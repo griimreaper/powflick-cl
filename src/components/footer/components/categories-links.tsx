@@ -1,19 +1,20 @@
 import { Fragment } from "react";
 import { Heading, StyledLink } from "../styles";
 import { CUSTOMER_CARE_LINKS } from "../data";
+import { Category } from "models/types";
 
 // ==============================================================
-type Props = { isDark?: boolean };
+type Props = { isDark?: boolean, list?: Category[] };
 // ==============================================================
 
-export default function CustomerCareLinks({ isDark }: Props) {
+export default function CategoriesLinks({ isDark, list }: Props) {
   return (
     <Fragment>
-      <Heading>Customer Care</Heading>
+      <Heading>Categories</Heading>
 
-      {CUSTOMER_CARE_LINKS.map((item, ind) => (
-        <StyledLink isDark={isDark} href={`/${item}`} key={ind}>
-          {item}
+      {list.map((item, ind) => (
+        <StyledLink isDark={isDark} href={`/${item.name}`} key={ind}>
+          {item.name}
         </StyledLink>
       ))}
     </Fragment>

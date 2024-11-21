@@ -16,18 +16,25 @@ import ProgressBar from "components/progress";
 
 // IMPORT i18n SUPPORT FILE
 import "i18n";
+import { NavbarProvider } from "contexts/NavBarContext";
+import { getLanding } from "services/Landing";
+import { DataStructure } from "models/types";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const { navbar }: DataStructure = await getLanding();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
         <CartProvider>
-          <SettingsProvider>
-            <ThemeProvider>
-              <ProgressBar />
-              <RTL>{children}</RTL>
-            </ThemeProvider>
-          </SettingsProvider>
+          <NavbarProvider initialData={navbar}>
+            <SettingsProvider>
+              <ThemeProvider>
+                <ProgressBar />
+                <RTL>{children}</RTL>
+              </ThemeProvider>
+            </SettingsProvider>
+          </NavbarProvider>
         </CartProvider>
         <GoogleAnalytics gaId="G-XKPD36JXY0" />
       </body>

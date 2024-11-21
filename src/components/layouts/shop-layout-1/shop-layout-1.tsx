@@ -5,7 +5,7 @@ import { Fragment, PropsWithChildren, useCallback, useState } from "react";
 import Sticky from "components/sticky";
 import Topbar from "components/topbar";
 import { Navbar } from "components/navbar";
-import { Footer1 } from "components/footer";
+import { Footer1, Footer2, Footer3, Footer4 } from "components/footer";
 import Header from "components/header/header";
 import { SearchInputWithCategory } from "components/search-box";
 import { MobileNavigationBar } from "components/mobile-navigation";

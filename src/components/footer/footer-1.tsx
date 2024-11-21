@@ -10,28 +10,37 @@ import CustomerCareLinks from "./components/customer-care-links";
 import { Paragraph } from "components/Typography";
 // STYLED COMPONENTS
 import { Heading } from "./styles";
+import { useNavbar } from "contexts/NavBarContext";
+import CategoriesLinks from "./components/categories-links";
 
 export default function Footer1() {
+  const { navbarData } = useNavbar();
+
   return (
     <Box component="footer" bgcolor="#222935" mb={{ sm: 0, xs: 7 }}>
       <Box component={Container} color="white" overflow="hidden" py={{ sm: 10, xs: 4 }}>
-        <Grid container spacing={3}>
-          <Grid item lg={4} md={6} sm={6} xs={12}>
+        <Grid container spacing={4} >
+          <Grid item lg={4} md={3} sm={6} xs={12}>
             <LogoSection />
           </Grid>
 
           {/* ABOUT US LINKS */}
-          <Grid item lg={2} md={6} sm={6} xs={12}>
+          <Grid item lg={2} md={3} sm={6} xs={12}>
             <AboutLinks />
           </Grid>
 
           {/* CUSTOMER CARE LINKS */}
-          <Grid item lg={3} md={6} sm={6} xs={12}>
+          <Grid item lg={2} md={3} sm={6} xs={12}>
             <CustomerCareLinks />
           </Grid>
 
+          {/* CUSTOMER CARE LINKS */}
+          <Grid item lg={2} md={3} sm={6} xs={12}>
+            <CategoriesLinks list={navbarData.categories} />
+          </Grid>
+
           {/* CONTACT & SOCIAL LINKS */}
-          <Grid item lg={3} md={6} sm={6} xs={12}>
+          <Grid item lg={2} md={3} sm={6} xs={12}>
             {/* CONTACT INFORMATION */}
             <Heading>Contact Us</Heading>
 
