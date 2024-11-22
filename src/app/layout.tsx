@@ -16,20 +16,23 @@ import ProgressBar from "components/progress";
 
 // IMPORT i18n SUPPORT FILE
 import "i18n";
+import React from "react";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
-        <CartProvider>
-          <SettingsProvider>
-            <ThemeProvider>
-              <ProgressBar />
-              <RTL>{children}</RTL>
-            </ThemeProvider>
-          </SettingsProvider>
-        </CartProvider>
-        <GoogleAnalytics gaId="G-XKPD36JXY0" />
+        <React.StrictMode>
+          <CartProvider>
+            <SettingsProvider>
+              <ThemeProvider>
+                <ProgressBar />
+                <RTL>{children}</RTL>
+              </ThemeProvider>
+            </SettingsProvider>
+          </CartProvider>
+          <GoogleAnalytics gaId="G-XKPD36JXY0" />
+        </React.StrictMode>
       </body>
     </html>
   );
