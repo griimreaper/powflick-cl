@@ -44,11 +44,6 @@ export interface Navbar {
 export interface Collections {
   mostSoldProducts: ProductDB[];
   discountProducts: ProductDB[];
-  productsMovilidad: ProductDB[];
-  productsHogar: ProductDB[];
-  productsDeporte: ProductDB[];
-  productsInfantil: ProductDB[];
-  productsSalud: ProductDB[];
 }
 
 export interface Landing {

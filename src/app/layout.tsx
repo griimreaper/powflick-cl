@@ -20,6 +20,8 @@ import { NavbarProvider } from "contexts/NavBarContext";
 import { getLanding } from "services/Landing";
 import { DataStructure } from "models/types";
 
+export const revalidate = 86400 * 7;
+
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const { navbar }: DataStructure = await getLanding();
 

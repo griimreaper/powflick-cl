@@ -11,8 +11,9 @@ import Section7 from "../section-7";
 import Section8 from "../section-8";
 import Section9 from "../section-9";
 import Section10 from "../section-10";
+import { DataStructure } from "models/types";
 
-export default function FashionTwoPageView() {
+export default function FashionTwoPageView({data} : {data: DataStructure['landing']}) {
   return (
     <div className="bg-white">
       {/* HERO SECTION CAROUSEL */}
@@ -25,13 +26,13 @@ export default function FashionTwoPageView() {
       <Section3 />
 
       {/* BEST SELLING PRODUCTS */}
-      <Section4 />
+      <Section4 products={data?.collections?.mostSoldProducts}/>
 
       {/* OFFER BANNERS */}
       <Section5 />
 
-      {/* FEATURED PRODUCTS */}
-      <Section6 />
+      {/* Discount PRODUCTS */}
+      <Section6 products={data?.collections?.discountProducts}/>
 
       {/* SUMMER SALE OFFER AREA */}
       <Section7 />

@@ -20,13 +20,14 @@ import { currency } from "lib";
 import { AddToCartButton, Card, CardMedia, FavoriteButton, QuickViewButton } from "./styles";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ==============================================================
-type Props = { product: Product };
+type Props = { product: ProductDB };
 // ==============================================================
 
 export default function ProductCard8({ product }: Props) {
-  const { slug, id, title, price, thumbnail, images, categories, reviews } = product || {};
+  const { slug, id, title, price, URL, images, product_categories } = product || {};
 
   const { cartItem, handleCartAmountChange, isFavorite, openModal, toggleDialog, toggleFavorite } =
     useProduct(slug);
@@ -38,7 +39,7 @@ export default function ProductCard8({ product }: Props) {
       slug,
       price,
       name: title,
-      imgUrl: thumbnail,
+      imgUrl: URL,
       qty: (cartItem?.qty || 0) + 1
     };
 
@@ -54,7 +55,7 @@ export default function ProductCard8({ product }: Props) {
             height={300}
             alt="category"
             className="product-img"
-            src={thumbnail}
+            src={URL}
           />
         </Link>
 
@@ -95,7 +96,7 @@ export default function ProductCard8({ product }: Props) {
 
       <Box p={1} textAlign="center">
         {/* PRODUCT CATEGORY */}
-        {categories.length > 0 ? <Small color="grey.500">{categories[0]}</Small> : null}
+        {product_categories?.split('|').length > 0 ? <Small color="grey.500">{product_categories.split('|')[0]}</Small> : null}
 
         {/* PRODUCT TITLE / NAME */}
         <Paragraph fontWeight="bold">{title}</Paragraph>
@@ -109,7 +110,7 @@ export default function ProductCard8({ product }: Props) {
         <FlexRowCenter gap={1}>
           <Rating name="read-only" value={4} readOnly sx={{ fontSize: 16 }} />
           <Small fontWeight={600} color="grey.500">
-            ({reviews.length} Reviews)
+            {/* ({reviews.length} Reviews) */}
           </Small>
         </FlexRowCenter>
       </Box>

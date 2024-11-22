@@ -3,12 +3,11 @@ import Container from "@mui/material/Container";
 import { H2 } from "components/Typography";
 import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
+import { DataStructure } from "models/types";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
 
-export default async function Section4() {
-  const products = await api.getProducts();
-
+export default async function Section4({ products }: { products: DataStructure['landing']['collections']['mostSoldProducts'] }) {
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 3 } },
     { breakpoint: 650, settings: { slidesToShow: 2 } },
