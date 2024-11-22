@@ -13,7 +13,7 @@ interface Props {
 }
 // ==========================================================
 
-export default function Navbar({ border, elevation = 2, hideCategories = false }: Props) {
+export default function Navbar({ border, elevation = 2, hideCategories = true }: Props) {
   return (
     <NavBarWrapper hoverEffect={false} elevation={elevation} border={border}>
       {hideCategories ? (
