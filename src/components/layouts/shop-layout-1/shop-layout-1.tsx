@@ -9,6 +9,7 @@ import { Footer1, Footer2, Footer3, Footer4 } from "components/footer";
 import Header from "components/header/header";
 import { SearchInputWithCategory } from "components/search-box";
 import { MobileNavigationBar } from "components/mobile-navigation";
+import { DataStructure } from "models/types";
 
 /**
  *  USED IN:
@@ -17,7 +18,11 @@ import { MobileNavigationBar } from "components/mobile-navigation";
  *  5. SHOPS, SHOP-DETAILS
  */
 
-export default function ShopLayout1({ children }: PropsWithChildren) {
+interface ShopLayout1Props extends PropsWithChildren {
+  data: DataStructure;
+}
+
+export default function ShopLayout1({ children, data }: ShopLayout1Props) {
   const [isFixed, setIsFixed] = useState(false);
   const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
 
@@ -32,13 +37,13 @@ export default function ShopLayout1({ children }: PropsWithChildren) {
       </Sticky>
 
       {/* NAVIGATION BAR */}
-      <Navbar elevation={0} border={1} />
+      <Navbar elevation={0} border={1} data={data.navbar} />
 
       {/* BODY CONTENT */}
       {children}
 
       {/* SMALL DEVICE BOTTOM NAVIGATION */}
-      <MobileNavigationBar />
+      <MobileNavigationBar data={data} />
 
       {/* FOOTER */}
       <Footer1 />
