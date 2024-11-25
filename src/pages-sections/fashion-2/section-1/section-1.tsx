@@ -19,7 +19,7 @@ export default async function Section1({ data }: { data: DataStructure["navbar"]
               key={ind}
               buttonColor="dark"
               title={item.title}
-              imgUrl={item.imgUrl}
+              imgUrl="assets/images/products/sports2.png"
               buttonLik={item.buttonLik}
               buttonText={item.buttonText}
               description={item.description}
