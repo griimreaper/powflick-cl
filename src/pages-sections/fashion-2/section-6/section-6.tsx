@@ -25,7 +25,7 @@ export default async function Section6({ products }: { products: DataStructure['
         slidesToShow={5}
         responsive={responsive}
         arrowStyles={{ backgroundColor: "dark.main", top: "34%" }}>
-        {products.map((product) => (
+        {products?.map((product) => (
           <ProductCard8 key={product.id} product={product} />
         ))}
       </Carousel>

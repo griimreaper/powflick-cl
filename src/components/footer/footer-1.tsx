@@ -36,7 +36,7 @@ export default function Footer1() {
 
           {/* CUSTOMER CARE LINKS */}
           <Grid item lg={2} md={3} sm={6} xs={12}>
-            <CategoriesLinks list={navbarData.categories} />
+            <CategoriesLinks list={navbarData?.categories} />
           </Grid>
 
           {/* CONTACT & SOCIAL LINKS */}
