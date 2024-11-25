@@ -13,7 +13,7 @@ export default function AboutLinks({ isDark }: Props) {
 
       <div>
         {ABOUT_LINKS.map((item, ind) => (
-          <StyledLink isDark={isDark} href="/" key={ind}>
+          <StyledLink isDark={isDark} href={`/${item}`} key={ind}>
             {item}
           </StyledLink>
         ))}

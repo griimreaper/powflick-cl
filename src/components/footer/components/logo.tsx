@@ -6,7 +6,7 @@ import { Paragraph } from "components/Typography";
 
 export default function LogoSection() {
   return (
-    <Fragment>
+    <Fragment >
       <Link href="/">
         <Image mb={2.5} src="/assets/images/logo.svg" alt="logo" />
       </Link>
