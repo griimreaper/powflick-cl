@@ -4,14 +4,10 @@ import Container from "@mui/material/Container";
 import ListBlock from "./block";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
+import { DataStructure } from "models/types";
 
-export default async function Section10() {
-  const [saleProducts, latestProducts, popularProducts, bestWeekProducts] = await Promise.all([
-    api.getSaleProducts(),
-    api.getLatestProducts(),
-    api.getPopularProducts(),
-    api.getBestWeekProducts()
-  ]);
+export default async function Section10({ products }: { products: DataStructure['landing']['collections']}) {
+  const {saleProducts, latestProducts, popularProducts, bestWeekProducts} = products;
 
   return (
     <Container className="pt-5 pb-5">

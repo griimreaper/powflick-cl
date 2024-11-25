@@ -44,7 +44,7 @@ export default function FashionTwoPageView({data} : {data: DataStructure['landin
       <Section9 />
 
       {/* PRODUCT LIST COLUMN */}
-      <Section10 />
+      <Section10 products={data?.collections}/>
 
       {/* POPUP NEWSLETTER FORM */}
       <Newsletter />
