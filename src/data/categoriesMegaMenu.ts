@@ -2,7 +2,7 @@ import Icons from "icons/duotone";
 
 const categoriesMegaMenu = [
   {
-    title: "Fashion",
+    title: "Custom Soccer Jersey",
     child: [
       {
         title: "Men's Fashion",
@@ -59,7 +59,7 @@ const categoriesMegaMenu = [
     ],
   },
   {
-    title: "Electronics",
+    title: "Custom Hockey Jersey",
     child: [
       {
         title: "Accessories & Supplies",
@@ -159,7 +159,7 @@ const categoriesMegaMenu = [
     ],
   },
   {
-    title: "Books",
+    title: "Custom Baseball Jerseys",
     child: [
       {
         title: "Arts & Photography",
@@ -195,7 +195,7 @@ const categoriesMegaMenu = [
     ],
   },
   {
-    title: "Sports and Outdoors",
+    title: "Running clothes",
     child: [
       {
         title: "Outdoor Recreation",
@@ -230,7 +230,7 @@ const categoriesMegaMenu = [
     ],
   },
   {
-    title: "Software",
+    title: "Custom Basketball Jerseys",
     child: [
       {
         title: "Accounting & Finance",
@@ -262,7 +262,30 @@ const categoriesMegaMenu = [
     ],
   },
   {
-    title: "Toys and Games",
+    title: "Gamer Shirts",
+    child: [
+      {
+        title: "Arts & Crafts",
+        child: [
+          { title: "Adhesives", url: "#" },
+          { title: "Aprons & Smocks", url: "#" },
+          { title: "Clay & Dough", url: "#" },
+          { title: "Craft Kits", url: "#" },
+        ],
+      },
+      {
+        title: "Baby & Toddler Toys",
+        child: [
+          { title: "Activity Centers", url: "#" },
+          { title: "Balls", url: "#" },
+          { title: "Bath Toys", url: "#" },
+          { title: "Car Seat & Stroller Toys", url: "#" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "New Arrivals",
     child: [
       {
         title: "Arts & Crafts",

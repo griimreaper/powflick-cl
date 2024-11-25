@@ -100,14 +100,14 @@ export default function NavigationList({ data }: { data: DataStructure["navbar"]
     });
   };
 
-  const fullScreenMenu = navigation.find(nav => nav.title === "Full Screen Menu");
+  const fullScreenMenu = navigation.find(nav => nav.title === "Store");
 
   return (
     <FlexBox gap={4}>
       {fullScreenMenu && renderNestedNav([fullScreenMenu], true)}
+      <StyledNavLink href="/blog">Blog</StyledNavLink>
       <StyledNavLink href="/contact">Contact</StyledNavLink>
       <StyledNavLink href="/about-us">About Us</StyledNavLink>
-      <StyledNavLink href="/blog">Blog</StyledNavLink>
       <StyledNavLink href="/help">Help</StyledNavLink>
     </FlexBox>
   );
