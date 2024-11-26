@@ -12,13 +12,23 @@ export default function NotFound() {
 
   return (
     <FlexRowCenter px={2} minHeight="100vh" flexDirection="column">
-      <Box maxWidth={320} width="100%" mb={3}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        width="100%"
+        marginBottom={"20px"}
+      >
         <Image
           alt="Not Found!"
           width={55}
           height={55}
           src="/assets/images/logo/SportZone2.png"
         />
+      </Box>
+
+      <Box textAlign="center" mb={4}>
+        <h1>Page Not Found</h1>
+        <p>Sorry, the page you are looking for does not exist.</p>
       </Box>
 
       <FlexBox flexWrap="wrap" gap={2}>
