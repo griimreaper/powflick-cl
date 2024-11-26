@@ -50,7 +50,7 @@ export default function FashionTwoPageView({
       <Section9 />
 
       {/* PRODUCT LIST COLUMN */}
-      <Section10 products={data?.collections}/>
+      <Section10 products={data?.landing?.collections}/>
 
       {/* POPUP NEWSLETTER FORM */}
       <Newsletter />
