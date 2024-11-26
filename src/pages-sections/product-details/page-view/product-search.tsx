@@ -46,6 +46,19 @@ const initialFilters = {
   price: [0, 300],
 };
 
+const handleSortProducts = (products: Product[], sortBy: string) => {
+  switch (sortBy) {
+    case "date":
+      return products.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    case "asc":
+      return products.sort((a, b) => a.price - b.price);
+    case "desc":
+      return products.sort((a, b) => b.price - a.price);
+    default:
+      return products;
+  }
+};
+
 export default function ProductSearchPageView({
   data,
   querys,
@@ -72,6 +85,8 @@ export default function ProductSearchPageView({
     discount: 25,
   }));
 
+  const sortedProducts = handleSortProducts(data, sortBy);
+
   return (
     <div className="bg-white pt-2 pb-4">
       <Container>
@@ -81,9 +96,7 @@ export default function ProductSearchPageView({
             <H5 lineHeight={1} mb={1}>
               Searching for “ {querys.search} ”
             </H5>
-            <Paragraph color="grey.600">
-              {data.totalResults} results found
-            </Paragraph>
+            <Paragraph color="grey.600">{data.totalResults} results found</Paragraph>
           </div>
 
           <FlexBox alignItems="center" columnGap={4} flexWrap="wrap">
@@ -167,9 +180,9 @@ export default function ProductSearchPageView({
           {/* PRODUCT VIEW AREA */}
           <Grid item xl={10} md={9} xs={12}>
             {view === "grid" ? (
-              <ProductsGridView products={data} />
+              <ProductsGridView products={sortedProducts} />
             ) : (
-              <ProductsListView products={data} />
+              <ProductsListView products={sortedProducts} />
             )}
           </Grid>
         </Grid>

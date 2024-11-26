@@ -1,7 +1,7 @@
 import Shop from "./Shop.model";
 import Review from "./Review.model";
 
- interface Product {
+interface Product {
   id: string; // Identificador único del producto
   title: string; // Título del producto
   content: string; // Descripción completa del producto
