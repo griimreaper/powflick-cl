@@ -20,13 +20,13 @@ export default function Footer4() {
         <Grid container spacing={3}>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <Box maxWidth={100}>
-              <LazyImage src={""} alt="logo" />
+              <LazyImage src="/assets/images/logo/SportZone2.png" alt="logo" />
             </Box>
 
             <Paragraph mb={2.5} maxWidth={{ xl: 400 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in
-              gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at
-              amet.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor
+              libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat
+              et lectus vel ut sollicitudin elit at amet.
             </Paragraph>
           </Grid>
 

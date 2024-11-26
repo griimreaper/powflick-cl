@@ -1,4 +1,5 @@
 // LOCAL CUSTOM COMPONENTS
+import { DataStructure } from "models/types";
 import Categories from "./categories";
 import NavigationList from "./nav-list";
 // STYLED COMPONENTS
@@ -10,15 +11,16 @@ interface Props {
   border?: number;
   elevation?: number;
   hideCategories?: boolean;
+  data: DataStructure["navbar"];
 }
 // ==========================================================
 
-export default function Navbar({ border, elevation = 2, hideCategories = true }: Props) {
+export default function Navbar({ border, elevation = 2, hideCategories = true, data }: Props) {
   return (
     <NavBarWrapper hoverEffect={false} elevation={elevation} border={border}>
       {hideCategories ? (
         <InnerContainer sx={{ justifyContent: "center" }}>
-          <NavigationList />
+          <NavigationList data={data} />
         </InnerContainer>
       ) : (
         <InnerContainer>
@@ -26,7 +28,7 @@ export default function Navbar({ border, elevation = 2, hideCategories = true }:
           <Categories />
 
           {/* HORIZONTAL MENU */}
-          <NavigationList />
+          <NavigationList data={data} />
         </InnerContainer>
       )}
     </NavBarWrapper>

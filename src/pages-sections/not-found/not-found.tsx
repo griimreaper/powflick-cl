@@ -15,17 +15,25 @@ export default function NotFound() {
       <Box maxWidth={320} width="100%" mb={3}>
         <Image
           alt="Not Found!"
-          src={""}
+          src="/assets/images/logo/SportZone2.png"
           style={{ width: "100%", height: "auto" }}
         />
       </Box>
 
       <FlexBox flexWrap="wrap" gap={2}>
-        <Button variant="outlined" color="primary" onClick={() => router.back()}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => router.back()}
+        >
           Go Back
         </Button>
 
-        <Button variant="contained" color="primary" onClick={() => router.push("/")}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => router.push("/")}
+        >
           Go to Home
         </Button>
       </FlexBox>

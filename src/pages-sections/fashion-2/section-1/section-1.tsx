@@ -3,10 +3,11 @@ import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
 import { Carousel } from "components/carousel";
 import CarouselCard1 from "components/carousel-cards/carousel-card-1";
+import { DataStructure } from "models/types";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
 
-export default async function Section1() {
+export default async function Section1({ data }: { data: DataStructure["navbar"] }) {
   const carouselData = await api.getMainCarouselData();
 
   return (
@@ -18,7 +19,7 @@ export default async function Section1() {
               key={ind}
               buttonColor="dark"
               title={item.title}
-              imgUrl={item.imgUrl}
+              imgUrl="assets/images/products/sports2.png"
               buttonLik={item.buttonLik}
               buttonText={item.buttonText}
               description={item.description}

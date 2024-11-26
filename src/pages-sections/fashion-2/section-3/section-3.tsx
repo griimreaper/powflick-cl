@@ -6,6 +6,25 @@ import CategoryCard1 from "components/category-cards/category-card-1";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
 
+const sportsCategories = [
+  { id: 1, title: "Football", image: "/assets/images/categories/futball.jpeg" },
+  {
+    id: 2,
+    title: "Basketball",
+    image: "/assets/images/categories/basketball.jpeg",
+  },
+  {
+    id: 3,
+    title: "Running",
+    image: "/assets/images/categories/running.jpeg",
+  },
+  {
+    id: 4,
+    title: "Baseball",
+    image: "/assets/images/categories/baseball.jpeg",
+  },
+];
+
 export default async function Section3() {
   const categories = await api.getCategories();
 
@@ -16,9 +35,9 @@ export default async function Section3() {
       </H2>
 
       <Grid container spacing={3}>
-        {categories.map((item) => (
+        {sportsCategories.map((item) => (
           <Grid item md={3} sm={6} xs={12} key={item.id}>
-            <CategoryCard1 image={item.image} title={item.name} />
+            <CategoryCard1 image={item.image} title={item.title} />
           </Grid>
         ))}
       </Grid>
