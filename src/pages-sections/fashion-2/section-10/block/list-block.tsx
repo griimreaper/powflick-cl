@@ -24,7 +24,7 @@ export default function ListBlock({ title, products }: Props) {
     <Fragment>
       <H3 mb={3}>{title}</H3>
 
-      {products.map((product) => (
+      {products?.map((product) => (
         <Wrapper key={product.id}>
           <Link href={`/products/${product.slug}`}>
             <div className="img-wrapper">
