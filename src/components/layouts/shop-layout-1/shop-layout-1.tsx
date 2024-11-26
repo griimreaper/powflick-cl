@@ -37,7 +37,7 @@ export default function ShopLayout1({ children, data }: ShopLayout1Props) {
       </Sticky>
 
       {/* NAVIGATION BAR */}
-      <Navbar elevation={0} border={1} data={data.navbar} />
+      <Navbar elevation={0} border={1} data={data?.navbar} />
 
       {/* BODY CONTENT */}
       {children}
