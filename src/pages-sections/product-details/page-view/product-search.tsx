@@ -24,13 +24,18 @@ import ProductsListView from "components/products-view/products-list-view";
 // PRODUCT DATA
 import productDatabase from "data/product-database";
 // TYPE
-import { ProductFilterKeys, ProductFilterValues, ProductFilters } from "../types";
+import {
+  ProductFilterKeys,
+  ProductFilterValues,
+  ProductFilters,
+} from "../types";
+import Product from "models/Product.model";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
   { label: "Date", value: "date" },
   { label: "Price Low to High", value: "asc" },
-  { label: "Price High to Low", value: "desc" }
+  { label: "Price High to Low", value: "desc" },
 ];
 
 const initialFilters = {
@@ -38,16 +43,23 @@ const initialFilters = {
   color: [],
   brand: [],
   sales: [],
-  price: [0, 300]
+  price: [0, 300],
 };
 
-export default function ProductSearchPageView() {
+export default function ProductSearchPageView({
+  data,
+  querys,
+  topCategories,
+}: any) {
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
-  const handleChangeFilters = (key: ProductFilterKeys, values: ProductFilterValues) => {
+  const handleChangeFilters = (
+    key: ProductFilterKeys,
+    values: ProductFilterValues
+  ) => {
     setFilters((prev) => ({ ...prev, [key]: values }));
   };
 
@@ -55,7 +67,10 @@ export default function ProductSearchPageView() {
 
   const toggleView = useCallback((v: string) => () => setView(v), []);
 
-  const PRODUCTS = productDatabase.slice(95, 104).map((pro) => ({ ...pro, discount: 25 }));
+  const PRODUCTS = data?.products?.map((pro: Product) => ({
+    ...pro,
+    discount: 25,
+  }));
 
   return (
     <div className="bg-white pt-2 pb-4">
@@ -64,9 +79,11 @@ export default function ProductSearchPageView() {
         <FlexBetween flexWrap="wrap" gap={2} mb={2}>
           <div>
             <H5 lineHeight={1} mb={1}>
-              Searching for “ mobile phone ”
+              Searching for “ {querys.search} ”
             </H5>
-            <Paragraph color="grey.600">48 results found</Paragraph>
+            <Paragraph color="grey.600">
+              {data.totalResults} results found
+            </Paragraph>
           </div>
 
           <FlexBox alignItems="center" columnGap={4} flexWrap="wrap">
@@ -83,7 +100,8 @@ export default function ProductSearchPageView() {
                 variant="outlined"
                 placeholder="Sort by"
                 onChange={(e) => handleChangeSortBy(e.target.value)}
-                sx={{ flex: "1 1 0", minWidth: "150px" }}>
+                sx={{ flex: "1 1 0", minWidth: "150px" }}
+              >
                 {SORT_OPTIONS.map((item) => (
                   <MenuItem value={item.value} key={item.value}>
                     {item.label}
@@ -98,11 +116,17 @@ export default function ProductSearchPageView() {
               </Paragraph>
 
               <IconButton onClick={toggleView("grid")}>
-                <Apps fontSize="small" color={view === "grid" ? "primary" : "inherit"} />
+                <Apps
+                  fontSize="small"
+                  color={view === "grid" ? "primary" : "inherit"}
+                />
               </IconButton>
 
               <IconButton onClick={toggleView("list")}>
-                <ViewList fontSize="small" color={view === "list" ? "primary" : "inherit"} />
+                <ViewList
+                  fontSize="small"
+                  color={view === "list" ? "primary" : "inherit"}
+                />
               </IconButton>
 
               {/* SHOW IN THE SMALL DEVICE */}
@@ -112,9 +136,13 @@ export default function ProductSearchPageView() {
                     <IconButton onClick={close}>
                       <FilterList fontSize="small" />
                     </IconButton>
-                  )}>
+                  )}
+                >
                   <Box px={3} py={2}>
-                    <ProductFilterCard filters={filters} changeFilters={handleChangeFilters} />
+                    <ProductFilterCard
+                      filters={filters}
+                      changeFilters={handleChangeFilters}
+                    />
                   </Box>
                 </Sidenav>
               )}
@@ -124,16 +152,24 @@ export default function ProductSearchPageView() {
 
         <Grid container spacing={4}>
           {/* PRODUCT FILTER SIDEBAR AREA */}
-          <Grid item xl={2} md={3} sx={{ display: { md: "block", xs: "none" } }}>
-            <ProductFilterCard filters={filters} changeFilters={handleChangeFilters} />
+          <Grid
+            item
+            xl={2}
+            md={3}
+            sx={{ display: { md: "block", xs: "none" } }}
+          >
+            <ProductFilterCard
+              filters={filters}
+              changeFilters={handleChangeFilters}
+            />
           </Grid>
 
           {/* PRODUCT VIEW AREA */}
           <Grid item xl={10} md={9} xs={12}>
             {view === "grid" ? (
-              <ProductsGridView products={PRODUCTS} />
+              <ProductsGridView products={data} />
             ) : (
-              <ProductsListView products={PRODUCTS} />
+              <ProductsListView products={data} />
             )}
           </Grid>
         </Grid>

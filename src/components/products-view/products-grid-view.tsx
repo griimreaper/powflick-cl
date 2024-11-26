@@ -18,7 +18,7 @@ export default function ProductsGridView({ products }: Props) {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-  const paginatedProducts = products.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const paginatedProducts = products?.slice((page - 1) * itemsPerPage, page * itemsPerPage) || [];
 
   return (
     <Fragment>
@@ -31,8 +31,8 @@ export default function ProductsGridView({ products }: Props) {
       </Grid>
 
       <FlexBetween flexWrap="wrap" mt={6}>
-        <Span color="grey.600">Showing {itemsPerPage * (page - 1) + 1}-{Math.min(itemsPerPage * page, products.length)} of {products.length} Products</Span>
-        <Pagination count={Math.ceil(products.length / itemsPerPage)} page={page} onChange={handleChange} variant="outlined" color="primary" />
+        <Span color="grey.600">Showing {itemsPerPage * (page - 1) + 1}-{Math.min(itemsPerPage * page, products?.length || 0)} of {products?.length || 0} Products</Span>
+        <Pagination count={Math.ceil((products?.length || 0) / itemsPerPage)} page={page} onChange={handleChange} variant="outlined" color="primary" />
       </FlexBetween>
     </Fragment>
   );

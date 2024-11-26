@@ -16,7 +16,6 @@ export const revalidate = 86400 * 7;
 export default async function ProductSearch({ params }: any) {
   const { products } = await getSearch();
   const categories = await getCategories();
-  console.log(categories);
 
   return (
     <ProductSearchPageView
