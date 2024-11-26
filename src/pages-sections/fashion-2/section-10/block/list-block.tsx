@@ -10,12 +10,12 @@ import { currency } from "lib";
 // STYLED COMPONENT
 import { Wrapper } from "./styles";
 // CUSTOM DATA MODEL
-import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ===========================================
 interface Props {
   title: string;
-  products: Product[];
+  products: ProductDB[];
 }
 // ===========================================
 
@@ -24,11 +24,11 @@ export default function ListBlock({ title, products }: Props) {
     <Fragment>
       <H3 mb={3}>{title}</H3>
 
-      {products.map((product) => (
+      {products?.map((product) => (
         <Wrapper key={product.id}>
           <Link href={`/products/${product.slug}`}>
             <div className="img-wrapper">
-              <LazyImage width={100} height={100} alt="product" src={product.thumbnail} />
+              <LazyImage width={100} height={100} alt="product" src={product.URL} />
             </div>
           </Link>
 

@@ -14,11 +14,12 @@ export const metadata: Metadata = {
 };
 
 export default async function FashionShopTwo() {
-  const { landing }: DataStructure = await getLanding();
+  const data: DataStructure = await getLanding();
+
   return (
     <>
-      <ShopLayout1>
-        <FashionTwoPageView data={landing}/>;
+      <ShopLayout1 data={data}>
+        <FashionTwoPageView data={data}/>;
       </ShopLayout1>
     </>
   );

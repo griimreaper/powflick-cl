@@ -43,7 +43,12 @@ export interface Navbar {
 
 export interface Collections {
   mostSoldProducts: ProductDB[];
+  featuredProducts: ProductDB[];
   discountProducts: ProductDB[];
+  latestProducts: ProductDB[];
+  bestWeekProducts: ProductDB[];
+  popularProducts: ProductDB[];
+  saleProducts: ProductDB[];
 }
 
 export interface Landing {

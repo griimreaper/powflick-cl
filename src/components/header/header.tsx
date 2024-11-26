@@ -35,7 +35,9 @@ export default function Header({ isFixed, className, midSlot }: Props) {
       <FlexBox minWidth={100} alignItems="center">
         <Link href="/">
           <LazyImage
-            src={""}
+            width={50}
+            height={40}
+            src="/assets/images/logo/SportZone2.png"
             alt="logo"
           />
         </Link>
