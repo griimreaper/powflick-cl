@@ -4,6 +4,7 @@ export interface ProductFilters {
   sales: string[];
   price: number[];
   rating: number;
+  category: string[];
   //   category: string[];
 }
 

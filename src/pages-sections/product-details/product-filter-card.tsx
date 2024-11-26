@@ -16,15 +16,22 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import { H5, H6, Paragraph, Span } from "components/Typography";
 import AccordionHeader from "components/accordion/accordion-header";
 // TYPE
-import { ProductFilterKeys, ProductFilterValues, ProductFilters } from "./types";
+import {
+  ProductFilterKeys,
+  ProductFilterValues,
+  ProductFilters,
+} from "./types";
 import { Slider } from "@mui/material";
 
 // FILTER OPTIONS
 const categoryList = [
-  { title: "Bath Preparations", subCategories: ["Bubble Bath", "Bath Capsules", "Others"] },
+  {
+    title: "Bath Preparations",
+    subCategories: ["Bubble Bath", "Bath Capsules", "Others"],
+  },
   { title: "Eye Makeup Preparations" },
   { title: "Fragrance" },
-  { title: "Hair Preparations" }
+  { title: "Hair Preparations" },
 ];
 
 const BRANDS = [
@@ -32,16 +39,23 @@ const BRANDS = [
   { label: "Karts", value: "karts" },
   { label: "Baals", value: "baals" },
   { label: "Bukks", value: "bukks" },
-  { label: "Luasis", value: "luasis" }
+  { label: "Luasis", value: "luasis" },
 ];
 
 const OTHERS = [
   { label: "On Sale", value: "sale" },
   { label: "In Stock", value: "stock" },
-  { label: "Featured", value: "featured" }
+  { label: "Featured", value: "featured" },
 ];
 
-const colorList = ["#1C1C1C", "#FF7A7A", "#FFC672", "#84FFB5", "#70F6FF", "#6B7AFF"];
+const colorList = [
+  "#1C1C1C",
+  "#FF7A7A",
+  "#FFC672",
+  "#84FFB5",
+  "#70F6FF",
+  "#6B7AFF",
+];
 
 // ============================================================================
 interface Props {
@@ -85,6 +99,13 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
     changeFilters("rating", value);
   };
 
+  const handleChangeCategory = (value: string) => {
+    const values = filters.category.includes(value)
+      ? filters.category.filter((item) => item !== value)
+      : [...filters.category, value];
+    changeFilters("category", values);
+  };
+
   return (
     <div>
       {/* CATEGORY VARIANT FILTER */}
@@ -95,10 +116,10 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
             <AccordionHeader
               open={collapsed}
               onClick={() => setCollapsed((state) => !state)}
-              sx={{ padding: ".5rem 0", cursor: "pointer", color: "grey.600" }}>
+              sx={{ padding: ".5rem 0", cursor: "pointer", color: "grey.600" }}
+            >
               <Span>{item.title}</Span>
             </AccordionHeader>
-
             <Collapse in={collapsed}>
               {item.subCategories.map((name) => (
                 <Paragraph
@@ -107,7 +128,9 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
                   key={name}
                   fontSize="14px"
                   color="grey.600"
-                  sx={{ cursor: "pointer" }}>
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => handleChangeCategory(name)}
+                >
                   {name}
                 </Paragraph>
               ))}
@@ -120,18 +143,18 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
               py: 0.75,
               fontSize: 14,
               cursor: "pointer",
-              color: "grey.600"
-            }}>
+              color: "grey.600",
+            }}
+            onClick={() => handleChangeCategory(item.title)}
+          >
             {item.title}
           </Paragraph>
         )
       )}
-
       <Box component={Divider} my={3} />
 
       {/* PRICE VARIANT FILTER */}
       <H6 mb={2}>Price Range</H6>
-
       <Slider
         min={0}
         max={300}
@@ -148,20 +171,22 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
           type="number"
           placeholder="0"
           value={filters.price[0]}
-          onChange={(e) => handleChangePrice([+e.target.value, filters.price[1]])}
+          onChange={(e) =>
+            handleChangePrice([+e.target.value, filters.price[1]])
+          }
         />
-
         <H5 color="grey.600" px={1}>
           -
         </H5>
-
         <TextField
           fullWidth
           size="small"
           type="number"
           placeholder="250"
           value={filters.price[1]}
-          onChange={(e) => handleChangePrice([filters.price[0], +e.target.value])}
+          onChange={(e) =>
+            handleChangePrice([filters.price[0], +e.target.value])
+          }
         />
       </FlexBetween>
 
@@ -227,7 +252,7 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
               outlineOffset: 1,
               cursor: "pointer",
               outline: filters.color.includes(item) ? 1 : 0,
-              outlineColor: item
+              outlineColor: item,
             }}
           />
         ))}

@@ -44,20 +44,42 @@ const initialFilters = {
   brand: [],
   sales: [],
   price: [0, 300],
+  category: [],
 };
 
-const handleSortProducts = (products: Product[], sortBy: string) => {
+// ...existing code...
+const handleSortProducts = (
+  products: Product[],
+  sortBy: string,
+  filters: ProductFilters
+) => {
+  const filteredProducts = products.filter((product) => {
+    const productCategories = product.product_categories.split("|");
+    const isInPriceRange =
+      product.price >= filters.price[0] && product.price <= filters.price[1];
+    return (
+      filters.category.every((category) =>
+        productCategories.includes(category)
+      ) && isInPriceRange
+    );
+  });
+
   switch (sortBy) {
     case "date":
-      return products.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      return filteredProducts.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
     case "asc":
-      return products.sort((a, b) => a.price - b.price);
+      return filteredProducts.sort((a, b) => a.price - b.price);
     case "desc":
-      return products.sort((a, b) => b.price - a.price);
+      return filteredProducts.sort((a, b) => b.price - a.price);
     default:
-      return products;
+      return filteredProducts;
   }
 };
+
+
+
 
 export default function ProductSearchPageView({
   data,
@@ -68,6 +90,7 @@ export default function ProductSearchPageView({
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
+  
 
   const handleChangeFilters = (
     key: ProductFilterKeys,
@@ -80,12 +103,7 @@ export default function ProductSearchPageView({
 
   const toggleView = useCallback((v: string) => () => setView(v), []);
 
-  const PRODUCTS = data?.products?.map((pro: Product) => ({
-    ...pro,
-    discount: 25,
-  }));
-
-  const sortedProducts = handleSortProducts(data, sortBy);
+const sortedProducts = handleSortProducts(data, sortBy, filters);
 
   return (
     <div className="bg-white pt-2 pb-4">
@@ -96,7 +114,9 @@ export default function ProductSearchPageView({
             <H5 lineHeight={1} mb={1}>
               Searching for “ {querys.search} ”
             </H5>
-            <Paragraph color="grey.600">{data.totalResults} results found</Paragraph>
+            <Paragraph color="grey.600">
+              {data.totalResults} results found
+            </Paragraph>
           </div>
 
           <FlexBox alignItems="center" columnGap={4} flexWrap="wrap">
