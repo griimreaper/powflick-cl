@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 export default async function FashionShopTwo() {
   const data: DataStructure = await getLanding();
+
   return (
     <>
       <ShopLayout1 data={data}>
