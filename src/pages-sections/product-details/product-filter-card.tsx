@@ -64,46 +64,53 @@ interface Props {
 }
 // ============================================================================
 
-export default function ProductFilterCard({ filters, changeFilters }: Props) {
+export default function ProductFilterCard({ filters = {
+  brand: [],
+  color: [],
+  sales: [],
+  price: [],
+  rating: 0,
+  category: []
+}, changeFilters }: Props) {
   const [collapsed, setCollapsed] = useState(true);
 
   const handleChangePrice = (values: number[]) => {
-    changeFilters("price", values);
+    changeFilters && changeFilters("price", values);
   };
 
   const handleChangeColor = (value: string) => {
-    const values = filters.color.includes(value)
-      ? filters.color.filter((item) => item !== value)
-      : [...filters.color, value];
+    const values = filters.color?.includes(value)
+      ? filters.color?.filter((item) => item !== value)
+      : [...(filters.color || []), value];
 
-    changeFilters("color", values);
+    changeFilters && changeFilters("color", values);
   };
 
   const handleChangeBrand = (value: string) => {
-    const values = filters.brand.includes(value)
-      ? filters.brand.filter((item) => item !== value)
-      : [...filters.brand, value];
+    const values = filters.brand?.includes(value)
+      ? filters.brand?.filter((item) => item !== value)
+      : [...(filters.brand || []), value];
 
-    changeFilters("brand", values);
+    changeFilters && changeFilters("brand", values);
   };
 
   const handleChangeSales = (value: string) => {
-    const values = filters.sales.includes(value)
-      ? filters.sales.filter((item) => item !== value)
-      : [...filters.sales, value];
+    const values = filters.sales?.includes(value)
+      ? filters.sales?.filter((item) => item !== value)
+      : [...(filters.sales || []), value];
 
-    changeFilters("sales", values);
+    changeFilters && changeFilters("sales", values);
   };
 
   const handleChangeRating = (value: number) => {
-    changeFilters("rating", value);
+    changeFilters && changeFilters("rating", value);
   };
 
   const handleChangeCategory = (value: string) => {
-    const values = filters.category.includes(value)
-      ? filters.category.filter((item) => item !== value)
-      : [...filters.category, value];
-    changeFilters("category", values);
+    const values = filters.category?.includes(value)
+      ? filters.category?.filter((item) => item !== value)
+      : [...(filters.category || []), value];
+    changeFilters && changeFilters("category", values);
   };
 
   return (
@@ -159,7 +166,7 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
         min={0}
         max={300}
         size="small"
-        value={filters.price}
+        value={filters.price || [0, 0]}
         valueLabelDisplay="auto"
         valueLabelFormat={(v) => `$${v}`}
         onChange={(_, v) => handleChangePrice(v as number[])}
@@ -170,9 +177,9 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
           size="small"
           type="number"
           placeholder="0"
-          value={filters.price[0]}
+          value={filters.price?.[0] || 0}
           onChange={(e) =>
-            handleChangePrice([+e.target.value, filters.price[1]])
+            handleChangePrice([+e.target.value, filters.price?.[1] || 0])
           }
         />
         <H5 color="grey.600" px={1}>
@@ -183,9 +190,9 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
           size="small"
           type="number"
           placeholder="250"
-          value={filters.price[1]}
+          value={filters.price?.[1] || 0}
           onChange={(e) =>
-            handleChangePrice([filters.price[0], +e.target.value])
+            handleChangePrice([filters.price?.[0] || 0, +e.target.value])
           }
         />
       </FlexBetween>
@@ -199,7 +206,7 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
           <CheckboxLabel
             key={value}
             label={label}
-            checked={filters.brand.includes(value)}
+            checked={filters.brand?.includes(value) || false}
             onChange={() => handleChangeBrand(value)}
           />
         ))}
@@ -213,7 +220,7 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
           <CheckboxLabel
             key={value}
             label={label}
-            checked={filters.sales.includes(value)}
+            checked={filters.sales?.includes(value) || false}
             onChange={() => handleChangeSales(value)}
           />
         ))}
@@ -227,7 +234,7 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
         {[5, 4, 3, 2, 1].map((item) => (
           <CheckboxLabel
             key={item}
-            checked={filters.rating === item}
+            checked={filters.rating === item || false}
             onChange={() => handleChangeRating(item)}
             label={<Rating size="small" value={item} color="warn" readOnly />}
           />
@@ -251,7 +258,7 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
             sx={{
               outlineOffset: 1,
               cursor: "pointer",
-              outline: filters.color.includes(item) ? 1 : 0,
+              outline: filters.color?.includes(item) ? 1 : 0,
               outlineColor: item,
             }}
           />
