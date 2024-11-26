@@ -46,7 +46,7 @@ export default function MobileHeader() {
         <Link href="/">
           <Image
             height={44}
-            src="/assets/images/SportZone-black-sm.svg"
+            src="/assets/images/logo/SportZone2.png"
             alt="logo"
           />
         </Link>

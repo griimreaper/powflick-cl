@@ -172,7 +172,7 @@ const navbarNavigation = [
   {
     megaMenu: false,
     megaMenuWithSub: true,
-    title: "Full Screen Menu",
+    title: "Store",
     child: categoriesMegaMenu
   },
 

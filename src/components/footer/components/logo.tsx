@@ -3,12 +3,20 @@ import Link from "next/link";
 import AppStore from "./app-store";
 import Image from "components/SportZoneImage";
 import { Paragraph } from "components/Typography";
+import { Box } from "@mui/material";
 
 export default function LogoSection() {
   return (
-    <Fragment >
+    <Fragment>
       <Link href="/">
-        <Image mb={2.5} src="/assets/images/logo.svg" alt="logo" />
+        <Box display="flex" justifyContent="center">
+          <Image
+            mb={2.5}
+            width={100}
+            src="/assets/images/logo/SportZone2.png"
+            alt="logo"
+          />
+        </Box>
       </Link>
 
       <Paragraph mb={2.5} color="grey.500">

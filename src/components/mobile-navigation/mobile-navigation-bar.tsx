@@ -12,8 +12,9 @@ import ShoppingBagOutlined from "icons/ShoppingBagOutlined";
 import useCart from "hooks/useCart";
 // STYLED COMPONENTS
 import { iconStyle, StyledNavLink, Wrapper } from "./styles";
+import { DataStructure } from "models/types";
 
-export default function MobileNavigationBar() {
+export default function MobileNavigationBar({ data }: { data: DataStructure }) {
   const { state } = useCart();
   const DOWN_900 = useMediaQuery((theme: Theme) => theme.breakpoints.down(900));
 

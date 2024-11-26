@@ -13,11 +13,17 @@ import Section9 from "../section-9";
 import Section10 from "../section-10";
 import { DataStructure } from "models/types";
 
-export default function FashionTwoPageView({data} : {data: DataStructure['landing']}) {
+export default function FashionTwoPageView({
+  data,
+}: {
+  data: DataStructure;
+}) {
+
+
   return (
     <div className="bg-white">
       {/* HERO SECTION CAROUSEL */}
-      <Section1 />
+      <Section1 data={data?.navbar} />
 
       {/* SERVICE CARDS */}
       <Section2 />
@@ -26,13 +32,13 @@ export default function FashionTwoPageView({data} : {data: DataStructure['landin
       <Section3 />
 
       {/* BEST SELLING PRODUCTS */}
-      <Section4 products={data?.collections?.mostSoldProducts}/>
+      <Section4 products={data?.landing.collections?.mostSoldProducts} />
 
       {/* OFFER BANNERS */}
       <Section5 />
 
       {/* Discount PRODUCTS */}
-      <Section6 products={data?.collections?.discountProducts}/>
+      <Section6 products={data?.landing.collections?.discountProducts} />
 
       {/* SUMMER SALE OFFER AREA */}
       <Section7 />
@@ -50,7 +56,6 @@ export default function FashionTwoPageView({data} : {data: DataStructure['landin
       <Newsletter />
 
       {/* SETTINGS IS USED ONLY FOR DEMO, YOU CAN REMOVE THIS */}
- 
     </div>
   );
 }
