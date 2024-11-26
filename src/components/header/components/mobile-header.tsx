@@ -46,6 +46,7 @@ export default function MobileHeader() {
         <Link href="/">
           <Image
             height={44}
+            width={44}
             src="/assets/images/logo/SportZone2.png"
             alt="logo"
           />

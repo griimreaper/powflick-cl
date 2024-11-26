@@ -15,8 +15,9 @@ export default function NotFound() {
       <Box maxWidth={320} width="100%" mb={3}>
         <Image
           alt="Not Found!"
+          width={55}
+          height={55}
           src="/assets/images/logo/SportZone2.png"
-          style={{ width: "100%", height: "auto" }}
         />
       </Box>
 

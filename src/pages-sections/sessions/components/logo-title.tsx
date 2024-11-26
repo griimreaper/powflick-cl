@@ -8,7 +8,7 @@ import logo from "../../../../public/assets/images/SportZone-black-sm.svg";
 export default function LogoWithTitle() {
   return (
     <FlexRowCenter flexDirection="column" gap={1.5} mb={4}>
-      <Image src="/assets/images/logo/SportZone2.png" alt="SportZone" />
+      <Image src="/assets/images/logo/SportZone2.png" width={100} height={100} alt="SportZone" />
       <H5 fontWeight={700}>Welcome To SportZone</H5>
     </FlexRowCenter>
   );
