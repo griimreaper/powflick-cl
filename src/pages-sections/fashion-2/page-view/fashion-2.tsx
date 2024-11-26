@@ -32,7 +32,7 @@ export default function FashionTwoPageView({
       <Section3 />
 
       {/* BEST SELLING PRODUCTS */}
-      <Section4 products={data?.landing.collections?.mostSoldProducts} />
+      <Section4 products={data?.landing?.collections?.mostSoldProducts} />
 
       {/* OFFER BANNERS */}
       <Section5 />
