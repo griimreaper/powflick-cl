@@ -24,15 +24,16 @@ import {
 import { Slider } from "@mui/material";
 
 // FILTER OPTIONS
-const categoryList = [
-  {
-    title: "Bath Preparations",
-    subCategories: ["Bubble Bath", "Bath Capsules", "Others"],
-  },
-  { title: "Eye Makeup Preparations" },
-  { title: "Fragrance" },
-  { title: "Hair Preparations" },
-];
+// Eliminar la constante categoryList
+// const categoryList = [
+//   {
+//     title: "Bath Preparations",
+//     subCategories: ["Bubble Bath", "Bath Capsules", "Others"],
+//   },
+//   { title: "Eye Makeup Preparations" },
+//   { title: "Fragrance" },
+//   { title: "Hair Preparations" },
+// ];
 
 const BRANDS = [
   { label: "Mac", value: "mac" },
@@ -57,22 +58,37 @@ const colorList = [
   "#6B7AFF",
 ];
 
+const mockSubCategories: { [key: string]: string[] } = {
+  "Custom Soccer Jerseys": ["SubCategory 1", "SubCategory 2"],
+  "Custom Hockey Jerseys": ["SubCategory 3", "SubCategory 4"],
+  "Custom Baseball Jerseys": ["SubCategory 5", "SubCategory 6"],
+  "Running clothes": ["SubCategory 7", "SubCategory 8"],
+  "Custom Basketball Jerseys": ["SubCategory 9", "SubCategory 10"],
+  "Gamer Shirts": ["SubCategory 11", "SubCategory 12"],
+  "New Arrivals": ["SubCategory 13", "SubCategory 14"],
+};
+
 // ============================================================================
 interface Props {
   filters?: ProductFilters;
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
+  topCategories: { id: string; name: string; subCategories?: string[] }[];
 }
 // ============================================================================
 
-export default function ProductFilterCard({ filters = {
-  brand: [],
-  color: [],
-  sales: [],
-  price: [],
-  rating: 0,
-  category: []
-}, changeFilters }: Props) {
-  const [collapsed, setCollapsed] = useState(true);
+export default function ProductFilterCard({
+  filters = {
+    brand: [],
+    color: [],
+    sales: [],
+    price: [],
+    rating: 0,
+    category: [],
+  },
+  changeFilters,
+  topCategories,
+}: Props) {
+  const [collapsed, setCollapsed] = useState<string | null>(null);
 
   const handleChangePrice = (values: number[]) => {
     changeFilters && changeFilters("price", values);
@@ -113,51 +129,44 @@ export default function ProductFilterCard({ filters = {
     changeFilters && changeFilters("category", values);
   };
 
+  const toggleCollapse = (categoryId: string) => {
+    setCollapsed((prev) => (prev === categoryId ? null : categoryId));
+  };
+
   return (
     <div>
       {/* CATEGORY VARIANT FILTER */}
       <H6 mb={1.25}>Categories</H6>
-      {categoryList.map((item) =>
-        item.subCategories ? (
-          <Fragment key={item.title}>
-            <AccordionHeader
-              open={collapsed}
-              onClick={() => setCollapsed((state) => !state)}
-              sx={{ padding: ".5rem 0", cursor: "pointer", color: "grey.600" }}
-            >
-              <Span>{item.title}</Span>
-            </AccordionHeader>
-            <Collapse in={collapsed}>
-              {item.subCategories.map((name) => (
-                <Paragraph
-                  pl="22px"
-                  py={0.75}
-                  key={name}
-                  fontSize="14px"
-                  color="grey.600"
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => handleChangeCategory(name)}
-                >
-                  {name}
-                </Paragraph>
-              ))}
-            </Collapse>
-          </Fragment>
-        ) : (
-          <Paragraph
-            key={item.title}
+      {topCategories.map((item) => (
+        <Fragment key={item.id}>
+          <AccordionHeader
+            open={collapsed === item.id}
+            onClick={() => toggleCollapse(item.id)}
             sx={{
-              py: 0.75,
-              fontSize: 14,
+              padding: ".5rem 0",
               cursor: "pointer",
               color: "grey.600",
             }}
-            onClick={() => handleChangeCategory(item.title)}
           >
-            {item.title}
-          </Paragraph>
-        )
-      )}
+            <Span>{item.name}</Span>
+          </AccordionHeader>
+          <Collapse in={collapsed === item.id}>
+            {(mockSubCategories[item.name] || []).map((name: string) => (
+              <Paragraph
+                pl="22px"
+                py={0.75}
+                key={name}
+                fontSize="14px"
+                color="grey.600"
+                sx={{ cursor: "pointer" }}
+                onClick={() => handleChangeCategory(name)}
+              >
+                {name}
+              </Paragraph>
+            ))}
+          </Collapse>
+        </Fragment>
+      ))}
       <Box component={Divider} my={3} />
 
       {/* PRICE VARIANT FILTER */}

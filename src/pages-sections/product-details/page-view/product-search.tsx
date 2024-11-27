@@ -78,9 +78,6 @@ const handleSortProducts = (
   }
 };
 
-
-
-
 export default function ProductSearchPageView({
   data,
   querys,
@@ -91,6 +88,7 @@ export default function ProductSearchPageView({
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   
+console.log(topCategories);
 
   const handleChangeFilters = (
     key: ProductFilterKeys,
@@ -175,6 +173,7 @@ const sortedProducts = handleSortProducts(data, sortBy, filters);
                     <ProductFilterCard
                       filters={filters}
                       changeFilters={handleChangeFilters}
+                      topCategories={topCategories}
                     />
                   </Box>
                 </Sidenav>
@@ -194,6 +193,7 @@ const sortedProducts = handleSortProducts(data, sortBy, filters);
             <ProductFilterCard
               filters={filters}
               changeFilters={handleChangeFilters}
+              topCategories={topCategories}
             />
           </Grid>
 
