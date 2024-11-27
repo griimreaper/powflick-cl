@@ -7,8 +7,8 @@ import OrderSummery from "../order-summery";
 import OrderProgress from "../order-progress";
 import OrderedProducts from "../ordered-products";
 import DashboardHeader from "../../dashboard-header";
+import { Order } from "models/types";
 // CUSTOM DATA MODEL
-import Order from "models/Order.model";
 
 // =============================================================
 type Props = { order: Order };
@@ -26,7 +26,7 @@ export default function OrderDetailsPageView({ order }: Props) {
       />
 
       {/* ORDER PROGRESS AREA */}
-      <OrderProgress />
+      <OrderProgress status={order.state}/>
 
       {/* ORDERED PRODUCT LIST */}
       <OrderedProducts order={order} />

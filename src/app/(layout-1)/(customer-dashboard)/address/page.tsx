@@ -11,6 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Address() {
-  const addressList = await api.getAddressList();
-  return <AddressPageView addressList={addressList} />;
+  return <AddressPageView />;
 }

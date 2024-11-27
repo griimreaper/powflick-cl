@@ -11,12 +11,16 @@ import * as yup from "yup";
 // CUSTOM DATA MODEL
 import User from "models/User.model";
 import { Profile } from "models/types";
+import { userUpdateProfile } from "services/DashboardUser/profile";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { useDashboardStore } from "store/dashboard";
 
 // ==============================================================
-type Props = { user: Profile['genericResponseUser'] };
+type Props = { user: Profile['genericResponseUser'], token: string };
 // ==============================================================
 
-export default function ProfileEditForm({ user }: Props) {
+export default function ProfileEditForm({ user, token }: Props) {
+  const { setProfileUser } = useDashboardStore();
   const INITIAL_VALUES = {
     email: user.email || "",
     phone: user.phone || "",
@@ -35,7 +39,21 @@ export default function ProfileEditForm({ user }: Props) {
   });
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
-    console.log(values);
+    if (token) {
+      try {
+        const response = await userUpdateProfile(token, values);
+        showSuccessAlert("Success!", response.message);
+        setProfileUser(response.profileUpdated);
+      } catch (error: any) {
+        showErrorAlert(
+          "Error!",
+          `Error updating profile: ${error}`
+        );
+      }
+    } else {
+      return;
+    }
+    // Acción a realizar con los datos del usuario
   };
 
   return (
@@ -90,7 +108,7 @@ export default function ProfileEditForm({ user }: Props) {
               <TextField
                 fullWidth
                 label="Phone"
-                name="contact"
+                name="phone"
                 onBlur={handleBlur}
                 value={values.phone}
                 onChange={handleChange}

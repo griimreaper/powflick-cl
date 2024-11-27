@@ -14,6 +14,7 @@ import { useDashboardStore } from "store/dashboard";
 export default function ProfileEditPageView() {
   const { profile } = useDashboardStore();
   const { genericResponseUser: user } = profile;
+  let token = profile.token;
 
   return (
     <Fragment>
@@ -30,7 +31,7 @@ export default function ProfileEditPageView() {
         <ProfilePicUpload image={user.image} />
 
         {/* PROFILE EDITOR FORM */}
-        <ProfileEditForm user={user} />
+        <ProfileEditForm user={user} token={token as string}/>
       </Card>
     </Fragment>
   );

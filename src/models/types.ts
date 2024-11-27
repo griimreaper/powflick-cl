@@ -89,11 +89,59 @@ export interface Coupon {
   updatedAt: string;
 }
 
+export interface Logo {
+  logoUrl: string;
+  logoId?: string;
+  logoPosition?: { x: number; y: number };
+  logoSize?: number;
+  rotate?: number,
+}
+
+export interface Text {
+  text?: string;
+  font?: string;
+  textPosition?: { x: number; y: number };
+  textSize?: number;
+  textColor?: string;
+  rotate?: number,
+}
+
+export interface Number {
+  number?: string;
+  font?: string;
+  numberPosition?: { x: number; y: number };
+  numberSize?: number;
+  numberColor?: string;
+  rotate?: number,
+}
+
+export interface CustomizationSides {
+  logos: Logo[];
+  texts: Text[];
+  numbers: Number[];
+}
+
+export type Customization = {
+  id: string;
+  price: number;
+  size: string;
+  frontSide: CustomizationSides;
+  backSide: CustomizationSides;
+  sleeve: string;
+  neck: string;
+  socks: string;
+  pants: string;
+  shorts: string;
+  materials: string;
+};
+
+
 export enum OrderStateEnum {
   APROBADO = 'APPROVED',
   PAGO = 'PAID',
   RECHAZADO = 'REJECTED',
   DESPACHO = 'DISPATCHED',
+  ENCAMINO = 'ONTHEWAY',
   PENDIENTE = 'PENDING',
   ENTREGADO = 'DELIVERED',
   CANCELADO = 'CANCELLED',
@@ -108,6 +156,10 @@ export interface Order {
     value: number,
   }
   state: OrderStateEnum;
+  customizations: {
+    productId: string;
+    customization: Customization;
+  }[];
   createdAt: string;
   updatedAt: string;
   products: ProductDB[];

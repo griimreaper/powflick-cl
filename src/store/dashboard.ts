@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { DashboardState } from "./interfaces/interface";
 const profileOff = {
   genericResponseUser: {
+    id:"",
     phone: "",
     firstName: "",
     email: "",
