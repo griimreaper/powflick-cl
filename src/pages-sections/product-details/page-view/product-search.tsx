@@ -56,10 +56,13 @@ const handleSortProducts = (
   const filteredProducts = products.filter((product) => {
     const isInPriceRange =
       product.price >= filters.price[0] && product.price <= filters.price[1];
+    const matchesColor =
+      filters.color.length === 0 ||
+      filters.color.some((color) => product.colors?.includes(color) ?? false);
     return (
       filters.category.every((category) =>
         product.product_categories.includes(category)
-      ) && isInPriceRange
+      ) && isInPriceRange && matchesColor
     );
   });
 

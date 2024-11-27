@@ -35,13 +35,13 @@ import { Slider } from "@mui/material";
 //   { title: "Hair Preparations" },
 // ];
 
-const BRANDS = [
-  { label: "Mac", value: "mac" },
-  { label: "Karts", value: "karts" },
-  { label: "Baals", value: "baals" },
-  { label: "Bukks", value: "bukks" },
-  { label: "Luasis", value: "luasis" },
-];
+// const BRANDS = [
+//   { label: "Mac", value: "mac" },
+//   { label: "Karts", value: "karts" },
+//   { label: "Baals", value: "baals" },
+//   { label: "Bukks", value: "bukks" },
+//   { label: "Luasis", value: "luasis" },
+// ];
 
 const OTHERS = [
   { label: "On Sale", value: "sale" },
@@ -50,12 +50,13 @@ const OTHERS = [
 ];
 
 const colorList = [
-  "#1C1C1C",
-  "#FF7A7A",
-  "#FFC672",
-  "#84FFB5",
-  "#70F6FF",
-  "#6B7AFF",
+  "Black",
+  "Yellow",
+  "Red",
+  "Orange",
+  "Green",
+  "Blue",
+  "White",
 ];
 
 const mockSubCategories: { [key: string]: string[] } = {
@@ -87,7 +88,6 @@ export default function ProductFilterCard({
   changeFilters,
   topCategories,
 }: Props) {
-
   const [collapsed, setCollapsed] = useState<string | null>(null);
 
   const handleChangePrice = (values: number[]) => {
@@ -95,11 +95,7 @@ export default function ProductFilterCard({
   };
 
   const handleChangeColor = (value: string) => {
-    const values = filters.color?.includes(value)
-      ? filters.color?.filter((item) => item !== value)
-      : [...(filters.color || []), value];
-
-    changeFilters && changeFilters("color", values);
+    changeFilters && changeFilters("color", [value]);
   };
 
   const handleChangeBrand = (value: string) => {
@@ -209,7 +205,7 @@ export default function ProductFilterCard({
       <Box component={Divider} my={3} />
 
       {/* BRAND VARIANT FILTER */}
-      <H6 mb={2}>Brands</H6>
+      {/* <H6 mb={2}>Brands</H6>
       <FormGroup>
         {BRANDS.map(({ label, value }) => (
           <CheckboxLabel
@@ -219,7 +215,7 @@ export default function ProductFilterCard({
             onChange={() => handleChangeBrand(value)}
           />
         ))}
-      </FormGroup>
+      </FormGroup> */}
 
       <Box component={Divider} my={3} />
 
@@ -238,7 +234,7 @@ export default function ProductFilterCard({
       <Box component={Divider} my={3} />
 
       {/* RATINGS FILTER */}
-      <H6 mb={2}>Ratings</H6>
+      {/* <H6 mb={2}>Ratings</H6>
       <FormGroup>
         {[5, 4, 3, 2, 1].map((item) => (
           <CheckboxLabel
@@ -248,7 +244,7 @@ export default function ProductFilterCard({
             label={<Rating size="small" value={item} color="warn" readOnly />}
           />
         ))}
-      </FormGroup>
+      </FormGroup> */}
 
       <Box component={Divider} my={3} />
 
