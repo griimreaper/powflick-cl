@@ -15,16 +15,18 @@ import CategoriesMenu from "./components/categories-menu";
 import LoginCartButtons from "./components/login-cart-buttons";
 // STYLED COMPONENTS
 import { HeaderWrapper, StyledContainer } from "./styles";
+import { Session } from "next-auth";
 
 // ==============================================================
 interface Props {
   isFixed?: boolean;
   className?: string;
   midSlot: ReactNode;
+  session: Session;
 }
 // ==============================================================
 
-export default function Header({ isFixed, className, midSlot }: Props) {
+export default function Header({ isFixed, className, midSlot, session }: Props) {
   const theme = useTheme();
   const downMd = useMediaQuery(theme.breakpoints.down(1150));
   const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
@@ -53,6 +55,7 @@ export default function Header({ isFixed, className, midSlot }: Props) {
       <LoginCartButtons
         toggleDialog={toggleDialog}
         toggleSidenav={toggleSidenav}
+        session={!!session}
       />
 
       {/* LOGIN FORM DIALOG AND CART SIDE BAR  */}
@@ -61,6 +64,7 @@ export default function Header({ isFixed, className, midSlot }: Props) {
         sidenavOpen={sidenavOpen}
         toggleDialog={toggleDialog}
         toggleSidenav={toggleSidenav}
+        session={!!session}
       />
     </Fragment>
   );

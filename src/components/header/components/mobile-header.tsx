@@ -20,6 +20,8 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import useCart from "hooks/useCart";
 // LOCAL CUSTOM HOOK
 import useHeader from "../hooks/use-header";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function MobileHeader() {
   const { state } = useCart();
@@ -33,6 +35,8 @@ export default function MobileHeader() {
   } = useHeader();
 
   const ICON_STYLE = { color: "grey.600", fontSize: 20 };
+  const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <Fragment>
@@ -58,7 +62,7 @@ export default function MobileHeader() {
             <Icon.Search sx={ICON_STYLE} />
           </IconButton>
 
-          <IconButton onClick={toggleDialog}>
+          <IconButton onClick={() => { session ? router.push('/profile') : toggleDialog()}}>
             <Icon.User sx={ICON_STYLE} />
           </IconButton>
 
@@ -97,6 +101,7 @@ export default function MobileHeader() {
         sidenavOpen={sidenavOpen}
         toggleDialog={toggleDialog}
         toggleSidenav={toggleSidenav}
+        session={!!session}
       />
     </Fragment>
   );
