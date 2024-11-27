@@ -17,6 +17,8 @@ export default async function ProductSearch({ params }: any) {
   const { products } = await getSearch();
   const categories = await getCategories();
 
+ 
+
   return (
     <ProductSearchPageView
       data={products}

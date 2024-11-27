@@ -10,12 +10,13 @@ interface Product {
   price: number; // Precio actual del producto
   regular_price: number; // Precio regular del producto
   discount: number; // Descuento aplicado al producto
-  stock_status: 'instock' | 'outofstock'; // Estado de inventario
+  stock_status: "instock" | "outofstock"; // Estado de inventario
   stock: number; // Cantidad de stock disponible
   selled: number; // Cantidad vendida (puede ser nula)
   product_categories: string; // Categorías del producto separadas por '|'
+  sports: string;
   colors: string | null; // Colores disponibles (puede ser nulo)
-  status: 'publish' | 'draft'; // Estado de publicación del producto
+  status: "publish" | "draft"; // Estado de publicación del producto
   URL: string; // URL de la imagen del producto
   images: string[]; // Array de URLs de imágenes del producto
   slug: string; // Slug (parte de la URL) del producto

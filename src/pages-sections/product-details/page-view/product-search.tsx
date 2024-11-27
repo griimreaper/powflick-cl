@@ -54,12 +54,11 @@ const handleSortProducts = (
   filters: ProductFilters
 ) => {
   const filteredProducts = products.filter((product) => {
-    const productCategories = product.product_categories.split("|");
     const isInPriceRange =
       product.price >= filters.price[0] && product.price <= filters.price[1];
     return (
       filters.category.every((category) =>
-        productCategories.includes(category)
+        product.product_categories.includes(category)
       ) && isInPriceRange
     );
   });
@@ -87,8 +86,6 @@ export default function ProductSearchPageView({
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
-  
-console.log(topCategories);
 
   const handleChangeFilters = (
     key: ProductFilterKeys,
@@ -101,7 +98,7 @@ console.log(topCategories);
 
   const toggleView = useCallback((v: string) => () => setView(v), []);
 
-const sortedProducts = handleSortProducts(data, sortBy, filters);
+  const sortedProducts = handleSortProducts(data, sortBy, filters);
 
   return (
     <div className="bg-white pt-2 pb-4">

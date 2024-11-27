@@ -74,7 +74,6 @@ interface Props {
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
   topCategories: { id: string; name: string; subCategories?: string[] }[];
 }
-// ============================================================================
 
 export default function ProductFilterCard({
   filters = {
@@ -88,6 +87,7 @@ export default function ProductFilterCard({
   changeFilters,
   topCategories,
 }: Props) {
+
   const [collapsed, setCollapsed] = useState<string | null>(null);
 
   const handleChangePrice = (values: number[]) => {
@@ -123,10 +123,7 @@ export default function ProductFilterCard({
   };
 
   const handleChangeCategory = (value: string) => {
-    const values = filters.category?.includes(value)
-      ? filters.category?.filter((item) => item !== value)
-      : [...(filters.category || []), value];
-    changeFilters && changeFilters("category", values);
+    changeFilters && changeFilters("category", [value]);
   };
 
   const toggleCollapse = (categoryId: string) => {
@@ -141,7 +138,10 @@ export default function ProductFilterCard({
         <Fragment key={item.id}>
           <AccordionHeader
             open={collapsed === item.id}
-            onClick={() => toggleCollapse(item.id)}
+            onClick={() => {
+              toggleCollapse(item.id);
+              handleChangeCategory(item.name);
+            }}
             sx={{
               padding: ".5rem 0",
               cursor: "pointer",
