@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { useRouter } from "next/navigation"; // Cambiar a next/navigation
+import { useState } from "react";
 // LOCAL CUSTOM COMPONENTS
 import SearchResult from "./components/search-result";
 import CategoryDropdown from "./components/category-dropdown";
@@ -10,6 +12,19 @@ import Search from "icons/Search";
 
 export default function SearchInputWithCategory() {
   const { categoryTitle, parentRef, resultList, handleCategoryChange, handleSearch } = useSearch();
+  const router = useRouter();
+  const [searchText, setSearchText] = useState("");
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      router.push(`/products?query=${searchText}&category=${categoryTitle}`);
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+    handleSearch(event);
+  };
 
   const INPUT_PROPS = {
     sx: {
@@ -41,7 +56,9 @@ export default function SearchInputWithCategory() {
         fullWidth
         variant="outlined"
         placeholder="Searching for..."
-        onChange={handleSearch}
+        value={searchText}
+        onChange={handleChange}
+        onKeyPress={handleKeyPress}
         InputProps={INPUT_PROPS}
       />
 

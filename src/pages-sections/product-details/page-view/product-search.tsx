@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Theme } from "@mui/material/styles";
@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Button from "@mui/material/Button";
 // MUI ICON COMPONENTS
 import Apps from "@mui/icons-material/Apps";
 import ViewList from "@mui/icons-material/ViewList";
@@ -30,6 +31,7 @@ import {
   ProductFilters,
 } from "../types";
 import Product from "models/Product.model";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
@@ -45,9 +47,9 @@ const initialFilters = {
   sales: [],
   price: [0, 300],
   category: [],
+  search: "",
 };
 
-// ...existing code...
 const handleSortProducts = (
   products: Product[],
   sortBy: string,
@@ -59,10 +61,16 @@ const handleSortProducts = (
     const matchesColor =
       filters.color.length === 0 ||
       filters.color.some((color) => product.colors?.includes(color) ?? false);
+    const matchesSearch =
+      !filters.search ||
+      product.title.toLowerCase().includes(filters.search.toLowerCase());
     return (
       filters.category.every((category) =>
         product.product_categories.includes(category)
-      ) && isInPriceRange && matchesColor
+      ) &&
+      isInPriceRange &&
+      matchesColor &&
+      matchesSearch
     );
   });
 
@@ -80,15 +88,29 @@ const handleSortProducts = (
   }
 };
 
-export default function ProductSearchPageView({
-  data,
-  querys,
-  topCategories,
-}: any) {
+export default function ProductSearchPageView({ data, topCategories }: any) {
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
+  const searchParams = useSearchParams();
+  const querys = {
+    query: searchParams.get("query"),
+    // category: searchParams.get("category"),
+  };
+
+  useEffect(() => {
+    setFilters((prev) => {
+      const newFilters = { ...prev };
+      if (querys?.query) {
+        newFilters.search = querys.query;
+      }
+      // if (querys?.category) {
+      //   newFilters.category = [querys?.category as string];
+      // }
+      return newFilters;
+    });
+  }, [querys?.query]);
 
   const handleChangeFilters = (
     key: ProductFilterKeys,
@@ -110,10 +132,10 @@ export default function ProductSearchPageView({
         <FlexBetween flexWrap="wrap" gap={2} mb={2}>
           <div>
             <H5 lineHeight={1} mb={1}>
-              Searching for “ {querys.search} ”
+              Searching for “ {querys?.query} ”
             </H5>
             <Paragraph color="grey.600">
-              {data.totalResults} results found
+              {sortedProducts.length} results found
             </Paragraph>
           </div>
 

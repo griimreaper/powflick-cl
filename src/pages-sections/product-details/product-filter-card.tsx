@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import Collapse from "@mui/material/Collapse";
 import TextField from "@mui/material/TextField";
 import FormGroup from "@mui/material/FormGroup";
+import Button from "@mui/material/Button";
 // LOCAL CUSTOM COMPONENTS
 import CheckboxLabel from "./checkbox-label";
 // GLOBAL CUSTOM COMPONENTS
@@ -76,15 +77,18 @@ interface Props {
   topCategories: { id: string; name: string; subCategories?: string[] }[];
 }
 
+const initialFilters = {
+  brand: [],
+  color: [],
+  sales: [],
+  price: [0, 300],
+  rating: 0,
+  category: [],
+  search: undefined,
+};
+
 export default function ProductFilterCard({
-  filters = {
-    brand: [],
-    color: [],
-    sales: [],
-    price: [],
-    rating: 0,
-    category: [],
-  },
+  filters = initialFilters,
   changeFilters,
   topCategories,
 }: Props) {
@@ -124,6 +128,16 @@ export default function ProductFilterCard({
 
   const toggleCollapse = (categoryId: string) => {
     setCollapsed((prev) => (prev === categoryId ? null : categoryId));
+  };
+
+  const handleResetFilters = () => {
+    changeFilters && changeFilters("price", initialFilters.price);
+    changeFilters && changeFilters("color", initialFilters.color);
+    changeFilters && changeFilters("brand", initialFilters.brand);
+    changeFilters && changeFilters("sales", initialFilters.sales);
+    changeFilters && changeFilters("rating", initialFilters.rating);
+    changeFilters && changeFilters("category", initialFilters.category);
+    changeFilters && changeFilters("search", initialFilters.search);
   };
 
   return (
@@ -269,6 +283,11 @@ export default function ProductFilterCard({
           />
         ))}
       </FlexBox>
+      <Box component={Divider} my={3} />
+      <Box component={Divider} my={3} />
+      <Button variant="outlined" onClick={handleResetFilters}>
+        Reset Filters
+      </Button>
     </div>
   );
 }

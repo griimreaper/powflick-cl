@@ -1,4 +1,5 @@
 export interface ProductFilters {
+  search: any;
   brand: string[];
   color: string[];
   sales: string[];
