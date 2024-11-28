@@ -37,10 +37,10 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   color: theme.palette.success.main
 }));
 
-export default function OrderProgress() {
-  const ORDER_STATUS = "Shipping";
+export default function OrderProgress({ status }: { status: string }) {
+  const ORDER_STATUS = status;
   const STEP_ICONS = [PackageBox, TruckFilled, Delivery];
-  const ORDER_STATUS_LIST = ["Packaging", "Shipping", "Delivering", "Complete"];
+  const ORDER_STATUS_LIST = ["PAID", "DISPATCHED", "ONTHEWAY", "DELIVERED"];
 
   const statusIndex = ORDER_STATUS_LIST.indexOf(ORDER_STATUS);
 

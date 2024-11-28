@@ -15,8 +15,7 @@ export const metadata: Metadata = {
 
 export default async function Address({ params }: IdParams) {
   try {
-    const address = await api.getAddress(params.id);
-    return <AddressDetailsPageView address={address} />;
+    return <AddressDetailsPageView id={params.id}/>;
   } catch (error) {
     notFound();
   }

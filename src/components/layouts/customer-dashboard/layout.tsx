@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 // Local CUSTOM COMPONENTS
 import Navigation from "./navigation";
+import { useDashboardStore } from "store/dashboard";
 
 /**
  *  Used in:
@@ -17,11 +18,12 @@ import Navigation from "./navigation";
  */
 
 export default function CustomerDashboardLayout({ children }: PropsWithChildren) {
+  const { profile } = useDashboardStore();
   return (
     <Container className="mt-2 mb-2">
       <Grid container spacing={3}>
         <Grid item lg={3} xs={12} sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
-          <Navigation />
+          <Navigation profile={profile}/>
         </Grid>
 
         <Grid item lg={9} xs={12}>

@@ -10,8 +10,7 @@ import { H5, Paragraph } from "components/Typography";
 import TableRow from "../table-row";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
-// CUSTOM DATA MODEL
-import Order from "models/Order.model";
+import { Order } from "models/types";
 
 // =================================================
 type Props = { order: Order };
@@ -20,16 +19,16 @@ type Props = { order: Order };
 export default function OrderRow({ order }: Props) {
   const getColor = (status: string) => {
     switch (status) {
-      case "Pending":
-        return "secondary";
+      case "PENDING":
+        return "warning";
 
-      case "Processing":
-        return "secondary";
+      case "PAID":
+        return "info";
 
-      case "Delivered":
+      case "DELIVERED":
         return "success";
 
-      case "Cancelled":
+      case "CANCELLED":
         return "primary";
 
       default:
@@ -40,17 +39,17 @@ export default function OrderRow({ order }: Props) {
   return (
     <Link href={`/orders/${order.id}`}>
       <TableRow sx={{ gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr" }}>
-        <H5 ellipsis>#{order.id.substring(0, 18)}</H5>
+        <H5 ellipsis>#{order.id}</H5>
 
         <Box textAlign="center">
-          <Chip size="small" label={order.status} color={getColor(order.status)} />
+          <Chip size="small" label={order.state} color={getColor(order.state)} />
         </Box>
 
         <Paragraph textAlign={{ sm: "center", xs: "left" }}>
           {format(new Date(order.createdAt), "MMM dd, yyyy")}
         </Paragraph>
 
-        <Paragraph textAlign="center">{currency(order.totalPrice)}</Paragraph>
+        <Paragraph textAlign="center">{currency(order.total)}</Paragraph>
 
         <Box display={{ sm: "inline-flex", xs: "none" }} justifyContent="end">
           <IconButton>

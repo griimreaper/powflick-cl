@@ -6,17 +6,17 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import { H3, H5, Paragraph, Small } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
-import { Profile } from "models/types";
+import { Profile, OrderStateEnum } from "models/types";
 // ==============================================================
 type Props = { user: Profile['genericResponseUser'] };
 // ==============================================================
 
 export default function UserAnalytics({ user }: Props) {
   const INFO_LIST = [
-    { title: "16", subtitle: "All Orders" },
-    { title: "02", subtitle: "Awaiting Payments" },
-    { title: "00", subtitle: "Awaiting Shipment" },
-    { title: "01", subtitle: "Awaiting Delivery" }
+    { title: user.orders.length, subtitle: "All Orders" },
+    { title: user.orders.filter(o => o.state === OrderStateEnum.PENDIENTE).length, subtitle: "Awaiting Payments" },
+    { title: user.orders.filter(o => o.state === OrderStateEnum.PENDIENTE).length, subtitle: "Awaiting Shipment" },
+    { title: user.orders.filter(o => o.state === OrderStateEnum.ENCAMINO).length, subtitle: "Awaiting Delivery" }
   ];
 
   return (
