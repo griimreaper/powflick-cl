@@ -1,6 +1,7 @@
 import ShopLayout1 from "components/layouts/shop-layout-1";
 import { DataStructure } from "models/types";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import FashionTwoPageView from "pages-sections/fashion-2/page-view";
 import { getLanding } from "services/Landing";
 
@@ -16,9 +17,14 @@ export const metadata: Metadata = {
 export default async function FashionShopTwo() {
   const data: DataStructure = await getLanding();
 
+  // Obtener la sesión del lado del servidor
+  const session = await getServerSession();
+
+  console.log(session);
+  
   return (
     <>
-      <ShopLayout1 data={data}>
+      <ShopLayout1 data={data} session={session}>
         <FashionTwoPageView data={data}/>;
       </ShopLayout1>
     </>

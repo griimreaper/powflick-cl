@@ -6,22 +6,27 @@ import PersonOutline from "@mui/icons-material/PersonOutline";
 import ShoppingBagOutlined from "icons/ShoppingBagOutlined";
 // GLOBAL CUSTOM HOOK
 import useCart from "hooks/useCart";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 // ==============================================================
 interface Props {
   toggleDialog: () => void;
   toggleSidenav: () => void;
+  session: boolean;
 }
 // ==============================================================
 
 export default function LoginCartButtons({ toggleDialog, toggleSidenav }: Props) {
   const { state } = useCart();
-
+  const router = useRouter();
   const ICON_COLOR = { color: "grey.600" };
+
+  const { data: session } = useSession();
 
   return (
     <div>
-      <IconButton onClick={toggleDialog}>
+      <IconButton onClick={() => { session ? router.push('/profile') : toggleDialog() }}>
         <PersonOutline sx={ICON_COLOR} />
       </IconButton>
 

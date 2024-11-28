@@ -5,11 +5,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 // GLOBAL CUSTOM COMPONENTS
 import FlexBox from "components/flex-box/flex-box";
 import { Small, Span } from "components/Typography";
-// CUSTOM DATA MODEL
-import User from "models/User.model";
+import { Profile, User } from "models/types";
 
 // ==============================================================
-type Props = { user: User };
+type Props = { user: Profile['genericResponseUser'] };
 // ==============================================================
 
 export default function UserInfo({ user }: Props) {
@@ -30,11 +29,10 @@ export default function UserInfo({ user }: Props) {
           justifyContent: "flex-start"
         })
       }}>
-      <TableRowItem title="First Name" value={user.name.firstName} />
-      <TableRowItem title="Last Name" value={user.name.lastName} />
+      <TableRowItem title="First Name" value={user.firstName} />
+      <TableRowItem title="Last Name" value={user.lastName} />
       <TableRowItem title="Email" value={user.email} />
       <TableRowItem title="Phone" value={user.phone} />
-      <TableRowItem title="Birth date" value={format(new Date(user.dateOfBirth), "dd MMM, yyyy")} />
     </Card>
   );
 }

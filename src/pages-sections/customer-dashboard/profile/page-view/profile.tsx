@@ -1,19 +1,36 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Person from "@mui/icons-material/Person";
 // Local CUSTOM COMPONENT
 import UserInfo from "../user-info";
 import UserAnalytics from "../user-analytics";
 import DashboardHeader from "../../dashboard-header";
-// CUSTOM DATA MODEL
-import User from "models/User.model";
+import { useDashboardStore } from "store/dashboard";
+import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 
 // ============================================================
-type Props = { user: User };
+type Props = { session: Session };
 // ============================================================
 
-export default function ProfilePageView({ user }: Props) {
+export default function ProfilePageView({ session }: Props) {
+  const { profile } = useDashboardStore();
+  const { genericResponseUser } = profile;
+  const router = useRouter();
+
+  // Obtener la sesión del usuario en el lado del servidor
+  useEffect(() => {
+    const fetchSession = async () => {
+      if (!session) {
+        // Si no hay sesión, redirigir a la página de inicio de sesión
+        router.push('/login');
+      }
+    };
+
+    fetchSession();
+  }, []);
+
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
@@ -21,14 +38,14 @@ export default function ProfilePageView({ user }: Props) {
         Icon={Person}
         title="My Profile"
         buttonText="Edit Profile"
-        href={`/profile/${user.id}`}
+        href={`/profile/${genericResponseUser.id}`}
       />
 
       {/* USER PROFILE INFO */}
-      <UserAnalytics user={user} />
+      <UserAnalytics user={genericResponseUser} />
 
       {/* USER PROFILE INFO */}
-      <UserInfo user={user} />
+      <UserInfo user={genericResponseUser} />
     </Fragment>
   );
 }

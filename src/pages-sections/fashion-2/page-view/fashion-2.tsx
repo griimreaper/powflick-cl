@@ -38,7 +38,7 @@ export default function FashionTwoPageView({
       <Section5 />
 
       {/* Discount PRODUCTS */}
-      <Section6 products={data?.landing.collections?.discountProducts} />
+      <Section6 products={data?.landing?.collections?.discountProducts} />
 
       {/* SUMMER SALE OFFER AREA */}
       <Section7 />

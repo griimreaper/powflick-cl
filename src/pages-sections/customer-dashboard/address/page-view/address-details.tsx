@@ -7,13 +7,20 @@ import Place from "@mui/icons-material/Place";
 import AddressForm from "../address-form";
 import DashboardHeader from "../../dashboard-header";
 // CUSTOM DATA MODEL
-import Address from "models/Address.model";
+import { Direction } from "models/types";
+import { useDashboardStore } from "store/dashboard";
 
 // =============================================================
-type Props = { address: Address };
+type Props = { id: string };
 // =============================================================
 
-export default function AddressDetailsPageView({ address }: Props) {
+export default function AddressDetailsPageView({ id }: Props) {
+  const { profile } = useDashboardStore();
+  const { genericResponseUser } = profile;
+  const { directions } = genericResponseUser;
+  const direction = directions?.find((d) => d.id === id) || null;
+  const token = profile.token;
+
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
@@ -26,7 +33,7 @@ export default function AddressDetailsPageView({ address }: Props) {
 
       {/* FORM AREA */}
       <Card sx={{ p: 3, pt: 4 }}>
-        <AddressForm address={address} />
+        <AddressForm direction={direction} token={token as string} />
       </Card>
     </Fragment>
   );

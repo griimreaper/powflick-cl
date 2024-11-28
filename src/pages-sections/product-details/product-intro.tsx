@@ -23,13 +23,15 @@ import { currency } from "lib";
 import productVariants from "data/product-variants";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
+import Image from "next/image";
 
 // ================================================================
-type Props = { product: Product };
+type Props = { product: ProductDB };
 // ================================================================
 
 export default function ProductIntro({ product }: Props) {
-  const { id, price, title, images, slug, thumbnail } = product || {};
+  const { id, price, title, images, slug, URL } = product || {};
 
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
@@ -56,7 +58,7 @@ export default function ProductIntro({ product }: Props) {
   const handleCartAmountChange = (amount: number) => () => {
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { price, qty: amount, name: title, imgUrl: thumbnail, id, slug }
+      payload: { price, qty: amount, name: title, imgUrl: URL, id, slug }
     });
   };
 
@@ -66,13 +68,12 @@ export default function ProductIntro({ product }: Props) {
         {/* IMAGE GALLERY AREA */}
         <Grid item md={6} xs={12} alignItems="center">
           <FlexBox borderRadius={3} overflow="hidden" justifyContent="center" mb={6}>
-            <LazyImage
+            <Image
               alt={title}
-              width={300}
-              height={300}
+              width={500}
+              height={500}
               loading="eager"
               src={product.images[selectedImage]}
-              sx={{ objectFit: "contain" }}
             />
           </FlexBox>
 
@@ -103,9 +104,9 @@ export default function ProductIntro({ product }: Props) {
           <H1 mb={1}>{title}</H1>
 
           {/* PRODUCT BRAND */}
-          <FlexBox alignItems="center" mb={1}>
-            <div>Brand: </div>
-            <H6>Xiaomi</H6>
+          <FlexBox alignItems="center" mb={1} gap={1}>
+            <div>Categories:{' '}</div>
+            <H6>{' '}{product.product_categories.split('|')[0]}</H6>
           </FlexBox>
 
           {/* PRODUCT RATING */}
@@ -180,8 +181,8 @@ export default function ProductIntro({ product }: Props) {
           {/* SHOP NAME */}
           <FlexBox alignItems="center" gap={1} mb={2}>
             <div>Sold By:</div>
-            <Link href="/shops/scarlett-beauty">
-              <H6>Mobile Store</H6>
+            <Link href="/">
+              <H6>Sport Zone</H6>
             </Link>
           </FlexBox>
         </Grid>

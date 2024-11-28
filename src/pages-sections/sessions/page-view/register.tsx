@@ -14,9 +14,13 @@ import usePasswordVisible from "../use-password-visible";
 import { Span } from "components/Typography";
 import { FlexBox } from "components/flex-box";
 import SportZoneTextField from "components/SportZoneTextField";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { registerUser } from "services/Register";
+import { useRouter } from "next/navigation";
 
 const RegisterPageView = () => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
+  const router = useRouter();
 
   // COMMON INPUT PROPS FOR TEXT FIELD
   const inputProps = {
@@ -27,8 +31,10 @@ const RegisterPageView = () => {
 
   // REGISTER FORM FIELDS INITIAL VALUES
   const initialValues = {
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    phone: "",
     password: "",
     re_password: "",
     agreement: false,
@@ -39,44 +45,77 @@ const RegisterPageView = () => {
     name: yup.string().required("Name is required"),
     email: yup.string().email("invalid email").required("Email is required"),
     password: yup.string().required("Password is required"),
+    phone: yup.string().matches(
+      /^(\+\d{1,3}[- ]?)?\d{10}$/,
+      "Phone number is not valid"
+    ), // Opcional
     re_password: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
       .required("Please re-type password"),
     agreement: yup
       .bool()
-      .test(
-        "agreement",
-        "You have to agree with our Terms and Conditions!",
-        (value) => value === true
-      )
+      .oneOf([true], "You have to agree with our Terms and Conditions!")
       .required("You have to agree with our Terms and Conditions!"),
   });
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit} =
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: (values) => {
+      onSubmit: async (values) => {
         console.log(values);
+
+        const response = await registerUser({ ...values, provider: "none" });
+        if (response.statusCode === 201) {
+          showSuccessAlert("Success!", "User registered successfully!");
+          router.push('/login')
+        } else {
+          showErrorAlert("Error!", response.message as string);
+        }
       },
     });
+
+    const onSubmit = async (values: any) => {
+      const response = await registerUser({ ...values, provider: "none" });
+      if (response.statusCode === 201) {
+        showSuccessAlert("Success!", "User registered successfully!");
+        router.push('/login')
+      } else {
+        showErrorAlert("Error!", response.message as string);
+      }
+    }
 
   return (
     <form onSubmit={handleSubmit}>
       <SportZoneTextField
         mb={1.5}
         fullWidth
-        name="name"
+        name="firstName"
         size="small"
-        label="Full Name"
+        label="First Name"
         variant="outlined"
         onBlur={handleBlur}
-        value={values.name}
+        value={values.firstName}
         onChange={handleChange}
-        placeholder="Ralph Awards"
-        error={!!touched.name && !!errors.name}
-        helperText={(touched.name && errors.name) as string}
+        placeholder="Ralph"
+        error={!!touched.firstName && !!errors.firstName}
+        helperText={(touched.firstName && errors.firstName) as string}
+      />
+
+      <SportZoneTextField
+        mb={1.5}
+        fullWidth
+        name="lastName"
+        size="small"
+        label="Last Name"
+        variant="outlined"
+        onBlur={handleBlur}
+        value={values.lastName}
+        onChange={handleChange}
+        placeholder="Bilkings"
+        error={!!touched.lastName && !!errors.lastName}
+        helperText={(touched.lastName && errors.lastName) as string}
       />
 
       <SportZoneTextField
@@ -89,10 +128,26 @@ const RegisterPageView = () => {
         onBlur={handleBlur}
         value={values.email}
         onChange={handleChange}
-        label="Email or Phone Number"
+        label="Email"
         placeholder="exmple@mail.com"
         error={!!touched.email && !!errors.email}
         helperText={(touched.email && errors.email) as string}
+      />
+
+      <SportZoneTextField
+        mb={1.5}
+        fullWidth
+        name="phone"
+        size="small"
+        type="tel"
+        variant="outlined"
+        onBlur={handleBlur}
+        value={values.phone}
+        onChange={handleChange}
+        label="Phone"
+        placeholder="+54 1170244654"
+        error={!!touched.phone && !!errors.phone}
+        helperText={(touched.phone && errors.phone) as string}
       />
 
       <SportZoneTextField
@@ -163,6 +218,7 @@ const RegisterPageView = () => {
         color="primary"
         variant="contained"
         size="large"
+        onClick={() => onSubmit(values)}
       >
         Create Account
       </Button>

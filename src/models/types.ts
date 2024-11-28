@@ -28,6 +28,7 @@ export interface ProductDB {
   slug: string; // Slug (parte de la URL) del producto
   featured: boolean; // Indica si el producto es destacado
   mostSold: boolean; // Indica si el producto es el más vendido
+  sport: string; // Fecha de creación del producto
   createdAt: string; // Fecha de creación del producto
   updatedAt: string; // Fecha de última actualización del producto
   quantityPurchase: number;
@@ -89,11 +90,59 @@ export interface Coupon {
   updatedAt: string;
 }
 
+export interface Logo {
+  logoUrl: string;
+  logoId?: string;
+  logoPosition?: { x: number; y: number };
+  logoSize?: number;
+  rotate?: number,
+}
+
+export interface Text {
+  text?: string;
+  font?: string;
+  textPosition?: { x: number; y: number };
+  textSize?: number;
+  textColor?: string;
+  rotate?: number,
+}
+
+export interface Number {
+  number?: string;
+  font?: string;
+  numberPosition?: { x: number; y: number };
+  numberSize?: number;
+  numberColor?: string;
+  rotate?: number,
+}
+
+export interface CustomizationSides {
+  logos: Logo[];
+  texts: Text[];
+  numbers: Number[];
+}
+
+export type Customization = {
+  id: string;
+  price: number;
+  size: string;
+  frontSide: CustomizationSides;
+  backSide: CustomizationSides;
+  sleeve: string;
+  neck: string;
+  socks: string;
+  pants: string;
+  shorts: string;
+  materials: string;
+};
+
+
 export enum OrderStateEnum {
   APROBADO = 'APPROVED',
   PAGO = 'PAID',
   RECHAZADO = 'REJECTED',
   DESPACHO = 'DISPATCHED',
+  ENCAMINO = 'ONTHEWAY',
   PENDIENTE = 'PENDING',
   ENTREGADO = 'DELIVERED',
   CANCELADO = 'CANCELLED',
@@ -108,6 +157,10 @@ export interface Order {
     value: number,
   }
   state: OrderStateEnum;
+  customizations: {
+    productId: string;
+    customization: Customization;
+  }[];
   createdAt: string;
   updatedAt: string;
   products: ProductDB[];
@@ -129,6 +182,7 @@ export interface Favorite {
 export interface Profile {
   favorites: Favorite[];
   genericResponseUser: {
+    id: string;
     couponUsers: {
       active: boolean;
       coupon: Coupon;
@@ -199,4 +253,16 @@ export enum ContactType {
   OrderHelp = 'Help with an Order',
   PageFunctionalityHelp = 'Help with Page Functionality',
   GeneralHelp = 'General Help',
+}
+
+export interface detailProps {
+  product: ProductDB;
+  sugestedProducts: ProductDB[]
+  frequentlyBought: ProductDB[]
+  PaymentMethods: {
+    text: string,
+    image: string
+  };
+  ShippingTypes: string;
+  reviews: Review[];
 }
