@@ -11,6 +11,8 @@ import { H2 } from "components/Typography";
 import FlexBox from "components/flex-box/flex-box";
 import { Navigation } from "components/layouts/customer-dashboard";
 import { IconButton } from "@mui/material";
+import { Profile } from "models/types";
+import { useDashboardStore } from "store/dashboard";
 
 // STYLED COMPONENT
 const StyledBox = styled("div")(({ theme }) => ({
@@ -51,7 +53,7 @@ type Props = WithoutButton | WithButton;
 
 export default function DashboardHeader({ title, buttonText, href, Icon }: Props) {
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down(1025));
-
+  const { profile } = useDashboardStore();
   const HEADER_LINK = (
     <Button
       href={href}
@@ -81,7 +83,7 @@ export default function DashboardHeader({ title, buttonText, href, Icon }: Props
                 <Menu fontSize="small" />
               </IconButton>
             )}>
-            <Navigation />
+            <Navigation profile={profile}/>
           </SideNav>
         </div>
 

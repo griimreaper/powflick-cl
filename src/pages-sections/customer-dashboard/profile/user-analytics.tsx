@@ -6,19 +6,17 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import { H3, H5, Paragraph, Small } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
-// CUSTOM DATA MODEL
-import User from "models/User.model";
-
+import { Profile, OrderStateEnum } from "models/types";
 // ==============================================================
-type Props = { user: User };
+type Props = { user: Profile['genericResponseUser'] };
 // ==============================================================
 
 export default function UserAnalytics({ user }: Props) {
   const INFO_LIST = [
-    { title: "16", subtitle: "All Orders" },
-    { title: "02", subtitle: "Awaiting Payments" },
-    { title: "00", subtitle: "Awaiting Shipment" },
-    { title: "01", subtitle: "Awaiting Delivery" }
+    { title: user.orders.length, subtitle: "All Orders" },
+    { title: user.orders.filter(o => o.state === OrderStateEnum.PENDIENTE).length, subtitle: "Awaiting Payments" },
+    { title: user.orders.filter(o => o.state === OrderStateEnum.PENDIENTE).length, subtitle: "Awaiting Shipment" },
+    { title: user.orders.filter(o => o.state === OrderStateEnum.ENCAMINO).length, subtitle: "Awaiting Delivery" }
   ];
 
   return (
@@ -32,11 +30,11 @@ export default function UserAnalytics({ user }: Props) {
             p: "1rem 1.5rem",
             alignItems: "center"
           }}>
-          <Avatar alt={user.name.firstName} src={user.avatar} sx={{ height: 64, width: 64 }} />
+          <Avatar alt={user.firstName} src={user.image} sx={{ height: 64, width: 64 }} />
 
           <FlexBetween flexWrap="wrap" flex={1}>
             <div>
-              <H5>{`${user.name.firstName} ${user.name.lastName}`}</H5>
+              <H5>{`${user.firstName} ${user.lastName}`}</H5>
 
               <FlexBox alignItems="center" gap={1}>
                 <Paragraph color="grey.600">Balance:</Paragraph>

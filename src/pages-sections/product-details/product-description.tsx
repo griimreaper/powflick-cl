@@ -1,19 +1,13 @@
 "use client";
 
-import { H3 } from "components/Typography";
+import { H3, H4 } from "components/Typography";
 
-export default function ProductDescription() {
+export default function ProductDescription({ content }: { content: string }) {
   return (
     <div>
-      <H3 mb={2}>Specification:</H3>
-      <div>
-        Brand: Beats <br />
-        Model: S450 <br />
-        Wireless Bluetooth Headset <br />
-        FM Frequency Response: 87.5 – 108 MHz <br />
-        Feature: FM Radio, Card Supported (Micro SD / TF) <br />
-        Made in China <br />
-      </div>
+      <H4>
+        {content}
+      </H4>
     </div>
   );
 }

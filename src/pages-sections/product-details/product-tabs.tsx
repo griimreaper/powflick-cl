@@ -8,6 +8,7 @@ import styled from "@mui/material/styles/styled";
 // LOCAL CUSTOM COMPONENTS
 import ProductReview from "./product-review";
 import ProductDescription from "./product-description";
+import { Review } from "models/types";
 
 // STYLED COMPONENT
 const StyledTabs = styled(Tabs)(({ theme }) => ({
@@ -22,9 +23,9 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   }
 }));
 
-export default function ProductTabs() {
+export default function ProductTabs({ content, reviews, productId }: { content: string, reviews: Review[], productId: string }) {
   const [selectedOption, setSelectedOption] = useState(0);
-  const handleOptionClick = (_, value: number) => setSelectedOption(value);
+  const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
   return (
     <>
@@ -34,12 +35,12 @@ export default function ProductTabs() {
         indicatorColor="primary"
         onChange={handleOptionClick}>
         <Tab className="inner-tab" label="Description" />
-        <Tab className="inner-tab" label="Review (3)" />
+        <Tab className="inner-tab" label={`Review (${reviews.length})`} />
       </StyledTabs>
 
       <Box mb={6}>
-        {selectedOption === 0 && <ProductDescription />}
-        {selectedOption === 1 && <ProductReview />}
+        {selectedOption === 0 && <ProductDescription content={content} />}
+        {selectedOption === 1 && <ProductReview reviews={reviews} typeId={productId}/>}
       </Box>
     </>
   );

@@ -10,30 +10,50 @@ import { Formik } from "formik";
 import * as yup from "yup";
 // CUSTOM DATA MODEL
 import User from "models/User.model";
+import { Profile } from "models/types";
+import { userUpdateProfile } from "services/DashboardUser/profile";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { useDashboardStore } from "store/dashboard";
 
 // ==============================================================
-type Props = { user: User };
+type Props = { user: Profile['genericResponseUser'], token: string };
 // ==============================================================
 
-export default function ProfileEditForm({ user }: Props) {
+export default function ProfileEditForm({ user, token }: Props) {
+  const { setProfileUser } = useDashboardStore();
   const INITIAL_VALUES = {
     email: user.email || "",
-    contact: user.phone || "",
-    last_name: user.name.lastName || "",
-    first_name: user.name.firstName || "",
-    birth_date: new Date(user.dateOfBirth) || new Date()
+    phone: user.phone || "",
+    last_name: user.lastName || "",
+    first_name: user.firstName || "",
   };
 
   const VALIDATION_SCHEMA = yup.object().shape({
     first_name: yup.string().required("First name is required"),
     last_name: yup.string().required("Last name is required"),
     email: yup.string().email("invalid email").required("Email is required"),
-    contact: yup.string().required("Contact is required"),
-    birth_date: yup.date().required("Birth date is required")
+    phone: yup.string().matches(
+      /^(\+\d{1,3}[- ]?)?\d{10}$/,
+      "Phone number is not valid"
+    ), // Opcional
   });
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
-    console.log(values);
+    if (token) {
+      try {
+        const response = await userUpdateProfile(token, values);
+        showSuccessAlert("Success!", response.message);
+        setProfileUser(response.profileUpdated);
+      } catch (error: any) {
+        showErrorAlert(
+          "Error!",
+          `Error updating profile: ${error}`
+        );
+      }
+    } else {
+      return;
+    }
+    // Acción a realizar con los datos del usuario
   };
 
   return (
@@ -88,30 +108,12 @@ export default function ProfileEditForm({ user }: Props) {
               <TextField
                 fullWidth
                 label="Phone"
-                name="contact"
+                name="phone"
                 onBlur={handleBlur}
-                value={values.contact}
+                value={values.phone}
                 onChange={handleChange}
-                error={!!touched.contact && !!errors.contact}
-                helperText={(touched.contact && errors.contact) as string}
-              />
-            </Grid>
-
-            <Grid item md={6} xs={12}>
-              <DatePicker
-                label="Birth Date"
-                value={values.birth_date}
-                onChange={(newValue) => setFieldValue("birth_date", newValue)}
-                slots={{ textField: TextField }}
-                slotProps={{
-                  textField: {
-                    sx: { mb: 1 },
-                    size: "small",
-                    fullWidth: true,
-                    error: Boolean(!!touched.birth_date && !!errors.birth_date),
-                    helperText: (touched.birth_date && errors.birth_date) as string
-                  }
-                }}
+                error={!!touched.phone && !!errors.phone}
+                helperText={(touched.phone && errors.phone) as string}
               />
             </Grid>
 

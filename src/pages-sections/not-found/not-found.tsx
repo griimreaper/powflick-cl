@@ -20,8 +20,8 @@ export default function NotFound() {
       >
         <Image
           alt="Not Found!"
-          width={55}
-          height={55}
+          width={100}
+          height={100}
           src="/assets/images/logo/SportZone2.png"
         />
       </Box>

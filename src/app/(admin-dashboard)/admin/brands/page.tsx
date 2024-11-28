@@ -6,7 +6,7 @@ import api from "utils/__api__/dashboard";
 export const metadata: Metadata = {
   title: "",
   description: ``,
-  authors: [{ name: "UI-LIB", url: "https://ui-lib.com" }],
+  authors: [{ name: "devcodelab" }],
   keywords: [""]
 };
 

@@ -8,23 +8,23 @@ import { Paragraph } from "components/Typography";
 // LOCAL CUSTOM COMPONENT
 import TableRow from "../table-row";
 // CUSTOM DATA MODEL
-import Address from "models/Address.model";
+import { Direction } from "models/types";
 
 // ==============================================================
 interface Props {
-  address: Address;
+  direction: Direction;
   handleDelete: (id: string) => void;
 }
 // ==============================================================
 
-export default function AddressListItem({ address, handleDelete }: Props) {
-  const { title, street, city, phone, id } = address || {};
+export default function AddressListItem({ direction, handleDelete }: Props) {
+  const { country, address, city, phone, district, addressReference, neighborhood, postalCode, id } = direction || {};
 
   return (
     <Link href={`/address/${id}`}>
       <TableRow>
-        <Paragraph ellipsis>{title}</Paragraph>
-        <Paragraph ellipsis>{`${street}, ${city}`}</Paragraph>
+        <Paragraph ellipsis>{addressReference}</Paragraph>
+        <Paragraph ellipsis>{`${country}, ${city}`}</Paragraph>
         <Paragraph ellipsis>{phone}</Paragraph>
         <Paragraph color="grey.600">
           <IconButton>
@@ -34,6 +34,7 @@ export default function AddressListItem({ address, handleDelete }: Props) {
           <IconButton
             onClick={(e) => {
               e.stopPropagation();
+              e.preventDefault();
               handleDelete(id);
             }}>
             <Delete fontSize="small" color="inherit" />

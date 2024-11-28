@@ -5,10 +5,10 @@ import CameraEnhance from "@mui/icons-material/CameraEnhance";
 // GLOBAL CUSTOM COMPONENTS
 import FlexBox from "components/flex-box/flex-box";
 
-export default function ProfilePicUpload() {
+export default function ProfilePicUpload({ image }: { image: string }) {
   return (
     <FlexBox alignItems="flex-end" mb={3}>
-      <Avatar alt="user" src="/assets/images/faces/ralph.png" sx={{ height: 64, width: 64 }} />
+      <Avatar alt="user" src={image} sx={{ height: 64, width: 64 }} />
 
       <IconButton
         size="small"

@@ -9,12 +9,13 @@ import ProfilePicUpload from "../profile-pic-upload";
 import DashboardHeader from "../../dashboard-header";
 // CUSTOM DATA MODEL
 import User from "models/User.model";
+import { useDashboardStore } from "store/dashboard";
 
-// ===========================================================
-type Props = { user: User };
-// ===========================================================
+export default function ProfileEditPageView() {
+  const { profile } = useDashboardStore();
+  const { genericResponseUser: user } = profile;
+  let token = profile.token;
 
-export default function ProfileEditPageView({ user }: Props) {
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
@@ -27,10 +28,10 @@ export default function ProfileEditPageView({ user }: Props) {
 
       <Card sx={{ p: 3 }}>
         {/* USER PROFILE PIC */}
-        <ProfilePicUpload />
+        <ProfilePicUpload image={user.image} />
 
         {/* PROFILE EDITOR FORM */}
-        <ProfileEditForm user={user} />
+        <ProfileEditForm user={user} token={token as string}/>
       </Card>
     </Fragment>
   );

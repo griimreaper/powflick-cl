@@ -6,11 +6,12 @@ import { FlexBetween } from "components/flex-box";
 import { H5, H6, Paragraph } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
+import { Order } from "models/types";
+import { Capitalize } from "utils/tools";
 // CUSTOM DATA MODEL
-import Order from "models/Order.model";
 
 // ==============================================================
-type Props = { order: Order };
+type Props = { order: Order | any };
 // ==============================================================
 
 function ListItem({ title, value }: { title: string; value: string }) {
@@ -22,7 +23,7 @@ function ListItem({ title, value }: { title: string; value: string }) {
   );
 }
 
-export default function OrderSummery({ order }) {
+export default function OrderSummery({ order }: Props) {
   return (
     <Grid container spacing={3}>
       {/* SHIPMENT ADDRESS SECTION */}
@@ -33,8 +34,24 @@ export default function OrderSummery({ order }) {
           </H5>
 
           <Paragraph fontSize={14} my={0}>
-            {order.shippingAddress}
+            {order?.direction?.postalCode}{" "}{order?.direction?.address} {order?.direction?.city}, {order?.direction?.country}
           </Paragraph>
+        </Card>
+
+        <Card sx={{ p: 3, mt:2 }}>
+          <H5 mt={0} mb={2}>
+            Payment Method
+          </H5>
+
+          <FlexBetween mb={2}>
+            <Paragraph>Paid by {Capitalize(order?.paymentData?.card?.funding)} Card: </Paragraph>
+            <H6>{Capitalize(order?.paymentData?.card?.brand)}</H6>
+          </FlexBetween>
+
+          <FlexBetween mb={2}>
+            <Paragraph>Ending in: </Paragraph>
+            <H6>{order?.paymentData?.card?.last4}</H6>
+          </FlexBetween>
         </Card>
       </Grid>
 
@@ -45,18 +62,16 @@ export default function OrderSummery({ order }) {
             Total Summary
           </H5>
 
-          <ListItem title="Subtotal:" value={currency(order.totalPrice)} />
+          <ListItem title="Subtotal:" value={currency(order?.total)} />
           <ListItem title="Shipping fee:" value={currency(0)} />
-          <ListItem title="Discount:" value={currency(order.discount)} />
+          <ListItem title="Discount:" value={currency(order?.coupon?.discount)} />
 
           <Divider sx={{ mb: 1 }} />
 
           <FlexBetween mb={2}>
             <H6>Total</H6>
-            <H6>{currency(order.totalPrice)}</H6>
+            <H6>{currency(order?.total)}</H6>
           </FlexBetween>
-
-          <Paragraph>Paid by Credit/Debit Card</Paragraph>
         </Card>
       </Grid>
     </Grid>
