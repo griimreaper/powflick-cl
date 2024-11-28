@@ -9,6 +9,9 @@ import EyeToggleButton from "../components/eye-toggle-button";
 import usePasswordVisible from "../use-password-visible";
 // GLOBAL CUSTOM COMPONENTS
 import SportZoneTextField from "components/SportZoneTextField";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 // ==============================================================
 interface Props {
@@ -18,6 +21,7 @@ interface Props {
 
 const LoginPageView = ({ closeDialog }: Props) => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
+  const router = useRouter();
 
   // LOGIN FORM FIELDS INITIAL VALUES
   const initialValues = { email: "", password: "" };
@@ -37,6 +41,23 @@ const LoginPageView = ({ closeDialog }: Props) => {
         closeDialog?.();
       },
     });
+
+    const onSubmit = async (values: any) => {
+      const response = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+      if (response?.error) {
+        showErrorAlert("Error!", `Error to init session ${response?.error}`);
+      } else {
+        showSuccessAlert("Success!", "Session started successfully");
+  
+        setTimeout(() => {
+          window.location.href = `/`;
+        }, 1000);
+      }
+    }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -87,6 +108,7 @@ const LoginPageView = ({ closeDialog }: Props) => {
         color="primary"
         variant="contained"
         size="large"
+        onClick={() => onSubmit(values)}
       >
         Login
       </Button>

@@ -9,7 +9,7 @@ import { Span } from "components/Typography";
 // IMPORT IMAGES
 import googleLogo from "../../../../public/assets/images/icons/google-1.svg";
 import facebookLogo from "../../../../public/assets/images/icons/facebook-filled-white.svg";
-
+import { signIn } from 'next-auth/react';
 // =======================================
 interface Props {
   handleGoogle?: () => void;
@@ -30,7 +30,7 @@ export default function SocialButtons(props: Props) {
       </Box>
 
       {/* FACEBOOK BUTTON */}
-      <Button
+      {/* <Button
         fullWidth
         size="large"
         className="facebookButton"
@@ -38,7 +38,7 @@ export default function SocialButtons(props: Props) {
         startIcon={<Image alt="facebook" src={facebookLogo} />}
       >
         Continue with Facebook
-      </Button>
+      </Button> */}
 
       {/* GOOGLE BUTTON */}
       <Button
@@ -47,6 +47,7 @@ export default function SocialButtons(props: Props) {
         className="googleButton"
         sx={{ fontSize: 12 }}
         startIcon={<Image alt="google" src={googleLogo} />}
+        onClick={() => signIn("google", { callbackUrl: "/" })}
       >
         Continue with Google
       </Button>

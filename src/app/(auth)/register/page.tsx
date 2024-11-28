@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { RegisterPageView } from "pages-sections/sessions/page-view";
 
 export const metadata: Metadata = {
-  title: "Register - SportZone Next.js E-commerce Template",
-  description: `SportZone is a React Next.js E-commerce template. Build SEO friendly Online store, delivery app and Multi vendor store`,
-  authors: [{ name: "UI-LIB", url: "https://ui-lib.com" }],
+  title: "Register - SportZone",
+  description: "SportZone es una tienda en línea especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizables, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñada para deportistas y equipos que buscan rendimiento y estilo.",
+  authors: [{ name: "devcodelab" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 

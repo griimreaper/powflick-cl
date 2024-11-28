@@ -129,6 +129,7 @@ export interface Favorite {
 export interface Profile {
   favorites: Favorite[];
   genericResponseUser: {
+    id: string;
     couponUsers: {
       active: boolean;
       coupon: Coupon;

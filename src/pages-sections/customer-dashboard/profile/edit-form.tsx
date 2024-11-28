@@ -10,26 +10,28 @@ import { Formik } from "formik";
 import * as yup from "yup";
 // CUSTOM DATA MODEL
 import User from "models/User.model";
+import { Profile } from "models/types";
 
 // ==============================================================
-type Props = { user: User };
+type Props = { user: Profile['genericResponseUser'] };
 // ==============================================================
 
 export default function ProfileEditForm({ user }: Props) {
   const INITIAL_VALUES = {
     email: user.email || "",
-    contact: user.phone || "",
-    last_name: user.name.lastName || "",
-    first_name: user.name.firstName || "",
-    birth_date: new Date(user.dateOfBirth) || new Date()
+    phone: user.phone || "",
+    last_name: user.lastName || "",
+    first_name: user.firstName || "",
   };
 
   const VALIDATION_SCHEMA = yup.object().shape({
     first_name: yup.string().required("First name is required"),
     last_name: yup.string().required("Last name is required"),
     email: yup.string().email("invalid email").required("Email is required"),
-    contact: yup.string().required("Contact is required"),
-    birth_date: yup.date().required("Birth date is required")
+    phone: yup.string().matches(
+      /^(\+\d{1,3}[- ]?)?\d{10}$/,
+      "Phone number is not valid"
+    ), // Opcional
   });
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
@@ -90,28 +92,10 @@ export default function ProfileEditForm({ user }: Props) {
                 label="Phone"
                 name="contact"
                 onBlur={handleBlur}
-                value={values.contact}
+                value={values.phone}
                 onChange={handleChange}
-                error={!!touched.contact && !!errors.contact}
-                helperText={(touched.contact && errors.contact) as string}
-              />
-            </Grid>
-
-            <Grid item md={6} xs={12}>
-              <DatePicker
-                label="Birth Date"
-                value={values.birth_date}
-                onChange={(newValue) => setFieldValue("birth_date", newValue)}
-                slots={{ textField: TextField }}
-                slotProps={{
-                  textField: {
-                    sx: { mb: 1 },
-                    size: "small",
-                    fullWidth: true,
-                    error: Boolean(!!touched.birth_date && !!errors.birth_date),
-                    helperText: (touched.birth_date && errors.birth_date) as string
-                  }
-                }}
+                error={!!touched.phone && !!errors.phone}
+                helperText={(touched.phone && errors.phone) as string}
               />
             </Grid>
 
