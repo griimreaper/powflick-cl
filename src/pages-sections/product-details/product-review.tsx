@@ -11,17 +11,27 @@ import ProductComment from "./product-comment";
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 import { H2, H5 } from "components/Typography";
+import { Review } from "models/types";
+import { title } from "process";
+import { useDashboardStore } from "store/dashboard";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { postReview } from "services/Reviews";
 
-export default function ProductReview() {
+export default function ProductReview({ reviews, typeId }: {typeId: string ,reviews: Review[] }) {
+  const { profile } = useDashboardStore();
+  const token = profile.token;
+
   const initialValues = {
     rating: 0,
-    comment: "",
+    title: "",
+    review: "",
     date: new Date().toISOString()
   };
 
   const validationSchema = yup.object().shape({
     rating: yup.number().required("required"),
-    comment: yup.string().required("required")
+    review: yup.string().required("required"),
+    title: yup.string().required("required"),
   });
 
   const {
@@ -38,15 +48,26 @@ export default function ProductReview() {
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      resetForm();
-      console.log(values);
+      if (!token || token === 'undefined') {
+          showErrorAlert("Denied", "The user must be logged in to send a review.");
+          return;
+      }
+
+      try {
+          await postReview({...values, rating: String(values.rating), typeId, type: "PRODUCT"}, token);
+          showSuccessAlert("Success", "Review successfully sent.");
+          resetForm(); // Limpia el formulario después de enviar la reseña
+      } catch (error) {
+          console.log(error)
+          showErrorAlert("Error", "There has been an error sending the review.");
+      }
     }
   });
 
   return (
     <div>
-      {commentList.map((item, ind) => (
-        <ProductComment {...item} key={ind} />
+      {reviews.map((item, ind) => (
+        <ProductComment name={item.author} comment={item.review} date={item.createdAt} rating={Number(item.rating)} imgUrl={item.user.image} key={ind} />
       ))}
 
       <H2 fontWeight="600" mt={7} mb={2.5}>
@@ -74,18 +95,32 @@ export default function ProductReview() {
             <H5 color="error.main">*</H5>
           </FlexBox>
 
+          <TextField 
+            name="title"
+            variant="outlined"
+            size="small" // Tamaño pequeño
+            onBlur={handleBlur}
+            value={values.title}
+            onChange={handleChange}
+            placeholder="Title"
+            fullWidth={false} // No ocupar todo el ancho
+            sx={{ width: '50%', mb: 1 }} // Ancho personalizado
+            error={!!touched.title && !!errors.title}
+            helperText={(touched.title && errors.title) as string}
+          />
+
           <TextField
             rows={8}
             multiline
             fullWidth
-            name="comment"
+            name="review"
             variant="outlined"
             onBlur={handleBlur}
-            value={values.comment}
+            value={values.review}
             onChange={handleChange}
             placeholder="Write a review here..."
-            error={!!touched.comment && !!errors.comment}
-            helperText={(touched.comment && errors.comment) as string}
+            error={!!touched.review && !!errors.review}
+            helperText={(touched.review && errors.review) as string}
           />
         </Box>
 

@@ -13,6 +13,7 @@ import FrequentlyProductCard from "./frequently-product-card";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // STYLED COMPONENTS
 const WrapperBox = styled(Box)(({ theme }) => ({
@@ -22,7 +23,7 @@ const WrapperBox = styled(Box)(({ theme }) => ({
 }));
 
 // ============================================================
-type Props = { products: Product[] };
+type Props = { products: ProductDB[] };
 // ============================================================
 
 export default function FrequentlyBought({ products }: Props) {
@@ -39,7 +40,7 @@ export default function FrequentlyBought({ products }: Props) {
               slug={item.slug}
               price={item.price}
               title={item.title}
-              imgUrl={item.thumbnail}
+              imgUrl={item.URL}
             />
 
             {ind < products.length - 1 && (

@@ -12,11 +12,11 @@ export default function NotFound() {
 
   return (
     <FlexRowCenter px={2} minHeight="100vh" flexDirection="column">
-      <Box maxWidth={320} width="100%" mb={3}>
+      <Box maxWidth={100} width="100%" mb={3} flexDirection={'row'}>
         <Image
           alt="Not Found!"
-          width={55}
-          height={55}
+          width={100}
+          height={100}
           src="/assets/images/logo/SportZone2.png"
         />
       </Box>

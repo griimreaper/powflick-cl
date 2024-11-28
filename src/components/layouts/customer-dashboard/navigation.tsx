@@ -60,7 +60,7 @@ export default function Navigation({ profile }: { profile: Profile }) {
           href: "/address",
           title: "Addresses",
           Icon: Place,
-          count: 16
+          count: profile?.genericResponseUser?.directions?.length
         },
         {
           href: "/login",

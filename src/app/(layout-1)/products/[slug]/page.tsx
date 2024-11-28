@@ -1,32 +1,78 @@
+import { detailProps } from "models/types";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 // PAGE VIEW COMPONENT
 import { ProductDetailsPageView } from "pages-sections/product-details/page-view";
-// API FUNCTIONS
-import api from "utils/__api__/products";
-import {
-  getFrequentlyBought,
-  getRelatedProducts,
-} from "utils/__api__/related-products";
+import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 
-export const metadata: Metadata = {
-  title: "Product Details - SportZone",
-  description: "SportZone es una tienda en línea especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizables, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñada para deportistas y equipos que buscan rendimiento y estilo.",
-  authors: [{ name: "devcodelab" }],
-  keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
-};
+export const revalidate = 86400; // 1 dia
 
-export default async function ProductDetails({ params }) {
+export const dynamicParams = true;
+
+// Genera los parámetros estáticos para las rutas
+export async function generateStaticParams() {
+  const slugs = await getAllProductSlugs(); // Obtener todos los IDs de productos
+
+  // Devuelve un array de objetos con los parámetros necesarios
+  return slugs.map((slug: string) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata | undefined> {
+  const id = params.id;
+
+  if (!id) return;
+
+  const { product } = await getProductsBySlug(id);
+
+  if (!product.URL) return;
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
+    title: product.title + '- SportZone' || "SportZone",
+    authors: [{ name: "devcodelab" }],
+    description: product.short_description || "Default Description",
+    keywords: [
+      "e-commerce", "e-commerce template", "next.js", "react",
+      ...product.title.split(" "),
+    ],
+    openGraph: {
+      title: product.title || "Vital Store",
+      description: product.description || "Default Description",
+      url: `${process.env.NEXT_PUBLIC_API_URL}/${product.id}`,
+      images: [
+        {
+          url: product.Url,
+          width: 800,
+          height: 800,
+          alt: product.title || "Vital Store",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary",
+      title: product.title,
+      description: product.description,
+      images: product.image,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+export default async function ProductDetails({ params }: { params: { slug: string } }) {
   try {
-    const product = await api.getProduct(params.slug as string);
-    const relatedProducts = await getRelatedProducts();
-    const frequentlyBought = await getFrequentlyBought();
+    const { slug } = params;
+    const detail: detailProps = await getProductsBySlug(slug);
 
     return (
       <ProductDetailsPageView
-        product={product}
-        relatedProducts={relatedProducts}
-        frequentlyBought={frequentlyBought}
+        detail={detail}
       />
     );
   } catch (error) {

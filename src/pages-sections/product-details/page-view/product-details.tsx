@@ -6,33 +6,27 @@ import AvailableShops from "../available-shops";
 import RelatedProducts from "../related-products";
 import FrequentlyBought from "../frequently-bought";
 // CUSTOM DATA MODEL
-import Product from "models/Product.model";
+import { detailProps, ProductDB } from "models/types";
 
-// ==============================================================
-interface Props {
-  product: Product;
-  relatedProducts: Product[];
-  frequentlyBought: Product[];
-}
-// ==============================================================
 
-export default function ProductDetailsPageView(props: Props) {
+export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
+  const { product, sugestedProducts, frequentlyBought, reviews } = detail;
   return (
     <Container className="mt-2 mb-2">
       {/* PRODUCT DETAILS INFO AREA */}
-      <ProductIntro product={props.product} />
+      <ProductIntro product={product} />
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
-      <ProductTabs />
+      <ProductTabs content={product.content} reviews={reviews} productId={product.id} />
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
-      <FrequentlyBought products={props.frequentlyBought} />
+      <FrequentlyBought products={frequentlyBought} />
 
       {/* AVAILABLE SHOPS AREA */}
       <AvailableShops />
 
       {/* RELATED PRODUCTS AREA */}
-      <RelatedProducts products={props.relatedProducts} />
+      <RelatedProducts products={sugestedProducts} />
     </Container>
   );
 }

@@ -7,9 +7,10 @@ import { H3 } from "components/Typography";
 import ProductCard1 from "components/product-cards/product-card-1";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ==============================================================
-type Props = { products: Product[] };
+type Props = { products: ProductDB[] };
 // ==============================================================
 
 export default function RelatedProducts({ products }: Props) {
@@ -26,8 +27,8 @@ export default function RelatedProducts({ products }: Props) {
               slug={item.slug}
               title={item.title}
               price={item.price}
-              rating={item.rating}
-              imgUrl={item.thumbnail}
+              rating={4}
+              imgUrl={item.URL}
               discount={item.discount}
             />
           </Grid>
