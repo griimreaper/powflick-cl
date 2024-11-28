@@ -21,7 +21,7 @@ type Props = { product: Product };
 // ==============================================================
 
 export default function ProductCard16({ product }: Props) {
-  const { slug, title, thumbnail, price, discount, rating, id } = product || {};
+  const { slug, title, URL, price, discount, id } = product || {};
 
   const { cartItem, handleCartAmountChange } = useProduct(slug);
 
@@ -31,7 +31,7 @@ export default function ProductCard16({ product }: Props) {
       slug,
       price,
       name: title,
-      imgUrl: thumbnail,
+      imgUrl: URL,
       qty: (cartItem?.qty || 0) + 1
     };
     handleCartAmountChange(product);
@@ -43,7 +43,7 @@ export default function ProductCard16({ product }: Props) {
       slug,
       price,
       name: title,
-      imgUrl: thumbnail,
+      imgUrl: URL,
       qty: (cartItem?.qty || 0) - 1
     };
     handleCartAmountChange(product, "remove");
@@ -53,7 +53,11 @@ export default function ProductCard16({ product }: Props) {
     <div>
       <Link href={`/products/${slug}`}>
         <FlexBox position="relative" bgcolor="grey.50" borderRadius={3} mb={2}>
-          <LazyImage alt={title} width={380} height={379} src={thumbnail} />
+          {URL ? (
+            <LazyImage alt={title} width={380} height={379} src={URL} />
+          ) : (
+            <div>No image available</div>
+          )}
           {discount ? <DiscountChip discount={discount} sx={{ left: 20, top: 20 }} /> : null}
         </FlexBox>
       </Link>
@@ -66,7 +70,7 @@ export default function ProductCard16({ product }: Props) {
             </H6>
           </Link>
 
-          <Rating readOnly value={rating} size="small" precision={0.5} />
+          <Rating readOnly value={0} size="small" precision={0.5} />
 
           <PriceText>
             {discount ? <span className="base-price">{currency(price)}</span> : null}

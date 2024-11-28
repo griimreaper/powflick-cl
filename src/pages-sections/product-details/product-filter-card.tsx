@@ -16,127 +16,162 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import { H5, H6, Paragraph, Span } from "components/Typography";
 import AccordionHeader from "components/accordion/accordion-header";
 // TYPE
-import { ProductFilterKeys, ProductFilterValues, ProductFilters } from "./types";
+import {
+  ProductFilterKeys,
+  ProductFilterValues,
+  ProductFilters,
+} from "./types";
 import { Slider } from "@mui/material";
 
 // FILTER OPTIONS
-const categoryList = [
-  { title: "Bath Preparations", subCategories: ["Bubble Bath", "Bath Capsules", "Others"] },
-  { title: "Eye Makeup Preparations" },
-  { title: "Fragrance" },
-  { title: "Hair Preparations" }
-];
+// Eliminar la constante categoryList
+// const categoryList = [
+//   {
+//     title: "Bath Preparations",
+//     subCategories: ["Bubble Bath", "Bath Capsules", "Others"],
+//   },
+//   { title: "Eye Makeup Preparations" },
+//   { title: "Fragrance" },
+//   { title: "Hair Preparations" },
+// ];
 
-const BRANDS = [
-  { label: "Mac", value: "mac" },
-  { label: "Karts", value: "karts" },
-  { label: "Baals", value: "baals" },
-  { label: "Bukks", value: "bukks" },
-  { label: "Luasis", value: "luasis" }
-];
+// const BRANDS = [
+//   { label: "Mac", value: "mac" },
+//   { label: "Karts", value: "karts" },
+//   { label: "Baals", value: "baals" },
+//   { label: "Bukks", value: "bukks" },
+//   { label: "Luasis", value: "luasis" },
+// ];
 
 const OTHERS = [
   { label: "On Sale", value: "sale" },
   { label: "In Stock", value: "stock" },
-  { label: "Featured", value: "featured" }
+  { label: "Featured", value: "featured" },
 ];
 
-const colorList = ["#1C1C1C", "#FF7A7A", "#FFC672", "#84FFB5", "#70F6FF", "#6B7AFF"];
+const colorList = [
+  "Black",
+  "Yellow",
+  "Red",
+  "Orange",
+  "Green",
+  "Blue",
+  "White",
+];
+
+const mockSubCategories: { [key: string]: string[] } = {
+  "Custom Soccer Jerseys": ["SubCategory 1", "SubCategory 2"],
+  "Custom Hockey Jerseys": ["SubCategory 3", "SubCategory 4"],
+  "Custom Baseball Jerseys": ["SubCategory 5", "SubCategory 6"],
+  "Running clothes": ["SubCategory 7", "SubCategory 8"],
+  "Custom Basketball Jerseys": ["SubCategory 9", "SubCategory 10"],
+  "Gamer Shirts": ["SubCategory 11", "SubCategory 12"],
+  "New Arrivals": ["SubCategory 13", "SubCategory 14"],
+};
 
 // ============================================================================
 interface Props {
   filters?: ProductFilters;
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
+  topCategories: { id: string; name: string; subCategories?: string[] }[];
 }
-// ============================================================================
 
-export default function ProductFilterCard({ filters, changeFilters }: Props) {
-  const [collapsed, setCollapsed] = useState(true);
+export default function ProductFilterCard({
+  filters = {
+    brand: [],
+    color: [],
+    sales: [],
+    price: [],
+    rating: 0,
+    category: [],
+  },
+  changeFilters,
+  topCategories,
+}: Props) {
+  const [collapsed, setCollapsed] = useState<string | null>(null);
 
   const handleChangePrice = (values: number[]) => {
-    changeFilters("price", values);
+    changeFilters && changeFilters("price", values);
   };
 
   const handleChangeColor = (value: string) => {
-    const values = filters.color.includes(value)
-      ? filters.color.filter((item) => item !== value)
-      : [...filters.color, value];
-
-    changeFilters("color", values);
+    changeFilters && changeFilters("color", [value]);
   };
 
   const handleChangeBrand = (value: string) => {
-    const values = filters.brand.includes(value)
-      ? filters.brand.filter((item) => item !== value)
-      : [...filters.brand, value];
+    const values = filters.brand?.includes(value)
+      ? filters.brand?.filter((item) => item !== value)
+      : [...(filters.brand || []), value];
 
-    changeFilters("brand", values);
+    changeFilters && changeFilters("brand", values);
   };
 
   const handleChangeSales = (value: string) => {
-    const values = filters.sales.includes(value)
-      ? filters.sales.filter((item) => item !== value)
-      : [...filters.sales, value];
+    const values = filters.sales?.includes(value)
+      ? filters.sales?.filter((item) => item !== value)
+      : [...(filters.sales || []), value];
 
-    changeFilters("sales", values);
+    changeFilters && changeFilters("sales", values);
   };
 
   const handleChangeRating = (value: number) => {
-    changeFilters("rating", value);
+    changeFilters && changeFilters("rating", value);
+  };
+
+  const handleChangeCategory = (value: string) => {
+    changeFilters && changeFilters("category", [value]);
+  };
+
+  const toggleCollapse = (categoryId: string) => {
+    setCollapsed((prev) => (prev === categoryId ? null : categoryId));
   };
 
   return (
     <div>
       {/* CATEGORY VARIANT FILTER */}
       <H6 mb={1.25}>Categories</H6>
-      {categoryList.map((item) =>
-        item.subCategories ? (
-          <Fragment key={item.title}>
-            <AccordionHeader
-              open={collapsed}
-              onClick={() => setCollapsed((state) => !state)}
-              sx={{ padding: ".5rem 0", cursor: "pointer", color: "grey.600" }}>
-              <Span>{item.title}</Span>
-            </AccordionHeader>
-
-            <Collapse in={collapsed}>
-              {item.subCategories.map((name) => (
-                <Paragraph
-                  pl="22px"
-                  py={0.75}
-                  key={name}
-                  fontSize="14px"
-                  color="grey.600"
-                  sx={{ cursor: "pointer" }}>
-                  {name}
-                </Paragraph>
-              ))}
-            </Collapse>
-          </Fragment>
-        ) : (
-          <Paragraph
-            key={item.title}
+      {topCategories.map((item) => (
+        <Fragment key={item.id}>
+          <AccordionHeader
+            open={collapsed === item.id}
+            onClick={() => {
+              toggleCollapse(item.id);
+              handleChangeCategory(item.name);
+            }}
             sx={{
-              py: 0.75,
-              fontSize: 14,
+              padding: ".5rem 0",
               cursor: "pointer",
-              color: "grey.600"
-            }}>
-            {item.title}
-          </Paragraph>
-        )
-      )}
-
+              color: "grey.600",
+            }}
+          >
+            <Span>{item.name}</Span>
+          </AccordionHeader>
+          <Collapse in={collapsed === item.id}>
+            {(mockSubCategories[item.name] || []).map((name: string) => (
+              <Paragraph
+                pl="22px"
+                py={0.75}
+                key={name}
+                fontSize="14px"
+                color="grey.600"
+                sx={{ cursor: "pointer" }}
+                onClick={() => handleChangeCategory(name)}
+              >
+                {name}
+              </Paragraph>
+            ))}
+          </Collapse>
+        </Fragment>
+      ))}
       <Box component={Divider} my={3} />
 
       {/* PRICE VARIANT FILTER */}
       <H6 mb={2}>Price Range</H6>
-
       <Slider
         min={0}
         max={300}
         size="small"
-        value={filters.price}
+        value={filters.price || [0, 0]}
         valueLabelDisplay="auto"
         valueLabelFormat={(v) => `$${v}`}
         onChange={(_, v) => handleChangePrice(v as number[])}
@@ -147,38 +182,40 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
           size="small"
           type="number"
           placeholder="0"
-          value={filters.price[0]}
-          onChange={(e) => handleChangePrice([+e.target.value, filters.price[1]])}
+          value={filters.price?.[0] || 0}
+          onChange={(e) =>
+            handleChangePrice([+e.target.value, filters.price?.[1] || 0])
+          }
         />
-
         <H5 color="grey.600" px={1}>
           -
         </H5>
-
         <TextField
           fullWidth
           size="small"
           type="number"
           placeholder="250"
-          value={filters.price[1]}
-          onChange={(e) => handleChangePrice([filters.price[0], +e.target.value])}
+          value={filters.price?.[1] || 0}
+          onChange={(e) =>
+            handleChangePrice([filters.price?.[0] || 0, +e.target.value])
+          }
         />
       </FlexBetween>
 
       <Box component={Divider} my={3} />
 
       {/* BRAND VARIANT FILTER */}
-      <H6 mb={2}>Brands</H6>
+      {/* <H6 mb={2}>Brands</H6>
       <FormGroup>
         {BRANDS.map(({ label, value }) => (
           <CheckboxLabel
             key={value}
             label={label}
-            checked={filters.brand.includes(value)}
+            checked={filters.brand?.includes(value) || false}
             onChange={() => handleChangeBrand(value)}
           />
         ))}
-      </FormGroup>
+      </FormGroup> */}
 
       <Box component={Divider} my={3} />
 
@@ -188,7 +225,7 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
           <CheckboxLabel
             key={value}
             label={label}
-            checked={filters.sales.includes(value)}
+            checked={filters.sales?.includes(value) || false}
             onChange={() => handleChangeSales(value)}
           />
         ))}
@@ -197,17 +234,17 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
       <Box component={Divider} my={3} />
 
       {/* RATINGS FILTER */}
-      <H6 mb={2}>Ratings</H6>
+      {/* <H6 mb={2}>Ratings</H6>
       <FormGroup>
         {[5, 4, 3, 2, 1].map((item) => (
           <CheckboxLabel
             key={item}
-            checked={filters.rating === item}
+            checked={filters.rating === item || false}
             onChange={() => handleChangeRating(item)}
             label={<Rating size="small" value={item} color="warn" readOnly />}
           />
         ))}
-      </FormGroup>
+      </FormGroup> */}
 
       <Box component={Divider} my={3} />
 
@@ -226,8 +263,8 @@ export default function ProductFilterCard({ filters, changeFilters }: Props) {
             sx={{
               outlineOffset: 1,
               cursor: "pointer",
-              outline: filters.color.includes(item) ? 1 : 0,
-              outlineColor: item
+              outline: filters.color?.includes(item) ? 1 : 0,
+              outlineColor: item,
             }}
           />
         ))}

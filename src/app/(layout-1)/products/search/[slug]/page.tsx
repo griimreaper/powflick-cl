@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 // PAGE VIEW COMPONENT
 import { ProductSearchPageView } from "pages-sections/product-details/page-view";
+import { getCategories } from "services/Categories";
+import { getSearch } from "services/Search";
 
 export const metadata: Metadata = {
   title: "Product Search - SportZone",
@@ -9,6 +11,19 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 
-export default async function ProductSearch({ params }) {
-  return <ProductSearchPageView />;
+export const revalidate = 86400 * 7;
+
+export default async function ProductSearch({ params }: any) {
+  const { products } = await getSearch();
+  const categories = await getCategories();
+
+ 
+
+  return (
+    <ProductSearchPageView
+      data={products}
+      querys={params}
+      topCategories={categories}
+    />
+  );
 }

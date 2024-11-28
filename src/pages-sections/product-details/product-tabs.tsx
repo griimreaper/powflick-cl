@@ -25,7 +25,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 
 export default function ProductTabs({ content, reviews, productId }: { content: string, reviews: Review[], productId: string }) {
   const [selectedOption, setSelectedOption] = useState(0);
-  const handleOptionClick = (_, value: number) => setSelectedOption(value);
+  const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
   return (
     <>
