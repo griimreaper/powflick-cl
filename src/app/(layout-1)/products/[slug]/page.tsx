@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 
-export default async function ProductDetails({ params }) {
+export default async function ProductDetails({ params }:any) {
   try {
     const product = await api.getProduct(params.slug as string);
     const relatedProducts = await getRelatedProducts();

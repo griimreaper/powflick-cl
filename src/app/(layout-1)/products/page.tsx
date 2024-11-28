@@ -17,13 +17,7 @@ export default async function ProductSearch({ params }: any) {
   const { products } = await getSearch();
   const categories = await getCategories();
 
- 
+  console.log(params);
 
-  return (
-    <ProductSearchPageView
-      data={products}
-      querys={params}
-      topCategories={categories}
-    />
-  );
+  return <ProductSearchPageView data={products} topCategories={categories} />;
 }
