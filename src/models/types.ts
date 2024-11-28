@@ -28,6 +28,7 @@ export interface ProductDB {
   slug: string; // Slug (parte de la URL) del producto
   featured: boolean; // Indica si el producto es destacado
   mostSold: boolean; // Indica si el producto es el más vendido
+  sport: string; // Fecha de creación del producto
   createdAt: string; // Fecha de creación del producto
   updatedAt: string; // Fecha de última actualización del producto
   quantityPurchase: number;
@@ -252,4 +253,16 @@ export enum ContactType {
   OrderHelp = 'Help with an Order',
   PageFunctionalityHelp = 'Help with Page Functionality',
   GeneralHelp = 'General Help',
+}
+
+export interface detailProps {
+  product: ProductDB;
+  sugestedProducts: ProductDB[]
+  frequentlyBought: ProductDB[]
+  PaymentMethods: {
+    text: string,
+    image: string
+  };
+  ShippingTypes: string;
+  reviews: Review[];
 }
