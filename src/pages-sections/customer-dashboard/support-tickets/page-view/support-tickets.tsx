@@ -9,19 +9,18 @@ import Pagination from "../../pagination";
 import DashboardHeader from "../../dashboard-header";
 // CUSTOM DATA MODEL
 import Ticket from "models/Ticket.model";
+import { useDashboardStore } from "store/dashboard";
 
-// =============================================
-type Props = { tickets: Ticket[] };
-// =============================================
-
-export default function TicketsPageView({ tickets }: Props) {
+export default function TicketsPageView() {
+  const { profile } = useDashboardStore();
+  const { messages } = profile;
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
       <DashboardHeader title="Support Ticket" Icon={CustomerService} />
 
       {/* SUPPORT TICKET LIST AREA */}
-      {tickets.map((item) => (
+      {messages.map((item) => (
         <TicketCard ticket={item} key={item.id} />
       ))}
 

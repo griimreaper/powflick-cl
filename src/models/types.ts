@@ -201,6 +201,7 @@ export interface Profile {
     orders: Order[];
     reviews: Review[];
   };
+  messages: Message[];
   token: string | null;
   rol: "admin" | "user" | null;
 }
@@ -240,12 +241,23 @@ export interface Review {
 export interface Message {
   id: string;
   name: string;
-  email?: string;
+  email: string;
+  title: string;
+  type: 'Urgent' | 'Normal'; // Se puede ampliar según los tipos posibles
+  status: 'Open' | 'Closed'; // Se puede ampliar según los estados posibles
+  pending: boolean;
   message: string;
-  category?: ContactType;
-  response?: string | null;
-  consultedAt: string;
-  responseAt: string;
+  category: string;
+  consultedAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
+  responseAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
+  conversation: Conversation[];
+}
+
+interface Conversation {
+  text: string;
+  imgUrl: string;
+  name: string;
+  createdAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
 }
 
 export enum ContactType {

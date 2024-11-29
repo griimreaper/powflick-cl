@@ -6,13 +6,14 @@ import { FlexBox } from "components/flex-box";
 import { H5, Span } from "components/Typography";
 // CUSTOM DATA MODEL
 import Ticket from "models/Ticket.model";
+import { Message } from "models/types";
 
 // ==============================================================
-type Props = { message: Ticket["conversation"][0] };
+type Props = { message: Message["conversation"][0] };
 // ==============================================================
 
 export default function ConversationCard({ message }: Props) {
-  const { imgUrl, name, date, text } = message || {};
+  const { imgUrl, name, createdAt, text } = message || {};
 
   return (
     <FlexBox gap={2} mb={4}>
@@ -23,7 +24,7 @@ export default function ConversationCard({ message }: Props) {
           {name}
         </H5>
 
-        <Span color="grey.600">{format(new Date(date), "hh:mm:a | dd MMM yyyy")}</Span>
+        <Span color="grey.600">{format(new Date(createdAt), "hh:mm:a | dd MMM yyyy")}</Span>
 
         <Box borderRadius={2} bgcolor="grey.300" p={2} mt={2} lineHeight={1.7} textAlign="justify">
           {text}

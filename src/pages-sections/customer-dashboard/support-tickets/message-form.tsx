@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-export default function MessageForm() {
+export default function MessageForm({ token }: { token: string }) {
   const initialValues = { message: "" };
 
   const validationSchema = yup.object().shape({
@@ -14,7 +14,11 @@ export default function MessageForm() {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      try {
+        
+      } catch (error) {
+        
+      }
     }
   });
 
