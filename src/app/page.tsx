@@ -20,12 +20,10 @@ export default async function FashionShopTwo() {
   // Obtener la sesión del lado del servidor
   const session = await getServerSession();
 
-  console.log(session);
-  
   return (
     <>
       <ShopLayout1 data={data} session={session}>
-        <FashionTwoPageView data={data}/>;
+        <FashionTwoPageView data={data} />;
       </ShopLayout1>
     </>
   );

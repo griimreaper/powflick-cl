@@ -17,7 +17,7 @@ interface Props {
 
 export default function Navbar({ border, elevation = 2, hideCategories = true, data }: Props) {
   return (
-    <NavBarWrapper hoverEffect={false} elevation={elevation} border={border}>
+    <NavBarWrapper hoverEffect={false} elevation={elevation} border={border ?? 0}>
       {hideCategories ? (
         <InnerContainer sx={{ justifyContent: "center" }}>
           <NavigationList data={data} />
