@@ -83,6 +83,13 @@ export const useDashboardStore = create(
             };
           }
         }),
+        setMessages: (messages) =>
+          set((state) => ({
+            profile: {
+              ...state.profile,
+              messages,
+            },
+          })),
     }),
     {
       name: "dashboard-storage", // Nombre para la clave de almacenamiento local

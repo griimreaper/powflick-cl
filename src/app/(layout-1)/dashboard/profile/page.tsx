@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import { ProfilePageView } from "pages-sections/customer-dashboard/profile/page-view";
 
 export const metadata: Metadata = {
@@ -10,8 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Profile() {
-  // Obtener la sesión del lado del servidor
-  const session = await getServerSession();
-
-  return <ProfilePageView session={session} />;
+  return <ProfilePageView />;
 }

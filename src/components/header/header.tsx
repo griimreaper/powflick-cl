@@ -22,7 +22,7 @@ interface Props {
   isFixed?: boolean;
   className?: string;
   midSlot: ReactNode;
-  session: Session;
+  session: Session | null;
 }
 // ==============================================================
 

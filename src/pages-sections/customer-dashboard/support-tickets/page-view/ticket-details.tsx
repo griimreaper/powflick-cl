@@ -31,14 +31,15 @@ export default function TicketDetailsPageView({ id }: { id: string }) {
         name: message?.name as string,
         imgUrl: profile.genericResponseUser.image as string,
         text: message?.message as string,
-        createdAt: message?.consultedAt as string
+        createdAt: message?.consultedAt as string,
+        from: 'user'
       }} />
       {message?.conversation?.map((item, ind) => (
         <ConversationCard message={item} key={ind} />
       ))}
 
       {/* FORM AREA */}
-      <MessageForm token={token as string}/>
+      <MessageForm token={token as string} messageId={id}/>
     </Fragment>
   );
 }

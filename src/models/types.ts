@@ -258,6 +258,7 @@ interface Conversation {
   imgUrl: string;
   name: string;
   createdAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
+  from: 'admin' | 'user';
 }
 
 export enum ContactType {

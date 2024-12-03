@@ -11,11 +11,15 @@ export const postMessages = async (message: any) => {
   }
 }
 
-export const addConversation = async (message: string, messageId: string) => {
+export const addConversation = async (message: string, messageId: string, token: string) => {
   try {
-    const response = await mainApi.post(`/messages/${messageId}/conversations`, {text: message});
+    const response = await mainApi.post(`/messages/${messageId}/conversations`, {text: message}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
