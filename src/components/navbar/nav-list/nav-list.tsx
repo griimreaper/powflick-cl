@@ -100,7 +100,12 @@ export default function NavigationList({ data }: { data: DataStructure["navbar"]
     });
   };
 
-  const fullScreenMenu = navigation.find(nav => nav.title === "Store");
+  const fullScreenMenu = {
+    megaMenu: false,
+    megaMenuWithSub: true,
+    title: "Store",
+    child: data.categories,
+  };
 
   return (
     <FlexBox gap={4}>

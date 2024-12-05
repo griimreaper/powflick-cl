@@ -1,4 +1,5 @@
 import { SvgIconComponent } from "@mui/icons-material";
+import { ProductDB } from "models/types";
 
 export type NavLink = {
   url: string;
@@ -9,7 +10,7 @@ export type NavLink = {
 
 export type MenuItem = {
   title: string;
-  child: NavLink[];
+  products: ProductDB[];
 };
 
 export type MenuList = {
