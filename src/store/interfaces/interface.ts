@@ -1,4 +1,4 @@
-import { Direction, Favorite, Profile } from "models/types";
+import { Direction, Favorite, Message, Profile } from "models/types";
 
 export type DashboardState = {
   profile: Profile;
@@ -7,4 +7,5 @@ export type DashboardState = {
   setFavorites: (favorites: Favorite[]) => void; // Definir setFavorites con el tipo correcto
   setProfileUser: (userData: Partial<Profile["genericResponseUser"]>) => void;
   addOrUpdateUserDirection: (updatedDirection: Direction) => void;
+  setMessages: (messages: Message[]) => void;
 };

@@ -26,7 +26,7 @@ export default function LoginCartButtons({ toggleDialog, toggleSidenav }: Props)
 
   return (
     <div>
-      <IconButton onClick={() => { session ? router.push('/profile') : toggleDialog() }}>
+      <IconButton onClick={() => { session ? router.push('/dashboard/profile') : toggleDialog() }}>
         <PersonOutline sx={ICON_COLOR} />
       </IconButton>
 
