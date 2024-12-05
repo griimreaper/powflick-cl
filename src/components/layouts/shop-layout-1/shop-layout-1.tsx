@@ -37,6 +37,8 @@ export default function ShopLayout1({ children, data, session }: ShopLayout1Prop
   let rol = session?.user?.email;
   let image = session?.user?.image;
 
+  console.log(data);
+  
   useEffect(() => {
     const fetchData = async () => {
       if (token && token !== undefined && !profile.token) {
