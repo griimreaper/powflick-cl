@@ -29,19 +29,19 @@ export default function Navigation({ profile }: { profile: Profile }) {
       title: "DASHBOARD",
       list: [
         {
-          href: "/orders",
+          href: "/dashboard/orders",
           title: "Orders",
           Icon: ShoppingBagOutlined,
           count: profile?.genericResponseUser?.orders?.length,
         },
         {
-          href: "/wish-list",
+          href: "/dashboard/wish-list",
           title: "Wishlist",
           Icon: FavoriteBorder,
           count: profile?.favorites?.length
         },
         {
-          href: "/support-tickets",
+          href: "/dashboard/support-tickets",
           title: "Support Tickets",
           Icon: CustomerService,
 
@@ -52,12 +52,12 @@ export default function Navigation({ profile }: { profile: Profile }) {
       title: "ACCOUNT SETTINGS",
       list: [
         {
-          href: "/profile",
+          href: "/dashboard/profile",
           title: "Profile Info",
           Icon: Person
         },
         {
-          href: "/address",
+          href: "/dashboard/address",
           title: "Addresses",
           Icon: Place,
           count: profile?.genericResponseUser?.directions?.length
@@ -80,7 +80,7 @@ export default function Navigation({ profile }: { profile: Profile }) {
           </Paragraph>
 
           {item.list.map(({ Icon, count, href, title }) => (
-            <StyledNavLink href={href} key={title} isCurrentPath={pathname.includes(href)}
+            <StyledNavLink href={href === '/login' ? '' : href} key={title} isCurrentPath={pathname.includes(href)}
               onClick={() => {
                 if (href === '/login') {
                   signOut(),

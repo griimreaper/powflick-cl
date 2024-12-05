@@ -9,16 +9,17 @@ import { Paragraph, Span } from "components/Typography";
 import { FlexBetween, FlexBox } from "components/flex-box";
 // CUSTOM DATA MODEL
 import Ticket from "models/Ticket.model";
+import { Message } from "models/types";
 
 // ==============================================================
-type Props = { ticket: Ticket };
+type Props = { ticket: Message };
 // ==============================================================
 
 export default function TicketCard({ ticket }: Props) {
-  const { id, slug, title, type, status, date, category } = ticket || {};
+  const { id, title, type, status, category, consultedAt } = ticket;
 
   return (
-    <Link href={`/support-tickets/${slug}`} key={id}>
+    <Link href={`/support-tickets/${id}`} key={id}>
       <FlexBetween component={Card} px={2.5} py={2} mb={2}>
         <div>
           <Paragraph mb={1.5} lineHeight={1}>
@@ -30,7 +31,7 @@ export default function TicketCard({ ticket }: Props) {
             <Chip label={status} size="small" color="success" />
 
             <Span className="pre" color="grey.600">
-              {format(new Date(date), "MMM dd, yyyy")}
+              {new Date(consultedAt).toDateString()}
             </Span>
 
             <Span color="grey.600">{category}</Span>

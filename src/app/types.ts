@@ -3,9 +3,9 @@
 export interface Category {
   id: string;
   name: string;
-  // parentId: string | null;
-  // link: string;
-  // subcategories: Category[];
+  parentId: string | null;
+  link: string;
+  subcategories: Category[];
 }
 
 export interface ProductDB {
@@ -28,11 +28,9 @@ export interface ProductDB {
   slug: string; // Slug (parte de la URL) del producto
   featured: boolean; // Indica si el producto es destacado
   mostSold: boolean; // Indica si el producto es el más vendido
-  sport: string; // Fecha de creación del producto
   createdAt: string; // Fecha de creación del producto
   updatedAt: string; // Fecha de última actualización del producto
   quantityPurchase: number;
-  collections?: any[];
 }
 
 export interface RecentProduct extends ProductDB {
@@ -45,12 +43,12 @@ export interface Navbar {
 
 export interface Collections {
   mostSoldProducts: ProductDB[];
-  featuredProducts: ProductDB[];
   discountProducts: ProductDB[];
-  latestProducts: ProductDB[];
-  bestWeekProducts: ProductDB[];
-  popularProducts: ProductDB[];
-  saleProducts: ProductDB[];
+  productsMovilidad: ProductDB[];
+  productsHogar: ProductDB[];
+  productsDeporte: ProductDB[];
+  productsInfantil: ProductDB[];
+  productsSalud: ProductDB[];
 }
 
 export interface Landing {
@@ -91,59 +89,11 @@ export interface Coupon {
   updatedAt: string;
 }
 
-export interface Logo {
-  logoUrl: string;
-  logoId?: string;
-  logoPosition?: { x: number; y: number };
-  logoSize?: number;
-  rotate?: number,
-}
-
-export interface Text {
-  text?: string;
-  font?: string;
-  textPosition?: { x: number; y: number };
-  textSize?: number;
-  textColor?: string;
-  rotate?: number,
-}
-
-export interface Number {
-  number?: string;
-  font?: string;
-  numberPosition?: { x: number; y: number };
-  numberSize?: number;
-  numberColor?: string;
-  rotate?: number,
-}
-
-export interface CustomizationSides {
-  logos: Logo[];
-  texts: Text[];
-  numbers: Number[];
-}
-
-export type Customization = {
-  id: string;
-  price: number;
-  size: string;
-  frontSide: CustomizationSides;
-  backSide: CustomizationSides;
-  sleeve: string;
-  neck: string;
-  socks: string;
-  pants: string;
-  shorts: string;
-  materials: string;
-};
-
-
 export enum OrderStateEnum {
   APROBADO = 'APPROVED',
   PAGO = 'PAID',
   RECHAZADO = 'REJECTED',
   DESPACHO = 'DISPATCHED',
-  ENCAMINO = 'ONTHEWAY',
   PENDIENTE = 'PENDING',
   ENTREGADO = 'DELIVERED',
   CANCELADO = 'CANCELLED',
@@ -158,10 +108,6 @@ export interface Order {
     value: number,
   }
   state: OrderStateEnum;
-  customizations: {
-    productId: string;
-    customization: Customization;
-  }[];
   createdAt: string;
   updatedAt: string;
   products: ProductDB[];
@@ -183,7 +129,6 @@ export interface Favorite {
 export interface Profile {
   favorites: Favorite[];
   genericResponseUser: {
-    id: string;
     couponUsers: {
       active: boolean;
       coupon: Coupon;
@@ -202,7 +147,6 @@ export interface Profile {
     orders: Order[];
     reviews: Review[];
   };
-  messages: Message[];
   token: string | null;
   rol: "admin" | "user" | null;
 }
@@ -242,24 +186,12 @@ export interface Review {
 export interface Message {
   id: string;
   name: string;
-  email: string;
-  title: string;
-  type: 'Urgent' | 'Normal'; // Se puede ampliar según los tipos posibles
-  status: 'Open' | 'Closed'; // Se puede ampliar según los estados posibles
-  pending: boolean;
+  email?: string;
   message: string;
-  category: string;
-  consultedAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
-  responseAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
-  conversation: Conversation[];
-}
-
-interface Conversation {
-  text: string;
-  imgUrl: string;
-  name: string;
-  createdAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
-  from: 'admin' | 'user';
+  category?: ContactType;
+  response?: string | null;
+  consultedAt: string;
+  responseAt: string;
 }
 
 export enum ContactType {
@@ -268,21 +200,3 @@ export enum ContactType {
   PageFunctionalityHelp = 'Help with Page Functionality',
   GeneralHelp = 'General Help',
 }
-
-export interface detailProps {
-  product: ProductDB;
-  sugestedProducts: ProductDB[]
-  frequentlyBought: ProductDB[]
-  PaymentMethods: {
-    text: string,
-    image: string
-  };
-  ShippingTypes: string;
-  reviews: Review[];
-}
-
-export type UseLoadingType = [
-  loading: boolean,
-  startLoading: () => void, // Función para iniciar la carga
-  stopLoading: () => void // Función para detener la carga
-];

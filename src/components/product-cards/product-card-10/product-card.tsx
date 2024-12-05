@@ -27,7 +27,7 @@ type Props = { product: Product };
 // ==============================================================
 
 export default function ProductCard10({ product }: Props) {
-  const { slug, id, price, rating, thumbnail, title, reviews } = product;
+  const { slug, id, price, URL, title } = product;
 
   const { cartItem, handleCartAmountChange, isFavorite, openModal, toggleDialog, toggleFavorite } =
     useProduct(slug);
@@ -38,7 +38,7 @@ export default function ProductCard10({ product }: Props) {
       slug: slug,
       name: title,
       price: price,
-      imgUrl: thumbnail,
+      imgUrl: URL,
       qty: (cartItem?.qty || 0) + 1
     };
 
@@ -48,13 +48,13 @@ export default function ProductCard10({ product }: Props) {
   return (
     <Card>
       <CardMedia>
-        {/* PRODUCT IMAGE / THUMBNAIL */}
+        {/* PRODUCT IMAGE / URL */}
         <Link href={`/products/${slug}`}>
           <LazyImage
             width={300}
             height={300}
             alt="category"
-            src={thumbnail}
+            src={URL}
             className="product-img"
           />
         </Link>
@@ -78,7 +78,7 @@ export default function ProductCard10({ product }: Props) {
       <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
-        product={{ id, slug, title, price, imgGroup: [thumbnail, thumbnail] }}
+        product={{ id, slug, title, price, imgGroup: [URL, URL] }}
       />
 
       <Box p={2} textAlign="center">
@@ -92,9 +92,9 @@ export default function ProductCard10({ product }: Props) {
 
         {/* PRODUCT RATINGS */}
         <FlexRowCenter gap={1} mb={2}>
-          <Rating name="read-only" value={rating || 4} readOnly sx={{ fontSize: 14 }} />
+          <Rating name="read-only" value={4} readOnly sx={{ fontSize: 14 }} />
           <Small fontWeight={600} color="grey.500">
-            ({reviews.length})
+            ({4})
           </Small>
         </FlexRowCenter>
 

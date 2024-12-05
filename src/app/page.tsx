@@ -23,7 +23,7 @@ export default async function FashionShopTwo() {
   return (
     <>
       <ShopLayout1 data={data} session={session}>
-        <FashionTwoPageView data={data}/>;
+        <FashionTwoPageView data={data} />;
       </ShopLayout1>
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Favorite from "@mui/icons-material/Favorite";
 // LOCAL CUSTOM HOOK
@@ -12,14 +12,26 @@ import Product from "models/Product.model";
 // Local CUSTOM COMPONENT
 import Pagination from "../pagination";
 import DashboardHeader from "../dashboard-header";
+import { useDashboardStore } from "store/dashboard";
+import { ProductDB } from "models/types";
 
-// ==================================================================
-type Props = { totalProducts: number; products: Product[] };
-// ==================================================================
+export default function WishListPageView() {
+  const [page, setPage] = useState<number>(1);
+  const { profile } = useDashboardStore();
+  const [favoritesToShow, setFavoritesToShow] = useState<{ id: string, product: ProductDB }[]>([]);
 
-export default function WishListPageView(props: Props) {
-  const { totalProducts, products } = props;
-  const { currentPage, handleChangePage } = useWishList();
+  const PAGE_SIZE = 8;
+
+  useEffect(() => {
+    const startIndex = (page - 1) * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
+    const favoritesOnPage = profile?.favorites?.slice(startIndex, endIndex) || [];
+    setFavoritesToShow(favoritesOnPage);
+  }, [profile, page]);
+
+  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);  // Cambia la página
+  };
 
   return (
     <Fragment>
@@ -28,15 +40,15 @@ export default function WishListPageView(props: Props) {
 
       {/* PRODUCT LIST AREA */}
       <Grid container spacing={3}>
-        {products.map((item) => (
+        {favoritesToShow.map(({ product: item }) => (
           <Grid item lg={4} sm={6} xs={12} key={item.id}>
             <ProductCard1
               id={item.id}
               slug={item.slug}
               title={item.title}
               price={item.price}
-              rating={item.rating}
-              imgUrl={item.thumbnail}
+              rating={4}
+              imgUrl={item.images[0]}
               discount={item.discount}
             />
           </Grid>
@@ -45,9 +57,9 @@ export default function WishListPageView(props: Props) {
 
       {/* PAGINATION AREA */}
       <Pagination
-        page={currentPage}
-        count={Math.ceil(totalProducts / 6)}
-        onChange={(_, page) => handleChangePage(page)}
+        page={page}  // Pasa el estado `page` para que el componente de paginación lo controle
+        count={Math.ceil(profile?.favorites?.length / PAGE_SIZE)}  // Número total de páginas basado en los productos
+        onChange={handleChangePage}  // Función que maneja el cambio de página
       />
     </Fragment>
   );

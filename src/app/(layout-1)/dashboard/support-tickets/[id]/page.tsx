@@ -13,10 +13,12 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 
-export default async function SupportTicketDetails({ params }: SlugParams) {
+export default async function SupportTicketDetails({ params }: any) {
   try {
-    const ticket = await api.getTicket(String(params.slug));
-    return <TicketDetailsPageView ticket={ticket} />;
+    const ticket = await api.getTicket('payment-method-is-not-working');
+    console.log(ticket);
+    
+    return <TicketDetailsPageView id={params.id}/>;
   } catch (error) {
     notFound();
   }

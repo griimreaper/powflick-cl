@@ -8,6 +8,8 @@ import CategoryItem from "./category-item";
 import { SubCategoryList } from "../styles";
 // DATA TYPES
 import { MenuList } from "../types";
+import ProductCard8 from "components/product-cards/product-card-8";
+
 
 // ==============================================================
 type Props = { categories: MenuList };
@@ -17,7 +19,7 @@ export default function ChildCategories({ categories }: Props) {
   return (
     <Scrollbar autoHide={false} sx={{ width: "100%" }}>
       <Box px={6} py={2} height="100%">
-        {categories.child.map((item, key) => (
+        {categories?.child?.map((item, key) => (
           <div key={key}>
             {/* NAV / CATEGORY TITLE */}
             <H6 fontWeight={700} my={3}>
@@ -26,8 +28,10 @@ export default function ChildCategories({ categories }: Props) {
 
             {/* NAV LIST ITEM / CATEGORY LIST ITEM */}
             <SubCategoryList>
-              {item.child.map((sub, key) => (
-                <CategoryItem item={sub} key={key} />
+              {item?.products?.map((sub) => (
+                <Box key={sub.id} width={200}>
+                <ProductCard8 key={sub.id} product={sub}></ProductCard8>
+                </Box>
               ))}
             </SubCategoryList>
           </div>
