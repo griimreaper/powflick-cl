@@ -17,7 +17,11 @@ import { StyledNavLink, NAV_LINK_STYLES, ChildNavListWrapper } from "../styles";
 import { NavList } from "../types";
 import { DataStructure } from "models/types";
 
-export default function NavigationList({ data }: { data: DataStructure["navbar"] }) {
+export default function NavigationList({
+  data,
+}: {
+  data: DataStructure["navbar"];
+}) {
   const renderNestedNav = (list: any[] = [], isRoot = false) => {
     return list.map((nav: NavList) => {
       if (isRoot) {
@@ -100,7 +104,7 @@ export default function NavigationList({ data }: { data: DataStructure["navbar"]
     });
   };
 
-  const fullScreenMenu = navigation.find(nav => nav.title === "Store");
+  const fullScreenMenu = navigation.find((nav) => nav.title === "Store");
 
   return (
     <FlexBox gap={4}>
