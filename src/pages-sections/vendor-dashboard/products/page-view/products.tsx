@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
@@ -16,51 +16,80 @@ import ProductRow from "../product-row";
 import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
 // CUSTOM DATA MODEL
-import Product from "models/Product.model";
+import { useDashboardStore } from "store/dashboard";
+import { getProductsAdmin } from "services/dashboardAdmin/products";
+import useLoading from "hooks/useLoading";
+import { Filters, ProductData } from ".";
+import Pagination from "./Pagination";
+import LoadingComponent from "components/Loaders/LoadingComponent";
+import { Box } from "@mui/material";
+import useHearingEvent from "hooks/hearingEvent";
 
-// TABLE HEADING DATA LIST
-const tableHeading = [
-  { id: "name", label: "Name", align: "left" },
-  { id: "category", label: "Category", align: "left" },
-  { id: "brand", label: "Brand", align: "left" },
-  { id: "price", label: "Price", align: "left" },
-  { id: "published", label: "Published", align: "left" },
-  { id: "action", label: "Action", align: "center" }
-];
+export default function ProductsPageView() {
+  const [productList, setProductList] = useState<ProductData>();
+  const { actualize, setActualize } = useHearingEvent();
+  const [filters, setFilters] = useState<Filters>({
+    search: '',
+    page: 1,
+    limit: 6,
+    order: 'DESC',
+  });
+  console.log(filters);
 
-// =============================================================================
-type Props = { products: Product[] };
-// =============================================================================
+  const { profile } = useDashboardStore();
+  const { token } = profile;
 
-export default function ProductsPageView({ products }: Props) {
-  const [productList, setProductList] = useState([...products]);
+  const handlePage = (page: number) => {
+    setFilters({ ...filters, page });
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        if (token) {
+          const data = await getProductsAdmin(filters, token);
+          setProductList(data);
+        }
+      } catch (error) {
+        console.error("Error getting products:", error);
+      }
+    };
+    fetchProducts();
+  }, [filters, token, actualize]);
+
+  console.log(filters);
 
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
-  const filteredProducts = productList.map((item) => ({
+  const filteredProducts = productList?.products.map((item) => ({
+    ...item,
     id: item.id,
     slug: item.slug,
     name: item.title,
-    brand: item.brand,
+    sport: item.sport,
     price: item.price,
-    image: item.thumbnail,
-    published: item.published,
-    category: item.categories[0]
+    image: item.URL,
+    status: item.status,
+    category: item.product_categories.split('|')[0]
   }));
 
-  const {
-    order,
-    orderBy,
-    selected,
-    rowsPerPage,
-    filteredList,
-    handleChangePage,
-    handleRequestSort
-  } = useMuiTable({ listData: filteredProducts });
+  // TABLE HEADING DATA LIST
+  const tableHeading = [
+    { id: "name", label: "Name", align: "left", content: null },
+    { id: "category", label: "Category", align: "left", content: (Object.keys(productList?.count?.categories || {})) },
+    { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})) },
+    { id: "order", label: "Price", align: "left", content: ['ASC', 'DESC'] },
+    { id: "status", label: "Published", align: "left", content: ['publish', 'draft'] },
+    { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 8, 10, 12] }
+  ];
+
+  const handleSearch = (value: string) => {
+    setFilters({ ...filters, search: value });
+  };
 
   return (
     <PageWrapper title="Product List">
       <SearchArea
-        handleSearch={() => {}}
+        handleSearch={handleSearch}
         buttonText="Add Product"
         url="/admin/products/create"
         searchPlaceholder="Search Product..."
@@ -71,28 +100,33 @@ export default function ProductsPageView({ products }: Props) {
           <TableContainer sx={{ minWidth: 900 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={filters.order}
                 hideSelectBtn
-                orderBy={orderBy}
+                orderBy={'asc'}
                 heading={tableHeading}
-                rowCount={products.length}
-                numSelected={selected.length}
-                onRequestSort={handleRequestSort}
+                rowCount={Number(productList?.total)}
+                numSelected={Number(productList?.totalPages)}
+                onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
+                onRequestSort={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
               />
+                <TableBody>
 
-              <TableBody>
-                {filteredList.map((product, index) => (
-                  <ProductRow key={index} product={product} />
-                ))}
-              </TableBody>
+                  {filteredProducts?.map((product) => (
+                    <ProductRow key={product.id} product={product} setActualize={setActualize} />
+                  ))}
+                </TableBody>
+              
             </Table>
           </TableContainer>
         </Scrollbar>
 
         <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil(products.length / rowsPerPage)}
+          <Pagination
+            page={productList?.page}
+            prevPage={productList?.prevPage}
+            nextPage={productList?.nextPage}
+            totalPages={productList?.totalPages}
+            handlePage={handlePage}
           />
         </Stack>
       </Card>

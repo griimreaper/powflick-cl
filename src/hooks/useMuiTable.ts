@@ -1,3 +1,4 @@
+import { ProductDB } from "models/types";
 import { useState } from "react";
 
 // ================================================================
@@ -31,7 +32,7 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 
 // ================================================================
 interface Props {
-  listData: any[];
+  listData: ProductDB[] | any;
   defaultSort?: string;
   defaultOrder?: "asc" | "desc";
 }
