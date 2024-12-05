@@ -17,7 +17,6 @@ export const CardMedia = styled("div")(({ theme }) => ({
   cursor: "pointer",
   overflow: "hidden",
   position: "relative",
-  backgroundColor: theme.palette.grey[300],
   img: { transition: "0.3s" }
 }));
 
