@@ -1,6 +1,12 @@
 "use client";
 
-import { Fragment, PropsWithChildren, useCallback, useEffect, useState } from "react";
+import {
+  Fragment,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 // GLOBAL CUSTOM COMPONENTS
 import Sticky from "components/sticky";
 import Topbar from "components/topbar";
@@ -24,30 +30,33 @@ import { useDashboardStore } from "store/dashboard";
 
 interface ShopLayout1Props extends PropsWithChildren {
   data: DataStructure;
-  session: Session | null
+  session: Session | null;
 }
 
-export default function ShopLayout1({ children, data, session }: ShopLayout1Props) {
+export default function ShopLayout1({
+  children,
+  data,
+  session,
+}: ShopLayout1Props) {
   const [isFixed, setIsFixed] = useState(false);
   const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
 
-  const { profile, setData, removeProfile, setProfileUser } = useDashboardStore();
+  const { profile, setData, removeProfile, setProfileUser } =
+    useDashboardStore();
   let token = session?.user?.name?.split("|")[0];
   let tokenExpiration = session?.user?.name?.split("|")[1];
   let rol = session?.user?.email;
   let image = session?.user?.image;
 
-  console.log(data);
-  
   useEffect(() => {
     const fetchData = async () => {
       if (token && token !== undefined && !profile.token) {
         localStorage.setItem("termsAccepted", "true");
         const response = await getProfile(token);
         console.log(response);
-        
+
         setData({ ...response, token, rol });
-        if (image) setProfileUser({ image: image })
+        if (image) setProfileUser({ image: image });
       }
     };
 
@@ -86,7 +95,11 @@ export default function ShopLayout1({ children, data, session }: ShopLayout1Prop
 
       {/* HEADER */}
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>
-        <Header isFixed={isFixed} session={session} midSlot={<SearchInputWithCategory />} />
+        <Header
+          isFixed={isFixed}
+          session={session}
+          midSlot={<SearchInputWithCategory />}
+        />
       </Sticky>
 
       {/* NAVIGATION BAR */}

@@ -32,6 +32,7 @@ import {
 } from "../types";
 import Product from "models/Product.model";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useNavbar } from "contexts/NavBarContext";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
@@ -64,14 +65,12 @@ const handleSortProducts = (
     const matchesSearch =
       !filters.search ||
       product.title.toLowerCase().includes(filters.search.toLowerCase());
-    return (
-      filters.category.every((category) =>
+    const matchesCategory =
+      filters.category.length === 0 ||
+      filters.category.some((category) =>
         product.product_categories.includes(category)
-      ) &&
-      isInPriceRange &&
-      matchesColor &&
-      matchesSearch
-    );
+      );
+    return isInPriceRange && matchesColor && matchesSearch && matchesCategory;
   });
 
   switch (sortBy) {
@@ -88,7 +87,8 @@ const handleSortProducts = (
   }
 };
 
-export default function ProductSearchPageView({ data, topCategories }: any) {
+export default function ProductSearchPageView({ data }: any) {
+  const { navbarData } = useNavbar();
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
@@ -98,6 +98,8 @@ export default function ProductSearchPageView({ data, topCategories }: any) {
     query: searchParams.get("query"),
     // category: searchParams.get("category"),
   };
+
+  console.log(filters);
 
   useEffect(() => {
     setFilters((prev) => {
@@ -195,7 +197,7 @@ export default function ProductSearchPageView({ data, topCategories }: any) {
                     <ProductFilterCard
                       filters={filters}
                       changeFilters={handleChangeFilters}
-                      topCategories={topCategories}
+                      topCategories={navbarData?.categories}
                     />
                   </Box>
                 </Sidenav>
@@ -215,7 +217,7 @@ export default function ProductSearchPageView({ data, topCategories }: any) {
             <ProductFilterCard
               filters={filters}
               changeFilters={handleChangeFilters}
-              topCategories={topCategories}
+              topCategories={navbarData?.categories}
             />
           </Grid>
 

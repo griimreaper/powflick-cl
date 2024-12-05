@@ -108,7 +108,7 @@ export default function NavigationList({
     megaMenu: false,
     megaMenuWithSub: true,
     title: "Store",
-    child: data.categories,
+    child: data?.categories,
   };
 
   return (
