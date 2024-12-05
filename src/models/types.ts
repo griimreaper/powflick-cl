@@ -32,6 +32,7 @@ export interface ProductDB {
   createdAt: string; // Fecha de creación del producto
   updatedAt: string; // Fecha de última actualización del producto
   quantityPurchase: number;
+  collections?: any[];
 }
 
 export interface RecentProduct extends ProductDB {
@@ -279,3 +280,9 @@ export interface detailProps {
   ShippingTypes: string;
   reviews: Review[];
 }
+
+export type UseLoadingType = [
+  loading: boolean,
+  startLoading: () => void, // Función para iniciar la carga
+  stopLoading: () => void // Función para detener la carga
+];

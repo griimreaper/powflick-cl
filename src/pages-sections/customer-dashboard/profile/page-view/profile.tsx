@@ -7,6 +7,12 @@ import UserInfo from "../user-info";
 import UserAnalytics from "../user-analytics";
 import DashboardHeader from "../../dashboard-header";
 import { useDashboardStore } from "store/dashboard";
+import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
+
+// ============================================================
+type Props = { session: Session | null };
+// ============================================================
 
 export default function ProfilePageView() {
   const { profile } = useDashboardStore();

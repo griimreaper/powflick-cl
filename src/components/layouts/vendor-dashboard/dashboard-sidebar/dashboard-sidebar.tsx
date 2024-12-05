@@ -28,9 +28,9 @@ export default function DashboardSidebar() {
         <Box p={2} maxHeight={TOP_HEADER_AREA}>
           <Image
             alt="Logo"
-            width={105}
+            width={50}
             height={50}
-            src="/assets/images/logo.svg"
+            src="/assets/images/logo/SportZone2.png"
             style={{ marginLeft: 8 }}
           />
         </Box>
