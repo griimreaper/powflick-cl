@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 // ============================================================
-type Props = { session: Session };
+type Props = { session: Session | null };
 // ============================================================
 
 export default function ProfilePageView({ session }: Props) {

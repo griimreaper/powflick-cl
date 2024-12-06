@@ -67,7 +67,7 @@ export default function BrandsPageView({ brands }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((brand) => (
+                {filteredList.map((brand: any) => (
                   <BrandRow key={brand.id} brand={brand} selected={selected} />
                 ))}
               </TableBody>

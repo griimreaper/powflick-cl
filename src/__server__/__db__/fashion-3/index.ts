@@ -1,7 +1,7 @@
 // import Mock from "../../mock";
 import { mainCarouselData, products, serviceList, blogs, brands } from "./data";
 
-export const FashionEndpoints = (Mock) => {
+export const FashionEndpoints = (Mock: any) => {
 
   const bestSell = products.filter((item) => item.for.type === "best-selling-product");
   const featureProducts = products.filter((item) => item.for.type === "featured-products");

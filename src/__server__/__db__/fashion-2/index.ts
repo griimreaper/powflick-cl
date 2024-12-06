@@ -1,7 +1,7 @@
 import * as db from "./data";
 // import Mock from "../../mock";
 
-export const Fashion2Endpoints = (Mock) => {
+export const Fashion2Endpoints = (Mock: any) => {
   const getProducts = (type: string) =>
     db.products.filter((item) => item.for.type === type);
 

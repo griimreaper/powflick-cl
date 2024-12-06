@@ -27,7 +27,7 @@ export default function HealthBeautySideNav({ navigation }: Props) {
           if (item.child) return <NavAccordion item={item} key={ind} />;
 
           return (
-            <NavLink key={ind} href={item.href} color="grey.700">
+            <NavLink key={ind} href={item.href!} color="grey.700">
               <ListItem title={item.title} icon={item.icon} />
             </NavLink>
           );

@@ -3,7 +3,7 @@
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
 import { frequentlyBoughtData, relatedProducts } from "./data";
-export const RelatedProductsEndpoints = (Mock) => {
+export const RelatedProductsEndpoints = (Mock: any) => {
   Mock.onGet("/api/frequently-bought-products").reply(async () => {
     try {
       return [200, frequentlyBoughtData];

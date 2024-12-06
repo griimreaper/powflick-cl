@@ -3,7 +3,7 @@
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
 import * as db from "./data";
-export const Grocery3Endpoints = (Mock) => {
+export const Grocery3Endpoints = (Mock: any) => {
   const products = db.products.filter((item) => item.for.type === "all-products");
   const topProducts = db.products.filter(
     (item) => item.for.type === "top-saled-products",

@@ -2,7 +2,7 @@
 import * as db from "./data";
 
 // get featured products
-export const MedicalEndpoints = (Mock) => {
+export const MedicalEndpoints = (Mock: any) => {
   const featuredProducts = db.products.filter((item) => item.for.type === "featured");
 
   Mock.onGet("/api/medical/products?tag=featured").reply(() => {

@@ -50,7 +50,7 @@ export default function PackagePaymentPageView({ payments }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((item, index) => (
+                {filteredList.map((item: any, index) => (
                   <PaymentRow payment={item} key={index} />
                 ))}
               </TableBody>

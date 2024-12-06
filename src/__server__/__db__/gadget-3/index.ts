@@ -17,7 +17,7 @@ export const Gadget3Endpoints = (Mock: MockAdapter) => {
     }
   });
 
-  Mock.onGet("/api/gadget-3/products").reply(async (config) => {
+  Mock.onGet("/api/gadget-3/products").reply(async (config: any) => {
     try {
       return [200, db.products];
     } catch (err) {
@@ -26,7 +26,7 @@ export const Gadget3Endpoints = (Mock: MockAdapter) => {
     }
   });
 
-  Mock.onGet("/api/gadget-3/products-by-slug").reply(async (config) => {
+  Mock.onGet("/api/gadget-3/products-by-slug").reply(async (config: any) => {
     try {
       return [200, shuffle(db.products)];
     } catch (err) {
@@ -44,7 +44,7 @@ export const Gadget3Endpoints = (Mock: MockAdapter) => {
     }
   });
 
-  Mock.onGet("/api/gadget-3/breadcrumb").reply(async (config) => {
+  Mock.onGet("/api/gadget-3/breadcrumb").reply(async (config: any) => {
     try {
       if (!config.params.slug) return [200, null];
 

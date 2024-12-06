@@ -16,10 +16,13 @@ export default function SportZoneTextField({
   const textFieldProps: TextFieldProps = {};
 
   for (const key in props) {
-    if (SPACE_PROPS_LIST.includes(key)) boxProps[key] = props[key];
-    else textFieldProps[key] = props[key];
+    const value = props[key as keyof typeof props]; // Asegura que TypeScript acepte el acceso
+    if (SPACE_PROPS_LIST.includes(key)) {
+      boxProps[key as keyof typeof boxProps] = value;
+    } else {
+      textFieldProps[key as keyof typeof textFieldProps] = value;
+    }
   }
-
   return (
     <Box {...boxProps}>
       {/* INPUT LEVEL TEXT */}

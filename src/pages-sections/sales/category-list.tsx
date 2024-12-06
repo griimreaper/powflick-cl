@@ -24,7 +24,7 @@ const CategoryList = forwardRef<HTMLDivElement, Props>(
       <FlexBox m={-1.5} flexWrap="wrap">
         {categories.map((item) => {
           const selectedItem = item.slug === selectedCategory ? 1 : 0;
-          const Icon = appIcons[item.icon];
+          const Icon = appIcons[item.icon as keyof typeof appIcons];
 
           return (
             <CategoryBoxWrapper

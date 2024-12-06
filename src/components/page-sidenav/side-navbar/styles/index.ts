@@ -21,7 +21,7 @@ export const NavbarRoot = styled(Card, {
   },
   ...(sidebar === "colored" && {
     paddingBottom: 10,
-    backgroundColor: theme.palette.primary[50]
+    backgroundColor: theme.palette.primary['light']
   })
 }));
 
@@ -66,5 +66,5 @@ export const ColorBorder = styled(Span, {
 })<{ grey?: number }>(({ grey, theme }) => ({
   borderRadius: "2px 0 0 2px",
   height: grey ? "2px" : "3px",
-  background: grey ? theme.palette.grey[400] : theme.palette.primary[200]
+  background: grey ? theme.palette.grey[400] : theme.palette.primary['light']
 }));

@@ -49,7 +49,7 @@ export default function EarningHistoryPageView({ earnings }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((item, index) => (
+                {filteredList.map((item: any, index) => (
                   <VendorEarningRow row={item} key={index} />
                 ))}
               </TableBody>

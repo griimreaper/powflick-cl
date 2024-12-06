@@ -48,7 +48,7 @@ export default function ProductForm(props: Props) {
     console.log(values);
   };
 
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<File[]>();
 
   // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
   const handleChangeDropZone = (files: File[]) => {
@@ -58,7 +58,7 @@ export default function ProductForm(props: Props) {
 
   // HANDLE DELETE UPLOAD IMAGE
   const handleFileDelete = (file: File) => () => {
-    setFiles((files) => files.filter((item) => item.name !== file.name));
+    setFiles((files) => files?.filter((item) => item.name !== file.name));
   };
 
   return (
@@ -107,13 +107,13 @@ export default function ProductForm(props: Props) {
               </Grid>
 
               <Grid item xs={12}>
-                <DropZone onChange={(files) => handleChangeDropZone(files)} />
+                <DropZone onChange={(files: any) => handleChangeDropZone(files)} />
 
                 <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
-                  {files.map((file, index) => {
+                  {files?.map((file, index) => {
                     return (
                       <UploadImageBox key={index}>
-                        <Box component="img" src={file.preview} width="100%" />
+                        <Box component="img" src={file.webkitRelativePath} width="100%" />
                         <StyledClear onClick={handleFileDelete(file)} />
                       </UploadImageBox>
                     );

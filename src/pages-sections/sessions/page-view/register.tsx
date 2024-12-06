@@ -50,9 +50,9 @@ const RegisterPageView = () => {
       "Phone number is not valid"
     ), // Opcional
     re_password: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Please re-type password"),
+    .string()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Please re-type password"),
     agreement: yup
       .bool()
       .oneOf([true], "You have to agree with our Terms and Conditions!")

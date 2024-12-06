@@ -4,7 +4,7 @@
 // CONTACT US AT support@ui-lib.com
 // import Mock from "../../mock";
 import * as db from "./data";
-export const Fashion1Endpoints = (Mock) => {
+export const Fashion1Endpoints = (Mock: any) => {
   const flashItems = db.products.filter(
     (item) => item.for.type === "flash-deals",
   );

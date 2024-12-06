@@ -23,8 +23,8 @@ import { useDashboardStore } from "store/dashboard";
  */
 
 interface ShopLayout1Props extends PropsWithChildren {
-  data: DataStructure;
-  session: Session | null
+  data: DataStructure | null;
+  session?: Session | null
 }
 
 export default function ShopLayout1({ children, data, session }: ShopLayout1Props) {
@@ -84,17 +84,17 @@ export default function ShopLayout1({ children, data, session }: ShopLayout1Prop
 
       {/* HEADER */}
       <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>
-        <Header isFixed={isFixed} session={session} midSlot={<SearchInputWithCategory />} />
+        <Header isFixed={isFixed} session={session!} midSlot={<SearchInputWithCategory />} />
       </Sticky>
 
       {/* NAVIGATION BAR */}
-      <Navbar elevation={0} border={1} data={data?.navbar} />
+      <Navbar elevation={0} border={1} data={data?.navbar!} />
 
       {/* BODY CONTENT */}
       {children}
 
       {/* SMALL DEVICE BOTTOM NAVIGATION */}
-      <MobileNavigationBar data={data} />
+      <MobileNavigationBar data={data!} />
 
       {/* FOOTER */}
       <Footer1 />

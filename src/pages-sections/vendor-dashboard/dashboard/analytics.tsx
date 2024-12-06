@@ -62,10 +62,11 @@ export default function Analytics() {
         <StyledSelect
           value={selectType}
           IconComponent={() => <KeyboardArrowDown />}
-          onChange={(e: SelectChangeEvent<string>) => setSelectType(e.target.value)}>
+          onChange={(e: SelectChangeEvent<unknown>) => setSelectType(e.target.value as string)}
+        >
           <MenuItem value="yearly">Yearly</MenuItem>
           <MenuItem value="monthly">Monthly</MenuItem>
-          <MenuItem value="Weekily">Weekily</MenuItem>
+          <MenuItem value="weekly">Weekly</MenuItem>
         </StyledSelect>
       </FlexBetween>
 

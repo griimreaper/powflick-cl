@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 
-export default async function WishList({ searchParams }) {
+export default async function WishList({ searchParams }: any) {
   const { products, totalProducts } = await getWishListProducts(
     searchParams.page
   );

@@ -26,7 +26,7 @@ export default function TicketDetailsPageView({ ticket }: Props) {
       />
 
       {/* CONVERSATION LIST */}
-      {ticket.conversation.map((item, ind) => (
+      {ticket.conversation?.map((item, ind) => (
         <ConversationCard message={item} key={ind} />
       ))}
 

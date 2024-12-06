@@ -50,7 +50,7 @@ export default function PayoutsPageView({ payouts }: PayoutsProps) {
               />
 
               <TableBody>
-                {filteredList.map((payout, index) => (
+                {filteredList.map((payout: any, index) => (
                   <PayoutRow payout={payout} key={index} />
                 ))}
               </TableBody>

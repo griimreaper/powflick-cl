@@ -28,7 +28,7 @@ const DeliveryAddress: FC<Props> = ({ values, handleFieldValueChange }) => {
 
   const changeEditAddressId = () => setEditAddressId(0);
 
-  const handleAddNewAddress = (address: Address) => {
+  const handleAddNewAddress = (address: Omit<Address, "id">) => {
     setAddressList((state) => [...state, { ...address, id: Date.now() }]);
   };
 
@@ -106,14 +106,14 @@ const DeliveryAddress: FC<Props> = ({ values, handleFieldValueChange }) => {
           handleEditAddress={handleEditAddress}
           active={editAddressId ? true : false}
           changeEditAddressId={changeEditAddressId}
-          address={addressList.find((item) => item.id === editAddressId)}
+          address={addressList.find((item) => item.id === editAddressId)!}
         />
       ) : null}
     </Card>
   );
 };
 
-const DUMMY_ADDRESS_LIST = [
+const DUMMY_ADDRESS_LIST: Address[] = [
   {
     id: 1,
     name: "Home",

@@ -1,5 +1,5 @@
 export const classes = () => {
-  const obj = {};
+  const obj: any = {};
 
   for (let i = 1; i < 11; i++) {
     // PADDING

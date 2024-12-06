@@ -3,7 +3,7 @@
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
 import { categories, categoriesTwo } from "./data";
-export const SalesEndpoints = (Mock) => {
+export const SalesEndpoints = (Mock: any) => {
   Mock.onGet("/api/sales-1/categories").reply(async () => {
     try {
       return [200, categories];

@@ -8,7 +8,7 @@ export default function useProduct(slug: string) {
   const [openModal, setOpenModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const cartItem = state.cart.find((item) => item.slug === slug);
+  const cartItem = state.cart.find((item) => item.slug === slug)!;
 
   const toggleFavorite = useCallback(() => setIsFavorite((fav) => !fav), []);
   const toggleDialog = useCallback(() => setOpenModal((open) => !open), []);

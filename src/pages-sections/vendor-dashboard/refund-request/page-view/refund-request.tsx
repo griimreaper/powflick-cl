@@ -50,7 +50,7 @@ export default function RefundRequestPageView({ requests }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((request, index) => (
+                {filteredList.map((request: any, index) => (
                   <RefundRequestRow request={request} key={index} />
                 ))}
               </TableBody>

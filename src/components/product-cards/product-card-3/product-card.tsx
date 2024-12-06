@@ -98,7 +98,7 @@ export default function ProductCard10(props: Props) {
         <ProductTitle title={title} slug={slug} />
 
         {/* PRODUCT RATING / REVIEW  */}
-        <ProductRating showRating={!hideRating} rating={rating} />
+        <ProductRating showRating={!hideRating} rating={4} />
 
         {/* PRODUCT PRICE WITH DISCOUNT */}
         <ProductPrice discount={off} price={price} />

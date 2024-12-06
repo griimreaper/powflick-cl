@@ -51,7 +51,7 @@ export default function SupportTicketsPageView({ tickets }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((ticket, index) => (
+                {filteredList.map((ticket: any, index) => (
                   <TicketRow ticket={ticket} key={index} />
                 ))}
               </TableBody>

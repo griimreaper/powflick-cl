@@ -36,7 +36,7 @@ export default function SalesLayout({ children, categoryNav, type = "one" }: Sal
   if (type == "one") {
     CONTENT = (
       <Fragment>
-        <Navbar />
+        <Navbar border={1} data={null} hideCategories />
         {children}
       </Fragment>
     );

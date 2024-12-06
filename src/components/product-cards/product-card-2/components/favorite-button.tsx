@@ -10,7 +10,7 @@ interface Props {
 }
 // ==============================================================
 
-export default function FavoriteButton({ isFavorite, handleClick }) {
+export default function FavoriteButton({ isFavorite, handleClick }: Props) {
   const STYLES = {
     height: 0,
     alignItems: "flex-start",

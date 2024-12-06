@@ -4,7 +4,7 @@
 // CONTACT US AT support@ui-lib.com
 import * as db from "./data";
 
-export const GiftEndpoints = (Mock) => {
+export const GiftEndpoints = (Mock: any) => {
   Mock.onGet("/api/gift-shop/main-carousel").reply(() => {
     try {
       return [200, db.mainCarouselData];

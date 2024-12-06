@@ -13,7 +13,7 @@ import { payoutRequests } from "./payout-requests";
 import { packagePayments } from "./package-payments";
 import { cardList, recentPurchase, stockOutProducts } from "./data";
 
-export const AdminDashboardEndpoints = (Mock) => {
+export const AdminDashboardEndpoints = (Mock: any) => {
   // dashboard
   Mock.onGet("/api/admin/dashboard-cards").reply(() => {
     try {
@@ -89,7 +89,7 @@ export const AdminDashboardEndpoints = (Mock) => {
     }
   });
 
-  Mock.onGet("/api/admin/orders/1").reply((config) => {
+  Mock.onGet("/api/admin/orders/1").reply((config: any) => {
     try {
       if (config?.params?.id) {
         const order = orders.find((item) => item.id === config.params.id);

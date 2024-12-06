@@ -37,7 +37,7 @@ const StatusWrapper = styled("div", {
   padding: "3px 12px",
   display: "inline-flex",
   color: payment ? theme.palette.error.main : theme.palette.success.main,
-  backgroundColor: payment ? theme.palette.error[100] : theme.palette.success[100]
+  backgroundColor: payment ? theme.palette.error['light'] : theme.palette.success['light']
 }));
 
 const StyledTableRow = styled(TableRow)({
@@ -63,7 +63,7 @@ export default function DataListTable({ dataList, tableHeading, type }: Props) {
   if (type === "STOCK_OUT") {
     BODY_CONTENT = (
       <TableBody>
-        {filteredList.map((row, index) => {
+        {filteredList.map((row: any, index) => {
           const { amount, stock, product } = row;
 
           return (
@@ -101,7 +101,7 @@ export default function DataListTable({ dataList, tableHeading, type }: Props) {
                 </StatusWrapper>
               </StyledTableCell>
 
-              <StyledTableCell align="center">{currency(amount)}</StyledTableCell>
+              <StyledTableCell align="center">{currency(Number(amount))}</StyledTableCell>
             </StyledTableRow>
           );
         })}

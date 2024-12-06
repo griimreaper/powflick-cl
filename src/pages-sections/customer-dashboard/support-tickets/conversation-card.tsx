@@ -4,11 +4,11 @@ import { format } from "date-fns";
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 import { H5, Span } from "components/Typography";
+import { Message } from "models/Ticket.model";
 // CUSTOM DATA MODEL
-import Ticket from "models/Ticket.model";
 
 // ==============================================================
-type Props = { message: Ticket["conversation"][0] };
+type Props = { message: Message };
 // ==============================================================
 
 export default function ConversationCard({ message }: Props) {

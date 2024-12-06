@@ -28,7 +28,7 @@ export default function ProfileEditPageView() {
 
       <Card sx={{ p: 3 }}>
         {/* USER PROFILE PIC */}
-        <ProfilePicUpload image={user.image} />
+        <ProfilePicUpload image={user.image!} />
 
         {/* PROFILE EDITOR FORM */}
         <ProfileEditForm user={user} token={token as string}/>

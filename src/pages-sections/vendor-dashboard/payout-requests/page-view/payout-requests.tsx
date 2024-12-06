@@ -50,7 +50,7 @@ export default function PayoutRequestsPageView({ requests }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((request, index) => (
+                {filteredList.map((request: any, index) => (
                   <RequestRow request={request} key={index} />
                 ))}
               </TableBody>

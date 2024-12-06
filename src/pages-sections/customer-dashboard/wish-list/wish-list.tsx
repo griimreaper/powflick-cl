@@ -14,7 +14,7 @@ import Pagination from "../pagination";
 import DashboardHeader from "../dashboard-header";
 
 // ==================================================================
-type Props = { totalProducts: number; products: Product[] };
+type Props = { totalProducts: number; products: Product[] | any};
 // ==================================================================
 
 export default function WishListPageView(props: Props) {
@@ -28,15 +28,15 @@ export default function WishListPageView(props: Props) {
 
       {/* PRODUCT LIST AREA */}
       <Grid container spacing={3}>
-        {products.map((item) => (
+        {products.map((item: any) => (
           <Grid item lg={4} sm={6} xs={12} key={item.id}>
             <ProductCard1
               id={item.id}
               slug={item.slug}
               title={item.title}
               price={item.price}
-              rating={item.rating}
-              imgUrl={item.thumbnail}
+              rating={4}
+              imgUrl={item.URL}
               discount={item.discount}
             />
           </Grid>

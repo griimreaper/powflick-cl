@@ -4,7 +4,7 @@
 // CONTACT US AT support@ui-lib.com
 import shuffle from "lodash/shuffle";
 import * as db from "./data";
-export const Grocery1Endpoints = (Mock) => {
+export const Grocery1Endpoints = (Mock: any) => {
   const getProducts = (type: string) => {
     return db.products.filter((item) => item.for.type === type);
   };

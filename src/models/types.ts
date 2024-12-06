@@ -192,11 +192,11 @@ export interface Profile {
       products: ProductDB;
       coupon?: Coupon;
     }[];
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    phone?: string;
-    image?: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    image: string;
     directions: Direction[];
     orders: Order[];
     reviews: Review[];

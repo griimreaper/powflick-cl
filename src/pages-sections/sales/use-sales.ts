@@ -14,7 +14,7 @@ export default function useSales(defaultSelectCategory = "women", fetchCategory 
   const [selectedCategory, setSelectedCategory] = useState(defaultSelectCategory);
 
   // HANDLE CHANGE PAGE
-  const handlePageChange = (_, page: number) => setPage(page);
+  const handlePageChange = (_: any, page: number) => setPage(page);
 
   // HANDLE THE CHANGE CATEGORY
   const handleCategoryChange = (category: string) => () => setSelectedCategory(category);

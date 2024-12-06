@@ -43,7 +43,7 @@ export default function OrderedProducts({ order }: Props) {
           </FlexBox>
 
           <Paragraph color="grey.600" ellipsis>
-            Product properties: {customizations.find(c => c.productId === item.id).customization.size}
+            Product properties: {customizations?.find(c => c.productId === item.id)?.customization.size}
           </Paragraph>
 
           <Button variant="text" color="primary">

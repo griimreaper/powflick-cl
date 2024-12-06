@@ -38,7 +38,7 @@ export default function ProductReviewsPageView({ reviews }: Props) {
     comment: item.comment,
     productId: item.product.id,
     product: item.product.title,
-    productImage: item.product.thumbnail,
+    productImage: item.product.URL,
     customer: `${item.customer.name.firstName} ${item.customer.name.lastName}`
   }));
 
@@ -69,7 +69,7 @@ export default function ProductReviewsPageView({ reviews }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((review) => (
+                {filteredList.map((review: any) => (
                   <ReviewRow review={review} key={review.id} />
                 ))}
               </TableBody>

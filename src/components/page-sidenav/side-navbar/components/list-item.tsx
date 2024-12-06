@@ -13,7 +13,7 @@ interface Props {
 // ==============================================================
 
 export default function ListItem({ title, icon }: Props) {
-  const Icon = appIcons[icon] as SvgIconComponent;
+  const Icon = appIcons[icon as keyof typeof appIcons] as SvgIconComponent;
 
   return (
     <Fragment>

@@ -15,10 +15,14 @@ import CreditCardForm from "./credit-card-form";
 export default function PaymentForm() {
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
 
-  const handlePaymentMethodChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPaymentMethod(event.target.name);
+  const handlePaymentMethodChange = (event: React.SyntheticEvent<Element, Event>, checked: boolean) => {
+    // Asegúrate de que event.currentTarget es un HTMLInputElement
+    const input = event.currentTarget as HTMLInputElement;
+  
+    if (checked) {
+      setPaymentMethod(input.name); // Aquí accedes a 'name' de un HTMLInputElement
+    }
   };
-
   return (
     <Fragment>
       <Card sx={{ padding: { sm: 3, xs: 2 }, mb: 4 }}>

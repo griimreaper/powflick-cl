@@ -49,7 +49,7 @@ export default function ReviewsPageView({ reviews }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((review, index) => (
+                {filteredList.map((review: any, index) => (
                   <ReviewRow review={review} key={index} />
                 ))}
               </TableBody>

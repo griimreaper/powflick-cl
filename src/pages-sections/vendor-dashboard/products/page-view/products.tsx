@@ -36,7 +36,7 @@ export default function ProductsPageView({ products }: Props) {
   const [productList, setProductList] = useState([...products]);
 
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
-  const filteredProducts = productList.map((item) => ({
+  const filteredProducts = productList.map((item: any) => ({
     id: item.id,
     slug: item.slug,
     name: item.title,
@@ -81,7 +81,7 @@ export default function ProductsPageView({ products }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((product, index) => (
+                {filteredList.map((product: any, index) => (
                   <ProductRow key={index} product={product} />
                 ))}
               </TableBody>

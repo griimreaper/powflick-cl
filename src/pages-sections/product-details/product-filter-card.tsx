@@ -74,7 +74,7 @@ const mockSubCategories: { [key: string]: string[] } = {
 interface Props {
   filters?: ProductFilters;
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
-  topCategories: { id: string; name: string; subCategories?: string[] }[];
+  topCategories?: { id: string; name: string; subCategories?: string[] }[];
 }
 
 const initialFilters = {
@@ -144,7 +144,7 @@ export default function ProductFilterCard({
     <div>
       {/* CATEGORY VARIANT FILTER */}
       <H6 mb={1.25}>Categories</H6>
-      {topCategories.map((item) => (
+      {topCategories?.map((item) => (
         <Fragment key={item.id}>
           <AccordionHeader
             open={collapsed === item.id}

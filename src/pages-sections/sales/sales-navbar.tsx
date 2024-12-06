@@ -23,7 +23,7 @@ export default function SalesNavbar({ categories, selected, onChangeCategory }: 
       <Container>
         <StyledScrollbar autoHide={false}>
           {categories.map((item) => {
-            const Icon = appIcons[item.icon];
+            const Icon = appIcons[item.icon as keyof typeof appIcons];
             const selectedItem = item.slug === selected ? 1 : 0;
 
             return (
