@@ -1,7 +1,6 @@
-import { Filters } from "@/app/dashboard-admin/reviews/interfaces";
 import { mainApi } from "../../apis";
 
-export const getReviewsAdmin = async (filters: Filters, token: string) => {
+export const getReviewsAdmin = async (filters: any, token: string) => {
   let query = '/reviews/admin?'
 
   if (filters) {

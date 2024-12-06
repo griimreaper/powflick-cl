@@ -1,7 +1,6 @@
-import { Filters } from "@/app/dashboard-admin/users/interfaces";
 import { mainApi } from "../../apis";
 
-export const getUsers = async (filters: Filters, token: string) => {
+export const getUsers = async (filters: any, token: string) => {
   let query = '/users?'
 
   if (filters) {

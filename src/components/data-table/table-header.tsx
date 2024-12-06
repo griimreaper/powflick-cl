@@ -25,7 +25,7 @@ interface Props {
   orderBy: string;
   rowCount: number;
   numSelected: number;
-  order: "ASC" | "DESC";
+  order: "asc" | "desc";
   hideSelectBtn?: boolean;
   onRequestSort: Function;
   onSelectAllClick?: (checked: boolean, defaultSelect: string) => void;

@@ -9,6 +9,7 @@ import { Navbar } from "components/navbar";
 import { Footer1 } from "components/footer";
 import { SearchInputWithCategory } from "components/search-box";
 import { MobileNavigationBar } from "components/mobile-navigation";
+import { useSession } from "next-auth/react";
 
 /** USED: SALES-1 & SALES-2 PAGES */
 
@@ -30,6 +31,7 @@ type SaleLayoutProps = withOutCategory | withCategory;
 // =============================================================
 
 export default function SalesLayout({ children, categoryNav, type = "one" }: SaleLayoutProps) {
+  const { data: session } = useSession();
   let CONTENT = null;
 
   // FOR SALES 1 PAGE
@@ -59,7 +61,7 @@ export default function SalesLayout({ children, categoryNav, type = "one" }: Sal
       <Topbar />
 
       {/* HEADER AREA */}
-      <Header midSlot={<SearchInputWithCategory />} />
+      <Header session={session} midSlot={<SearchInputWithCategory />} />
 
       {/* RENDER MAIN CONTENT AREA */}
       {CONTENT}

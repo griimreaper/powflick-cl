@@ -100,7 +100,7 @@ export default function ProductsPageView() {
           <TableContainer sx={{ minWidth: 900 }}>
             <Table>
               <TableHeader
-                order={filters.order}
+                order={filters.order.toLowerCase() as 'asc' | 'desc'}
                 hideSelectBtn
                 orderBy={'asc'}
                 heading={tableHeading}
