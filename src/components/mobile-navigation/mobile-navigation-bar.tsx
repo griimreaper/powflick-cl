@@ -14,7 +14,7 @@ import useCart from "hooks/useCart";
 import { iconStyle, StyledNavLink, Wrapper } from "./styles";
 import { DataStructure } from "models/types";
 
-export default function MobileNavigationBar({ data }: { data?: DataStructure }) {
+export default function MobileNavigationBar({ data }: { data?: DataStructure['navbar'] }) {
   const { state } = useCart();
   const DOWN_900 = useMediaQuery((theme: Theme) => theme.breakpoints.down(900));
 

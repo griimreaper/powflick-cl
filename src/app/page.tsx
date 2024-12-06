@@ -7,6 +7,8 @@ import { getLanding } from "services/Landing";
 
 export const revalidate = 86400 * 7;
 
+export const dynamicParams = true;
+
 export const metadata: Metadata = {
   title: "Sport Zone",
   description: `Sport Zone is a modern e-commerce for selling sports equipment and accessories.`,
@@ -22,7 +24,7 @@ export default async function FashionShopTwo() {
 
   return (
     <>
-      <ShopLayout1 data={data} session={session}>
+      <ShopLayout1 session={session}>
         <FashionTwoPageView data={data} />;
       </ShopLayout1>
     </>
