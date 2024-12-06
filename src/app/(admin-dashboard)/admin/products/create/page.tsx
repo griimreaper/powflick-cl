@@ -1,5 +1,7 @@
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { ProductCreatePageView } from "pages-sections/vendor-dashboard/products/page-view";
+import { getOneProduct } from "services/dashboardAdmin/products";
 
 export const metadata: Metadata = {
   title: "Product Create - SportZone",
@@ -8,6 +10,12 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 
-export default function ProductCreate() {
-  return <ProductCreatePageView />;
+export default async function ProductCreate() {
+  const session = await getServerSession();
+
+  let token = session?.user?.name?.split("|")[0];
+
+  const { collectionsList, categoriesList } = await getOneProduct('create', token as string);
+
+  return <ProductCreatePageView collectionsList={collectionsList} categoriesList={categoriesList}/>;
 }

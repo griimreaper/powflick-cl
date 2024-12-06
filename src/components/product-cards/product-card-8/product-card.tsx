@@ -21,6 +21,10 @@ import { AddToCartButton, Card, CardMedia, FavoriteButton, QuickViewButton } fro
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
 import { ProductDB } from "models/types";
+import { useEffect, useState } from "react";
+import { useDashboardStore } from "store/dashboard";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { favProduct } from "services/Products";
 
 // ==============================================================
 type Props = { product: ProductDB };
@@ -29,8 +33,8 @@ type Props = { product: ProductDB };
 export default function ProductCard8({ product }: Props) {
   const { slug, id, title, price, URL, images, product_categories } = product || {};
 
-  const { cartItem, handleCartAmountChange, isFavorite, openModal, toggleDialog, toggleFavorite } =
-    useProduct(slug);
+  const { cartItem, handleCartAmountChange, openModal, toggleDialog, isFavorite, toggleFavorite } =
+    useProduct(id);
 
   // HANDLE ADD TO CART PRODUCT
   const handleAddToCart = () => {
@@ -45,6 +49,7 @@ export default function ProductCard8({ product }: Props) {
 
     handleCartAmountChange(payload);
   };
+
 
   return (
     <Card>
@@ -65,7 +70,7 @@ export default function ProductCard8({ product }: Props) {
         </AddToCartButton>
 
         {/* PRODUCT FAVORITE BUTTON */}
-        <FavoriteButton className="product-actions" onClick={toggleFavorite}>
+        <FavoriteButton className="product-actions" onClick={() => toggleFavorite()} >
           {isFavorite ? (
             <Favorite className="icon" fontSize="small" color="primary" />
           ) : (

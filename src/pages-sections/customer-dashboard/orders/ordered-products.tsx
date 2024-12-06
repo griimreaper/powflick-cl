@@ -16,7 +16,7 @@ type Props = { order: Order };
 // ==============================================================
 
 export default function OrderedProducts({ order }: Props) {
-  const { id, createdAt, products, updatedAt, customizations } = order || {};
+  const { id, createdAt, products, updatedAt, customizations } = order;
 
   return (
     <Card sx={{ p: 0, mb: "30px" }}>

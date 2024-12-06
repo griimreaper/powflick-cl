@@ -32,6 +32,7 @@ export interface ProductDB {
   createdAt: string; // Fecha de creación del producto
   updatedAt: string; // Fecha de última actualización del producto
   quantityPurchase: number;
+  collections?: any[];
 }
 
 export interface RecentProduct extends ProductDB {
@@ -201,6 +202,7 @@ export interface Profile {
     orders: Order[];
     reviews: Review[];
   };
+  messages: Message[];
   token: string | null;
   rol: "admin" | "user" | null;
 }
@@ -240,12 +242,24 @@ export interface Review {
 export interface Message {
   id: string;
   name: string;
-  email?: string;
+  email: string;
+  title: string;
+  type: 'Urgent' | 'Normal'; // Se puede ampliar según los tipos posibles
+  status: 'Open' | 'Closed'; // Se puede ampliar según los estados posibles
+  pending: boolean;
   message: string;
-  category?: ContactType;
-  response?: string | null;
-  consultedAt: string;
-  responseAt: string;
+  category: string;
+  consultedAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
+  responseAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
+  conversation: Conversation[];
+}
+
+interface Conversation {
+  text: string;
+  imgUrl: string;
+  name: string;
+  createdAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
+  from: 'admin' | 'user';
 }
 
 export enum ContactType {
@@ -266,3 +280,9 @@ export interface detailProps {
   ShippingTypes: string;
   reviews: Review[];
 }
+
+export type UseLoadingType = [
+  loading: boolean,
+  startLoading: () => void, // Función para iniciar la carga
+  stopLoading: () => void // Función para detener la carga
+];

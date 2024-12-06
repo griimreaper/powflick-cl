@@ -1,18 +1,13 @@
 import { Metadata } from "next";
-import { WishListPageView } from "pages-sections/customer-dashboard/wish-list";
-// API FUNCTIONS
-import { getWishListProducts } from "utils/__api__/wish-list";
+import { ProfilePageView } from "pages-sections/customer-dashboard/profile/page-view";
 
 export const metadata: Metadata = {
-  title: "Wish List - SportZone",
+  title: "Profile - SportZone",
   description: "SportZone es una tienda en línea especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizables, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñada para deportistas y equipos que buscan rendimiento y estilo.",
   authors: [{ name: "devcodelab" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 
-export default async function WishList({ searchParams }: any) {
-  const { products, totalProducts } = await getWishListProducts(
-    searchParams.page
-  );
-  return <WishListPageView products={products} totalProducts={totalProducts} />;
+export default async function Profile() {
+  return <ProfilePageView />;
 }

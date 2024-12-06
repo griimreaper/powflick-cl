@@ -52,7 +52,7 @@ export default function ProductCard1({
     toggleDialog,
     toggleFavorite,
     handleCartAmountChange,
-  } = useProduct(slug);
+  } = useProduct(String(id));
 
   const handleIncrementQuantity = () => {
     const product = {

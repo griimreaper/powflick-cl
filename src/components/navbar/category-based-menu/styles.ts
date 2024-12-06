@@ -53,7 +53,8 @@ const CategoryListItem = styled(ListItem, {
 
 const SubCategoryList = styled(List)(({ theme }) => ({
   padding: 0,
-  display: "grid",
+  display: "flex",
+  gap: 24,
   gridTemplateColumns: "repeat(6, 1fr)",
   [theme.breakpoints.down("xl")]: { gridTemplateColumns: "repeat(5, 1fr)" },
   [theme.breakpoints.down("lg")]: { gridTemplateColumns: "repeat(4, 1fr)" },

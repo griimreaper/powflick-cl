@@ -95,7 +95,7 @@ export default function ProductCard10({ product }: Props) {
         <FlexRowCenter gap={1} mb={2}>
           <Rating name="read-only" value={4} readOnly sx={{ fontSize: 14 }} />
           <Small fontWeight={600} color="grey.500">
-            ({100})
+            ({4})
           </Small>
         </FlexRowCenter>
 

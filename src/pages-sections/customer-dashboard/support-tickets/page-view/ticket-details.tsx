@@ -7,14 +7,15 @@ import ConversationCard from "../conversation-card";
 import DashboardHeader from "../../dashboard-header";
 // CUSTOM ICON COMPONENT
 import CustomerService from "icons/CustomerService";
-// CUSTOM DATA MODEL
-import Ticket from "models/Ticket.model";
+import { useDashboardStore } from "store/dashboard";
 
-// ==========================================================
-type Props = { ticket: Ticket };
-// ==========================================================
+export default function TicketDetailsPageView({ id }: { id: string }) {
+  const { profile } = useDashboardStore();
+  const { messages } = profile;
+  const message = messages?.find((m) => m.id === id) || null;
 
-export default function TicketDetailsPageView({ ticket }: Props) {
+  const token = profile.token;
+
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
@@ -26,12 +27,19 @@ export default function TicketDetailsPageView({ ticket }: Props) {
       />
 
       {/* CONVERSATION LIST */}
-      {ticket.conversation?.map((item, ind) => (
+      <ConversationCard message={{
+        name: message?.name as string,
+        imgUrl: profile.genericResponseUser.image as string,
+        text: message?.message as string,
+        createdAt: message?.consultedAt as string,
+        from: 'user'
+      }} />
+      {message?.conversation?.map((item, ind) => (
         <ConversationCard message={item} key={ind} />
       ))}
 
       {/* FORM AREA */}
-      <MessageForm />
+      <MessageForm token={token as string} messageId={id}/>
     </Fragment>
   );
 }

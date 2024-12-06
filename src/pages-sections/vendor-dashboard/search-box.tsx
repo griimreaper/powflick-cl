@@ -6,12 +6,13 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 import SearchInput from "components/SearchInput";
+import { useRef } from "react";
 
 // ===============================================================
 interface Props {
   url: string;
   buttonText: string;
-  handleSearch: () => void;
+  handleSearch: (values: string) => void;
   searchPlaceholder: string;
 }
 // ===============================================================
@@ -19,13 +20,24 @@ interface Props {
 export default function SearchArea({
   searchPlaceholder = "Search Product...",
   buttonText = "Add Product",
-  url = "/"
+  url = "/",
+  handleSearch,
 }: Props) {
   const downSM = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  const debounceRef = useRef<NodeJS.Timeout>();
+
+  const onQueryChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    debounceRef.current = setTimeout(() => {
+      console.log("Searching for:", event.target.value);
+      handleSearch(event.target.value);
+    }, 350);
+  };
 
   return (
     <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap">
-      <SearchInput placeholder={searchPlaceholder} />
+      <SearchInput placeholder={searchPlaceholder} onChange={(e) => onQueryChange(e)} />
 
       <Button
         href={url}

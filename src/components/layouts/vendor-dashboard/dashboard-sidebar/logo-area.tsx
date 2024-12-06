@@ -24,8 +24,8 @@ export default function LogoArea() {
         alt="SportZone Logo"
         src={
           COMPACT
-            ? "/assets/images/SportZone-white-sm.svg"
-            : "/assets/images/logo.svg"
+            ? "/assets/images/logo/SportZone2.png"
+            : "/assets/images/logo/SportZone2.png"
         }
         sx={{ borderRadius: 0, width: "auto", marginLeft: COMPACT ? 0 : 1 }}
       />

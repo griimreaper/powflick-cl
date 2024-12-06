@@ -45,7 +45,7 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({user, account, profile}) {
+    async signIn({ user, account, profile }) {
       let token: string = '';
       // Se ejecuta después de que un usuario se haya autenticado con éxito
       if (account?.provider === "google") {
@@ -55,8 +55,9 @@ const handler = NextAuth({
           firstName: profile?.name?.split(' ')[0],
           lastName: profile?.name?.split(' ').pop(),
           image: profile?.image,
-          provider: "google", // Marcar como autenticado con Google
-        });
+        },
+          "google", // Marcar como autenticado con Google
+        );
 
         const loginResponse = await login(String(profile?.email), null);
 
