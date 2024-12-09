@@ -16,6 +16,13 @@ import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
 // STYLED COMPONENTS
 import { UploadImageBox, StyledClear } from "../styles";
+import { Category } from "models/types";
+import { useDashboardStore } from "store/dashboard";
+import { useRouter } from "next/navigation";
+import { Autocomplete } from "@mui/material";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { createCategory, updateCategory } from "services/Categories";
+import { createProduct } from "services/dashboardAdmin/products";
 
 // FORM FIELDS VALIDATION
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -23,29 +30,52 @@ const VALIDATION_SCHEMA = yup.object().shape({
 });
 
 // ================================================================
-interface Props {}
+interface Props {
+  category?: Category,
+  availableProducts: string[]; // Lista de productos disponibles para seleccionar
+};
 // ================================================================
 
-export default function CategoryForm(props: Props) {
-  const [files, setFiles] = useState([]);
+export default function CategoryForm({ category, availableProducts }: Props) {
+  const { profile } = useDashboardStore();
+  const router = useRouter();
+
+  const {
+    id,
+    name,
+    products,
+  } = category || {};
 
   const INITIAL_VALUES = {
-    name: "",
-    parent: [],
-    featured: false
+    name: name || "",
+    products: products?.map(p => p.title) || [],
   };
 
-  const handleFormSubmit = () => {};
+  const update = async (values: typeof INITIAL_VALUES) => {
+    try {
+      const response = await updateCategory(id!, values, profile.token as string);
+      showSuccessAlert('Success', response.message)
+    } catch (error) {
+      showErrorAlert('Failed', 'The product could not be updated')
+    }
+  }
 
-  // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-  const handleChangeDropZone = (files: File[]) => {
-    files.forEach((file) => Object.assign(file, { preview: URL.createObjectURL(file) }));
-    setFiles(files);
-  };
+  const create = async (values: typeof INITIAL_VALUES) => {
+    try {
+      const response = await createCategory(values, profile.token as string);
+      showSuccessAlert('Success', response.message)
+      router.push('/admin/categories/'+ response.createdCategory.id)
+    } catch (error: any) {
+      showErrorAlert('Failed', error.response.data.message)
+    }
+  }
 
-  // HANDLE DELETE UPLOAD IMAGE
-  const handleFileDelete = (file: File) => () => {
-    setFiles((files) => files.filter((item) => item.name !== file.name));
+  const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
+    if (!category) {
+      create(values)
+    } else {
+      update(values)
+    }
   };
 
   return (
@@ -73,7 +103,35 @@ export default function CategoryForm(props: Props) {
                 />
               </Grid>
 
-              <Grid item sm={6} xs={12}>
+              {/* Campo Autocomplete para seleccionar productos */}
+              <Grid item sm={12} xs={12}>
+                <Autocomplete
+                  multiple
+                  id="products"
+                  options={availableProducts}
+                  getOptionLabel={(option) => option} // Suponiendo que el nombre del producto está en `option`
+                  value={values.products} // Mantener el estado de los productos seleccionados
+                  onChange={(event, newValue) => {
+                    handleChange({
+                      target: { name: 'products', value: newValue },
+                    });
+                  }}
+
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Select Products"
+                      color="info"
+                      size="medium"
+                      placeholder="Search products"
+                    />
+                  )}
+                  isOptionEqualToValue={(option, value) => option === value} // Comparar el valor de la opción con el valor seleccionado
+                />
+              </Grid>
+
+
+              {/* <Grid item sm={6} xs={12}>
                 <TextField
                   select
                   fullWidth
@@ -89,27 +147,9 @@ export default function CategoryForm(props: Props) {
                   <MenuItem value="electronics">Electronics</MenuItem>
                   <MenuItem value="fashion">Fashion</MenuItem>
                 </TextField>
-              </Grid>
+              </Grid> */}
 
-              <Grid item xs={12}>
-                <DropZone
-                  title="Drop & drag category image"
-                  onChange={(files) => handleChangeDropZone(files)}
-                />
-
-                <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
-                  {files.map((file, index) => {
-                    return (
-                      <UploadImageBox key={index}>
-                        <Box component="img" alt="product" src={file.preview} width="100%" />
-                        <StyledClear onClick={handleFileDelete(file)} />
-                      </UploadImageBox>
-                    );
-                  })}
-                </FlexBox>
-              </Grid>
-
-              <Grid item sm={6} xs={12}>
+              {/* <Grid item sm={6} xs={12}>
                 <FormControlLabel
                   label="Featured Category"
                   control={
@@ -122,11 +162,11 @@ export default function CategoryForm(props: Props) {
                     />
                   }
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
-                  Save category
+                {!category ? 'Create category' : 'Save category'}
                 </Button>
               </Grid>
             </Grid>
