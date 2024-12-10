@@ -15,7 +15,7 @@ type Props = { customer: any };
 // ========================================================================
 
 export default function CustomerRow({ customer }: Props) {
-  const { email, name, phone, avatar, balance, orders } = customer || {};
+  const { email, name, phone, avatar, rol, orders, isActive } = customer || {};
 
   const STYLE = { fontWeight: 400 };
 
@@ -37,11 +37,11 @@ export default function CustomerRow({ customer }: Props) {
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={STYLE}>
-        {currency(balance)}
+        {rol}
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={STYLE}>
-        {orders}
+        {isActive ? "yes" : "no"}
       </StyledTableCell>
 
       <StyledTableCell align="center">
