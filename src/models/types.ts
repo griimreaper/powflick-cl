@@ -286,12 +286,18 @@ export type UseLoadingType = [
 ];
 
 export interface Filters {
-  filter: string;
-  order: "DESC" | "ASC";
-  rol: "user" | "admin" | "all";
-  isActive: "active" | "inactive" | "all";
-  search: "";
+  filter: "email";
+
+  order: "DESC";
+
+  rol: "all" | "admin" | "user";
+
+  isActive: "all" | "yes" | "no";
+
+  search: string;
+
   page: number;
+
   limit: number;
 }
 

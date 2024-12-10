@@ -15,7 +15,8 @@ type Props = { customer: any };
 // ========================================================================
 
 export default function CustomerRow({ customer }: Props) {
-  const { email, name, phone, avatar, rol, orders, isActive } = customer || {};
+  const { email, name, phone, avatar, rol, firstName, isActive } =
+    customer || {};
 
   const STYLE = { fontWeight: 400 };
 
@@ -24,7 +25,7 @@ export default function CustomerRow({ customer }: Props) {
       <StyledTableCell align="left">
         <FlexBox alignItems="center" gap={1.5}>
           <Avatar alt={name} src={avatar} />
-          <Paragraph fontWeight={600}>{name}</Paragraph>
+          <Paragraph fontWeight={600}>{firstName}</Paragraph>
         </FlexBox>
       </StyledTableCell>
 
