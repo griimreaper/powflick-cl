@@ -9,6 +9,22 @@ export interface Category {
   // subcategories: Category[];
 }
 
+export enum CollectionType {
+  NAVBAR = 'navbar',
+  STORE = 'store',
+  BOTH = 'both',
+  NONE = 'none',
+}
+
+export interface Collection {
+  id: string;
+  title: string;
+  content: string;
+  order: number;
+  type: CollectionType;
+  products: ProductDB[]
+}
+
 export interface ProductDB {
   id: string; // Identificador único del producto
   title: string; // Título del producto
