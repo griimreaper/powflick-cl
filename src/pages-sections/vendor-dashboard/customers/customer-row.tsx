@@ -7,6 +7,7 @@ import Select from "@mui/material/Select";
 import Edit from "@mui/icons-material/Edit";
 import Save from "@mui/icons-material/Save";
 import Delete from "@mui/icons-material/Delete";
+import Cancel from "@mui/icons-material/Cancel";
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 import { Paragraph } from "components/Typography";
@@ -54,6 +55,12 @@ export default function CustomerRow({ customer }: Props) {
       showErrorAlert("Error", "Token is null");
       console.error("Token is null");
     }
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditedRole(rol);
+    setEditedActive(isActive);
   };
 
   return (
@@ -106,7 +113,11 @@ export default function CustomerRow({ customer }: Props) {
         <StyledIconButton onClick={isEditing ? handleSaveClick : handleEditClick}>
           {isEditing ? <Save /> : <Edit />}
         </StyledIconButton>
-
+        {isEditing && (
+          <StyledIconButton onClick={handleCancelClick}>
+            <Cancel />
+          </StyledIconButton>
+        )}
         {/* <StyledIconButton>
           <Delete />
         </StyledIconButton> */}
