@@ -47,7 +47,7 @@ export default function CustomersPageView() {
   const token = session?.user?.name?.split("|")[0];
 
   const {
-    order,
+    order: rawOrder,
     orderBy,
     selected,
     rowsPerPage,
@@ -55,6 +55,8 @@ export default function CustomersPageView() {
     handleChangePage,
     handleRequestSort,
   } = useMuiTable({ listData: users?.users || [] });
+
+  const order = rawOrder === "desc" ? "DESC" : "ASC";
 
   const [filters, setFilters] = useState<Filters>({
     filter: "email",
