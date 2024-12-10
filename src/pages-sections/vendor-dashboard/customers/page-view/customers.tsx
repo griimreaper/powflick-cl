@@ -16,12 +16,23 @@ import CustomerRow from "../customer-row";
 import PageWrapper from "../../page-wrapper";
 // TABLE HEAD COLUMN DATA
 import { tableHeading } from "../table-heading";
+import { useEffect, useState } from "react";
+import useLoading from "hooks/useLoading";
+import { getUsers } from "services/dashboardAdmin/users";
+import { DataUsers, Filters } from "models/types";
+import { useSession } from "next-auth/react";
 
 // =============================================================================
 type Props = { customers: any[] };
 // =============================================================================
 
 export default function CustomersPageView({ customers }: Props) {
+  const [loading, startLoading, stopLoading] = useLoading();
+  const [users, setUsers] = useState<DataUsers>();
+
+  const { data: session } = useSession();
+  const token = session?.user?.name?.split("|")[0];
+
   const {
     order,
     orderBy,
@@ -29,8 +40,34 @@ export default function CustomersPageView({ customers }: Props) {
     rowsPerPage,
     filteredList,
     handleChangePage,
-    handleRequestSort
-  } = useMuiTable({ listData: customers });
+    handleRequestSort,
+  } = useMuiTable({ listData: users?.users || [] });
+
+  const [filters, setFilters] = useState<Filters>({
+    filter: "email",
+    order: "DESC",
+    rol: "all",
+    isActive: "all",
+    search: "",
+    page: 1,
+    limit: 6,
+  });
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        if (token) {
+          startLoading();
+          const data = await getUsers(filters, token);
+          stopLoading();
+          setUsers(data);
+        }
+      } catch (error) {
+        console.error("Error getting users:", error);
+      }
+    };
+    fetchUsers();
+  }, [filters, token]);
 
   return (
     <PageWrapper title="Customers">
@@ -67,7 +104,7 @@ export default function CustomersPageView({ customers }: Props) {
         <Stack alignItems="center" my={4}>
           <TablePagination
             onChange={handleChangePage}
-            count={Math.ceil(filteredList.length / rowsPerPage)}
+            count={Math.ceil((users?.total || 0) / rowsPerPage)}
           />
         </Stack>
       </Card>

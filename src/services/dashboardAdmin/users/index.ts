@@ -1,4 +1,4 @@
-import { Filters } from "@/app/dashboard-admin/users/interfaces";
+import { Filters } from "models/types";
 import { mainApi } from "../../apis";
 
 export const getUsers = async (filters: Filters, token: string) => {
