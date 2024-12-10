@@ -29,12 +29,14 @@ export default function ProductsPageView() {
   const [productList, setProductList] = useState<ProductData>();
   const { actualize, setActualize } = useHearingEvent();
   const [filters, setFilters] = useState<Filters>({
-    search: "",
+    search: '',
     page: 1,
     limit: 6,
-    order: "DESC",
+    order: 'DESC',
   });
-  console.log(filters);
+
+  const { profile } = useDashboardStore();
+  const { token } = profile;
 
   const handlePage = (page: number) => {
     setFilters({ ...filters, page });
@@ -54,8 +56,6 @@ export default function ProductsPageView() {
     fetchProducts();
   }, [filters, token, actualize]);
 
-  console.log(filters);
-
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
   const filteredProducts = productList?.products.map((item) => ({
     ...item,
@@ -66,37 +66,17 @@ export default function ProductsPageView() {
     price: item.price,
     image: item.URL,
     status: item.status,
-    category: item.product_categories.split("|")[0],
+    category: item.product_categories.split('|')[0]
   }));
 
   // TABLE HEADING DATA LIST
   const tableHeading = [
     { id: "name", label: "Name", align: "left", content: null },
-    {
-      id: "category",
-      label: "Category",
-      align: "left",
-      content: Object.keys(productList?.count?.categories || {}),
-    },
-    {
-      id: "collection",
-      label: "Collection",
-      align: "left",
-      content: Object.keys(productList?.count?.collection || {}),
-    },
-    { id: "order", label: "Price", align: "left", content: ["ASC", "DESC"] },
-    {
-      id: "status",
-      label: "Published",
-      align: "left",
-      content: ["publish", "draft"],
-    },
-    {
-      id: "limit",
-      label: "Limit",
-      align: "center",
-      content: [1, 3, 6, 8, 10, 12],
-    },
+    { id: "category", label: "Category", align: "left", content: (Object.keys(productList?.count?.categories || {})) },
+    { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})) },
+    { id: "order", label: "Price", align: "left", content: ['ASC', 'DESC'] },
+    { id: "status", label: "Published", align: "left", content: ['publish', 'draft'] },
+    { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 8, 10, 12] }
   ];
 
   const handleSearch = (value: string) => {
@@ -119,30 +99,20 @@ export default function ProductsPageView() {
               <TableHeader
                 order={filters.order}
                 hideSelectBtn
-                orderBy={"asc"}
+                orderBy={'asc'}
                 heading={tableHeading}
                 rowCount={Number(productList?.total)}
                 numSelected={Number(productList?.totalPages)}
-                onFilterChange={(filter: string, option: string) =>
-                  setFilters((f: any) => {
-                    return { ...f, [filter]: option };
-                  })
-                }
-                onRequestSort={(filter: string, option: string) =>
-                  setFilters((f: any) => {
-                    return { ...f, [filter]: option };
-                  })
-                }
+                onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
+                onRequestSort={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
               />
               <TableBody>
+
                 {filteredProducts?.map((product) => (
-                  <ProductRow
-                    key={product.id}
-                    product={product}
-                    setActualize={setActualize}
-                  />
+                  <ProductRow key={product.id} product={product} setActualize={setActualize} />
                 ))}
               </TableBody>
+
             </Table>
           </TableContainer>
         </Scrollbar>
