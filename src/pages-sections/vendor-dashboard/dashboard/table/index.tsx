@@ -114,7 +114,7 @@ export default function DataListTable({ dataList, tableHeading, type }: Props) {
       <TableContainer sx={{ minWidth: type === "RECENT_PURCHASE" ? 600 : 0 }}>
         <Table>
           <TableHeader
-            order={order}
+            order={order as 'asc' || 'desc'}
             orderBy={orderBy}
             heading={tableHeading}
             onRequestSort={handleRequestSort}

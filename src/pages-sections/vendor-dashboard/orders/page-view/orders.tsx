@@ -45,7 +45,7 @@ export default function OrdersPageView({ orders }: Props) {
   } = useMuiTable({
     listData: filteredOrders,
     defaultSort: "purchaseDate",
-    defaultOrder: "desc"
+    defaultOrder: "DESC"
   });
 
   return (
@@ -62,7 +62,7 @@ export default function OrdersPageView({ orders }: Props) {
           <TableContainer sx={{ minWidth: 900 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={order.toLowerCase() as 'asc' || 'desc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}

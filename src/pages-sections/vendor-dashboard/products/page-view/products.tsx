@@ -99,7 +99,7 @@ export default function ProductsPageView() {
               <TableHeader
                 order={filters.order.toLowerCase() as 'asc' | 'desc'}
                 hideSelectBtn
-                orderBy={'asc'}
+                orderBy={'ASC'}
                 heading={tableHeading}
                 rowCount={Number(productList?.total)}
                 numSelected={Number(productList?.totalPages)}

@@ -22,14 +22,14 @@ export default function SalesNavbar({ categories, selected, onChangeCategory }: 
     <Box bgcolor="background.paper">
       <Container>
         <StyledScrollbar autoHide={false}>
-          {categories.map((item) => {
+          {categories.map((item: any) => {
             const Icon = appIcons[item.icon as keyof typeof appIcons];
-            const selectedItem = item.slug === selected ? 1 : 0;
+            const selectedItem = item.name === selected ? 1 : 0;
 
             return (
               <FlexRowCenter
                 key={item.id}
-                onClick={onChangeCategory(item.slug)}
+                onClick={onChangeCategory(item.name)}
                 sx={{
                   cursor: "pointer",
                   minWidth: "100px",

@@ -48,7 +48,7 @@ export default function SellersPageView({ sellers }: Props) {
           <TableContainer sx={{ minWidth: 1100 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}

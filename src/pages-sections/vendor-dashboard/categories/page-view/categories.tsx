@@ -76,7 +76,7 @@ const CategoriesPageView = () => {
           <TableContainer >
             <Table>
               <TableHeader
-                order={'ASC'}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={''}
                 heading={tableHeading}

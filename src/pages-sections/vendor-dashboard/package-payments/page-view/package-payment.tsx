@@ -40,7 +40,7 @@ export default function PackagePaymentPageView({ payments }: Props) {
           <TableContainer sx={{ minWidth: 1000 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}

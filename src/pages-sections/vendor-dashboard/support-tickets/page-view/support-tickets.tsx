@@ -41,7 +41,7 @@ export default function SupportTicketsPageView({ tickets }: Props) {
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
