@@ -35,7 +35,7 @@ export const Furniture3Endpoints = (Mock: MockAdapter) => {
     }
   });
 
-  Mock.onGet("/api/furniture-3/breadcrumb").reply(async (config) => {
+  Mock.onGet("/api/furniture-3/breadcrumb").reply(async (config: any) => {
     try {
       if (!config.params.slug) return [200, null];
 

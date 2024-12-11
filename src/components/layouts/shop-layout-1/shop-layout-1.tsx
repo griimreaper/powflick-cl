@@ -20,6 +20,7 @@ import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
 import { getProfile } from "services/DashboardUser";
 import { useDashboardStore } from "store/dashboard";
+import { useNavbar } from "contexts/NavBarContext";
 
 /**
  *  USED IN:
@@ -29,17 +30,17 @@ import { useDashboardStore } from "store/dashboard";
  */
 
 interface ShopLayout1Props extends PropsWithChildren {
-  data: DataStructure;
   session: Session | null;
 }
 
 export default function ShopLayout1({
   children,
-  data,
   session,
 }: ShopLayout1Props) {
   const [isFixed, setIsFixed] = useState(false);
   const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
+
+  const {navbarData: data} = useNavbar();
 
   const { profile, setData, removeProfile, setProfileUser } =
     useDashboardStore();
@@ -103,7 +104,7 @@ export default function ShopLayout1({
       </Sticky>
 
       {/* NAVIGATION BAR */}
-      <Navbar elevation={0} border={1} data={data?.navbar} />
+      <Navbar elevation={0} border={1} data={data} />
 
       {/* BODY CONTENT */}
       {children}

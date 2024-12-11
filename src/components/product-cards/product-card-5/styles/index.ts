@@ -88,6 +88,6 @@ export const ButtonBox = styled("div")(({ theme }) => ({
   "& button": {
     color: "#fff",
     background: theme.palette.primary.main,
-    "&:hover": { background: theme.palette.primary[600] },
+    "&:hover": { background: theme.palette.primary['light'] },
   },
 }));

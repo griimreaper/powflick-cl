@@ -131,7 +131,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
 
   // HANDLE DELETE UPLOAD IMAGE
   const handleFileDelete = (file: File) => () => {
-    setFiles((files) => files.filter((item) => item.name !== file.name));
+    setFiles((files) => files?.filter((item) => item.name !== file.name));
   };
 
   return (
@@ -369,7 +369,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
               </Grid>
 
               <Grid item xs={12}>
-                <DropZone onChange={(files) => handleChangeDropZone(files)} />
+                <DropZone onChange={(files: any) => handleChangeDropZone(files)} />
 
                 <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
                   {files.map((file, index) => (

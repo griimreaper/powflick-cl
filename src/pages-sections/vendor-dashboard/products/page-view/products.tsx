@@ -97,9 +97,9 @@ export default function ProductsPageView() {
           <TableContainer sx={{ minWidth: 900 }}>
             <Table>
               <TableHeader
-                order={filters.order}
+                order={filters.order.toLowerCase() as 'asc' | 'desc'}
                 hideSelectBtn
-                orderBy={'asc'}
+                orderBy={'ASC'}
                 heading={tableHeading}
                 rowCount={Number(productList?.total)}
                 numSelected={Number(productList?.totalPages)}

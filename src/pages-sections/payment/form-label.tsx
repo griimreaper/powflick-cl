@@ -9,7 +9,7 @@ interface Props {
   name: string;
   title: string;
   checked: boolean;
-  handleChange: (event: SyntheticEvent<Element, Event>, checked: boolean) => void;
+  handleChange:  (event: React.SyntheticEvent<Element, Event>, checked: boolean) => void;
 }
 // ==============================================================
 

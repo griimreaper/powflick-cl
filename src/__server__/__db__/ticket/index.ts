@@ -4,7 +4,7 @@
 // CONTACT US AT support@ui-lib.com
 import Ticket from "models/Ticket.model";
 import { ticketList, messageList } from "./data";
-export const TicketsEndpoints = (Mock) => {
+export const TicketsEndpoints = (Mock: any) => {
   Mock.onGet("/api/tickets").reply(async () => {
     try {
       return [200, ticketList];
@@ -14,7 +14,7 @@ export const TicketsEndpoints = (Mock) => {
     }
   });
 
-  Mock.onGet("/api/tickets/single").reply(async (config) => {
+  Mock.onGet("/api/tickets/single").reply(async (config: any) => {
     try {
       if (config.params?.slug) {
         const ticket = ticketList.find(

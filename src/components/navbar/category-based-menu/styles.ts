@@ -47,7 +47,7 @@ const CategoryListItem = styled(ListItem, {
   justifyContent: "space-between",
   ...(active && {
     color: theme.palette.primary.main,
-    backgroundColor: theme.palette.primary[100],
+    backgroundColor: theme.palette.primary['light'],
   }),
 }));
 

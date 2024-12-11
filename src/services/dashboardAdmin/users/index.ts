@@ -1,7 +1,6 @@
-import { Filters } from "models/types";
 import { mainApi } from "../../apis";
 
-export const getUsers = async (filters: Filters, token: string) => {
+export const getUsers = async (filters: any, token: string) => {
   let query = '/users?'
 
   if (filters) {

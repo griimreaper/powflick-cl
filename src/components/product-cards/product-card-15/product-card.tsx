@@ -17,15 +17,16 @@ import { calculateDiscount, currency } from "lib";
 import { Content, PriceText, StyledRoot } from "./styles";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ==============================================================
 interface Props {
-  product: Product;
+  product: ProductDB;
 }
 // ==============================================================
 
 export default function ProductCard14({ product }: Props) {
-  const { id, slug, title, thumbnail, price, discount } = product || {};
+  const { id, slug, title, URL, price, discount } = product || {};
 
   const { cartItem, handleCartAmountChange } = useProduct(slug);
 
@@ -35,7 +36,7 @@ export default function ProductCard14({ product }: Props) {
       slug,
       price,
       name: title,
-      imgUrl: thumbnail,
+      imgUrl: URL,
       qty: (cartItem?.qty || 0) + 1
     };
 
@@ -48,7 +49,7 @@ export default function ProductCard14({ product }: Props) {
       slug,
       price,
       name: title,
-      imgUrl: thumbnail,
+      imgUrl: URL,
       qty: (cartItem?.qty || 0) - 1
     };
     handleCartAmountChange(product, "remove");
@@ -57,7 +58,7 @@ export default function ProductCard14({ product }: Props) {
   return (
     <StyledRoot>
       <Link href={`/products/${slug}`}>
-        <LazyImage alt={title} width={260} height={280} src={thumbnail} />
+        <LazyImage alt={title} width={260} height={280} src={URL} />
       </Link>
 
       <Content>

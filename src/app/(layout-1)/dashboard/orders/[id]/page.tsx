@@ -21,7 +21,7 @@ export default async function OrderDetails({ params }: IdParams) {
     const session = await getServerSession();
     let token = session?.user?.name?.split("|")[0];
 
-    const { data: order } = await getOrder(String(params.id), token);
+    const { data: order } = await getOrder(String(params.id), token as string);
 
     console.log(order);
 

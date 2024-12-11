@@ -4,7 +4,7 @@
 // CONTACT US AT support@ui-lib.com
 import shuffle from "lodash/shuffle";
 import { uniqueProducts, slugs, search } from "./data";
-export const ProductsEndpoints = (Mock) => {
+export const ProductsEndpoints = (Mock: any) => {
   Mock.onGet("/api/products").reply(async () => {
     try {
       return [200, uniqueProducts];
@@ -15,7 +15,7 @@ export const ProductsEndpoints = (Mock) => {
   });
 
   // single product based on slug
-  Mock.onGet("/api/products/slug").reply(async (config) => {
+  Mock.onGet("/api/products/slug").reply(async (config: any) => {
     try {
       if (config?.params?.slug) {
         const product = uniqueProducts.find((item) => item?.slug === config.params.slug);

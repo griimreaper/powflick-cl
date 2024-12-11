@@ -22,15 +22,15 @@ const CategoryList = forwardRef<HTMLDivElement, Props>(
   ({ categories, selectedCategory, handleCategoryChange }, ref) => (
     <Box mb={4} overflow="hidden" ref={ref}>
       <FlexBox m={-1.5} flexWrap="wrap">
-        {categories.map((item) => {
-          const selectedItem = item.slug === selectedCategory ? 1 : 0;
-          const Icon = appIcons[item.icon];
+        {categories.map((item: any) => {
+          const selectedItem = item.name === selectedCategory ? 1 : 0;
+          const Icon = appIcons[item.icon as keyof typeof appIcons];
 
           return (
             <CategoryBoxWrapper
-              key={item.slug}
+              key={item.name}
               selected={selectedItem}
-              onClick={handleCategoryChange(item.slug)}>
+              onClick={handleCategoryChange(item.name)}>
               <Icon
                 fontSize="inherit"
                 sx={{ fontSize: 44 }}

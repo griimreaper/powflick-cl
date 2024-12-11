@@ -31,7 +31,7 @@ export const Content = styled("div")(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
     ".base-button": {
       padding: "8px 16px",
-      backgroundColor: theme.palette.primary[800]
+      backgroundColor: theme.palette.primary['light']
     }
   },
   ".button-small": { maxWidth: 170, margin: "auto" },

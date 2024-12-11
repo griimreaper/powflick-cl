@@ -21,9 +21,10 @@ import { StyledIconButton, Card, CardMedia, FavoriteButton } from "./styles";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ==============================================================
-type Props = { product: Product };
+type Props = { product: ProductDB };
 // ==============================================================
 
 export default function ProductCard10({ product }: Props) {

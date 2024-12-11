@@ -12,6 +12,6 @@ interface Props extends SvgIconProps {
 // ==============================================================
 
 export default function IconComponent({ icon, ...props }: Props) {
-  const Icon = appIcons[icon] as SvgIconComponent;
+  const Icon = appIcons[icon as keyof typeof appIcons] as SvgIconComponent;
   return <Icon {...props} />;
 }

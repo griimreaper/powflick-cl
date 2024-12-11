@@ -5,7 +5,7 @@
 import * as db from "./data";
 // import Mock from "../../mock";
 import shops from "../shop/data";
-export const Market1Endpoints = (Mock) => {
+export const Market1Endpoints = (Mock: any) => {
   Mock.onGet("/api/market-1/main-carousel").reply(async () => {
     try {
       return [200, db.mainCarouselData];

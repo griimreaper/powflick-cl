@@ -3,7 +3,7 @@
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
 import { payoutRequests, productReviews, refundRequest } from "./data";
-export const VendorEndpoints = (Mock) => {
+export const VendorEndpoints = (Mock: any) => {
   Mock.onGet("/api/vendor/product-reviews").reply(async () => {
     try {
       return [200, productReviews];

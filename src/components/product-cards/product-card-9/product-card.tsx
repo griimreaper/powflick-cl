@@ -99,7 +99,7 @@ export default function ProductCard9(props: Props) {
       <ContentWrapper>
         <div className="img-wrapper">
           {/* DISCOUNT PERCENT CHIP IF AVAILABLE */}
-          <DiscountChip discount={off} />
+          <DiscountChip discount={off!} />
 
           {/* PRODUCT IMAGE / THUMBNAIL */}
           <LazyImage src={imgUrl} alt={title} width={500} height={500} />
@@ -121,7 +121,7 @@ export default function ProductCard9(props: Props) {
             <Rating size="small" value={rating} color="warn" readOnly />
 
             {/* PRODUCT PRICE */}
-            <ProductPrice price={price} discount={off} />
+            <ProductPrice price={price} discount={off!} />
           </div>
 
           {/* PRODUCT ADD TO CART BUTTON */}

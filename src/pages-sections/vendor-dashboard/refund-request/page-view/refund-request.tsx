@@ -40,7 +40,7 @@ export default function RefundRequestPageView({ requests }: Props) {
           <TableContainer sx={{ minWidth: 900 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
@@ -50,7 +50,7 @@ export default function RefundRequestPageView({ requests }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((request, index) => (
+                {filteredList.map((request: any, index) => (
                   <RefundRequestRow request={request} key={index} />
                 ))}
               </TableBody>

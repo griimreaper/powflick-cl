@@ -9,7 +9,7 @@ import { StyledRoot } from "./styles";
 // ==================================================
 interface Props {
   title?: string;
-  imgUrl?: string;
+  imgUrl: string;
   buttonLik?: string;
   buttonText?: string;
   description?: string;

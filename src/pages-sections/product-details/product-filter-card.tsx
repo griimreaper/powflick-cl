@@ -42,7 +42,7 @@ const colorList = [
 interface Props {
   filters?: ProductFilters;
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
-  topCategories: any[];
+  topCategories?: any[];
 }
 
 const initialFilters = {
@@ -119,7 +119,7 @@ export default function ProductFilterCard({
     <div>
       {/* ACTIVE FILTERS */}
       <H6 mb={1.25}>Active Filters</H6>
-      {topCategories.map((item) => (
+      {topCategories?.map((item) => (
         <Fragment key={item.title}>
           <AccordionHeader
             open={collapsed === item.title}

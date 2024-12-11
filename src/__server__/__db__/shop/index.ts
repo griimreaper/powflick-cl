@@ -6,7 +6,7 @@ import shops from "./data";
 import products from "data/product-database";
 import Shop from "models/Shop.model";
 import Product from "models/Product.model";
-export const ShopEndpoints = (Mock) => {
+export const ShopEndpoints = (Mock: any) => {
   const getProducts = (slug: string) =>
     products.filter((item) => item.shop.slug === slug);
 
@@ -19,7 +19,7 @@ export const ShopEndpoints = (Mock) => {
     }
   });
 
-  Mock.onGet("/api/shops/single").reply(async (config) => {
+  Mock.onGet("/api/shops/single").reply(async (config: any) => {
     try {
       if (config?.params?.slug) {
         const shop = shops.find((item) => item.slug === config.params.slug);

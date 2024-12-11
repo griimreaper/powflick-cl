@@ -39,7 +39,7 @@ export default function ReviewsPageView({ reviews }: Props) {
           <TableContainer sx={{ minWidth: 1000 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
@@ -49,7 +49,7 @@ export default function ReviewsPageView({ reviews }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((review, index) => (
+                {filteredList.map((review: any, index) => (
                   <ReviewRow review={review} key={index} />
                 ))}
               </TableBody>

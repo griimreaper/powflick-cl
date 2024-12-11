@@ -16,19 +16,20 @@ import ProductRating from "../product-rating";
 import { ContentWrapper, ImgBox, StyledCard } from "./styles";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ============================================================
-interface Props extends Partial<Product> {
+interface Props extends ProductDB {
   hideRating?: boolean;
   showProductSize?: boolean;
 }
 // ============================================================
 
 export default function ProductCard6(props: Props) {
-  const { hideRating, discount, id, slug, title, price, thumbnail, rating, images } = props;
+  const { discount, id, slug, title, price, URL, images } = props;
 
   const { cartItem, isFavorite, openModal, toggleDialog, toggleFavorite, handleCartAmountChange } =
-    useProduct(slug);
+    useProduct(slug!);
 
   const handleAddToCart = () => {
     handleCartAmountChange({
@@ -36,7 +37,7 @@ export default function ProductCard6(props: Props) {
       slug,
       price,
       name: title,
-      imgUrl: thumbnail,
+      imgUrl: URL,
       qty: (cartItem?.qty || 0) + 1
     });
   };
@@ -47,13 +48,13 @@ export default function ProductCard6(props: Props) {
         {/* DISCOUNT PERCENT CHIP IF AVAILABLE */}
         <DiscountChip discount={discount} shape="square" />
 
-        {/* PRODUCT IMAGE / THUMBNAIL */}
+        {/* PRODUCT IMAGE / URL */}
         <Link href={`/products/${slug}`}>
           <LazyImage
             alt={title}
             width={550}
             height={550}
-            src={thumbnail}
+            src={URL}
             style={{ height: 190, objectFit: "contain" }}
           />
         </Link>
@@ -82,7 +83,7 @@ export default function ProductCard6(props: Props) {
         <ProductTitle slug={slug} title={title} />
 
         {/* PRODUCT RATINGS IF AVAILABLE */}
-        <ProductRating rating={rating} showRating={!hideRating} />
+        <ProductRating rating={4} showRating={true} />
       </ContentWrapper>
     </StyledCard>
   );

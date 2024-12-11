@@ -127,7 +127,7 @@ export const marketShareChartOptions = (theme: Theme): ApexOptions => ({
           fontSize: "14px",
           fontWeight: "600",
           formatter: function (w) {
-            return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+            return w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0);
           },
         },
       },
@@ -216,7 +216,7 @@ export const analyticsChartOptions = (
           labels: {
             show: true,
             style: { fontSize: "14px", colors: theme.palette.grey[600] },
-            formatter: (value) => `${(value / 1000).toFixed(0)}K`,
+            formatter: (value: number) => `${(value / 1000).toFixed(0)}K`,
           },
         },
         yaxis: {

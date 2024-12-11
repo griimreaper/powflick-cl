@@ -3,7 +3,7 @@
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
 import { orders } from "./data";
-export const UserOrders1Endpoints = (Mock) => {
+export const UserOrders1Endpoints = (Mock: any) => {
   Mock.onGet("/api/users/orders").reply(async () => {
     try {
       return [200, orders];
@@ -23,7 +23,7 @@ export const UserOrders1Endpoints = (Mock) => {
     }
   });
 
-  Mock.onGet("/api/users/order").reply(async (config) => {
+  Mock.onGet("/api/users/order").reply(async (config: any) => {
     try {
       if (config?.params?.id) {
         const order = orders.find((item) => item.id === config.params.id);

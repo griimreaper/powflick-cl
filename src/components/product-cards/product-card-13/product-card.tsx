@@ -10,13 +10,14 @@ import { calculateDiscount, currency } from "lib";
 import { CardRoot, PriceText } from "./styles";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ==============================================================
-type Props = { product: Product };
+type Props = { product: ProductDB };
 // ==============================================================
 
 export default function ProductCard13({ product }: Props) {
-  const { title, thumbnail, price, discount, slug } = product || {};
+  const { title, URL, price, discount, slug } = product || {};
 
   return (
     <CardRoot elevation={0}>
@@ -25,7 +26,7 @@ export default function ProductCard13({ product }: Props) {
         <DiscountChip discount={discount} sx={{ top: 15, left: 15 }} />
 
         {/* PRODUCT IMAGE */}
-        <LazyImage alt={title} width={380} height={379} src={thumbnail} />
+        <LazyImage alt={title} width={380} height={379} src={URL} />
 
         <div className="content">
           <Paragraph fontWeight={600} color="grey.600">

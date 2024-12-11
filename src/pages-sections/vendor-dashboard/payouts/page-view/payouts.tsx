@@ -40,7 +40,7 @@ export default function PayoutsPageView({ payouts }: PayoutsProps) {
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
@@ -50,7 +50,7 @@ export default function PayoutsPageView({ payouts }: PayoutsProps) {
               />
 
               <TableBody>
-                {filteredList.map((payout, index) => (
+                {filteredList.map((payout: any, index) => (
                   <PayoutRow payout={payout} key={index} />
                 ))}
               </TableBody>

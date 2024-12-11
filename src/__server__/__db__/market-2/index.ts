@@ -2,9 +2,9 @@ import shuffle from "lodash/shuffle";
 // import Mock from "../../mock";
 import * as db from "./data";
 
-export const Market2Endpoints = (Mock) => {
+export const Market2Endpoints = (Mock: any) => {
   // get all products
-  Mock.onGet("/api/market-2/products").reply((config) => {
+  Mock.onGet("/api/market-2/products").reply((config: any) => {
     try {
       if (config?.params?.type) {
         return [200, shuffle(db.products)];

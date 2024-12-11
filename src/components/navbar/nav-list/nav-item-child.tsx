@@ -48,7 +48,7 @@ export default function NavItemChild({ nav, children }: Props) {
       </MenuItem>
 
       <ParentNavItem
-        ref={elementRef}
+        ref={elementRef as React.RefObject<HTMLDivElement>}
         left={isLeftOverflowing}
         right={isRightOverflowing}
         className="parent-nav-item"

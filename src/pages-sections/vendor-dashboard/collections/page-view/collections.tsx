@@ -77,7 +77,7 @@ export default function CollectionsPageView() {
           <TableContainer sx={{ minWidth: 600 }}>
             <Table>
               <TableHeader
-                order={'ASC'}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={''}
                 heading={tableHeading}

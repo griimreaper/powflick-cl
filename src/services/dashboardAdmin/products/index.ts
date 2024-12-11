@@ -23,9 +23,11 @@ export const getProductsAdmin = async (filters: any, token: string) => {
   }
 };
 
-export const getOneProduct = async (id: string) => {
+export const getOneProduct = async (id: string, token: string) => {
   try {
-    const response = await mainApi.get(`/products/admin/${id}`);
+    const response = await mainApi.get(`/products/admin/${id}`,  {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     return response.data;
   } catch (error) {

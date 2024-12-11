@@ -1,6 +1,6 @@
 // import Mock from "../../mock";
 import * as db from "./data";
-export const Furniture1Endpoints = (Mock) => {
+export const Furniture1Endpoints = (Mock: any) => {
   // get sidebar navigation
   Mock.onGet("/api/furniture-1/navigation").reply(() => {
     try {

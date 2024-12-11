@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import MainContent from "./components/MainContent";
 import Latest from "./components/Latest";
 
-export default function Blog(props: { disableCustomTheme?: boolean }) {
+export default function Blog() {
   return (
     <>
       <CssBaseline enableColorScheme />

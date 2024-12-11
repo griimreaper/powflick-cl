@@ -9,17 +9,20 @@ export default function useHeader() {
 
   const toggleSidenav = () => setOpen((open) => !open);
 
-  const scrollListener = debounce(() => {
-    if (window.scrollY >= 72) setFixed(true);
-    else setFixed(false);
-  }, 50);
-
   useEffect(() => {
-    if (!window) return null;
+    if (typeof window === "undefined") return;
+
+    const scrollListener = debounce(() => {
+      if (window.scrollY >= 72) setFixed(true);
+      else setFixed(false);
+    }, 50);
 
     window.addEventListener("scroll", scrollListener);
-    return () => window.removeEventListener("scroll", scrollListener);
-  }, [scrollListener]);
 
+    // Cleanup function (función que se ejecuta cuando el componente se desmonta)
+    return () => {
+      window.removeEventListener("scroll", scrollListener);
+    };
+  }, []);
   return { open, isFixed, downSM, toggleSidenav };
 }
