@@ -25,7 +25,7 @@ export default function ProfilePageView() {
         Icon={Person}
         title="My Profile"
         buttonText="Edit Profile"
-        href={`/profile/${genericResponseUser.id}`}
+        href={`/dashboard/profile/${genericResponseUser.id}`}
       />
 
       {/* USER PROFILE INFO */}

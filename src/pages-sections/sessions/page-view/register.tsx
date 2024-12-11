@@ -42,7 +42,8 @@ const RegisterPageView = () => {
 
   // REGISTER FORM FIELD VALIDATION SCHEMA
   const validationSchema = yup.object().shape({
-    name: yup.string().required("Name is required"),
+    firstName: yup.string().required("Name is required"),
+    lastName: yup.string().required("Last name is required"),
     email: yup.string().email("invalid email").required("Email is required"),
     password: yup.string().required("Password is required"),
     phone: yup.string().matches(
@@ -50,16 +51,16 @@ const RegisterPageView = () => {
       "Phone number is not valid"
     ), // Opcional
     re_password: yup
-    .string()
-    .oneOf([yup.ref("password")], "Passwords must match")
-    .required("Please re-type password"),
+      .string()
+      .oneOf([yup.ref("password")], "Passwords must match")
+      .required("Please re-type password"),
     agreement: yup
       .bool()
       .oneOf([true], "You have to agree with our Terms and Conditions!")
       .required("You have to agree with our Terms and Conditions!"),
   });
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit} =
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema,
@@ -75,16 +76,6 @@ const RegisterPageView = () => {
         }
       },
     });
-
-    const onSubmit = async (values: any) => {
-      const response = await registerUser({ ...values }, "none");
-      if (response.statusCode === 201) {
-        showSuccessAlert("Success!", "User registered successfully!");
-        router.push('/login')
-      } else {
-        showErrorAlert("Error!", response.message as string);
-      }
-    }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -185,32 +176,41 @@ const RegisterPageView = () => {
         InputProps={inputProps}
       />
 
-      <FormControlLabel
-        name="agreement"
-        className="agreement"
-        onChange={handleChange}
-        control={
-          <Checkbox
-            size="small"
-            color="secondary"
-            checked={values.agreement || false}
-          />
-        }
-        label={
-          <FlexBox
-            flexWrap="wrap"
-            alignItems="center"
-            justifyContent="flex-start"
-            gap={1}
-          >
-            <Span display={{ sm: "inline-block", xs: "none" }}>
-              By signing up, you agree to
-            </Span>
-            <Span display={{ sm: "none", xs: "inline-block" }}>Accept Our</Span>
-            <BoxLink title="Terms & Condition" href="/" />
-          </FlexBox>
-        }
-      />
+      <div style={{ marginBottom: "1rem", display:'flex', flexDirection: 'column'  }}>
+        <FormControlLabel
+          name="agreement"
+          className="agreement"
+          onChange={handleChange} // Vincula correctamente con Formik
+          onBlur={handleBlur} // Marca el campo como "tocado" para que la validación funcione
+          control={
+            <Checkbox
+              size="small"
+              color="secondary"
+              checked={values.agreement || false}
+            />
+          }
+          label={
+            <FlexBox
+              flexWrap="wrap"
+              alignItems="center"
+              justifyContent="flex-start"
+              gap={1}
+            >
+              <Span display={{ sm: "inline-block", xs: "none" }}>
+                By signing up, you agree to
+              </Span>
+              <Span display={{ sm: "none", xs: "inline-block" }}>Accept Our</Span>
+              <BoxLink title="Terms & Condition" href="/" />
+            </FlexBox>
+          }
+        />
+        {/* Mostrar error si aplica */}
+        {touched.agreement && errors.agreement && (
+          <Span style={{ color: "red", fontSize: "0.875rem" }}>
+            {errors.agreement}
+          </Span>
+        )}
+      </div>
 
       <Button
         fullWidth
@@ -218,7 +218,6 @@ const RegisterPageView = () => {
         color="primary"
         variant="contained"
         size="large"
-        onClick={() => onSubmit(values)}
       >
         Create Account
       </Button>

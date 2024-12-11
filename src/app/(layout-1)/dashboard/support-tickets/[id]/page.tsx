@@ -14,12 +14,5 @@ export const metadata: Metadata = {
 };
 
 export default async function SupportTicketDetails({ params }: any) {
-  try {
-    const ticket = await api.getTicket('payment-method-is-not-working');
-    console.log(ticket);
-    
     return <TicketDetailsPageView id={params.id}/>;
-  } catch (error) {
-    notFound();
-  }
 }

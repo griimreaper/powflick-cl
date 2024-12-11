@@ -19,7 +19,7 @@ export default function TicketCard({ ticket }: Props) {
   const { id, title, type, status, category, consultedAt } = ticket;
 
   return (
-    <Link href={`/support-tickets/${id}`} key={id}>
+    <Link href={`/dashboard/support-tickets/${id}`} key={id}>
       <FlexBetween component={Card} px={2.5} py={2} mb={2}>
         <div>
           <Paragraph mb={1.5} lineHeight={1}>

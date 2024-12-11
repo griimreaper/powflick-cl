@@ -14,6 +14,7 @@ import { Profile } from "models/types";
 import { userUpdateProfile } from "services/DashboardUser/profile";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { useDashboardStore } from "store/dashboard";
+import { useRouter } from "next/navigation";
 
 // ==============================================================
 type Props = { user: Profile['genericResponseUser'], token: string };
@@ -21,16 +22,17 @@ type Props = { user: Profile['genericResponseUser'], token: string };
 
 export default function ProfileEditForm({ user, token }: Props) {
   const { setProfileUser } = useDashboardStore();
+  const router = useRouter();
   const INITIAL_VALUES = {
     email: user.email || "",
     phone: user.phone || "",
-    last_name: user.lastName || "",
-    first_name: user.firstName || "",
+    lastName: user.lastName || "",
+    firstName: user.firstName || "",
   };
 
   const VALIDATION_SCHEMA = yup.object().shape({
-    first_name: yup.string().required("First name is required"),
-    last_name: yup.string().required("Last name is required"),
+    firstName: yup.string().required("First name is required"),
+    lastName: yup.string().required("Last name is required"),
     email: yup.string().email("invalid email").required("Email is required"),
     phone: yup.string().matches(
       /^(\+\d{1,3}[- ]?)?\d{10}$/,
@@ -44,6 +46,7 @@ export default function ProfileEditForm({ user, token }: Props) {
         const response = await userUpdateProfile(token, values);
         showSuccessAlert("Success!", response.message);
         setProfileUser(response.profileUpdated);
+        router.push('/dashboard/profile')
       } catch (error: any) {
         showErrorAlert(
           "Error!",
@@ -67,26 +70,26 @@ export default function ProfileEditForm({ user, token }: Props) {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                name="first_name"
+                name="firstName"
                 label="First Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.first_name}
-                error={!!touched.first_name && !!errors.first_name}
-                helperText={(touched.first_name && errors.first_name) as string}
+                value={values.firstName}
+                error={!!touched.firstName && !!errors.firstName}
+                helperText={(touched.firstName && errors.firstName) as string}
               />
             </Grid>
 
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                name="last_name"
+                name="lastName"
                 label="Last Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.last_name}
-                error={!!touched.last_name && !!errors.last_name}
-                helperText={(touched.last_name && errors.last_name) as string}
+                value={values.lastName}
+                error={!!touched.lastName && !!errors.lastName}
+                helperText={(touched.lastName && errors.lastName) as string}
               />
             </Grid>
 

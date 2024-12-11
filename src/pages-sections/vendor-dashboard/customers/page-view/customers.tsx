@@ -20,6 +20,7 @@ import useLoading from "hooks/useLoading";
 import { getUsers } from "services/dashboardAdmin/users";
 import { DataUsers, Filters } from "models/types";
 import { useSession } from "next-auth/react";
+import Pagination from "pages-sections/vendor-dashboard/products/page-view/Pagination";
 
 // =============================================================================
 
@@ -36,7 +37,7 @@ const tableHeading = [
     align: "left",
     content: ["all", "yes", "no"],
   },
-  { id: "action", label: "Action", align: "left", content: null },
+  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 8, 10, 12] },
 ];
 
 export default function CustomersPageView() {
@@ -88,6 +89,10 @@ export default function CustomersPageView() {
     setFilters({ ...filters, search: value });
   };
 
+  const handlePage = (page: number) => {
+    setFilters({ ...filters, page });
+  };
+
   const handleFilterChange = (filter: string, option: string) => {
     setFilters((f: any) => {
       const updatedFilters = {
@@ -131,9 +136,12 @@ export default function CustomersPageView() {
         </Scrollbar>
 
         <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil((users?.total || 0) / rowsPerPage)}
+          <Pagination
+            page={users?.page}
+            prevPage={users?.prevPage}
+            nextPage={users?.nextPage}
+            totalPages={users?.totalPages}
+            handlePage={handlePage}
           />
         </Stack>
       </Card>

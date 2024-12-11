@@ -37,7 +37,7 @@ export default function OrderRow({ order }: Props) {
   };
 
   return (
-    <Link href={`/orders/${order.id}`}>
+    <Link href={`/dashboard/orders/${order.id}`}>
       <TableRow sx={{ gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr" }}>
         <H5 ellipsis>#{order.id}</H5>
 
