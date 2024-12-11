@@ -3,9 +3,26 @@
 export interface Category {
   id: string;
   name: string;
+  products: ProductDB[]
   // parentId: string | null;
   // link: string;
   // subcategories: Category[];
+}
+
+export enum CollectionType {
+  NAVBAR = 'navbar',
+  STORE = 'store',
+  BOTH = 'both',
+  NONE = 'none',
+}
+
+export interface Collection {
+  id: string;
+  title: string;
+  content: string;
+  order: number;
+  type: CollectionType;
+  products: ProductDB[]
 }
 
 export interface ProductDB {

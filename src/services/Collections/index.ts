@@ -1,68 +1,68 @@
-import { Filters } from "pages-sections/vendor-dashboard/categories/page-view";
+import { Filters } from "pages-sections/vendor-dashboard/collections/page-view";
 import { mainApi } from "../apis";
 
-export const getCategories = async () => {
+export const getCollections = async () => {
     try {
-        const response: any = await mainApi.get("/categories");
+        const response: any = await mainApi.get("/collection");
 
         return response.data;
     } catch (error: any) {
-        console.error("Error getting categories:", error);
+        console.error("Error getting collection:", error);
         throw error.response.data.message;
     }
 }
 
-export const getOneCategory = async (id: string) => {
+export const getOneCollection = async (id: string) => {
     try {
-        const response: any = await mainApi.get("/categories/" + id);
+        const response: any = await mainApi.get("/collections/" + id);
 
         return response.data;
     } catch (error: any) {
-        console.error("Error getting categories:", error);
+        console.error("Error getting collection:", error);
         throw error.response.data.message;
     }
 }
 
-export const createCategory = async (values: any, token:string) => {
+export const createCollection = async (values: any, token:string) => {
     try {
-        const response: any = await mainApi.post("/categories/create-with-products", values, {
+        const response: any = await mainApi.post("/collections/create-with-products", values, {
             headers: { Authorization: `Bearer ${token}` },
         });
 
         return response.data;
     } catch (error: any) {
-        console.error("Error creating categories:", error);
+        console.error("Error creating collection:", error);
         throw error.response.data.message;
     }
 }
 
-export const updateCategory = async (id: string, values: any, token:string) => {
+export const updateCollection = async (id: string, values: any, token:string) => {
     try {
-        const response: any = await mainApi.put("/categories/" + id + '/products', values, {
+        const response: any = await mainApi.put("/collections/" + id + '/products', values, {
             headers: { Authorization: `Bearer ${token}` },
         });
 
         return response.data;
     } catch (error: any) {
-        console.error("Error updating categories:", error);
+        console.error("Error updating collection:", error);
         throw error.response.data.message;
     }
 }
 
-export const deleteCategory = async (id: string, token: string) => {
+export const deleteCollection = async (id: string, token: string) => {
     try {
-        const response: any = await mainApi.delete("/categories/" + id, {
+        const response: any = await mainApi.delete("/collections/" + id, {
             headers: { Authorization: `Bearer ${token}` },
         });
 
         return response.data;
     } catch (error: any) {
-        console.error("Error deleting categories:", error);
+        console.error("Error deleting collection:", error);
         throw error.response.data.message;
     }
 }
 
-export const getAllCategories = async (filters: Filters, token: string) => {
+export const getAllCollections = async (filters: Filters, token: string) => {
     try {
         // Construir manualmente la cadena de consulta
         const queryParams = new URLSearchParams();
@@ -73,13 +73,13 @@ export const getAllCategories = async (filters: Filters, token: string) => {
 
         const queryString = queryParams.toString(); // Convierte a "page=1&limit=10&search=value"
 
-        const response: any = await mainApi.get(`/categories/admin${queryString ? `?${queryString}` : ''}`, {
+        const response: any = await mainApi.get(`/collections/admin/get${queryString ? `?${queryString}` : ''}`, {
             headers: { Authorization: `Bearer ${token}` },
         });
 
         return response.data;
     } catch (error: any) {
-        console.error("Error getting categories:", error);
+        console.error("Error getting collection:", error);
         throw error.response?.data?.message || "Unexpected error occurred";
     }
 };

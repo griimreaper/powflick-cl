@@ -11,28 +11,28 @@ import { TableHeader, TablePagination } from "components/data-table";
 // GLOBAL CUSTOM HOOK
 import useMuiTable from "hooks/useMuiTable";
 // LOCAL CUSTOM COMPONENT
-import CategoryRow from "../category-row";
+import BrandRow from "../collection-row";
 import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
 // TABLE HEAD COLUMN DATA
 import { tableHeading } from "../table-heading";
-import { useEffect, useState } from "react";
-import { CategoriesData, Filters } from ".";
-import { getAllCategories, getCategories } from "services/Categories";
-import { useDashboardStore } from "store/dashboard";
 import Pagination from "pages-sections/vendor-dashboard/products/page-view/Pagination";
-import { Category } from "models/types";
+import { useDashboardStore } from "store/dashboard";
 import useHearingEvent from "hooks/hearingEvent";
+import { useEffect, useState } from "react";
+import { CollectionsData, Filters } from ".";
+import CollectionRow from "../collection-row";
+import { getAllCollections } from "services/Collections";
 
 // =============================================================================
-type Props = { category: Category[] };
+type Props = { collections: any[] };
 // =============================================================================
 
-const CategoriesPageView = () => {
+export default function CollectionsPageView() {
   const { profile } = useDashboardStore();
   const token = profile.token;
   const { actualize, setActualize } = useHearingEvent();
-  const [categoriesList, setCategoriesList] = useState<CategoriesData>();
+  const [collectionsList, setCollectionsList] = useState<CollectionsData>();
 
   const [filters, setFilters] = useState<Filters>({
     search: '',
@@ -40,12 +40,13 @@ const CategoriesPageView = () => {
     limit: 6,
   });
 
+  // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         if (token) {
-          const data = await getAllCategories(filters, token);
-          setCategoriesList(data);
+          const data = await getAllCollections(filters, token);
+          setCollectionsList(data);
         }
       } catch (error) {
         console.error("Error getting products:", error);
@@ -63,32 +64,32 @@ const CategoriesPageView = () => {
   };
 
   return (
-    <PageWrapper title="Product Categories">
+    <PageWrapper title="Product collection">
       <SearchArea
         handleSearch={handleSearch}
-        buttonText="Add Category"
-        url="/admin/categories/create"
-        searchPlaceholder="Search Category..."
+        buttonText="Add Collection"
+        url="/admin/collections/create"
+        searchPlaceholder="Search Collection..."
       />
 
       <Card>
         <Scrollbar>
-          <TableContainer >
+          <TableContainer sx={{ minWidth: 600 }}>
             <Table>
               <TableHeader
                 order={'ASC'}
                 hideSelectBtn
                 orderBy={''}
                 heading={tableHeading}
-                rowCount={Number(categoriesList?.total)}
-                numSelected={Number(categoriesList?.totalPages)}
+                rowCount={Number(collectionsList?.total)}
+                numSelected={Number(collectionsList?.totalPages)}
                 onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
                 onRequestSort={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
               />
 
               <TableBody>
-                {categoriesList?.categories.map((category) => (
-                  <CategoryRow key={category.id} category={category} setActualize={setActualize} />
+                {collectionsList?.collections?.map((collection) => (
+                  <CollectionRow key={collection.id} collection={collection} setActualize={setActualize}  />
                 ))}
               </TableBody>
             </Table>
@@ -97,16 +98,14 @@ const CategoriesPageView = () => {
 
         <Stack alignItems="center" my={4}>
           <Pagination
-            page={categoriesList?.page}
-            prevPage={categoriesList?.prevPage}
-            nextPage={categoriesList?.nextPage}
-            totalPages={categoriesList?.totalPages}
+            page={collectionsList?.page}
+            prevPage={collectionsList?.prevPage}
+            nextPage={collectionsList?.nextPage}
+            totalPages={collectionsList?.totalPages}
             handlePage={handlePage}
           />
         </Stack>
       </Card>
     </PageWrapper>
   );
-};
-
-export default CategoriesPageView;
+}
