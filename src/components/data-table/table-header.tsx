@@ -96,7 +96,7 @@ export default function TableHeader(props: Props) {
             key={headCell.id}
             align={headCell.align}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div style={{ alignItems: "center", gap: "8px" }}>
               <TableSortLabel
                 active={orderBy === headCell.id}
                 onClick={() => !headCell.content && onRequestSort(headCell.id)}

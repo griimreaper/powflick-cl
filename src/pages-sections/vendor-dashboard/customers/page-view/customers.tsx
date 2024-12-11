@@ -15,27 +15,93 @@ import SearchArea from "../../search-box";
 import CustomerRow from "../customer-row";
 import PageWrapper from "../../page-wrapper";
 // TABLE HEAD COLUMN DATA
-import { tableHeading } from "../table-heading";
+import { useEffect, useState } from "react";
+import useLoading from "hooks/useLoading";
+import { getUsers } from "services/dashboardAdmin/users";
+import { DataUsers, Filters } from "models/types";
+import { useSession } from "next-auth/react";
 
 // =============================================================================
-type Props = { customers: any[] };
+
 // =============================================================================
 
-export default function CustomersPageView({ customers }: Props) {
+const tableHeading = [
+  { id: "name", label: "Name", align: "left", content: null },
+  { id: "email", label: "Email", align: "left", content: null },
+  { id: "phone", label: "Phone", align: "left", content: null },
+  { id: "rol", label: "Rol", align: "left", content: ["all", "admin", "user"] },
+  {
+    id: "isActive",
+    label: "Active",
+    align: "left",
+    content: ["all", "yes", "no"],
+  },
+  { id: "action", label: "Action", align: "left", content: null },
+];
+
+export default function CustomersPageView() {
+  const [loading, startLoading, stopLoading] = useLoading();
+  const [users, setUsers] = useState<DataUsers>();
+
+  const { data: session } = useSession();
+  const token = session?.user?.name?.split("|")[0];
+
   const {
-    order,
+    order: rawOrder,
     orderBy,
     selected,
     rowsPerPage,
     filteredList,
     handleChangePage,
-    handleRequestSort
-  } = useMuiTable({ listData: customers });
+    handleRequestSort,
+  } = useMuiTable({ listData: users?.users || [] });
+
+  const order = rawOrder === "desc" ? "DESC" : "ASC";
+
+  const [filters, setFilters] = useState<Filters>({
+    filter: "email",
+    order: "DESC",
+    rol: "all",
+    isActive: "all",
+    search: "",
+    page: 1,
+    limit: 6,
+  });
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        if (token) {
+          startLoading();
+          const data = await getUsers(filters, token);
+          stopLoading();
+          setUsers(data);
+        }
+      } catch (error) {
+        console.error("Error getting users:", error);
+      }
+    };
+    fetchUsers();
+  }, [filters, token]);
+
+  const handleSearch = (value: string) => {
+    setFilters({ ...filters, search: value });
+  };
+
+  const handleFilterChange = (filter: string, option: string) => {
+    setFilters((f: any) => {
+      const updatedFilters = {
+        ...f,
+        [filter]: option === "all" ? undefined : option,
+      };
+      return updatedFilters;
+    });
+  };
 
   return (
     <PageWrapper title="Customers">
       <SearchArea
-        handleSearch={() => {}}
+        handleSearch={handleSearch}
         buttonText="Add Customer"
         url="/admin/customers"
         searchPlaceholder="Search Customer..."
@@ -52,9 +118,9 @@ export default function CustomersPageView({ customers }: Props) {
                 heading={tableHeading}
                 numSelected={selected.length}
                 rowCount={filteredList.length}
+                onFilterChange={handleFilterChange}
                 onRequestSort={handleRequestSort}
               />
-
               <TableBody>
                 {filteredList.map((customer) => (
                   <CustomerRow customer={customer} key={customer.id} />
@@ -67,7 +133,7 @@ export default function CustomersPageView({ customers }: Props) {
         <Stack alignItems="center" my={4}>
           <TablePagination
             onChange={handleChangePage}
-            count={Math.ceil(filteredList.length / rowsPerPage)}
+            count={Math.ceil((users?.total || 0) / rowsPerPage)}
           />
         </Stack>
       </Card>

@@ -17,12 +17,12 @@ export interface ProductDB {
   price: number; // Precio actual del producto
   regular_price: number; // Precio regular del producto
   discount: number; // Descuento aplicado al producto
-  stock_status: 'instock' | 'outofstock'; // Estado de inventario
+  stock_status: "instock" | "outofstock"; // Estado de inventario
   stock: number; // Cantidad de stock disponible
   selled: number; // Cantidad vendida (puede ser nula)
   product_categories: string; // Categorías del producto separadas por '|'
   colors: string | null; // Colores disponibles (puede ser nulo)
-  status: 'publish' | 'draft'; // Estado de publicación del producto
+  status: "publish" | "draft"; // Estado de publicación del producto
   URL: string; // URL de la imagen del producto
   images: string[]; // Array de URLs de imágenes del producto
   slug: string; // Slug (parte de la URL) del producto
@@ -35,8 +35,7 @@ export interface ProductDB {
   collections?: any[];
 }
 
-export interface RecentProduct extends ProductDB {
-}
+export interface RecentProduct extends ProductDB {}
 
 export interface Navbar {
   categories: Category[];
@@ -96,7 +95,7 @@ export interface Logo {
   logoId?: string;
   logoPosition?: { x: number; y: number };
   logoSize?: number;
-  rotate?: number,
+  rotate?: number;
 }
 
 export interface Text {
@@ -105,7 +104,7 @@ export interface Text {
   textPosition?: { x: number; y: number };
   textSize?: number;
   textColor?: string;
-  rotate?: number,
+  rotate?: number;
 }
 
 export interface Number {
@@ -114,7 +113,7 @@ export interface Number {
   numberPosition?: { x: number; y: number };
   numberSize?: number;
   numberColor?: string;
-  rotate?: number,
+  rotate?: number;
 }
 
 export interface CustomizationSides {
@@ -137,16 +136,15 @@ export type Customization = {
   materials: string;
 };
 
-
 export enum OrderStateEnum {
-  APROBADO = 'APPROVED',
-  PAGO = 'PAID',
-  RECHAZADO = 'REJECTED',
-  DESPACHO = 'DISPATCHED',
-  ENCAMINO = 'ONTHEWAY',
-  PENDIENTE = 'PENDING',
-  ENTREGADO = 'DELIVERED',
-  CANCELADO = 'CANCELLED',
+  APROBADO = "APPROVED",
+  PAGO = "PAID",
+  RECHAZADO = "REJECTED",
+  DESPACHO = "DISPATCHED",
+  ENCAMINO = "ONTHEWAY",
+  PENDIENTE = "PENDING",
+  ENTREGADO = "DELIVERED",
+  CANCELADO = "CANCELLED",
 }
 
 export interface Order {
@@ -154,9 +152,9 @@ export interface Order {
   id: number;
   total: number;
   currency: {
-    name: string,
-    value: number,
-  }
+    name: string;
+    value: number;
+  };
   state: OrderStateEnum;
   customizations: {
     productId: string;
@@ -244,8 +242,8 @@ export interface Message {
   name: string;
   email: string;
   title: string;
-  type: 'Urgent' | 'Normal'; // Se puede ampliar según los tipos posibles
-  status: 'Open' | 'Closed'; // Se puede ampliar según los estados posibles
+  type: "Urgent" | "Normal"; // Se puede ampliar según los tipos posibles
+  status: "Open" | "Closed"; // Se puede ampliar según los estados posibles
   pending: boolean;
   message: string;
   category: string;
@@ -259,23 +257,23 @@ interface Conversation {
   imgUrl: string;
   name: string;
   createdAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
-  from: 'admin' | 'user';
+  from: "admin" | "user";
 }
 
 export enum ContactType {
-  ComplaintOrClaim = 'Complaint or Claim',
-  OrderHelp = 'Help with an Order',
-  PageFunctionalityHelp = 'Help with Page Functionality',
-  GeneralHelp = 'General Help',
+  ComplaintOrClaim = "Complaint or Claim",
+  OrderHelp = "Help with an Order",
+  PageFunctionalityHelp = "Help with Page Functionality",
+  GeneralHelp = "General Help",
 }
 
 export interface detailProps {
   product: ProductDB;
-  sugestedProducts: ProductDB[]
-  frequentlyBought: ProductDB[]
+  sugestedProducts: ProductDB[];
+  frequentlyBought: ProductDB[];
   PaymentMethods: {
-    text: string,
-    image: string
+    text: string;
+    image: string;
   };
   ShippingTypes: string;
   reviews: Review[];
@@ -284,5 +282,30 @@ export interface detailProps {
 export type UseLoadingType = [
   loading: boolean,
   startLoading: () => void, // Función para iniciar la carga
-  stopLoading: () => void // Función para detener la carga
+  stopLoading: () => void, // Función para detener la carga
 ];
+
+export interface Filters {
+  filter: "email";
+
+  order: "DESC";
+
+  rol: "all" | "admin" | "user";
+
+  isActive: "all" | "yes" | "no";
+
+  search: string;
+
+  page: number;
+
+  limit: number;
+}
+
+export interface DataUsers {
+  prevPage: number | null;
+  page: number;
+  nextPage: number | null;
+  totalPages: number | null;
+  total: number;
+  users: User[];
+}
