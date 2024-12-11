@@ -11,6 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Categories() {
-  const categories = await api.category();
-  return <CategoriesPageView categories={categories} />;
+  return <CategoriesPageView />;
 }

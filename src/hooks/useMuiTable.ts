@@ -2,7 +2,7 @@ import { ProductDB } from "models/types";
 import { useState } from "react";
 
 // ================================================================
-type Order = "asc" | "desc";
+type Order = "ASC" | "DESC";
 type Unknown = Record<string | number, string>;
 // ================================================================
 
@@ -13,7 +13,7 @@ export function descendingComparator(a: Unknown, b: Unknown, orderBy: string) {
 }
 
 export function getComparator(order: Order, orderBy: string) {
-  return order === "desc"
+  return order === "DESC"
     ? (a: Unknown, b: Unknown) => descendingComparator(a, b, orderBy)
     : (a: Unknown, b: Unknown) => -descendingComparator(a, b, orderBy);
 }
@@ -34,12 +34,12 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 interface Props {
   listData: ProductDB[] | any;
   defaultSort?: string;
-  defaultOrder?: "asc" | "desc";
+  defaultOrder?: "ASC" | "DESC";
 }
 // ================================================================
 
 export default function useMuiTable(props: Props) {
-  const { listData = [], defaultSort = "name", defaultOrder = "asc" } = props;
+  const { listData = [], defaultSort = "name", defaultOrder = "ASC" } = props;
 
   const [rowsPerPage] = useState(20);
   const [page, setPage] = useState(0);
@@ -49,8 +49,8 @@ export default function useMuiTable(props: Props) {
 
   // Handle list sorting
   const handleRequestSort = (property: string) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === "ASC";
+    setOrder(isAsc ? "DESC" : "ASC");
     setOrderBy(property);
   };
 

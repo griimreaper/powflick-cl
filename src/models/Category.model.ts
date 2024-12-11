@@ -1,12 +1,9 @@
+import { ProductDB } from "./types";
+
 interface Category {
   id: string;
   name: string;
-  slug: string;
-  icon?: string;
-  image?: string;
-  parent: string[];
-  featured?: boolean;
-  description?: string;
+  products: ProductDB[]
 }
 
 export default Category;
