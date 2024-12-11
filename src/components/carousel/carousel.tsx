@@ -32,6 +32,9 @@ const Carousel = forwardRef<Slider, Props>((props, ref) => {
     slidesToShow = 4,
     spaceBetween = 10,
     dotStyles = { mt: 4 },
+    autoplay = false,
+    autoplaySpeed = 3000,
+    infinite = true,
     ...others
   } = props;
 
@@ -41,10 +44,13 @@ const Carousel = forwardRef<Slider, Props>((props, ref) => {
     dots,
     arrows,
     slidesToShow,
+    autoplay,
+    autoplaySpeed,
+    infinite,
     rtl: theme.direction === "rtl",
     ...CarouselArrows(arrowStyles),
     ...CarouselDots({ dotColor, sx: dotStyles }),
-    ...others
+    ...others,
   };
 
   return (
