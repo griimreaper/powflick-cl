@@ -41,7 +41,7 @@ export default function SupportTicketsPageView({ tickets }: Props) {
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
@@ -51,7 +51,7 @@ export default function SupportTicketsPageView({ tickets }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((ticket, index) => (
+                {filteredList.map((ticket: any, index) => (
                   <TicketRow ticket={ticket} key={index} />
                 ))}
               </TableBody>

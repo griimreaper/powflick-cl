@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import { detailProps } from "models/types";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -69,6 +70,23 @@ export default async function ProductDetails({ params }: { params: { slug: strin
   try {
     const { slug } = params;
     const detail: detailProps = await getProductsBySlug(slug);
+
+    if (detail.product.status === 'draft' || !detail.product.images) {
+      return (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+          py={5}
+          textAlign="center"
+        >
+          <Typography variant="h5" color="textSecondary">
+            Sorry, this product is not available.
+          </Typography>
+        </Box>
+      );
+    }
 
     return (
       <ProductDetailsPageView

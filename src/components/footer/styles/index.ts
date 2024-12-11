@@ -29,7 +29,7 @@ export const StyledRoot = styled("footer")(({ theme }) => ({
   padding: 40,
   color: "white",
   borderRadius: 8,
-  background: theme.palette.primary[600],
+  background: theme.palette.primary['light'],
   [theme.breakpoints.down("md")]: { marginBottom: "6rem !important" }
 }));
 

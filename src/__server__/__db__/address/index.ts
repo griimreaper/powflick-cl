@@ -4,7 +4,7 @@
 // CONTACT US AT support@ui-lib.com
 // import Mock from "../../mock";
 import { addressList } from "./data";
-export const UserAddressEndpoints = (Mock) => {
+export const UserAddressEndpoints = (Mock: any) => {
 
   // get all users
   Mock.onGet("/api/address/user").reply(async () => {
@@ -28,7 +28,7 @@ export const UserAddressEndpoints = (Mock) => {
   });
 
   // get single user
-  Mock.onGet("/api/address/user/1").reply(async (config) => {
+  Mock.onGet("/api/address/user/1").reply(async (config: any) => {
     try {
       if (config?.params?.id) {
         const address = addressList.find((item) => item.id === config.params.id);

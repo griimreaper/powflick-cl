@@ -1,7 +1,6 @@
-import { Filters } from "@/app/dashboard-admin/messages/interfaces";
 import { mainApi } from "../../apis";
 
-export const getMessages = async (token: string, filters: Filters) => {
+export const getMessages = async (token: string, filters: any) => {
     try {
         let query = `/messages?page=${filters.page}&limit=${filters.limit}&`
 

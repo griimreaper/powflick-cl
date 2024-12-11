@@ -17,7 +17,7 @@ export const Grocery4Endpoints = (Mock: MockAdapter) => {
     }
   });
 
-  Mock.onGet("/api/grocery-4/products").reply(async (config) => {
+  Mock.onGet("/api/grocery-4/products").reply(async (config: any) => {
     try {
       return [200, db.products];
     } catch (err) {
@@ -26,7 +26,7 @@ export const Grocery4Endpoints = (Mock: MockAdapter) => {
     }
   });
 
-  Mock.onGet("/api/grocery-4/products-by-slug").reply(async (config) => {
+  Mock.onGet("/api/grocery-4/products-by-slug").reply(async (config: any) => {
     try {
       return [200, shuffle(db.products)];
     } catch (err) {
@@ -44,7 +44,7 @@ export const Grocery4Endpoints = (Mock: MockAdapter) => {
     }
   });
 
-  Mock.onGet("/api/grocery-4/breadcrumb").reply(async (config) => {
+  Mock.onGet("/api/grocery-4/breadcrumb").reply(async (config: any) => {
     try {
       if (!config.params.slug) return [200, null];
 

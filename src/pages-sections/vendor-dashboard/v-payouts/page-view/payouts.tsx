@@ -39,7 +39,7 @@ export default function VendorPayoutsPageView({ payouts }: Props) {
           <TableContainer sx={{ minWidth: 600 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
@@ -49,7 +49,7 @@ export default function VendorPayoutsPageView({ payouts }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((payout, index) => (
+                {filteredList.map((payout: any, index) => (
                   <PayoutRow payout={payout} key={index} />
                 ))}
               </TableBody>

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 
 export default function useOverflowDetect() {
-  const elementRef = useRef(null);
+  const elementRef = useRef<HTMLElement | null>(null);
   const [isLeftOverflowing, setLeftIsOverflowing] = useState(false);
   const [isRightOverflowing, setRightIsOverflowing] = useState(false);
 

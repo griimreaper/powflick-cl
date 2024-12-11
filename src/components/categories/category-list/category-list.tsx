@@ -23,7 +23,7 @@ export default function CategoryList({ open, position = "absolute" }: Props) {
             icon={icon}
             title={title}
             caret={!!children}
-            render={component ? <MegaMenu data={children} banner={offer} /> : null}
+            render={component ? <MegaMenu data={children!} banner={offer} /> : null}
           />
         );
       })}

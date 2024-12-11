@@ -3,7 +3,7 @@
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
 import * as db from "./data";
-export const Grocery2Endpoints = (Mock) => {
+export const Grocery2Endpoints = (Mock: any) => {
   Mock.onGet("/api/grocery-2/main-carousel").reply(() => {
     try {
       return [200, db.mainCarouselData];

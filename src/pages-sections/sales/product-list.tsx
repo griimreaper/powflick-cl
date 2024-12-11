@@ -18,8 +18,8 @@ export default function ProductList({ products }: Props) {
             slug={item.slug}
             title={item.title}
             price={item.price}
-            rating={item.rating}
-            imgUrl={item.thumbnail}
+            rating={4}
+            imgUrl={item.URL}
             discount={item.discount}
           />
         </Grid>

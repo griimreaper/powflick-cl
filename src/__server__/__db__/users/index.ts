@@ -3,7 +3,7 @@
 // IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
 // CONTACT US AT support@ui-lib.com
 import { users } from "./data";
-export const UsersEndpoints = (Mock) => {
+export const UsersEndpoints = (Mock: any) => {
   Mock.onGet("/api/user-list").reply(() => {
     try {
       return [200, users];

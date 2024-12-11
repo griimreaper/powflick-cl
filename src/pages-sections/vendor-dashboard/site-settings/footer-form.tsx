@@ -98,7 +98,7 @@ const FooterForm = () => {
                     />
                   </Grid>
 
-                  {values.column_two_links?.map((item, index) => (
+                  {values.column_two_links?.map((item: any, index) => (
                     <Grid item container spacing={2} key={item.id}>
                       <Grid item xs={5}>
                         <TextField
@@ -178,7 +178,7 @@ const FooterForm = () => {
                     />
                   </Grid>
 
-                  {values.column_three_links?.map((item, index) => (
+                  {values.column_three_links?.map((item: any, index) => (
                     <Grid item container spacing={2} key={item.id}>
                       <Grid item xs={5}>
                         <TextField

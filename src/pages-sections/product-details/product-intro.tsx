@@ -30,12 +30,16 @@ import Image from "next/image";
 type Props = { product: ProductDB };
 // ================================================================
 
+type SelectVariants = {
+  [key: string]: string; // Permite usar cualquier string como clave
+};
+
 export default function ProductIntro({ product }: Props) {
   const { id, price, title, images, slug, URL } = product || {};
 
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectVariants, setSelectVariants] = useState({
+  const [selectVariants, setSelectVariants] = useState<SelectVariants>({
     option: "option 1",
     type: "type 1"
   });
@@ -48,7 +52,7 @@ export default function ProductIntro({ product }: Props) {
     }));
   };
 
-  // CHECK PRODUCT EXIST OR NOT IN THE CART
+  // CHECK PRODUCT EXIST OR NOT IN THE CART1
   const cartItem = state.cart.find((item) => item.id === id);
 
   // HANDLE SELECT IMAGE
@@ -73,12 +77,12 @@ export default function ProductIntro({ product }: Props) {
               width={500}
               height={500}
               loading="eager"
-              src={product.images[selectedImage]}
+              src={product.images[selectedImage] || ''}
             />
           </FlexBox>
 
           <FlexBox overflow="auto">
-            {images.map((url, ind) => (
+            {images?.map((url, ind) => (
               <FlexRowCenter
                 key={ind}
                 width={64}

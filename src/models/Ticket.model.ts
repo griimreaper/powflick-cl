@@ -1,6 +1,6 @@
 import User from "./User.model";
 
-type Message = {
+export type Message = {
   name: string;
   date: string;
   text: string;

@@ -13,13 +13,13 @@ interface Props {
 // ==============================================================
 
 export default function ButtonContent({ icon, name }: Props) {
-  const Icon = icon ? (Icons[icon] as SvgIconComponent) : null;
+  const Icon = icon ? (Icons[icon as keyof typeof Icons] as SvgIconComponent) : null;
 
   return (
     <Box display="flex" alignItems="center">
       {icon ? (
         <ListIconWrapper>
-          <Icon />
+          {Icon ? <Icon /> : null}
         </ListIconWrapper>
       ) : (
         <Box marginRight="0.6rem" />

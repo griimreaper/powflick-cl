@@ -50,9 +50,9 @@ const RegisterPageView = () => {
       "Phone number is not valid"
     ), // Opcional
     re_password: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Please re-type password"),
+    .string()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Please re-type password"),
     agreement: yup
       .bool()
       .oneOf([true], "You have to agree with our Terms and Conditions!")
@@ -66,7 +66,7 @@ const RegisterPageView = () => {
       onSubmit: async (values) => {
         console.log(values);
 
-        const response = await registerUser({ ...values, provider: "none" });
+        const response = await registerUser({ ...values }, "none");
         if (response.statusCode === 201) {
           showSuccessAlert("Success!", "User registered successfully!");
           router.push('/login')
@@ -77,7 +77,7 @@ const RegisterPageView = () => {
     });
 
     const onSubmit = async (values: any) => {
-      const response = await registerUser({ ...values, provider: "none" });
+      const response = await registerUser({ ...values }, "none");
       if (response.statusCode === 201) {
         showSuccessAlert("Success!", "User registered successfully!");
         router.push('/login')

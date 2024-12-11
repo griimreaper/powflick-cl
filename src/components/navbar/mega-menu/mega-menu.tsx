@@ -43,7 +43,7 @@ export default function MegaMenu({ title, menuList }: Props) {
       </FlexRowCenter>
 
       <MenusContainer
-        ref={elementRef}
+        ref={elementRef as React.RefObject<HTMLLIElement>}
         className="menu-list"
         left={isLeftOverflowing}
         right={isRightOverflowing}>

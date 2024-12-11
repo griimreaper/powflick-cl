@@ -91,7 +91,7 @@ const AboutUs = () => {
           </Title>
           <Typography variant="body1" align="center" color="grey" paragraph>
             Our mission is to deliver high-quality products that bring joy and
-            convenience to our customers' lives.
+            convenience to our customers lives.
           </Typography>
           <AnimatedBox mt={4}>
             <img

@@ -73,12 +73,13 @@ export default function CustomerRow({ customer }: Props) {
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={STYLE}>
-        {phone}
+        {email}
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={STYLE}>
-        {email}
+        {phone}
       </StyledTableCell>
+
 
       <StyledTableCell align="left" sx={STYLE}>
         {isEditing ? (

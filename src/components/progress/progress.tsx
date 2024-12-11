@@ -25,8 +25,13 @@ export default function ProgressBar() {
     };
 
     const handleMutation: MutationCallback = () => {
-      const anchorElements = document.querySelectorAll("a[href]");
-      anchorElements.forEach((anchor) => anchor.addEventListener("click", handleAnchorClick));
+      const anchorElements = document.querySelectorAll<HTMLAnchorElement>("a[href]");
+
+      // Evita acumulación de listeners
+      anchorElements.forEach((anchor) => {
+        anchor.removeEventListener("click", handleAnchorClick); // Elimina listener previo
+        anchor.addEventListener("click", handleAnchorClick);   // Agrega listener nuevo
+      });
     };
 
     const mutationObserver = new MutationObserver(handleMutation);

@@ -20,7 +20,7 @@ export const ImgBox = styled("div")(({ theme }) => ({
   overflow: "hidden",
   position: "relative",
   padding: "0 40px 20px 40px",
-  background: theme.palette.primary[100]
+  background: theme.palette.primary['light']
 }));
 
 export const ItemController = styled(FlexBetween)(({ theme }) => ({

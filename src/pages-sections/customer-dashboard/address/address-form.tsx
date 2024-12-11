@@ -11,7 +11,7 @@ import { useDashboardStore } from "store/dashboard";
 import { useRouter } from "next/navigation";
 
 // =============================================================
-type Props = { direction: Direction, token: string };
+type Props = { direction: Direction | null, token: string };
 // =============================================================
 
 export default function AddressForm({ direction, token }: Props) {

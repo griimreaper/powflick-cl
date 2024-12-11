@@ -16,7 +16,7 @@ export default function useProduct(id: string) {
   const { data: session } = useSession();
   let token = session?.user?.name?.split("|")[0];
 
-  const cartItem = state.cart.find((item) => item.id === id);
+  const cartItem = state.cart.find((item) => item.id === id)!;
 
   const toggleFavorite = useCallback(() => {
     setIsFavorite((fav) => !fav);

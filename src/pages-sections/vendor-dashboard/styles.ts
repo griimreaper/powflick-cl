@@ -54,26 +54,26 @@ const StatusWrapper = styled(Box, {
   shouldForwardProp: (prop) => prop !== "status",
 })<StatusType>(({ theme, status }) => {
   let color = theme.palette.secondary.main;
-  let backgroundColor = theme.palette.secondary[100];
+  let backgroundColor = theme.palette.secondary['light'];
 
   if (status === "Accepted" || status === "Delivered" || status === "Normal") {
     color = theme.palette.success.main;
-    backgroundColor = theme.palette.success[100];
+    backgroundColor = theme.palette.success['light'];
   }
 
   if (status === "Rejected" || status === "Urgent" || status === "Cancelled") {
     color = theme.palette.error.main;
-    backgroundColor = theme.palette.error[100];
+    backgroundColor = theme.palette.error['light'];
   }
 
   if (status === "Processing") {
     color = theme.palette.warning.main;
-    backgroundColor = theme.palette.warning[100];
+    backgroundColor = theme.palette.warning['light'];
   }
 
   if (status === "Pending") {
     color = theme.palette.info.main;
-    backgroundColor = theme.palette.info[100];
+    backgroundColor = theme.palette.info['light'];
   }
 
   return {

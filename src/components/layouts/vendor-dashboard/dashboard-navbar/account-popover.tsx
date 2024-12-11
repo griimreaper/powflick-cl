@@ -16,7 +16,7 @@ const Divider = styled("div")(({ theme }) => ({
 }));
 
 export default function AccountPopover() {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<any>();
   const open = Boolean(anchorEl);
 
   const handleClose = () => setAnchorEl(null);

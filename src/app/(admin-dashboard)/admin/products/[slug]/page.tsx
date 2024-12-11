@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { EditProductPageView } from "pages-sections/vendor-dashboard/products/page-view";
 import { getOneProduct } from "services/dashboardAdmin/products";
 
@@ -10,7 +11,12 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductEdit({ params }: any) {
-  const { product, collectionsList, categoriesList } = await getOneProduct(params.slug);
+  // Obtener la sesión del lado del servidor
+  const session = await getServerSession();
+
+  let token = session?.user?.name?.split("|")[0];
+
+  const { product, collectionsList, categoriesList } = await getOneProduct(params.slug, token as string);
 
   return <EditProductPageView product={product} collectionsList={collectionsList} categoriesList={categoriesList} />;
 }

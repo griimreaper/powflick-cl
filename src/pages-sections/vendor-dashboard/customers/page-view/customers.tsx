@@ -56,7 +56,7 @@ export default function CustomersPageView() {
     handleRequestSort,
   } = useMuiTable({ listData: users?.users || [] });
 
-  const order = rawOrder === "desc" ? "DESC" : "ASC";
+  const order = rawOrder === "DESC" ? "DESC" : "ASC";
 
   const [filters, setFilters] = useState<Filters>({
     filter: "email",
@@ -112,7 +112,7 @@ export default function CustomersPageView() {
           <TableContainer sx={{ minWidth: 900 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={order.toLowerCase() as 'asc' || 'desc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}

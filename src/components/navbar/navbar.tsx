@@ -8,10 +8,10 @@ import { NavBarWrapper, InnerContainer } from "./styles";
 
 // ==========================================================
 interface Props {
-  border?: number;
+  border: number;
   elevation?: number;
   hideCategories?: boolean;
-  data: DataStructure["navbar"];
+  data: DataStructure["navbar"] | null;
 }
 // ==========================================================
 
@@ -29,7 +29,7 @@ export default function Navbar({
     >
       {hideCategories ? (
         <InnerContainer sx={{ justifyContent: "center" }}>
-          <NavigationList data={data} />
+          <NavigationList data={data!} />
         </InnerContainer>
       ) : (
         <InnerContainer>
@@ -37,7 +37,7 @@ export default function Navbar({
           <Categories />
 
           {/* HORIZONTAL MENU */}
-          <NavigationList data={data} />
+          <NavigationList data={data!} />
         </InnerContainer>
       )}
     </NavBarWrapper>

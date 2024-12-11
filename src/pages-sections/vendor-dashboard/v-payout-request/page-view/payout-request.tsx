@@ -39,7 +39,7 @@ export default function PayoutRequestsPageView({ payoutRequests }: Props) {
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHeader
-                order={order}
+                order={'asc'}
                 hideSelectBtn
                 orderBy={orderBy}
                 heading={tableHeading}
@@ -49,7 +49,7 @@ export default function PayoutRequestsPageView({ payoutRequests }: Props) {
               />
 
               <TableBody>
-                {filteredList.map((payout, index) => (
+                {filteredList.map((payout: any, index) => (
                   <RequestRow row={payout} key={index} />
                 ))}
               </TableBody>

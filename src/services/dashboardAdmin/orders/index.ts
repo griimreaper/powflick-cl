@@ -1,7 +1,6 @@
-import { Filters } from "@/app/dashboard-admin/orders-history/interfaces";
 import { mainApi } from "../../apis";
 
-export const getAllOrders = async (token: string, filters: Filters) => {
+export const getAllOrders = async (token: string, filters: any) => {
     try {
         let query = '/orders?'
 

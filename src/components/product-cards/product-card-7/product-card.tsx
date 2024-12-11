@@ -91,7 +91,7 @@ export default function ProductCard7(props: Props) {
           </Link>
 
           {/* PRODUCT RATING / REVIEW  */}
-          <ProductRating showRating={!hideRating} rating={rating} />
+          <ProductRating showRating={!hideRating} rating={4} />
 
           {/* PRODUCT COLORS */}
           {productColors.length ? (

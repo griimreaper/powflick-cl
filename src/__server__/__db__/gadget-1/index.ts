@@ -5,7 +5,7 @@
 // import Mock from "../../mock";
 import * as db from "./data";
 
-export const Gadget1Endpoints = (Mock) => {
+export const Gadget1Endpoints = (Mock: any) => {
   Mock.onGet("/api/gadget-1/featured-categories").reply(async () => {
     try {
       return [200, db.categories];

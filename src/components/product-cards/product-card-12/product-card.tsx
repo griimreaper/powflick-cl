@@ -10,22 +10,23 @@ import { calculateDiscount, currency } from "lib";
 import { PriceText } from "./styles";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
+import { ProductDB } from "models/types";
 
 // ==============================================================
-type Props = { product: Product };
+type Props = { product: ProductDB };
 // ==============================================================
 
 export default function ProductCard12({ product }: Props) {
-  const { slug, title, thumbnail, price, discount, rating } = product || {};
+  const { slug, title, URL, price, discount } = product || {};
 
   return (
     <Link href={`/products/${slug}`}>
       <FlexBox bgcolor="grey.50" borderRadius={3} mb={2}>
-        <LazyImage alt={title} width={380} height={379} src={thumbnail} />
+        <LazyImage alt={title} width={380} height={379} src={URL} />
       </FlexBox>
 
       <div>
-        <Rating readOnly value={rating} size="small" precision={0.5} />
+        <Rating readOnly value={4} size="small" precision={0.5} />
         <H6 fontSize={17} fontWeight={700}>
           {title}
         </H6>

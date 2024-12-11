@@ -7,7 +7,7 @@ import { StyledRoot } from "./styles";
 interface Props {
   icon: string;
   title: string;
-  description: string;
+  description?: string;
 }
 // ==============================================================
 

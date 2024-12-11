@@ -1,6 +1,6 @@
 // import Mock from "../../mock";
 import * as db from "./data";
-export const Furniture2Endpoints = (Mock) => {
+export const Furniture2Endpoints = (Mock: any) => {
 
   // get new products
   const newArrivalProducts = db.products.filter((item) => item.for.type === "new-arrival");

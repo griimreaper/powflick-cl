@@ -23,7 +23,7 @@ export default function SellerPackagePageView() {
       </FlexBetween>
 
       <Grid container spacing={3}>
-        {PACKAGES.map((item) => (
+        {PACKAGES.map((item: any) => (
           <Grid item xl={4} md={6} xs={12} key={item.id}>
             <SellerPackageCard listItem={item} />
           </Grid>
