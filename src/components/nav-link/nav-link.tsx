@@ -8,12 +8,12 @@ import clsx from "clsx";
 
 // STYLED COMPONENT
 const StyledLink = styled(Link, {
-  shouldForwardProp: (prop) => prop !== "active"
+  shouldForwardProp: (prop) => prop !== "active",
 })<{ active: number }>(({ theme, active }) => ({
   position: "relative",
   transition: "color 150ms ease-in-out",
-  color: active ? theme.palette.primary.main : "inherit",
-  "&:hover": { color: `${theme.palette.primary.main} !important` }
+  color: active ? theme.palette.common.black : "inherit",
+  "&:hover": { color: `${theme.palette.primary.main} !important` },
 }));
 
 // ==============================================================
@@ -24,7 +24,13 @@ export interface NavLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 // ==============================================================
 
-export default function NavLink({ href, children, style, className, ...props }: NavLinkProps) {
+export default function NavLink({
+  href,
+  children,
+  style,
+  className,
+  ...props
+}: NavLinkProps) {
   const pathname = usePathname();
 
   // CHECK CURRENT ROUTE
@@ -39,7 +45,8 @@ export default function NavLink({ href, children, style, className, ...props }: 
       style={style}
       className={clsx(className)}
       active={checkRouteMatch() ? 1 : 0}
-      {...props}>
+      {...props}
+    >
       {children}
     </StyledLink>
   );

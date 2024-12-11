@@ -28,7 +28,12 @@ export default function ListBlock({ title, products }: Props) {
         <Wrapper key={product.id}>
           <Link href={`/products/${product.slug}`}>
             <div className="img-wrapper">
-              <LazyImage width={100} height={100} alt="product" src={product.URL} />
+              <LazyImage
+                width={100}
+                height={100}
+                alt="product"
+                src={product.URL}
+              />
             </div>
           </Link>
 
