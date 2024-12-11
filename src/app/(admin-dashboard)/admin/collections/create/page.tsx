@@ -1,13 +1,16 @@
 import { Metadata } from "next";
-import { EditCategoryPageView } from "pages-sections/vendor-dashboard/categories/page-view";
+import CreateCollectionPageView from "pages-sections/vendor-dashboard/collections/page-view/collection-create";
+import { getOneCollection } from "services/Collections";
 
 export const metadata: Metadata = {
-  title: "Edit Category - SportZone",
+  title: "Collections Create - SportZone",
   description: "SportZone es una tienda en línea especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizables, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñada para deportistas y equipos que buscan rendimiento y estilo.",
   authors: [{ name: "devcodelab" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
 
-export default function EditCategory() {
-  return <EditCategoryPageView />;
+export default async function CollectionsCreate() {
+  const { availableProducts }: { availableProducts: string[] } = await getOneCollection('create');
+
+  return <CreateCollectionPageView availableProducts={availableProducts}/>;
 }

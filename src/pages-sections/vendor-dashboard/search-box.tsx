@@ -26,7 +26,9 @@ export default function SearchArea({
   const downSM = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const debounceRef = useRef<NodeJS.Timeout>();
 
-  const onQueryChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const onQueryChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     debounceRef.current = setTimeout(() => {
@@ -37,9 +39,12 @@ export default function SearchArea({
 
   return (
     <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap">
-      <SearchInput placeholder={searchPlaceholder} onChange={(e) => onQueryChange(e)} />
+      <SearchInput
+        placeholder={searchPlaceholder}
+        onChange={(e) => onQueryChange(e)}
+      />
 
-      <Button
+      {/* <Button
         href={url}
         color="info"
         fullWidth={downSM}
@@ -48,7 +53,7 @@ export default function SearchArea({
         LinkComponent={Link}
         sx={{ minHeight: 44 }}>
         {buttonText}
-      </Button>
+      </Button> */}
     </FlexBox>
   );
 }

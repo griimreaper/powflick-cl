@@ -25,7 +25,7 @@ interface Props {
   orderBy: string;
   rowCount: number;
   numSelected: number;
-  order: "asc" | "desc";
+  order: "ASC" | "DESC";
   hideSelectBtn?: boolean;
   onRequestSort: Function;
   onSelectAllClick?: (checked: boolean, defaultSelect: string) => void;
@@ -96,7 +96,7 @@ export default function TableHeader(props: Props) {
             key={headCell.id}
             align={headCell.align}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div style={{ alignItems: "center", gap: "8px" }}>
               <TableSortLabel
                 active={orderBy === headCell.id}
                 onClick={() => !headCell.content && onRequestSort(headCell.id)}

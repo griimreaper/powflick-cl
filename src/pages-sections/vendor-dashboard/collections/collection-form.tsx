@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -16,44 +15,57 @@ import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
 // STYLED COMPONENTS
 import { UploadImageBox, StyledClear } from "../styles";
-import { Category } from "models/types";
+import { Collection, CollectionType } from "models/types";
 import { useDashboardStore } from "store/dashboard";
 import { useRouter } from "next/navigation";
-import { Autocomplete } from "@mui/material";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
-import { createCategory, updateCategory } from "services/Categories";
-import { createProduct } from "services/dashboardAdmin/products";
+import { createCollection, updateCollection } from "services/Collections";
+import { Autocomplete, MenuItem } from "@mui/material";
 
-// FORM FIELDS VALIDATION
+// FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
-  name: yup.string().required("Name required")
+  title: yup.string().required("Title is required!"),
+  order: yup
+    .number()
+    .typeError("Order must be a number!") // Mensaje si no es un número
+    .required("Order is required!")
+    .positive("Order must be greater than 0!") // Debe ser positivo
+    .integer("Order must be an integer!") // Solo enteros
+    .min(1, "Order must be at positive number!") // Mínimo valor permitido es 1
 });
 
 // ================================================================
 interface Props {
-  category?: Category,
+  collection?: Collection,
   availableProducts: string[]; // Lista de productos disponibles para seleccionar
 };
+
 // ================================================================
 
-export default function CategoryForm({ category, availableProducts }: Props) {
+export default function CollectionForm({ collection, availableProducts }: Props) {
   const { profile } = useDashboardStore();
   const router = useRouter();
 
   const {
     id,
-    name,
+    title,
+    content,
+    type,
+    order,
     products,
-  } = category || {};
+  } = collection || {};
 
   const INITIAL_VALUES = {
-    name: name || "",
+    title: title || "",
+    content: content || "",
+    order: order || 1,
+    type: type || "none",
     products: products?.map(p => p.title) || [],
   };
 
   const update = async (values: typeof INITIAL_VALUES) => {
     try {
-      const response = await updateCategory(id!, values, profile.token as string);
+      const response = await updateCollection(id!, values, profile.token as string);
       showSuccessAlert('Success', response.message)
     } catch (error) {
       showErrorAlert('Failed', 'The product could not be updated')
@@ -62,16 +74,16 @@ export default function CategoryForm({ category, availableProducts }: Props) {
 
   const create = async (values: typeof INITIAL_VALUES) => {
     try {
-      const response = await createCategory(values, profile.token as string);
+      const response = await createCollection(values, profile.token as string);
       showSuccessAlert('Success', response.message)
-      router.push('/admin/categories/'+ response.createdCategory.id)
+      router.push('/admin/collections/' + response.createdCategory.id)
     } catch (error: any) {
       showErrorAlert('Failed', error.response.data.message)
     }
   }
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
-    if (!category) {
+    if (!collection) {
       create(values)
     } else {
       update(values)
@@ -87,23 +99,81 @@ export default function CategoryForm({ category, availableProducts }: Props) {
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item sm={6} xs={12}>
+              <Grid item xs={6}>
                 <TextField
                   fullWidth
-                  name="name"
-                  label="Name"
+                  name="title"
+                  label="Title"
                   color="info"
                   size="medium"
-                  placeholder="Name"
-                  value={values.name}
+                  placeholder="Title"
+                  value={values.title}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  helperText={touched.name && errors.name}
-                  error={Boolean(touched.name && errors.name)}
+                  helperText={touched.title && errors.title}
+                  error={Boolean(touched.title && errors.title)}
                 />
               </Grid>
 
-              {/* Campo Autocomplete para seleccionar productos */}
+              <Grid item xs={3}>
+                <TextField
+                  select
+                  fullWidth
+                  name="type"
+                  label="Type"
+                  color="info"
+                  size="medium"
+                  placeholder="Type"
+                  value={values.type}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  helperText={touched.type && errors.type}
+                  error={Boolean(touched.type && errors.type)}
+                >
+                  {Object.values(CollectionType)?.map((collection) => (
+                    <MenuItem key={collection} value={collection}>{collection}</MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  fullWidth
+                  name="order"
+                  type="number"
+                  label="Order"
+                  color="info"
+                  size="medium"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (/^\d*$/.test(value)) { // Acepta solo números positivos
+                      handleChange(e);
+                    }
+                  }}
+                  placeholder="Order"
+                  value={values.order}
+                  onBlur={handleBlur}
+                  helperText={touched.order && errors.order}
+                  error={Boolean(touched.order && errors.order)}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  name="content"
+                  label="Content"
+                  color="info"
+                  size="medium"
+                  placeholder="Content"
+                  value={values.content}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  helperText={touched.content && errors.content}
+                  error={Boolean(touched.content && errors.content)}
+                />
+              </Grid>
+
               <Grid item sm={12} xs={12}>
                 <Autocomplete
                   multiple
@@ -130,43 +200,9 @@ export default function CategoryForm({ category, availableProducts }: Props) {
                 />
               </Grid>
 
-
-              {/* <Grid item sm={6} xs={12}>
-                <TextField
-                  select
-                  fullWidth
-                  color="info"
-                  size="medium"
-                  name="parent"
-                  onBlur={handleBlur}
-                  value={values.parent}
-                  onChange={handleChange}
-                  placeholder="Parent Category"
-                  label="Select Parent Category"
-                  SelectProps={{ multiple: true }}>
-                  <MenuItem value="electronics">Electronics</MenuItem>
-                  <MenuItem value="fashion">Fashion</MenuItem>
-                </TextField>
-              </Grid> */}
-
-              {/* <Grid item sm={6} xs={12}>
-                <FormControlLabel
-                  label="Featured Category"
-                  control={
-                    <Checkbox
-                      color="info"
-                      name="featured"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.featured}
-                    />
-                  }
-                />
-              </Grid> */}
-
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
-                {!category ? 'Create category' : 'Save category'}
+                  Save category
                 </Button>
               </Grid>
             </Grid>

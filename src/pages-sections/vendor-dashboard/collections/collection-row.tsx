@@ -2,43 +2,33 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Avatar from "@mui/material/Avatar";
 // MUI ICON COMPONENTS
-import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
 // GLOBAL CUSTOM COMPONENT
 import SportZoneSwitch from "components/SportZoneSwitch";
 // STYLED COMPONENTS
-import {
-  StyledTableRow,
-  CategoryWrapper,
-  StyledTableCell,
-  StyledIconButton,
-} from "../styles";
-import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { StyledIconButton, StyledTableCell, StyledTableRow } from "../styles";
 import { useDashboardStore } from "store/dashboard";
-import { deleteCategory } from "services/Categories";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { deleteCollection } from "services/Collections";
+import { Collection } from "models/types";
+import { Edit } from "@mui/icons-material";
 
 // ========================================================================
-interface Category {
-  id: string;
-  name: string;
-}
-
-type Props = { category: Category; selected?: string[], setActualize: Function };
+type Props = { collection: Collection; selected?: string[], setActualize: Function };
 // ========================================================================
 
-export default function CategoryRow({ category, setActualize }: Props) {
-  const { name, id } = category || {};
+export default function CollectionRow({ collection, setActualize }: Props) {
+  const { order, title, type, id } = collection || {};
   const { profile } = useDashboardStore();
   const router = useRouter();
 
-  // const hasSelected = selected.indexOf(name) !== -1;
 
-  const handleNavigate = () => router.push(`/admin/categories/${id}`);
+  const handleNavigate = () => router.push(`/admin/collections/${id}`);
 
   const deleteCat = async (id: string) => {
     try {
-      const response = await deleteCategory(id, profile.token as string);
+      const response = await deleteCollection(id, profile.token as string);
       showSuccessAlert('Success', response.message)
       setActualize();
     } catch (error) {
@@ -46,30 +36,38 @@ export default function CategoryRow({ category, setActualize }: Props) {
     }
   }
 
+
   return (
     <StyledTableRow tabIndex={-1} role="checkbox" >
       <StyledTableCell align="left">#{id.split("-")[0]}</StyledTableCell>
 
-      <StyledTableCell align="left">
-        <CategoryWrapper>{name}</CategoryWrapper>
-      </StyledTableCell>
-      {/*
-      <StyledTableCell align="left">
-        <Avatar alt={name} src={image} sx={{ borderRadius: 2 }} />
+      <StyledTableCell align="left">{title}</StyledTableCell>
+      <StyledTableCell align="center">{order}</StyledTableCell>
+      <StyledTableCell align="right">{type}</StyledTableCell>
+
+      {/* <StyledTableCell align="center">
+        <Avatar
+          alt={name}
+          src={logo}
+          sx={{
+            width: 55,
+            height: "auto",
+            margin: "auto",
+            borderRadius: 0,
+          }}
+        />
       </StyledTableCell> */}
 
-      {/* <StyledTableCell align="left">{level}</StyledTableCell> */}
-
-      {/* <StyledTableCell align="left">
+      {/* <StyledTableCell align="center">
         <SportZoneSwitch
           color="info"
-          checked={featuredCategory}
+          checked={featuredC}
           onChange={() => setFeaturedCategory((state: boolean) => !state)}
         />
       </StyledTableCell> */}
 
       <StyledTableCell align="right">
-        <StyledIconButton onClick={handleNavigate}>
+      <StyledIconButton onClick={handleNavigate}>
           <Edit />
         </StyledIconButton>
 

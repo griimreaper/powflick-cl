@@ -24,11 +24,11 @@ export const navigation = [
   },
 
   {
-    name: "Brands",
+    name: "Collections",
     icon: duotone.Apps,
     children: [
-      { name: "Brand List", path: "/admin/brands" },
-      { name: "Create Brand", path: "/admin/brands/create" }
+      { name: "Collections List", path: "/admin/collections" },
+      { name: "Create Collection", path: "/admin/collections/create" }
     ]
   },
 

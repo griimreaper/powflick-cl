@@ -34,7 +34,6 @@ export default function ProductsPageView() {
     limit: 6,
     order: 'DESC',
   });
-  console.log(filters);
 
   const { profile } = useDashboardStore();
   const { token } = profile;
@@ -56,8 +55,6 @@ export default function ProductsPageView() {
     };
     fetchProducts();
   }, [filters, token, actualize]);
-
-  console.log(filters);
 
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
   const filteredProducts = productList?.products.map((item) => ({
@@ -109,13 +106,13 @@ export default function ProductsPageView() {
                 onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
                 onRequestSort={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
               />
-                <TableBody>
+              <TableBody>
 
-                  {filteredProducts?.map((product) => (
-                    <ProductRow key={product.id} product={product} setActualize={setActualize} />
-                  ))}
-                </TableBody>
-              
+                {filteredProducts?.map((product) => (
+                  <ProductRow key={product.id} product={product} setActualize={setActualize} />
+                ))}
+              </TableBody>
+
             </Table>
           </TableContainer>
         </Scrollbar>
