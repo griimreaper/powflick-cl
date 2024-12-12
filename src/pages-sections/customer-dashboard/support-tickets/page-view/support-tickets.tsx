@@ -10,10 +10,14 @@ import DashboardHeader from "../../dashboard-header";
 // CUSTOM DATA MODEL
 import Ticket from "models/Ticket.model";
 import { useDashboardStore } from "store/dashboard";
+import { log } from "node:console";
 
 export default function TicketsPageView() {
   const { profile } = useDashboardStore();
   const { messages } = profile;
+
+  console.log("messages", messages);
+  
 
   // Número de tickets por página
   const TICKETS_PER_PAGE = 5;
