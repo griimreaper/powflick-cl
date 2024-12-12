@@ -43,7 +43,7 @@ const BannerTop: React.FC<Props> = ({ props, textColor }) => {
               prevEl: ".swiper-button-prev",
             }}
             modules={[Navigation, Autoplay]}
-            className="h-full relative flex items-center justify-center "
+            className="h-full relative flex items-center justify-center"
             autoplay={{
               delay: 2000,
             }}
