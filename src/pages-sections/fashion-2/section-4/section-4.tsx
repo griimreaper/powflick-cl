@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
 import { H2 } from "components/Typography";
@@ -16,9 +17,23 @@ export default async function Section4({ products }: { products: DataStructure['
 
   return (
     <Container className="mt-4">
-      <H2 textAlign="center" mb={4}>
-        Best Selling Product
-      </H2>
+     <Box mb={4} sx={{ textAlign: "center" }}>
+
+       <Typography 
+          variant="h3" 
+          component="h1" 
+          gutterBottom
+          sx={{ 
+            fontWeight: "bold",
+            background: "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginBottom: "1rem"
+          }}
+        >
+          Best Selling Products
+        </Typography>
+      </Box>
 
       <Carousel
         slidesToShow={4}

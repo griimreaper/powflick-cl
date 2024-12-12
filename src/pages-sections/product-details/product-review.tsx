@@ -16,6 +16,8 @@ import { title } from "process";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { postReview } from "services/Reviews";
+import Reviews from "components/Reviews/Reviews";
+
 
 export default function ProductReview({ reviews, typeId }: {typeId: string ,reviews: Review[] }) {
   const { profile } = useDashboardStore();
@@ -66,6 +68,7 @@ export default function ProductReview({ reviews, typeId }: {typeId: string ,revi
 
   return (
     <div>
+      <Reviews review={reviews} />
       {reviews.map((item, ind) => (
         <ProductComment name={item.author} comment={item.review} date={item.createdAt} rating={Number(item.rating)} imgUrl={item.user.image} key={ind} />
       ))}
