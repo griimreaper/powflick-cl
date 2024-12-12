@@ -38,16 +38,15 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 type StatusType = {
-  status: string;
-  // status:
-  //   | "Accepted"
-  //   | "Rejected"
-  //   | "Processing"
-  //   | "Pending"
-  //   | "Delivered"
-  //   | "Normal"
-  //   | "Urgent"
-  //   | "Cancelled";
+  status:
+    | "APPROVED"
+    | "PAID"
+    | "REJECTED"
+    | "DISPATCHED"
+    | "ONTHEWAY"
+    | "PENDING"
+    | "DELIVERED"
+    | "CANCELLED";
 };
 
 const StatusWrapper = styled(Box, {
@@ -56,22 +55,22 @@ const StatusWrapper = styled(Box, {
   let color = theme.palette.secondary.main;
   let backgroundColor = theme.palette.secondary['light'];
 
-  if (status === "Accepted" || status === "Delivered" || status === "Normal") {
+  if (status === "APPROVED" || status === "DELIVERED" || status === "PAID") {
     color = theme.palette.success.main;
     backgroundColor = theme.palette.success['light'];
   }
 
-  if (status === "Rejected" || status === "Urgent" || status === "Cancelled") {
+  if (status === "REJECTED" || status === "CANCELLED") {
     color = theme.palette.error.main;
     backgroundColor = theme.palette.error['light'];
   }
 
-  if (status === "Processing") {
+  if (status === "DISPATCHED") {
     color = theme.palette.warning.main;
     backgroundColor = theme.palette.warning['light'];
   }
 
-  if (status === "Pending") {
+  if (status === "PENDING" || status === 'ONTHEWAY') {
     color = theme.palette.info.main;
     backgroundColor = theme.palette.info['light'];
   }

@@ -11,7 +11,7 @@ import { useRef } from "react";
 // ===============================================================
 interface Props {
   url: string;
-  buttonText: string;
+  buttonText?: string;
   handleSearch: (values: string) => void;
   searchPlaceholder: string;
 }

@@ -44,26 +44,37 @@ export const navigation = [
   { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
 
   {
-    name: "Refunds",
-    icon: duotone.Refund,
+    name: "Messages",
+    icon: duotone.Review,
     children: [
-      { name: "Refund Request", path: "/admin/refund-request" },
-      { name: "Refund Settings", path: "/admin/refund-setting" }
+      { name: "Complaint or Claim", path: "/admin/complaint-or-claim" },
+      { name: "Help with an Order", path: "/admin/help-with-a-order" },
+      { name: "Help with Page Functionality", path: "/admin/help-with-page-functionality" },
+      { name: "General Help", path: "/admin/general-help" },
     ]
   },
 
-  {
-    name: "Sellers",
-    icon: duotone.Seller,
-    children: [
-      { name: "Seller List", path: "/admin/sellers" },
-      { name: "Seller Package", path: "/admin/seller-package" },
-      { name: "Package Payments", path: "/admin/package-payments" },
-      { name: "Earning History", path: "/admin/earning-history" },
-      { name: "Payouts", path: "/admin/payouts" },
-      { name: "Payout Request", path: "/admin/payout-requests" }
-    ]
-  },
+  // {
+  //   name: "Refunds",
+  //   icon: duotone.Refund,
+  //   children: [
+  //     { name: "Refund Request", path: "/admin/refund-request" },
+  //     { name: "Refund Settings", path: "/admin/refund-setting" }
+  //   ]
+  // },
+
+  // {
+  //   name: "Sellers",
+  //   icon: duotone.Seller,
+  //   children: [
+  //     { name: "Seller List", path: "/admin/sellers" },
+  //     { name: "Seller Package", path: "/admin/seller-package" },
+  //     { name: "Package Payments", path: "/admin/package-payments" },
+  //     { name: "Earning History", path: "/admin/earning-history" },
+  //     { name: "Payouts", path: "/admin/payouts" },
+  //     { name: "Payout Request", path: "/admin/payout-requests" }
+  //   ]
+  // },
 
   { type: "label", label: "Vendor" },
   {

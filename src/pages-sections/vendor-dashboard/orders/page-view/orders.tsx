@@ -18,40 +18,52 @@ import PageWrapper from "../../page-wrapper";
 import Order from "models/Order.model";
 // TABLE HEAD COLUMN DATA
 import { tableHeading } from "../table-heading";
+import { DataOrders, Filters } from ".";
+import { useEffect, useState } from "react";
+import useHearingEvent from "hooks/hearingEvent";
+import { useDashboardStore } from "store/dashboard";
+import { getAllOrders } from "services/dashboardAdmin/orders";
+import Pagination from "pages-sections/vendor-dashboard/products/page-view/Pagination";
 
 // =============================================================================
-type Props = { orders: Order[] };
 // =============================================================================
 
-export default function OrdersPageView({ orders }: Props) {
-  // RESHAPE THE ORDER LIST BASED TABLE HEAD CELL ID
-  const filteredOrders = orders.map((item) => ({
-    id: item.id,
-    qty: item.items.length,
-    purchaseDate: item.createdAt,
-    billingAddress: item.shippingAddress,
-    amount: item.totalPrice,
-    status: item.status
-  }));
-
-  const {
-    order,
-    orderBy,
-    selected,
-    rowsPerPage,
-    filteredList,
-    handleChangePage,
-    handleRequestSort
-  } = useMuiTable({
-    listData: filteredOrders,
-    defaultSort: "purchaseDate",
-    defaultOrder: "DESC"
+export default function OrdersPageView() {
+  const [orders, setOrders] = useState<DataOrders>();
+  const { actualize, setActualize } = useHearingEvent();
+  const { profile } = useDashboardStore();
+  const { token } = profile;
+  const [filters, setFilters] = useState<Filters>({
+    filterBy: "USER",
+    order: "DESC",
+    status: "",
+    search: "",
+    page: 1,
+    limit: 6,
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (token) {
+        const response = await getAllOrders(token, filters);
+        setOrders(response.data);
+      }
+    };
+    fetchData();
+  }, [filters, token, actualize]);
+
+  const handleSearch = (value: string) => {
+    setFilters({ ...filters, search: value });
+  };
+
+  const handlePage = (page: number) => {
+    setFilters({ ...filters, page });
+  };
 
   return (
     <PageWrapper title="Orders">
       <SearchArea
-        handleSearch={() => {}}
+        handleSearch={handleSearch}
         buttonText="Create Order"
         url="/admin/orders"
         searchPlaceholder="Search Order..."
@@ -62,17 +74,18 @@ export default function OrdersPageView({ orders }: Props) {
           <TableContainer sx={{ minWidth: 900 }}>
             <Table>
               <TableHeader
-                order={order.toLowerCase() as 'asc' || 'desc'}
+                order={filters.order.toLowerCase() as 'asc' || 'desc'}
                 hideSelectBtn
-                orderBy={orderBy}
+                orderBy={''}
                 heading={tableHeading}
-                numSelected={selected.length}
-                rowCount={filteredList.length}
-                onRequestSort={handleRequestSort}
+                rowCount={Number(orders?.totalOrders)}
+                numSelected={Number(orders?.totalPages)}
+                onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
+                onRequestSort={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
               />
 
               <TableBody>
-                {filteredList.map((order) => (
+                {orders?.orders?.map((order) => (
                   <OrderRow order={order} key={order.id} />
                 ))}
               </TableBody>
@@ -81,9 +94,12 @@ export default function OrdersPageView({ orders }: Props) {
         </Scrollbar>
 
         <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil(filteredList.length / rowsPerPage)}
+        <Pagination
+            page={orders?.page}
+            prevPage={orders?.prevPage}
+            nextPage={orders?.nextPage}
+            totalPages={orders?.totalPages}
+            handlePage={handlePage}
           />
         </Stack>
       </Card>

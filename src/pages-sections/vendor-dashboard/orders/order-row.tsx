@@ -7,33 +7,34 @@ import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
 import { currency } from "lib";
 // STYLED COMPONENTS
 import { StatusWrapper, StyledIconButton, StyledTableCell, StyledTableRow } from "../styles";
+import { Order } from "models/types";
 
 // ========================================================================
-type Props = { order: any };
+type Props = { order: Order };
 // ========================================================================
 
 export default function OrderRow({ order }: Props) {
-  const { amount, id, qty, purchaseDate, billingAddress, status } = order || {};
+  const { id, total, createdAt, state, customizations, direction } = order || {};
 
   const router = useRouter();
 
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
-      <StyledTableCell align="left">#{id.split("-")[0]}</StyledTableCell>
-      <StyledTableCell align="left">{qty}</StyledTableCell>
+      <StyledTableCell align="left">#{id}</StyledTableCell>
+      <StyledTableCell align="left">{customizations.length}</StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
-        {format(new Date(purchaseDate), "dd MMM yyyy")}
+        {format(new Date(createdAt), "dd MMM yyyy")}
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
-        {billingAddress}
+        {`${direction.city}, ${direction.country}, ${direction.address}`}
       </StyledTableCell>
 
-      <StyledTableCell align="left">{currency(amount)}</StyledTableCell>
+      <StyledTableCell align="left">{currency(total)}</StyledTableCell>
 
       <StyledTableCell align="left">
-        <StatusWrapper status={status}>{status}</StatusWrapper>
+        <StatusWrapper status={state}>{state}</StatusWrapper>
       </StyledTableCell>
 
       <StyledTableCell align="center">

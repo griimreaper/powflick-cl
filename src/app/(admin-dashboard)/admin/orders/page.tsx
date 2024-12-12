@@ -11,6 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Orders() {
-  const orders = await api.orders();
-  return <OrdersPageView orders={orders} />;
+  return <OrdersPageView />;
 }

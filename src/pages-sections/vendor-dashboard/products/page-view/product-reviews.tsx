@@ -11,46 +11,59 @@ import { TableHeader, TablePagination } from "components/data-table";
 // LOCAL CUSTOM COMPONENT
 import ReviewRow from "../review-row";
 import PageWrapper from "../../page-wrapper";
-// GLOBAL CUSTOM HOOK
-import useMuiTable from "hooks/useMuiTable";
 
-// CUSTOM DATA MODEL
-import Review from "models/Review.model";
+import useHearingEvent from "hooks/hearingEvent";
+import { useEffect, useState } from "react";
+import { FiltersReview, ReviewsData } from ".";
+import { getReviewsAdmin } from "services/dashboardAdmin/reviews";
+import { useDashboardStore } from "store/dashboard";
+import Pagination from "./Pagination";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [
-  { id: "product", label: "Product", align: "left" },
+  { id: "image", label: "Image", align: "left" },
   { id: "customer", label: "Customer", align: "left" },
+  { id: "rating", label: "Rating", align: "left" },
   { id: "comment", label: "Comment", align: "left" },
   { id: "published", label: "Published", align: "left" },
-  { id: "action", label: "Action", align: "center" }
+  { id: "show", label: "Show", align: "left" },
+  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 8, 10, 12] }
 ];
 
 // =============================================================================
-type Props = { reviews: Review[] };
 // =============================================================================
 
-export default function ProductReviewsPageView({ reviews }: Props) {
-  // RESHAPE THE REVIEW LIST BASED TABLE HEAD CELL ID
-  const filteredReviews = reviews.map((item) => ({
-    id: item.id,
-    published: true,
-    comment: item.comment,
-    productId: item.product.id,
-    product: item.product.title,
-    productImage: item.product.URL,
-    customer: `${item.customer.name.firstName} ${item.customer.name.lastName}`
-  }));
+export default function ProductReviewsPageView() {
+  const [reviewList, setReviewList] = useState<ReviewsData>();
+  const { actualize, setActualize } = useHearingEvent();
+  const [filters, setFilters] = useState<FiltersReview>({
+    isActive: "",
+    rating: "",
+    type: null,
+    search: "",
+    page: 1,
+    limit: 6,
+  });
+  const { profile } = useDashboardStore();
+  const { token } = profile;
 
-  const {
-    order,
-    orderBy,
-    selected,
-    rowsPerPage,
-    filteredList,
-    handleChangePage,
-    handleRequestSort
-  } = useMuiTable({ listData: filteredReviews, defaultSort: "product" });
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        if (token) {
+          const { data } = await getReviewsAdmin(filters, token as string);
+          setReviewList(data);
+        }
+      } catch (error) {
+        console.error("Error getting users:", error);
+      }
+    };
+    fetchReviews();
+  }, [token, filters, actualize]);
+
+  const handlePage = (page: number) => {
+    setFilters({ ...filters, page });
+  };
 
   return (
     <PageWrapper title="Product Reviews">
@@ -61,16 +74,17 @@ export default function ProductReviewsPageView({ reviews }: Props) {
               <TableHeader
                 order={'asc'}
                 hideSelectBtn
-                orderBy={orderBy}
+                orderBy={''}
                 heading={tableHeading}
-                numSelected={selected.length}
-                rowCount={filteredList.length}
-                onRequestSort={handleRequestSort}
+                rowCount={Number(reviewList?.total)}
+                numSelected={Number(reviewList?.totalPages)}
+                onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
+                onRequestSort={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
               />
 
               <TableBody>
-                {filteredList.map((review: any) => (
-                  <ReviewRow review={review} key={review.id} />
+                {reviewList?.reviews.map((review) => (
+                  <ReviewRow rev={review} key={review.id} setActualize={setActualize}/>
                 ))}
               </TableBody>
             </Table>
@@ -78,9 +92,12 @@ export default function ProductReviewsPageView({ reviews }: Props) {
         </Scrollbar>
 
         <Stack alignItems="center" my={4}>
-          <TablePagination
-            onChange={handleChangePage}
-            count={Math.ceil(filteredList.length / rowsPerPage)}
+          <Pagination
+            page={reviewList?.page}
+            prevPage={reviewList?.prevPage}
+            nextPage={reviewList?.nextPage}
+            totalPages={reviewList?.totalPages}
+            handlePage={handlePage}
           />
         </Stack>
       </Card>

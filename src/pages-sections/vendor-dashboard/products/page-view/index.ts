@@ -1,4 +1,4 @@
-import { ProductDB } from "models/types";
+import { ProductDB, Review } from "models/types";
 
 export { default as ProductsPageView } from "./products";
 export { default as EditProductPageView } from "./product-edit";
@@ -14,11 +14,30 @@ export interface ProductData {
     products: ProductDB[];
     count: any
 }
+
+export interface ReviewsData {
+    page: number;
+    prevPage?: any;
+    nextPage: number;
+    totalPages: number;
+    total: number;
+    reviews: Review[];
+    count: any
+}
 export interface Filters {
     search: string,
     page: number,
     limit: number,
     order: 'ASC' | 'DESC'
+}
+
+export interface FiltersReview {
+    limit: number;
+    page: number;
+    search: '',
+    isActive?: 'true' | 'false' | ''
+    type?: 'ORDER' | 'PRODUCT' | null
+    rating?: '1' | '2' | '3' | '4' | '5' | ''
 }
 
 export interface paginationProps {

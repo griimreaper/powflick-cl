@@ -10,7 +10,7 @@ import { currency } from "lib";
 // ==============================================================
 interface Props {
   total: number;
-  discount: number;
+  discount?: number;
 }
 // ==============================================================
 
@@ -30,8 +30,8 @@ export default function TotalSummery({ total, discount }: Props) {
         <Paragraph color="grey.600">Shipping fee:</Paragraph>
 
         <FlexBox alignItems="center" gap={1} maxWidth={100}>
-          <Paragraph>$</Paragraph>
-          <TextField color="info" defaultValue={10} type="number" fullWidth />
+          <Paragraph>${0}</Paragraph>
+          {/* <TextField color="info" defaultValue={10} type="number" fullWidth /> */}
         </FlexBox>
       </FlexBetween>
 
@@ -39,8 +39,8 @@ export default function TotalSummery({ total, discount }: Props) {
         <Paragraph color="grey.600">Discount(%):</Paragraph>
 
         <FlexBox alignItems="center" gap={1} maxWidth={100}>
-          <Paragraph>$</Paragraph>
-          <TextField color="info" defaultValue={discount} type="number" fullWidth />
+          <Paragraph>${discount || 0}</Paragraph>
+          {/* <TextField color="info" defaultValue={discount} type="number" fullWidth /> */}
         </FlexBox>
       </FlexBetween>
 

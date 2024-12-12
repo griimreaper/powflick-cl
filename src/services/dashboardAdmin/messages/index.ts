@@ -9,7 +9,7 @@ export const getMessages = async (token: string, filters: any) => {
                 query += `category=${filters.category}&`;
             }
             if (filters.orderByDate) {
-                query += filters.orderByDate === 'asc' ? 'desc=true&' : 'desc=false&'
+                query += filters.orderByDate === 'ASC' ? 'desc=true&' : 'desc=false&'
             }
             if (filters.showAnswered !== null) {
                 query += filters.showAnswered === true ? 'answered=true&' : 'answered=false&';

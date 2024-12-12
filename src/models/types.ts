@@ -179,6 +179,7 @@ export interface Order {
   }[];
   createdAt: string;
   updatedAt: string;
+  note: string;
   products: ProductDB[];
   direction: Direction;
   user: {
@@ -236,6 +237,12 @@ export interface User {
   deletedAt: string | null;
 }
 
+export enum ShowType {
+  LANDING = 'LANDING',
+  DETAIL = 'DETAIL',
+  BOTH = 'BOTH',
+}
+
 export interface Review {
   id: string;
   title: string;
@@ -251,7 +258,7 @@ export interface Review {
   updatedAt: string;
   user: User;
   product?: ProductDB;
-  show: string;
+  show: ShowType;
 }
 
 export interface Message {

@@ -1,3 +1,4 @@
+import { Review } from "models/types";
 import { mainApi } from "../../apis";
 
 export const getReviewsAdmin = async (filters: any, token: string) => {
@@ -29,16 +30,28 @@ export const getReviewsAdmin = async (filters: any, token: string) => {
   }
 };
 
-interface ActiveOrInactiveReview {
+interface updateReview extends Partial<Review>{
   reviewId: string;
-  isActive: boolean;
 }
 
-export const statusReview = async (data: ActiveOrInactiveReview, token: string) => {
+export const updateReview = async (data: updateReview, token: string) => {
   try {
     const response = await mainApi.patch("/reviews/update", data, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating status review:", error);
+    throw error;
+  }
+};
+
+export const deleteReview = async (id: string, token: string) => {
+  try {
+    const response = await mainApi.delete("/reviews/" + id, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Error updating status review:", error);

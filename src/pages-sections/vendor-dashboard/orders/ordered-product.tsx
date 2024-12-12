@@ -11,33 +11,34 @@ import { H6, Paragraph } from "components/Typography";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import Order from "models/Order.model";
+import { ProductDB } from "models/types";
 
 // ==============================================================
-type Props = { product: Order["items"][0] };
+type Props = { product: ProductDB };
 // ==============================================================
 
 export default function OrderedProduct({ product }: Props) {
-  const { product_img, product_name, product_price, product_quantity } = product || {};
+  const { URL, title, price, quantityPurchase } = product || {};
 
   return (
     <Box my={2} gap={2} display="grid" gridTemplateColumns={{ md: "1fr 1fr", xs: "1fr" }}>
       <FlexBox flexShrink={0} gap={1.5} alignItems="center">
         <Avatar
-          src={product_img}
-          alt={product_name}
+          src={URL}
+          alt={title}
           sx={{ height: 64, width: 64, borderRadius: 2 }}
         />
 
         <div>
-          <H6 mb={1}>{product_name}</H6>
+          <H6 mb={1}>{title}</H6>
 
           <FlexBox alignItems="center" gap={1}>
             <Paragraph fontSize={14} color="grey.600">
-              {currency(product_price)} x
+              {currency(price)} x
             </Paragraph>
 
             <Box maxWidth={60}>
-              <TextField defaultValue={product_quantity} type="number" fullWidth />
+              <TextField defaultValue={quantityPurchase} type="number" fullWidth />
             </Box>
           </FlexBox>
         </div>

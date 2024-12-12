@@ -54,7 +54,6 @@ export default function ShopLayout1({
       if (token && token !== undefined && !profile.token) {
         localStorage.setItem("termsAccepted", "true");
         const response = await getProfile(token);
-        console.log(response);
 
         setData({ ...response, token, rol });
         if (image) setProfileUser({ image: image });
