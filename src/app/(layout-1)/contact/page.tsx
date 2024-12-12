@@ -36,6 +36,11 @@ const ContactUs = () => {
 
   const onSubmit = async (data: any) => {
     try {
+      // Add missing fields
+      data.title = "Contact Form Submission";
+      data.type = data.category;
+      data.status = "new";
+
       const response = await sendMessage(data);
       if (response.status === 201) {
         showSuccessAlert("Success!", "Message sent successfully");

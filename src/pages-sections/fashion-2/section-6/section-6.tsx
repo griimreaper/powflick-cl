@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
 import { H2 } from "components/Typography";
@@ -5,7 +6,7 @@ import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
 // API FUNCTIONS
-import api from "utils/__api__/fashion-2";
+
 
 export default async function Section6({ products }: { products: DataStructure['landing']['collections']['discountProducts'] }) {
   const responsive = [
@@ -17,9 +18,23 @@ export default async function Section6({ products }: { products: DataStructure['
 
   return (
     <Container className="mt-4">
-      <H2 textAlign="center" mb={4}>
-        Discount Products
-      </H2>
+       <Box mb={4} sx={{ textAlign: "center" }}>
+
+       <Typography 
+          variant="h3" 
+          component="h1" 
+          gutterBottom
+          sx={{ 
+            fontWeight: "bold",
+            background: "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginBottom: "1rem"
+          }}
+        >
+          Discount Products
+        </Typography>
+      </Box>
 
       <Carousel
         slidesToShow={5}

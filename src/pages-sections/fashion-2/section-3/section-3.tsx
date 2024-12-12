@@ -5,6 +5,7 @@ import { H2 } from "components/Typography";
 import CategoryCard1 from "components/category-cards/category-card-1";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
+import { Box, Typography } from "@mui/material";
 
 const sportsCategories = [
   { id: 1, title: "Football", image: "/assets/images/categories/futball.jpeg" },
@@ -30,9 +31,23 @@ export default async function Section3() {
 
   return (
     <Container className="mt-4">
-      <H2 textAlign="center" mb={4}>
-        Best selling Categories
-      </H2>
+      <Box mb={4} sx={{ textAlign: "center" }}>
+
+       <Typography 
+          variant="h3" 
+          component="h1" 
+          gutterBottom
+          sx={{ 
+            fontWeight: "bold",
+            background: "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginBottom: "1rem"
+          }}
+        >
+           Categories
+        </Typography>
+      </Box>
 
       <Grid container spacing={3}>
         {sportsCategories.map((item) => (

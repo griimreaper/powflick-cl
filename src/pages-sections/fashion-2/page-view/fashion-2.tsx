@@ -1,5 +1,6 @@
 // GLOBAL CUSTOM COMPONENTS
 import Newsletter from "components/newsletter";
+import Reviews from "components/Reviews/Reviews";
 // LOCAL CUSTOM COMPONENTS
 import Section1 from "../section-1";
 import Section2 from "../section-2";
@@ -12,10 +13,12 @@ import Section8 from "../section-8";
 import Section9 from "../section-9";
 import Section10 from "../section-10";
 import { DataStructure } from "models/types";
+import BannerTop from "components/BannerTop";
 
 export default function FashionTwoPageView({ data }: { data: DataStructure }) {
   return (
     <div className="bg-white">
+      <BannerTop props={""} textColor={""} />
       {/* HERO SECTION CAROUSEL */}
       <Section1 data={data?.navbar} />
 
@@ -45,7 +48,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
 
       {/* PRODUCT LIST COLUMN */}
       <Section10 products={data?.landing?.collections} />
-
+      <Reviews review={data?.landing?.reviews} />
       {/* POPUP NEWSLETTER FORM */}
       <Newsletter />
 
