@@ -6,7 +6,7 @@ import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import * as yup from "yup";
 
-export default function MessageForm({ token, messageId }: { token: string, messageId: string }) {
+export default function MessageForm({ token, messageId, setMess, from }: { token: string, messageId: string, setMess: Function, from: 'user' | 'admin' }) {
   const { setMessages } = useDashboardStore();
   const initialValues = { message: "" };
 
@@ -19,8 +19,12 @@ export default function MessageForm({ token, messageId }: { token: string, messa
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const data = await addConversation(values.message, messageId, token);
-        setMessages(data.messages)
+        const data = await addConversation(values.message, messageId, from, token);
+        if (from === 'admin') {
+          setMess(data.messages)
+        } else {
+          setMessages(data.messages)
+        }
         resetForm();
         showSuccessAlert('Success', 'Your message has been sended succesfully');
       } catch (error) {

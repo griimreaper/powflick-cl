@@ -15,7 +15,7 @@ type Props = { mess: Message };
 // ========================================================================
 
 export default function MessageRow({ mess }: Props) {
-  const { id, consultedAt, email, name, status, message, type, title } = mess || {};
+  const { id, consultedAt, email, name, status, message, type, title, pending } = mess || {};
 
   const router = useRouter();
 
@@ -37,21 +37,17 @@ export default function MessageRow({ mess }: Props) {
 
       <StyledTableCell align="center" sx={{ fontWeight: 400 }}
       >{
-        status ? 
-        <CheckCircleOutline/>
-        :
-        <Announcement/>
-         }
+          pending === true ?
+            <Announcement />
+            :
+            <CheckCircleOutline />
+        }
       </StyledTableCell>
 
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={() => router.push(`/admin/orders/${id}`)}>
+        <StyledIconButton onClick={() => router.push(`/admin/messages/${id}`)}>
           <RemoveRedEye />
-        </StyledIconButton>
-
-        <StyledIconButton>
-          <Delete />
         </StyledIconButton>
       </StyledTableCell>
     </StyledTableRow>

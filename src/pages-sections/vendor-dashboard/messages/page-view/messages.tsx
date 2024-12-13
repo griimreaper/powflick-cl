@@ -31,7 +31,7 @@ import { ContactType } from "models/types";
 // =============================================================================
 // =============================================================================
 
-export default function OrdersPageView({ type }: { type: "Complaint or Claim" | "Help with an Order" | "Help with Page Functionality" | "General Help" }) {
+export default function MessagesPageView({ type }: { type: "Complaint or Claim" | "Help with an Order" | "Help with Page Functionality" | "General Help" }) {
     const [messages, setMessages] = useState<DataMessage>();
     const { actualize, setActualize } = useHearingEvent();
     const { profile } = useDashboardStore();
