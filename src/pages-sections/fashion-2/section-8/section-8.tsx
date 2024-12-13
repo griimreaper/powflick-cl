@@ -7,9 +7,20 @@ import BlogCard from "./blog-card";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
 import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import Blog from "models/Blog.model";
 
-export default async function Section8() {
-  const blogs = await api.getBlogs();
+export default function Section8() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const blogs = await api.getBlogs();
+      setBlogs(blogs);
+    };
+
+    fetchBlogs();
+  }, []);
 
   return (
     <Container className="mt-4">
@@ -35,7 +46,7 @@ export default async function Section8() {
       </Box>
 
       <Grid container spacing={3}>
-        {blogs.map((item) => (
+        {blogs.map((item: Blog) => (
           <Grid item md={4} xs={12} key={item.id}>
             <BlogCard
               title={item.title}

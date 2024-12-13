@@ -1,14 +1,25 @@
 import Divider from "@mui/material/Divider";
 import Container from "@mui/material/Container";
+import { useEffect, useState } from "react";
 // GLOBAL CUSTOM COMPONENTS
 import { Carousel } from "components/carousel";
 import SportZoneImage from "components/SportZoneImage";
 import FlexRowCenter from "components/flex-box/flex-row-center";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
+import Brand from "models/Brand.model";
 
-export default async function Section9() {
-  const brands = await api.getBrands();
+export default function Section9() {
+  const [brands, setBrands] = useState<Brand[]>([]);
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      const brandsData = await api.getBrands();
+      setBrands(brandsData);
+    };
+
+    fetchBrands();
+  }, []);
 
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 3 } },

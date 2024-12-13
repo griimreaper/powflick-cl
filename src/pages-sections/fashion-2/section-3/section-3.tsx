@@ -27,25 +27,23 @@ const sportsCategories = [
 ];
 
 export default async function Section3() {
-  const categories = await api.getCategories();
-
   return (
     <Container className="mt-4">
       <Box mb={4} sx={{ textAlign: "center" }}>
-
-       <Typography 
-          variant="h3" 
-          component="h1" 
+        <Typography
+          variant="h3"
+          component="h1"
           gutterBottom
-          sx={{ 
+          sx={{
             fontWeight: "bold",
-            background: "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
+            background:
+              "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            marginBottom: "1rem"
+            marginBottom: "1rem",
           }}
         >
-           Categories
+          Categories
         </Typography>
       </Box>
 

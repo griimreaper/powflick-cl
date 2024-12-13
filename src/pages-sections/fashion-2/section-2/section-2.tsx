@@ -1,3 +1,4 @@
+"use client"
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENT
 import ServiceCard3 from "components/service-cards/service-card-3";
@@ -5,9 +6,20 @@ import ServiceCard3 from "components/service-cards/service-card-3";
 import { RootStyle } from "./styles";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
+import { useEffect, useState } from "react";
+import Service from "models/Service.model";
 
-export default async function Section2() {
-  const services = await api.getServices();
+export default function Section2() {
+  const [services, setServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const services = await api.getServices();
+      setServices(services);
+    };
+
+    fetchServices();
+  }, []);
 
   return (
     <Container className="mt-2">
