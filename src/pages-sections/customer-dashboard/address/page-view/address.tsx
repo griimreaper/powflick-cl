@@ -46,7 +46,7 @@ export default function AddressPageView() {
       {/* TITLE HEADER AREA */}
       <DashboardHeader
         Icon={Place}
-        href="/address/new"
+        href="/dashboard/address/new"
         title="My Addresses"
         buttonText="Add New Address"
       />

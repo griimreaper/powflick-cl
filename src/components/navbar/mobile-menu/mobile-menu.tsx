@@ -17,8 +17,6 @@ export default function MobileMenu() {
 
   const storeMenu = { title: 'Store', child: data?.categories }
 
-  console.log(storeMenu);
-  
   return (
     <Fragment>
       <IconButton

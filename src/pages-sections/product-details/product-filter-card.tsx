@@ -23,6 +23,7 @@ import {
   ProductFilters,
 } from "./types";
 import { Slider } from "@mui/material";
+import { ProductDB } from "models/types";
 
 const OTHERS = [
   { label: "On Sale", value: "sale" },
@@ -30,19 +31,11 @@ const OTHERS = [
   { label: "Featured", value: "featured" },
 ];
 
-const colorList = [
-  "Black",
-  "Yellow",
-  "Red",
-  "Orange",
-  "Green",
-  "Blue",
-  "White",
-];
 interface Props {
   filters?: ProductFilters;
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
   topCategories?: any[];
+  products: ProductDB[];
 }
 
 const initialFilters = {
@@ -59,8 +52,22 @@ export default function ProductFilterCard({
   filters = initialFilters,
   changeFilters,
   topCategories,
+  products,
 }: Props) {
   const [collapsed, setCollapsed] = useState<string | null>(null);
+
+  const allColors = new Set(
+    products.flatMap(p => p.colors?.map(c => c?.trim().toLowerCase()) || [])
+  );
+
+  const isValidColor = (color: string) => {
+    const s = new Option().style;
+    s.color = color.toLowerCase(); // Normaliza el color
+    return s.color !== ""; // Devuelve true si el navegador reconoce el color
+  };
+
+  const validColors = [...allColors].map(c => c.trim().toLowerCase())
+    .filter(isValidColor);
 
   console.log("topCategories", topCategories);
 
@@ -68,7 +75,12 @@ export default function ProductFilterCard({
     changeFilters && changeFilters("price", values);
   };
 
+  console.log(validColors);
+
+
   const handleChangeColor = (value: string) => {
+    const firstLetterUp = value.split('')[0].toUpperCase()
+    value = [firstLetterUp, ...value.split('').splice(1)].join('');
     changeFilters && changeFilters("color", [value]);
   };
 
@@ -240,14 +252,18 @@ export default function ProductFilterCard({
       {/* COLORS VARIANT FILTER */}
       <H6 mb={2}>Colors</H6>
       <FlexBox mb={2} flexWrap="wrap" gap={1.5}>
-        {colorList.map((item) => (
+        {validColors.map((item: string) => (
           <Box
             key={item}
             width={25}
             height={25}
             flexShrink={0}
-            bgcolor={item}
+            bgcolor={
+              item === 'orange' ? 'orangered' :
+                item
+            }
             borderRadius="50%"
+            border={1}
             onClick={() => handleChangeColor(item)}
             sx={{
               outlineOffset: 1,

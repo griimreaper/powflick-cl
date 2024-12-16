@@ -2,7 +2,7 @@
 
 export interface Category {
   id: string;
-  name: string;
+  title: string;
   products: ProductDB[]
   // parentId: string | null;
   // link: string;
@@ -38,7 +38,7 @@ export interface ProductDB {
   stock: number; // Cantidad de stock disponible
   selled: number; // Cantidad vendida (puede ser nula)
   product_categories: string; // Categorías del producto separadas por '|'
-  colors: string | null; // Colores disponibles (puede ser nulo)
+  colors: string[]; // Colores disponibles (puede ser nulo)
   status: "publish" | "draft"; // Estado de publicación del producto
   URL: string; // URL de la imagen del producto
   images: string[]; // Array de URLs de imágenes del producto

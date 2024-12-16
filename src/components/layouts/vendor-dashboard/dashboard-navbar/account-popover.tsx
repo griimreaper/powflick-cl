@@ -8,6 +8,8 @@ import styled from "@mui/material/styles/styled";
 import IconButton from "@mui/material/IconButton";
 // GLOBAL CUSTOM COMPONENTS
 import { H6, Small } from "components/Typography";
+import { useDashboardStore } from "store/dashboard";
+import { signOut } from "next-auth/react";
 
 // STYLED COMPONENT
 const Divider = styled("div")(({ theme }) => ({
@@ -18,9 +20,12 @@ const Divider = styled("div")(({ theme }) => ({
 export default function AccountPopover() {
   const [anchorEl, setAnchorEl] = useState<any>();
   const open = Boolean(anchorEl);
-
+  const { profile, removeProfile } = useDashboardStore();
   const handleClose = () => setAnchorEl(null);
-
+  const handleLogout = () => {
+    signOut();
+    removeProfile();
+  }
   return (
     <div>
       <IconButton
@@ -29,7 +34,7 @@ export default function AccountPopover() {
         onClick={(e) => setAnchorEl(e.currentTarget)}
         aria-expanded={open ? "true" : undefined}
         aria-controls={open ? "account-menu" : undefined}>
-        <Avatar alt="Remy Sharp" src="/assets/images/avatars/001-man.svg" />
+        <Avatar src={profile.genericResponseUser.image} />
       </IconButton>
 
       <Menu
@@ -73,7 +78,7 @@ export default function AccountPopover() {
           }
         }}>
         <Box px={2} pt={1}>
-          <H6>Gage Paquette</H6>
+          <H6>{profile.genericResponseUser.firstName + ' ' + profile.genericResponseUser.lastName}</H6>
           <Small color="grey.500">Admin</Small>
         </Box>
 
@@ -82,7 +87,7 @@ export default function AccountPopover() {
         <MenuItem>My Orders</MenuItem>
         <MenuItem>Settings</MenuItem>
         <Divider />
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
       </Menu>
     </div>
   );

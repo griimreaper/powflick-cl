@@ -9,10 +9,10 @@ import { StyledInputBase } from "./styles";
 export default function RightContent() {
   return (
     <FlexBox alignItems="center" gap={2}>
-      <StyledInputBase
+      {/* <StyledInputBase
         placeholder="Search anything..."
         startAdornment={<Search sx={{ color: "grey.500" }} />}
-      />
+      /> */}
 
       <NotificationsPopover />
       <AccountPopover />

@@ -15,9 +15,10 @@ import DiscountChip from "../discount-chip";
 import QuantityButtons from "./components/quantity-buttons";
 // LOCAL CUSTOM HOOKS
 import useProduct from "../use-product";
+import { ProductDB } from "models/types";
 
 // ==============================================================
-type Props = { product: Product };
+type Props = { product: ProductDB };
 // ==============================================================
 
 export default function ProductCard16({ product }: Props) {

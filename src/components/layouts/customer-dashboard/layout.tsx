@@ -28,7 +28,7 @@ export default function CustomerDashboardLayout({ children, session }: { childre
     const fetchSession = async () => {
       if (!session) {
         // Si no hay sesión, redirigir a la página de inicio de sesión
-        router.push('/login');
+        router.push('/');
       }
     };
 

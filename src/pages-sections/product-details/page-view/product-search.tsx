@@ -33,6 +33,7 @@ import {
 import Product from "models/Product.model";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useNavbar } from "contexts/NavBarContext";
+import { ProductDB } from "models/types";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
@@ -52,7 +53,7 @@ const initialFilters = {
 };
 
 const handleSortProducts = (
-  products: Product[],
+  products: ProductDB[],
   sortBy: string,
   filters: ProductFilters
 ) => {
@@ -195,6 +196,7 @@ export default function ProductSearchPageView({ data }: any) {
                 >
                   <Box px={3} py={2}>
                     <ProductFilterCard
+                      products={sortedProducts}
                       filters={filters}
                       changeFilters={handleChangeFilters}
                       topCategories={navbarData?.categories}
@@ -215,6 +217,7 @@ export default function ProductSearchPageView({ data }: any) {
             sx={{ display: { md: "block", xs: "none" } }}
           >
             <ProductFilterCard
+              products={sortedProducts}
               filters={filters}
               changeFilters={handleChangeFilters}
               topCategories={navbarData?.categories}

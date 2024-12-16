@@ -18,11 +18,13 @@ import {
   NavItemButton,
   ListIconWrapper
 } from "./styles";
+import { signOut } from "next-auth/react";
+import { useDashboardStore } from "store/dashboard";
 
 export default function MultiLevelMenu() {
   const router = useRouter();
   const pathname = usePathname();
-
+  const { removeProfile } = useDashboardStore()
   const { COMPACT, TOP_HEADER_AREA, handleCloseMobileSidebar } = useLayout();
 
   // HANDLE ACTIVE CURRENT PAGE
@@ -30,8 +32,13 @@ export default function MultiLevelMenu() {
 
   // HANDLE NAVIGATE TO ANOTHER ROUTE & CLOSE SIDEBAR DRAWER IN MOBILE DEVICE
   const handleNavigation = (path: string) => {
-    router.push(path);
-    handleCloseMobileSidebar();
+    if (path === '/logout') {
+      signOut()
+      removeProfile()
+    } else {
+      router.push(path);
+      handleCloseMobileSidebar();
+    }
   };
 
   const renderLevels = (data: any) => {

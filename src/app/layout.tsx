@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Open_Sans } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { Instrument_Sans } from "next/font/google";
 
 export const openSans = Instrument_Sans({ subsets: ["latin"] });
@@ -11,6 +10,8 @@ import { getLanding } from "services/Landing";
 import { DataStructure } from "models/types";
 import React from "react";
 import { GlobalProvider } from "./providers";
+import GoogleAnalytics from "./GoogleAnalytics";
+import GoogleTagManager from "./GoogleTagManager";
 
 export const revalidate = 86400 * 7;
 
@@ -26,7 +27,8 @@ export default async function RootLayout({
       <body className={openSans.className}>
         <React.StrictMode>
           <GlobalProvider navbar={navbar}>{children}</GlobalProvider>
-          <GoogleAnalytics gaId="G-XKPD36JXY0" />
+          <GoogleAnalytics/>
+          <GoogleTagManager/>
         </React.StrictMode>
       </body>
     </html>

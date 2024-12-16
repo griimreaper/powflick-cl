@@ -9,8 +9,6 @@ import SportZoneCard from "components/SportZoneCard";
 import MegaMenu from "../mega-menu";
 import NavItemChild from "./nav-item-child";
 import CategoryBasedMenu from "../category-based-menu";
-// NAVIGATION DATA LIST
-import navigation from "data/navbarNavigation";
 // STYLED COMPONENTS
 import { StyledNavLink, NAV_LINK_STYLES, ChildNavListWrapper } from "../styles";
 // DATA TYPES

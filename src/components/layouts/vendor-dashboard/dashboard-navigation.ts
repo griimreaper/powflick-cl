@@ -117,6 +117,6 @@ export const navigation = [
   {
     name: "Logout",
     icon: duotone.Session,
-    path: "/"
+    path: "/logout"
   }
 ];

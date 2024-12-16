@@ -9,6 +9,7 @@ import ChildCategories from "./components/child-categories";
 import { Wrapper, StyledCard, MenusContainer } from "./styles";
 // DATA TYPES
 import { MenuList } from "./types";
+import Link from "next/link";
 
 // ===============================================================
 type Props = { menuList: MenuList[]; title: string };
@@ -22,7 +23,9 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
   return (
     <Wrapper>
       <FlexRowCenter fontWeight={600} alignItems="flex-end" gap={0.3}>
-        {title} <KeyboardArrowDown sx={{ color: "grey.500", fontSize: "1.1rem" }} />
+        <Link href={'/products'}>
+          {title} <KeyboardArrowDown sx={{ color: "grey.500", fontSize: "1.1rem" }} />
+        </Link>
       </FlexRowCenter>
 
       <MenusContainer className="menu-list">
