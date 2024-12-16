@@ -21,7 +21,7 @@ export default function ProductCard12({ product }: Props) {
 
   return (
     <Link href={`/products/${slug}`}>
-      <FlexBox bgcolor="grey.50" borderRadius={3} mb={2}>
+      <FlexBox borderRadius={3} mb={2}>
         <LazyImage alt={title} width={380} height={379} src={URL} />
       </FlexBox>
 

@@ -15,26 +15,17 @@ import ProductRating from "../product-rating";
 import QuantityButtons from "./components/quantity-buttons";
 // STYLED COMPONENTS
 import { StyledCard, ContentWrapper, ColorBox, ImgBox } from "./styles";
+import { ProductDB } from "models/types";
 
 // =======================================================
 interface Props {
-  off: number;
-  slug: string;
-  price: number;
-  title: string;
-  imgUrl: string;
-  status: string;
-  rating?: number;
-  id: string | number;
-  sx?: SxProps<Theme>;
-  hideRating?: boolean;
-  productColors: string[];
+product: ProductDB
 }
 // =======================================================
 
 export default function ProductCard7(props: Props) {
-  const { sx, off, status, id, title, price, imgUrl, rating, hideRating, productColors, slug } =
-    props;
+  const { status, id, title, price, slug, URL, discount, colors} =
+    props.product;
 
   const { cartItem, handleCartAmountChange } = useProduct(slug);
 
@@ -43,7 +34,6 @@ export default function ProductCard7(props: Props) {
       id,
       slug,
       price,
-      imgUrl,
       name: title,
       qty: (cartItem?.qty || 0) + 1
     };
@@ -56,7 +46,6 @@ export default function ProductCard7(props: Props) {
       id,
       slug,
       price,
-      imgUrl,
       name: title,
       qty: (cartItem?.qty || 0) - 1
     };
@@ -65,18 +54,18 @@ export default function ProductCard7(props: Props) {
   };
 
   return (
-    <StyledCard sx={sx}>
+    <StyledCard>
       <Link href={`/products/${slug}`}>
         <ImgBox>
           {/* PRODUCT BADGE STATUS IF STATUS AVAILABLE */}
           <ProductStatus status={status} />
 
           {/* DISCOUNT PERCENT CHIP IF AVAILABLE */}
-          <DiscountChip discount={off} sx={{ borderRadius: 0 }} />
+          <DiscountChip discount={discount} sx={{ borderRadius: 0 }} />
 
           {/* PRODUCT IMAGE / THUMBNAIL */}
           <div className="img-wrapper">
-            <LazyImage alt={title} width={300} height={273} src={imgUrl} />
+            <LazyImage alt={title} width={300} height={273} src={URL} />
           </div>
         </ImgBox>
       </Link>
@@ -91,19 +80,19 @@ export default function ProductCard7(props: Props) {
           </Link>
 
           {/* PRODUCT RATING / REVIEW  */}
-          <ProductRating showRating={!hideRating} rating={4} />
+          <ProductRating showRating={true} rating={4} />
 
           {/* PRODUCT COLORS */}
-          {productColors.length ? (
+          {colors?.split('|').length ? (
             <ColorBox>
-              {productColors.map((color, ind) => (
+              {colors?.split('|').map((color, ind) => (
                 <Span key={ind} bgcolor={color} />
               ))}
             </ColorBox>
           ) : null}
 
           {/* PRODUCT PRICE WITH DISCOUNT */}
-          <ProductPrice discount={off} price={price} />
+          <ProductPrice discount={discount} price={price} />
         </div>
 
         {/* PRODUCT QUANTITY HANDLER BUTTONS */}

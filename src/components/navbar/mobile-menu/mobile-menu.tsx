@@ -5,17 +5,20 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/icons-material/Menu";
 import Clear from "@mui/icons-material/Clear";
 import Scrollbar from "components/scrollbar";
-import { StyledNavLink} from "components/navbar/styles";
+import { StyledNavLink } from "components/navbar/styles";
 import { renderLevels } from "./render-levels";
 import { updateNavigation } from "./modified-navigation";
+import { useNavbar } from "contexts/NavBarContext";
 
 export default function MobileMenu() {
   const [openDrawer, setOpenDrawer] = useState(false);
-
+  const { navbarData: data } = useNavbar();
   const handleClose = () => setOpenDrawer(false);
 
-  const storeMenu = updateNavigation.find((nav) => nav.title === "Store");
+  const storeMenu = { title: 'Store', child: data?.categories }
 
+  console.log(storeMenu);
+  
   return (
     <Fragment>
       <IconButton

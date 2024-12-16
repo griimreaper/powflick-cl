@@ -5,6 +5,9 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 // GLOBAL CUSTOM COMPONENTS
 import { H6 } from "components/Typography";
 import { NavLink } from "components/nav-link";
+import { SubCategoryList } from "../category-based-menu/styles";
+import ProductCard8 from "components/product-cards/product-card-8";
+import ProductCard12 from "components/product-cards/product-card-12";
 
 const ACCORDION_STYLES = {
   "&:not(:last-child)": { borderBottom: 0 },
@@ -36,20 +39,27 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
       );
     }
 
-    if (item.extLink) {
+    if (item.products) {
       return (
-        <H6 key={index} py={1}>
-          <NavLink href={item.url}>{item.title}</NavLink>
-        </H6>
+        <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
+          <AccordionSummary expandIcon={<ExpandMore />} sx={ACCORDION_SUMMARY_STYLES}>
+            <H6>{item.title}</H6>
+          </AccordionSummary>
+
+          <Box sx={{ display: 'flex', overflowX: 'scroll', alignItems: 'center', gap: 2 }}
+            mx={2}>{renderLevels(item.products, handleClose)}</Box>
+        </Accordion>
       );
     }
 
     return (
-      <Box key={index} py={1}>
-        <NavLink href={item.url} onClick={handleClose}>
-          {item.title}
-        </NavLink>
-      </Box>
+      <div key={item.title}>
+        <SubCategoryList>
+          <Box key={item.id} width={200}>
+            <ProductCard8 key={item.id} product={item}></ProductCard8>
+          </Box>
+        </SubCategoryList>
+      </div>
     );
   });
 };
