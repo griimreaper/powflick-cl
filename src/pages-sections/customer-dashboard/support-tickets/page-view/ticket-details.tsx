@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 // Local CUSTOM COMPONENTS
 import MessageForm from "../message-form";
 import ConversationCard from "../conversation-card";
@@ -8,38 +8,62 @@ import DashboardHeader from "../../dashboard-header";
 // CUSTOM ICON COMPONENT
 import CustomerService from "icons/CustomerService";
 import { useDashboardStore } from "store/dashboard";
+import { Message } from "models/types";
 
-export default function TicketDetailsPageView({ id }: { id: string }) {
+export default function TicketDetailsPageView({ id, message }: { id: string, message?: Message }) {
   const { profile } = useDashboardStore();
   const { messages } = profile;
-  const message = messages?.find((m) => m.id === id) || null;
-
   const token = profile.token;
+
+  const [mess, setMess] = useState(message || messages?.find((m) => m.id === id) || null);
+  const from = message ? 'admin' : 'user';
 
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
-      <DashboardHeader
-        title="Support Ticket"
-        Icon={CustomerService}
-        href="/support-tickets"
-        buttonText="Back to Tickets"
-      />
+      {from === 'admin' ?
+        <div
+          style={{
+            marginTop: "24px", // Limita la altura del contenedor
+          }}
+        >
+          <DashboardHeader
+            title="Support"
+            Icon={CustomerService}
+          />
+        </div>
+        :
+        <DashboardHeader
+          title="Support"
+          Icon={CustomerService}
+          href="/support-tickets"
+          buttonText={"Back to Tickets"}
+        />
+      }
 
       {/* CONVERSATION LIST */}
-      <ConversationCard message={{
-        name: message?.name as string,
-        imgUrl: profile.genericResponseUser.image as string,
-        text: message?.message as string,
-        createdAt: message?.consultedAt as string,
-        from: 'user'
-      }} />
-      {message?.conversation?.map((item, ind) => (
-        <ConversationCard message={item} key={ind} />
-      ))}
-
+      <div
+        style={{
+          maxHeight: "400px", // Limita la altura del contenedor
+          overflowY: "auto",  // Habilita el scroll vertical
+          padding: "1rem",   // Opcional: espacio interno
+          borderRadius: "8px", // Opcional: esquinas redondeadas
+          marginBottom: "6px"
+        }}
+      >
+        <ConversationCard message={{
+          name: mess?.name as string,
+          imgUrl: profile.genericResponseUser.image as string,
+          text: mess?.message as string,
+          createdAt: mess?.consultedAt as string,
+          from: 'user'
+        }} />
+        {mess?.conversation?.map((item, ind) => (
+          <ConversationCard message={item} key={ind} />
+        ))}
+      </div>
       {/* FORM AREA */}
-      <MessageForm token={token as string} messageId={id}/>
+      <MessageForm token={token as string} messageId={id} setMess={setMess} from={from} />
     </Fragment>
   );
 }

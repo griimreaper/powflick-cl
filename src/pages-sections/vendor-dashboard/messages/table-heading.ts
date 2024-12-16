@@ -4,6 +4,6 @@ export const tableHeading = [
   { id: "message", label: "Message", align: "left" },
   { id: "orderByDate", label: "Date", align: "left", content: ['ASC', 'DESC'] },
   { id: "type", label: "Type", align: "left" },
-  { id: "status", label: "Status", align: "center", content: ['pending', 'answered'] },
+  { id: "showAnswered", label: "Answered", align: "center", content: ['true', 'false'] },
   { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 8, 10, 12] },
 ];

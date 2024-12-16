@@ -23,10 +23,10 @@ export default function LoginCartButtons({ toggleDialog, toggleSidenav }: Props)
   const ICON_COLOR = { color: "grey.600" };
 
   const { data: session } = useSession();
-
+  const rol = session?.user?.email
   return (
     <div>
-      <IconButton onClick={() => { session ? router.push('/dashboard/profile') : toggleDialog() }}>
+      <IconButton onClick={() => { session ? rol === 'admin' ? router.push('/vendor/dashboard') : router.push('/dashboard/profile') : toggleDialog() }}>
         <PersonOutline sx={ICON_COLOR} />
       </IconButton>
 

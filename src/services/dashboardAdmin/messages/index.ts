@@ -12,7 +12,7 @@ export const getMessages = async (token: string, filters: any) => {
                 query += filters.orderByDate === 'ASC' ? 'desc=true&' : 'desc=false&'
             }
             if (filters.showAnswered !== null) {
-                query += filters.showAnswered === true ? 'answered=true&' : 'answered=false&';
+                query += filters.showAnswered === 'true' ? 'answered=true&' : 'answered=false&';
             }
             if (filters.filterBy) {
                 query += filters.filterBy === 'name' ? 'filter=name&' : 'filter=email&'
@@ -23,6 +23,18 @@ export const getMessages = async (token: string, filters: any) => {
         }
 
         const response = await mainApi.get(query, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error getting messages:", error);
+        throw error;
+    }
+}
+
+export const getOneMessage = async (id: string, token: string) => {
+    try {
+        const response = await mainApi.get('/messages/' + id, {
             headers: { Authorization: `Bearer ${token}` }
         });
         return response.data;

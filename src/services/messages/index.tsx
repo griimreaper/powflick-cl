@@ -11,9 +11,9 @@ export const postMessages = async (message: any) => {
   }
 }
 
-export const addConversation = async (message: string, messageId: string, token: string) => {
+export const addConversation = async (message: string, messageId: string, from: string, token: string) => {
   try {
-    const response = await mainApi.post(`/messages/${messageId}/conversations`, {text: message}, {
+    const response = await mainApi.post(`/messages/${messageId}/conversations`, {text: message, from}, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
