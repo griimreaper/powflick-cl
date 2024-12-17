@@ -18,6 +18,7 @@ import {
 import { sendMessage } from "services/messages";
 import { ContactType } from "app/types";
 import { showSuccessAlert, showErrorAlert } from "utils/alerts";
+import { useDashboardStore } from "store/dashboard";
 
 const ContactUs = () => {
   const {
@@ -29,10 +30,13 @@ const ContactUs = () => {
     defaultValues: {
       name: "",
       email: "",
+      title: "",
       message: "",
       category: ContactType.GeneralHelp,
     },
   });
+
+  const { profile, setMessages } = useDashboardStore();
 
   const onSubmit = async (data: any) => {
     try {
@@ -44,6 +48,7 @@ const ContactUs = () => {
       const response = await sendMessage(data);
       if (response.status === 201) {
         showSuccessAlert("Success!", "Message sent successfully");
+        if (profile.token) setMessages(data.messages);
       }
     } catch (error) {
       console.error("Error sending message:", error);
@@ -92,6 +97,18 @@ const ContactUs = () => {
                     })}
                     error={!!errors.email}
                     helperText={errors.email?.message}
+                    sx={{ backgroundColor: "white" }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="Title *"
+                    {...register("title", {
+                      required: "Title is required",
+                    })}
+                    error={!!errors.title}
+                    helperText={errors.title?.message}
                     sx={{ backgroundColor: "white" }}
                   />
                 </Grid>
