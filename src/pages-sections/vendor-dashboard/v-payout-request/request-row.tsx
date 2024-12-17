@@ -18,7 +18,9 @@ export default function RequestRow({ row }: Props) {
       <StyledTableCell align="left">{date}</StyledTableCell>
       <StyledTableCell align="center">{currency(amount)}</StyledTableCell>
       <StyledTableCell align="center">
-        <StatusWrapper status={status}>{status}</StatusWrapper>
+        <StatusWrapper status={status as "APPROVED" | "PAID" | "REJECTED" | "DISPATCHED" | "ONTHEWAY" | "PENDING" | "DELIVERED" | "CANCELLED"}>
+          {status}
+        </StatusWrapper>
       </StyledTableCell>
       <StyledTableCell align="center">{message}</StyledTableCell>
     </StyledTableRow>
