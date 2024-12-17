@@ -3,6 +3,7 @@ import ChevronRight from "@mui/icons-material/ChevronRight";
 import useSettings from "hooks/useSettings";
 // STYLED COMPONENTS
 import { CategoryList, CategoryListItem } from "../styles";
+import Link from "next/link";
 
 // ==============================================================
 interface Props {
@@ -18,17 +19,19 @@ export default function Categories({ categories, openList, handleOpen }: Props) 
   return (
     <CategoryList>
       {categories.map((item) => (
-        <CategoryListItem
-          key={item}
-          active={openList === item ? 1 : 0}
-          onMouseEnter={() => handleOpen(item)}>
-          {item}
+        <Link key={item} href={'/products?category=' + item}>
+          <CategoryListItem
+            key={item}
+            active={openList === item ? 1 : 0}
+            onMouseEnter={() => handleOpen(item)}>
+            {item}
 
-          <ChevronRight
-            fontSize="small"
-            sx={{ transform: `rotate(${settings.direction === "rtl" ? "180deg" : "0"})` }}
-          />
-        </CategoryListItem>
+            <ChevronRight
+              fontSize="small"
+              sx={{ transform: `rotate(${settings.direction === "rtl" ? "180deg" : "0"})` }}
+            />
+          </CategoryListItem>
+        </Link>
       ))}
     </CategoryList>
   );

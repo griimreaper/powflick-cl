@@ -25,12 +25,7 @@ import {
   QuickViewButton,
 } from "./styles";
 // CUSTOM DATA MODEL
-import Product from "models/Product.model";
 import { ProductDB } from "models/types";
-import { useEffect, useState } from "react";
-import { useDashboardStore } from "store/dashboard";
-import { showErrorAlert, showSuccessAlert } from "utils/alerts";
-import { favProduct } from "services/Products";
 import Marquee from "react-fast-marquee";
 
 // ==============================================================
@@ -40,8 +35,6 @@ type Props = { product: ProductDB };
 export default function ProductCard8({ product }: Props) {
   const { slug, id, title, price, URL, images, product_categories, discount } =
     product || {};
-
-
 
   const {
     cartItem,
