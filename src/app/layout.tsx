@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import { Open_Sans } from "next/font/google";
-import { Instrument_Sans } from "next/font/google";
 
-export const openSans = Instrument_Sans({ subsets: ["latin"] });
+export const openSans = Open_Sans({ subsets: ["latin"] });
 
 // IMPORT i18n SUPPORT FILE
 import "i18n";
@@ -27,8 +26,8 @@ export default async function RootLayout({
       <body className={openSans.className}>
         <React.StrictMode>
           <GlobalProvider navbar={navbar}>{children}</GlobalProvider>
-          <GoogleAnalytics/>
-          <GoogleTagManager/>
+          <GoogleAnalytics />
+          <GoogleTagManager />
         </React.StrictMode>
       </body>
     </html>
