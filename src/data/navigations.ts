@@ -30,7 +30,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Man Clothes",
         href: "#",
-        children: [
+        child: [
           { title: "Shirt", href: "/products/search/shirt" },
           { title: "T- shirt", href: "/products/search/t-shirt" },
           { title: "Pant", href: "/products/search/pant" },
@@ -40,7 +40,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Accessories",
         href: "#",
-        children: [
+        child: [
           { title: "Belt", href: "/products/search/belt" },
           { title: "Hat", href: "/products/search/Hat" },
           { title: "Watches", href: "/products/search/Watches" },
@@ -50,7 +50,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Shoes",
         href: "#",
-        children: [
+        child: [
           { title: "Sneakers", href: "/products/search/Sneakers" },
           { title: "Sandals", href: "/products/search/Sandals" },
           { title: "Formal", href: "/products/search/Formal" },
@@ -60,7 +60,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Bags",
         href: "#",
-        children: [
+        child: [
           { title: "Backpack", href: "/products/search/backpack" },
           { title: "Crossbody Bags", href: "/products/search/Crossbody Bags" },
           { title: "Side Bags", href: "/products/search/Side Bags" },
@@ -70,7 +70,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Woman Clothes",
         href: "#",
-        children: [
+        child: [
           { title: "Shirt", href: "/products/search/shirt" },
           { title: "T- shirt", href: "/products/search/t-shirt" },
           { title: "Pant", href: "/products/search/pant" },
@@ -80,7 +80,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Accessories",
         href: "#",
-        children: [
+        child: [
           { title: "Belt", href: "/products/search/belt" },
           { title: "Hat", href: "/products/search/Hat" },
           { title: "Watches", href: "/products/search/Watches" },
@@ -90,7 +90,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Shoes",
         href: "#",
-        children: [
+        child: [
           { title: "Sneakers", href: "/products/search/Sneakers" },
           { title: "Sandals", href: "/products/search/Sandals" },
           { title: "Formal", href: "/products/search/Formal" },
@@ -100,7 +100,7 @@ export const categoryMenus: CategoryItem[] = [
       {
         title: "Bags",
         href: "#",
-        children: [
+        child: [
           { title: "Backpack", href: "/products/search/backpack" },
           { title: "Crossbody Bags", href: "/products/search/Crossbody Bags" },
           { title: "Side Bags", href: "/products/search/Side Bags" },
@@ -114,17 +114,17 @@ export const categoryMenus: CategoryItem[] = [
   //   title: "Bikes",
   //   href: "/products/search/bikes",
   //   component: MegaMenu2.name,
-  //   children: [
+  //   child: [
   //     {
   //       icon: Man,
   //       title: "Man",
   //       href: "#",
   //       component: MegaMenu1.name,
-  //       children: [
+  //       child: [
   //         {
   //           title: "Man Clothes",
   //           href: "#",
-  //           children: [
+  //           child: [
   //             { title: "Shirt", href: "/products/search/shirt" },
   //             { title: "T- shirt", href: "/products/search/t-shirt" },
   //             { title: "Pant", href: "/products/search/pant" },
@@ -134,7 +134,7 @@ export const categoryMenus: CategoryItem[] = [
   //         {
   //           title: "Accessories",
   //           href: "#",
-  //           children: [
+  //           child: [
   //             { title: "Belt", href: "/products/search/belt" },
   //             { title: "Hat", href: "/products/search/Hat" },
   //             { title: "Watches", href: "/products/search/Watches" },
@@ -144,7 +144,7 @@ export const categoryMenus: CategoryItem[] = [
   //         {
   //           title: "Shoes",
   //           href: "#",
-  //           children: [
+  //           child: [
   //             { title: "Sneakers", href: "/products/search/Sneakers" },
   //             { title: "Sandals", href: "/products/search/Sandals" },
   //             { title: "Formal", href: "/products/search/Formal" },
@@ -154,7 +154,7 @@ export const categoryMenus: CategoryItem[] = [
   //         {
   //           title: "Bags",
   //           href: "#",
-  //           children: [
+  //           child: [
   //             { title: "Backpack", href: "/products/search/backpack" },
   //             { title: "Crossbody Bags", href: "/products/search/Crossbody Bags" },
   //             { title: "Side Bags", href: "/products/search/Side Bags" },
@@ -185,11 +185,11 @@ export const categoryMenus: CategoryItem[] = [
   //   title: "Home & Garden",
   //   href: "#",
   //   component: MegaMenu1.name,
-  //   children: [
+  //   child: [
   //     {
   //       title: "Man Clothes",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Shirt", href: "/products/search/shirt" },
   //         { title: "T- shirt", href: "/products/search/t-shirt" },
   //         { title: "Pant", href: "/products/search/pant" },
@@ -199,7 +199,7 @@ export const categoryMenus: CategoryItem[] = [
   //     {
   //       title: "Accessories",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Belt", href: "/products/search/belt" },
   //         { title: "Hat", href: "/products/search/Hat" },
   //         { title: "Watches", href: "/products/search/Watches" },
@@ -209,7 +209,7 @@ export const categoryMenus: CategoryItem[] = [
   //     {
   //       title: "Shoes",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Sneakers", href: "/products/search/Sneakers" },
   //         { title: "Sandals", href: "/products/search/Sandals" },
   //         { title: "Formal", href: "/products/search/Formal" },
@@ -219,7 +219,7 @@ export const categoryMenus: CategoryItem[] = [
   //     {
   //       title: "Bags",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Backpack", href: "/products/search/backpack" },
   //         { title: "Crossbody Bags", href: "/products/search/Crossbody Bags" },
   //         { title: "Side Bags", href: "/products/search/Side Bags" },
@@ -229,7 +229,7 @@ export const categoryMenus: CategoryItem[] = [
   //     {
   //       title: "Woman Clothes",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Shirt", href: "/products/search/shirt" },
   //         { title: "T- shirt", href: "/products/search/t-shirt" },
   //         { title: "Pant", href: "/products/search/pant" },
@@ -239,7 +239,7 @@ export const categoryMenus: CategoryItem[] = [
   //     {
   //       title: "Accessories",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Belt", href: "/products/search/belt" },
   //         { title: "Hat", href: "/products/search/Hat" },
   //         { title: "Watches", href: "/products/search/Watches" },
@@ -249,7 +249,7 @@ export const categoryMenus: CategoryItem[] = [
   //     {
   //       title: "Shoes",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Sneakers", href: "/products/search/Sneakers" },
   //         { title: "Sandals", href: "/products/search/Sandals" },
   //         { title: "Formal", href: "/products/search/Formal" },
@@ -259,7 +259,7 @@ export const categoryMenus: CategoryItem[] = [
   //     {
   //       title: "Bags",
   //       href: "#",
-  //       children: [
+  //       child: [
   //         { title: "Backpack", href: "/products/search/backpack" },
   //         { title: "Crossbody Bags", href: "/products/search/Crossbody Bags" },
   //         { title: "Side Bags", href: "/products/search/Side Bags" },
@@ -273,7 +273,7 @@ export const categoryMenus: CategoryItem[] = [
   //   title: "Gifts",
   //   href: "#",
   //   component: MegaMenu2.name,
-  //   children: [
+  //   child: [
   //     { icon: Dress, title: "Fashion", href: "/products/search/fashion" },
   //     { icon: Laptop, title: "Electronics", href: "/products/search/electronics" },
   //     { icon: PlantPot, title: "Home & Garden", href: "/products/search/home&garden" },
