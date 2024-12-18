@@ -36,7 +36,7 @@ export default function ShopDetailsPageView({ shop }: Props) {
       <Grid container spacing={3}>
         {/* SIDEBAR AREA */}
         <Grid item md={3} xs={12} sx={{ display: { md: "block", xs: "none" } }}>
-          <ProductFilterCard />
+          <ProductFilterCard products={[]} />
         </Grid>
 
         <Grid item md={9} xs={12}>
@@ -48,8 +48,9 @@ export default function ShopDetailsPageView({ shop }: Props) {
                 <IconButton sx={{ float: "right" }} onClick={close}>
                   <FilterList fontSize="small" />
                 </IconButton>
-              )}>
-              <ProductFilterCard />
+              )}
+            >
+              <ProductFilterCard products={[]} />
             </SideNav>
           )}
 

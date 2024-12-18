@@ -20,7 +20,14 @@ interface Props extends PropsWithChildren {
 }
 // ==============================================================
 
-export default function ColumnList({ list, children, banner, minWidth = 760 }: Props) {
+export default function ColumnList({
+  list,
+  children,
+  banner,
+  minWidth = 760,
+}: Props) {
+  console.log("list", list);
+
   return (
     <StyledRoot elevation={2} sx={{ minWidth }}>
       <FlexBox px={2.5}>
@@ -30,7 +37,7 @@ export default function ColumnList({ list, children, banner, minWidth = 760 }: P
               <Grid item md={3} key={ind}>
                 <div className="title-link">{item.title}</div>
 
-                {item.children?.map((sub, ind) => (
+                {item.child?.map((sub, ind) => (
                   <NavLink className="child-link" href={sub.href} key={ind}>
                     {sub.title}
                   </NavLink>
@@ -43,7 +50,12 @@ export default function ColumnList({ list, children, banner, minWidth = 760 }: P
         {banner?.position === "right" ? (
           <Box mt={1.5}>
             <Link href={banner.href}>
-              <LazyImage src={banner.url} width={137} height={318} alt="banner" />
+              <LazyImage
+                src={banner.url}
+                width={137}
+                height={318}
+                alt="banner"
+              />
             </Link>
           </Box>
         ) : null}

@@ -40,7 +40,7 @@ export default function RefundRequestRow({ request }: Props) {
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
-        <StatusWrapper status={status}>{status}</StatusWrapper>
+        <StatusWrapper status={status as "APPROVED" | "PAID" | "REJECTED" | "DISPATCHED" | "ONTHEWAY" | "PENDING" | "DELIVERED" | "CANCELLED"}>{status}</StatusWrapper>
       </StyledTableCell>
 
       <StyledTableCell align="center">

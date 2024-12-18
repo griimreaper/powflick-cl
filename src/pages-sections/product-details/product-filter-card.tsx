@@ -35,7 +35,7 @@ interface Props {
   filters?: ProductFilters;
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
   topCategories?: any[];
-  products: ProductDB[];
+  products?: ProductDB[];
 }
 
 const initialFilters = {
@@ -57,7 +57,7 @@ export default function ProductFilterCard({
   const [collapsed, setCollapsed] = useState<string | null>(null);
 
   const allColors = new Set(
-    products.flatMap(p => p.colors?.map(c => c?.trim().toLowerCase()) || [])
+    products?.flatMap(p => p.colors?.map(c => c?.trim().toLowerCase()) || [])
   );
 
   const isValidColor = (color: string) => {
