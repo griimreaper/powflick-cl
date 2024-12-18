@@ -41,7 +41,7 @@ export async function generateMetadata({
       ...product.title.split(" "),
     ],
     openGraph: {
-      title: product.title || "Vital Store",
+      title: product.title || "Sport Zone",
       description: product.description || "Default Description",
       url: `${process.env.NEXT_PUBLIC_API_URL}/${product.id}`,
       images: [
@@ -49,7 +49,7 @@ export async function generateMetadata({
           url: product.Url,
           width: 800,
           height: 800,
-          alt: product.title || "Vital Store",
+          alt: product.title || "Sport Zone",
         },
       ],
     },

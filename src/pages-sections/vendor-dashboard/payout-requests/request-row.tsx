@@ -24,9 +24,7 @@ export default function RequestRow({ request }: Props) {
       <StyledTableCell align="left">{date}</StyledTableCell>
 
       <StyledTableCell align="center">
-        <StatusWrapper status={status as "APPROVED" | "PAID" | "REJECTED" | "DISPATCHED" | "ONTHEWAY" | "PENDING" | "DELIVERED" | "CANCELLED"}>
-          {status}
-        </StatusWrapper>
+        <StatusWrapper status={status as "APPROVED" | "PAID" | "REJECTED" | "DISPATCHED" | "ONTHEWAY" | "PENDING" | "DELIVERED" | "CANCELLED"}>{status}</StatusWrapper>
       </StyledTableCell>
 
       <StyledTableCell align="center">
