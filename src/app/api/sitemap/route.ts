@@ -12,15 +12,8 @@ export async function GET(req: NextRequest) {
             priority: 0.8
         }));
 
-        const categories = await getAllCategories();
-        const categoryLinks = categories.map((category: string) => ({
-            url: `/products?categories=${category}`,
-            changefreq: 'weekly',
-            priority: 0.7
-        }));
-
         // Combina los enlaces de productos y categorías
-        const links = [...categoryLinks, ...productLinksFromIds];
+        const links = [...productLinksFromIds];
 
         // Crea un stream de Sitemap
         const stream = new SitemapStream({ hostname: 'https://4thesports.com' });
