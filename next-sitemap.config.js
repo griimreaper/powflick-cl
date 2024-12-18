@@ -32,7 +32,7 @@ module.exports = {
             },
         ],
         additionalSitemaps: [
-            'https://front-six-smoky.vercel.app/sitemap-0.xml',
+            'https://front-six-smoky.vercel.app/sitemap-1.xml',
         ]
     },
 };
