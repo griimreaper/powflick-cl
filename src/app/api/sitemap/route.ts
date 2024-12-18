@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
         const links = [...productLinksFromIds];
 
         // Crea un stream de Sitemap
-        const stream = new SitemapStream({ hostname: 'https://4thesports.com' });
+        const stream = new SitemapStream({ hostname: 'https://front-six-smoky.vercel.app' });
 
         // Convierte el stream a una promesa y obtiene el XML
         const xmlString = await streamToPromise(Readable.from(links).pipe(stream)).then((data: any) => data.toString());
