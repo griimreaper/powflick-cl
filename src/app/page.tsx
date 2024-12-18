@@ -63,13 +63,16 @@ export const metadata: Metadata = {
     "sportswear for all sports",
     "custom team hoodies",
     "custom youth sportswear",
-    "quick team apparel orders"
+    "quick team apparel orders",
   ],
-  other: { "google-site-verification": "LGUfrjSp7vV-WMb-So5VYbpRbeYEQwPtuocbwj2_S7Y" }
+  other: {
+    "google-site-verification": "LGUfrjSp7vV-WMb-So5VYbpRbeYEQwPtuocbwj2_S7Y",
+  },
 };
 
 export default async function FashionShopTwo() {
   const data: DataStructure = await getLanding();
+  console.log(data);
 
   // Obtener la sesión del lado del servidor
   const session = await getServerSession();

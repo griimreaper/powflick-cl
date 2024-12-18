@@ -13,10 +13,12 @@ import {
   MenuItem,
   Container,
   Fade,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { keyframes } from "@emotion/react";
-import { log } from "console";
+import Slider from "react-slick";
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -133,6 +135,10 @@ interface ReviewsProps {
 const Reviews: React.FC<ReviewsProps> = ({ review }) => {
   const [sortBy, setSortBy] = useState("date");
   const [reviews, setReviews] = useState(review);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  console.log("reviews",review);
 
   const handleSortChange = (event: any) => {
     const value = event.target.value;
@@ -153,6 +159,14 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
   const averageRating = (
     reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length
   ).toFixed(1);
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   return (
     <Container>
@@ -201,13 +215,25 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
           </Select>
         </FormControl>
       </Box>
-      <Grid container spacing={3}>
-        {reviews.map((review) => (
-          <Grid item xs={12} sm={6} md={4} key={review.id}>
-            <ReviewCard review={review} />
-          </Grid>
-        ))}
-      </Grid>
+      {isMobile ? (
+        <Slider {...sliderSettings}>
+          {reviews.map((review) => (
+            <ReviewCard key={review.id} review={review} />
+          ))}
+        </Slider>
+      ) : (
+        <Grid container spacing={3}>
+          {reviews.map((review) => (
+            <React.Fragment key={review.id}>
+              {review.type === "ORDER" && (
+                <Grid item xs={12} sm={6} md={4}>
+                  <ReviewCard review={review} />
+                </Grid>
+              )}
+            </React.Fragment>
+          ))}
+        </Grid>
+      )}
     </Container>
   );
 };
