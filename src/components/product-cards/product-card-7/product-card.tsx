@@ -83,9 +83,9 @@ export default function ProductCard7(props: Props) {
           <ProductRating showRating={true} rating={4} />
 
           {/* PRODUCT COLORS */}
-          {colors?.split('|').length ? (
+          {colors?.length ? (
             <ColorBox>
-              {colors?.split('|').map((color, ind) => (
+              {colors?.map((color, ind) => (
                 <Span key={ind} bgcolor={color} />
               ))}
             </ColorBox>

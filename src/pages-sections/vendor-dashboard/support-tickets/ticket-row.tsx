@@ -18,7 +18,7 @@ export default function TicketRow({ ticket }: Props) {
       <StyledTableCell align="left">{title}</StyledTableCell>
 
       <StyledTableCell align="left">
-        <StatusWrapper status={type}>{type}</StatusWrapper>
+        <StatusWrapper status={type as "APPROVED" | "PAID" | "REJECTED" | "DISPATCHED" | "ONTHEWAY" | "PENDING" | "DELIVERED" | "CANCELLED"}>{type}</StatusWrapper>
       </StyledTableCell>
 
       <StyledTableCell align="left">{date}</StyledTableCell>

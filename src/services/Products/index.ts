@@ -58,3 +58,14 @@ export const allFavorites = async (token: string) => {
         throw error;
     }
 };
+
+export const getAllCategories = async () => {
+    try {
+        const response = await mainApi.get("/categories");
+
+        return response.data.map((c: any) => c = c.name);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+};

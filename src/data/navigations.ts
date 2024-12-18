@@ -26,7 +26,7 @@ export const categoryMenus: CategoryItem[] = [
     component: MegaMenu1.name,
     href: "/products/",
     offer: { url: "/assets/images/promotion/offer-5.png", href: "/", position: "bottom" },
-    children: [
+    child: [
       {
         title: "Man Clothes",
         href: "#",

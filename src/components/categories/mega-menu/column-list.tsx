@@ -30,7 +30,7 @@ export default function ColumnList({ list, children, banner, minWidth = 760 }: P
               <Grid item md={3} key={ind}>
                 <div className="title-link">{item.title}</div>
 
-                {item.children?.map((sub, ind) => (
+                {item.child?.map((sub, ind) => (
                   <NavLink className="child-link" href={sub.href} key={ind}>
                     {sub.title}
                   </NavLink>

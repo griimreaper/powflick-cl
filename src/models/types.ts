@@ -3,6 +3,7 @@
 export interface Category {
   id: string;
   title: string;
+  name?: string;
   products: ProductDB[]
   // parentId: string | null;
   // link: string;
