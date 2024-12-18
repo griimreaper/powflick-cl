@@ -9,7 +9,12 @@ import { RootStyle } from "./styles";
 export default function Section7() {
   return (
     <RootStyle>
-      <H3 fontWeight={400} fontSize={30} lineHeight={1}>
+      <img
+        src="/assets/images/banners/PROMO_SPORTS_BANNER-1920X389.PNG"
+        alt="Promo Sports Banner"
+        style={{ width: "100%", height: "auto" }}
+      />
+      {/* <H3 fontWeight={400} fontSize={30} lineHeight={1}>
         Extra <Span color="primary.main">30% Off</Span> Online
       </H3>
 
@@ -23,7 +28,7 @@ export default function Section7() {
 
       <Button variant="contained" size="large" color="dark">
         Shop Now
-      </Button>
+      </Button> */}
     </RootStyle>
   );
 }

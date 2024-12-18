@@ -37,18 +37,20 @@ type SelectVariants = {
 export default function ProductIntro({ product }: Props) {
   const { id, price, title, images, slug, URL } = product || {};
 
+  console.log("Product:", product);
+
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectVariants, setSelectVariants] = useState<SelectVariants>({
     option: "option 1",
-    type: "type 1"
+    type: "type 1",
   });
 
   // HANDLE CHANGE TYPE AND OPTIONS
   const handleChangeVariant = (variantName: string, value: string) => () => {
     setSelectVariants((state) => ({
       ...state,
-      [variantName.toLowerCase()]: value
+      [variantName.toLowerCase()]: value,
     }));
   };
 
@@ -62,7 +64,7 @@ export default function ProductIntro({ product }: Props) {
   const handleCartAmountChange = (amount: number) => () => {
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { price, qty: amount, name: title, imgUrl: URL, id, slug }
+      payload: { price, qty: amount, name: title, imgUrl: URL, id, slug },
     });
   };
 
@@ -71,13 +73,18 @@ export default function ProductIntro({ product }: Props) {
       <Grid container spacing={3} justifyContent="space-around">
         {/* IMAGE GALLERY AREA */}
         <Grid item md={6} xs={12} alignItems="center">
-          <FlexBox borderRadius={3} overflow="hidden" justifyContent="center" mb={6}>
+          <FlexBox
+            borderRadius={3}
+            overflow="hidden"
+            justifyContent="center"
+            mb={6}
+          >
             <Image
               alt={title}
               width={500}
               height={500}
               loading="eager"
-              src={product.images[selectedImage] || ''}
+              src={product.images[selectedImage] || ""}
             />
           </FlexBox>
 
@@ -95,8 +102,16 @@ export default function ProductIntro({ product }: Props) {
                 style={{ cursor: "pointer" }}
                 onClick={handleImageClick(ind)}
                 mr={ind === images.length - 1 ? "auto" : "10px"}
-                borderColor={selectedImage === ind ? "primary.main" : "grey.400"}>
-                <Avatar alt="product" src={url} variant="square" sx={{ height: 40 }} />
+                borderColor={
+                  selectedImage === ind ? "primary.main" : "grey.400"
+                }
+              >
+                <Avatar
+                  alt="product"
+                  src={url}
+                  variant="square"
+                  sx={{ height: 40 }}
+                />
               </FlexRowCenter>
             ))}
           </FlexBox>
@@ -109,8 +124,8 @@ export default function ProductIntro({ product }: Props) {
 
           {/* PRODUCT BRAND */}
           <FlexBox alignItems="center" mb={1} gap={1}>
-            <div>Categories:{' '}</div>
-            <H6>{' '}{product.product_categories.split('|')[0]}</H6>
+            <div>Categories: </div>
+            <H6> {product.product_categories.split("|")[0]}</H6>
           </FlexBox>
 
           {/* PRODUCT RATING */}
@@ -132,7 +147,9 @@ export default function ProductIntro({ product }: Props) {
                   onClick={handleChangeVariant(variant.title, value)}
                   sx={{ borderRadius: "4px", mr: 1, cursor: "pointer" }}
                   color={
-                    selectVariants[variant.title.toLowerCase()] === value ? "primary" : "default"
+                    selectVariants[variant.title.toLowerCase()] === value
+                      ? "primary"
+                      : "default"
                   }
                 />
               ))}
@@ -153,7 +170,8 @@ export default function ProductIntro({ product }: Props) {
               color="primary"
               variant="contained"
               onClick={handleCartAmountChange(1)}
-              sx={{ mb: 4.5, px: "1.75rem", height: 40 }}>
+              sx={{ mb: 4.5, px: "1.75rem", height: 40 }}
+            >
               Add to Cart
             </Button>
           ) : (
@@ -163,7 +181,8 @@ export default function ProductIntro({ product }: Props) {
                 sx={{ p: 1 }}
                 color="primary"
                 variant="outlined"
-                onClick={handleCartAmountChange(cartItem?.qty - 1)}>
+                onClick={handleCartAmountChange(cartItem?.qty - 1)}
+              >
                 <Remove fontSize="small" />
               </Button>
 
@@ -176,7 +195,8 @@ export default function ProductIntro({ product }: Props) {
                 sx={{ p: 1 }}
                 color="primary"
                 variant="outlined"
-                onClick={handleCartAmountChange(cartItem?.qty + 1)}>
+                onClick={handleCartAmountChange(cartItem?.qty + 1)}
+              >
                 <Add fontSize="small" />
               </Button>
             </FlexBox>

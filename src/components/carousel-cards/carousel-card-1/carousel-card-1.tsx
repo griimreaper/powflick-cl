@@ -7,6 +7,7 @@ import { Paragraph } from "components/Typography";
 import { StyledRoot } from "./styles";
 import { Box, Typography } from "@mui/material";
 import BannerTop from "components/BannerTop";
+import Image from "next/image";
 
 // ==================================================
 interface Props {
@@ -29,9 +30,7 @@ export default function CarouselCard1({
 }: Props) {
   return (
     <>
-      <StyledRoot>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item className="grid-item" xl={4} md={5} sm={6} xs={12}>
+      {/* <Grid item className="grid-item" xl={4} md={5} sm={6} xs={12}>
             <Box mb={4} sx={{ textAlign: "left" }}>
               <Typography
                 className="title"
@@ -66,22 +65,19 @@ export default function CarouselCard1({
                 {buttonText}
               </Button>
             </a>
-          </Grid>
-
-          <Grid item xl={8} md={7} sm={6} xs={12}>
-            <SportZoneImage
-              src={imgUrl}
-              alt="apple-watch-1"
-              sx={{
-                mx: "auto",
-                maxHeight: 400,
-                display: "block",
-                maxWidth: "100%",
-              }}
-            />
-          </Grid>
-        </Grid>
-      </StyledRoot>
+          </Grid> */}
+      <Image
+        src={`/${imgUrl}`}
+        alt="image slider"
+        layout="responsive"
+        width={700}
+        height={400}
+        style={{
+          margin: "auto",
+          display: "block",
+          maxWidth: "100%",
+        }}
+      />
     </>
   );
 }

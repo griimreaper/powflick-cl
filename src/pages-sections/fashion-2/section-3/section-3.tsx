@@ -8,21 +8,25 @@ import api from "utils/__api__/fashion-2";
 import { Box, Typography } from "@mui/material";
 
 const sportsCategories = [
-  { id: 1, title: "Football", image: "/assets/images/categories/futball.jpeg" },
+  {
+    id: 1,
+    title: "Football",
+    image: "/assets/images/categories/new/CATEGORIAS_SOCCER.png",
+  },
   {
     id: 2,
     title: "Basketball",
-    image: "/assets/images/categories/basketball.jpeg",
+    image: "/assets/images/categories/new/CATEGORIAS_BASKETBALL.png",
   },
   {
     id: 3,
     title: "Running",
-    image: "/assets/images/categories/running.jpeg",
+    image: "/assets/images/categories/new/CATEGORIAS_RUNNING.png",
   },
   {
     id: 4,
     title: "Baseball",
-    image: "/assets/images/categories/baseball.jpeg",
+    image: "/assets/images/categories/new/CATEGORIAS_BASEBALL.png",
   },
 ];
 
