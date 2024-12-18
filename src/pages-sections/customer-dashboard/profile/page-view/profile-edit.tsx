@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Card from "@mui/material/Card";
 import Person from "@mui/icons-material/Person";
 // Local CUSTOM COMPONENT
@@ -16,22 +16,24 @@ export default function ProfileEditPageView() {
   const { genericResponseUser: user } = profile;
   let token = profile.token;
 
+  const [image, setImage] = useState<string>(user.image);
+
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
       <DashboardHeader
         Icon={Person}
-        href="/profile"
+        href="/dashboard/profile"
         title="Edit Profile"
         buttonText="Back to Profile"
       />
 
       <Card sx={{ p: 3 }}>
         {/* USER PROFILE PIC */}
-        <ProfilePicUpload image={user.image!} />
+        <ProfilePicUpload image={image} setImage={setImage} user={user} />
 
         {/* PROFILE EDITOR FORM */}
-        <ProfileEditForm user={user} token={token as string}/>
+        <ProfileEditForm user={user} image={image} token={token as string}/>
       </Card>
     </Fragment>
   );
