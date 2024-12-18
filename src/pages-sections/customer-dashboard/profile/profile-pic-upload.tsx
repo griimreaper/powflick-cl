@@ -12,7 +12,7 @@ export default function ProfilePicUpload({ image, setImage, user }: { image: str
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // Obtén el archivo seleccionado por el usuario
     if (file) {
-      if (image) {
+      if (image && !image.includes('https://lh3.googleusercontent')) {
         try {
           await deleteImage(image); // Borra la imagen previa si existe
           setImage(null);
