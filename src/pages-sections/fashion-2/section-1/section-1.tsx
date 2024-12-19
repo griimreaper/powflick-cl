@@ -15,7 +15,7 @@ export default function Section1({ data }: { data: DataStructure["navbar"] }) {
       buttonText: "Comprar ahora",
       description:
         "Luce increíble con nuestras zapatillas Nike negras. ¡No te las pierdas!",
-      imageUrl: "assets/images/products/nike-black.png",
+      imageUrl: "assets/images/banners/new/slider1.png",
     },
     {
       title: "¡Mantente conectado con estilo!",
@@ -23,7 +23,7 @@ export default function Section1({ data }: { data: DataStructure["navbar"] }) {
       buttonText: "Comprar ahora",
       description:
         "El Apple Watch que combina tecnología y elegancia. ¡Consíguelo ya!",
-      imageUrl: "assets/images/products/apple-watch-1.png",
+      imageUrl: "assets/images/banners/new/slider2.png",
     },
     {
       title: "¡Corre con confianza!",
@@ -31,35 +31,33 @@ export default function Section1({ data }: { data: DataStructure["navbar"] }) {
       buttonText: "Comprar ahora",
       description:
         "Las zapatillas Nike rojas que te llevarán más lejos. ¡Compra ahora!",
-      imageUrl: "assets/images/products/Fashion/Shoes/1.NikeRed.png",
+      imageUrl: "assets/images/banners/new/slider3.png",
     },
   ];
 
   return (
-    <Box bgcolor="grey.100" mb={7.5}>
-      <Container className="pt-2 pb-2">
-        <Carousel
-          dots
-          spaceBetween={0}
-          slidesToShow={1}
-          arrows={false}
-          autoplay={true}
-          autoplaySpeed={3000}
-          infinite={true}
-        >
-          {carouselData.map((item, ind) => (
-            <CarouselCard1
-              key={ind}
-              buttonColor="dark"
-              title={item.title}
-              imgUrl={item.imageUrl}
-              buttonLik={item.buttonLik}
-              buttonText={item.buttonText}
-              description={item.description}
-            />
-          ))}
-        </Carousel>
-      </Container>
-    </Box>
+    <div>
+      <Carousel
+        dots
+        spaceBetween={0}
+        slidesToShow={1}
+        arrows={false}
+        autoplay={true}
+        autoplaySpeed={3000}
+        infinite={true}
+      >
+        {carouselData.map((item, ind) => (
+          <CarouselCard1
+            key={ind}
+            buttonColor="dark"
+            title={item.title}
+            imgUrl={item.imageUrl}
+            buttonLik={item.buttonLik}
+            buttonText={item.buttonText}
+            description={item.description}
+          />
+        ))}
+      </Carousel>
+    </div>
   );
 }
