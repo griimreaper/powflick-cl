@@ -13,6 +13,7 @@ export const dynamicParams = true;
 // Genera los parámetros estáticos para las rutas
 export async function generateStaticParams() {
   const slugs = await getAllProductSlugs(); // Obtener todos los IDs de productos
+  
 
   // Devuelve un array de objetos con los parámetros necesarios
   return slugs.map((slug: string) => ({ slug }));
@@ -70,7 +71,7 @@ export default async function ProductDetails({ params }: { params: { slug: strin
   try {
     const { slug } = params;
     const detail: detailProps = await getProductsBySlug(slug);
-
+    
     if (detail.product.status === 'draft' || !detail.product.images) {
       return (
         <Box
