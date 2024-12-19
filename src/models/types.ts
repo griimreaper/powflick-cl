@@ -50,6 +50,8 @@ export interface ProductDB {
   createdAt: string; // Fecha de creación del producto
   updatedAt: string; // Fecha de última actualización del producto
   quantityPurchase: number;
+  font: string;
+  font_color: string;
   collections?: any[];
 }
 
@@ -109,29 +111,35 @@ export interface Coupon {
 }
 
 export interface Logo {
+  type?: 'Logo';
   logoUrl: string;
   logoId?: string;
-  logoPosition?: { x: number; y: number };
+  logoPosition: { x: number; y: number };
+  logoDragOffset?: { x: number; y: number };
   logoSize?: number;
-  rotate?: number;
+  rotate: number;
 }
 
 export interface Text {
+  type?: 'Text';
   text?: string;
   font?: string;
-  textPosition?: { x: number; y: number };
+  textPosition: { x: number; y: number };
+  textDragOffset?: { x: number; y: number };
   textSize?: number;
   textColor?: string;
-  rotate?: number;
+  rotate: number;
 }
 
 export interface Number {
+  type?: 'Number';
   number?: string;
   font?: string;
-  numberPosition?: { x: number; y: number };
+  numberPosition: { x: number; y: number };
+  numberDragOffset?: { x: number; y: number };
   numberSize?: number;
   numberColor?: string;
-  rotate?: number;
+  rotate: number;
 }
 
 export interface CustomizationSides {
