@@ -69,7 +69,7 @@ export default function ProductIntro({ product }: Props) {
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
-const [counter, setCounter, handleCounterChange] = useCounter();
+  const [counter, setCounter, handleCounterChange] = useCounter(id);
   const [font, setFont] = useState<string>("Arial");
   const [fontColor, setFontColr] = useState<string>("000000");
 
@@ -133,26 +133,26 @@ const [counter, setCounter, handleCounterChange] = useCounter();
   const handleImageClick = (ind: number) => () => setSelectedImage(ind);
 
   // Renombrar la función handleCounterChange a handleCounterUpdate
-const handleCounterUpdate = (value: number) => {
+  const handleCounterUpdate = (value: number) => {
     // Verificar si el nuevo valor está dentro del rango permitido (1-20)
     const newValue = Math.max(1, Math.min(99, counter + value));
     setCounter(newValue);
     if (newValue === 1) {
-        trimCustomizations(id, newValue);
+      trimCustomizations(id, newValue);
 
-        const numRandom = Math.floor(Math.random() * counter - 1);
+      const numRandom = Math.floor(Math.random() * counter - 1);
 
-        list[list.findIndex((i) => i.productId === id)]?.customizations[
-            counter - 1
-        ]
-            ? setCustomization(
-                list[list.findIndex((i) => i.productId === id)]?.customizations[
-                    numRandom >= 0 ? numRandom : 0
-                ]
-            )
-            : null;
+      list[list.findIndex((i) => i.productId === id)]?.customizations[
+        counter - 1
+      ]
+        ? setCustomization(
+          list[list.findIndex((i) => i.productId === id)]?.customizations[
+          numRandom >= 0 ? numRandom : 0
+          ]
+        )
+        : null;
     }
-};
+  };
 
   // HANDLE CHANGE CART
   const handleCartAmountChange = (amount: number) => () => {
