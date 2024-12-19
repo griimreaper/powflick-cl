@@ -33,11 +33,14 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
-    title: product.title + '- SportZone' || "SportZone",
+    title: product.title + "- SportZone" || "SportZone",
     authors: [{ name: "devcodelab" }],
     description: product.short_description || "Default Description",
     keywords: [
-      "e-commerce", "e-commerce template", "next.js", "react",
+      "e-commerce",
+      "e-commerce template",
+      "next.js",
+      "react",
       ...product.title.split(" "),
     ],
     openGraph: {
@@ -66,12 +69,17 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductDetails({ params }: { params: { slug: string } }) {
+export default async function ProductDetails({
+  params,
+}: {
+  params: { slug: string };
+}) {
   try {
     const { slug } = params;
     const detail: detailProps = await getProductsBySlug(slug);
+    console.log(detail);
 
-    if (detail.product.status === 'draft' || !detail.product.images) {
+    if (detail.product.status === "draft" || !detail.product.images) {
       return (
         <Box
           display="flex"
@@ -88,11 +96,7 @@ export default async function ProductDetails({ params }: { params: { slug: strin
       );
     }
 
-    return (
-      <ProductDetailsPageView
-        detail={detail}
-      />
-    );
+    return <ProductDetailsPageView detail={detail} />;
   } catch (error) {
     notFound();
   }
