@@ -8,6 +8,7 @@ import ShoppingBagOutlined from "icons/ShoppingBagOutlined";
 import useCart from "hooks/useCart";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 // ==============================================================
 interface Props {
@@ -18,7 +19,9 @@ interface Props {
 // ==============================================================
 
 export default function LoginCartButtons({ toggleDialog, toggleSidenav }: Props) {
-  const { state } = useCart();
+  // const { state } = useCart();
+  const { cart } = useShoppingCartStore();
+
   const router = useRouter();
   const ICON_COLOR = { color: "grey.600" };
 
@@ -30,7 +33,7 @@ export default function LoginCartButtons({ toggleDialog, toggleSidenav }: Props)
         <PersonOutline sx={ICON_COLOR} />
       </IconButton>
 
-      <Badge badgeContent={state.cart.length} color="primary">
+      <Badge badgeContent={cart?.length} color="primary">
         <IconButton onClick={toggleSidenav}>
           <ShoppingBagOutlined sx={ICON_COLOR} />
         </IconButton>

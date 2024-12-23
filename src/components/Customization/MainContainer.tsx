@@ -2,10 +2,11 @@ import React, { useRef } from 'react'
 import { Logo, Number, Text } from 'models/types';
 import useFlag from 'hooks/useFlag';
 import ManipulableContainer from './ManipulableContainer';
+import { Box } from '@mui/material';
 
 interface MainContainerProps {
     selection: {
-        type:  'Text' | 'Number' | 'Logo' | '';
+        type: 'Text' | 'Number' | 'Logo' | '';
         index: number;
     }
     setSelection: Function;
@@ -430,20 +431,32 @@ function MainContainer({
     };
 
     return (
-        <div>
-            <div
+        <Box sx={{width: "full", justifyContent: 'center', display: 'flex'}}>
+            <Box
                 ref={panelRef}
                 id="customization-panel"
-                className="relative w-[500px] h-[500px] overflow-hidden"
+                sx={{
+                    position: "relative",
+                    width: "500px",
+                    height: "500px",
+                    overflow: "hidden",
+                    justifyContent:'center',
+                }}
                 onMouseMove={handleDragMove}
                 onMouseUp={handleDragEnd}
                 onTouchMove={handleDragMoveTouch}
                 onTouchEnd={handleDragEnd}
             >
-                <img
+                <Box
+                    component="img"
                     src={image}
-                    draggable="false"
-                    className="rounded-full relative w-full h-auto"
+                    draggable={false}
+                    sx={{
+                        borderRadius: "50%",
+                        position: "relative",
+                        width: "100%",
+                        height: "auto",
+                    }}
                 />
                 {logos &&
                     logos.map(
@@ -495,8 +508,8 @@ function MainContainer({
                                 each={{ font, text: number, position: numberPosition, color: numberColor, size: numberSize, rotate, type: 'Number' }}
                             />
                         ))}
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 

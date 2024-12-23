@@ -7,7 +7,7 @@ const nextConfig = {
     domains: [
       '5ogdqbzzrogmotoh.public.blob.vercel-storage.com',
       'ideasjersey.com',
-      'emmanuela.insyst.info'
+      'help.pitpay.com'
     ]
   }
 };

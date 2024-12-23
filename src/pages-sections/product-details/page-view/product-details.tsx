@@ -11,13 +11,12 @@ import FrequentlyBought from "../frequently-bought";
 // CUSTOM DATA MODEL
 import { detailProps, ProductDB } from "models/types";
 
-
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
   const { product, sugestedProducts, frequentlyBought, reviews } = detail;
   console.log("detail", detail);
-  
+
   return (
-    <Container className="mt-2 mb-2">
+    <Container className="mt-2 mb-2" sx={{ overflow: 'hidden'}}>
       {/* PRODUCT DETAILS INFO AREA */}
       <ProductIntro product={detail} />
 

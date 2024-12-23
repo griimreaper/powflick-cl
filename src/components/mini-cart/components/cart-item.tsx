@@ -17,17 +17,20 @@ import { CartItem } from "contexts/CartContext";
 
 // ==============================================================
 interface Props {
-  item: CartItem;
-  handleCartAmountChange: (amount: number, product: CartItem) => () => void;
+  item: any;
+  handleCartAmountChange: (amount: number, product: any) => () => void;
 }
 // ==============================================================
 
 export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
+
+  console.log("item", item);
+  
   return (
     <FlexBox
       py={2}
       px={2.5}
-      key={item.id}
+      key={item.product.id}
       alignItems="center"
       borderBottom="1px solid"
       borderColor="divider">
@@ -41,21 +44,21 @@ export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
           <Add fontSize="small" />
         </Button>
 
-        <H6 my="3px">{item.qty}</H6>
+        <H6 my="3px">{item.product.amount}</H6>
 
         <Button
           size="small"
           color="primary"
           variant="outlined"
-          disabled={item.qty === 1}
+          disabled={item.product.amount === 1}
           onClick={handleCartAmountChange(item.qty - 1, item)}
           sx={{ height: 28, width: 28, borderRadius: 50 }}>
           <Remove fontSize="small" />
         </Button>
       </FlexBox>
 
-      <Link href={`/products/${item.id}`}>
-        <Avatar alt={item.name} src={item.imgUrl} sx={{ mx: 1, width: 75, height: 75 }} />
+      <Link href={`/products/${item.product.id}`}>
+        <Avatar alt={item.product.title} src={item.product.image} sx={{ mx: 1, width: 75, height: 75 }} />
       </Link>
 
       <Box flex="1" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
@@ -66,11 +69,11 @@ export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
         </Link>
 
         <Tiny color="grey.600">
-          {currency(item.price)} x {item.qty}
+          {currency(item.product.price)} x {item.product.amount}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
-          {currency(item.qty * item.price)}
+          {currency(item.product.amount * item.product.price)}
         </H6>
       </Box>
 

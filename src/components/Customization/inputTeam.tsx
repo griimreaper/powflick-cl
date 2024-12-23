@@ -1,4 +1,5 @@
 import { ChevronLeftOutlined } from '@mui/icons-material';
+import { Box, TextField, Typography } from '@mui/material';
 import { Customization } from 'models/types';
 import React, { useEffect, useState } from 'react'
 import { useCustomizationsStore, useCustomizationStore } from 'store/customizations';
@@ -117,59 +118,114 @@ const InputTeam = ({ id, sideName, name, showInput, setShowInput, selection }: P
 
     return (
         Number(customizations?.length) > 1 && showInput &&
-        <div className='flex-col flex w-full sm:w-1/3 p-2 items-center gap-2'>
-            <div className='flex flex-row w-full items-center justify-center'>
-                <div className="w-auto flex flex-row absolute font-medium mr-60 text-sm text-logo hover:underline cursor-pointer items-center sm:hidden"
-                    onClick={() => setShowInput('')} >
-                    <ChevronLeftOutlined className='w-4 h-4 text-logo cursor-pointer relative' />
+        <Box
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            sx={{
+                sm: { width: '33.33%' },  // Estilo para sm (Pantallas pequeñas)
+                p: 2,                     // Padding de 2
+                gap: 2,                   // Espaciado entre los elementos
+                alignItems: 'center',     // Centrado de los elementos
+            }}
+        >
+            <Box display="flex" flexDirection="row" justifyContent="center" width="100%" position="relative">
+                <Box
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                    fontWeight={500}
+                    fontSize="0.875rem"
+                    color="primary.main"
+                    sx={{ position: 'absolute', marginRight: '150px', cursor: 'pointer' }}
+                    onClick={() => setShowInput('')}
+                >
+                    <ChevronLeftOutlined sx={{ width: 16, height: 16, color: 'primary.main'}} />
                     Back
-                </div>
-                <div>
-                    <h1 className='font-semibold text-xl border-b w-32 text-center'>
-                        Team</h1>
-                    <h1 className='font-semibold text-md w-32 text-center'>
-                        {selection[name.toLowerCase() as keyof {}] + 1 + ' ' + name}</h1>
-                </div>
-            </div>
-            <div className='overflow-y-scroll scroll-chido flex-col flex max-h-[400px]'>
+                </Box>
+                <Box>
+                    <Typography variant="h6" fontWeight={600} textAlign="center" sx={{ width: '8rem', borderBottom: '2px solid' }}>
+                        Team
+                    </Typography>
+                    <Typography variant="body1" fontWeight={600} textAlign="center" sx={{ width: '8rem' }}>
+                        {selection.index + 1 + ' ' + name}
+                    </Typography>
+                </Box>
+            </Box>
+            <Box
+                display="flex"
+                flexDirection="column"
+                maxHeight="400px"
+                sx={{
+                    overflowY: "auto",
+                    '&::-webkit-scrollbar': {
+                        width: '6px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        backgroundColor: '#888',
+                        borderRadius: '10px',
+                    },
+                    '&::-webkit-scrollbar-thumb:hover': {
+                        backgroundColor: '#555',
+                    },
+                }}
+            >
 
                 {customizations && Number(customizations.length) > 1 &&
                     customizations.map((custom, index: number) => custom.id !== customization.id &&
-                        <div key={index + 1} className='flex flex-row justify-between items-center justify-center w-full gap-4 font-sm border-b-2 border-gray-100 px-1'>
-                            <div className='w-1/4 items-start'>
+                        <Box
+                            key={index + 1}
+                            display="flex"
+                            flexDirection="row"
+                            alignItems="center"
+                            justifyContent="space-between"
+                            width="100%"
+                            gap={2}
+                            borderBottom="2px solid #f0f0f0"
+                            px={1}
+                            py={1}
+                        >
+                            <div style={{ width: '25%', alignItems: 'flex-start' }}>
                                 {name === 'Number' ?
-                                    <input
+                                    <TextField
                                         type="text"
-                                        className="w-full flex py-0 my-2 px-1 font-bold font-medium rounded-lg border border-gray-200"
-                                        inputMode="numeric"
+                                        variant="outlined"
+                                        size="small"
+                                        fullWidth
+                                        inputProps={{ inputMode: 'numeric' }}
                                         value={inputValues[sideName]?.[custom.id]?.number?.[selection.index] || ''}
-                                        defaultValue={custom[sideName].numbers[selection.index]?.number}
-                                        onChange={(e) => handleNumberChange(e, custom, selection.index)}
+                                        onChange={(e: any) => handleNumberChange(e, custom, selection.index)}
                                         placeholder={`#${index + 1}`}
                                     />
                                     :
-                                    <p className='text-[16px] font-bold'>{custom[sideName].numbers[selection.index]?.number || `#` + (index + 1)}</p>
+                                    <Typography variant="body1" fontWeight="bold" fontSize={16}>
+                                        {custom[sideName].numbers[selection.index]?.number || `#${index + 1}`}
+                                    </Typography>
                                 }
                             </div>
-                            <div className='w-4/5'>
+                            <div style={{ width: '80%' }}>
                                 {name === 'Text' ?
-                                    <input
+                                    <TextField
                                         type="text"
-                                        className="w-full flex text-md py-0 px-1 font-medium rounded-lg border border-gray-200"
-                                        inputMode="numeric"
+                                        variant="outlined"
+                                        size="small"
+                                        fullWidth
+                                        inputProps={{ inputMode: 'numeric' }}
                                         value={inputValues[sideName]?.[custom.id]?.text?.[selection.index] || ''}
-                                        defaultValue={custom[sideName].texts[selection.index]?.text}
-                                        onChange={(e) => handleTextChange(e, custom, selection.index)}
+                                        onChange={(e: any) => handleTextChange(e, custom, selection.index)}
                                         placeholder="Rename"
-                                    /> :
-                                    <p className='text-sm font-bold'>{custom[sideName].texts[selection.index]?.text || 'None'}</p>
+                                    />
+                                    :
+                                    <Typography variant="body2" fontWeight="bold">
+                                        {custom[sideName].texts[selection.index]?.text || 'None'}
+                                    </Typography>
                                 }
                             </div>
-                        </div>
+                        </Box>
                     )
                 }
-            </div>
-        </div>
+            </Box>
+        </Box >
     )
 }
 

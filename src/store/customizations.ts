@@ -208,7 +208,7 @@ export const useCustomizationStore = create(
         set({ customization: initialCustomization() });
       },
       setFonts: (font) => {
-        set((state) => {
+        set((state: any) => {
           const updateFont = (items: Array<Text | Number>) => {
             const updatedItems = items.map((item) => ({
               ...item,
