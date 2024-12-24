@@ -23,8 +23,6 @@ export default async function OrderDetails({ params }: IdParams) {
 
     const { data: order } = await getOrder(String(params.id), token as string);
 
-    console.log(order);
-
     return <OrderDetailsPageView order={order} />;
   } catch (error) {
     notFound();

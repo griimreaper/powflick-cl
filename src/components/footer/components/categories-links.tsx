@@ -14,7 +14,7 @@ export default function CategoriesLinks({ isDark, list }: Props) {
 
       {list?.map((item, ind) => (
         <StyledLink isDark={isDark} href={`/products?category=${item.name}`} key={ind}>
-          {item.name}
+          {item.title}
         </StyledLink>
       ))}
     </Fragment>

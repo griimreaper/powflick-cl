@@ -13,7 +13,6 @@ import { detailProps, ProductDB } from "models/types";
 
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
   const { product, sugestedProducts, frequentlyBought, reviews } = detail;
-  console.log("detail", detail);
 
   return (
     <Container className="mt-2 mb-2" sx={{ overflow: 'hidden'}}>

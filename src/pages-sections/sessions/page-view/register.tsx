@@ -65,8 +65,6 @@ const RegisterPageView = () => {
       initialValues,
       validationSchema,
       onSubmit: async (values) => {
-        console.log(values);
-
         const response = await registerUser({ ...values }, "none");
         if (response.statusCode === 201) {
           showSuccessAlert("Success!", "User registered successfully!");

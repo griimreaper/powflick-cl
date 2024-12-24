@@ -46,8 +46,6 @@ type SelectVariants = {
 };
 
 export default function ProductIntro({ product }: Props) {
-  console.log("Product", product);
-
   const { id, price, title, images, slug, URL, font: fontDefault, font_color } = product.product;
 
   const [selectedValues, setSelectedValues] = useState<{
@@ -75,9 +73,6 @@ export default function ProductIntro({ product }: Props) {
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
-
-  console.log("list", list);
-
 
   // CHECK PRODUCT EXIST OR NOT IN THE CART1
   const cartItem = state.cart.find((item) => item.id === id);

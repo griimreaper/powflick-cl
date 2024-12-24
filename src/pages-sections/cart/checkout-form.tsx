@@ -36,7 +36,7 @@ export default function CheckoutForm() {
         </Span>
       </FlexBetween>
 
-      <Divider sx={{ mb: 2 }} />
+      {/* <Divider sx={{ mb: 2 }} />
 
       <FlexBox alignItems="center" columnGap={1} mb={2}>
         <Span fontWeight="600">Additional Comments</Span>
@@ -50,28 +50,28 @@ export default function CheckoutForm() {
           bgcolor="primary.light">
           Note
         </Span>
-      </FlexBox>
+      </FlexBox> */}
 
       {/* COMMENTS TEXT FIELD */}
-      <TextField variant="outlined" rows={6} fullWidth multiline />
+      {/* <TextField variant="outlined" rows={6} fullWidth multiline /> */}
 
-      <Divider sx={{ mb: 2 }} />
+      {/* <Divider sx={{ mb: 2 }} /> */}
 
       {/* APPLY VOUCHER TEXT FIELD */}
-      <TextField fullWidth size="small" label="Voucher" variant="outlined" placeholder="Voucher" />
+      {/* <TextField fullWidth size="small" label="Voucher" variant="outlined" placeholder="Voucher" /> */}
 
-      <Button variant="outlined" color="primary" fullWidth sx={{ mt: 2, mb: 4 }}>
+      {/* <Button variant="outlined" color="primary" fullWidth sx={{ mt: 2, mb: 4 }}>
         Apply Voucher
-      </Button>
+      </Button> */}
 
-      <Divider sx={{ mb: 2 }} />
+      {/* <Divider sx={{ mb: 2 }} /> */}
 
-      <Span fontWeight={600} mb={2} display="block">
+      {/* <Span fontWeight={600} mb={2} display="block">
         Shipping Estimates
-      </Span>
+      </Span> */}
 
       {/* COUNTRY TEXT FIELD */}
-      <Autocomplete
+      {/* <Autocomplete
         fullWidth
         sx={{ mb: 2 }}
         options={countryList}
@@ -84,10 +84,10 @@ export default function CheckoutForm() {
             placeholder="Select Country"
           />
         )}
-      />
+      /> */}
 
       {/* STATE/CITY TEXT FIELD */}
-      <TextField
+      {/* <TextField
         select
         fullWidth
         size="small"
@@ -100,25 +100,25 @@ export default function CheckoutForm() {
             {label}
           </MenuItem>
         ))}
-      </TextField>
+      </TextField> */}
 
       {/* ZIP-CODE TEXT FIELD */}
-      <TextField
+      {/* <TextField
         fullWidth
         size="small"
         label="Zip Code"
         placeholder="3100"
         variant="outlined"
         sx={{ mt: 2 }}
-      />
+      /> */}
 
-      <Button variant="outlined" color="primary" fullWidth sx={{ my: 2 }}>
+      {/* <Button variant="outlined" color="primary" fullWidth sx={{ my: 2 }}>
         Calculate Shipping
-      </Button>
+      </Button> */}
 
-      <Button fullWidth color="primary" href="/checkout" variant="contained" LinkComponent={Link}>
+      {/* <Button fullWidth color="primary" href="/checkout" variant="contained" LinkComponent={Link}>
         Checkout Now
-      </Button>
+      </Button> */}
     </Card>
   );
 }

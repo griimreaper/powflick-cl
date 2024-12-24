@@ -16,9 +16,6 @@ export default function TicketsPageView() {
   const { profile } = useDashboardStore();
   const { messages } = profile;
 
-  console.log("messages", messages);
-  
-
   // Número de tickets por página
   const TICKETS_PER_PAGE = 5;
 

@@ -72,7 +72,6 @@ export const metadata: Metadata = {
 
 export default async function FashionShopTwo() {
   const data: DataStructure = await getLanding();
-  console.log(data);
 
   // Obtener la sesión del lado del servidor
   const session = await getServerSession();
