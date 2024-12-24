@@ -1,5 +1,5 @@
 import { mainApi } from "../apis";
-import { Customization } from "@/global interfaces";
+import { Customization } from "models/types";
 
 export const getPDF = async (product: any, customization: Customization, orderId?: string | null) => {
     try {
