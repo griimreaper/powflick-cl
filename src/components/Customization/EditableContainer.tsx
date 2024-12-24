@@ -5,7 +5,7 @@ import { deleteImage, setImageBlob } from 'services/imageStorage';
 import CustomTooltip from 'components/Tooltip/tooltip';
 import InputTeam from './inputTeam';
 import { ChevronRightOutlined, ErrorOutline } from '@mui/icons-material';
-import { SwatchesPicker } from 'react-color';
+import { SwatchesPicker } from "react-color";
 import { Box, Button, FormControl, IconButton, Input, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from '@mui/material';
 
 const textTooltip = [
