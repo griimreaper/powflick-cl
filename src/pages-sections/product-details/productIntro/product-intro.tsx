@@ -30,10 +30,12 @@ import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { favProduct } from "services/Products";
 import { FavoriteBorder, FavoriteBorderOutlined, FavoriteOutlined } from "@mui/icons-material";
-import { useCustomizationsStore, useCustomizationStore } from "store/customizations";
+import { useCustomizationsStore, useCustomizationStore, initialCustomization, } from "store/customizations";
 import AditionalDetails from "./AditionalDetails";
 import Customizations from "components/Customization/customization";
 import useCounter from "hooks/useCounter";
+import { useShoppingCartStore } from "store/shoppingCart";
+
 
 // ================================================================
 type Props = { product: detailProps };
@@ -46,7 +48,7 @@ type SelectVariants = {
 export default function ProductIntro({ product }: Props) {
   console.log("Product", product);
 
-  const { id, price, title, images, slug, URL } = product.product;
+  const { id, price, title, images, slug, URL, font: fontDefault, font_color } = product.product;
 
   const [selectedValues, setSelectedValues] = useState<{
     [key: string]: string;
@@ -70,8 +72,12 @@ export default function ProductIntro({ product }: Props) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
   const [counter, setCounter, handleCounterChange] = useCounter(id);
-  const [font, setFont] = useState<string>("Arial");
-  const [fontColor, setFontColr] = useState<string>("000000");
+  const [font, setFont] = useState<string>(fontDefault || "Arial");
+  const [fontColor, setFontColr] = useState<string>(font_color || "000000");
+  const { setProductInCart } = useShoppingCartStore();
+
+  console.log("list", list);
+
 
   // CHECK PRODUCT EXIST OR NOT IN THE CART1
   const cartItem = state.cart.find((item) => item.id === id);
@@ -93,6 +99,42 @@ export default function ProductIntro({ product }: Props) {
       }
     }
   }, []);
+
+  const handleAddNewCustomization = (amount: number) => {
+    if (amount < counter) {
+      setCustomizationInList(id, initialCustomization());
+    } else if (amount > counter) {
+      trimCustomizations(id, counter);
+
+      !amount
+        ? null
+        : list[list.findIndex((i) => i.productId === id)]?.customizations[
+          counter - 1
+        ]
+          ? setCustomization(
+            list[list.findIndex((i) => i.productId === id)]?.customizations[0]
+          )
+          : null;
+    }
+  };
+
+  useEffect(() => {
+    const amount = list?.find((i) => i.productId === id)?.amount;
+    if (counter !== 1) {
+      if (amount) {
+        handleAddNewCustomization(Number(amount));
+      }
+    }
+    if (counter === 0) {
+      setCounter(1);
+    }
+  }, [counter]);
+
+  useEffect(() => {
+    if (customization.id !== "none") {
+      setCustomizationInList(id, customization);
+    }
+  }, [customization]);
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -128,6 +170,12 @@ export default function ProductIntro({ product }: Props) {
       setCustomizationInList(id, customization);
     }
   }, [customization]);
+
+  useEffect(() => {
+    return () => {
+      setShowCustomization(false);
+    };
+  }, []);
 
   // HANDLE SELECT IMAGE
   const handleImageClick = (ind: number) => () => setSelectedImage(ind);
@@ -211,6 +259,52 @@ export default function ProductIntro({ product }: Props) {
     setCounter,
   };
 
+  const totalCustomizationPrice =
+    list[list.findIndex((i) => i.productId === id)]?.total?.toFixed(2) ?? 0;
+  const totalProductsPrice = (Number(product?.product.price) * counter).toFixed(2);
+  const total = Number(totalProductsPrice) + Number(totalCustomizationPrice);
+
+  const handleAddToBagClick = () => {
+    const customizations: Customization[] | null =
+      list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
+    const totalCustomization: number =
+      typeof list[list.findIndex((i) => i.productId === id)]?.total === "number"
+        ? list[list.findIndex((i) => i.productId === id)]?.total
+        : 0;
+    const totalProduct: number = parseFloat(
+      (Number(product?.product.price) * counter).toFixed(2)
+    );
+    const productToBag = {
+      id,
+      title: String(product.product.title),
+      price: Number(product.product.price),
+      image: String(product.product.images[0]),
+      category: product.product.product_categories,
+      colors: product.product.colors,
+      slug: product.product.slug,
+      sport: product.product.sport,
+      amount: counter
+    };
+    const amount = counter;
+
+    if (counter !== 0)
+      setProductInCart(
+        productToBag,
+        customizations,
+        totalCustomization,
+        totalProduct,
+        amount
+      );
+    showSuccessAlert("Success!", "Product added to bag");
+    return {
+      productToBag,
+      customizations,
+      totalCustomization,
+      totalProduct,
+      amount,
+    };
+  };
+
   return (
     <Box width="100%">
       <Grid container spacing={3} justifyContent="space-around">
@@ -287,70 +381,70 @@ export default function ProductIntro({ product }: Props) {
           </Box>
 
           <Box sx={{ display: 'flex', gap: 3 }}>
-            {/* ADD TO CART BUTTON */}
-            {!cartItem?.qty ? (
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={handleCartAmountChange(1)}
-                sx={{ mb: 4.5, px: "1.75rem", height: 40 }}>
-                Add to Cart
-              </Button>
-            ) : (
+            {/* BUTTONS */}
+            <Box sx={{ display: 'column', gap: 3 }}>
               <FlexBox alignItems="center" mb={4.5}>
                 <Button
                   size="small"
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={handleCartAmountChange(cartItem?.qty - 1)}>
+                  onClick={() => { handleCounterChange(-1); }}>
                   <Remove fontSize="small" />
                 </Button>
                 <H3 fontWeight="600" mx={2.5}>
-                  {cartItem?.qty.toString().padStart(2, "0")}
+                  {counter}
                 </H3>
-
                 <Button
                   size="small"
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={handleCartAmountChange(cartItem?.qty + 1)}>
+                  onClick={() => { handleCounterChange(1); }}>
                   <Add fontSize="small" />
                 </Button>
               </FlexBox>
-            )}
 
-            {/* BOTÓN DE CORAZÓN */}
-            <Button
-              onClick={handleAddToFav}
-              sx={{ mb: 4.5, px: "1.75rem", height: 40 }}
-            >
-              {isFav ?
-                <FavoriteOutlined
-                  color="primary" />
-                :
-                <FavoriteBorderOutlined
-                  color={"inherit"} // Cambia el color según el estado
-                />
-              }
-            </Button>
+              {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
+              <FlexBox alignItems="center" gap={2}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    const result = handleAddToBagClick();
+                    (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+                    (window as any).dataLayer.push({
+                      // Your dataLayer push code here
+                    });
+                  }}>
+                  Add to Cart
+                </Button>
 
+                <Button
+                  onClick={handleAddToFav}
+                  sx={{ px: "1.75rem", height: 40 }}>
+                  {isFav ? (
+                    <FavoriteOutlined color="primary" />
+                  ) : (
+                    <FavoriteBorderOutlined color={"inherit"} />
+                  )}
+                </Button>
 
-
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={handleCustomizationClick} // Manejar el clic en "Custom"
-              sx={{ mb: 4.5, px: "1.75rem", height: 40 }}>
-              Customize
-            </Button>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleCustomizationClick}
+                  sx={{ px: "1.75rem", height: 40 }}>
+                  Customize
+                </Button>
+              </FlexBox>
+            </Box>
           </Box>
 
           {/* SHOP NAME */}
           <FlexBox alignItems="center" gap={1} mb={2}>
             <div>Sold By:</div>
-            <Link href="/">d
+            <Link href="/">
               <H6>Sport Zone</H6>
             </Link>
           </FlexBox>

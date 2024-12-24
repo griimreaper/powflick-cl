@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
 import Moveable from "react-moveable";
 
@@ -121,24 +122,25 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   };
 
   return (
-    <div
+    <Box
       ref={containerRef}
-      style={{
+      sx={{
         position: "absolute",
         zIndex: 0,
         left: each.position.x,
         top: each.position.y,
       }}
     >
-      <div
+      <Box
         ref={hiddenDivRef}
-        style={{
-          visibility: "hidden",
-          position: "absolute",
-          whiteSpace: "pre",
+        sx={{
+          visibility: 'hidden',
+          position: 'absolute',
+          whiteSpace: 'pre',
           fontFamily: each.font,
         }}
       />
+
       {isSelected && (
         <Moveable
           target={elementRef.current}
@@ -223,7 +225,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           />
         </div>
       )}
-    </div>
+    </Box>
   );
 };
 

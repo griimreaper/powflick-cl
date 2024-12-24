@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 
 // ==============================================================
 interface Props {
-  total: string;
+  total: number;
   handleNavigate: (path: string) => () => void;
 }
 // ==============================================================

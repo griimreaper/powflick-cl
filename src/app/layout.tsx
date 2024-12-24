@@ -11,6 +11,7 @@ import React from "react";
 import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
+import { GlobalStyles } from "@mui/material";
 
 export const revalidate = 86400 * 7;
 
@@ -25,6 +26,24 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
         <React.StrictMode>
+        <GlobalStyles
+            styles={{
+              "*::-webkit-scrollbar": {
+                width: "8px",
+                height: "8px",
+              },
+              "*::-webkit-scrollbar-thumb": {
+                backgroundColor: "#888",
+                borderRadius: "4px",
+              },
+              "*::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "#555",
+              },
+              "*::-webkit-scrollbar-track": {
+                backgroundColor: "#f0f0f0",
+              },
+            }}
+          />
           <GlobalProvider navbar={navbar}>{children}</GlobalProvider>
           <GoogleAnalytics />
           <GoogleTagManager />

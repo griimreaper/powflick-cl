@@ -14,6 +14,7 @@ import Scrollbar from "components/scrollbar";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 // =========================================================
 type Props = { toggleSidenav: () => void };
@@ -22,18 +23,23 @@ type Props = { toggleSidenav: () => void };
 export default function MiniCart({ toggleSidenav }: Props) {
   const { push } = useRouter();
   const { state, dispatch } = useCart();
-  const cartList = state.cart;
+  const { cart, total, setCoupon, coupon } = useShoppingCartStore();
+  const cartList = cart;
+  
 
-  const handleCartAmountChange = (amount: number, product: CartItem) => () => {
-    dispatch({
-      type: "CHANGE_CART_AMOUNT",
-      payload: { ...product, qty: amount }
-    });
-  };
+  console.log("cartList", cartList);
+  
 
-  const getTotalPrice = () => {
-    return cartList.reduce((acc, item) => acc + item.price * item.qty, 0);
-  };
+  // const handleCartAmountChange = (amount: number, product: CartItem) => () => {
+  //   dispatch({
+  //     type: "CHANGE_CART_AMOUNT",
+  //     payload: { ...product, qty: amount }
+  //   });
+  // };
+
+  // const getTotalPrice = () => {
+  //   return cartList.reduce((acc, item) => acc + item.price * item.qty, 0);
+  // };
 
   const handleNavigate = (path: string) => () => {
     toggleSidenav();
@@ -51,11 +57,11 @@ export default function MiniCart({ toggleSidenav }: Props) {
         {/* CART ITEM LIST */}
         {cartList.length > 0 ? (
           <Scrollbar>
-            {cartList.map((item) => (
+            {cartList.map((item:any) => (
               <MiniCartItem
                 item={item}
                 key={item.id}
-                handleCartAmountChange={handleCartAmountChange}
+       
               />
             ))}
           </Scrollbar>
@@ -66,7 +72,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
 
       {/* CART BOTTOM ACTION BUTTONS */}
       {cartList.length > 0 ? (
-        <BottomActions total={currency(getTotalPrice())} handleNavigate={handleNavigate} />
+        <BottomActions total={total} handleNavigate={handleNavigate} />
       ) : null}
     </Box>
   );

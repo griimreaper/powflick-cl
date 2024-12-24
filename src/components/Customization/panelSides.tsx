@@ -6,6 +6,7 @@ import { useCustomizationsStore, useCustomizationStore } from "store/customizati
 import MainContainer from "./MainContainer";
 import EditableContainer from "./EditableContainer";
 import useHearingEvent from "hooks/hearingEvent";
+import { Box, Button, Grid } from "@mui/material";
 
 interface PanelSidesProps {
   image?: string;
@@ -228,10 +229,17 @@ export default function PanelSides({
     handleStep();
   }, []);
 
-  console.log(texts,'text');
-  
+  console.log(texts, 'text');
+
   return (
-    <div className="flex flex-col items-center w-full">
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <MainContainer // Contenedor principal, este es el lienzo donde van ubicados los elementos del usuario
         selection={selection}
         setSelection={setSelection}
@@ -248,90 +256,177 @@ export default function PanelSides({
         setActualize={setActualize}
       />
       {/* Buttons Logo, Text, Number */}
-      <div className="grid grid-cols-3 gap-4 w-full m-4 md:text-lg xs:text-sm pb-4 border-b ">
-        <div className="relative ">
-          <button
-            id="logoButton"
-            onClick={() => {
-              handleShowItem("Logo"), setShowInputsEdit("");
-            }}
-            className="sm:max-w-xs w-16 mx-auto flex items-center justify-center rounded-md border border-transparent bg-neutral sm:w-28 text-base font-medium text-white hover:bg-neutral/80 focus:outline-none focus:ring-2 focus:ring-logo focus:ring-offset-2 focus:ring-offset-gray-50"
-          >
-            Logo
-          </button>
-          {step1 && (
-            <div className="absolute left-[20%] lg:left-[35%] transform top-full mt-2 z-40 ">
-              <ContainerInfoBox
-                stepp={1}
-                arrowPosition="topLeft"
-                className="w-full lg:w-screen "
-                visible={{ step1, step2, step3, step4, step5 }}
-                setVisible={{
-                  setStep1,
-                  setStep2,
-                  setStep3,
-                  setStep4,
-                  setStep5,
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          width: "100%",
+          margin: "16px",
+          paddingBottom: "16px",
+          borderBottom: "1px solid",
+        }}
+      >
+        {/* Logo Button */}
+        <Grid item xs={4} sm={4}>
+          <Box sx={{ position: "relative" }}>
+            <Button
+              id="logoButton"
+              onClick={() => {
+                handleShowItem("Logo");
+                setShowInputsEdit("");
+              }}
+              sx={{
+                width: { xs: "64px", sm: "112px" },
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 1,
+                backgroundColor: "#D23F57",
+                color: "white",
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "darkred",
+                },
+                "&:focus": {
+                  outline: "none",
+                  ring: 2,
+                  ringColor: "red",
+                },
+              }}
+            >
+              Logo
+            </Button>
+            {step1 && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  left: { xs: "20%", lg: "35%" },
+                  top: "100%",
+                  marginTop: "8px",
+                  zIndex: 40,
+                  transform: "translateY(0)",
                 }}
-              />
-            </div>
-          )}
-        </div>
-        <div className="relative ">
-          <button
-            onClick={() => {
-              handleShowItem("Text"), setShowInputsEdit("");
-            }}
-            className="sm:max-w-xs w-16 mx-auto flex items-center justify-center rounded-md border border-transparent bg-neutral sm:w-28 text-base font-medium text-white hover:bg-neutral/80 focus:outline-none focus:ring-2 focus:ring-logo focus:ring-offset-2 focus:ring-offset-gray-50"
-          >
-            Text
-          </button>
-          {step2 && (
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 z-40 ">
-              <ContainerInfoBox
-                stepp={2}
-                arrowPosition="top"
-                className="w-full lg:w-screen"
-                visible={{ step1, step2, step3, step4, step5 }}
-                setVisible={{
-                  setStep1,
-                  setStep2,
-                  setStep3,
-                  setStep4,
-                  setStep5,
+              >
+                <ContainerInfoBox
+                  stepp={1}
+                  arrowPosition="topLeft"
+                  className="w-full lg:w-screen"
+                  visible={{ step1, step2, step3, step4, step5 }}
+                  setVisible={{ setStep1, setStep2, setStep3, setStep4, setStep5 }}
+                />
+              </Box>
+            )}
+          </Box>
+        </Grid>
+
+        {/* Text Button */}
+        <Grid item xs={4} sm={4}>
+          <Box sx={{ position: "relative" }}>
+            <Button
+              onClick={() => {
+                handleShowItem("Text");
+                setShowInputsEdit("");
+              }}
+              sx={{
+                width: { xs: "64px", sm: "112px" },
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 1,
+                backgroundColor: "#D23F57",
+                color: "white",
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "darkred",
+                },
+                "&:focus": {
+                  outline: "none",
+                  ring: 2,
+                  ringColor: "red",
+                },
+              }}
+            >
+              Text
+            </Button>
+            {step2 && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "100%",
+                  marginTop: "8px",
+                  zIndex: 40,
+                  transform: "translateX(-50%)",
                 }}
-              />
-            </div>
-          )}
-        </div>
-        <div className="relative " id="numberButton">
-          <button
-            onClick={() => {
-              handleShowItem("Number"), setShowInputsEdit("");
-            }}
-            className="sm:max-w-xs w-16 mx-auto flex items-center justify-center rounded-md border border-transparent bg-neutral sm:w-28 text-base font-medium text-white hover:bg-neutral/80 focus:outline-none focus:ring-2 focus:ring-logo focus:ring-offset-2 focus:ring-offset-gray-50"
-          >
-            Number
-          </button>
-          {step3 && (
-            <div className="absolute transform right-[20%] lg:right-[35%] top-full mt-2 z-40 ">
-              <ContainerInfoBox
-                stepp={3}
-                arrowPosition="topRight"
-                className="w-full lg:w-screen"
-                visible={{ step1, step2, step3, step4, step5 }}
-                setVisible={{
-                  setStep1,
-                  setStep2,
-                  setStep3,
-                  setStep4,
-                  setStep5,
+              >
+                <ContainerInfoBox
+                  stepp={2}
+                  arrowPosition="top"
+                  className="w-full lg:w-screen"
+                  visible={{ step1, step2, step3, step4, step5 }}
+                  setVisible={{ setStep1, setStep2, setStep3, setStep4, setStep5 }}
+                />
+              </Box>
+            )}
+          </Box>
+        </Grid>
+
+        {/* Number Button */}
+        <Grid item xs={4} sm={4}>
+          <Box sx={{ position: "relative" }} id="numberButton">
+            <Button
+              onClick={() => {
+                handleShowItem("Number");
+                setShowInputsEdit("");
+              }}
+              sx={{
+                width: { xs: "64px", sm: "112px" },
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 1,
+                backgroundColor: "#D23F57",
+                color: "white",
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "darkred",
+                },
+                "&:focus": {
+                  outline: "none",
+                  ring: 2,
+                  ringColor: "red",
+                },
+              }}
+            >
+              Number
+            </Button>
+            {step3 && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  right: { xs: "20%", lg: "35%" },
+                  top: "100%",
+                  marginTop: "8px",
+                  zIndex: 40,
+                  transform: "translateY(0)",
                 }}
-              />
-            </div>
-          )}
-        </div>
-      </div>
+              >
+                <ContainerInfoBox
+                  stepp={3}
+                  arrowPosition="topRight"
+                  className="w-full lg:w-screen"
+                  visible={{ step1, step2, step3, step4, step5 }}
+                  setVisible={{ setStep1, setStep2, setStep3, setStep4, setStep5 }}
+                />
+              </Box>
+            )}
+          </Box>
+        </Grid>
+      </Grid>
+
       <EditableContainer // Editor del elemento
         id={id}
         selection={selection}
@@ -353,6 +448,6 @@ export default function PanelSides({
         showInputsEdit={showInputsEdit}
         setShowInputsEdit={setShowInputsEdit}
       />
-    </div>
+    </Box>
   );
 }

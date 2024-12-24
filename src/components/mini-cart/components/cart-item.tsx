@@ -14,67 +14,74 @@ import { H6, Tiny } from "components/Typography";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
+import { ShoppingCartStoreType } from "store/interfaces/interface";
+import useCounter from "hooks/useCounter";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 // ==============================================================
 interface Props {
-  item: CartItem;
-  handleCartAmountChange: (amount: number, product: CartItem) => () => void;
+  item: ShoppingCartStoreType["cart"][0];
+
 }
 // ==============================================================
 
-export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
+export default function MiniCartItem({ item }: Props) {
+  const [counter, setCounter, handleCounterChange] = useCounter(item.product.id);
+  const { removeProductById } = useShoppingCartStore();
+  console.log("item", item);
+
   return (
     <FlexBox
       py={2}
       px={2.5}
-      key={item.id}
+      key={item.product.id}
       alignItems="center"
       borderBottom="1px solid"
       borderColor="divider">
       <FlexBox alignItems="center" flexDirection="column">
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
-          onClick={handleCartAmountChange(item.qty + 1, item)}
+          onClick={() => { handleCounterChange(+1); }}
           sx={{ height: 28, width: 28, borderRadius: 50 }}>
           <Add fontSize="small" />
-        </Button>
+        </Button> */}
 
-        <H6 my="3px">{item.qty}</H6>
+        <H6 my="3px">{item.customizations.length}</H6>
 
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
-          disabled={item.qty === 1}
-          onClick={handleCartAmountChange(item.qty - 1, item)}
+          disabled={item.customizations.length === 1}
+          onClick={() => { handleCounterChange(-1); }}
           sx={{ height: 28, width: 28, borderRadius: 50 }}>
           <Remove fontSize="small" />
-        </Button>
+        </Button> */}
       </FlexBox>
 
-      <Link href={`/products/${item.id}`}>
-        <Avatar alt={item.name} src={item.imgUrl} sx={{ mx: 1, width: 75, height: 75 }} />
+      <Link href={`/products/${item.product.id}`}>
+        <Avatar alt={item.product.title} src={item.product.image} sx={{ mx: 1, width: 75, height: 75 }} />
       </Link>
 
       <Box flex="1" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
-        <Link href={`/products/${item.slug}`}>
+        <Link href={`/products/${item.product.slug}`}>
           <H6 ellipsis className="title">
-            {item.name}
+            {item.product.title}
           </H6>
         </Link>
 
         <Tiny color="grey.600">
-          {currency(item.price)} x {item.qty}
+          {currency(item.product.price)} x {item.customizations.length}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
-          {currency(item.qty * item.price)}
+          {currency(item.customizations.length * item.product.price)}
         </H6>
       </Box>
 
-      <IconButton size="small" onClick={handleCartAmountChange(0, item)} sx={{ marginLeft: 2.5 }}>
+      <IconButton size="small" onClick={() => { removeProductById(item.product.id) }} sx={{ marginLeft: 2.5 }}>
         <Close fontSize="small" />
       </IconButton>
     </FlexBox>

@@ -6,6 +6,7 @@ import CustomTooltip from 'components/Tooltip/tooltip';
 import InputTeam from './inputTeam';
 import { ChevronRightOutlined, ErrorOutline } from '@mui/icons-material';
 import { SwatchesPicker } from 'react-color';
+import { Box, Button, FormControl, IconButton, Input, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from '@mui/material';
 
 const textTooltip = [
     "You can add this customization to all products if there are several",
@@ -141,7 +142,7 @@ function EditableContainer({
     };
 
     const handleFontChange = (
-        event: React.ChangeEvent<HTMLSelectElement>,
+        event: SelectChangeEvent ,
         index: number,
         type: "Text" | "Number"
     ) => {
@@ -264,184 +265,270 @@ function EditableContainer({
         setActualize();
     };
 
+    console.log(showInputsEdit, 'inputedit');
+    console.log(showInputsEdit === "Text");
+
     return (
-        <div className='w-full flex'>
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: "column" }}>
             {selection.type === "Logo" && (
-                <div className="w-full">
-                    <div className="max-w-full overflow-x-scroll mini-scroll rounded-md flex gap-2 px-4 pb-2">
+                <Box sx={{ width: "100%" }}>
+                    <Box
+                        sx={{
+                            maxWidth: "100%",
+                            overflowX: "auto",
+                            display: "flex",
+                            gap: 2,
+                            px: 4,
+                            pb: 2,
+                            borderRadius: 1,
+                        }}
+                    >
                         {logos.map(
                             (each: Logo, index: number) =>
                                 each.logoUrl && (
-                                    <img
-                                        key={index + "logos" + sideName}
+                                    <Box
+                                        component="img"
+                                        key={`${index}logos${sideName}`}
                                         src={each.logoUrl}
-                                        className={`h-8 w-8 bg-gray-200 rounded-md p-2 ${selection.index === index
-                                            ? "bg-logo"
-                                            : "bg-gray-200 cursor-pointer hover:bg-logo"
-                                            }`}
-                                        onClick={() => setSelection({ type: 'Logo', index })}
-                                    ></img>
+                                        sx={{
+                                            height: 32,
+                                            width: 32,
+                                            backgroundColor: selection.index === index ? "primary.main" : "grey.200",
+                                            borderRadius: 1,
+                                            p: 0.5,
+                                            cursor: "pointer",
+                                            "&:hover": {
+                                                backgroundColor: "primary.main",
+                                            },
+                                        }}
+                                        onClick={() => setSelection({ type: "Logo", index })}
+                                    />
                                 )
                         )}
-                        <button
-                            className={`w-auto p-1 bg-gray-200 rounded-md hover:bg-logo hover:text-white`}
+                        <Button
+                            variant="contained"
+                            sx={{ p: 1, backgroundColor: "grey.200", "&:hover": { backgroundColor: "primary.main", color: "white" } }}
                             onClick={() => addNewElement("Logo")}
                         >
                             +
-                        </button>
-                    </div>
+                        </Button>
+                    </Box>
                     {/* Logo */}
-                    <div className="flex-col flex w-full items-center justify-center gap-2">
-                        <input
+                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
+                        <Input
                             type="file"
-                            accept="image/png"
                             onChange={handleFileChange}
-                            className="py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                            sx={{
+                                py: 1,
+                                fontSize: "0.875rem",
+                                "&:focus": {
+                                    outline: "none",
+                                    borderColor: "primary.main",
+                                    ring: "2px solid primary.main",
+                                },
+                            }}
                         />
-                        <button
+                        <Button
+                            variant="contained"
                             onClick={() => handleSubmit(selection.index)}
                             disabled={!file}
-                            className={`px-1 w-28 mx-auto flex items-center justify-center rounded-md border border-transparent
-                     sm:w-28 text-base font-medium text-white
-                        ${!file
-                                    ? "bg-gray-300 cursor-not-allowed"
-                                    : "bg-neutral hover:bg-neutral/80 focus:outline-none focus:ring-2 focus:ring-logo focus:ring-offset-2 focus:ring-offset-gray-50 cursor-pointer"
-                                }`}
+                            sx={{
+                                width: 112,
+                                backgroundColor: !file ? "grey.300" : "neutral.main",
+                                cursor: !file ? "not-allowed" : "pointer",
+                                "&:hover": {
+                                    backgroundColor: !file ? "grey.300" : "neutral.dark",
+                                },
+                            }}
                         >
                             Upload
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="error"
                             onClick={() => removeLogo(selection.index)}
-                            disabled={!logos[selection.index].logoUrl}
-                            className={`px-1 mx-auto flex items-center justify-center rounded-md border border-transparent bg-red-600 w-28 text-base font-medium text-white
-                        ${!logos[selection.index].logoUrl
-                                    ? "opacity-50 cursor-not-allowed"
-                                    : "hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                                }`}
+                            disabled={!logos[selection.index]?.logoUrl}
+                            sx={{
+                                width: 112,
+                                opacity: !logos[selection.index]?.logoUrl ? 0.5 : 1,
+                                cursor: !logos[selection.index]?.logoUrl ? "not-allowed" : "pointer",
+                                "&:hover": {
+                                    backgroundColor: !logos[selection.index]?.logoUrl ? "error.main" : "error.dark",
+                                },
+                            }}
                         >
                             Remove
-                        </button>
+                        </Button>
 
-                        <button
+                        <Button
+                            variant="contained"
                             onClick={() => handleSetForAll("Logo")}
-                            disabled={
-                                customizations?.length === 1 ||
-                                !logos[selection.index].logoUrl
-                            }
-                            className={`gap-1 px-1  mx-auto flex items-center justify-center rounded-md border border-transparent  text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50
-                        ${customizations?.length === 1 ||
-                                    !logos[selection.index].logoUrl
-                                    ? "bg-gray-300 cursor-not-allowed"
-                                    : "bg-neutral hover:bg-neutral/80 focus:outline-none focus:ring-2 focus:ring-logo focus:ring-offset-2 focus:ring-offset-gray-50 cursor-pointer"
-                                }`}
+                            disabled={customizations?.length === 1 || !logos[selection.index]?.logoUrl}
+                            sx={{
+                                backgroundColor:
+                                    customizations?.length === 1 || !logos[selection.index]?.logoUrl
+                                        ? "grey.300"
+                                        : "neutral.main",
+                                cursor:
+                                    customizations?.length === 1 || !logos[selection.index]?.logoUrl
+                                        ? "not-allowed"
+                                        : "pointer",
+                                "&:hover": {
+                                    backgroundColor:
+                                        customizations?.length === 1 || !logos[selection.index]?.logoUrl
+                                            ? "grey.300"
+                                            : "neutral.dark",
+                                },
+                            }}
                         >
                             Set For All
-                            <CustomTooltip content={textTooltip} position="bottom">
-                                <ErrorOutline className="w-6 h-6 opacity-50 hover:opacity-100 transition duration-300" />
-                            </CustomTooltip>
-                        </button>
-                    </div>
-                </div>
+                            <Tooltip title={textTooltip} placement="bottom">
+                                <IconButton>
+                                    <ErrorOutline fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                        </Button>
+                    </Box>
+                </Box>
             )}
             {/* Text */}
             {selection.type === "Text" && (
-                <div className="w-full flex flex-col">
-                    <div className="max-w-full overflow-x-scroll mini-scroll flex gap-2 px-4 pb-2">
-                        {texts.map(
-                            (each: Text, index: number) =>
-                                (each.text || selection.index === index) && (
-                                    <input
-                                        key={index + "texts" + sideName}
-                                        className={`w-auto p-0 bg-gray-200 rounded-md text-center whitespace-nowrap ${selection.index === index
-                                            ? "bg-logo text-white"
-                                            : "bg-gray-200 cursor-pointer hover:bg-logo hover:text-white"
-                                            }`}
-                                        style={
-                                            { width: `${(each.text ?? '').length + 0.5}ch` }
-                                        }
-                                        onClick={() => setSelection({ type: 'Text', index })}
-                                        defaultValue={each.text}
-                                        value={each.text}
-                                        onChange={(e) => handleTextChange(e, selection.index)}
-                                    >
-                                    </input>
-                                )
-                        )}
-                        <button
-                            className={`w-auto p-1 bg-gray-200 rounded-md hover:bg-logo hover:text-white`}
-                            onClick={(e) => addNewElement("Text")}
+                <Box display="flex" flexDirection="column" width="100%">
+                    <Box
+                        sx={{
+                            maxWidth: "100%",
+                            overflowX: "auto",
+                            display: "flex",
+                            gap: 2,
+                            px: 2,
+                            pb: 1,
+                        }}
+                    >
+                        {texts.map((each: Text, index: number) => (
+                            (each.text || selection.index === index) && (
+                                <TextField
+                                    key={index + "texts" + sideName}
+                                    variant="outlined"
+                                    size="small"
+                                    value={each.text || ""}
+                                    onClick={() => setSelection({ type: "Text", index })}
+                                    onChange={(e) => handleTextChange(e, selection.index)}
+                                    inputProps={{
+                                        style: { textAlign: "center" },
+                                    }}
+                                    sx={{
+                                        width: `${(each.text ?? "").length + 2}ch`,
+                                        "&.Mui-focused": {
+                                            backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                        },
+                                        backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                        cursor: selection.index === index ? "default" : "pointer",
+                                        "&:hover": { backgroundColor: "#D23F57" },
+                                    }}
+                                />
+                            )
+                        ))}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            onClick={() => addNewElement("Text")}
                         >
                             +
-                        </button>
-                    </div>
-                    <div
-                        className={`flex flex-row sm:flex justify-center gap-2 mt-2
-                    ${showInputsEdit === "Text" ? " hidden " : ""}`}
+                        </Button>
+                    </Box>
+                    <Box
+                        display="flex"
+                        flexDirection={{ xs: "column", sm: "row" }}
+                        justifyContent="center"
+                        gap={2}
+                        mt={2}
+                        sx={{ display: showInputsEdit === "Text" ? "none" : "flex" }}
                     >
-                        <div className="flex-col flex gap-2 justify-center items-center">
-                            <div className="flex-row flex gap-2 w-full justify-center items-center">
+                        <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                            <Box display="flex" alignItems="center" gap={2}>
                                 {Number(
-                                    list.find(({ productId }) => productId === id)?.customizations
-                                        .length
+                                    list.find(({ productId }) => productId === id)?.customizations?.length
                                 ) > 1 && (
-                                        <div
-                                            className="w-auto flex flex-row font-medium text-sm text-logo hover:underline cursor-pointer items-center "
+                                        <Box
+                                            display="flex"
+                                            alignItems="center"
+                                            sx={{ cursor: "pointer" }}
                                             onClick={() =>
                                                 showInputsEdit === "Text"
                                                     ? setShowInputsEdit("")
                                                     : setShowInputsEdit("Text")
                                             }
                                         >
-                                            <CustomTooltip content={textTooltipTeam} position="bottom">
-                                                <ErrorOutline className="w-6 h-6 opacity-50 hover:opacity-100 transition duration-300" />
-                                            </CustomTooltip>
-                                            Team
-                                            <ChevronRightOutlined className="w-4 h-4" />
-                                        </div>
+                                            <Tooltip title={textTooltipTeam} placement="bottom">
+                                                <ErrorOutline
+                                                    sx={{
+                                                        width: 24,
+                                                        height: 24,
+                                                        opacity: 0.5,
+                                                        "&:hover": { opacity: 1 },
+                                                    }}
+                                                />
+                                            </Tooltip>
+                                            <Typography variant="body2" color="primary" sx={{ textDecoration: "underline" }}>
+                                                Team
+                                            </Typography>
+                                            <ChevronRightOutlined sx={{ width: 16, height: 16 }} />
+                                        </Box>
                                     )}
-                            </div>
-                            <select
-                                value={texts[selection.index].font}
-                                onChange={(e) =>
-                                    handleFontChange(e, selection.index, "Text")
-                                }
-                                className="mb-2 rounded-lg border border-gray-200 w-full"
-                            >
-                                {Object.entries(fonts).map(([fontName, fontFamily]) => (
-                                    <option
-                                        key={fontName}
-                                        value={fontName}
-                                        style={{ fontFamily }}
-                                    >
-                                        {fontName}
-                                    </option>
-                                ))}
-                            </select>
-                            <div className="flex w-full justify-center">
+                            </Box>
+                            <FormControl fullWidth>
+                                <InputLabel id="font-select-label">Font</InputLabel>
+                                <Select
+                                    labelId="font-select-label"
+                                    value={texts[selection.index]?.font || ""}
+                                    onChange={(e) => handleFontChange(e, selection.index, "Text")}
+                                    defaultValue={font}
+                                >
+                                    {Object.entries(fonts).map(([fontName, fontFamily]) => (
+                                        <MenuItem
+                                            key={fontName}
+                                            value={fontName}
+                                            style={{ fontFamily }}
+                                        >
+                                            {fontName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <Box display="flex" justifyContent="center" borderRadius={1}>
                                 <SwatchesPicker
-                                    color={texts[selection.index].textColor || "000000"}
-                                    onChange={(e:any) =>
-                                        handleTextColorChange(e, selection.index)
-                                    }
+                                    color={texts[selection.index]?.textColor || "000000"}
+                                    onChange={(e: any) => handleTextColorChange(e, selection.index)}
                                     width={300}
                                     height={300}
                                 />
-                            </div>
-                            <button
+                            </Box>
+                            <Button
                                 onClick={() => handleSetForAll("Text")}
                                 disabled={customizations?.length === 1}
-                                className={`gap-1 px-1 mx-auto flex items-center justify-center rounded-md border border-transparent  text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50
-                        ${customizations?.length === 1
-                                        ? "bg-gray-300 cursor-not-allowed"
-                                        : "bg-neutral hover:bg-neutral/80 focus:outline-none focus:ring-2 focus:ring-logo focus:ring-offset-2 focus:ring-offset-gray-50 cursor-pointer"
-                                    }`}
+                                sx={{
+                                    gap: 1,
+                                    color: "white",
+                                    backgroundColor: customizations?.length === 1 ? "#e0e0e0" : "#D23F57",
+                                    "&:hover": {
+                                        backgroundColor: customizations?.length === 1 ? "#D23F57" : "#D23F57",
+                                    },
+                                }}
                             >
                                 Set For All
-                                <CustomTooltip content={textTooltip} position="bottom">
-                                    <ErrorOutline className="w-6 h-6 opacity-50 hover:opacity-100 transition duration-300" />
-                                </CustomTooltip>
-                            </button>
-                        </div>
+                                <Tooltip title={textTooltip} placement="bottom">
+                                    <ErrorOutline
+                                        sx={{
+                                            width: 24,
+                                            height: 24,
+                                            opacity: 0.5,
+                                            "&:hover": { opacity: 1 },
+                                        }}
+                                    />
+                                </Tooltip>
+                            </Button>
+                        </Box>
                         <InputTeam
                             sideName={sideName}
                             selection={selection}
@@ -450,107 +537,155 @@ function EditableContainer({
                             showInput={showInputsEdit === "Text"}
                             setShowInput={setShowInputsEdit}
                         />
-                    </div>
-                </div>
+                    </Box>
+                </Box>
             )}
             {/* Number */}
             {selection.type === "Number" && (
-                <div className="w-full flex flex-col">
-                    <div className="max-w-full overflow-x-scroll mini-scroll flex gap-2 px-4 pb-2">
-                        {numbers?.map(
-                            (each: Numb, index: number) =>
-                                (each.number || selection.index === index) && (
-                                    <input
-                                        key={index + "numbers" + sideName}
-                                        className={`w-auto p-0 text-center bg-gray-200 rounded-md ${selection.index === index
-                                            ? "bg-logo text-white"
-                                            : "bg-gray-200 cursor-pointer hover:bg-logo hover:text-white"
-                                            }`}
-                                        onClick={() => setSelection({ type: 'Number', index })}
-                                        style={
-                                            { width: `${(each.number ?? '').length + 1}ch` }
-                                        }
-                                        value={each.number}
-                                        onChange={(e) => handleNumberChange(e, selection.index)}
-                                    >
-                                    </input>
-                                )
-                        )}
-                        <button
-                            className={`w-auto p-1 bg-gray-200 rounded-md hover:bg-logo hover:text-white`}
+                <Box display="flex" flexDirection="column" width="100%">
+                    <Box
+                        sx={{
+                            maxWidth: "100%",
+                            overflowX: "auto",
+                            display: "flex",
+                            gap: 2,
+                            px: 2,
+                            pb: 1,
+                        }}
+                    >
+                        {numbers?.map((each: Numb, index: number) => (
+                            (each.number || selection.index === index) && (
+                                <TextField
+                                    key={index + "numbers" + sideName}
+                                    value={each.number}
+                                    color='primary'
+                                    onChange={(e) => handleNumberChange(e, selection.index)}
+                                    onClick={() => setSelection({ type: "Number", index })}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: "center",
+                                            width: `${(each.number ?? "").length + 1}ch`,
+                                        },
+                                    }}
+                                    variant="outlined"
+                                    size="small"
+                                    sx={{
+                                        "&.Mui-focused": {
+                                            backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                        },
+                                        backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                        cursor: selection.index === index ? "default" : "pointer",
+                                        "&:hover": { backgroundColor: "#D23F57", color: "#fff" },
+                                    }}
+                                />
+                            )
+                        ))}
+                        <Button
                             onClick={() => addNewElement("Number")}
+                            variant="contained"
+                            color='primary'
+                            size="small"
                         >
                             +
-                        </button>
-                    </div>
-                    <div
-                        className={`flex flex-row sm:flex justify-center gap-2 mt-2
-                    ${showInputsEdit === "Number" ? " hidden" : ""}`}
+                        </Button>
+                    </Box>
+
+                    <Box
+                        display="flex"
+                        flexDirection={{ xs: "column", sm: "row" }}
+                        justifyContent="center"
+                        gap={2}
+                        mt={2}
+                        sx={{ display: showInputsEdit === "Number" ? "none" : "flex" }}
                     >
-                        <div className="flex-col flex justify-center items-center gap-2">
-                            <div className="w-full flex w-full justify-center items-center gap-2">
+                        <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                            <Box display="flex" alignItems="center" gap={2}>
                                 {Number(
-                                    list.find(({ productId }) => productId === id)?.customizations
-                                        .length
+                                    list.find(({ productId }) => productId === id)?.customizations.length
                                 ) > 1 && (
-                                        <div
-                                            className="w-auto flex flex-row font-medium text-sm text-logo hover:underline cursor-pointer items-center"
+                                        <Box
+                                            display="flex"
+                                            alignItems="center"
+                                            sx={{ cursor: "pointer" }}
                                             onClick={() =>
                                                 showInputsEdit === "Number"
                                                     ? setShowInputsEdit("")
                                                     : setShowInputsEdit("Number")
                                             }
                                         >
-                                            <CustomTooltip content={textTooltipTeam} position="bottom">
-                                                <ErrorOutline className="w-6 h-6 opacity-50 hover:opacity-100 transition duration-300" />
-                                            </CustomTooltip>
-                                            Team
-                                            <ChevronRightOutlined className="w-4 h-4" />
-                                        </div>
+                                            <Tooltip title={textTooltipTeam} placement="bottom">
+                                                <ErrorOutline
+                                                    sx={{
+                                                        width: 24,
+                                                        height: 24,
+                                                        opacity: 0.5,
+                                                        "&:hover": { opacity: 1 },
+                                                    }}
+                                                />
+                                            </Tooltip>
+                                            <Typography variant="body2" color="primary" sx={{ textDecoration: "underline" }}>
+                                                Team
+                                            </Typography>
+                                            <ChevronRightOutlined sx={{ width: 16, height: 16 }} />
+                                        </Box>
                                     )}
-                            </div>
-                            <select
-                                value={numbers[selection.index].font}
-                                onChange={(e) =>
-                                    handleFontChange(e, selection.index, "Number")
-                                }
-                                className="mb-2 rounded-lg border border-gray-200 w-full"
-                            >
-                                {Object.entries(fonts).map(([fontName, fontFamily]) => (
-                                    <option
-                                        key={fontName}
-                                        value={fontName}
-                                        style={{ fontFamily }}
-                                    >
-                                        {fontName}
-                                    </option>
-                                ))}
-                            </select>
-                            <div className="flex w-full justify-center rounded-lg">
+                            </Box>
+
+                            <FormControl fullWidth>
+                                <InputLabel id="font-select-label">Font</InputLabel>
+                                <Select
+                                    labelId="font-select-label"
+                                    value={numbers[selection.index]?.font || ""}
+                                    onChange={(e) => handleFontChange(e, selection.index, "Text")}
+                                    defaultValue={font}
+                                >
+                                    {Object.entries(fonts).map(([fontName, fontFamily]) => (
+                                        <MenuItem
+                                            key={fontName}
+                                            value={fontName}
+                                            style={{ fontFamily }}
+                                        >
+                                            {fontName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+
+                            <Box display="flex" justifyContent="center" borderRadius={1}>
                                 <SwatchesPicker
-                                    color={numbers[selection.index].numberColor || '000000'}
-                                    onChange={(e:any) =>
-                                        handleNumberColorChange(e, selection.index)
-                                    }
+                                    color={numbers[selection.index]?.numberColor || "#000000"}
+                                    onChange={(e: any) => handleNumberColorChange(e, selection.index)}
                                     width={300}
                                     height={300}
                                 />
-                            </div>
-                            <button
+                            </Box>
+
+                            <Button
                                 onClick={() => handleSetForAll("Number")}
                                 disabled={customizations?.length === 1}
-                                className={`gap-1 px-1 mx-auto flex items-center justify-center rounded-md border border-transparent  text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50
-                        ${customizations?.length === 1
-                                        ? "bg-gray-300 cursor-not-allowed"
-                                        : "bg-neutral hover:bg-neutral/80 focus:outline-none focus:ring-2 focus:ring-logo focus:ring-offset-2 focus:ring-offset-gray-50 cursor-pointer"
-                                    }`}
+                                sx={{
+                                    gap: 1,
+                                    color: "white",
+                                    backgroundColor: customizations?.length === 1 ? "#e0e0e0" : "#D23F57",
+                                    "&:hover": {
+                                        backgroundColor: customizations?.length === 1 ? "#D23F57" : "#D23F57",
+                                    },
+                                }}
                             >
                                 Set For All
-                                <CustomTooltip content={textTooltip} position="bottom">
-                                    <ErrorOutline className="w-6 h-6 opacity-50 hover:opacity-100 transition duration-300" />
-                                </CustomTooltip>
-                            </button>
-                        </div>
+                                <Tooltip title={textTooltip} placement="bottom">
+                                    <ErrorOutline
+                                        sx={{
+                                            width: 24,
+                                            height: 24,
+                                            opacity: 0.5,
+                                            "&:hover": { opacity: 1 },
+                                        }}
+                                    />
+                                </Tooltip>
+                            </Button>
+                        </Box>
+
                         <InputTeam
                             sideName={sideName}
                             selection={selection}
@@ -559,10 +694,10 @@ function EditableContainer({
                             showInput={showInputsEdit === "Number"}
                             setShowInput={setShowInputsEdit}
                         />
-                    </div>
-                </div>
+                    </Box>
+                </Box>
             )}
-            <div className="w-full sm:hidden">
+            <Box sx={{ width: "100%"        }}>
                 {showInputsEdit === "Text" ? (
                     <InputTeam
                         sideName={sideName}
@@ -582,8 +717,8 @@ function EditableContainer({
                         setShowInput={setShowInputsEdit}
                     />
                 ) : null}
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 
