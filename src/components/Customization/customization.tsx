@@ -533,22 +533,14 @@ export default function Customizations(props: CustomizationProps) {
                 flexDirection: 'column',
               }}
             >
-              <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'end' }}>
                 <IconButton
                   onClick={() => setSelectedCustomization(null)} // Cierra el diálogo
                   style={{
                     position: 'absolute',
-                    top: '0',
-                    right: '0',
-                    marginTop: '-4px',
-                    padding: '4px',
-                  }}
-                  sx={{
-                    '&:focus': {
-                      outline: 'none',
-                      ring: 2,
-                      ringOffset: 2,
-                    },
+                    padding: '0px',
+                    top: '-14px',
+                    right: '-14px',
                   }}
                 >
                   <Close fontSize="small" />

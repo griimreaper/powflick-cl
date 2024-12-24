@@ -1,4 +1,4 @@
-import { Customization, Direction, Favorite, Message, Profile } from "models/types";
+import { Coupon, Customization, Direction, Favorite, Message, Profile } from "models/types";
 
 export type DashboardState = {
   profile: Profile;
@@ -43,4 +43,44 @@ export type CustomizationsStoreType = {
   removeCustomizationById: (customizationId: string) => void;
   clearCustomization: () => void;
   trimCustomizations: (productId: string, numCustomizations: number) => void;
+};
+
+export type ProductToBagType = {
+  id: string;
+  title?: string;
+  price: number;
+  image?: string;
+  category?: string;
+  sport?: string;
+  amount?: number;
+  slug?: string;
+  colors?: string[];
+};
+
+export type ShoppingCartStoreType = {
+  cart: {
+    product: ProductToBagType;
+    customizations: Customization[];
+    amount: number;
+    totalProduct: number;
+    totalCustomization: number;
+  }[];
+  coupon: Coupon | null;
+  total: number;
+  showCart: boolean;
+  setCoupon: (coupon: Coupon) => void;
+  setProductInCart: (
+    product: ProductToBagType,
+    customization: Customization[],
+    totalCustomization: number,
+    totalProduct: number,
+    amount: number
+  ) => void;
+  removeProductById: (customizationId: string) => void;
+  removeCustomizationFromProduct: (
+    productId: string,
+    customizationId: string
+  ) => void;
+  clearCart: () => void;
+  handleShowCart: () => void;
 };

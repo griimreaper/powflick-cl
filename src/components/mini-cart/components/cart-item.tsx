@@ -14,10 +14,11 @@ import { H6, Tiny } from "components/Typography";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
+import { ShoppingCartStoreType } from "store/interfaces/interface";
 
 // ==============================================================
 interface Props {
-  item: any;
+  item: ShoppingCartStoreType["cart"][0];
   handleCartAmountChange: (amount: number, product: any) => () => void;
 }
 // ==============================================================
@@ -44,7 +45,7 @@ export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
           <Add fontSize="small" />
         </Button>
 
-        <H6 my="3px">{item.product.amount}</H6>
+        <H6 my="3px">{item.customizations.length}</H6>
 
         <Button
           size="small"
@@ -62,18 +63,18 @@ export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
       </Link>
 
       <Box flex="1" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
-        <Link href={`/products/${item.slug}`}>
+        <Link href={`/products/${item.product.slug}`}>
           <H6 ellipsis className="title">
-            {item.name}
+            {item.product.title}
           </H6>
         </Link>
 
         <Tiny color="grey.600">
-          {currency(item.product.price)} x {item.product.amount}
+          {currency(item.product.price)} x {item.customizations.length}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
-          {currency(item.product.amount * item.product.price)}
+          {currency(item.customizations.length * item.product.price)}
         </H6>
       </Box>
 

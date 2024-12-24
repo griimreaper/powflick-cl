@@ -1,10 +1,8 @@
-import { SetState, create } from "zustand";
-import {
-  ProductToBagType,
-  ShoppingCartStoreType,
-} from "./interfaces/interface";
+import { create } from "zustand";
 import { PersistStorage, StorageValue, persist } from "zustand/middleware";
-import { Customization, Coupon } from "@/global interfaces";
+import { ProductToBagType, ShoppingCartStoreType } from "./interfaces/interface";
+import { Coupon, Customization } from "models/types";
+
 
 const localStorageAdapter: PersistStorage<ShoppingCartStoreType> = {
   getItem: async (key: string) => {
@@ -171,14 +169,14 @@ export const useShoppingCartStore = create(
   )
 );
 
-function updateCartTotal(set: SetState<ShoppingCartStoreType>) {
-  set((state) => ({
+function updateCartTotal(set: any) {
+  set((state: any) => ({
     ...state,
-    cart: state.cart.map((prod) => ({
+    cart: state.cart.map((prod: any) => ({
       ...prod,
       totalCustomization: parseFloat(
         prod.customizations
-          .reduce((acc, custom) => (acc += custom.price), 0)
+          .reduce((acc: number, custom: Customization) => (acc += custom.price), 0)
           .toFixed(2)
       ),
       amount: prod.customizations.length,
@@ -187,7 +185,7 @@ function updateCartTotal(set: SetState<ShoppingCartStoreType>) {
     total: parseFloat(
       state.cart
         .reduce(
-          (acc, { totalCustomization, totalProduct }) =>
+          (acc: number, { totalCustomization, totalProduct }: any) =>
             (acc += totalCustomization + totalProduct),
           0
         )
