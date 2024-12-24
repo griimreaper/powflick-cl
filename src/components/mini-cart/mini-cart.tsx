@@ -25,16 +25,17 @@ export default function MiniCart({ toggleSidenav }: Props) {
   const { state, dispatch } = useCart();
   const { cart, total, setCoupon, coupon } = useShoppingCartStore();
   const cartList = cart;
+  
 
   console.log("cartList", cartList);
   
 
-  const handleCartAmountChange = (amount: number, product: CartItem) => () => {
-    dispatch({
-      type: "CHANGE_CART_AMOUNT",
-      payload: { ...product, qty: amount }
-    });
-  };
+  // const handleCartAmountChange = (amount: number, product: CartItem) => () => {
+  //   dispatch({
+  //     type: "CHANGE_CART_AMOUNT",
+  //     payload: { ...product, qty: amount }
+  //   });
+  // };
 
   // const getTotalPrice = () => {
   //   return cartList.reduce((acc, item) => acc + item.price * item.qty, 0);
@@ -60,7 +61,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
               <MiniCartItem
                 item={item}
                 key={item.id}
-                handleCartAmountChange={handleCartAmountChange}
+       
               />
             ))}
           </Scrollbar>

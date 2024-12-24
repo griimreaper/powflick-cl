@@ -74,10 +74,10 @@ export default function ProductIntro({ product }: Props) {
   const [counter, setCounter, handleCounterChange] = useCounter(id);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
-    const { setProductInCart } = useShoppingCartStore();
+  const { setProductInCart } = useShoppingCartStore();
 
   console.log("list", list);
-  
+
 
   // CHECK PRODUCT EXIST OR NOT IN THE CART1
   const cartItem = state.cart.find((item) => item.id === id);
@@ -100,7 +100,7 @@ export default function ProductIntro({ product }: Props) {
     }
   }, []);
 
-    const handleAddNewCustomization = (amount: number) => {
+  const handleAddNewCustomization = (amount: number) => {
     if (amount < counter) {
       setCustomizationInList(id, initialCustomization());
     } else if (amount > counter) {
@@ -109,16 +109,16 @@ export default function ProductIntro({ product }: Props) {
       !amount
         ? null
         : list[list.findIndex((i) => i.productId === id)]?.customizations[
-            counter - 1
-          ]
-        ? setCustomization(
+          counter - 1
+        ]
+          ? setCustomization(
             list[list.findIndex((i) => i.productId === id)]?.customizations[0]
           )
-        : null;
+          : null;
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     const amount = list?.find((i) => i.productId === id)?.amount;
     if (counter !== 1) {
       if (amount) {
@@ -135,9 +135,6 @@ export default function ProductIntro({ product }: Props) {
       setCustomizationInList(id, customization);
     }
   }, [customization]);
-
-  
-
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -174,7 +171,7 @@ export default function ProductIntro({ product }: Props) {
     }
   }, [customization]);
 
-    useEffect(() => {
+  useEffect(() => {
     return () => {
       setShowCustomization(false);
     };
@@ -262,7 +259,7 @@ export default function ProductIntro({ product }: Props) {
     setCounter,
   };
 
-    const totalCustomizationPrice =
+  const totalCustomizationPrice =
     list[list.findIndex((i) => i.productId === id)]?.total?.toFixed(2) ?? 0;
   const totalProductsPrice = (Number(product?.product.price) * counter).toFixed(2);
   const total = Number(totalProductsPrice) + Number(totalCustomizationPrice);
@@ -289,7 +286,7 @@ export default function ProductIntro({ product }: Props) {
       amount: counter
     };
     const amount = counter;
-    
+
     if (counter !== 0)
       setProductInCart(
         productToBag,
@@ -383,66 +380,66 @@ export default function ProductIntro({ product }: Props) {
             <Box color="inherit">Stock Available</Box>
           </Box>
 
-    <Box sx={{ display: 'flex', gap: 3 }}>
-  {/* BUTTONS */}
-  <Box sx={{ display: 'column', gap: 3 }}>
-    <FlexBox alignItems="center" mb={4.5}>
-      <Button
-        size="small"
-        sx={{ p: 1 }}
-        color="primary"
-        variant="outlined"
-        onClick={() => { handleCounterChange(-1); }}>
-        <Remove fontSize="small" />
-      </Button>
-      <H3 fontWeight="600" mx={2.5}>
-        {counter}
-      </H3>
-      <Button
-        size="small"
-        sx={{ p: 1 }}
-        color="primary"
-        variant="outlined"
-        onClick={() => { handleCounterChange(1); }}>
-        <Add fontSize="small" />
-      </Button>
-    </FlexBox>
+          <Box sx={{ display: 'flex', gap: 3 }}>
+            {/* BUTTONS */}
+            <Box sx={{ display: 'column', gap: 3 }}>
+              <FlexBox alignItems="center" mb={4.5}>
+                <Button
+                  size="small"
+                  sx={{ p: 1 }}
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => { handleCounterChange(-1); }}>
+                  <Remove fontSize="small" />
+                </Button>
+                <H3 fontWeight="600" mx={2.5}>
+                  {counter}
+                </H3>
+                <Button
+                  size="small"
+                  sx={{ p: 1 }}
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => { handleCounterChange(1); }}>
+                  <Add fontSize="small" />
+                </Button>
+              </FlexBox>
 
-    {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-    <FlexBox alignItems="center" gap={2}>
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={() => {
-          const result = handleAddToBagClick();
-          (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
-          (window as any).dataLayer.push({
-            // Your dataLayer push code here
-          });
-        }}>
-        Add to Cart
-      </Button>
+              {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
+              <FlexBox alignItems="center" gap={2}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    const result = handleAddToBagClick();
+                    (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+                    (window as any).dataLayer.push({
+                      // Your dataLayer push code here
+                    });
+                  }}>
+                  Add to Cart
+                </Button>
 
-      <Button
-        onClick={handleAddToFav}
-        sx={{ px: "1.75rem", height: 40 }}>
-        {isFav ? (
-          <FavoriteOutlined color="primary" />
-        ) : (
-          <FavoriteBorderOutlined color={"inherit"} />
-        )}
-      </Button>
+                <Button
+                  onClick={handleAddToFav}
+                  sx={{ px: "1.75rem", height: 40 }}>
+                  {isFav ? (
+                    <FavoriteOutlined color="primary" />
+                  ) : (
+                    <FavoriteBorderOutlined color={"inherit"} />
+                  )}
+                </Button>
 
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={handleCustomizationClick}
-        sx={{ px: "1.75rem", height: 40 }}>
-        Customize
-      </Button>
-    </FlexBox>
-  </Box>
-</Box>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleCustomizationClick}
+                  sx={{ px: "1.75rem", height: 40 }}>
+                  Customize
+                </Button>
+              </FlexBox>
+            </Box>
+          </Box>
 
           {/* SHOP NAME */}
           <FlexBox alignItems="center" gap={1} mb={2}>

@@ -15,18 +15,21 @@ import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
 import { ShoppingCartStoreType } from "store/interfaces/interface";
+import useCounter from "hooks/useCounter";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 // ==============================================================
 interface Props {
   item: ShoppingCartStoreType["cart"][0];
-  handleCartAmountChange: (amount: number, product: any) => () => void;
+
 }
 // ==============================================================
 
-export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
-
+export default function MiniCartItem({ item }: Props) {
+  const [counter, setCounter, handleCounterChange] = useCounter(item.product.id);
+  const { removeProductById } = useShoppingCartStore();
   console.log("item", item);
-  
+
   return (
     <FlexBox
       py={2}
@@ -36,26 +39,26 @@ export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
       borderBottom="1px solid"
       borderColor="divider">
       <FlexBox alignItems="center" flexDirection="column">
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
-          onClick={handleCartAmountChange(item.qty + 1, item)}
+          onClick={() => { handleCounterChange(+1); }}
           sx={{ height: 28, width: 28, borderRadius: 50 }}>
           <Add fontSize="small" />
-        </Button>
+        </Button> */}
 
         <H6 my="3px">{item.customizations.length}</H6>
 
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
-          disabled={item.product.amount === 1}
-          onClick={handleCartAmountChange(item.qty - 1, item)}
+          disabled={item.customizations.length === 1}
+          onClick={() => { handleCounterChange(-1); }}
           sx={{ height: 28, width: 28, borderRadius: 50 }}>
           <Remove fontSize="small" />
-        </Button>
+        </Button> */}
       </FlexBox>
 
       <Link href={`/products/${item.product.id}`}>
@@ -78,7 +81,7 @@ export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
         </H6>
       </Box>
 
-      <IconButton size="small" onClick={handleCartAmountChange(0, item)} sx={{ marginLeft: 2.5 }}>
+      <IconButton size="small" onClick={() => { removeProductById(item.product.id) }} sx={{ marginLeft: 2.5 }}>
         <Close fontSize="small" />
       </IconButton>
     </FlexBox>
