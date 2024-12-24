@@ -22,15 +22,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }): Promise<Metadata | undefined> {
-  const id = params.id;
+  const id = params.slug;
 
   if (!id) return;
 
   const { product } = await getProductsBySlug(id);
 
-  if (!product.URL) return;
+  if (product.status === 'draft' || !product.images) return;
 
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
