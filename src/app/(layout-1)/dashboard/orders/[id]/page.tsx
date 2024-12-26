@@ -22,7 +22,7 @@ export default async function OrderDetails({ params }: IdParams) {
     let token = session?.user?.name?.split("|")[0];
 
     const { data: order } = await getOrder(String(params.id), token as string);
-
+    
     return <OrderDetailsPageView order={order} />;
   } catch (error) {
     notFound();
