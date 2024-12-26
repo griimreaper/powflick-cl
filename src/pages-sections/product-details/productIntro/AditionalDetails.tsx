@@ -198,7 +198,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         )}
       {detail.ShippingTypes &&
         renderSection(
-          `Shipping Types ${customization.shippingTypes}`,
+          `Shipping Types `,
           <Typography>{detail.ShippingTypes}</Typography>,
           "shipping-types"
         )}
