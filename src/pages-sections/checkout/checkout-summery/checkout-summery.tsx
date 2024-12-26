@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -12,20 +13,39 @@ import { currency } from "lib";
 import FlexBetween from "components/flex-box/flex-between";
 
 export default function CheckoutSummary({ data }: any) {
+  const subtotal = data.cart.reduce(
+    (acc: any, item: any) => acc + item.totalProduct,
+    0
+  );
+  const totalCustomizations = data.cart.reduce(
+    (acc: any, item: any) => acc + item.totalCustomization,
+    0
+  );
+
   return (
-    <Card sx={{ p: 3 }}>
-       <ListItem mb={1} title="Subtotal" value={data.cart[0].totalProduct} />
-            <ListItem mb={1} title="Customizations" value={data.cart[0].totalCustomization} />
-            <ListItem mb={1} title="Discount" value={data.coupon.discount || 0} />
-            <FlexBetween mb={2}>
-              <Span color="grey.600">Total:</Span>
-      
-              <Span fontSize={18} fontWeight={600} lineHeight="1">
-                {currency(data.total)}
-              </Span>
-            </FlexBetween>
+    <Card sx={{ padding: 3 }}>
+      <ListItem mb={1} title="Subtotal" value={subtotal} />
+      <ListItem mb={1} title="Customizations" value={totalCustomizations} />
+      <ListItem mb={1} title="Discount" value={data.coupon.discount || 0} />
+      <FlexBetween mb={2}>
+        <Span color="grey.600">Total:</Span>
+
+        <Span fontSize={18} fontWeight={600} lineHeight="1">
+          {currency(data.total)}
+        </Span>
+      </FlexBetween>
 
       <Divider sx={{ my: 2 }} />
+
+      <Button
+        fullWidth
+        color="primary"
+        href="/checkout"
+        variant="contained"
+        LinkComponent={Link}
+      >
+        Checkout Now
+      </Button>
 
       {/* <Paragraph fontSize={25} fontWeight={600} lineHeight={1}>
         {currency(2610)}
