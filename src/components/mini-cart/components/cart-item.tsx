@@ -55,6 +55,9 @@ export default function MiniCartItem({ item }: Props) {
   const [counter, setCounter, handleCounterChange] = useCounter(
     item.product.id
   );
+
+  console.log(item);
+
   const { cart } = useShoppingCartStore();
   const { removeProductById } = useShoppingCartStore();
   const [selectedCustomization, setSelectedCustomization] = useState<
@@ -147,7 +150,7 @@ export default function MiniCartItem({ item }: Props) {
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
-          {currency(item.customizations.length * item.product.price)}
+          {currency(item.customizations.length * item.product.price + item.customizations.reduce((acc, _) => acc + _.price, 0))}
         </H6>
 
         <FlexBox alignItems="center">

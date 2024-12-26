@@ -15,28 +15,34 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import countryList from "data/countryList";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
+import ListItem from "pages-sections/checkout/list-item";
 
-export default function CheckoutForm() {
-  const { state } = useCart();
+export default function CheckoutForm({ data }: any) {
+  console.log(data);
 
-  const getTotalPrice = () => state.cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-
-  const STATE_LIST = [
-    { value: "new-york", label: "New York" },
-    { value: "chicago", label: "Chicago" }
-  ];
+  const subtotal = data.cart.reduce(
+    (acc: any, item: any) => acc + item.totalProduct,
+    0
+  );
+  const totalCustomizations = data.cart.reduce(
+    (acc: any, item: any) => acc + item.totalCustomization,
+    0
+  );
 
   return (
     <Card sx={{ padding: 3 }}>
+      <ListItem mb={1} title="Subtotal" value={subtotal} />
+      <ListItem mb={1} title="Customizations" value={totalCustomizations} />
+      <ListItem mb={1} title="Discount" value={data.coupon.discount || 0} />
       <FlexBetween mb={2}>
         <Span color="grey.600">Total:</Span>
 
         <Span fontSize={18} fontWeight={600} lineHeight="1">
-          {currency(getTotalPrice())}
+          {currency(data.total)}
         </Span>
       </FlexBetween>
 
-      {/* <Divider sx={{ mb: 2 }} />
+      <Divider sx={{ mb: 2 }} />
 
       <FlexBox alignItems="center" columnGap={1} mb={2}>
         <Span fontWeight="600">Additional Comments</Span>
@@ -47,78 +53,46 @@ export default function CheckoutForm() {
           lineHeight="1"
           borderRadius="3px"
           color="primary.main"
-          bgcolor="primary.light">
+          bgcolor="primary.light"
+        >
           Note
         </Span>
-      </FlexBox> */}
+      </FlexBox>
 
       {/* COMMENTS TEXT FIELD */}
-      {/* <TextField variant="outlined" rows={6} fullWidth multiline /> */}
+      <TextField variant="outlined" rows={6} fullWidth multiline />
 
-      {/* <Divider sx={{ mb: 2 }} /> */}
+      <Divider sx={{ mb: 2 }} />
 
       {/* APPLY VOUCHER TEXT FIELD */}
-      {/* <TextField fullWidth size="small" label="Voucher" variant="outlined" placeholder="Voucher" /> */}
+      <TextField
+        fullWidth
+        size="small"
+        label="Voucher"
+        variant="outlined"
+        placeholder="Voucher"
+      />
 
-      {/* <Button variant="outlined" color="primary" fullWidth sx={{ mt: 2, mb: 4 }}>
+      <Button
+        variant="outlined"
+        color="primary"
+        fullWidth
+        sx={{ mt: 2, mb: 4 }}
+      >
         Apply Voucher
-      </Button> */}
+      </Button>
 
-      {/* <Divider sx={{ mb: 2 }} /> */}
+      <Divider sx={{ mb: 2 }} />
 
-      {/* <Span fontWeight={600} mb={2} display="block">
-        Shipping Estimates
-      </Span> */}
-
-      {/* COUNTRY TEXT FIELD */}
-      {/* <Autocomplete
+      <Button
         fullWidth
-        sx={{ mb: 2 }}
-        options={countryList}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            size="small"
-            label="Country"
-            variant="outlined"
-            placeholder="Select Country"
-          />
-        )}
-      /> */}
-
-      {/* STATE/CITY TEXT FIELD */}
-      {/* <TextField
-        select
-        fullWidth
-        size="small"
-        label="State"
-        variant="outlined"
-        placeholder="Select State"
-        defaultValue="new-york">
-        {STATE_LIST.map(({ label, value }) => (
-          <MenuItem value={value} key={label}>
-            {label}
-          </MenuItem>
-        ))}
-      </TextField> */}
-
-      {/* ZIP-CODE TEXT FIELD */}
-      {/* <TextField
-        fullWidth
-        size="small"
-        label="Zip Code"
-        placeholder="3100"
-        variant="outlined"
-        sx={{ mt: 2 }}
-      /> */}
-
-      {/* <Button variant="outlined" color="primary" fullWidth sx={{ my: 2 }}>
-        Calculate Shipping
-      </Button> */}
-
-      {/* <Button fullWidth color="primary" href="/checkout" variant="contained" LinkComponent={Link}>
+        color="primary"
+        href="/checkout"
+        variant="contained"
+        LinkComponent={Link}
+      >
         Checkout Now
-      </Button> */}
+      </Button>
     </Card>
   );
 }
