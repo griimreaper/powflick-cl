@@ -184,20 +184,11 @@ export default function Customizations(props: CustomizationProps) {
     setIsOverlayVisible(step1 || step2 || step3 || step4 || step5);
   }, [step1, step2, step3, step4, step5]);
 
-  const [anchorEl, setAnchorEl] = useState(null); // Estado para controlar el Popover
   const [isPopoverOpen, setIsPopoverOpen] = useState(true);
 
   const handlePopoverOpen = (event: any) => {
     setIsPopoverOpen(true);
-    setAnchorEl(event.currentTarget);
   };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  console.log({ isPopoverOpen, anchorEl });
-
 
   return (
     <>
@@ -428,8 +419,7 @@ export default function Customizations(props: CustomizationProps) {
                     {index === 0 && step5 && (
                       <Popover
                         open={isPopoverOpen}
-                        anchorEl={anchorEl}
-                        onClose={handlePopoverClose}
+                        anchorEl={buttonRef.current}
                         anchorOrigin={{
                           vertical: "bottom",
                           horizontal: "left",
@@ -439,8 +429,6 @@ export default function Customizations(props: CustomizationProps) {
                           horizontal: "center",
                         }}
                         sx={{
-                          top: "-36%",
-                          left: "9.5%",
                           display: "absolute",
                           "& .MuiPopover-paper": {
                             backgroundColor: "transparent", // Fondo transparente
