@@ -28,7 +28,6 @@ interface Props {
 export default function MiniCartItem({ item }: Props) {
   const [counter, setCounter, handleCounterChange] = useCounter(item.product.id);
   const { removeProductById } = useShoppingCartStore();
-  console.log("item", item);
 
   return (
     <FlexBox

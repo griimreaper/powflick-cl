@@ -25,10 +25,6 @@ export default function MiniCart({ toggleSidenav }: Props) {
   const { state, dispatch } = useCart();
   const { cart, total, setCoupon, coupon } = useShoppingCartStore();
   const cartList = cart;
-  
-
-  console.log("cartList", cartList);
-  
 
   // const handleCartAmountChange = (amount: number, product: CartItem) => () => {
   //   dispatch({

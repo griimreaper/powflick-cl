@@ -100,8 +100,6 @@ export default function ProductSearchPageView({ data }: any) {
     // category: searchParams.get("category"),
   };
 
-  console.log(filters);
-
   useEffect(() => {
     setFilters((prev) => {
       const newFilters = { ...prev };

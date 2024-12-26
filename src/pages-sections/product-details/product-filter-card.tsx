@@ -69,14 +69,9 @@ export default function ProductFilterCard({
   const validColors = [...allColors].map(c => c.trim().toLowerCase())
     .filter(isValidColor);
 
-  console.log("topCategories", topCategories);
-
   const handleChangePrice = (values: number[]) => {
     changeFilters && changeFilters("price", values);
   };
-
-  console.log(validColors);
-
 
   const handleChangeColor = (value: string) => {
     const firstLetterUp = value.split('')[0].toUpperCase()

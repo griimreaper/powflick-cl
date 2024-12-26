@@ -26,8 +26,6 @@ export default function ColumnList({
   banner,
   minWidth = 760,
 }: Props) {
-  console.log("list", list);
-
   return (
     <StyledRoot elevation={2} sx={{ minWidth }}>
       <FlexBox px={2.5}>

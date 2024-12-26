@@ -30,8 +30,6 @@ export default function CategoryList({ open, position = "absolute" }: Props) {
     { icon: Help, title: "Help", href: "/help" },
   ];
 
-  console.log(categoryMenus);
-  
   return (
     <StyledRoot open={open} position={position}>
       {categoryMenus.map((item) => {

@@ -185,8 +185,10 @@ export default function Customizations(props: CustomizationProps) {
   }, [step1, step2, step3, step4, step5]);
 
   const [anchorEl, setAnchorEl] = useState(null); // Estado para controlar el Popover
+  const [isPopoverOpen, setIsPopoverOpen] = useState(true);
 
   const handlePopoverOpen = (event: any) => {
+    setIsPopoverOpen(true);
     setAnchorEl(event.currentTarget);
   };
 
@@ -194,7 +196,8 @@ export default function Customizations(props: CustomizationProps) {
     setAnchorEl(null);
   };
 
-  const isPopoverOpen = Boolean(anchorEl);
+  console.log({ isPopoverOpen, anchorEl });
+
 
   return (
     <>
@@ -435,19 +438,22 @@ export default function Customizations(props: CustomizationProps) {
                           vertical: "top",
                           horizontal: "center",
                         }}
+                        sx={{
+                          top: "-36%",
+                          left: "9.5%",
+                          display: "absolute",
+                          "& .MuiPopover-paper": {
+                            backgroundColor: "transparent", // Fondo transparente
+                            boxShadow: "none",             // Sin sombra
+                          },
+                        }}
                       >
                         <Box
-                          sx={{
-                            p: 2,
-                            bgcolor: "background.paper",
-                            boxShadow: 2,
-                            borderRadius: 1,
-                            width: "100%",
-                          }}
+                          sx={{ p: 1 }}
                         >
                           <ContainerInfoBox
                             stepp={5}
-                            arrowPosition="topLeft"
+                            arrowPosition="top"
                             visible={{ step1, step2, step3, step4, step5 }}
                             setVisible={{
                               setStep1,
@@ -466,7 +472,7 @@ export default function Customizations(props: CustomizationProps) {
             }
           )}
         </Box>
-        <Box sx={{ width: "100%", overflow: 'hidden' }}>
+        <Box sx={{ width: "100%" }}>
           {/* Mostrar el panel frontal o posterior según el estado */}
           {showFrontPanel ? (
             <PanelSides

@@ -15,98 +15,157 @@ import useCart from "hooks/useCart";
 import { currency } from "lib";
 // STYLED COMPONENT
 import { Wrapper } from "./styles";
+import { ShoppingCartStoreType } from "store/interfaces/interface";
+import { styled } from "@mui/material";
+import { useRef, useState } from "react";
+import { CustomizationModal } from "./CustomizationModal";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 // =========================================================
 type Props = {
-  qty: number;
-  name: string;
-  slug: string;
-  price: number;
-  imgUrl?: string;
-  id: string | number;
+  item: ShoppingCartStoreType["cart"][0];
 };
 // =========================================================
 
+
+const CustomButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  border: `1px solid ${theme.palette.grey[500]}`,
+  backgroundColor: theme.palette.grey[200],
+  width: '2rem',
+  height: '2rem',
+  borderRadius: '4px',
+  textAlign: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  transition: 'background-color 0.3s, color 0.3s, border 0.3s',
+  '&:hover': {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    border: `1px solid ${theme.palette.primary.light}`,
+  },
+  '&:focus': {
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
 export default function CartItem({
-  id,
-  name,
-  qty,
-  price,
-  imgUrl,
-  slug,
+  item
 }: Props) {
   const { dispatch } = useCart();
+  const [selectedCustomization, setSelectedCustomization] = useState<
+    [string, string] | null
+  >(null);
+  const [modalPosition, setModalPosition] = useState<{
+    top: number;
+    left: number;
+  }>({ top: 0, left: 0 });
 
-  // HANDLE CHANGE CART PRODUCT QUANTITY
-  const handleCartAmountChange = (amount: number) => () => {
-    dispatch({
-      type: "CHANGE_CART_AMOUNT",
-      payload: { id, name, price, imgUrl, qty: amount, slug },
-    });
+  const handleCustomizationClick = (
+    productId: string,
+    customizationIndex: string,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setSelectedCustomization([productId, customizationIndex]);
+    const rect = event.currentTarget.getBoundingClientRect();
+    setModalPosition({ top: rect.top, left: rect.left });
   };
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const { cart } = useShoppingCartStore();
+  // HANDLE CHANGE CART PRODUCT QUANTITY
+  // const handleCartAmountChange = (amount: number) => () => {
+  //   dispatch({
+  //     type: "CHANGE_CART_AMOUNT",
+  //     payload: { id, name, price, imgUrl, qty: amount, slug },
+  //   });
+  // };
 
   return (
     <Wrapper>
       <Image
-        alt={name}
+        alt={item.product.title as string}
         width={140}
         height={140}
         display="block"
-        src={imgUrl || "/assets/images/products/iphone-xi.png"}
+        src={item.product.image || "/assets/images/products/iphone-xi.png"}
       />
 
       {/* DELETE BUTTON */}
       <IconButton
         size="small"
-        onClick={handleCartAmountChange(0)}
         sx={{ position: "absolute", right: 15, top: 15 }}
       >
         <Close fontSize="small" />
       </IconButton>
 
       <FlexBox p={2} rowGap={2} width="100%" flexDirection="column">
-        <Link href={`/products/${slug}`}>
+        <Link href={`/products/${item.product.slug}`}>
           <Span ellipsis fontWeight="600" fontSize={18}>
-            {name}
+            {item.product.title}
           </Span>
         </Link>
 
         {/* PRODUCT PRICE SECTION */}
         <FlexBox gap={1} flexWrap="wrap" alignItems="center">
           <Span color="grey.600">
-            {currency(price)} x {qty}
+            {currency(item.product.price)} x {item.customizations.length}
           </Span>
 
           <Span fontWeight={600} color="primary.main">
-            {currency(price * qty)}
+            {currency(item.product.price * item.customizations.length)}
           </Span>
         </FlexBox>
 
         {/* PRODUCT QUANTITY INC/DEC BUTTONS */}
         <FlexBox alignItems="center">
-          <Button
+          {item.customizations.map((_, index) => (
+            <CustomButton
+              key={index}
+              variant="contained"
+              onClick={(event) => handleCustomizationClick(item.product.id, _.id, event)}
+              ref={buttonRef}
+            >
+              {index + 1}
+            </CustomButton>
+          ))}
+          {/* <Button
             color="primary"
             sx={{ p: "5px" }}
             variant="outlined"
-            disabled={qty === 1}
-            onClick={handleCartAmountChange(qty - 1)}
+            disabled={item.customizations.length === 1}
           >
             <Remove fontSize="small" />
-          </Button>
+          </Button> */}
 
-          <Span mx={1} fontWeight={600} fontSize={15}>
-            {qty}
-          </Span>
+          {/* <Span mx={1} fontWeight={600} fontSize={15}>
+            {item.customizations.length}
+          </Span> */}
 
-          <Button
+          {/* <Button
             color="primary"
             sx={{ p: "5px" }}
             variant="outlined"
-            onClick={handleCartAmountChange(qty + 1)}
           >
             <Add fontSize="small" />
-          </Button>
+          </Button> */}
         </FlexBox>
+        {selectedCustomization !== null && (
+          <CustomizationModal
+            customization={cart
+              .find((p) => p.product.id === selectedCustomization[0])
+              ?.customizations.find(
+                (c) => c.id === selectedCustomization[1]
+              )}
+            productId={selectedCustomization[0]}
+            productSlug={item.product.slug!}
+            onClose={() => setSelectedCustomization(null)}
+            position={modalPosition}
+            orderId={null}
+            currencyOrder={null}
+          />
+        )}
       </FlexBox>
     </Wrapper>
   );

@@ -265,9 +265,6 @@ function EditableContainer({
         setActualize();
     };
 
-    console.log(showInputsEdit, 'inputedit');
-    console.log(showInputsEdit === "Text");
-
     return (
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: "column" }}>
             {selection.type === "Logo" && (

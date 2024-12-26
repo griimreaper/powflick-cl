@@ -38,8 +38,6 @@ export const showLoader = (message: string) => {
 let currentToast: any;
 
 export const ToastWithProgress = (progress: any) => {
-  console.log(progress);
-  
   // Cierra el toast actual si existe
   if (currentToast) {
     Swal.close();

@@ -45,8 +45,6 @@ export default function Newsletter({
   const token = session?.user?.name?.split("|")[0];
   const { push } = useRouter();
 
-  console.log("profile", profile);
-
   const coupon = {
     title: "30% off sale",
     content: "Get 30% off during our one-time sale",

@@ -229,8 +229,6 @@ export default function PanelSides({
     handleStep();
   }, []);
 
-  console.log(texts, 'text');
-
   return (
     <Box
       sx={{

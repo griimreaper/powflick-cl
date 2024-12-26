@@ -1,4 +1,5 @@
 import React from "react";
+import { Box, Button, Typography } from "@mui/material";
 
 interface InfoBoxProps {
   step: number;
@@ -31,61 +32,120 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       text: "You can turn the garment to repeat the previous steps on the back of the garment",
     },
     {
-      text: "you can see the customizations made in each product",
+      text: "You can see the customizations made in each product",
     },
   ];
 
   const currentStep = steps[step - 1];
 
-  const arrowStyles = {
-    top: "absolute top-[-8px] left-1/2 transform -translate-x-1/2 border-b-8 border-b-white border-l-8 border-l-transparent border-r-8 border-r-transparent",
-    bottom:
-      "absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 border-t-8 border-t-white border-l-8 border-l-transparent border-r-8 border-r-transparent",
-    left: "absolute left-[-8px] top-1/2 transform -translate-y-1/2 border-r-8 border-r-white border-t-8 border-t-transparent border-b-8 border-b-transparent",
-    right:
-      "absolute right-[-8px] top-1/2 transform -translate-y-1/2 border-l-8 border-l-white border-t-8 border-t-transparent border-b-8 border-b-transparent",
-    topLeft:
-      "absolute top-[-8px] left-4 border-b-8 border-b-white border-l-8 border-l-transparent border-r-8 border-r-transparent",
-    topRight:
-      "absolute top-[-8px] right-4 border-b-8 border-b-white border-l-8 border-l-transparent border-r-8 border-r-transparent",
+  const arrowStyles: Record<string, React.CSSProperties> = {
+    top: {
+      position: "absolute",
+      top: -8,
+      left: "50%",
+      transform: "translateX(-50%)",
+      borderStyle: "solid",
+      borderWidth: "0 8px 8px 8px",
+      borderColor: "transparent transparent white transparent",
+    },
+    bottom: {
+      position: "absolute",
+      bottom: -8,
+      left: "50%",
+      transform: "translateX(-50%)",
+      borderStyle: "solid",
+      borderWidth: "8px 8px 0 8px",
+      borderColor: "white transparent transparent transparent",
+    },
+    left: {
+      position: "absolute",
+      left: -8,
+      top: "50%",
+      transform: "translateY(-50%)",
+      borderStyle: "solid",
+      borderWidth: "8px 8px 8px 0",
+      borderColor: "transparent white transparent transparent",
+    },
+    right: {
+      position: "absolute",
+      right: -8,
+      top: "50%",
+      transform: "translateY(-50%)",
+      borderStyle: "solid",
+      borderWidth: "8px 0 8px 8px",
+      borderColor: "transparent transparent transparent white",
+    },
+    topLeft: {
+      position: "absolute",
+      top: -8,
+      left: 16,
+      borderStyle: "solid",
+      borderWidth: "0 8px 8px 8px",
+      borderColor: "transparent transparent white transparent",
+    },
+    topRight: {
+      position: "absolute",
+      top: -8,
+      right: 16,
+      borderStyle: "solid",
+      borderWidth: "0 8px 8px 8px",
+      borderColor: "transparent transparent white transparent",
+    },
   };
 
   return (
-    <div
-      className={`relative max-w-sm p-4 bg-white text-black h-full rounded-md ${className}`}
+    <Box
+      className={className}
+      sx={{
+        position: "relative",
+        maxWidth: 400,
+        p: 2,
+        bgcolor: "white",
+        color: "black",
+        borderRadius: 2,
+        boxShadow: 3,
+      }}
     >
-      <div className={arrowStyles[arrowPosition]}></div>
-      <p>{currentStep.text}</p>
-      <div className="flex justify-between items-center mt-4 gap-4">
-        <button
+      <Box sx={arrowStyles[arrowPosition]}></Box>
+      <Typography variant="body1" gutterBottom>
+        {currentStep.text}
+      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2, gap: 1}}>
+        <Button
           onClick={onDismiss}
-          className="bg-logo text-white px-3 py-1 rounded-md "
+          variant="contained"
+          color="primary"
+          size="small"
         >
           Dismiss
-        </button>
-        <span className="text-black">
+        </Button>
+        <Typography variant="body2" color="textSecondary">
           {step}/{steps.length}
-        </span>
-        <div className="flex flex-col lg:flex-row  gap-2  ">
+        </Typography>
+        <Box sx={{ display: "flex", gap: 1 }}>
           {step > 1 && (
-            <button
+            <Button
               onClick={onPrevious}
-              className="bg-logo text-white px-3 py-1 rounded-md "
+              variant="contained"
+              color="primary"
+              size="small"
             >
               Previous
-            </button>
+            </Button>
           )}
           {step < steps.length && (
-            <button
+            <Button
               onClick={onNext}
-              className="bg-logo text-white px-3 py-1 rounded-md"
+              variant="contained"
+              color="primary"
+              size="small"
             >
               Next
-            </button>
+            </Button>
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
