@@ -53,39 +53,51 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
     <div className="bg-white">
       <BannerTop props={""} textColor={""} />
       <AnimatedSection>
+        {/* Navbar Section */}
         <Section1 data={data?.navbar} />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Promotional Section */}
         <Section2 />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Featured Products Section */}
         <Section3 />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Most Sold Products Section */}
         <Section4 products={data?.landing?.collections?.mostSoldProducts} />
       </AnimatedSection>
       <AnimatedSection>
+        {/* New Arrivals Section */}
         <Section5 />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Discount Products Section */}
         <Section6 products={data?.landing?.collections?.discountProducts} />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Best Sellers Section */}
         <Section7 />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Trending Products Section */}
         <Section8 />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Customer Favorites Section */}
         <Section9 />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Collections Section */}
         <Section10 products={data?.landing?.collections} />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Customer Reviews Section */}
         <Reviews review={data?.landing?.reviews} />
       </AnimatedSection>
       <AnimatedSection>
+        {/* Newsletter Subscription Section */}
         <Newsletter />
       </AnimatedSection>
     </div>

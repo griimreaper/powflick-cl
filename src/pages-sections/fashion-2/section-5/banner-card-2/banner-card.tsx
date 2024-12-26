@@ -29,7 +29,7 @@ export default function BannerCard2({
     <CardWrapper {...props}>
       <SportZoneImage alt="category" height="100%" width="100%" src={img} />
 
-      <CardContent contentAlign={contentPosition} className="content">
+      {/* <CardContent contentAlign={contentPosition} className="content">
         <H2>{title}</H2>
         <Paragraph>{subTitle}</Paragraph>
         <Divider sx={{ borderWidth: 2, my: 1.5, width: 50 }} />
@@ -37,7 +37,7 @@ export default function BannerCard2({
         <Link href={url}>
           <CardLink>Shop Now</CardLink>
         </Link>
-      </CardContent>
+      </CardContent> */}
     </CardWrapper>
   );
 }
