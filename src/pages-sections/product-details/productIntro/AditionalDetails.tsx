@@ -12,7 +12,10 @@ import Image from "next/image";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { Customization } from "models/types";
-import { initialCustomization, useCustomizationStore } from "store/customizations";
+import {
+  initialCustomization,
+  useCustomizationStore,
+} from "store/customizations";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -33,7 +36,10 @@ interface AditionalDetailsProps {
 
 const defaultCustom = initialCustomization();
 
-const AditionalDetails: FC<AditionalDetailsProps> = ({ detail, handleItemChange }) => {
+const AditionalDetails: FC<AditionalDetailsProps> = ({
+  detail,
+  handleItemChange,
+}) => {
   const { customization } = useCustomizationStore();
 
   const renderSection = (
@@ -56,30 +62,57 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({ detail, handleItemChange 
     </Accordion>
   );
 
-  const renderItems = (items: any[], type: keyof Customization) => (
-    <Grid container spacing={2}>
+  const renderItems = (
+    items: any[],
+    type: keyof Customization,
+    useZoom: boolean = false,
+    imageSize: number = 100,
+    compact: boolean = false
+  ) => (
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
       {items.map((item, index) => (
-        <Grid item xs={6} sm={4} md={3} key={index}>
+        <div
+          key={index}
+          style={{
+            flex: compact ? "1 0 15%" : "1 0 21%",
+            margin: compact ? "0.2rem" : "0.5rem",
+          }}
+        >
           <Button
             onClick={() => handleItemChange(type, item.name)}
-            style={{ textTransform: "none", display: "block" }}
+            style={{
+              textTransform: "none",
+              display: "block",
+              width: "100%",
+              padding: compact ? "0.2rem" : "0.5rem",
+            }}
           >
-            <Zoom>
+            {useZoom ? (
+              <Zoom>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={imageSize}
+                  height={imageSize}
+                  style={{ borderRadius: "10px" }}
+                />
+              </Zoom>
+            ) : (
               <Image
                 src={item.image}
                 alt={item.name}
-                width={100}
-                height={100}
+                width={imageSize}
+                height={imageSize}
                 style={{ borderRadius: "10px" }}
               />
-            </Zoom>
+            )}
             <Typography variant="body2" align="center">
               {item.name}
             </Typography>
           </Button>
-        </Grid>
+        </div>
       ))}
-    </Grid>
+    </div>
   );
 
   return (
@@ -90,21 +123,27 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({ detail, handleItemChange 
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {["-MEN", "-KIDS", "-WOMEN"].map((gender) => (
               <div key={gender} style={{ width: "100%" }}>
-                <Typography variant="subtitle2">{gender.split("-").pop()}</Typography>
+                <Typography variant="subtitle2">
+                  {gender.split("-").pop()}
+                </Typography>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {detail.Size.filter((s: string) => s.includes(gender)).map((name: string) => (
-                    <Button
-                      key={name}
-                      variant={customization.size === name ? "contained" : "outlined"}
-                      onClick={() => handleItemChange("size", name)}
-                      style={{
-                        margin: "0.5rem",
-                        borderRadius: "20px",
-                      }}
-                    >
-                      {name.split("-")[0]}
-                    </Button>
-                  ))}
+                  {detail.Size.filter((s: string) => s.includes(gender)).map(
+                    (name: string) => (
+                      <Button
+                        key={name}
+                        variant={
+                          customization.size === name ? "contained" : "outlined"
+                        }
+                        onClick={() => handleItemChange("size", name)}
+                        style={{
+                          margin: "0.5rem",
+                          borderRadius: "20px",
+                        }}
+                      >
+                        {name.split("-")[0]}
+                      </Button>
+                    )
+                  )}
                 </div>
               </div>
             ))}
@@ -113,32 +152,32 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({ detail, handleItemChange 
         )}
       {detail.Neck &&
         renderSection(
-          `Neck`,
-          renderItems(detail.Neck, "neck"),
+          `Neck ${customization.neck}`,
+          renderItems(detail.Neck, "neck", true),
           "neck"
         )}
       {detail.Socks &&
         renderSection(
-          `Socks`,
-          renderItems(detail.Socks, "socks"),
+          `Socks ${customization.socks}`,
+          renderItems(detail.Socks, "socks", false, 25, true),
           "socks"
         )}
       {detail.Shorts &&
         renderSection(
-          `Shorts`,
+          `Shorts ${customization.shorts}`,
           renderItems(detail.Shorts, "shorts"),
           "shorts"
         )}
       {detail.Pants &&
         renderSection(
-          `Pants`,
+          `Pants ${customization.pants}`,
           renderItems(detail.Pants, "pants"),
           "pants"
         )}
       {detail.Materials &&
         renderSection(
-          `Materials`,
-          renderItems(detail.Materials, "materials"),
+          `Materials ${customization.materials}`,
+          renderItems(detail.Materials, "materials", true),
           "materials"
         )}
       {detail.PaymentMethods &&
@@ -159,7 +198,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({ detail, handleItemChange 
         )}
       {detail.ShippingTypes &&
         renderSection(
-          `Shipping Types`,
+          `Shipping Types ${customization.shippingTypes}`,
           <Typography>{detail.ShippingTypes}</Typography>,
           "shipping-types"
         )}
