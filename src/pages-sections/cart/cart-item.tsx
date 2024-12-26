@@ -27,32 +27,29 @@ type Props = {
 };
 // =========================================================
 
-
 const CustomButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.secondary,
   border: `1px solid ${theme.palette.grey[500]}`,
   backgroundColor: theme.palette.grey[200],
-  width: '2rem',
-  height: '2rem',
-  borderRadius: '4px',
-  textAlign: 'center',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  transition: 'background-color 0.3s, color 0.3s, border 0.3s',
-  '&:hover': {
+  width: "2rem",
+  height: "2rem",
+  borderRadius: "4px",
+  textAlign: "center",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  transition: "background-color 0.3s, color 0.3s, border 0.3s",
+  "&:hover": {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
     border: `1px solid ${theme.palette.primary.light}`,
   },
-  '&:focus': {
+  "&:focus": {
     borderColor: theme.palette.primary.main,
   },
 }));
 
-export default function CartItem({
-  item
-}: Props) {
+export default function CartItem({ item }: Props) {
   const { dispatch } = useCart();
   const [selectedCustomization, setSelectedCustomization] = useState<
     [string, string] | null
@@ -124,7 +121,9 @@ export default function CartItem({
             <CustomButton
               key={index}
               variant="contained"
-              onClick={(event) => handleCustomizationClick(item.product.id, _.id, event)}
+              onClick={(event) =>
+                handleCustomizationClick(item.product.id, _.id, event)
+              }
               ref={buttonRef}
             >
               {index + 1}
@@ -155,9 +154,7 @@ export default function CartItem({
           <CustomizationModal
             customization={cart
               .find((p) => p.product.id === selectedCustomization[0])
-              ?.customizations.find(
-                (c) => c.id === selectedCustomization[1]
-              )}
+              ?.customizations.find((c) => c.id === selectedCustomization[1])}
             productId={selectedCustomization[0]}
             productSlug={item.product.slug!}
             onClose={() => setSelectedCustomization(null)}

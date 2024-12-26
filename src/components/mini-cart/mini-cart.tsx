@@ -43,7 +43,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
   };
 
   return (
-    <Box width="100%" minWidth={380}>
+    <Box width="100%" minWidth={380} sx={{ zIndex: 10 }}>
       {/* HEADING SECTION */}
       <TopHeader toggle={toggleSidenav} total={cartList.length} />
 
@@ -53,12 +53,8 @@ export default function MiniCart({ toggleSidenav }: Props) {
         {/* CART ITEM LIST */}
         {cartList.length > 0 ? (
           <Scrollbar>
-            {cartList.map((item:any) => (
-              <MiniCartItem
-                item={item}
-                key={item.id}
-       
-              />
+            {cartList.map((item: any) => (
+              <MiniCartItem item={item} key={item.id} />
             ))}
           </Scrollbar>
         ) : (
