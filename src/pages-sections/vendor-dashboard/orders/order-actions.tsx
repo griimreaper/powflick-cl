@@ -39,14 +39,14 @@ export default function OrderActions({ id, createdAt, status, customer, onStatus
       </FlexBox>
 
       <FlexBox gap={3} my={3} flexDirection={{ sm: "row", xs: "column" }}>
-        <TextField
+        {/* <TextField
           fullWidth
           color="info"
           size="medium"
           variant="outlined"
           label="Add Product"
           placeholder="Type product name"
-        />
+        /> */}
 
         <TextField
           select

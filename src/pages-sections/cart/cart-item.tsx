@@ -116,7 +116,7 @@ export default function CartItem({ item }: Props) {
         </FlexBox>
 
         {/* PRODUCT QUANTITY INC/DEC BUTTONS */}
-        <FlexBox alignItems="center">
+        <FlexBox alignItems="center" gap={1}>
           {item.customizations.map((_, index) => (
             <CustomButton
               key={index}

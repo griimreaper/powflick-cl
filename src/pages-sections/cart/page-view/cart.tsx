@@ -7,6 +7,7 @@ import useCart from "hooks/useCart";
 import CartItem from "../cart-item";
 import CheckoutForm from "../checkout-form";
 import { useShoppingCartStore } from "store/shoppingCart";
+import { Button } from "@mui/material";
 
 export default function CartPageView() {
   const { state } = useCart();
@@ -25,6 +26,10 @@ export default function CartPageView() {
       <Grid item md={4} xs={12}>
         <CheckoutForm data={{ cart, coupon, total }} />
       </Grid>
+        {/* <Button href={'/checkout'} variant="contained" color="primary" type="submit" 
+        disabled={cart.length === 0}>
+          Go to checkout
+        </Button> */}
     </Grid>
   );
 }

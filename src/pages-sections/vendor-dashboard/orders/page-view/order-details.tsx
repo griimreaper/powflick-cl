@@ -72,7 +72,7 @@ export default function OrderDetailsPageView({ data }: Props) {
 
             {/* ORDERED PRODUCT LIST */}
             {order?.products?.map((item, index) => (
-              <OrderedProduct product={item} key={index} />
+              <OrderedProduct product={item} customizations={order.customizations.filter(c => c.productId === item.id)} key={index} />
             ))}
           </Card>
         </Grid>
