@@ -32,9 +32,9 @@ export const useShoppingCartStore = create(
         totalProduct: number,
         amount: number
       ) => {
-        set((state) => {
+        set((state: any) => {
           const productIndex = state.cart.findIndex(
-            (item) => item.product.id === product.id
+            (item: any) => item.product.id === product.id
           );
           if (productIndex !== -1) {
             // El producto ya está en el carrito
@@ -48,7 +48,7 @@ export const useShoppingCartStore = create(
             } else {
               // Eliminar customizaciones si el nuevo array es más corto
               existingProduct.customizations =
-                existingProduct.customizations.filter((existingCustomization) =>
+                existingProduct.customizations.filter((existingCustomization: Customization) =>
                   customizations.some(
                     (newCustomization) =>
                       newCustomization.id === existingCustomization.id
@@ -59,7 +59,7 @@ export const useShoppingCartStore = create(
               customizations.forEach((customization) => {
                 const existingCustomizationIndex =
                   existingProduct.customizations.findIndex(
-                    (c) => c.id === customization.id
+                    (c: Customization) => c.id === customization.id
                   );
                 if (existingCustomizationIndex !== -1) {
                   // La customización ya existe, actualízala

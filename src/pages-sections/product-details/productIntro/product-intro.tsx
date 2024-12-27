@@ -69,10 +69,11 @@ export default function ProductIntro({ product }: Props) {
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
-  const [counter, setCounter, handleCounterChange] = useCounter(id);
+  const {counter, setCounter, handleCounterChange} = useCounter(product.product, false);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
+  const customizations = list[list.findIndex((i) => i.productId === id)]?.customizations ?? [];
 
   // CHECK PRODUCT EXIST OR NOT IN THE CART1
   const cartItem = state.cart.find((item) => item.id === id);
@@ -94,36 +95,6 @@ export default function ProductIntro({ product }: Props) {
       }
     }
   }, []);
-
-  const handleAddNewCustomization = (amount: number) => {
-    if (amount < counter) {
-      setCustomizationInList(id, initialCustomization());
-    } else if (amount > counter) {
-      trimCustomizations(id, counter);
-
-      !amount
-        ? null
-        : list[list.findIndex((i) => i.productId === id)]?.customizations[
-          counter - 1
-        ]
-          ? setCustomization(
-            list[list.findIndex((i) => i.productId === id)]?.customizations[0]
-          )
-          : null;
-    }
-  };
-
-  useEffect(() => {
-    const amount = list?.find((i) => i.productId === id)?.amount;
-    if (counter !== 1) {
-      if (amount) {
-        handleAddNewCustomization(Number(amount));
-      }
-    }
-    if (counter === 0) {
-      setCounter(1);
-    }
-  }, [counter]);
 
   useEffect(() => {
     if (customization.id !== "none") {
@@ -174,37 +145,6 @@ export default function ProductIntro({ product }: Props) {
 
   // HANDLE SELECT IMAGE
   const handleImageClick = (ind: number) => () => setSelectedImage(ind);
-
-  // Renombrar la función handleCounterChange a handleCounterUpdate
-  const handleCounterUpdate = (value: number) => {
-    // Verificar si el nuevo valor está dentro del rango permitido (1-20)
-    const newValue = Math.max(1, Math.min(99, counter + value));
-    setCounter(newValue);
-    if (newValue === 1) {
-      trimCustomizations(id, newValue);
-
-      const numRandom = Math.floor(Math.random() * counter - 1);
-
-      list[list.findIndex((i) => i.productId === id)]?.customizations[
-        counter - 1
-      ]
-        ? setCustomization(
-          list[list.findIndex((i) => i.productId === id)]?.customizations[
-          numRandom >= 0 ? numRandom : 0
-          ]
-        )
-        : null;
-    }
-  };
-
-  // HANDLE CHANGE CART
-  const handleCartAmountChange = (amount: number) => () => {
-    dispatch({
-      type: "CHANGE_CART_AMOUNT",
-      payload: { price, qty: amount, name: title, imgUrl: URL, id, slug }
-    });
-    handleCounterUpdate(amount)
-  };
 
   const handleAddToFav = async () => {
     if (!token || token === undefined) {
@@ -269,17 +209,7 @@ export default function ProductIntro({ product }: Props) {
     const totalProduct: number = parseFloat(
       (Number(product?.product.price) * counter).toFixed(2)
     );
-    const productToBag = {
-      id,
-      title: String(product.product.title),
-      price: Number(product.product.price),
-      image: String(product.product.images[0]),
-      category: product.product.product_categories,
-      colors: product.product.colors,
-      slug: product.product.slug,
-      sport: product.product.sport,
-      amount: counter
-    };
+    const productToBag = product?.product;
     const amount = counter;
 
     if (counter !== 0)
@@ -384,18 +314,18 @@ export default function ProductIntro({ product }: Props) {
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => { handleCounterChange(-1); }}>
+                  onClick={() => { handleCounterChange(-1, false); }}>
                   <Remove fontSize="small" />
                 </Button>
                 <H3 fontWeight="600" mx={2.5}>
-                  {counter}
+                  {customizations.length}
                 </H3>
                 <Button
                   size="small"
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => { handleCounterChange(1); }}>
+                  onClick={() => { handleCounterChange(1, false); }}>
                   <Add fontSize="small" />
                 </Button>
               </FlexBox>

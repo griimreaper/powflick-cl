@@ -10,7 +10,7 @@ export default function Section7() {
   return (
     <RootStyle>
       <img
-        src="/assets/images/banners/PROMO_SPORTS_BANNER-1920X389.PNG"
+        src="/assets/images/banners/prepare-season.jpg"
         alt="Promo Sports Banner"
         style={{ width: "100%", height: "auto" }}
       />

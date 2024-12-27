@@ -21,7 +21,7 @@ export default function AddressListItem({ direction, handleDelete }: Props) {
   const { country, address, city, phone, district, addressReference, neighborhood, postalCode, id } = direction || {};
 
   return (
-    <Link href={`/address/${id}`}>
+    <Link href={`/dashboard/address/${id}`}>
       <TableRow>
         <Paragraph ellipsis>{addressReference}</Paragraph>
         <Paragraph ellipsis>{`${country}, ${city}`}</Paragraph>

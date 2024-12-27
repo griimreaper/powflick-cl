@@ -16,10 +16,11 @@ import { currency } from "lib";
 // STYLED COMPONENT
 import { Wrapper } from "./styles";
 import { ShoppingCartStoreType } from "store/interfaces/interface";
-import { styled } from "@mui/material";
-import { useRef, useState } from "react";
+import { Box, styled } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import { CustomizationModal } from "./CustomizationModal";
 import { useShoppingCartStore } from "store/shoppingCart";
+import useCounter from "hooks/useCounter";
 
 // =========================================================
 type Props = {
@@ -27,33 +28,30 @@ type Props = {
 };
 // =========================================================
 
-
 const CustomButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.secondary,
   border: `1px solid ${theme.palette.grey[500]}`,
   backgroundColor: theme.palette.grey[200],
-  width: '2rem',
-  height: '2rem',
-  borderRadius: '4px',
-  textAlign: 'center',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  transition: 'background-color 0.3s, color 0.3s, border 0.3s',
-  '&:hover': {
+  width: "2rem",
+  height: "2rem",
+  borderRadius: "4px",
+  textAlign: "center",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  transition: "background-color 0.3s, color 0.3s, border 0.3s",
+  "&:hover": {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
     border: `1px solid ${theme.palette.primary.light}`,
   },
-  '&:focus': {
+  "&:focus": {
     borderColor: theme.palette.primary.main,
   },
 }));
 
-export default function CartItem({
-  item
-}: Props) {
-  const { dispatch } = useCart();
+export default function CartItem({ item }: Props) {
+  const { counter, handleCounterChange } = useCounter(item.product, true);
   const [selectedCustomization, setSelectedCustomization] = useState<
     [string, string] | null
   >(null);
@@ -74,13 +72,6 @@ export default function CartItem({
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const { cart } = useShoppingCartStore();
-  // HANDLE CHANGE CART PRODUCT QUANTITY
-  // const handleCartAmountChange = (amount: number) => () => {
-  //   dispatch({
-  //     type: "CHANGE_CART_AMOUNT",
-  //     payload: { id, name, price, imgUrl, qty: amount, slug },
-  //   });
-  // };
 
   return (
     <Wrapper>
@@ -89,7 +80,7 @@ export default function CartItem({
         width={140}
         height={140}
         display="block"
-        src={item.product.image || "/assets/images/products/iphone-xi.png"}
+        src={item.product.images[0] || "/assets/images/products/iphone-xi.png"}
       />
 
       {/* DELETE BUTTON */}
@@ -119,45 +110,51 @@ export default function CartItem({
         </FlexBox>
 
         {/* PRODUCT QUANTITY INC/DEC BUTTONS */}
-        <FlexBox alignItems="center">
-          {item.customizations.map((_, index) => (
-            <CustomButton
-              key={index}
-              variant="contained"
-              onClick={(event) => handleCustomizationClick(item.product.id, _.id, event)}
-              ref={buttonRef}
+        <FlexBox alignItems="start" display={'flex'} gap={2} flexDirection={'column-reverse'} >
+          <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'}>
+            {item.customizations.map((_, index) => (
+              <CustomButton
+                key={index}
+                variant="contained"
+                onClick={(event) =>
+                  handleCustomizationClick(item.product.id, _.id, event)
+                }
+                ref={buttonRef}
+              >
+                {index + 1}
+              </CustomButton>
+            ))}
+          </Box>
+          <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'}>
+            <Button
+              color="primary"
+              sx={{ p: "5px" }}
+              variant="outlined"
+              disabled={item.customizations.length === 1}
+              onClick={() => handleCounterChange(-1, true)}
             >
-              {index + 1}
-            </CustomButton>
-          ))}
-          {/* <Button
-            color="primary"
-            sx={{ p: "5px" }}
-            variant="outlined"
-            disabled={item.customizations.length === 1}
-          >
-            <Remove fontSize="small" />
-          </Button> */}
+              <Remove fontSize="small" />
+            </Button>
 
-          {/* <Span mx={1} fontWeight={600} fontSize={15}>
-            {item.customizations.length}
-          </Span> */}
+            <Span mx={1} fontWeight={600} fontSize={15}>
+              {item.customizations.length}
+            </Span>
 
-          {/* <Button
-            color="primary"
-            sx={{ p: "5px" }}
-            variant="outlined"
-          >
-            <Add fontSize="small" />
-          </Button> */}
+            <Button
+              color="primary"
+              sx={{ p: "5px" }}
+              variant="outlined"
+              onClick={() => handleCounterChange(1, true)}
+            >
+              <Add fontSize="small" />
+            </Button>
+          </Box>
         </FlexBox>
         {selectedCustomization !== null && (
           <CustomizationModal
             customization={cart
               .find((p) => p.product.id === selectedCustomization[0])
-              ?.customizations.find(
-                (c) => c.id === selectedCustomization[1]
-              )}
+              ?.customizations.find((c) => c.id === selectedCustomization[1])}
             productId={selectedCustomization[0]}
             productSlug={item.product.slug!}
             onClose={() => setSelectedCustomization(null)}

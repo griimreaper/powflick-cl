@@ -21,7 +21,7 @@ export default function BannerCard1({ img, url, text1, text2, text3 }: Props) {
     <CardWrapper>
       <SportZoneImage alt="category" height="100%" width="100%" src={img} />
 
-      <CardContent>
+      {/* <CardContent>
         <div>
           <Paragraph fontWeight={600}>{text1}</Paragraph>
           <H3>{text2}</H3>
@@ -39,7 +39,7 @@ export default function BannerCard1({ img, url, text1, text2, text3 }: Props) {
         >
           Shop Now
         </Button>
-      </CardContent>
+      </CardContent> */}
     </CardWrapper>
   );
 }

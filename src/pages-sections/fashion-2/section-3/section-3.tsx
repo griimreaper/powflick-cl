@@ -11,22 +11,22 @@ const sportsCategories = [
   {
     id: 1,
     title: "Football",
-    image: "/assets/images/categories/new/CATEGORIAS_SOCCER.png",
+    image: "/assets/images/categories/new/basketball.jpg",
   },
   {
     id: 2,
     title: "Basketball",
-    image: "/assets/images/categories/new/CATEGORIAS_BASKETBALL.png",
+    image: "/assets/images/categories/new/soccer.jpg",
   },
   {
     id: 3,
     title: "Running",
-    image: "/assets/images/categories/new/CATEGORIAS_RUNNING.png",
+    image: "/assets/images/categories/new/running.jpg",
   },
   {
     id: 4,
     title: "Baseball",
-    image: "/assets/images/categories/new/CATEGORIAS_BASEBALL.png",
+    image: "/assets/images/categories/new/gamer.jpg",
   },
 ];
 

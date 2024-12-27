@@ -15,7 +15,7 @@ export default function Section5() {
             title="For Men's"
             contentPosition="left"
             subTitle="Starting At $29"
-            img="/assets/images/banners/promotion/PROMO_BASEBALL.png"
+            img="/assets/images/banners/promotion/promo1.jpg"
           />
         </Grid>
 
@@ -26,7 +26,7 @@ export default function Section5() {
             text3="Sale"
             text2="Black Friday"
             text1="Up to 20% Off"
-            img="/assets/images/banners/promotion/PROMO_BASKET.png"
+            img="/assets/images/banners/promotion/promo2.jpg"
           />
         </Grid>
 
@@ -37,7 +37,7 @@ export default function Section5() {
             subTitle="25% Off"
             title="For Women's"
             contentPosition="right"
-            img="/assets/images/banners/promotion/PROMO_SOCCER.png"
+            img="/assets/images/banners/promotion/promo3.jpg"
           />
         </Grid>
       </Grid>

@@ -66,14 +66,6 @@ export default function Customizations(props: CustomizationProps) {
     };
   }, []);
 
-  useEffect(() => {
-    if (customizations) {
-      setCustomization(customizations[0]);
-    } else {
-      setCustomization(initialCustomization());
-    }
-  }, [props.productId]);
-
   const handleCustomizationClick = (
     index: number,
     event: React.MouseEvent<HTMLButtonElement>
@@ -184,21 +176,11 @@ export default function Customizations(props: CustomizationProps) {
     setIsOverlayVisible(step1 || step2 || step3 || step4 || step5);
   }, [step1, step2, step3, step4, step5]);
 
-  const [anchorEl, setAnchorEl] = useState(null); // Estado para controlar el Popover
-  const anchorRef = useRef<HTMLDivElement | null>(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(true);
 
   const handlePopoverOpen = (event: any) => {
     setIsPopoverOpen(true);
-    setAnchorEl(event.currentTarget);
   };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  console.log({ isPopoverOpen, anchorEl });
-
 
   return (
     <>
@@ -430,7 +412,6 @@ export default function Customizations(props: CustomizationProps) {
                       <Popover
                         open={isPopoverOpen}
                         anchorEl={buttonRef.current}
-                        onClose={handlePopoverClose}
                         anchorOrigin={{
                           vertical: "bottom",
                           horizontal: "left",

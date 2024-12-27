@@ -3,114 +3,184 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import * as yup from "yup";
-import { Formik } from "formik";
-// DUMMY CUSTOM DATA
-import countryList from "data/countryList";
-// LOCAL CUSTOM COMPONENTS
-import ShippingForm from "./shipping-form";
-import BillingAddressForm from "./billing-address-form";
+import { Box, FormControl, InputLabel, MenuItem, Select, Typography, Card, CardContent } from "@mui/material";
+import { useDashboardStore } from "store/dashboard";
+import { Direction } from "models/types";
+import DirectionForm from "./direction-form";
+import { useShoppingCartStore } from "store/shoppingCart";
+import useFlag from "hooks/useFlag";
+import { createOrder } from "services/Order";
+import Image from "next/image";
 
 export default function CheckoutForm() {
   const router = useRouter();
+  const { cart, coupon } = useShoppingCartStore();
   const [sameAsShipping, setSameAsShipping] = useState(false);
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const { profile } = useDashboardStore();
+  const { directions } = profile.genericResponseUser;
+  const { token } = profile;
+  const [selectedDirection, setSelectedDirection] = useState<Direction | null>(null);
+  const [loading, setLoading] = useFlag();
 
-  const handleFormSubmit = async (values: typeof initialValues) => {
-    router.push("/payment");
+  const handleDirectionChange = (event: any) => {
+    const selectedIndex = event.target.value;
+    if (selectedIndex === "") {
+      setSelectedDirection(null);
+    } else {
+      setSelectedDirection(directions.find((dir) => dir.id === selectedIndex) || null);
+    }
+  };
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
+
+  const handleProceedToPayment = async () => {
+    setLoading(true);
+    const Cart = cart.map((item) => ({
+      customizations: item.customizations,
+      productId: item.product.id.toString(),
+    }));
+
+    if (token && selectedDirection) {
+      const response = await createOrder(
+        token,
+        Cart,
+        selectedDirection.id,
+        'USD',
+        1,
+        coupon?.id
+      );
+
+      typeof response === "string" ? router.push(response) : null;
+    }
+    setLoading(false);
   };
 
   return (
-    <Formik
-      onSubmit={handleFormSubmit}
-      initialValues={initialValues}
-      validationSchema={checkoutSchema}>
-      {({ values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue }) => {
-        const handleCheckboxChange = (checked: boolean) => {
-          setSameAsShipping(checked);
-          setFieldValue("same_as_shipping", checked);
-          setFieldValue("billing_name", checked ? values.shipping_name : "");
-        };
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Card>
+        <CardContent>
+          {/* Selector de direcciones */}
+          <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
+            <FormControl fullWidth sx={{ flex: 2 }}>
+              <InputLabel id="direction-select-label">Select Direction</InputLabel>
+              <Select
+                labelId="direction-select-label"
+                value={selectedDirection?.id || ""}
+                onChange={handleDirectionChange}
+                fullWidth
+              >
+                <MenuItem value="">
+                  <em>Select Direction</em>
+                </MenuItem>
+                {directions.map(({ id, country, city, district }) => (
+                  <MenuItem key={id} value={id}>
+                    {`${country}, ${city}, ${district}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-        return (
-          <form onSubmit={handleSubmit}>
-            <ShippingForm
-              values={values}
-              errors={errors}
-              touched={touched}
-              handleBlur={handleBlur}
-              handleChange={handleChange}
-              setFieldValue={setFieldValue}
-            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleForm}
+              sx={{ textTransform: "uppercase", minWidth: "150px" }}
+            >
+              Insert a New Direction
+            </Button>
+          </Box>
 
-            <BillingAddressForm
-              errors={errors}
-              handleBlur={handleBlur}
-              handleChange={handleChange}
-              handleCheckboxChange={handleCheckboxChange}
-              sameAsShipping={sameAsShipping}
-              setFieldValue={setFieldValue}
-              touched={touched}
-              values={values}
-            />
+          {/* Formulario para nueva dirección */}
+          {showForm && <DirectionForm address={null} toggleForm={toggleForm} />}
+        </CardContent>
+      </Card>
 
-            <Grid container spacing={6}>
-              <Grid item sm={6} xs={12}>
-                <Button
-                  LinkComponent={Link}
-                  variant="outlined"
-                  color="primary"
-                  type="button"
-                  href="/cart"
-                  fullWidth>
-                  Back to Cart
-                </Button>
-              </Grid>
+      {/* Información de la dirección seleccionada */}
+      {selectedDirection && !showForm && (
+        <Card>
+          <CardContent>
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
+              Selected Direction:
+            </Typography>
+            <Typography>
+              <strong>Country:</strong> {selectedDirection.country}
+            </Typography>
+            <Typography>
+              <strong>City:</strong> {selectedDirection.city}
+            </Typography>
+            <Typography>
+              <strong>Location:</strong> {selectedDirection.district}
+            </Typography>
+            {selectedDirection.address && (
+              <Typography>
+                <strong>Address:</strong> {selectedDirection.address}
+              </Typography>
+            )}
+            {selectedDirection.addressReference && (
+              <Typography>
+                <strong>Address Reference:</strong> {selectedDirection.addressReference}
+              </Typography>
+            )}
+            {selectedDirection.postalCode && (
+              <Typography>
+                <strong>Postal Code:</strong> {selectedDirection.postalCode}
+              </Typography>
+            )}
+            {selectedDirection.neighborhood && (
+              <Typography>
+                <strong>Neighborhood:</strong> {selectedDirection.neighborhood}
+              </Typography>
+            )}
+            {selectedDirection.phone && (
+              <Typography>
+                <strong>Phone:</strong> {selectedDirection.phone}
+              </Typography>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
-              <Grid item sm={6} xs={12}>
-                <Button variant="contained" color="primary" type="submit" fullWidth>
-                  Proceed to Payment
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        );
-      }}
-    </Formik>
+      {/* Botones de navegación */}
+      <Box sx={{ mt: 3 }}>
+        <Grid container spacing={6}>
+          <Grid item sm={6} xs={12}>
+            <Button
+              LinkComponent={Link}
+              variant="outlined"
+              color="primary"
+              href="/cart"
+              fullWidth
+            >
+              Back to Cart
+            </Button>
+          </Grid>
+
+          <Grid item sm={6} xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleProceedToPayment}
+              fullWidth
+              disabled={!selectedDirection || cart.length === 0}
+            >
+              {loading ? (
+                // Contenido cuando está cargando
+                <Image
+                  src="/assets/images/Double Ring-1s-200px.png"
+                  alt="Loader GIF"
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                "Proceed to Payment"
+              )}
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
-
-const initialValues = {
-  shipping_zip: "",
-  shipping_name: "",
-  shipping_email: "",
-  shipping_contact: "",
-  shipping_company: "",
-  shipping_address1: "",
-  shipping_address2: "",
-  shipping_country: countryList[229],
-
-  billing_zip: "",
-  billing_name: "",
-  billing_email: "",
-  billing_contact: "",
-  billing_company: "",
-  billing_address1: "",
-  billing_address2: "",
-  billing_country: countryList[229]
-};
-
-// uncomment these fields below for from validation
-const checkoutSchema = yup.object().shape({
-  // shipping_name: yup.string().required("required"),
-  // shipping_email: yup.string().email("invalid email").required("required"),
-  // shipping_contact: yup.string().required("required"),
-  // shipping_zip: yup.string().required("required"),
-  // shipping_country: yup.object().required("required"),
-  // shipping_address1: yup.string().required("required"),
-  // billing_name: yup.string().required("required"),
-  // billing_email: yup.string().required("required"),
-  // billing_contact: yup.string().required("required"),
-  // billing_zip: yup.string().required("required"),
-  // billing_country: yup.object().required("required"),
-  // billing_address1: yup.string().required("required"),
-});

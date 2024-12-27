@@ -15,7 +15,7 @@ export default function Section1({ data }: { data: DataStructure["navbar"] }) {
       buttonText: "Comprar ahora",
       description:
         "Luce increíble con nuestras zapatillas Nike negras. ¡No te las pierdas!",
-      imageUrl: "assets/images/banners/new/slider1.png",
+      imageUrl: "assets/images/banners/new/banner-web1.png",
     },
     {
       title: "¡Mantente conectado con estilo!",
@@ -23,7 +23,7 @@ export default function Section1({ data }: { data: DataStructure["navbar"] }) {
       buttonText: "Comprar ahora",
       description:
         "El Apple Watch que combina tecnología y elegancia. ¡Consíguelo ya!",
-      imageUrl: "assets/images/banners/new/slider2.png",
+      imageUrl: "assets/images/banners/new/banner-web2.png",
     },
     {
       title: "¡Corre con confianza!",
@@ -31,7 +31,7 @@ export default function Section1({ data }: { data: DataStructure["navbar"] }) {
       buttonText: "Comprar ahora",
       description:
         "Las zapatillas Nike rojas que te llevarán más lejos. ¡Compra ahora!",
-      imageUrl: "assets/images/banners/new/slider3.png",
+      imageUrl: "assets/images/banners/new/banner-web3.png",
     },
   ];
 
