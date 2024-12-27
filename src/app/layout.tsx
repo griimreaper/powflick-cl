@@ -8,6 +8,7 @@ import "i18n";
 import { getLanding } from "services/Landing";
 import { DataStructure } from "models/types";
 import React from "react";
+import "./global.css";
 import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
