@@ -16,7 +16,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
         color="primary"
         variant="contained"
         sx={{ mb: "0.75rem", height: "40px" }}
-        onClick={handleNavigate("/checkout-alternative")}>
+        onClick={handleNavigate("/checkout")}>
         Checkout Now ({total})
       </Button>
 

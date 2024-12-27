@@ -22,7 +22,6 @@ type Props = { toggleSidenav: () => void };
 
 export default function MiniCart({ toggleSidenav }: Props) {
   const { push } = useRouter();
-  const { state, dispatch } = useCart();
   const { cart, total, setCoupon, coupon } = useShoppingCartStore();
   const cartList = cart;
 

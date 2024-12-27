@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -52,13 +51,10 @@ const CustomButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function MiniCartItem({ item }: Props) {
-  const [counter, setCounter, handleCounterChange] = useCounter(
-    item.product.id
-  );
-
-  console.log(item);
+  const { counter, setCounter, handleCounterChange } = useCounter(item.product, true);
 
   const { cart } = useShoppingCartStore();
+
   const { removeProductById } = useShoppingCartStore();
   const [selectedCustomization, setSelectedCustomization] = useState<
     [string, string] | null
@@ -103,32 +99,32 @@ export default function MiniCartItem({ item }: Props) {
       sx={{ zIndex: 10 }} // Añadir zIndex aquí
     >
       <FlexBox alignItems="center" flexDirection="column">
-        {/* <Button
+        <Button
           size="small"
           color="primary"
           variant="outlined"
-          onClick={() => { handleCounterChange(+1); }}
+          onClick={() => { handleCounterChange(1, true); }}
           sx={{ height: 28, width: 28, borderRadius: 50 }}>
           <Add fontSize="small" />
-        </Button> */}
+        </Button>
 
         <H6 my="3px">{item.customizations.length}</H6>
 
-        {/* <Button
+        <Button
           size="small"
           color="primary"
           variant="outlined"
           disabled={item.customizations.length === 1}
-          onClick={() => { handleCounterChange(-1); }}
+          onClick={() => { handleCounterChange(-1, true); }}
           sx={{ height: 28, width: 28, borderRadius: 50 }}>
           <Remove fontSize="small" />
-        </Button> */}
+        </Button>
       </FlexBox>
 
       <Link href={`/products/${item.product.id}`}>
         <Avatar
           alt={item.product.title}
-          src={item.product.image}
+          src={item.product?.images && item.product.images[0] || ''}
           sx={{ mx: 1, width: 75, height: 75 }}
         />
       </Link>
@@ -153,7 +149,7 @@ export default function MiniCartItem({ item }: Props) {
           {currency(item.customizations.length * item.product.price + item.customizations.reduce((acc, _) => acc + _.price, 0))}
         </H6>
 
-        <FlexBox alignItems="center">
+        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "scroll", py: 1}}>
           {item.customizations.map((_, index) => (
             <CustomButton
               key={index}

@@ -66,14 +66,6 @@ export default function Customizations(props: CustomizationProps) {
     };
   }, []);
 
-  useEffect(() => {
-    if (customizations) {
-      setCustomization(customizations[0]);
-    } else {
-      setCustomization(initialCustomization());
-    }
-  }, [props.productId]);
-
   const handleCustomizationClick = (
     index: number,
     event: React.MouseEvent<HTMLButtonElement>

@@ -8,9 +8,9 @@ import CartItem from "../cart-item";
 import CheckoutForm from "../checkout-form";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function CartPageView() {
-  const { state } = useCart();
   const { cart, coupon, total } = useShoppingCartStore();
 
   return (
@@ -26,7 +26,7 @@ export default function CartPageView() {
       <Grid item md={4} xs={12}>
         <CheckoutForm data={{ cart, coupon, total }} />
       </Grid>
-        {/* <Button href={'/checkout'} variant="contained" color="primary" type="submit" 
+      {/* <Button href={'/checkout'} variant="contained" color="primary" type="submit" 
         disabled={cart.length === 0}>
           Go to checkout
         </Button> */}

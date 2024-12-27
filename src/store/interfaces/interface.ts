@@ -1,4 +1,4 @@
-import { Coupon, Customization, Direction, Favorite, Message, Profile } from "models/types";
+import { Coupon, Customization, Direction, Favorite, Message, ProductDB, Profile } from "models/types";
 
 export type DashboardState = {
   profile: Profile;
@@ -59,7 +59,7 @@ export type ProductToBagType = {
 
 export type ShoppingCartStoreType = {
   cart: {
-    product: ProductToBagType;
+    product: ProductDB;
     customizations: Customization[];
     amount: number;
     totalProduct: number;
