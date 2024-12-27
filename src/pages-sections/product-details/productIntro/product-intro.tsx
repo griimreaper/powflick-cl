@@ -66,16 +66,12 @@ export default function ProductIntro({ product }: Props) {
     useCustomizationsStore();
   const { profile, setFavorites } = useDashboardStore();
   const { token } = profile;
-  const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
   const [counter, setCounter, handleCounterChange] = useCounter(id);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
-
-  // CHECK PRODUCT EXIST OR NOT IN THE CART1
-  const cartItem = state.cart.find((item) => item.id === id);
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -126,9 +122,7 @@ export default function ProductIntro({ product }: Props) {
   }, [counter]);
 
   useEffect(() => {
-    if (customization.id !== "none") {
       setCustomizationInList(id, customization);
-    }
   }, [customization]);
 
   useEffect(() => {
@@ -161,12 +155,6 @@ export default function ProductIntro({ product }: Props) {
   }, [font, fontColor]);
 
   useEffect(() => {
-    if (customization.id !== "none") {
-      setCustomizationInList(id, customization);
-    }
-  }, [customization]);
-
-  useEffect(() => {
     return () => {
       setShowCustomization(false);
     };
@@ -195,15 +183,6 @@ export default function ProductIntro({ product }: Props) {
         )
         : null;
     }
-  };
-
-  // HANDLE CHANGE CART
-  const handleCartAmountChange = (amount: number) => () => {
-    dispatch({
-      type: "CHANGE_CART_AMOUNT",
-      payload: { price, qty: amount, name: title, imgUrl: URL, id, slug }
-    });
-    handleCounterUpdate(amount)
   };
 
   const handleAddToFav = async () => {

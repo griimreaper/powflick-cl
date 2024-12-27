@@ -26,7 +26,7 @@ export default function CheckoutSummary({ data }: any) {
     <Card sx={{ padding: 3 }}>
       <ListItem mb={1} title="Subtotal" value={subtotal} />
       <ListItem mb={1} title="Customizations" value={totalCustomizations} />
-      <ListItem mb={1} title="Discount" value={data.coupon.discount || 0} />
+      <ListItem mb={1} title="Discount" value={data?.coupon?.discount || 0} />
       <FlexBetween mb={2}>
         <Span color="grey.600">Total:</Span>
 
@@ -37,7 +37,7 @@ export default function CheckoutSummary({ data }: any) {
 
       <Divider sx={{ my: 2 }} />
 
-      <Button
+      {/* <Button
         fullWidth
         color="primary"
         href="/checkout"
@@ -45,7 +45,7 @@ export default function CheckoutSummary({ data }: any) {
         LinkComponent={Link}
       >
         Checkout Now
-      </Button>
+      </Button> */}
 
       {/* <Paragraph fontSize={25} fontWeight={600} lineHeight={1}>
         {currency(2610)}

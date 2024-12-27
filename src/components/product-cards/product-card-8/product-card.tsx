@@ -184,7 +184,7 @@ export default function ProductCard8({ product }: Props) {
       <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
-        product={{ id, slug, title, price, imgGroup: images }}
+        product={product}
       />
 
       <Box p={1} textAlign="center">

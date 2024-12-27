@@ -18,10 +18,11 @@ import { H1, H2, H3, H6, Paragraph } from "components/Typography";
 import useCart from "hooks/useCart";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
+import { ProductDB } from "models/types";
 
 // =====================================================
 interface Props {
-  product: any;
+  product: ProductDB;
   openDialog: boolean;
   handleCloseDialog: () => void;
 }
@@ -40,7 +41,7 @@ export default function ProductViewDialog(props: Props) {
         ...product,
         qty: amount,
         name: product.title,
-        imgUrl: product.imgGroup[0],
+        // imgUrl: product.imgGroup[0],
       },
     });
   };
@@ -64,7 +65,7 @@ export default function ProductViewDialog(props: Props) {
                   backgroundColor: "transparent",
                 }}
               >
-                {product.imgGroup.map((item: string, index: number) => (
+                {product.images.map((item: string, index: number) => (
                   <SportZoneImage
                     key={index}
                     src={item}
@@ -84,7 +85,7 @@ export default function ProductViewDialog(props: Props) {
               <H2>{product.title}</H2>
 
               <Paragraph py={1} color="grey.500" fontWeight={600} fontSize={13}>
-                CATEGORY: Cosmetic
+                CATEGORY: {product.product_categories.split("|").join(",")}
               </Paragraph>
 
               <H1 color="primary.main">{currency(product.price)}</H1>
@@ -95,9 +96,7 @@ export default function ProductViewDialog(props: Props) {
               </FlexBox>
 
               <Paragraph my={2}>
-                Sed egestas, ante et vulputate volutpat, eros pede semper est,
-                vitae luctus metus libero eu augue. Morbi purus liberpuro ate
-                vol faucibus adipiscing.
+                {product.content}
               </Paragraph>
 
               <Divider sx={{ mb: 2 }} />
