@@ -65,7 +65,7 @@ export default function ProductViewDialog(props: Props) {
                   backgroundColor: "transparent",
                 }}
               >
-                {product.images.map((item: string, index: number) => (
+                {product?.images?.map((item: string, index: number) => (
                   <SportZoneImage
                     key={index}
                     src={item}
@@ -85,7 +85,7 @@ export default function ProductViewDialog(props: Props) {
               <H2>{product.title}</H2>
 
               <Paragraph py={1} color="grey.500" fontWeight={600} fontSize={13}>
-                CATEGORY: {product.product_categories.split("|").join(",")}
+                CATEGORY: {product?.product_categories?.split("|").join(",")}
               </Paragraph>
 
               <H1 color="primary.main">{currency(product.price)}</H1>
@@ -95,9 +95,7 @@ export default function ProductViewDialog(props: Props) {
                 <H6 lineHeight="1">(50)</H6>
               </FlexBox>
 
-              <Paragraph my={2}>
-                {product.content}
-              </Paragraph>
+              <Paragraph my={2}>{product.content}</Paragraph>
 
               <Divider sx={{ mb: 2 }} />
 
