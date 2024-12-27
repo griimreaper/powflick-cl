@@ -19,13 +19,13 @@ export default function ProductCreatePageView({
   return (
     <PageWrapper title="Add New Product">
       <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 20 }}>
-        {/* <Button
+        <Button
           variant="contained"
           color="primary"
           onClick={() => setOpenPanel(true)}
         >
           Add products
-        </Button> */}
+        </Button>
       </div>
       <Modal
         open={openPanel}
