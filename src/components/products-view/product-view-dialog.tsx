@@ -99,9 +99,7 @@ export default function ProductViewDialog(props: Props) {
                 <H6 lineHeight="1">(50)</H6>
               </FlexBox>
 
-              <Paragraph my={2}>
-                {product.content}
-              </Paragraph>
+              <Paragraph my={2}>{product.content}</Paragraph>
 
               <Divider sx={{ mb: 2 }} />
 
