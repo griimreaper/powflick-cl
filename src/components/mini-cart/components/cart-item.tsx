@@ -149,7 +149,7 @@ export default function MiniCartItem({ item }: Props) {
           {currency(item.customizations.length * item.product.price + item.customizations.reduce((acc, _) => acc + _.price, 0))}
         </H6>
 
-        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "scroll", py: 1}}>
+        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "auto", py: 1}}>
           {item.customizations.map((_, index) => (
             <CustomButton
               key={index}
