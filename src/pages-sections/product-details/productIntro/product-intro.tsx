@@ -318,7 +318,7 @@ export default function ProductIntro({ product }: Props) {
                   <Remove fontSize="small" />
                 </Button>
                 <H3 fontWeight="600" mx={2.5}>
-                  {customizations.length}
+                  {counter}
                 </H3>
                 <Button
                   size="small"

@@ -48,7 +48,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
 
       <Divider />
 
-      <Box height={`calc(100vh - ${cartList.length ? "207px" : "75px"})`}>
+      <Box overflow={'hidden'} height={`calc(100vh - ${cartList.length ? "207px" : "75px"})`}>
         {/* CART ITEM LIST */}
         {cartList.length > 0 ? (
           <Scrollbar>
