@@ -29,13 +29,17 @@ import Heart from "icons/Heart";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { favProduct } from "services/Products";
-import { FavoriteBorder, FavoriteBorderOutlined, FavoriteOutlined } from "@mui/icons-material";
-import { useCustomizationsStore, useCustomizationStore, initialCustomization, } from "store/customizations";
+import {
+  FavoriteBorder,
+  FavoriteBorderOutlined,
+  FavoriteOutlined,
+} from "@mui/icons-material";
+import { useCustomizationStore } from "store/customizationStore";
+import { useCustomizationsStore } from "store/customizationsStore";
 import AditionalDetails from "./AditionalDetails";
 import Customizations from "components/Customization/customization";
 import useCounter from "hooks/useCounter";
 import { useShoppingCartStore } from "store/shoppingCart";
-
 
 // ================================================================
 type Props = { product: detailProps };
@@ -46,7 +50,16 @@ type SelectVariants = {
 };
 
 export default function ProductIntro({ product }: Props) {
-  const { id, price, title, images, slug, URL, font: fontDefault, font_color } = product.product;
+  const {
+    id,
+    price,
+    title,
+    images,
+    slug,
+    URL,
+    font: fontDefault,
+    font_color,
+  } = product.product;
 
   const [selectedValues, setSelectedValues] = useState<{
     [key: string]: string;
@@ -68,12 +81,18 @@ export default function ProductIntro({ product }: Props) {
   const { token } = profile;
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
-  const {counter, setCounter, handleCounterChange} = useCounter(product.product, false);
+  const [isFav, setIsFav] = useState<boolean>(
+    profile.favorites?.some(({ product }) => product.id === id)
+  );
+  const { counter, setCounter, handleCounterChange } = useCounter(
+    product.product,
+    false
+  );
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
-  const customizations = list[list.findIndex((i) => i.productId === id)]?.customizations ?? [];
+  const customizations =
+    list[list.findIndex((i) => i.productId === id)]?.customizations ?? [];
 
   // CHECK PRODUCT EXIST OR NOT IN THE CART1
   const cartItem = state.cart.find((item) => item.id === id);
@@ -151,11 +170,7 @@ export default function ProductIntro({ product }: Props) {
       showErrorAlert("Error!", "Must be loged.");
     } else {
       setIsFav(!isFav);
-      const fetchfavProduct = await favProduct(
-        token,
-        String(id),
-        false
-      );
+      const fetchfavProduct = await favProduct(token, String(id), false);
       setFavorites(fetchfavProduct.list);
       if (
         fetchfavProduct.error &&
@@ -196,7 +211,9 @@ export default function ProductIntro({ product }: Props) {
 
   const totalCustomizationPrice =
     list[list.findIndex((i) => i.productId === id)]?.total?.toFixed(2) ?? 0;
-  const totalProductsPrice = (Number(product?.product.price) * counter).toFixed(2);
+  const totalProductsPrice = (Number(product?.product.price) * counter).toFixed(
+    2
+  );
   const total = Number(totalProductsPrice) + Number(totalCustomizationPrice);
 
   const handleAddToBagClick = () => {
@@ -236,47 +253,68 @@ export default function ProductIntro({ product }: Props) {
         {/* IMAGE GALLERY AREA */}
 
         {/* modularizamos, mostramos esta imagen si no se da click en customizar, y si se da click aqui hacemos renderizado condicional para mostrar componente Customization.*/}
-        <Grid id="customization-section" item md={6} xs={12} alignItems="center">
-          {showCustomization ?
-            <Box
-              mt={{ xs: 10, sm: 16, lg: 0 }}
-              px={{ xs: 4, sm: 0 }}
-            >
+        <Grid
+          id="customization-section"
+          item
+          md={6}
+          xs={12}
+          alignItems="center"
+        >
+          {showCustomization ? (
+            <Box mt={{ xs: 10, sm: 16, lg: 0 }} px={{ xs: 4, sm: 0 }}>
               <Customizations {...customizationProps} />
               {/* Agrega aquí los elementos de personalización */}
             </Box>
-            :
+          ) : (
             <Box>
-              <FlexBox borderRadius={3} overflow="hidden" justifyContent="center" mb={6}>
+              <FlexBox
+                borderRadius={3}
+                overflow="hidden"
+                justifyContent="center"
+                mb={6}
+              >
                 <Image
                   alt={title}
                   width={500}
                   height={500}
                   loading="eager"
-                  src={product.product.images[selectedImage] || ''}
+                  src={product.product.images[selectedImage] || ""}
                 />
               </FlexBox>
 
-              <FlexBox overflow="auto" sx={{ width: 'full', justifyContent: 'center' }}>
-                {images?.filter((i: string) => i.includes('customization')).map((url: string, ind: number) => (
-                  <FlexRowCenter
-                    key={ind}
-                    width={64}
-                    height={64}
-                    minWidth={64}
-                    bgcolor="white"
-                    border="1px solid"
-                    borderRadius="10px"
-                    style={{ cursor: "pointer" }}
-                    onClick={handleImageClick(ind)}
-                    mr={ind === images.length - 1 ? "auto" : "10px"}
-                    borderColor={selectedImage === ind ? "primary.main" : "grey.400"}>
-                    <Avatar alt="product" src={url} variant="square" sx={{ height: 40 }} />
-                  </FlexRowCenter>
-                ))}
+              <FlexBox
+                overflow="auto"
+                sx={{ width: "full", justifyContent: "center" }}
+              >
+                {images
+                  ?.filter((i: string) => i.includes("customization"))
+                  .map((url: string, ind: number) => (
+                    <FlexRowCenter
+                      key={ind}
+                      width={64}
+                      height={64}
+                      minWidth={64}
+                      bgcolor="white"
+                      border="1px solid"
+                      borderRadius="10px"
+                      style={{ cursor: "pointer" }}
+                      onClick={handleImageClick(ind)}
+                      mr={ind === images.length - 1 ? "auto" : "10px"}
+                      borderColor={
+                        selectedImage === ind ? "primary.main" : "grey.400"
+                      }
+                    >
+                      <Avatar
+                        alt="product"
+                        src={url}
+                        variant="square"
+                        sx={{ height: 40 }}
+                      />
+                    </FlexRowCenter>
+                  ))}
               </FlexBox>
             </Box>
-          }
+          )}
         </Grid>
 
         {/* PRODUCT INFO AREA */}
@@ -286,8 +324,8 @@ export default function ProductIntro({ product }: Props) {
 
           {/* PRODUCT BRAND */}
           <FlexBox alignItems="center" mb={1} gap={1}>
-            <div>Categories:{' '}</div>
-            <H6>{' '}{product.product.product_categories.split('|')[0]}</H6>
+            <div>Categories: </div>
+            <H6> {product.product.product_categories.split("|")[0]}</H6>
           </FlexBox>
 
           {/* PRODUCT RATING */}
@@ -305,16 +343,19 @@ export default function ProductIntro({ product }: Props) {
             <Box color="inherit">Stock Available</Box>
           </Box>
 
-          <Box sx={{ display: 'flex', gap: 3 }}>
+          <Box sx={{ display: "flex", gap: 3 }}>
             {/* BUTTONS */}
-            <Box sx={{ display: 'column', gap: 3 }}>
+            <Box sx={{ display: "column", gap: 3 }}>
               <FlexBox alignItems="center" mb={4.5}>
                 <Button
                   size="small"
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => { handleCounterChange(-1, false); }}>
+                  onClick={() => {
+                    handleCounterChange(-1, false);
+                  }}
+                >
                   <Remove fontSize="small" />
                 </Button>
                 <H3 fontWeight="600" mx={2.5}>
@@ -325,7 +366,10 @@ export default function ProductIntro({ product }: Props) {
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => { handleCounterChange(1, false); }}>
+                  onClick={() => {
+                    handleCounterChange(1, false);
+                  }}
+                >
                   <Add fontSize="small" />
                 </Button>
               </FlexBox>
@@ -341,13 +385,15 @@ export default function ProductIntro({ product }: Props) {
                     (window as any).dataLayer.push({
                       // Your dataLayer push code here
                     });
-                  }}>
+                  }}
+                >
                   Add to Cart
                 </Button>
 
                 <Button
                   onClick={handleAddToFav}
-                  sx={{ px: "1.75rem", height: 40 }}>
+                  sx={{ px: "1.75rem", height: 40 }}
+                >
                   {isFav ? (
                     <FavoriteOutlined color="primary" />
                   ) : (
@@ -359,7 +405,8 @@ export default function ProductIntro({ product }: Props) {
                   color="primary"
                   variant="contained"
                   onClick={handleCustomizationClick}
-                  sx={{ px: "1.75rem", height: 40 }}>
+                  sx={{ px: "1.75rem", height: 40 }}
+                >
                   Customize
                 </Button>
               </FlexBox>
@@ -375,8 +422,10 @@ export default function ProductIntro({ product }: Props) {
           </FlexBox>
 
           {/* EDITS DETAIL */}
-          <AditionalDetails detail={product} handleItemChange={handleItemChange} />
-
+          <AditionalDetails
+            detail={product}
+            handleItemChange={handleItemChange}
+          />
         </Grid>
       </Grid>
     </Box>

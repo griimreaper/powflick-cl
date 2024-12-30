@@ -2,7 +2,8 @@ import { ChevronLeftOutlined } from '@mui/icons-material';
 import { Box, TextField, Typography } from '@mui/material';
 import { Customization } from 'models/types';
 import React, { useEffect, useState } from 'react'
-import { useCustomizationsStore, useCustomizationStore } from 'store/customizations';
+import { useCustomizationsStore } from 'store/customizationsStore';
+import { useCustomizationStore } from 'store/customizationStore';
 
 type Props = {
     id: string;

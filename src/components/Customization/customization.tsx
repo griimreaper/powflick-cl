@@ -5,10 +5,21 @@ import useFlag from "hooks/useFlag";
 import { Customization, ProductDB } from "models/types";
 import React, { useEffect, useRef, useState } from "react";
 import { getPDF } from "services/customization";
-import { initialCustomization, useCustomizationsStore, useCustomizationStore } from "store/customizations";
+import {
+  useCustomizationStore,
+} from "store/customizationStore";
+import { useCustomizationsStore } from "store/customizationsStore";
 import { showSuccessAlert } from "utils/alerts";
 import PanelSides from "./panelSides";
-import { Box, Button, CircularProgress, IconButton, Link, Popover, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  Link,
+  Popover,
+  Typography,
+} from "@mui/material";
 // import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 interface CustomizationProps {
@@ -82,7 +93,7 @@ export default function Customizations(props: CustomizationProps) {
     setShowFrontPanel(!showFrontPanel);
   };
 
-  useEffect(() => { }, [list]);
+  useEffect(() => {}, [list]);
 
   const ViewCustomization = async (
     customization: Customization,
@@ -163,9 +174,9 @@ export default function Customizations(props: CustomizationProps) {
 
     newCustomList?.length !== 0
       ? setCustomization(
-        list[list.findIndex((i) => i.productId === productId)]
-          ?.customizations[0]
-      )
+          list[list.findIndex((i) => i.productId === productId)]
+            ?.customizations[0]
+        )
       : clearCustomization();
     showSuccessAlert("Success!", "Customization removed successfully!");
   };
@@ -187,15 +198,15 @@ export default function Customizations(props: CustomizationProps) {
       {isOverlayVisible && (
         <Box
           sx={{
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
             zIndex: 30,
-            width: '100%',
-            height: '100%',
+            width: "100%",
+            height: "100%",
           }}
         />
       )}
@@ -213,7 +224,8 @@ export default function Customizations(props: CustomizationProps) {
           width="100%"
         >
           Product{" "}
-          {Number(customizations?.findIndex((c) => c.id === customization.id)) + 1}
+          {Number(customizations?.findIndex((c) => c.id === customization.id)) +
+            1}
         </Typography>
         <Box
           display="flex"
@@ -238,16 +250,25 @@ export default function Customizations(props: CustomizationProps) {
                 fontWeight: 500,
                 color: "gray.500",
                 gap: 1,
-                cursor: customizations?.findIndex((e) => e.id === customization.id) === 0
-                  ? "not-allowed"
-                  : "pointer",
+                cursor:
+                  customizations?.findIndex(
+                    (e) => e.id === customization.id
+                  ) === 0
+                    ? "not-allowed"
+                    : "pointer",
                 "&:hover": {
-                  borderBottomColor: customizations?.findIndex((e) => e.id === customization.id) === 0
-                    ? "transparent"
-                    : "gray.300",
-                  color: customizations?.findIndex((e) => e.id === customization.id) === 0
-                    ? "gray.500"
-                    : "gray.700",
+                  borderBottomColor:
+                    customizations?.findIndex(
+                      (e) => e.id === customization.id
+                    ) === 0
+                      ? "transparent"
+                      : "gray.300",
+                  color:
+                    customizations?.findIndex(
+                      (e) => e.id === customization.id
+                    ) === 0
+                      ? "gray.500"
+                      : "gray.700",
                 },
               }}
             >
@@ -281,7 +302,10 @@ export default function Customizations(props: CustomizationProps) {
                 },
               }}
             >
-              <AutorenewOutlined sx={{ height: 24, width: "100%" }} aria-hidden="true" />
+              <AutorenewOutlined
+                sx={{ height: 24, width: "100%" }}
+                aria-hidden="true"
+              />
             </Button>
 
             {step4 && (
@@ -323,19 +347,25 @@ export default function Customizations(props: CustomizationProps) {
                 color: "gray.500",
                 gap: 1, // flex gap-2
                 cursor:
-                  customizations?.findIndex((e) => e.id === customization.id) ===
-                    Number(customizations?.length) - 1
+                  customizations?.findIndex(
+                    (e) => e.id === customization.id
+                  ) ===
+                  Number(customizations?.length) - 1
                     ? "not-allowed"
                     : "pointer",
                 "&:hover": {
                   borderColor:
-                    customizations?.findIndex((e) => e.id === customization.id) ===
-                      Number(customizations?.length) - 1
+                    customizations?.findIndex(
+                      (e) => e.id === customization.id
+                    ) ===
+                    Number(customizations?.length) - 1
                       ? "transparent"
                       : "gray.300",
                   color:
-                    customizations?.findIndex((e) => e.id === customization.id) ===
-                      Number(customizations?.length) - 1
+                    customizations?.findIndex(
+                      (e) => e.id === customization.id
+                    ) ===
+                    Number(customizations?.length) - 1
                       ? "gray.500"
                       : "gray.700",
                 },
@@ -363,94 +393,92 @@ export default function Customizations(props: CustomizationProps) {
             p: 2,
           }}
         >
-          {list[list.findIndex((i) => i.productId === productId)]?.customizations.map(
-            (item, index) => {
-              const isActive = item.id === customization.id;
+          {list[
+            list.findIndex((i) => i.productId === productId)
+          ]?.customizations.map((item, index) => {
+            const isActive = item.id === customization.id;
 
-              return (
-                <Box key={item.id}>
-                  {/* Botón numerado */}
+            return (
+              <Box key={item.id}>
+                {/* Botón numerado */}
+                <Button
+                  onClick={() => handleEditCustomization(item)}
+                  variant={isActive ? "contained" : "outlined"}
+                  color={isActive ? "primary" : "secondary"}
+                  sx={{
+                    width: "2rem",
+                    height: "2rem",
+                    fontSize: "0.875rem", // text-sm
+                    borderRadius: "0.375rem", // rounded-md
+                    mb: 1,
+                    textAlign: "center",
+                  }}
+                >
+                  {index + 1}
+                </Button>
+
+                {/* Botón "List" con Popover */}
+                <Box sx={{ position: "relative" }}>
                   <Button
-                    onClick={() => handleEditCustomization(item)}
-                    variant={isActive ? "contained" : "outlined"}
-                    color={isActive ? "primary" : "secondary"}
+                    ref={buttonRef}
+                    onClick={(event) => {
+                      handleCustomizationClick(index, event);
+                      handlePopoverOpen(event);
+                    }}
+                    variant="outlined"
+                    size="small"
                     sx={{
-                      width: "2rem",
-                      height: "2rem",
-                      fontSize: "0.875rem", // text-sm
-                      borderRadius: "0.375rem", // rounded-md
-                      mb: 1,
-                      textAlign: "center",
+                      fontSize: "0.75rem", // text-xs
+                      padding: "0.25rem 0.3rem",
+                      bgcolor: "gray.200",
+                      borderRadius: "0.375rem",
+                      "&:hover": { bgcolor: "primary.light" },
                     }}
                   >
-                    {index + 1}
+                    List
                   </Button>
 
-                  {/* Botón "List" con Popover */}
-                  <Box sx={{ position: "relative" }}>
-                    <Button
-                      ref={buttonRef}
-                      onClick={(event) => {
-                        handleCustomizationClick(index, event);
-                        handlePopoverOpen(event);
+                  {/* Popover para el contenido dinámico */}
+                  {index === 0 && step5 && (
+                    <Popover
+                      open={isPopoverOpen}
+                      anchorEl={buttonRef.current}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
                       }}
-                      variant="outlined"
-                      size="small"
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center",
+                      }}
                       sx={{
-                        fontSize: "0.75rem", // text-xs
-                        padding: "0.25rem 0.3rem",
-                        bgcolor: "gray.200",
-                        borderRadius: "0.375rem",
-                        "&:hover": { bgcolor: "primary.light" },
+                        display: "absolute",
+                        "& .MuiPopover-paper": {
+                          backgroundColor: "transparent", // Fondo transparente
+                          boxShadow: "none", // Sin sombra
+                        },
                       }}
                     >
-                      List
-                    </Button>
-
-                    {/* Popover para el contenido dinámico */}
-                    {index === 0 && step5 && (
-                      <Popover
-                        open={isPopoverOpen}
-                        anchorEl={buttonRef.current}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "center",
-                        }}
-                        sx={{
-                          display: "absolute",
-                          "& .MuiPopover-paper": {
-                            backgroundColor: "transparent", // Fondo transparente
-                            boxShadow: "none",             // Sin sombra
-                          },
-                        }}
-                      >
-                        <Box
-                          sx={{ p: 1 }}
-                        >
-                          <ContainerInfoBox
-                            stepp={5}
-                            arrowPosition="top"
-                            visible={{ step1, step2, step3, step4, step5 }}
-                            setVisible={{
-                              setStep1,
-                              setStep2,
-                              setStep3,
-                              setStep4,
-                              setStep5,
-                            }}
-                          />
-                        </Box>
-                      </Popover>
-                    )}
-                  </Box>
+                      <Box sx={{ p: 1 }}>
+                        <ContainerInfoBox
+                          stepp={5}
+                          arrowPosition="top"
+                          visible={{ step1, step2, step3, step4, step5 }}
+                          setVisible={{
+                            setStep1,
+                            setStep2,
+                            setStep3,
+                            setStep4,
+                            setStep5,
+                          }}
+                        />
+                      </Box>
+                    </Popover>
+                  )}
                 </Box>
-              );
-            }
-          )}
+              </Box>
+            );
+          })}
         </Box>
         <Box sx={{ width: "100%" }}>
           {/* Mostrar el panel frontal o posterior según el estado */}
@@ -472,7 +500,8 @@ export default function Customizations(props: CustomizationProps) {
               sideName="backSide"
               id={productId}
               font={product.font}
-              fontColor={product.font_color} />
+              fontColor={product.font_color}
+            />
           ) : (
             <PanelSides
               steps={{
@@ -490,7 +519,8 @@ export default function Customizations(props: CustomizationProps) {
               image={frontImage}
               sideName="frontSide"
               id={productId}
-              font={product?.font} fontColor={product?.font_color}
+              font={product?.font}
+              fontColor={product?.font_color}
             />
           )}
         </Box>
@@ -501,32 +531,39 @@ export default function Customizations(props: CustomizationProps) {
             <Box
               ref={customizationModalRef}
               sx={{
-                position: 'absolute',
+                position: "absolute",
                 top: `${modalPosition.top}px`,
                 left: `${modalPosition.left}px`,
-                backgroundColor: 'white',
-                border: '1px solid #d1d5db', // Equivalent to border-gray-300
-                borderRadius: '8px', // Rounded corners (adjust as needed)
-                padding: '16px', // Equivalent to p-4
+                backgroundColor: "white",
+                border: "1px solid #d1d5db", // Equivalent to border-gray-300
+                borderRadius: "8px", // Rounded corners (adjust as needed)
+                padding: "16px", // Equivalent to p-4
                 zIndex: 50,
-                display: 'flex',
-                flexWrap: 'wrap',
+                display: "flex",
+                flexWrap: "wrap",
                 fontWeight: 500, // Equivalent to font-medium
-                color: '#4b5563', // Equivalent to text-gray-600
-                fontSize: '14px', // Equivalent to text-sm
-                textAlign: 'left',
-                marginRight: '16px', // Equivalent to mr-4
-                flexDirection: 'column',
+                color: "#4b5563", // Equivalent to text-gray-600
+                fontSize: "14px", // Equivalent to text-sm
+                textAlign: "left",
+                marginRight: "16px", // Equivalent to mr-4
+                flexDirection: "column",
               }}
             >
-              <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'end' }}>
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "end",
+                }}
+              >
                 <IconButton
                   onClick={() => setSelectedCustomization(null)} // Cierra el diálogo
                   style={{
-                    position: 'absolute',
-                    padding: '0px',
-                    top: '-14px',
-                    right: '-14px',
+                    position: "absolute",
+                    padding: "0px",
+                    top: "-14px",
+                    right: "-14px",
                   }}
                 >
                   <Close fontSize="small" />
@@ -542,12 +579,25 @@ export default function Customizations(props: CustomizationProps) {
                 customizations[selectedCustomization].frontSide.logos.map(
                   (each, index) =>
                     each.logoUrl && (
-                      <Box key={index} display="flex" flexDirection="row" alignItems="center">
+                      <Box
+                        key={index}
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                      >
                         <Typography variant="body1" fontWeight="medium">
                           Front Logo {index + 1}:{" "}
                         </Typography>
-                        <img src={each.logoUrl} alt={`Logo ${index + 1}`} style={{ width: 24, height: 24, marginLeft: 8 }} />
-                        <Typography variant="body2" color="textSecondary" sx={{ marginLeft: 1 }}>
+                        <img
+                          src={each.logoUrl}
+                          alt={`Logo ${index + 1}`}
+                          style={{ width: 24, height: 24, marginLeft: 8 }}
+                        />
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          sx={{ marginLeft: 1 }}
+                        >
                           (+{4.99})
                         </Typography>
                       </Box>
@@ -560,14 +610,23 @@ export default function Customizations(props: CustomizationProps) {
                 customizations[selectedCustomization].frontSide.texts.map(
                   (each, index) =>
                     each.text && (
-                      <Box key={index} display="flex" flexDirection="row" alignItems="center">
+                      <Box
+                        key={index}
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                      >
                         <Typography variant="body1" fontWeight="medium">
                           Front Text {index + 1}:{" "}
                         </Typography>
                         <Typography variant="body1" sx={{ marginLeft: 1 }}>
                           {each.text}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" sx={{ marginLeft: 1 }}>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          sx={{ marginLeft: 1 }}
+                        >
                           (+{3.99})
                         </Typography>
                       </Box>
@@ -580,14 +639,23 @@ export default function Customizations(props: CustomizationProps) {
                 customizations[selectedCustomization].frontSide.numbers.map(
                   (each, index) =>
                     each.number && (
-                      <Box key={index} display="flex" flexDirection="row" alignItems="center">
+                      <Box
+                        key={index}
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                      >
                         <Typography variant="body1" fontWeight="medium">
                           Front Number {index + 1}:{" "}
                         </Typography>
                         <Typography variant="body1" sx={{ marginLeft: 1 }}>
                           {each.number}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" sx={{ marginLeft: 1 }}>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          sx={{ marginLeft: 1 }}
+                        >
                           (+{3.99})
                         </Typography>
                       </Box>
@@ -600,12 +668,25 @@ export default function Customizations(props: CustomizationProps) {
                 customizations[selectedCustomization].backSide.logos.map(
                   (each, index) =>
                     each.logoUrl && (
-                      <Box key={index} display="flex" flexDirection="row" alignItems="center">
+                      <Box
+                        key={index}
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                      >
                         <Typography variant="body1" fontWeight="medium">
                           Back Logo {index + 1}:{" "}
                         </Typography>
-                        <img src={each.logoUrl} alt={`Back Logo ${index + 1}`} style={{ width: 24, height: 24, marginLeft: 8 }} />
-                        <Typography variant="body2" color="textSecondary" sx={{ marginLeft: 1 }}>
+                        <img
+                          src={each.logoUrl}
+                          alt={`Back Logo ${index + 1}`}
+                          style={{ width: 24, height: 24, marginLeft: 8 }}
+                        />
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          sx={{ marginLeft: 1 }}
+                        >
                           (+{4.99})
                         </Typography>
                       </Box>
@@ -618,14 +699,27 @@ export default function Customizations(props: CustomizationProps) {
                 customizations[selectedCustomization].backSide.texts.map(
                   (each, index) =>
                     each.text && (
-                      <Box key={index} display="flex" flexDirection="row" alignItems="center">
+                      <Box
+                        key={index}
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                      >
                         <Typography variant="body1" fontWeight="medium">
                           Back Text {index + 1}:{" "}
                         </Typography>
-                        <Typography variant="body1" fontWeight="medium" sx={{ marginLeft: 1 }}>
+                        <Typography
+                          variant="body1"
+                          fontWeight="medium"
+                          sx={{ marginLeft: 1 }}
+                        >
                           {each.text}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" sx={{ marginLeft: 1 }}>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          sx={{ marginLeft: 1 }}
+                        >
                           (+ ${3.99})
                         </Typography>
                       </Box>
@@ -638,14 +732,27 @@ export default function Customizations(props: CustomizationProps) {
                 customizations[selectedCustomization].backSide.numbers.map(
                   (each, index) =>
                     each.number && (
-                      <Box key={index} display="flex" flexDirection="row" alignItems="center">
+                      <Box
+                        key={index}
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                      >
                         <Typography variant="body1" fontWeight="medium">
                           Back Number {index + 1}:{" "}
                         </Typography>
-                        <Typography variant="body1" fontWeight="medium" sx={{ marginLeft: 1 }}>
+                        <Typography
+                          variant="body1"
+                          fontWeight="medium"
+                          sx={{ marginLeft: 1 }}
+                        >
                           {each.number}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" sx={{ marginLeft: 1 }}>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          sx={{ marginLeft: 1 }}
+                        >
                           (+ ${3.99})
                         </Typography>
                       </Box>
@@ -661,49 +768,56 @@ export default function Customizations(props: CustomizationProps) {
               )}
               {customizations[selectedCustomization].pants !==
                 "None (+$0.00)" && (
-                  <p>Pants: {customizations[selectedCustomization].pants}</p>
-                )}
+                <p>Pants: {customizations[selectedCustomization].pants}</p>
+              )}
               {customizations[selectedCustomization].shorts !==
                 "No Shorts (+$0.00)" && (
-                  <p>Shorts: {customizations[selectedCustomization].shorts}</p>
-                )}
+                <p>Shorts: {customizations[selectedCustomization].shorts}</p>
+              )}
               {customizations[selectedCustomization].socks !==
                 "No Socks (+$0.00)" && (
-                  <p>Socks: {customizations[selectedCustomization].socks}</p>
-                )}
+                <p>Socks: {customizations[selectedCustomization].socks}</p>
+              )}
               {/* Contenido del modal con los detalles de la customización */}
 
               <Button
-                onClick={() => ViewCustomization(customizations[selectedCustomization], productId)}
+                onClick={() =>
+                  ViewCustomization(
+                    customizations[selectedCustomization],
+                    productId
+                  )
+                }
                 variant="contained"
                 color="primary"
                 size="small"
                 sx={{
                   mt: 2,
-                  textTransform: 'none',
-                  '&:hover': {
-                    backgroundColor: 'neutral.main',
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "neutral.main",
                   },
-                  '&:focus': {
-                    outline: 'none',
+                  "&:focus": {
+                    outline: "none",
                     ring: 2,
-                    ringColor: 'logo.main',
+                    ringColor: "logo.main",
                     ringOffset: 2,
-                    ringOffsetColor: 'gray.50',
+                    ringOffsetColor: "gray.50",
                   },
                 }}
                 disabled={loadingState[productId]}
               >
                 {loadingState[productId] ? (
-                  <CircularProgress size={24} sx={{ margin: 'auto' }} />
+                  <CircularProgress size={24} sx={{ margin: "auto" }} />
                 ) : (
-                  'View'
+                  "View"
                 )}
               </Button>
               {customizations?.length !== 1 && (
                 <Button
                   onClick={() => {
-                    handleRemoveCustomization(customizations[selectedCustomization]?.id);
+                    handleRemoveCustomization(
+                      customizations[selectedCustomization]?.id
+                    );
                     setSelectedCustomization(null);
                   }}
                   variant="contained"
@@ -711,16 +825,16 @@ export default function Customizations(props: CustomizationProps) {
                   size="small"
                   sx={{
                     mt: 2,
-                    textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: 'error',
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "error",
                     },
-                    '&:focus': {
-                      outline: 'none',
+                    "&:focus": {
+                      outline: "none",
                       ring: 2,
-                      ringColor: 'error.main',
+                      ringColor: "error.main",
                       ringOffset: 2,
-                      ringOffsetColor: 'gray.50',
+                      ringOffsetColor: "gray.50",
                     },
                   }}
                 >
@@ -729,7 +843,7 @@ export default function Customizations(props: CustomizationProps) {
               )}
             </Box>
           )}
-      </Box >
+      </Box>
     </>
   );
 }
