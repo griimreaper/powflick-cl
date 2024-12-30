@@ -118,18 +118,18 @@ export default function ProductCard9(props: Props) {
             </Link>
 
             {/* PRODUCT RATING / REVIEW  */}
-            <Rating size="small" value={rating} color="warn" readOnly />
+            <Rating size="small" value={4} color="warn" readOnly />
 
             {/* PRODUCT PRICE */}
             <ProductPrice price={price} discount={off!} />
           </div>
 
           {/* PRODUCT ADD TO CART BUTTON */}
-          <AddToCartButton
+          {/* <AddToCartButton
             quantity={cartItem?.qty}
             handleDecrement={handleDecrementQuantity}
             handleIncrement={handleIncrementQuantity}
-          />
+          /> */}
         </div>
       </ContentWrapper>
     </Wrapper>

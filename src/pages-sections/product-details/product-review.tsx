@@ -73,7 +73,7 @@ export default function ProductReview({ reviews, typeId }: {typeId: string ,revi
         <ProductComment name={item.author} comment={item.review} date={item.createdAt} rating={Number(item.rating)} imgUrl={item.user.image} key={ind} />
       ))}
 
-      <H2 fontWeight="600" mt={7} mb={2.5}>
+      {/* <H2 fontWeight="600" mt={7} mb={2.5}>
         Write a Review for this product
       </H2>
 
@@ -130,7 +130,7 @@ export default function ProductReview({ reviews, typeId }: {typeId: string ,revi
         <Button variant="contained" color="primary" type="submit" disabled={!(dirty && isValid)}>
           Submit
         </Button>
-      </form>
+      </form> */}
     </div>
   );
 }

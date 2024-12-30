@@ -27,6 +27,9 @@ import {
 // CUSTOM DATA MODEL
 import { ProductDB } from "models/types";
 import Marquee from "react-fast-marquee";
+import ProductPrice from "components/product-cards/product-price";
+import DiscountChip from "../discount-chip";
+
 
 // ==============================================================
 type Props = { product: ProductDB };
@@ -67,6 +70,7 @@ export default function ProductCard8({ product }: Props) {
   return (
     <Card>
       <CardMedia>
+           <DiscountChip discount={discount} />
         <Link href={`/products/${slug}`}>
           <LazyImage
             width={300}
@@ -149,9 +153,9 @@ export default function ProductCard8({ product }: Props) {
         )}
 
         {/* ADD TO CART BUTTON */}
-        <AddToCartButton className="product-actions" onClick={handleAddToCart}>
+        {/* <AddToCartButton className="product-actions" onClick={handleAddToCart}>
           <AddShoppingCart className="icon" fontSize="small" />
-        </AddToCartButton>
+        </AddToCartButton> */}
 
         {/* PRODUCT FAVORITE BUTTON */}
         <FavoriteButton
@@ -197,9 +201,10 @@ export default function ProductCard8({ product }: Props) {
         <Paragraph fontWeight="bold">{title}</Paragraph>
 
         {/* PRODUCT PRICE  */}
-        <H4 fontWeight={700} py={0.5}>
-          {currency(price)}
-        </H4>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+
+             <ProductPrice discount={discount} price={price} />
+        </div>
 
         {/* PRODUCT RATING / REVIEW  */}
         <FlexRowCenter gap={1}>

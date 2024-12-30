@@ -22,9 +22,10 @@ import useCart from "hooks/useCart";
 import useHeader from "../hooks/use-header";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 export default function MobileHeader() {
-  const { state } = useCart();
+  const { cart } = useShoppingCartStore();
   const {
     dialogOpen,
     sidenavOpen,
@@ -66,7 +67,7 @@ export default function MobileHeader() {
             <Icon.User sx={ICON_STYLE} />
           </IconButton>
 
-          <Badge badgeContent={state.cart.length} color="primary">
+          <Badge  badgeContent={cart?.length} color="primary">
             <IconButton onClick={toggleSidenav}>
               <Icon.CartBag sx={ICON_STYLE} />
             </IconButton>

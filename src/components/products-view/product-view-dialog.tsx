@@ -32,7 +32,7 @@ interface Props {
 
 export default function ProductViewDialog(props: Props) {
   const { product, openDialog, handleCloseDialog } = props;
-  const { handleCounterChange } = useCounter(product, false, true);
+  // const { handleCounterChange } = useCounter(product, false, true);
 
   const { cart } = useShoppingCartStore();
 
@@ -105,7 +105,7 @@ export default function ProductViewDialog(props: Props) {
 
               <Divider sx={{ mb: 2 }} />
 
-              {!cartItem?.customizations.length ? (
+              {/* {!cartItem?.customizations.length ? (
                 <Button
                   size="large"
                   color="dark"
@@ -141,7 +141,7 @@ export default function ProductViewDialog(props: Props) {
                     <Add fontSize="small" />
                   </Button>
                 </FlexBox>
-              )}
+              )} */}
             </Grid>
           </Grid>
         </div>

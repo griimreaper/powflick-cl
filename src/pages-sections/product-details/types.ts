@@ -6,7 +6,7 @@ export interface ProductFilters {
   price: number[];
   rating: number;
   category: string[];
-  //   category: string[];
+  collection: string[];
 }
 
 export type ProductFilterKeys = keyof ProductFilters;

@@ -14,6 +14,7 @@ import ShoppingBagOutlined from "icons/ShoppingBagOutlined";
 import useCart from "hooks/useCart";
 // STYLED COMPONENTS
 import { iconStyle, StyledBox, StyledDrawer, StyledNavLink, Wrapper } from "./styles";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 /**
  * Difference between MobileNavigationBar and MobileNavigationBar2
@@ -25,6 +26,8 @@ export default function MobileNavigationBar2({ children }: PropsWithChildren) {
   const { state } = useCart();
   const [open, setOpen] = useState(false);
   const DOWN_900 = useMediaQuery((theme: Theme) => theme.breakpoints.down(900));
+
+  const { cart } = useShoppingCartStore();
 
   const handleDrawerClose = () => setOpen(false);
   const handleDrawerToggle = () => setOpen((state) => !state);
@@ -44,7 +47,10 @@ export default function MobileNavigationBar2({ children }: PropsWithChildren) {
             const CONTENT = (
               <Fragment>
                 {title === "Cart" ? (
-                  <Badge badgeContent={state.cart.length} color="primary">
+                  <Badge badgeContent={cart?.reduce(
+                    (acc, item) => acc + (item.customizations?.length || 0),
+                    0
+                  )} color="primary">
                     {ICON}
                   </Badge>
                 ) : (

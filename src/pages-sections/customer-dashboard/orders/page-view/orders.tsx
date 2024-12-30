@@ -28,9 +28,11 @@ export default function OrdersPageView() {
       <DashboardHeader Icon={ShoppingBag} title="My Orders" />
 
       {/* ORDER LIST AREA */}
-      {currentOrders.map((order) => (
-        <OrderRow order={order} key={order.id} />
-      ))}
+      {[...currentOrders]
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // Convertir a timestamps
+        .map((order) => (
+          <OrderRow order={order} key={order.id} />
+        ))}
 
       {/* ORDERS PAGINATION */}
       <Pagination

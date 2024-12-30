@@ -71,7 +71,7 @@ export default function ProductCard16({ product }: Props) {
             </H6>
           </Link>
 
-          <Rating readOnly value={0} size="small" precision={0.5} />
+          <Rating readOnly value={4} size="small" precision={0.5} />
 
           <PriceText>
             {discount ? <span className="base-price">{currency(price)}</span> : null}
@@ -80,11 +80,11 @@ export default function ProductCard16({ product }: Props) {
         </div>
 
         {/* PRODUCT QUANTITY HANDLER BUTTONS */}
-        <QuantityButtons
+        {/* <QuantityButtons
           quantity={cartItem?.qty || 0}
           handleIncrement={handleIncrementQuantity}
           handleDecrement={handleDecrementQuantity}
-        />
+        /> */}
       </FlexBetween>
     </div>
   );

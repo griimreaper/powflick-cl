@@ -10,13 +10,13 @@ import { Box, Typography } from "@mui/material";
 const sportsCategories = [
   {
     id: 1,
-    title: "Football",
-    image: "/assets/images/categories/new/basketball.jpg",
+    title: "Soccer",
+    image: "/assets/images/categories/new/soccer.jpg",
   },
   {
     id: 2,
     title: "Basketball",
-    image: "/assets/images/categories/new/soccer.jpg",
+    image: "/assets/images/categories/new/basketball.jpg",
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ const sportsCategories = [
   },
   {
     id: 4,
-    title: "Baseball",
+    title: "Gamer",
     image: "/assets/images/categories/new/gamer.jpg",
   },
 ];
