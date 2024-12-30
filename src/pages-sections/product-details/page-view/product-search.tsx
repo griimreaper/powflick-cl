@@ -34,6 +34,7 @@ import Product from "models/Product.model";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useNavbar } from "contexts/NavBarContext";
 import { ProductDB } from "models/types";
+import Breadcrumbs from "./Breadcrumbs";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
@@ -49,6 +50,7 @@ const initialFilters = {
   sales: [],
   price: [0, 300],
   category: [],
+  collection: [],
   search: "",
 };
 
@@ -71,7 +73,11 @@ const handleSortProducts = (
       filters.category.some((category) =>
         product.product_categories.includes(category)
       );
-    return isInPriceRange && matchesColor && matchesSearch && matchesCategory;
+    const matchesCollection =
+      filters.collection.length === 0 ||
+      product.title.includes(filters.collection[0]);
+
+    return isInPriceRange && matchesColor && matchesSearch && matchesCategory && matchesCollection;
   });
 
   switch (sortBy) {
@@ -95,23 +101,33 @@ export default function ProductSearchPageView({ data }: any) {
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const searchParams = useSearchParams();
-  const querys = {
-    query: searchParams.get("query"),
-    // category: searchParams.get("category"),
-  };
 
   useEffect(() => {
-    setFilters((prev) => {
-      const newFilters = { ...prev };
-      if (querys?.query) {
-        newFilters.search = querys.query;
-      }
-      // if (querys?.category) {
-      //   newFilters.category = [querys?.category as string];
-      // }
-      return newFilters;
-    });
-  }, [querys?.query]);
+    const newFilters: any = { ...initialFilters };
+
+    if (searchParams.get("query")) newFilters.search = searchParams.get("query") || "";
+    if (searchParams.get("category")) newFilters.category = [searchParams.get("category")];
+    if (searchParams.get("collection")) newFilters.collection = [searchParams.get("collection")];
+    if (searchParams.get("color")) newFilters.color = [searchParams.get("color")];
+    if (searchParams.get("minPrice")) newFilters.price[0] = parseInt(searchParams.get("minPrice") || "0", 10);
+    if (searchParams.get("maxPrice")) newFilters.price[1] = parseInt(searchParams.get("maxPrice") || "300", 10);
+    if (searchParams.get("rating")) newFilters.rating = parseInt(searchParams.get("rating") || "0", 10);
+
+    setFilters(newFilters);
+  }, [searchParams]);
+
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products" },
+    ...(filters.category[0] ? [{ label: filters.category[0], href: `/products?category=${filters.category[0]}` }] : []),
+    ...(filters.collection[0] ? [{ label: `${filters.collection}`, href: `/products?collection=${filters.collection}` }] : []),
+    ...(filters.color[0] ? [{ label: `${filters.color[0]}`, href: `/products?color=${filters.color[0]}` }] : []),
+    ...(filters.search ? [{ label: `Search: ${filters.search}` }] : []),
+  ];
+
+  console.log(breadcrumbs);
+  console.log(filters);
+
 
   const handleChangeFilters = (
     key: ProductFilterKeys,
@@ -129,12 +145,19 @@ export default function ProductSearchPageView({ data }: any) {
   return (
     <div className="bg-white pt-2 pb-4">
       <Container>
+        {/* Breadcrumbs */}
+        <Box mb={2}>
+          <Breadcrumbs items={breadcrumbs} />
+        </Box>
+
         {/* FILTER ACTION AREA */}
         <FlexBetween flexWrap="wrap" gap={2} mb={2}>
           <div>
-            <H5 lineHeight={1} mb={1}>
-              Searching for “ {querys?.query} ”
-            </H5>
+            {filters.search &&
+              <H5 lineHeight={1} mb={1}>
+                Searching for “ {filters?.search} ”
+              </H5>
+            }
             <Paragraph color="grey.600">
               {sortedProducts.length} results found
             </Paragraph>

@@ -81,13 +81,8 @@ export default function ProductIntro({ product }: Props) {
   const { token } = profile;
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isFav, setIsFav] = useState<boolean>(
-    profile.favorites?.some(({ product }) => product.id === id)
-  );
-  const { counter, setCounter, handleCounterChange } = useCounter(
-    product.product,
-    false
-  );
+  const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
+  const {counter, setCounter, handleCounterChange} = useCounter(product.product.id);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
@@ -352,24 +347,18 @@ export default function ProductIntro({ product }: Props) {
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => {
-                    handleCounterChange(-1, false);
-                  }}
-                >
+                  onClick={() => { handleCounterChange(-1); }}>
                   <Remove fontSize="small" />
                 </Button>
                 <H3 fontWeight="600" mx={2.5}>
-                  {customizations.length}
+                  {counter}
                 </H3>
                 <Button
                   size="small"
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => {
-                    handleCounterChange(1, false);
-                  }}
-                >
+                  onClick={() => { handleCounterChange(1); }}>
                   <Add fontSize="small" />
                 </Button>
               </FlexBox>

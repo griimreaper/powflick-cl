@@ -24,7 +24,7 @@ export default function CategoryList({ open, position = "absolute" }: Props) {
       // offer: { url: "/assets/images/promotion/offer-5.png", href: "/", position: "bottom" },
       child: data?.categories
     },
-    { icon: Public, title: "Blog", href: "/blog" },
+    // { icon: Public, title: "Blog", href: "/blog" },
     { icon: ContactMail, title: "Contact", href: "/contact" },
     { icon: Info, title: "About Us", href: "/about-us" },
     { icon: Help, title: "Help", href: "/help" },

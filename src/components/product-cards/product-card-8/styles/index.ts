@@ -31,7 +31,7 @@ export const AddToCartButton = styled(IconButton)(({ theme }) => ({
 }));
 
 export const FavoriteButton = styled(IconButton)(({ theme }) => ({
-  top: 55,
+  top: 15,
   right: -40,
   position: "absolute",
   backgroundColor: "white",

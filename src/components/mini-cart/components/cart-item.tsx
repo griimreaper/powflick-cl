@@ -51,10 +51,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function MiniCartItem({ item }: Props) {
-  const { counter, setCounter, handleCounterChange } = useCounter(
-    item.product,
-    true
-  );
+  // const { counter, setCounter, handleCounterChange } = useCounter(item.product.id);
 
   const { cart } = useShoppingCartStore();
 
@@ -102,7 +99,7 @@ export default function MiniCartItem({ item }: Props) {
       sx={{ zIndex: 10 }} // Añadir zIndex aquí
     >
       <FlexBox alignItems="center" flexDirection="column">
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
@@ -112,11 +109,11 @@ export default function MiniCartItem({ item }: Props) {
           sx={{ height: 28, width: 28, borderRadius: 50 }}
         >
           <Add fontSize="small" />
-        </Button>
+        </Button> */}
 
         <H6 my="3px">{item.customizations.length}</H6>
 
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
@@ -127,7 +124,7 @@ export default function MiniCartItem({ item }: Props) {
           sx={{ height: 28, width: 28, borderRadius: 50 }}
         >
           <Remove fontSize="small" />
-        </Button>
+        </Button> */}
       </FlexBox>
 
       <Link href={`/products/${item.product.id}`}>

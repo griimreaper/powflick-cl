@@ -152,9 +152,9 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     setReviews(sortedReviews);
   };
 
-  const averageRating = (
-    reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length
-  ).toFixed(1);
+  const averageRating = reviews.length ? (
+    reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) / reviews.length
+  ).toFixed(1) : "0";
 
   const sliderSettings = {
     dots: true,

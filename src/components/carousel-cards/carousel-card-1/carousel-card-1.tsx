@@ -8,6 +8,7 @@ import { StyledRoot } from "./styles";
 import { Box, Typography } from "@mui/material";
 import BannerTop from "components/BannerTop";
 import Image from "next/image";
+import Link from "next/link";
 
 // ==================================================
 interface Props {
@@ -66,18 +67,20 @@ export default function CarouselCard1({
               </Button>
             </a>
           </Grid> */}
-      <Image
-        src={`/${imgUrl}`}
-        alt="image slider"
-        layout="responsive"
-        width={700}
-        height={400}
-        style={{
-          margin: "auto",
-          display: "block",
-          maxWidth: "100%",
-        }}
-      />
+      <Link href={'/products'}>
+        <Image
+          src={`/${imgUrl}`}
+          alt="image slider"
+          layout="responsive"
+          width={700}
+          height={400}
+          style={{
+            margin: "auto",
+            display: "block",
+            maxWidth: "100%",
+          }}
+        />
+      </Link>
     </>
   );
 }

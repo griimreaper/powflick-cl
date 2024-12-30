@@ -32,7 +32,7 @@ export default function CheckoutForm({ data }: any) {
     <Card sx={{ padding: 3 }}>
       <ListItem mb={1} title="Subtotal" value={subtotal} />
       <ListItem mb={1} title="Customizations" value={totalCustomizations} />
-      <ListItem mb={1} title="Discount" value={data.coupon.discount || 0} />
+      <ListItem mb={1} title="Discount" value={data?.coupon?.discount || 0} />
       <FlexBetween mb={2}>
         <Span color="grey.600">Total:</Span>
 
