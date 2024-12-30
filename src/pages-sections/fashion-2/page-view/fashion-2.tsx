@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect } from "react";
 import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -80,14 +80,14 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
         {/* Best Sellers Section */}
         <Section7 />
       </AnimatedSection>
-      <AnimatedSection>
-        {/* Trending Products Section */}
-        <Section8 />
-      </AnimatedSection>
-      <AnimatedSection>
-        {/* Customer Favorites Section */}
-        <Section9 />
-      </AnimatedSection>
+      {/* <AnimatedSection> */}
+      {/* Trending Products Section */}
+      {/* <Section8 />
+      </AnimatedSection> */}
+      {/* <AnimatedSection> */}
+      {/* Customer Favorites Section */}
+      {/* <Section9 /> */}
+      {/* </AnimatedSection> */}
       <AnimatedSection>
         {/* Collections Section */}
         <Section10 products={data?.landing?.collections} />
