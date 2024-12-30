@@ -51,7 +51,10 @@ const CustomButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function MiniCartItem({ item }: Props) {
-  const { counter, setCounter, handleCounterChange } = useCounter(item.product, true);
+  const { counter, setCounter, handleCounterChange } = useCounter(
+    item.product,
+    true
+  );
 
   const { cart } = useShoppingCartStore();
 
@@ -103,8 +106,11 @@ export default function MiniCartItem({ item }: Props) {
           size="small"
           color="primary"
           variant="outlined"
-          onClick={() => { handleCounterChange(1, true); }}
-          sx={{ height: 28, width: 28, borderRadius: 50 }}>
+          onClick={() => {
+            handleCounterChange(1, true);
+          }}
+          sx={{ height: 28, width: 28, borderRadius: 50 }}
+        >
           <Add fontSize="small" />
         </Button>
 
@@ -115,8 +121,11 @@ export default function MiniCartItem({ item }: Props) {
           color="primary"
           variant="outlined"
           disabled={item.customizations.length === 1}
-          onClick={() => { handleCounterChange(-1, true); }}
-          sx={{ height: 28, width: 28, borderRadius: 50 }}>
+          onClick={() => {
+            handleCounterChange(-1, true);
+          }}
+          sx={{ height: 28, width: 28, borderRadius: 50 }}
+        >
           <Remove fontSize="small" />
         </Button>
       </FlexBox>
@@ -124,7 +133,7 @@ export default function MiniCartItem({ item }: Props) {
       <Link href={`/products/${item.product.id}`}>
         <Avatar
           alt={item.product.title}
-          src={item.product?.images && item.product.images[0] || ''}
+          src={(item.product?.images && item.product.images[0]) || ""}
           sx={{ mx: 1, width: 75, height: 75 }}
         />
       </Link>
@@ -146,10 +155,17 @@ export default function MiniCartItem({ item }: Props) {
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
-          {currency(item.customizations.length * item.product.price + item.customizations.reduce((acc, _) => acc + _.price, 0))}
+          {currency(
+            item.customizations.length * item.product.price +
+              item.customizations.reduce((acc, _) => acc + _.price, 0)
+          )}
         </H6>
 
-        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "scroll", py: 1}}>
+        <FlexBox
+          alignItems="center"
+          gap={1}
+          sx={{ overflowX: "auto", py: 1, width: "100%" }}
+        >
           {item.customizations.map((_, index) => (
             <CustomButton
               key={index}

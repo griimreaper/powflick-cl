@@ -1,6 +1,6 @@
 import { Customization, Logo, Number as Numb, Text } from 'models/types';
 import React, { useState } from 'react'
-import { useCustomizationsStore } from 'store/customizations';
+import { useCustomizationsStore } from 'store/customizationsStore';
 import { deleteImage, setImageBlob } from 'services/imageStorage';
 import CustomTooltip from 'components/Tooltip/tooltip';
 import InputTeam from './inputTeam';

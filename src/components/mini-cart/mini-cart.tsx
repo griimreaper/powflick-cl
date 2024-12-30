@@ -25,17 +25,6 @@ export default function MiniCart({ toggleSidenav }: Props) {
   const { cart, total, setCoupon, coupon } = useShoppingCartStore();
   const cartList = cart;
 
-  // const handleCartAmountChange = (amount: number, product: CartItem) => () => {
-  //   dispatch({
-  //     type: "CHANGE_CART_AMOUNT",
-  //     payload: { ...product, qty: amount }
-  //   });
-  // };
-
-  // const getTotalPrice = () => {
-  //   return cartList.reduce((acc, item) => acc + item.price * item.qty, 0);
-  // };
-
   const handleNavigate = (path: string) => () => {
     toggleSidenav();
     push(path);
