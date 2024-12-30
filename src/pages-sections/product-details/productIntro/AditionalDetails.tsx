@@ -15,7 +15,7 @@ import { Customization } from "models/types";
 import {
   initialCustomization,
   useCustomizationStore,
-} from "store/customizations";
+} from "store/customizationStore";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;

@@ -1,6 +1,7 @@
 import { Customization, ProductDB } from "models/types";
 import { useEffect, useState } from "react";
-import { initialCustomization, useCustomizationsStore, useCustomizationStore } from "store/customizations";
+import { initialCustomization, useCustomizationStore } from "store/customizationStore";
+import { useCustomizationsStore } from "store/customizationsStore";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { showSuccessAlert } from "utils/alerts";
 

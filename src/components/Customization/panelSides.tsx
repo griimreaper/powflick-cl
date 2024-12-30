@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { CustomizationSides, Logo, Number as Numb, Text } from "models/types";
 import ContainerInfoBox from "../Modals/ContainerInfoBox";
-import { useCustomizationsStore, useCustomizationStore } from "store/customizations";
+import { useCustomizationStore } from "store/customizationStore";
+import { useCustomizationsStore } from "store/customizationsStore";
 import MainContainer from "./MainContainer";
 import EditableContainer from "./EditableContainer";
 import useHearingEvent from "hooks/hearingEvent";

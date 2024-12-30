@@ -2,10 +2,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { eliminarCaracteresNoNumericos } from "utils/tools";
 import { Customization } from "models/types";
-import {
-  useCustomizationsStore,
-  useCustomizationStore,
-} from "store/customizations";
+import { useCustomizationStore } from "store/customizationStore";
+import { useCustomizationsStore } from "store/customizationsStore";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { getProductsBySlug } from "services/Products";
 import { getPDF } from "services/customization";
@@ -29,7 +27,7 @@ interface CustomizationModalProps {
   position: { top: number; left: number };
   orderId: number | null;
   currencyOrder: { name: string; currency: number } | null;
-  style?: React.CSSProperties; 
+  style?: React.CSSProperties;
 }
 
 export function CustomizationModal({
@@ -40,7 +38,7 @@ export function CustomizationModal({
   productSlug,
   orderId,
   currencyOrder,
-  style, 
+  style,
 }: CustomizationModalProps) {
   const [loadingState, setLoadingState] = useState<{ [key: string]: boolean }>(
     {}
@@ -209,6 +207,20 @@ export function CustomizationModal({
               : customization.materials}
           </Typography>
         )}
+
+        {customization?.neck && (
+          <Typography>Neck: {customization.neck}</Typography>
+        )}
+        {customization?.socks && (
+          <Typography>Socks: {customization.socks}</Typography>
+        )}
+        {customization?.pants && (
+          <Typography>Pants: {customization.pants}</Typography>
+        )}
+        {customization?.shorts && (
+          <Typography>Shorts: {customization.shorts}</Typography>
+        )}
+
         <Box display="flex" justifyContent="center" gap={1}>
           <Button
             onClick={() => ViewCustomization(customization!, productId)}

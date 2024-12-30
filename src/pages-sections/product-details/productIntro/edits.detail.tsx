@@ -17,7 +17,7 @@ import "react-medium-image-zoom/dist/styles.css";
 //   killParenthesisIn,
 // } from "@/utils/tools";
 import { Customization } from "models/types";
-import { initialCustomization, useCustomizationStore } from "store/customizations";
+import { initialCustomization, useCustomizationStore } from "store/customizationStore";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
