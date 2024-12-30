@@ -127,7 +127,7 @@ export default function Newsletter({
                 </H1>
 
                 <Paragraph color="grey.600" mb={5}>
-                  Subscribe to the BAZAR eCommerce newsletter to receive timely
+                  Subscribe to the Sport Zone eCommerce newsletter to receive timely
                   updates from your favorite products.
                 </Paragraph>
 
