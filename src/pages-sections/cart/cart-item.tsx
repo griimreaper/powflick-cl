@@ -111,7 +111,7 @@ export default function CartItem({ item }: Props) {
 
         {/* PRODUCT QUANTITY INC/DEC BUTTONS */}
         <FlexBox alignItems="start" display={'flex'} gap={2} flexDirection={'column-reverse'} >
-          <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'}>
+          <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'} maxWidth={'99%'} sx={{ overflowX: "auto", py: 1 }}>
             {item.customizations.map((_, index) => (
               <CustomButton
                 key={index}

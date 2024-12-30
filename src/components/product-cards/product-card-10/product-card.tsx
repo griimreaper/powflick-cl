@@ -76,11 +76,11 @@ export default function ProductCard10({ product }: Props) {
       </CardMedia>
 
       {/* PRODUCT VIEW BOX */}
-      <ProductViewDialog
+      {/* <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
         product={{ id, slug, title, price, imgGroup: [URL, URL] }}
-      />
+      /> */}
 
       <Box p={2} textAlign="center">
         {/* PRODUCT TITLE */}

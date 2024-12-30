@@ -161,11 +161,7 @@ export default function MiniCartItem({ item }: Props) {
           )}
         </H6>
 
-        <FlexBox
-          alignItems="center"
-          gap={1}
-          sx={{ overflowX: "auto", py: 1, width: "100%" }}
-        >
+        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "auto", py: 1}}>
           {item.customizations.map((_, index) => (
             <CustomButton
               key={index}

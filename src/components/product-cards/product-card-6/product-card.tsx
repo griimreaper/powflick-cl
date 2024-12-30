@@ -69,11 +69,11 @@ export default function ProductCard6(props: Props) {
       </ImgBox>
 
       {/* PRODUCT VIEW DIALOG BOX */}
-      <ProductViewDialog
+      {/* <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
         product={{ title, price, id, slug, imgGroup: images }}
-      />
+      /> */}
 
       <ContentWrapper>
         {/* PRODUCT PRICE WITH DISCOUNT */}
