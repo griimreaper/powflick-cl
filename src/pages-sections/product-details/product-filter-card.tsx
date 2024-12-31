@@ -108,7 +108,7 @@ export default function ProductFilterCard({
   };
 
   const handleChangeSubCategory = (value: string) => {
-    changeFilters && changeFilters("collection", value);
+    changeFilters && changeFilters("collection", [value]);
   };
 
   const toggleCollapse = (categoryId: string) => {
