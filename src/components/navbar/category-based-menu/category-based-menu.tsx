@@ -10,6 +10,7 @@ import { Wrapper, StyledCard, MenusContainer } from "./styles";
 // DATA TYPES
 import { MenuList } from "./types";
 import Link from "next/link";
+import { Typography } from "@mui/material";
 
 // ===============================================================
 type Props = { menuList: MenuList[]; title: string };
@@ -22,10 +23,13 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
 
   return (
     <Wrapper>
-      <FlexRowCenter fontWeight={600} alignItems="flex-end" gap={0.3}>
+      <FlexRowCenter alignItems="center" display={"flex"} flexDirection={"row"} width={"100%"} gap={"0.3rem"}>
         <Link href={'/products'}>
-          {title} <KeyboardArrowDown sx={{ color: "grey.500", fontSize: "1.1rem" }} />
+          <Typography sx={{ fontWeight: 600 }}>
+            {title}
+          </Typography>
         </Link>
+        <KeyboardArrowDown sx={{ color: "grey.500", fontSize: "1.1rem", display: "absolute" }} />
       </FlexRowCenter>
 
       <MenusContainer className="menu-list">

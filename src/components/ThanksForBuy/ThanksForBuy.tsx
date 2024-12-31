@@ -45,19 +45,19 @@ export default function ThanksForBuy({ id }: { id: string }) {
             ecommerce: {
               transaction_id: order.id,
               value: order.total,
-              currency: 'USD',
+              currency: "USD",
               coupon: order.coupon?.title || null,
               discount: order.coupon
                 ? ((order.total * order.coupon.discount) / 100).toFixed(2)
                 : 0,
               shippingAddress: {
-                address: order.data.direction?.address,
-                postalCode: order.data.direction?.postalCode,
-                district: order.data.direction?.district,
-                city: order.data.direction?.city,
-                country: order.data.direction?.country,
+                address: order?.data?.direction?.address,
+                postalCode: order?.data?.direction?.postalCode,
+                district: order?.data?.direction?.district,
+                city: order?.data?.direction?.city,
+                country: order?.data?.direction?.country,
               },
-              items: order.products.map(
+              items: order?.products?.map(
                 ({
                   title,
                   id,

@@ -11,6 +11,7 @@ import "swiper/css/autoplay";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 
 interface Props {
   props: string;
@@ -18,11 +19,12 @@ interface Props {
 }
 
 const BannerTop: React.FC<Props> = ({ props, textColor }) => {
+    const theme = useTheme();
   return (
     <Box
       className={`banner-top style-four w-full ${props}`}
       sx={{
-        backgroundColor: "black",
+        backgroundColor: theme.palette.grey[900],
         color: "white",
         textAlign: "center",
         height: "37px",

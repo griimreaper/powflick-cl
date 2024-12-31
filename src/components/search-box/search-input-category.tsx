@@ -23,7 +23,7 @@ export default function SearchInputWithCategory() {
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
-      router.push(`/products?query=${searchText}&category=${categoryTitle}`);
+      router.push(`/products?query=${searchText}`);
     }
   };
 

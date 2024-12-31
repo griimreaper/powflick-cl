@@ -26,7 +26,7 @@ export default function AddressDetailsPageView({ id }: Props) {
       {/* TITLE HEADER AREA */}
       <DashboardHeader
         Icon={Place}
-        href="/address"
+        href="/dashboard/address"
         title="Edit Address"
         buttonText="Back to Address"
       />

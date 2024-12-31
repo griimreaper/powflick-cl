@@ -51,7 +51,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function CartItem({ item }: Props) {
-  const { counter, handleCounterChange } = useCounter(item.product, true);
+  // const { counter, handleCounterChange } = useCounter(item.product, true);
   const [selectedCustomization, setSelectedCustomization] = useState<
     [string, string] | null
   >(null);
@@ -125,7 +125,7 @@ export default function CartItem({ item }: Props) {
               </CustomButton>
             ))}
           </Box>
-          <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'}>
+          {/* <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'}>
             <Button
               color="primary"
               sx={{ p: "5px" }}
@@ -148,7 +148,7 @@ export default function CartItem({ item }: Props) {
             >
               <Add fontSize="small" />
             </Button>
-          </Box>
+          </Box> */}
         </FlexBox>
         {selectedCustomization !== null && (
           <CustomizationModal

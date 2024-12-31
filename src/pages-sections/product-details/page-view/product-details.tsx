@@ -23,10 +23,10 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       <ProductTabs content={product.content} reviews={reviews} productId={product.id} />
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
-      <FrequentlyBought products={frequentlyBought} />
+      {/* <FrequentlyBought products={frequentlyBought} /> */}
 
       {/* AVAILABLE SHOPS AREA */}
-      <AvailableShops />
+      {/* <AvailableShops /> */}
       {/* RELATED PRODUCTS AREA */}
       <RelatedProducts products={sugestedProducts} />
     </Container>

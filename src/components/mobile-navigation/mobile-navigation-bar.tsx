@@ -13,9 +13,10 @@ import useCart from "hooks/useCart";
 // STYLED COMPONENTS
 import { iconStyle, StyledNavLink, Wrapper } from "./styles";
 import { DataStructure } from "models/types";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 export default function MobileNavigationBar({ data }: { data?: DataStructure['navbar'] }) {
-  const { state } = useCart();
+  const { cart } = useShoppingCartStore();
   const DOWN_900 = useMediaQuery((theme: Theme) => theme.breakpoints.down(900));
 
   if (DOWN_900) {
@@ -24,7 +25,7 @@ export default function MobileNavigationBar({ data }: { data?: DataStructure['na
         {list.map(({ Icon, href, title }) => (
           <StyledNavLink href={href} key={title}>
             {title === "Cart" ? (
-              <Badge badgeContent={state.cart.length} color="primary">
+              <Badge badgeContent={cart.length} color="primary">
                 <Icon fontSize="small" sx={iconStyle} />
               </Badge>
             ) : (
@@ -43,7 +44,7 @@ export default function MobileNavigationBar({ data }: { data?: DataStructure['na
 
 const list = [
   { title: "Home", Icon: Home, href: "/" },
-  { title: "Category", Icon: CategoryOutlined, href: "/mobile-category-nav" },
+  // { title: "Category", Icon: CategoryOutlined, href: "/mobile-category-nav" },
   { title: "Cart", Icon: ShoppingBagOutlined, href: "/cart" },
   { title: "Account", Icon: User2, href: "/profile" }
 ];

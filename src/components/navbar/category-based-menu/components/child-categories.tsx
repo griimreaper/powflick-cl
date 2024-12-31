@@ -9,6 +9,7 @@ import { SubCategoryList } from "../styles";
 // DATA TYPES
 import { MenuList } from "../types";
 import ProductCard8 from "components/product-cards/product-card-8";
+import Link from "next/link";
 
 
 // ==============================================================
@@ -22,15 +23,17 @@ export default function ChildCategories({ categories }: Props) {
         {categories?.child?.map((item, key) => (
           <div key={key}>
             {/* NAV / CATEGORY TITLE */}
-            <H6 fontWeight={700} my={3}>
-              {item.title}
-            </H6>
+            <Link href={`/products?category=${categories.title}&collection=${item.title}`}>
+              <H6 fontWeight={700} my={3}>
+                {item.title}
+              </H6>
+            </Link>
 
             {/* NAV LIST ITEM / CATEGORY LIST ITEM */}
             <SubCategoryList>
               {item?.products?.map((sub) => (
                 <Box key={sub.id} width={200}>
-                <ProductCard8 key={sub.id} product={sub}></ProductCard8>
+                  <ProductCard8 key={sub.id} product={sub}></ProductCard8>
                 </Box>
               ))}
             </SubCategoryList>

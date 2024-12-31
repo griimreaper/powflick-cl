@@ -46,6 +46,7 @@ const initialFilters = {
   rating: 0,
   category: [],
   search: undefined,
+  collection: [],
 };
 
 export default function ProductFilterCard({
@@ -61,6 +62,8 @@ export default function ProductFilterCard({
   );
 
   const isValidColor = (color: string) => {
+    if (typeof window === "undefined") return false; // No se puede validar en el servidor
+
     const s = new Option().style;
     s.color = color.toLowerCase(); // Normaliza el color
     return s.color !== ""; // Devuelve true si el navegador reconoce el color
@@ -101,11 +104,11 @@ export default function ProductFilterCard({
 
   const handleChangeCategory = (value: string) => {
     changeFilters && changeFilters("category", [value]);
-    changeFilters && changeFilters("search", undefined); // Limpiar subcategoría seleccionada
+    changeFilters && changeFilters("collection", undefined); // Limpiar subcategoría seleccionada
   };
 
   const handleChangeSubCategory = (value: string) => {
-    changeFilters && changeFilters("search", value);
+    changeFilters && changeFilters("collection", value);
   };
 
   const toggleCollapse = (categoryId: string) => {
@@ -119,6 +122,7 @@ export default function ProductFilterCard({
     changeFilters && changeFilters("sales", initialFilters.sales);
     changeFilters && changeFilters("rating", initialFilters.rating);
     changeFilters && changeFilters("category", initialFilters.category);
+    changeFilters && changeFilters("collection", initialFilters.collection);
     changeFilters && changeFilters("search", initialFilters.search);
   };
 
