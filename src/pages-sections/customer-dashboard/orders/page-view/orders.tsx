@@ -21,18 +21,20 @@ export default function OrdersPageView() {
 
   // Calcular las órdenes a mostrar en la página actual
   const startIndex = (currentPage - 1) * ORDERS_PER_PAGE;
-  const currentOrders = orders.slice(startIndex, startIndex + ORDERS_PER_PAGE);
+  const currentOrders = orders
+    .slice()
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // Ordenar por fecha
+    .slice(startIndex, startIndex + ORDERS_PER_PAGE);
+
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
       <DashboardHeader Icon={ShoppingBag} title="My Orders" />
 
       {/* ORDER LIST AREA */}
-      {[...currentOrders]
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // Convertir a timestamps
-        .map((order) => (
-          <OrderRow order={order} key={order.id} />
-        ))}
+      {currentOrders.map((order) => (
+        <OrderRow order={order} key={order.id} />
+      ))}
 
       {/* ORDERS PAGINATION */}
       <Pagination

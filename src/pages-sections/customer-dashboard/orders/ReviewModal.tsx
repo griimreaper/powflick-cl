@@ -24,12 +24,12 @@ export const ReviewModal = ({ open, onClose, productId }: { open: boolean; onClo
 
             // Aquí puedes manejar la lógica de la reseña (enviar la reseña y la imagen al backend)
             const reviewData = {
-                title: data.title,
-                review: data.reviewText,
-                rating: data.rating.toString(),
-                image: imageUrl, // Incluimos la URL de la imagen si está presente
-                typeId: productId,
-                type: "PRODUCT",
+              title: data?.title,
+              review: data?.reviewText,
+              rating: data?.rating?.toString(),
+              image: imageUrl, // Incluimos la URL de la imagen si está presente
+              typeId: productId,
+              type: "PRODUCT",
             };
 
             // Enviar la reseña al servidor

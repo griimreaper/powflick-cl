@@ -21,7 +21,9 @@ import BannerTop from "components/BannerTop";
 
 const AnimatedSection = ({ children }: any) => {
   const controls = useAnimation();
-  const [ref, inView] = useInView();
+  const [ref, inView] = useInView({
+    triggerOnce: true, // Añadir esta opción para que la animación se ejecute solo una vez
+  });
 
   useEffect(() => {
     if (inView) {
@@ -32,8 +34,8 @@ const AnimatedSection = ({ children }: any) => {
   }, [controls, inView]);
 
   const variants = {
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }, // Ajustar la duración y la curva de transición
+    hidden: { opacity: 0, y: 50, transition: { duration: 0.6, ease: "easeIn" } }, // Ajustar la duración y la curva de transición
   };
 
   return (
@@ -42,6 +44,7 @@ const AnimatedSection = ({ children }: any) => {
       animate={controls}
       initial="hidden"
       variants={variants}
+      style={{ willChange: "opacity, transform" }} // Añadir will-change para optimizar el rendimiento
     >
       {children}
     </motion.div>

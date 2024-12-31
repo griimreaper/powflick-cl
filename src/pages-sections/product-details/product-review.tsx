@@ -17,9 +17,15 @@ import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { postReview } from "services/Reviews";
 import Reviews from "components/Reviews/Reviews";
+import { Title } from "../sales/styles";
 
-
-export default function ProductReview({ reviews, typeId }: {typeId: string ,reviews: Review[] }) {
+export default function ProductReview({
+  reviews,
+  typeId,
+}: {
+  typeId: string;
+  reviews: Review[];
+}) {
   const { profile } = useDashboardStore();
   const token = profile.token;
 
@@ -27,7 +33,7 @@ export default function ProductReview({ reviews, typeId }: {typeId: string ,revi
     rating: 0,
     title: "",
     review: "",
-    date: new Date().toISOString()
+    date: new Date().toISOString(),
   };
 
   const validationSchema = yup.object().shape({
@@ -45,32 +51,47 @@ export default function ProductReview({ reviews, typeId }: {typeId: string ,revi
     handleBlur,
     handleChange,
     handleSubmit,
-    setFieldValue
+    setFieldValue,
   } = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      if (!token || token === 'undefined') {
-          showErrorAlert("Denied", "The user must be logged in to send a review.");
-          return;
+      if (!token || token === "undefined") {
+        showErrorAlert(
+          "Denied",
+          "The user must be logged in to send a review."
+        );
+        return;
       }
 
       try {
-          await postReview({...values, rating: String(values.rating), typeId, type: "PRODUCT"}, token);
-          showSuccessAlert("Success", "Review successfully sent.");
-          resetForm(); // Limpia el formulario después de enviar la reseña
+        await postReview(
+          { ...values, rating: String(values.rating), typeId, type: "PRODUCT" },
+          token
+        );
+        showSuccessAlert("Success", "Review successfully sent.");
+        resetForm(); // Limpia el formulario después de enviar la reseña
       } catch (error) {
-          console.log(error)
-          showErrorAlert("Error", "There has been an error sending the review.");
+        console.log(error);
+        showErrorAlert("Error", "There has been an error sending the review.");
       }
-    }
+    },
   });
+
+  console.log(reviews);
 
   return (
     <div>
       <Reviews review={reviews} />
       {reviews.map((item, ind) => (
-        <ProductComment name={item.author} comment={item.review} date={item.createdAt} rating={Number(item.rating)} imgUrl={item.user.image} key={ind} />
+        <ProductComment
+          name={item.user.firstName + " " + item.user.lastName}
+          comment={item.review}
+          date={item.createdAt}
+          rating={Number(item.rating)}
+          imgUrl={item.user.image}
+          key={ind}
+        />
       ))}
 
       {/* <H2 fontWeight="600" mt={7} mb={2.5}>
@@ -142,7 +163,7 @@ const commentList = [
     rating: 4.7,
     date: "2021-02-14",
     comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius massa id ut mattis. Facilisis vitae gravida egestas ac account."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius massa id ut mattis. Facilisis vitae gravida egestas ac account.",
   },
   {
     name: "Joe Kenan",
@@ -150,7 +171,7 @@ const commentList = [
     rating: 4.7,
     date: "2019-08-10",
     comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius massa id ut mattis. Facilisis vitae gravida egestas ac account."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius massa id ut mattis. Facilisis vitae gravida egestas ac account.",
   },
   {
     name: "Jenifer Tulio",
@@ -158,6 +179,6 @@ const commentList = [
     rating: 4.7,
     date: "2021-02-05",
     comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius massa id ut mattis. Facilisis vitae gravida egestas ac account."
-  }
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius massa id ut mattis. Facilisis vitae gravida egestas ac account.",
+  },
 ];
