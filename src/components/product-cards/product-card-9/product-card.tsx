@@ -65,7 +65,7 @@ type Props = {
 export default function ProductCard9(props: Props) {
   const { imgUrl, title, price, off, rating, id, slug } = props || {};
 
-  const { cartItem, handleCartAmountChange, isFavorite, toggleFavorite } = useProduct(slug);
+  const { cartItem, handleCartAmountChange, isFavorite, toggleFavorite } = useProduct(id);
 
   const handleIncrementQuantity = () => {
     const product = {

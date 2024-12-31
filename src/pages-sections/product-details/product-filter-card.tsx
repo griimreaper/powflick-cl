@@ -104,7 +104,7 @@ export default function ProductFilterCard({
 
   const handleChangeCategory = (value: string) => {
     changeFilters && changeFilters("category", [value]);
-    changeFilters && changeFilters("collection", undefined); // Limpiar subcategoría seleccionada
+    changeFilters && changeFilters("collection", []); // Limpiar subcategoría seleccionada
   };
 
   const handleChangeSubCategory = (value: string) => {
