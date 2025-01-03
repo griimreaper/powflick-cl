@@ -5,8 +5,6 @@ export const openSans = Open_Sans({ subsets: ["latin"] });
 
 // IMPORT i18n SUPPORT FILE
 import "i18n";
-import { getLanding } from "services/Landing";
-import { DataStructure } from "models/types";
 import React from "react";
 import "./global.css";
 import { GlobalProvider } from "./providers";
@@ -21,8 +19,6 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const { navbar }: DataStructure = await getLanding();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
@@ -45,7 +41,7 @@ export default async function RootLayout({
               },
             }}
           />
-          <GlobalProvider navbar={navbar}>{children}</GlobalProvider>
+          <GlobalProvider>{children}</GlobalProvider>
           <GoogleAnalytics />
           <GoogleTagManager />
         </React.StrictMode>

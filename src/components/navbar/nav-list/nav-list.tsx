@@ -40,7 +40,7 @@ export default function NavigationList({
             <CategoryBasedMenu
               key={nav.title}
               title={nav.title}
-              menuList={nav.child as any}
+              menuList={nav.child}
             />
           );
         }
@@ -106,7 +106,7 @@ export default function NavigationList({
     megaMenu: false,
     megaMenuWithSub: true,
     title: "Store",
-    child: data?.categories,
+    child:  "categories" in data ? data.categories : [],
   };
 
   return (

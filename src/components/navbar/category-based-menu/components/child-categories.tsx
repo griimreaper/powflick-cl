@@ -13,7 +13,7 @@ import Link from "next/link";
 
 
 // ==============================================================
-type Props = { categories: MenuList };
+type Props = { categories: MenuList | { title: string, child: [] } };
 // ==============================================================
 
 export default function ChildCategories({ categories }: Props) {

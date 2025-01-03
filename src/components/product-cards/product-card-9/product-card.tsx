@@ -56,6 +56,8 @@ type Props = {
   off?: number;
   slug: string;
   price: number;
+  discount: number;
+  product_categories: string;
   title: string;
   imgUrl: string;
   rating: number;
@@ -63,7 +65,7 @@ type Props = {
 // ===========================================================
 
 export default function ProductCard9(props: Props) {
-  const { imgUrl, title, price, off, rating, id, slug } = props || {};
+  const { imgUrl, title, price, off, rating, id, slug, discount, product_categories } = props || {};
 
   const { cartItem, handleCartAmountChange, isFavorite, toggleFavorite } = useProduct(id);
 
@@ -111,7 +113,25 @@ export default function ProductCard9(props: Props) {
             <ProductTags tags={["Bike", "Motor", "Ducati"]} />
 
             {/* PRODUCT TITLE / NAME */}
-            <Link href={`/products/${slug}`}>
+            <Link href={`/products/${slug}`}
+              onClick={() => {
+                (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+                (window as any).dataLayer.push({
+                  event: "View item",
+                  ecommerce: {
+                    items: [
+                      {
+                        item_id: `${id}`,
+                        item_name: `${title}`,
+                        discount: `${discount}`,
+                        slug: `${slug}`,
+                        item_category: `${product_categories.split("|")[0]}`,
+                        price: `${Number(price)}`,
+                      },
+                    ],
+                  },
+                });
+              }}>
               <H5 fontWeight="700" mt={1} mb={2}>
                 {title}
               </H5>

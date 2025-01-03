@@ -14,7 +14,7 @@ import Image from "next/image";
 
 export default function CheckoutForm() {
   const router = useRouter();
-  const { cart, coupon } = useShoppingCartStore();
+  const { cart, total, coupon } = useShoppingCartStore();
   const [sameAsShipping, setSameAsShipping] = useState(false);
   const [showForm, setShowForm] = useState<boolean>(false);
   const { profile } = useDashboardStore();
@@ -160,9 +160,51 @@ export default function CheckoutForm() {
 
           <Grid item sm={6} xs={12}>
             <Button
+              id="continuePayment-button-event-click"
               variant="contained"
               color="primary"
-              onClick={handleProceedToPayment}
+              onClick={() => {
+                handleProceedToPayment();
+                (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+                (window as any).dataLayer.push({
+                  event: "Go To Stripe",
+                  ecommerce: {
+                    currency: "USD",
+                    value: Number(
+                      total * (1 - (coupon?.discount || 0) / 100),
+                    ),
+                    coupon: coupon?.title || null,
+                    discount: coupon?.discount || 0,
+                    items: cart.map(
+                      ({ product, totalCustomization, totalProduct, amount }) => {
+                        const {
+                          id,
+                          price,
+                          title,
+                          product_categories,
+                          colors,
+                          slug,
+                          sport,
+                        } = product;
+                        return {
+                          item_id: id,
+                          item_name: title,
+                          affiliation: "Google Merchandise Store",
+                          item_brand: "Sport Zone",
+                          item_category: product_categories.split("|")[0],
+                          item_category2: sport,
+                          item_list_name: slug,
+                          item_variant: colors ? colors[0] : null,
+                          price: Number(price),
+                          quantity: amount,
+                          total_product: Number(totalProduct),
+                          total_customizations: Number(totalCustomization),
+                        };
+                      }
+                    ),
+                  },
+                });
+              }}
               fullWidth
               disabled={!selectedDirection || cart.length === 0}
             >

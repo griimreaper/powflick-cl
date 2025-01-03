@@ -40,13 +40,13 @@ export default function MegaMenu2({ data }: Props) {
             caret={!!item.products}
             render={
               item.products?.length ? (
-                <Box
+                <StyledRoot
+                elevation={2}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     bgcolor: "white",
                     marginLeft: 2,
-                    boxShadow: "2",
                     borderRadius: 2,
                     padding: 2,
                     maxHeight: 350,
@@ -58,7 +58,7 @@ export default function MegaMenu2({ data }: Props) {
                       <ProductCard8 key={sub.id} product={sub}></ProductCard8>
                     </Box>
                   ))}
-                </Box>
+                </StyledRoot>
               ) : null
             }
           />

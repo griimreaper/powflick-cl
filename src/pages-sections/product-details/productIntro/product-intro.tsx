@@ -82,7 +82,7 @@ export default function ProductIntro({ product }: Props) {
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
-  const {counter, setCounter, handleCounterChange} = useCounter(product.product.id);
+  const { counter, setCounter, handleCounterChange } = useCounter(product.product.id);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
@@ -366,12 +366,33 @@ export default function ProductIntro({ product }: Props) {
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
               <FlexBox alignItems="center" gap={2}>
                 <Button
+                  id="addToBag-button-event-click"
                   color="primary"
                   variant="contained"
                   onClick={() => {
                     const result = handleAddToBagClick();
                     (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
                     (window as any).dataLayer.push({
+                      event: "Add To Cart",
+                      ecommerce: {
+                        currency: "USD",
+                        value: Number(total),
+                        total_product_price: Number(totalProductsPrice),
+                        total_customization_price: Number(totalCustomizationPrice),
+                        items: [
+                          {
+                            item_id: result.productToBag.id,
+                            item_name: result.productToBag.title,
+                            affiliation: "Google Merchandise Store",
+                            item_brand: "Sport Zone",
+                            item_category: product.product.product_categories.split("|")[0],
+                            item_category2: product.product.sport,
+                            item_variant: result.productToBag.colors,
+                            price: Number(result.productToBag.price),
+                            quantity: result.amount,
+                          },
+                        ],
+                      },
                       // Your dataLayer push code here
                     });
                   }}

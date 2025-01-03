@@ -17,22 +17,32 @@ export default function Sticky({ fixedOn, children, onSticky, scrollDistance = 0
   const elementRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
 
+  // Implement debouncing
+  const debounceScrollListener = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const scrollListener = useCallback(() => {
     if (!window) return;
 
     const isFixed = window.scrollY >= fixedOn + scrollDistance;
-    setFixed(isFixed);
+
+    // Debounce scroll listener to reduce event processing
+    if (debounceScrollListener.current) {
+      clearTimeout(debounceScrollListener.current);
+    }
+
+    debounceScrollListener.current = setTimeout(() => {
+      setFixed(isFixed);
+    }, 0); // Adjust the delay to your liking (e.g., 20ms)
+
   }, [fixedOn, scrollDistance]);
 
   useEffect(() => {
     if (!window) return;
 
     window.addEventListener("scroll", scrollListener);
-    window.addEventListener("resize", scrollListener);
 
     return () => {
       window.removeEventListener("scroll", scrollListener);
-      window.removeEventListener("resize", scrollListener);
     };
   }, [scrollListener]);
 

@@ -11,7 +11,7 @@ interface Props {
   border: number;
   elevation?: number;
   hideCategories?: boolean;
-  data: DataStructure["navbar"] | null;
+  data: DataStructure["navbar"];
 }
 // ==========================================================
 
@@ -29,7 +29,7 @@ export default function Navbar({
     >
       {hideCategories ? (
         <InnerContainer sx={{ justifyContent: "center" }}>
-          <NavigationList data={data!} />
+          <NavigationList data={data} />
         </InnerContainer>
       ) : (
         <InnerContainer>
@@ -37,7 +37,7 @@ export default function Navbar({
           <Categories />
 
           {/* HORIZONTAL MENU */}
-          <NavigationList data={data!} />
+          <NavigationList data={data} />
         </InnerContainer>
       )}
     </NavBarWrapper>

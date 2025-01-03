@@ -606,6 +606,52 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/query-core@5.62.12":
+  version "5.62.12"
+  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.62.12.tgz"
+  integrity sha512-6igFeBgymHkCxVgaEk+yiLwkMf9haui/EQLmI3o9CatOyDThEoFKe8toLWvWliZC/Jf+h7NwHi/zjfyLArr1ow==
+
+"@tanstack/query-core@5.62.9":
+  version "5.62.9"
+  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.62.9.tgz"
+  integrity sha512-lwePd8hNYhyQ4nM/iRQ+Wz2cDtspGeZZHFZmCzHJ7mfKXt+9S301fULiY2IR2byJYY6Z03T427E5PoVfMexHjw==
+
+"@tanstack/query-persist-client-core@5.62.12":
+  version "5.62.12"
+  resolved "https://registry.npmjs.org/@tanstack/query-persist-client-core/-/query-persist-client-core-5.62.12.tgz"
+  integrity sha512-4f2YA8ypb/U8jaqcHVZ8/PcnmxGsTjKomxS+WHMLLpauThakB/vMGENMD6p35/hVrpwNwBIJtZseyeKIJ9/ANw==
+  dependencies:
+    "@tanstack/query-core" "5.62.12"
+
+"@tanstack/query-persist-client-core@5.62.9":
+  version "5.62.9"
+  resolved "https://registry.npmjs.org/@tanstack/query-persist-client-core/-/query-persist-client-core-5.62.9.tgz"
+  integrity sha512-EHjnG7AgaFDHhDBaagXeNTUgmi9DVHWu4TGMclpmiYXBYyLQNaM6SKu+6Kcdm7hqIAVN2RxLlo+V/qSCdWs7KA==
+  dependencies:
+    "@tanstack/query-core" "5.62.9"
+
+"@tanstack/query-sync-storage-persister@^5.62.12":
+  version "5.62.12"
+  resolved "https://registry.npmjs.org/@tanstack/query-sync-storage-persister/-/query-sync-storage-persister-5.62.12.tgz"
+  integrity sha512-nXUtIrDb0nVbRaVYS/eXds1DIRaLmEhSIsNwZM4h3cN5OoCeLCx9mff44bzHBnp0Q/fQAz6HbhLhh32jfJ41uw==
+  dependencies:
+    "@tanstack/query-core" "5.62.12"
+    "@tanstack/query-persist-client-core" "5.62.12"
+
+"@tanstack/react-query-persist-client@^5.62.11":
+  version "5.62.11"
+  resolved "https://registry.npmjs.org/@tanstack/react-query-persist-client/-/react-query-persist-client-5.62.11.tgz"
+  integrity sha512-xQ9pMrGR1t432eeuf2S1KSEj+y0IJbbQsAZzcovFk2AtCJ+qT/nZreofYyBwRiNx1tqhLxq92mHiwjYUYVnZsQ==
+  dependencies:
+    "@tanstack/query-persist-client-core" "5.62.9"
+
+"@tanstack/react-query@^5.62.11":
+  version "5.62.11"
+  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.62.11.tgz"
+  integrity sha512-Xb1nw0cYMdtFmwkvH9+y5yYFhXvLRCnXoqlzSw7UkqtCVFq3cG8q+rHZ2Yz1XrC+/ysUaTqbLKJqk95mCgC1oQ==
+  dependencies:
+    "@tanstack/query-core" "5.62.9"
+
 "@testing-library/dom@>=7.21.4":
   version "9.3.4"
   resolved "https://registry.npmjs.org/@testing-library/dom/-/dom-9.3.4.tgz"
@@ -3435,7 +3481,7 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@*, "react@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^15.5.4 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18 || ^19", react@^18.2.0, "react@>= 16.8 || 18.0.0", "react@>= 16.8.0", "react@>= 16.8.0 || ^18.0.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>= 17.0.2", react@>=0.13, react@>=16.6.0, "react@>=16.8 || ^17.0.0 || ^18.0.0", react@>=16.8.0, react@>=16.8.2, react@>=18.0.0:
+react@*, "react@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^15.5.4 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18 || ^19", "react@^18 || ^19", react@^18.2.0, "react@>= 16.8 || 18.0.0", "react@>= 16.8.0", "react@>= 16.8.0 || ^18.0.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>= 17.0.2", react@>=0.13, react@>=16.6.0, "react@>=16.8 || ^17.0.0 || ^18.0.0", react@>=16.8.0, react@>=16.8.2, react@>=18.0.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

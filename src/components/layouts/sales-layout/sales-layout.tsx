@@ -35,14 +35,14 @@ export default function SalesLayout({ children, categoryNav, type = "one" }: Sal
   let CONTENT = null;
 
   // FOR SALES 1 PAGE
-  if (type == "one") {
-    CONTENT = (
-      <Fragment>
-        <Navbar border={1} data={null} hideCategories />
-        {children}
-      </Fragment>
-    );
-  }
+  // if (type == "one") {
+  //   CONTENT = (
+  //     <Fragment>
+  //       <Navbar border={1} data={{}} hideCategories />
+  //       {children}
+  //     </Fragment>
+  //   );
+  // }
 
   // FOR SALES 2 PAGE
   if (type == "two") {
