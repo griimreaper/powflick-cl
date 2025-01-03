@@ -7,8 +7,6 @@ import { getLanding } from "services/Landing";
 
 export const revalidate = 86400 * 7;
 
-export const dynamicParams = true;
-
 export const metadata: Metadata = {
   title: "Sport Zone",
   description: `Sport Zone is a modern e-commerce for selling sports equipment and accessories.`,

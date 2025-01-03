@@ -32,9 +32,9 @@ import {
 } from "../types";
 import Product from "models/Product.model";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useNavbar } from "contexts/NavBarContext";
-import { ProductDB } from "models/types";
+import { DataStructure, ProductDB } from "models/types";
 import Breadcrumbs from "./Breadcrumbs";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
@@ -95,7 +95,10 @@ const handleSortProducts = (
 };
 
 export default function ProductSearchPageView({ data }: any) {
-  const { navbarData } = useNavbar();
+  const queryClient = useQueryClient();
+
+  const navbarData = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
+
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });

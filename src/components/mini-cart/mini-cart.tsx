@@ -25,7 +25,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
   const { cart, total, setCoupon, coupon } = useShoppingCartStore();
   const cartList = cart;
 
-  const handleNavigate = (path: string) => () => {
+  const handleNavigate = (path: string) => {
     toggleSidenav();
     push(path);
   };

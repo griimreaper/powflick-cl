@@ -70,7 +70,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
                   item_id: id,
                   item_name: title,
                   affiliation: "Google Merchandise Store",
-                  item_brand: "4 The Sports",
+                  item_brand: "Sport Zone",
                   item_category: product_categories,
                   item_category2: sports,
                   item_list_name: slug,

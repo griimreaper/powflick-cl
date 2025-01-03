@@ -10,10 +10,13 @@ import { StyledRoot } from "./styles";
 import { Props } from "./types";
 import { ContactMail, Help, Info, Public, Store } from "@mui/icons-material";
 import { CategoryItem } from "../types";
-import { useNavbar } from "contexts/NavBarContext";
+import { useQueryClient } from "@tanstack/react-query";
+import { DataStructure } from "app/types";
 
 export default function CategoryList({ open, position = "absolute" }: Props) {
-  const { navbarData: data } = useNavbar();
+  const queryClient = useQueryClient();
+
+  const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
 
   const categoryMenus: CategoryItem[] = [
     {
@@ -31,7 +34,7 @@ export default function CategoryList({ open, position = "absolute" }: Props) {
   ];
 
   return (
-    <StyledRoot open={open} position={position}>
+    <StyledRoot open={open} position={position} >
       {categoryMenus.map((item) => {
         const { href, title, child, component, icon, offer } = item;
         const MegaMenu = MegaMenu2;

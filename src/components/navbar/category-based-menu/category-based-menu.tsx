@@ -17,9 +17,9 @@ type Props = { menuList: MenuList[]; title: string };
 // ===============================================================
 
 export default function CategoryBasedMenu({ title, menuList }: Props) {
-  const [openList, setOpenList] = useState(menuList[0].title);
+  const [openList, setOpenList] = useState(menuList[0]?.title || "");
   const categories = menuList.reduce<string[]>((prev, curr) => [...prev, curr.title], []);
-  const subCategories = menuList.find((item) => item.title === openList);
+  const subCategories = menuList.find((item) => item.title === openList) || { title: "", child: [] };
 
   return (
     <Wrapper>
@@ -42,7 +42,7 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
           />
 
           {/* SUB / CHILD CATEGORIES SECTION */}
-          <ChildCategories categories={subCategories!} />
+          <ChildCategories categories={subCategories} />
         </StyledCard>
       </MenusContainer>
     </Wrapper>

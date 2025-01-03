@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 // PAGE VIEW COMPONENT
 import { ProductDetailsPageView } from "pages-sections/product-details/page-view";
 import { getAllProductSlugs, getProductsBySlug } from "services/Products";
+import { getCache, setCache } from "utils/cache";
 
 export const revalidate = 86400; // 1 dia
 
@@ -13,7 +14,6 @@ export const dynamicParams = true;
 // Genera los parámetros estáticos para las rutas
 export async function generateStaticParams() {
   const slugs = await getAllProductSlugs(); // Obtener todos los IDs de productos
-  
 
   // Devuelve un array de objetos con los parámetros necesarios
   return slugs.map((slug: string) => ({ slug }));
@@ -28,7 +28,17 @@ export async function generateMetadata({
 
   if (!id) return;
 
-  const { product } = await getProductsBySlug(id);
+  // Intentar obtener datos del caché
+  let detail = getCache<detailProps>(id);
+
+  if (!detail) {
+    // Si no están en caché, obtenerlos y almacenarlos
+    detail = await getProductsBySlug(id);
+    if (!detail) return; // Si no se pueden obtener detalles, no generar metadata
+    setCache(id, detail);
+  }
+
+  const { product } = detail;
 
   if (product.status === 'draft' || !product.images) return;
 
@@ -46,11 +56,11 @@ export async function generateMetadata({
     ],
     openGraph: {
       title: product.title || "Sport Zone",
-      description: product.description || "Default Description",
+      description: product.short_description || "Default Description",
       url: `${process.env.NEXT_PUBLIC_API_URL}/${product.id}`,
       images: [
         {
-          url: product.Url,
+          url: product.URL,
           width: 800,
           height: 800,
           alt: product.title || "Sport Zone",
@@ -60,8 +70,8 @@ export async function generateMetadata({
     twitter: {
       card: "summary",
       title: product.title,
-      description: product.description,
-      images: product.image,
+      description: product.short_description,
+      images: product.URL,
     },
     robots: {
       index: true,
@@ -77,8 +87,19 @@ export default async function ProductDetails({
 }) {
   try {
     const { slug } = params;
-    const detail: detailProps = await getProductsBySlug(slug);
-    
+
+    // Obtener detalles del producto del caché
+    let detail: detailProps | null = getCache<detailProps>(slug);
+
+    if (!detail) {
+      // Si no están en caché, obtenerlos y almacenarlos
+      detail = await getProductsBySlug(slug);
+      if (!detail) {
+        throw new Error("Product details could not be fetched");
+      }
+      setCache(slug, detail);
+    }
+
     if (detail.product.status === 'draft' || !detail.product.images) {
       return (
         <Box

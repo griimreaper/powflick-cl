@@ -70,8 +70,26 @@ export default function ProductCard8({ product }: Props) {
   return (
     <Card>
       <CardMedia>
-           <DiscountChip discount={discount} />
-        <Link href={`/products/${slug}`}>
+        <DiscountChip discount={discount} />
+        <Link href={`/products/${slug}`}
+        onClick={() => {
+          (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+          (window as any).dataLayer.push({
+            event: "View item",
+            ecommerce: {
+              items: [
+                {
+                  item_id: `${product.id}`,
+                  item_name: `${product.title}`,
+                  item_list_name: `${product.slug}`,
+                  discount: `${product.discount}`,
+                  item_category: `${product.product_categories.split("|")[0]}`,
+                  price: `${Number(product.price )}`,
+                },
+              ],
+            },
+          });
+        }}>
           <LazyImage
             width={300}
             height={300}
@@ -203,7 +221,7 @@ export default function ProductCard8({ product }: Props) {
         {/* PRODUCT PRICE  */}
         <div style={{ display: "flex", justifyContent: "center" }}>
 
-             <ProductPrice discount={discount} price={price} />
+          <ProductPrice discount={discount} price={price} />
         </div>
 
         {/* PRODUCT RATING / REVIEW  */}

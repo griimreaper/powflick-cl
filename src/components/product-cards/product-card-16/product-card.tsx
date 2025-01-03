@@ -52,7 +52,25 @@ export default function ProductCard16({ product }: Props) {
 
   return (
     <div>
-      <Link href={`/products/${slug}`}>
+      <Link href={`/products/${slug}`}
+        onClick={() => {
+          (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+          (window as any).dataLayer.push({
+            event: "View item",
+            ecommerce: {
+              items: [
+                {
+                  item_id: `${product.id}`,
+                  item_name: `${product.title}`,
+                  discount: `${product.discount}`,
+                  item_list_name: `${product.slug}`,
+                  item_category: `${product.product_categories.split("|")[0]}`,
+                  price: `${Number(product.price)}`,
+                },
+              ],
+            },
+          });
+        }}>
         <FlexBox position="relative" bgcolor="grey.50" borderRadius={3} mb={2}>
           {URL ? (
             <LazyImage alt={title} width={380} height={379} src={URL} />
