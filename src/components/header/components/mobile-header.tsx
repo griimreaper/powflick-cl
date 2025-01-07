@@ -23,8 +23,9 @@ import useHeader from "../hooks/use-header";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useShoppingCartStore } from "store/shoppingCart";
+import { DataStructure } from "models/types";
 
-export default function MobileHeader() {
+export default function MobileHeader({ data }: { data: DataStructure['navbar'] }) {
   const { cart } = useShoppingCartStore();
   const {
     dialogOpen,
@@ -44,7 +45,7 @@ export default function MobileHeader() {
       <FlexBetween width="100%">
         {/* LEFT CONTENT - NAVIGATION ICON BUTTON */}
         <Box flex={1}>
-          <MobileMenu />
+          <MobileMenu data={data} />
         </Box>
 
         {/* MIDDLE CONTENT - LOGO */}
@@ -63,11 +64,11 @@ export default function MobileHeader() {
             <Icon.Search sx={ICON_STYLE} />
           </IconButton>
 
-          <IconButton onClick={() => { session ? router.push('/profile') : toggleDialog()}}>
+          <IconButton onClick={() => { session ? router.push('/profile') : toggleDialog() }}>
             <Icon.User sx={ICON_STYLE} />
           </IconButton>
 
-          <Badge  badgeContent={cart?.length} color="primary">
+          <Badge badgeContent={cart?.length} color="primary">
             <IconButton onClick={toggleSidenav}>
               <Icon.CartBag sx={ICON_STYLE} />
             </IconButton>

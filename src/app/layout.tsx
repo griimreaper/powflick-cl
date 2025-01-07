@@ -12,8 +12,6 @@ import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
 import { GlobalStyles } from "@mui/material";
 
-export const revalidate = 86400 * 7;
-
 export default async function RootLayout({
   children,
 }: {

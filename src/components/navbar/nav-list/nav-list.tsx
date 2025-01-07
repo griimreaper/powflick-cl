@@ -106,7 +106,7 @@ export default function NavigationList({
     megaMenu: false,
     megaMenuWithSub: true,
     title: "Store",
-    child:  "categories" in data ? data.categories : [],
+    child: "categories" in data ? data.categories : [],
   };
 
   return (

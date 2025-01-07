@@ -17,7 +17,7 @@ interface Props {
 export default function MegaMenu2({ data }: Props) {
   return (
     <StyledRoot elevation={2}>
-      {data.map((item) =>
+      {data?.map((item) =>
         item.child ? (
           <CategoryMenuItem
             href={"/products?category=" + item.title}

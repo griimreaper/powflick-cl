@@ -6,10 +6,11 @@ import CategoryMenu from "components/categories/category-menu";
 import Category from "icons/Category";
 // STYLED COMPONENT
 import { CategoryMenuButton } from "./styles";
+import { DataStructure } from "models/types";
 
-export default function Categories() {
+export default function Categories({ data }: { data: DataStructure["navbar"] }) {
   return (
-    <CategoryMenu
+    <CategoryMenu data={data}
       render={(handler) => (
         <CategoryMenuButton variant="text" onClick={(e) => handler(e)}>
           <div className="prefix">

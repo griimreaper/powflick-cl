@@ -13,13 +13,8 @@ import { Paragraph } from "components/Typography";
 import { Heading } from "./styles";
 import CategoriesLinks from "./components/categories-links";
 import { DataStructure } from "models/types";
-import { useQueryClient } from "@tanstack/react-query";
 
-export default function Footer1() {
-  const queryClient = useQueryClient();
-
-  const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
-
+export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
   return (
     <Box component="footer" bgcolor="#222935" mb={{ sm: 0, xs: 7 }}>
       <Box component={Container} color="white" overflow="hidden" py={{ sm: 10, xs: 4 }}>

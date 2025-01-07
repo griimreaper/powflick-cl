@@ -56,6 +56,7 @@ export default function ProductFilterCard({
   products,
 }: Props) {
   const [collapsed, setCollapsed] = useState<string | null>(null);
+console.log(topCategories);
 
   const allColors = new Set(
     products?.flatMap(p => p.colors?.map(c => c?.trim().toLowerCase()) || [])
