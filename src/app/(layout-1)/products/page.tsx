@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export const revalidate = 86400 * 7;
 
 export default async function ProductSearch({ params }: any) {
-  const { products } = await getSearch();
+  const { products, filt } = await getSearch();
 
-  return <ProductSearchPageView data={products} />;
+  return <ProductSearchPageView data={products} filt={filt} />;
 }

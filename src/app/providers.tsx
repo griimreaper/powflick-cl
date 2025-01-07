@@ -13,18 +13,16 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return (
         <ClientProviders>
             <CartProvider>
-                <NavbarProvider >
-                    <SettingsProvider>
-                        <ThemeProvider>
-                            <SessionProvider>
-                                <ProgressBar />
-                                <RTL>
-                                    {children}
-                                </RTL>
-                            </SessionProvider>
-                        </ThemeProvider>
-                    </SettingsProvider>
-                </NavbarProvider>
+                <SettingsProvider>
+                    <ThemeProvider>
+                        <SessionProvider>
+                            <ProgressBar />
+                            <RTL>
+                                {children}
+                            </RTL>
+                        </SessionProvider>
+                    </ThemeProvider>
+                </SettingsProvider>
             </CartProvider>
         </ClientProviders>
     )

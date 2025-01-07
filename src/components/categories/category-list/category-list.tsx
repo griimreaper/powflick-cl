@@ -13,10 +13,10 @@ import { CategoryItem } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
 import { DataStructure } from "app/types";
 
-export default function CategoryList({ open, position = "absolute" }: Props) {
+export default function CategoryList({ open, position = "absolute", data }: Props) {
   const queryClient = useQueryClient();
 
-  const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
+  // const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
 
   const categoryMenus: CategoryItem[] = [
     {
@@ -33,7 +33,7 @@ export default function CategoryList({ open, position = "absolute" }: Props) {
     { icon: Help, title: "Help", href: "/help" },
   ];
 
-  return (
+return (
     <StyledRoot open={open} position={position} >
       {categoryMenus.map((item) => {
         const { href, title, child, component, icon, offer } = item;

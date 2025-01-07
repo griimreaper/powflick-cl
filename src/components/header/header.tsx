@@ -16,6 +16,7 @@ import LoginCartButtons from "./components/login-cart-buttons";
 // STYLED COMPONENTS
 import { HeaderWrapper, StyledContainer } from "./styles";
 import { Session } from "next-auth";
+import { DataStructure } from "models/types";
 
 // ==============================================================
 interface Props {
@@ -23,10 +24,11 @@ interface Props {
   className?: string;
   midSlot: ReactNode;
   session: Session | null;
+  data: DataStructure['navbar']
 }
 // ==============================================================
 
-export default function Header({ isFixed, className, midSlot, session }: Props) {
+export default function Header({ isFixed, className, midSlot, session, data }: Props) {
   const theme = useTheme();
   const downMd = useMediaQuery(theme.breakpoints.down(1150));
   const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
@@ -45,7 +47,7 @@ export default function Header({ isFixed, className, midSlot, session }: Props) 
         </Link>
 
         {/* SHOW DROP DOWN CATEGORY BUTTON WHEN HEADER FIXED */}
-        {isFixed ? <CategoriesMenu /> : null}
+        {isFixed ? <CategoriesMenu data={data} /> : null}
       </FlexBox>
 
       {/* SEARCH FORM | NAVIGATION */}
@@ -72,7 +74,7 @@ export default function Header({ isFixed, className, midSlot, session }: Props) 
   return (
     <HeaderWrapper className={clsx(className)}>
       <StyledContainer>
-        {downMd ? <MobileHeader /> : CONTENT_FOR_LARGE_DEVICE}
+        {downMd ? <MobileHeader data={data}/> : CONTENT_FOR_LARGE_DEVICE}
       </StyledContainer>
     </HeaderWrapper>
   );

@@ -1,6 +1,7 @@
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import styled from "@mui/material/styles/styled";
 import CategoryList from "./category-list";
+import { DataStructure } from "models/types";
 
 // STYLED COMPONENT
 const Wrapper = styled("div", {
@@ -15,10 +16,10 @@ const Wrapper = styled("div", {
 }));
 
 // ===========================================================
-type Props = { render: (handler: Function) => JSX.Element };
+type Props = { render: (handler: Function) => JSX.Element, data: DataStructure["navbar"] };
 // ===========================================================
 
-export default function CategoryMenu({ render }: Props) {
+export default function CategoryMenu({ render, data }: Props) {
   const [open, setOpen] = useState(false);
 
   const onClick = (e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -28,6 +29,8 @@ export default function CategoryMenu({ render }: Props) {
 
   const handleDocumentClick = useCallback(() => setOpen(false), []);
 
+  console.log(data, '2');
+  
   useEffect(() => {
     window.addEventListener("click", handleDocumentClick);
     return () => window.removeEventListener("click", handleDocumentClick);
@@ -37,7 +40,7 @@ export default function CategoryMenu({ render }: Props) {
     <Wrapper open={open}>
       {render(onClick)}
 
-      <CategoryList open={open} />
+      <CategoryList open={open} data={data} />
     </Wrapper>
   );
 }

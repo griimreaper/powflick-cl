@@ -11,11 +11,11 @@ import { updateNavigation } from "./modified-navigation";
 import { DataStructure } from "models/types";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function MobileMenu() {
+export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const queryClient = useQueryClient();
 
-  const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
+  // const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
   const handleClose = () => setOpenDrawer(false);
 
   const storeMenu = { title: 'Store', child: data?.categories }

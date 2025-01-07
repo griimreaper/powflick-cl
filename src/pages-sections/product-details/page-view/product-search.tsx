@@ -94,10 +94,11 @@ const handleSortProducts = (
   }
 };
 
-export default function ProductSearchPageView({ data }: any) {
-  const queryClient = useQueryClient();
+export default function ProductSearchPageView({ data, filt }: any) {
+  const navbarData = filt;
 
-  const navbarData = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
+  console.log(navbarData);
+  
 
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("relevance");
@@ -130,7 +131,6 @@ export default function ProductSearchPageView({ data }: any) {
 
   console.log(breadcrumbs);
   console.log(filters);
-
 
   const handleChangeFilters = (
     key: ProductFilterKeys,
@@ -223,7 +223,7 @@ export default function ProductSearchPageView({ data }: any) {
                       products={sortedProducts}
                       filters={filters}
                       changeFilters={handleChangeFilters}
-                      topCategories={navbarData?.categories}
+                      topCategories={navbarData}
                     />
                   </Box>
                 </Sidenav>
@@ -244,7 +244,7 @@ export default function ProductSearchPageView({ data }: any) {
               products={sortedProducts}
               filters={filters}
               changeFilters={handleChangeFilters}
-              topCategories={navbarData?.categories}
+              topCategories={navbarData}
             />
           </Grid>
 
