@@ -15,7 +15,7 @@ import customThemeOptions from "./theme-options";
 import NextAppDirEmotionCacheProvider from "./emotion-cache";
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
   const { settings } = useSettings();
 
   const themeOptions = customThemeOptions(pathname);

@@ -109,13 +109,15 @@ export default function ProductSearchPageView({ data, filt }: any) {
   useEffect(() => {
     const newFilters: any = { ...initialFilters };
 
-    if (searchParams.get("query")) newFilters.search = searchParams.get("query") || "";
-    if (searchParams.get("category")) newFilters.category = [searchParams.get("category")];
-    if (searchParams.get("collection")) newFilters.collection = [searchParams.get("collection")];
-    if (searchParams.get("color")) newFilters.color = [searchParams.get("color")];
-    if (searchParams.get("minPrice")) newFilters.price[0] = parseInt(searchParams.get("minPrice") || "0", 10);
-    if (searchParams.get("maxPrice")) newFilters.price[1] = parseInt(searchParams.get("maxPrice") || "300", 10);
-    if (searchParams.get("rating")) newFilters.rating = parseInt(searchParams.get("rating") || "0", 10);
+    if (searchParams) {
+      if (searchParams.get("query")) newFilters.search = searchParams.get("query") || "";
+      if (searchParams.get("category")) newFilters.category = [searchParams.get("category")];
+      if (searchParams.get("collection")) newFilters.collection = [searchParams.get("collection")];
+      if (searchParams.get("color")) newFilters.color = [searchParams.get("color")];
+      if (searchParams.get("minPrice")) newFilters.price[0] = parseInt(searchParams.get("minPrice") || "0", 10);
+      if (searchParams.get("maxPrice")) newFilters.price[1] = parseInt(searchParams.get("maxPrice") || "300", 10);
+      if (searchParams.get("rating")) newFilters.rating = parseInt(searchParams.get("rating") || "0", 10);
+    }
 
     setFilters(newFilters);
   }, [searchParams]);
