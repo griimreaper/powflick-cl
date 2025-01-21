@@ -61,13 +61,13 @@ export default function SalesLayout({ children, categoryNav, type = "one" }: Sal
       <Topbar />
 
       {/* HEADER AREA */}
-      <Header session={session} midSlot={<SearchInputWithCategory />} />
+      {/* <Header session={session} midSlot={<SearchInputWithCategory />} /> */}
 
       {/* RENDER MAIN CONTENT AREA */}
       {CONTENT}
 
       {/* FOOTER AREA */}
-      <Footer1 />
+      {/* <Footer1 /> */}
 
       {/* SMALLER DEVICE NAVIGATION */}
       <MobileNavigationBar />

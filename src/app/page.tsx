@@ -76,7 +76,7 @@ export default async function FashionShopTwo() {
 
   return (
     <>
-      <ShopLayout1 session={session} data={data.navbar}>
+      <ShopLayout1 session={session}>
         <FashionTwoPageView data={data} />;
       </ShopLayout1>
     </>

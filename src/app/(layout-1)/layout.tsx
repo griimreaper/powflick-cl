@@ -8,11 +8,10 @@ export const revalidate = 86400; // 1 dia
 
 export default async function Layout1({ children }: PropsWithChildren) {
   // Obtener la sesión del lado del servidor
-  const data: DataStructure = await getLanding();
   const session = await getServerSession();
 
   return (
-    <ShopLayout1 session={session} data={data.navbar}>
+    <ShopLayout1 session={session}>
       {children}
     </ShopLayout1>
   );

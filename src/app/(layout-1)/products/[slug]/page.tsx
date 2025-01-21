@@ -9,8 +9,6 @@ import { getCache, setCache } from "utils/cache";
 
 export const revalidate = 86400; // 1 dia
 
-export const dynamicParams = true;
-
 // Genera los parámetros estáticos para las rutas
 export async function generateStaticParams() {
   const slugs = await getAllProductSlugs(); // Obtener todos los IDs de productos

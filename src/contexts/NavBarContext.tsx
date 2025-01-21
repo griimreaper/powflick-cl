@@ -28,6 +28,7 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         queryKey: ['navbarData'],   // Clave de la consulta
         queryFn: fetchNavbar,       // Función para obtener los datos
         staleTime: 86400 * 1000,     // 1 día en milisegundos
+        enabled: !localStorage.getItem('navbarData'),
         initialData: () => {
             // Intentar obtener los datos de localStorage al iniciar
             const cachedNavbar = localStorage.getItem('navbarData');
