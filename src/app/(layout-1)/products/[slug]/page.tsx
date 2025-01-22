@@ -5,25 +5,28 @@ import { notFound } from "next/navigation";
 // PAGE VIEW COMPONENT
 import { ProductDetailsPageView } from "pages-sections/product-details/page-view";
 import { getAllProductSlugs, getProductsBySlug } from "services/Products";
-import { getCache, setCache } from "utils/cache";
 import { cache } from "react";
 
+const cacheMap = new Map<string, detailProps | null>(); // Capa de caché local
+
 const getProductsBySlugCached = cache(async (slug: string): Promise<detailProps | null> => {
-  return await getProductsBySlug(slug);
+  if (cacheMap.has(slug)) {
+    return cacheMap.get(slug)!; // Devuelve desde la caché si existe
+  }
+
+  const result = await getProductsBySlug(slug);
+  cacheMap.set(slug, result); // Almacena en caché
+  return result;
 });
 
 export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales
-export const revalidate = 86400; // 1 día
+export const dynamic = "force-static"; // Fuerza el comportamiento estático
+export const revalidate = 3600; // Revalidar cada 1 hora
 export const dynamicParams = true;
 
 // Helper: Maneja el caché de manera centralizada
 async function fetchProductDetails(slug: string): Promise<detailProps | null> {
-  let detail = getCache<detailProps>(slug);
-  if (!detail) {
-    detail = await getProductsBySlugCached(slug);
-    if (detail) setCache(slug, detail);
-  }
-  return detail;
+  return await getProductsBySlugCached(slug);
 }
 
 // Genera los parámetros estáticos para las rutas

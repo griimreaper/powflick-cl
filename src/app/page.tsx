@@ -3,9 +3,21 @@ import { DataStructure } from "models/types";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import FashionTwoPageView from "pages-sections/fashion-2/page-view";
+import { cache } from "react";
 import { getLanding } from "services/Landing";
 
-export const revalidate = 86400 * 7;
+export const revalidate = 86400;
+export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales
+export const dynamic = "force-static"; // Fuerza el comportamiento estático
+
+const getLandingCached = cache(async (): Promise<DataStructure> => {
+  try {
+    return await getLanding();
+  } catch (error) {
+    console.error("Error fetching landing data:", error);
+    throw new Error("Failed to fetch landing data.");
+  }
+});
 
 export const metadata: Metadata = {
   title: "Sport Zone",
@@ -69,10 +81,10 @@ export const metadata: Metadata = {
 };
 
 export default async function FashionShopTwo() {
-  const data: DataStructure = await getLanding();
-
-  // Obtener la sesión del lado del servidor
-  const session = await getServerSession();
+  const [data, session] = await Promise.all([
+    getLandingCached(),
+    getServerSession(),
+  ]);
 
   return (
     <>

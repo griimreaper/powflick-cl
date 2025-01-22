@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            staleTime: 86400 * 7,
+            staleTime: 86400,
             refetchOnMount: false,
         },
     },
