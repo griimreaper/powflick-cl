@@ -30,11 +30,7 @@ interface withCategory {
 type SaleLayoutProps = withOutCategory | withCategory;
 // =============================================================
 
-export default function SalesLayout({
-  children,
-  categoryNav,
-  type = "one",
-}: SaleLayoutProps) {
+export default function SalesLayout({ children, categoryNav, type = "one" }: SaleLayoutProps) {
   const { data: session } = useSession();
   let CONTENT = null;
 
@@ -65,17 +61,13 @@ export default function SalesLayout({
       <Topbar />
 
       {/* HEADER AREA */}
-      <Header
-        session={session}
-        midSlot={<SearchInputWithCategory />}
-        data={{ categories: [], recent: [] }}
-      />
+      {/* <Header session={session} midSlot={<SearchInputWithCategory />} /> */}
 
       {/* RENDER MAIN CONTENT AREA */}
       {CONTENT}
 
       {/* FOOTER AREA */}
-      <Footer1 data={{ categories: [], recent: [] }} />
+      {/* <Footer1 /> */}
 
       {/* SMALLER DEVICE NAVIGATION */}
       <MobileNavigationBar />

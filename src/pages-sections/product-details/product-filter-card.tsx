@@ -26,15 +26,16 @@ import { Slider } from "@mui/material";
 import { ProductDB } from "models/types";
 
 const OTHERS = [
-  { label: "On Sale", value: "sale" },
-  { label: "In Stock", value: "stock" },
+  { label: "On Sale", value: "discount" },
+  // { label: "In Stock", value: "stock" },
   { label: "Featured", value: "featured" },
 ];
 
 interface Props {
-  filters?: ProductFilters;
+  filters: ProductFilters;
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
   topCategories?: any[];
+  colors: string[];
   products?: ProductDB[];
 }
 
@@ -50,17 +51,12 @@ const initialFilters = {
 };
 
 export default function ProductFilterCard({
-  filters = initialFilters,
+  filters,
   changeFilters,
   topCategories,
-  products,
+  colors,
 }: Props) {
   const [collapsed, setCollapsed] = useState<string | null>(null);
-console.log(topCategories);
-
-  const allColors = new Set(
-    products?.flatMap(p => p.colors?.map(c => c?.trim().toLowerCase()) || [])
-  );
 
   const isValidColor = (color: string) => {
     if (typeof window === "undefined") return false; // No se puede validar en el servidor
@@ -70,7 +66,7 @@ console.log(topCategories);
     return s.color !== ""; // Devuelve true si el navegador reconoce el color
   };
 
-  const validColors = [...allColors].map(c => c.trim().toLowerCase())
+  const validColors = colors?.map(c => c.trim().toLowerCase())
     .filter(isValidColor);
 
   const handleChangePrice = (values: number[]) => {
@@ -83,21 +79,30 @@ console.log(topCategories);
     changeFilters && changeFilters("color", [value]);
   };
 
-  const handleChangeBrand = (value: string) => {
-    const values = filters.brand?.includes(value)
-      ? filters.brand?.filter((item) => item !== value)
-      : [...(filters.brand || []), value];
+  // const handleChangeBrand = (value: string) => {
+  //   const values = filters.brand?.includes(value)
+  //     ? filters.brand?.filter((item) => item !== value)
+  //     : [...(filters.brand || []), value];
 
-    changeFilters && changeFilters("brand", values);
+  //   changeFilters && changeFilters("brand", values);
+  // };
+
+  const handleChangeSales = (value: string, isChecked: boolean) => {
+    if (value === "featured") {
+      // Si es "featured", usa undefined al desactivar
+      changeFilters && changeFilters("featured", isChecked ? true : undefined);
+    } else if (value === "discount") {
+      // Si es "sale", usa undefined al desactivar
+      changeFilters && changeFilters("discount", isChecked ? true : undefined);
+    } else {
+      // Si no coincide con ninguno de los casos, sigue manejando como "sales"
+      const values = isChecked
+        ? [...(filters.sales || []), value] // Agrega el valor si está activado
+        : filters.sales?.filter((item) => item !== value); // Remueve el valor si está desactivado
+      changeFilters && changeFilters("sales", values?.length ? values : undefined);
+    }
   };
-
-  const handleChangeSales = (value: string) => {
-    const values = filters.sales?.includes(value)
-      ? filters.sales?.filter((item) => item !== value)
-      : [...(filters.sales || []), value];
-
-    changeFilters && changeFilters("sales", values);
-  };
+  
 
   const handleChangeRating = (value: number) => {
     changeFilters && changeFilters("rating", value);
@@ -123,9 +128,15 @@ console.log(topCategories);
     changeFilters && changeFilters("sales", initialFilters.sales);
     changeFilters && changeFilters("rating", initialFilters.rating);
     changeFilters && changeFilters("category", initialFilters.category);
+    changeFilters && changeFilters("mostSold", undefined);
+    changeFilters && changeFilters("discount", undefined);
+    changeFilters && changeFilters("featured", undefined);
     changeFilters && changeFilters("collection", initialFilters.collection);
     changeFilters && changeFilters("search", initialFilters.search);
   };
+
+  console.log(filters);
+
 
   return (
     <div>
@@ -226,8 +237,8 @@ console.log(topCategories);
           <CheckboxLabel
             key={value}
             label={label}
-            checked={filters.sales?.includes(value) || false}
-            onChange={() => handleChangeSales(value)}
+            checked={filters[value as keyof ProductFilters] || false} // Verifica si está activo
+            onChange={(e) => handleChangeSales(value, e.target.checked)}
           />
         ))}
       </FormGroup>

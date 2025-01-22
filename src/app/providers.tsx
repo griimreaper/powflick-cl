@@ -12,18 +12,20 @@ import ThemeProvider from "theme/theme-provider";
 export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <ClientProviders>
-            <CartProvider>
-                <SettingsProvider>
-                    <ThemeProvider>
-                        <SessionProvider>
-                            <ProgressBar />
-                            <RTL>
-                                {children}
-                            </RTL>
-                        </SessionProvider>
-                    </ThemeProvider>
-                </SettingsProvider>
-            </CartProvider>
+            <NavbarProvider>
+                <CartProvider>
+                    <SettingsProvider>
+                        <ThemeProvider>
+                            <SessionProvider>
+                                <ProgressBar />
+                                <RTL>
+                                    {children}
+                                </RTL>
+                            </SessionProvider>
+                        </ThemeProvider>
+                    </SettingsProvider>
+                </CartProvider>
+            </NavbarProvider>
         </ClientProviders>
     )
 }

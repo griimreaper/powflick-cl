@@ -1,5 +1,6 @@
 export interface ProductFilters {
   search: any;
+  page: number;
   brand: string[];
   color: string[];
   sales: string[];
@@ -7,6 +8,10 @@ export interface ProductFilters {
   rating: number;
   category: string[];
   collection: string[];
+  featured: true | false | undefined
+  discount: true | false | undefined
+  mostSold: true | false | undefined
+  order: string
 }
 
 export type ProductFilterKeys = keyof ProductFilters;
