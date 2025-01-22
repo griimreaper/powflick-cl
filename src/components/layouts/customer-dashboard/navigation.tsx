@@ -21,7 +21,7 @@ import { signOut } from "next-auth/react";
 import { useDashboardStore } from "store/dashboard";
 
 export default function Navigation({ profile }: { profile: Profile }) {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
   const router = useRouter();
   const { removeProfile } = useDashboardStore()
   const MENUS = [
