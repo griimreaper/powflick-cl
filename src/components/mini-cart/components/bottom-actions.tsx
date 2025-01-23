@@ -43,7 +43,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
               item_id: id,
               item_name: title,
               affiliation: "Google Merchandise Store",
-              item_brand: "Sport Zone",
+              item_brand: "Pow Flick",
               item_category: product_categories.split("|")[0],
               item_category2: sport,
               item_list_name: slug,

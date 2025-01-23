@@ -119,14 +119,14 @@ const DUMMY_ADDRESS_LIST: Address[] = [
     name: "Home",
     phone: "+17804084466",
     street2: "435 Bristol, MA 2351",
-    street1: "375 SubidSportZone, MA 2351",
+    street1: "375 SubidPow Flick, MA 2351",
   },
   {
     id: 2,
     name: "Office",
     phone: "+18334271710",
     street2: "968 Brockton, MA 2351",
-    street1: "645 BondorSportZone, MA 2351",
+    street1: "645 BondorPow Flick, MA 2351",
   },
   {
     id: 3,

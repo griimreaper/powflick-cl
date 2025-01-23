@@ -85,7 +85,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
       >
         <Box width="auto" padding={2} height="100vh">
           <FlexBetween mb={1}>
-            <Paragraph>Search to SportZone</Paragraph>
+            <Paragraph>Search to Pow Flick</Paragraph>
 
             <IconButton onClick={toggleSearchBar}>
               <Clear />

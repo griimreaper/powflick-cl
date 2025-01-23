@@ -21,7 +21,7 @@ export default function LogoArea() {
       justifyContent={COMPACT ? "center" : "space-between"}
     >
       <Avatar
-        alt="SportZone Logo"
+        alt="Pow Flick Logo"
         src={
           COMPACT
             ? "/assets/images/logo/POWFLICK_LOGO-HEADER.png"

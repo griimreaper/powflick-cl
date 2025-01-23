@@ -4,7 +4,7 @@ import CollectionsPageView from "pages-sections/vendor-dashboard/collections/pag
 import api from "utils/__api__/dashboard";
 
 export const metadata: Metadata = {
-  title: "Collections - SportZone",
+  title: "Collections - Pow Flick",
   description: ``,
   authors: [{ name: "devcodelab" }],
   keywords: [""]
