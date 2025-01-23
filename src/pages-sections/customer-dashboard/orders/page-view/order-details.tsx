@@ -19,14 +19,12 @@ export default function OrderDetailsPageView({ order }: Props) {
     <Fragment>
       {/* TITLE HEADER AREA */}
       <DashboardHeader
-        href="/orders"
         Icon={ShoppingBag}
         title="Order Details"
-        buttonText="Order Again"
       />
 
       {/* ORDER PROGRESS AREA */}
-      <OrderProgress status={order.state}/>
+      <OrderProgress status={order?.state}/>
 
       {/* ORDERED PRODUCT LIST */}
       <OrderedProducts order={order} />

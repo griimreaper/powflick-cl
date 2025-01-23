@@ -26,7 +26,7 @@ type Props = {
   imgUrl: string;
   rating?: number;
   discount?: number;
-  id: string | number;
+  id: string;
   hideRating?: boolean;
   hoverEffect?: boolean;
   showProductSize?: boolean;
@@ -104,11 +104,11 @@ export default function ProductCard1({
       </ImageWrapper>
 
       {/* PRODUCT VIEW DIALOG BOX */}
-      <ProductViewDialog
+      {/* <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
-        product={{ title, price, id, slug, imgGroup: [imgUrl, imgUrl] }}
-      />
+        product={{ title, price, id, slug  }}
+      /> */}
 
       <ContentWrapper>
         <Box flex="1 1 0" minWidth="0px" mr={1}>
@@ -132,11 +132,11 @@ export default function ProductCard1({
         </Box>
 
         {/* PRODUCT QUANTITY HANDLER BUTTONS */}
-        <QuantityButtons
+        {/* <QuantityButtons
           quantity={cartItem?.qty || 0}
           handleIncrement={handleIncrementQuantity}
           handleDecrement={handleDecrementQuantity}
-        />
+        /> */}
       </ContentWrapper>
     </StyledSportZoneCard>
   );

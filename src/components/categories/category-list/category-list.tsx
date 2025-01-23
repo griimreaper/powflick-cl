@@ -10,10 +10,13 @@ import { StyledRoot } from "./styles";
 import { Props } from "./types";
 import { ContactMail, Help, Info, Public, Store } from "@mui/icons-material";
 import { CategoryItem } from "../types";
-import { useNavbar } from "contexts/NavBarContext";
+import { useQueryClient } from "@tanstack/react-query";
+import { DataStructure } from "app/types";
 
-export default function CategoryList({ open, position = "absolute" }: Props) {
-  const { navbarData: data } = useNavbar();
+export default function CategoryList({ open, position = "absolute", data }: Props) {
+  const queryClient = useQueryClient();
+
+  // const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
 
   const categoryMenus: CategoryItem[] = [
     {
@@ -24,16 +27,14 @@ export default function CategoryList({ open, position = "absolute" }: Props) {
       // offer: { url: "/assets/images/promotion/offer-5.png", href: "/", position: "bottom" },
       child: data?.categories
     },
-    { icon: Public, title: "Blog", href: "/blog" },
+    // { icon: Public, title: "Blog", href: "/blog" },
     { icon: ContactMail, title: "Contact", href: "/contact" },
     { icon: Info, title: "About Us", href: "/about-us" },
     { icon: Help, title: "Help", href: "/help" },
   ];
 
-  console.log(categoryMenus);
-  
-  return (
-    <StyledRoot open={open} position={position}>
+return (
+    <StyledRoot open={open} position={position} >
       {categoryMenus.map((item) => {
         const { href, title, child, component, icon, offer } = item;
         const MegaMenu = MegaMenu2;

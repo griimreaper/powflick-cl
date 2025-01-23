@@ -18,10 +18,13 @@ import { H1, H2, H3, H6, Paragraph } from "components/Typography";
 import useCart from "hooks/useCart";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
+import { ProductDB } from "models/types";
+import { useShoppingCartStore } from "store/shoppingCart";
+import useCounter from "hooks/useCounter";
 
 // =====================================================
 interface Props {
-  product: any;
+  product: ProductDB;
   openDialog: boolean;
   handleCloseDialog: () => void;
 }
@@ -29,20 +32,22 @@ interface Props {
 
 export default function ProductViewDialog(props: Props) {
   const { product, openDialog, handleCloseDialog } = props;
+  // const { handleCounterChange } = useCounter(product, false, true);
 
-  const { state, dispatch } = useCart();
-  const cartItem = state.cart.find((item) => item.id === product.id);
+  const { cart } = useShoppingCartStore();
+
+  const cartItem = cart.find((item) => item.product.id === product.id);
 
   const handleCartAmountChange = (amount: number) => () => {
-    dispatch({
-      type: "CHANGE_CART_AMOUNT",
-      payload: {
-        ...product,
-        qty: amount,
-        name: product.title,
-        imgUrl: product.imgGroup[0],
-      },
-    });
+    // dispatch({
+    //   type: "CHANGE_CART_AMOUNT",
+    //   payload: {
+    //     ...product,
+    //     qty: amount,
+    //     name: product.title,
+    //     // imgUrl: product.imgGroup[0],
+    //   },
+    // });
   };
 
   return (
@@ -64,7 +69,7 @@ export default function ProductViewDialog(props: Props) {
                   backgroundColor: "transparent",
                 }}
               >
-                {product.imgGroup.map((item: string, index: number) => (
+                {product?.images?.map((item: string, index: number) => (
                   <SportZoneImage
                     key={index}
                     src={item}
@@ -84,7 +89,7 @@ export default function ProductViewDialog(props: Props) {
               <H2>{product.title}</H2>
 
               <Paragraph py={1} color="grey.500" fontWeight={600} fontSize={13}>
-                CATEGORY: Cosmetic
+                CATEGORY: {product?.product_categories?.split("|").join(",")}
               </Paragraph>
 
               <H1 color="primary.main">{currency(product.price)}</H1>
@@ -95,19 +100,17 @@ export default function ProductViewDialog(props: Props) {
               </FlexBox>
 
               <Paragraph my={2}>
-                Sed egestas, ante et vulputate volutpat, eros pede semper est,
-                vitae luctus metus libero eu augue. Morbi purus liberpuro ate
-                vol faucibus adipiscing.
+                {product.content}
               </Paragraph>
 
               <Divider sx={{ mb: 2 }} />
 
-              {!cartItem?.qty ? (
+              {/* {!cartItem?.customizations.length ? (
                 <Button
                   size="large"
                   color="dark"
                   variant="contained"
-                  onClick={handleCartAmountChange(1)}
+                  onClick={() => handleCounterChange(1, true)}
                   sx={{ height: 45, borderRadius: 2 }}
                 >
                   Add to Cart
@@ -119,13 +122,13 @@ export default function ProductViewDialog(props: Props) {
                     color="dark"
                     variant="outlined"
                     sx={{ p: ".6rem", height: 45 }}
-                    onClick={handleCartAmountChange(cartItem?.qty - 1)}
+                    onClick={() =>handleCounterChange(- 1, true)}
                   >
                     <Remove fontSize="small" />
                   </Button>
 
                   <H3 fontWeight="600" mx={2.5}>
-                    {cartItem?.qty.toString().padStart(2, "0")}
+                    {cartItem?.customizations.length.toString().padStart(2, "0")}
                   </H3>
 
                   <Button
@@ -133,12 +136,12 @@ export default function ProductViewDialog(props: Props) {
                     color="dark"
                     variant="outlined"
                     sx={{ p: ".6rem", height: 45 }}
-                    onClick={handleCartAmountChange(cartItem?.qty + 1)}
+                    onClick={() => handleCounterChange(1, true)}
                   >
                     <Add fontSize="small" />
                   </Button>
                 </FlexBox>
-              )}
+              )} */}
             </Grid>
           </Grid>
         </div>

@@ -76,11 +76,11 @@ export default function ProductCard10(props: Props) {
         </ImageBox>
 
         {/* PRODUCT VIEW DIALOG BOX */}
-        <ProductViewDialog
+        {/* <ProductViewDialog
           openDialog={openModal}
           handleCloseDialog={toggleDialog}
           product={{ title, price, id, slug, imgGroup: [imgUrl, imgUrl] }}
-        />
+        /> */}
 
         {/* PRODUCT HOVER ACTION ICONS */}
         <HoverActions

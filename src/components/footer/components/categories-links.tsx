@@ -13,8 +13,8 @@ export default function CategoriesLinks({ isDark, list }: Props) {
       <Heading>Categories</Heading>
 
       {list?.map((item, ind) => (
-        <StyledLink isDark={isDark} href={`/products?category=${item.name}`} key={ind}>
-          {item.name}
+        <StyledLink isDark={isDark} href={`/products?category=${item.title}`} key={ind}>
+          {item.title}
         </StyledLink>
       ))}
     </Fragment>

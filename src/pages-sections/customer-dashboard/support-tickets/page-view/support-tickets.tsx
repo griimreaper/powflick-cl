@@ -16,9 +16,6 @@ export default function TicketsPageView() {
   const { profile } = useDashboardStore();
   const { messages } = profile;
 
-  console.log("messages", messages);
-  
-
   // Número de tickets por página
   const TICKETS_PER_PAGE = 5;
 
@@ -38,7 +35,7 @@ export default function TicketsPageView() {
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
-      <DashboardHeader title="Support Ticket" Icon={CustomerService} />
+      <DashboardHeader title="Support Ticket" href="/contact" Icon={CustomerService} buttonText="Contact Us"/>
 
       {/* SUPPORT TICKET LIST AREA */}
       {currentMessages.map((item) => (

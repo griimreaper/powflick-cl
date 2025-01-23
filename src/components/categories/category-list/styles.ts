@@ -4,7 +4,7 @@ import { Props } from "./types";
 // styled component
 export const StyledRoot = styled("div", {
   shouldForwardProp: (prop) => prop !== "position" && prop !== "open"
-})<Props>(({ theme, position, open }) => ({
+})<any>(({ theme, position, open }) => ({
   left: 0,
   zIndex: 98,
   right: "auto",

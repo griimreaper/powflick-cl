@@ -40,7 +40,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 export default function OrderProgress({ status }: { status: string }) {
   const ORDER_STATUS = status;
   const STEP_ICONS = [PackageBox, TruckFilled, Delivery];
-  const ORDER_STATUS_LIST = ["PAID", "DISPATCHED", "ONTHEWAY", "DELIVERED"];
+  const ORDER_STATUS_LIST = ["PAID", "ONTHEWAY", "DELIVERED"];
 
   const statusIndex = ORDER_STATUS_LIST.indexOf(ORDER_STATUS);
 
@@ -75,7 +75,7 @@ export default function OrderProgress({ status }: { status: string }) {
         ))}
       </StyledFlexbox>
 
-      <FlexBox justifyContent={{ xs: "center", sm: "flex-end" }}>
+      {/* <FlexBox justifyContent={{ xs: "center", sm: "flex-end" }}>
         <Paragraph
           p="0.5rem 1rem"
           textAlign="center"
@@ -84,7 +84,7 @@ export default function OrderProgress({ status }: { status: string }) {
           bgcolor="primary.light">
           Estimated Delivery Date <b>4th October</b>
         </Paragraph>
-      </FlexBox>
+      </FlexBox> */}
     </Card>
   );
 }

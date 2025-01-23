@@ -8,11 +8,14 @@ import Scrollbar from "components/scrollbar";
 import { StyledNavLink } from "components/navbar/styles";
 import { renderLevels } from "./render-levels";
 import { updateNavigation } from "./modified-navigation";
-import { useNavbar } from "contexts/NavBarContext";
+import { DataStructure } from "models/types";
+import { useQueryClient } from "@tanstack/react-query";
 
-export default function MobileMenu() {
+export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { navbarData: data } = useNavbar();
+  const queryClient = useQueryClient();
+
+  // const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
   const handleClose = () => setOpenDrawer(false);
 
   const storeMenu = { title: 'Store', child: data?.categories }

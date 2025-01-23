@@ -31,7 +31,7 @@ export default function NavLink({
   className,
   ...props
 }: NavLinkProps) {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
 
   // CHECK CURRENT ROUTE
   const checkRouteMatch = () => {

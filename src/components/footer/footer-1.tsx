@@ -1,3 +1,4 @@
+"use client";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -10,12 +11,10 @@ import CustomerCareLinks from "./components/customer-care-links";
 import { Paragraph } from "components/Typography";
 // STYLED COMPONENTS
 import { Heading } from "./styles";
-import { useNavbar } from "contexts/NavBarContext";
 import CategoriesLinks from "./components/categories-links";
+import { DataStructure } from "models/types";
 
-export default function Footer1() {
-  const { navbarData } = useNavbar();
-
+export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
   return (
     <Box component="footer" bgcolor="#222935" mb={{ sm: 0, xs: 7 }}>
       <Box component={Container} color="white" overflow="hidden" py={{ sm: 10, xs: 4 }}>
@@ -36,7 +35,7 @@ export default function Footer1() {
 
           {/* CUSTOMER CARE LINKS */}
           <Grid item lg={2} md={3} sm={6} xs={12}>
-            <CategoriesLinks list={navbarData?.categories} />
+            <CategoriesLinks list={data?.categories} />
           </Grid>
 
           {/* CONTACT & SOCIAL LINKS */}

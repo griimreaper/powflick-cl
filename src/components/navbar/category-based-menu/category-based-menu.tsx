@@ -10,22 +10,26 @@ import { Wrapper, StyledCard, MenusContainer } from "./styles";
 // DATA TYPES
 import { MenuList } from "./types";
 import Link from "next/link";
+import { Typography } from "@mui/material";
 
 // ===============================================================
 type Props = { menuList: MenuList[]; title: string };
 // ===============================================================
 
 export default function CategoryBasedMenu({ title, menuList }: Props) {
-  const [openList, setOpenList] = useState(menuList[0].title);
+  const [openList, setOpenList] = useState(menuList[0]?.title || "");
   const categories = menuList.reduce<string[]>((prev, curr) => [...prev, curr.title], []);
-  const subCategories = menuList.find((item) => item.title === openList);
+  const subCategories = menuList.find((item) => item.title === openList) || { title: "", child: [] };
 
   return (
     <Wrapper>
-      <FlexRowCenter fontWeight={600} alignItems="flex-end" gap={0.3}>
+      <FlexRowCenter alignItems="center" display={"flex"} flexDirection={"row"} width={"100%"} gap={"0.3rem"}>
         <Link href={'/products'}>
-          {title} <KeyboardArrowDown sx={{ color: "grey.500", fontSize: "1.1rem" }} />
+          <Typography sx={{ fontWeight: 600 }}>
+            {title}
+          </Typography>
         </Link>
+        <KeyboardArrowDown sx={{ color: "grey.500", fontSize: "1.1rem", display: "absolute" }} />
       </FlexRowCenter>
 
       <MenusContainer className="menu-list">
@@ -38,7 +42,7 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
           />
 
           {/* SUB / CHILD CATEGORIES SECTION */}
-          <ChildCategories categories={subCategories!} />
+          <ChildCategories categories={subCategories} />
         </StyledCard>
       </MenusContainer>
     </Wrapper>

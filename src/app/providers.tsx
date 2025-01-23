@@ -2,25 +2,30 @@
 import ProgressBar from "components/progress";
 import RTL from "components/rtl";
 import CartProvider from "contexts/CartContext";
+import ClientProviders from "contexts/ClientProviders";
 import { NavbarProvider } from "contexts/NavBarContext";
 import SettingsProvider from "contexts/SettingContext";
 import { SessionProvider } from "next-auth/react";
 import React from "react";
 import ThemeProvider from "theme/theme-provider";
 
-export const GlobalProvider: React.FC<{ children: React.ReactNode, navbar: any }> = ({ children, navbar }) => {
+export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
-        <CartProvider>
-            <NavbarProvider initialData={navbar}>
-                <SettingsProvider>
-                    <ThemeProvider>
-                        <SessionProvider>
-                            <ProgressBar />
-                            <RTL>{children}</RTL>
-                        </SessionProvider>
-                    </ThemeProvider>
-                </SettingsProvider>
+        <ClientProviders>
+            <NavbarProvider>
+                <CartProvider>
+                    <SettingsProvider>
+                        <ThemeProvider>
+                            <SessionProvider>
+                                <ProgressBar />
+                                <RTL>
+                                    {children}
+                                </RTL>
+                            </SessionProvider>
+                        </ThemeProvider>
+                    </SettingsProvider>
+                </CartProvider>
             </NavbarProvider>
-        </CartProvider>
+        </ClientProviders>
     )
 }

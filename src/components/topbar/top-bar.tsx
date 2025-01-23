@@ -72,7 +72,7 @@ export default function Topbar({ bgColor }: Props) {
 
         <FlexBox className="topbarRight" alignItems="center">
           {/* LANGUAGE MENU SELECTOR */}
-          <SportZoneMenu
+          {/* <SportZoneMenu
             handler={(e) => (
               <TouchRipple className="handler marginRight" onClick={e}>
                 <Span className="menuTitle">{selectedLanguage.title}</Span>
@@ -95,7 +95,7 @@ export default function Topbar({ bgColor }: Props) {
                 </MenuItem>
               ));
             }}
-          />
+          /> */}
 
           {/* SOCIAL LINKS AREA */}
           <FlexBox alignItems="center" gap={1.5}>

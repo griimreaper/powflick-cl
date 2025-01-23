@@ -14,67 +14,188 @@ import { H6, Tiny } from "components/Typography";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
+import { ShoppingCartStoreType } from "store/interfaces/interface";
+import useCounter from "hooks/useCounter";
+import { useShoppingCartStore } from "store/shoppingCart";
+
+import { useRef, useState } from "react";
+import { CustomizationModal } from "pages-sections/cart/CustomizationModal";
+import { styled } from "@mui/material";
 
 // ==============================================================
 interface Props {
-  item: CartItem;
-  handleCartAmountChange: (amount: number, product: CartItem) => () => void;
+  item: ShoppingCartStoreType["cart"][0];
 }
 // ==============================================================
 
-export default function MiniCartItem({ item, handleCartAmountChange }: Props) {
+const CustomButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  border: `1px solid ${theme.palette.grey[500]}`,
+  backgroundColor: theme.palette.grey[200],
+  width: "2rem",
+  height: "2rem",
+  borderRadius: "4px",
+  textAlign: "center",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  transition: "background-color 0.3s, color 0.3s, border 0.3s",
+  "&:hover": {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    border: `1px solid ${theme.palette.primary.light}`,
+  },
+  "&:focus": {
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
+export default function MiniCartItem({ item }: Props) {
+  // const { counter, setCounter, handleCounterChange } = useCounter(item.product.id);
+
+  const { cart } = useShoppingCartStore();
+
+  const { removeProductById } = useShoppingCartStore();
+  const [selectedCustomization, setSelectedCustomization] = useState<
+    [string, string] | null
+  >(null);
+  const [modalPosition, setModalPosition] = useState<{
+    top: number;
+    left: number;
+  }>({ top: 0, left: 0 });
+
+  const handleCustomizationClick = (
+    productId: string,
+    customizationIndex: string,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setSelectedCustomization([productId, customizationIndex]);
+    const rect = event.currentTarget.getBoundingClientRect();
+    setModalPosition({ top: rect.top, left: rect.left });
+  };
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const adjustModalPosition = (position: any) => {
+    const { top, left } = position;
+    const modalWidth = 400; // Ancho estimado del modal
+    const screenWidth = window.innerWidth;
+
+    let adjustedLeft = left;
+    if (left + modalWidth > screenWidth) {
+      adjustedLeft = screenWidth - modalWidth - 20; // Ajusta 20px de margen
+    }
+
+    return { top, left: adjustedLeft };
+  };
+
   return (
     <FlexBox
       py={2}
       px={2.5}
-      key={item.id}
+      key={item.product.id}
       alignItems="center"
       borderBottom="1px solid"
-      borderColor="divider">
+      borderColor="divider"
+      sx={{ zIndex: 10 }} // Añadir zIndex aquí
+    >
       <FlexBox alignItems="center" flexDirection="column">
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
-          onClick={handleCartAmountChange(item.qty + 1, item)}
-          sx={{ height: 28, width: 28, borderRadius: 50 }}>
+          onClick={() => {
+            handleCounterChange(1, true);
+          }}
+          sx={{ height: 28, width: 28, borderRadius: 50 }}
+        >
           <Add fontSize="small" />
-        </Button>
+        </Button> */}
 
-        <H6 my="3px">{item.qty}</H6>
+        <H6 my="3px">{item.customizations.length}</H6>
 
-        <Button
+        {/* <Button
           size="small"
           color="primary"
           variant="outlined"
-          disabled={item.qty === 1}
-          onClick={handleCartAmountChange(item.qty - 1, item)}
-          sx={{ height: 28, width: 28, borderRadius: 50 }}>
+          disabled={item.customizations.length === 1}
+          onClick={() => {
+            handleCounterChange(-1, true);
+          }}
+          sx={{ height: 28, width: 28, borderRadius: 50 }}
+        >
           <Remove fontSize="small" />
-        </Button>
+        </Button> */}
       </FlexBox>
 
-      <Link href={`/products/${item.id}`}>
-        <Avatar alt={item.name} src={item.imgUrl} sx={{ mx: 1, width: 75, height: 75 }} />
+      <Link href={`/products/${item.product.id}`}>
+        <Avatar
+          alt={item.product.title}
+          src={(item.product?.images && item.product.images[0]) || ""}
+          sx={{ mx: 1, width: 75, height: 75 }}
+        />
       </Link>
 
-      <Box flex="1" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
-        <Link href={`/products/${item.slug}`}>
+      <Box
+        flex="1"
+        textOverflow="ellipsis"
+        whiteSpace="nowrap"
+        overflow="hidden"
+      >
+        <Link href={`/products/${item.product.slug}`}>
           <H6 ellipsis className="title">
-            {item.name}
+            {item.product.title}
           </H6>
         </Link>
 
         <Tiny color="grey.600">
-          {currency(item.price)} x {item.qty}
+          {currency(item.product.price)} x {item.customizations.length}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
-          {currency(item.qty * item.price)}
+          {currency(
+            item.customizations.length * item.product.price +
+              item.customizations.reduce((acc, _) => acc + _.price, 0)
+          )}
         </H6>
+
+        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "auto", py: 1}}>
+          {item.customizations.map((_, index) => (
+            <CustomButton
+              key={index}
+              variant="contained"
+              onClick={(event: any) =>
+                handleCustomizationClick(item.product.id, _.id, event)
+              }
+              ref={buttonRef}
+            >
+              {index + 1}
+            </CustomButton>
+          ))}
+        </FlexBox>
       </Box>
 
-      <IconButton size="small" onClick={handleCartAmountChange(0, item)} sx={{ marginLeft: 2.5 }}>
+      {selectedCustomization !== null && (
+        <CustomizationModal
+          customization={cart
+            .find((p) => p.product.id === selectedCustomization[0])
+            ?.customizations.find((c) => c.id === selectedCustomization[1])}
+          productId={selectedCustomization[0]}
+          productSlug={item.product.slug!}
+          onClose={() => setSelectedCustomization(null)}
+          position={adjustModalPosition(modalPosition)}
+          orderId={null}
+          currencyOrder={null}
+          style={{ zIndex: 9999 }}
+        />
+      )}
+
+      <IconButton
+        size="small"
+        onClick={() => {
+          removeProductById(item.product.id);
+        }}
+        sx={{ marginLeft: 2.5 }}
+      >
         <Close fontSize="small" />
       </IconButton>
     </FlexBox>

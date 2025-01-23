@@ -27,6 +27,9 @@ import {
 // CUSTOM DATA MODEL
 import { ProductDB } from "models/types";
 import Marquee from "react-fast-marquee";
+import ProductPrice from "components/product-cards/product-price";
+import DiscountChip from "../discount-chip";
+
 
 // ==============================================================
 type Props = { product: ProductDB };
@@ -67,7 +70,26 @@ export default function ProductCard8({ product }: Props) {
   return (
     <Card>
       <CardMedia>
-        <Link href={`/products/${slug}`}>
+        <DiscountChip discount={discount} />
+        <Link href={`/products/${slug}`}
+        onClick={() => {
+          (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+          (window as any).dataLayer.push({
+            event: "View item",
+            ecommerce: {
+              items: [
+                {
+                  item_id: `${product.id}`,
+                  item_name: `${product.title}`,
+                  item_list_name: `${product.slug}`,
+                  discount: `${product.discount}`,
+                  item_category: `${product.product_categories.split("|")[0]}`,
+                  price: `${Number(product.price )}`,
+                },
+              ],
+            },
+          });
+        }}>
           <LazyImage
             width={300}
             height={300}
@@ -149,9 +171,9 @@ export default function ProductCard8({ product }: Props) {
         )}
 
         {/* ADD TO CART BUTTON */}
-        <AddToCartButton className="product-actions" onClick={handleAddToCart}>
+        {/* <AddToCartButton className="product-actions" onClick={handleAddToCart}>
           <AddShoppingCart className="icon" fontSize="small" />
-        </AddToCartButton>
+        </AddToCartButton> */}
 
         {/* PRODUCT FAVORITE BUTTON */}
         <FavoriteButton
@@ -184,7 +206,7 @@ export default function ProductCard8({ product }: Props) {
       <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
-        product={{ id, slug, title, price, imgGroup: images }}
+        product={product}
       />
 
       <Box p={1} textAlign="center">
@@ -197,9 +219,10 @@ export default function ProductCard8({ product }: Props) {
         <Paragraph fontWeight="bold">{title}</Paragraph>
 
         {/* PRODUCT PRICE  */}
-        <H4 fontWeight={700} py={0.5}>
-          {currency(price)}
-        </H4>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+
+          <ProductPrice discount={discount} price={price} />
+        </div>
 
         {/* PRODUCT RATING / REVIEW  */}
         <FlexRowCenter gap={1}>

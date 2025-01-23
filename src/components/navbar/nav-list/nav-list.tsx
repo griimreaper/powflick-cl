@@ -40,7 +40,7 @@ export default function NavigationList({
             <CategoryBasedMenu
               key={nav.title}
               title={nav.title}
-              menuList={nav.child as any}
+              menuList={nav.child}
             />
           );
         }
@@ -106,13 +106,13 @@ export default function NavigationList({
     megaMenu: false,
     megaMenuWithSub: true,
     title: "Store",
-    child: data?.categories,
+    child: "categories" in data ? data.categories : [],
   };
 
   return (
     <FlexBox gap={4}>
       {fullScreenMenu && renderNestedNav([fullScreenMenu], true)}
-      <StyledNavLink href="/blog">Blog</StyledNavLink>
+      {/* <StyledNavLink href="/blog">Blog</StyledNavLink> */}
       <StyledNavLink href="/contact">Contact</StyledNavLink>
       <StyledNavLink href="/about-us">About Us</StyledNavLink>
       <StyledNavLink href="/help">Help</StyledNavLink>

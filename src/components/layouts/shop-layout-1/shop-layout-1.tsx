@@ -21,6 +21,7 @@ import { Session } from "next-auth";
 import { getProfile } from "services/DashboardUser";
 import { useDashboardStore } from "store/dashboard";
 import { useNavbar } from "contexts/NavBarContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 /**
  *  USED IN:
@@ -40,7 +41,10 @@ export default function ShopLayout1({
   const [isFixed, setIsFixed] = useState(false);
   const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
 
-  const {navbarData: data} = useNavbar();
+  const queryClient = useQueryClient();
+
+  const data = queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], recent: [] };
+console.log(data);
 
   const { profile, setData, removeProfile, setProfileUser } =
     useDashboardStore();
@@ -98,6 +102,7 @@ export default function ShopLayout1({
         <Header
           isFixed={isFixed}
           session={session}
+          data={data}
           midSlot={<SearchInputWithCategory />}
         />
       </Sticky>
@@ -112,7 +117,7 @@ export default function ShopLayout1({
       <MobileNavigationBar data={data} />
 
       {/* FOOTER */}
-      <Footer1 />
+      <Footer1 data={data}/>
     </Fragment>
   );
 }

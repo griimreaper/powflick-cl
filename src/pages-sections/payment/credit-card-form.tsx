@@ -49,7 +49,6 @@ export default function CreditCardForm() {
 
   const handleFormSubmit = (values: typeof INITIAL_VALUES) => {
     router.push("/payment");
-    console.log(values);
   };
 
   return (

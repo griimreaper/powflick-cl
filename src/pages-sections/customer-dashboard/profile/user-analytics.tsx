@@ -36,15 +36,15 @@ export default function UserAnalytics({ user }: Props) {
             <div>
               <H5>{`${user.firstName} ${user.lastName}`}</H5>
 
-              <FlexBox alignItems="center" gap={1}>
+              {/* <FlexBox alignItems="center" gap={1}>
                 <Paragraph color="grey.600">Balance:</Paragraph>
                 <Paragraph color="primary.main">{currency(500)}</Paragraph>
-              </FlexBox>
+              </FlexBox> */}
             </div>
 
-            <Paragraph color="grey.600" letterSpacing={3}>
+            {/* <Paragraph color="grey.600" letterSpacing={3}>
               SILVER USER
-            </Paragraph>
+            </Paragraph> */}
           </FlexBetween>
         </Card>
       </Grid>

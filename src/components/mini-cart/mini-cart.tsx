@@ -14,6 +14,7 @@ import Scrollbar from "components/scrollbar";
 import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
+import { useShoppingCartStore } from "store/shoppingCart";
 
 // =========================================================
 type Props = { toggleSidenav: () => void };
@@ -21,42 +22,27 @@ type Props = { toggleSidenav: () => void };
 
 export default function MiniCart({ toggleSidenav }: Props) {
   const { push } = useRouter();
-  const { state, dispatch } = useCart();
-  const cartList = state.cart;
+  const { cart, total, setCoupon, coupon } = useShoppingCartStore();
+  const cartList = cart;
 
-  const handleCartAmountChange = (amount: number, product: CartItem) => () => {
-    dispatch({
-      type: "CHANGE_CART_AMOUNT",
-      payload: { ...product, qty: amount }
-    });
-  };
-
-  const getTotalPrice = () => {
-    return cartList.reduce((acc, item) => acc + item.price * item.qty, 0);
-  };
-
-  const handleNavigate = (path: string) => () => {
+  const handleNavigate = (path: string) => {
     toggleSidenav();
     push(path);
   };
 
   return (
-    <Box width="100%" minWidth={380}>
+    <Box width="100%" minWidth={380} sx={{ zIndex: 10 }}>
       {/* HEADING SECTION */}
       <TopHeader toggle={toggleSidenav} total={cartList.length} />
 
       <Divider />
 
-      <Box height={`calc(100vh - ${cartList.length ? "207px" : "75px"})`}>
+      <Box overflow={'hidden'} height={`calc(100vh - ${cartList.length ? "207px" : "75px"})`}>
         {/* CART ITEM LIST */}
         {cartList.length > 0 ? (
           <Scrollbar>
-            {cartList.map((item) => (
-              <MiniCartItem
-                item={item}
-                key={item.id}
-                handleCartAmountChange={handleCartAmountChange}
-              />
+            {cartList.map((item: any) => (
+              <MiniCartItem item={item} key={item.id} />
             ))}
           </Scrollbar>
         ) : (
@@ -66,7 +52,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
 
       {/* CART BOTTOM ACTION BUTTONS */}
       {cartList.length > 0 ? (
-        <BottomActions total={currency(getTotalPrice())} handleNavigate={handleNavigate} />
+        <BottomActions total={total} handleNavigate={handleNavigate} />
       ) : null}
     </Box>
   );

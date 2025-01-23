@@ -36,7 +36,6 @@ export const ToggleWrapper = styled(FlexRowCenter)(({ theme }) => ({
 export const CustomButton = styled(Button)(({ theme }) => ({
   minHeight: 40,
   flexShrink: 0,
-  marginLeft: 16,
   padding: "0 20px",
   borderRadius: "8px",
   backgroundColor: theme.palette.grey[100],

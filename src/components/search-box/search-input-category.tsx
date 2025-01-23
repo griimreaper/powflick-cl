@@ -11,13 +11,19 @@ import useSearch from "./hooks/use-search";
 import Search from "icons/Search";
 
 export default function SearchInputWithCategory() {
-  const { categoryTitle, parentRef, resultList, handleCategoryChange, handleSearch } = useSearch();
+  const {
+    categoryTitle,
+    parentRef,
+    resultList,
+    handleCategoryChange,
+    handleSearch,
+  } = useSearch();
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
-      router.push(`/products?query=${searchText}&category=${categoryTitle}`);
+      router.push(`/products?query=${searchText}`);
     }
   };
 
@@ -33,7 +39,7 @@ export default function SearchInputWithCategory() {
       padding: 0,
       overflow: "hidden",
       backgroundColor: "grey.200",
-      "& .MuiOutlinedInput-notchedOutline": { border: 0 }
+      "& .MuiOutlinedInput-notchedOutline": { border: 0 },
     },
     startAdornment: (
       <Box
@@ -43,15 +49,22 @@ export default function SearchInputWithCategory() {
         alignItems="center"
         justifyContent="center"
         borderRight="1px solid"
-        borderColor="grey.400">
+        borderColor="grey.400"
+      >
         <Search sx={{ fontSize: 17, color: "grey.600" }} />
       </Box>
     ),
-    endAdornment: <CategoryDropdown title={categoryTitle} handleChange={handleCategoryChange} />
+    // endAdornment: <CategoryDropdown title={categoryTitle} handleChange={handleCategoryChange} />
   };
 
   return (
-    <Box position="relative" flex="1 1 0" maxWidth="670px" mx="auto" {...{ ref: parentRef }}>
+    <Box
+      position="relative"
+      flex="1 1 0"
+      maxWidth="670px"
+      mx="auto"
+      {...{ ref: parentRef }}
+    >
       <TextField
         fullWidth
         variant="outlined"

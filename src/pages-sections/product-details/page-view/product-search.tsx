@@ -32,8 +32,10 @@ import {
 } from "../types";
 import Product from "models/Product.model";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useNavbar } from "contexts/NavBarContext";
-import { ProductDB } from "models/types";
+import { DataStructure, ProductDB } from "models/types";
+import Breadcrumbs from "./Breadcrumbs";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProducts } from "services/Products";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
@@ -43,77 +45,95 @@ const SORT_OPTIONS = [
 ];
 
 const initialFilters = {
+  page: 1,
   rating: 0,
   color: [],
   brand: [],
   sales: [],
   price: [0, 300],
   category: [],
+  collection: [],
   search: "",
+  featured: undefined,
+  discount: undefined,
+  mostSold: undefined,
+  order: ""
+};
+export const useProducts = (params: ProductFilters) => {
+  return useQuery({
+    queryKey: ['products', params],
+    queryFn: () => getProducts(
+      params.page,
+      '',
+      params.category[0],
+      params.collection[0],
+      '',
+      params.color[0],
+      params.featured,
+      params.mostSold,
+      params.discount,
+      params.order,
+      params.search,
+      params.price[0],
+      params.price[1],
+      9
+    ),
+    staleTime: 1000 * 60 * 5,
+    placeholderData: (previousData, previousQuery) => previousData,
+  },
+  );
 };
 
-const handleSortProducts = (
-  products: ProductDB[],
-  sortBy: string,
-  filters: ProductFilters
-) => {
-  const filteredProducts = products.filter((product) => {
-    const isInPriceRange =
-      product.price >= filters.price[0] && product.price <= filters.price[1];
-    const matchesColor =
-      filters.color.length === 0 ||
-      filters.color.some((color) => product.colors?.includes(color) ?? false);
-    const matchesSearch =
-      !filters.search ||
-      product.title.toLowerCase().includes(filters.search.toLowerCase());
-    const matchesCategory =
-      filters.category.length === 0 ||
-      filters.category.some((category) =>
-        product.product_categories.includes(category)
-      );
-    return isInPriceRange && matchesColor && matchesSearch && matchesCategory;
-  });
+const useGlobalLoadingCursor = (isFetching: boolean) => {
+  useEffect(() => {
+    if (isFetching) {
+      document.body.style.cursor = 'wait'; // Aplica el cursor a todo el documento
+    } else {
+      document.body.style.cursor = 'default'; // Vuelve al estado normal
+    }
 
-  switch (sortBy) {
-    case "date":
-      return filteredProducts.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-    case "asc":
-      return filteredProducts.sort((a, b) => a.price - b.price);
-    case "desc":
-      return filteredProducts.sort((a, b) => b.price - a.price);
-    default:
-      return filteredProducts;
-  }
+    return () => {
+      document.body.style.cursor = 'default'; // Limpieza al desmontar
+    };
+  }, [isFetching]);
 };
 
-export default function ProductSearchPageView({ data }: any) {
-  const { navbarData } = useNavbar();
+
+export default function ProductSearchPageView() {
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const searchParams = useSearchParams();
-  const querys = {
-    query: searchParams.get("query"),
-    // category: searchParams.get("category"),
-  };
 
-  console.log(filters);
+  const { data, isLoading, isError, error, isFetching } = useProducts(filters);
+
+  useGlobalLoadingCursor(isFetching);
 
   useEffect(() => {
-    setFilters((prev) => {
-      const newFilters = { ...prev };
-      if (querys?.query) {
-        newFilters.search = querys.query;
-      }
-      // if (querys?.category) {
-      //   newFilters.category = [querys?.category as string];
-      // }
-      return newFilters;
-    });
-  }, [querys?.query]);
+    const newFilters: any = { ...initialFilters };
+
+    if (searchParams) {
+      if (searchParams.get("query")) newFilters.search = searchParams.get("query") || "";
+      if (searchParams.get("category")) newFilters.category = [searchParams.get("category")];
+      if (searchParams.get("collection")) newFilters.collection = [searchParams.get("collection")];
+      if (searchParams.get("color")) newFilters.color = [searchParams.get("color")];
+      if (searchParams.get("minPrice")) newFilters.price[0] = parseInt(searchParams.get("minPrice") || "0", 10);
+      if (searchParams.get("maxPrice")) newFilters.price[1] = parseInt(searchParams.get("maxPrice") || "300", 10);
+      if (searchParams.get("rating")) newFilters.rating = parseInt(searchParams.get("rating") || "0", 10);
+    }
+
+    setFilters(newFilters);
+  }, [searchParams]);
+
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products" },
+    ...(filters.category[0] ? [{ label: filters.category[0], href: `/products?category=${filters.category[0]}` }] : []),
+    ...(filters.collection[0] ? [{ label: `${filters.collection}`, href: `/products?collection=${filters.collection}` }] : []),
+    ...(filters.color[0] ? [{ label: `${filters.color[0]}`, href: `/products?color=${filters.color[0]}` }] : []),
+    ...(filters.search ? [{ label: `Search: ${filters.search}` }] : []),
+  ];
 
   const handleChangeFilters = (
     key: ProductFilterKeys,
@@ -122,23 +142,54 @@ export default function ProductSearchPageView({ data }: any) {
     setFilters((prev) => ({ ...prev, [key]: values }));
   };
 
-  const handleChangeSortBy = useCallback((v: string) => setSortBy(v), []);
+  const handleChangeSortBy = (value: string) => {
+    console.log(value);
+
+    setSortBy(value);
+
+    setFilters((prevFilters) => {
+      switch (value) {
+        case "asc":
+          return { ...prevFilters, order: "ASC" }; // Modifica el valor de `order`
+        case "desc":
+          return { ...prevFilters, order: "DESC" }; // Modifica el valor de `order`
+        case "date":
+          return { ...prevFilters, order: "date" }; // Modifica el valor de `order`
+        case "relevance":
+          return { ...prevFilters, mostSold: true }; // Cambia `mostSold` a true
+        default:
+          return prevFilters;
+      }
+    });
+  };
 
   const toggleView = useCallback((v: string) => () => setView(v), []);
+  console.log(data);
 
-  const sortedProducts = handleSortProducts(data, sortBy, filters);
+  // const sortedProducts = handleSortProducts(data, sortBy, filters);
 
   return (
-    <div className="bg-white pt-2 pb-4">
+    <div className="bg-white pt-2 pb-4"
+    style={{
+      cursor: isFetching ? 'wait' : 'default', // Cambia el cursor según `isFetching`
+      opacity: isFetching ? 0.7 : 1,
+    }}>
       <Container>
+        {/* Breadcrumbs */}
+        <Box mb={2}>
+          <Breadcrumbs items={breadcrumbs} />
+        </Box>
+
         {/* FILTER ACTION AREA */}
         <FlexBetween flexWrap="wrap" gap={2} mb={2}>
           <div>
-            <H5 lineHeight={1} mb={1}>
-              Searching for “ {querys?.query} ”
-            </H5>
+            {filters.search &&
+              <H5 lineHeight={1} mb={1}>
+                Searching for “ {filters?.search} ”
+              </H5>
+            }
             <Paragraph color="grey.600">
-              {sortedProducts.length} results found
+              {data?.count?.total} results found
             </Paragraph>
           </div>
 
@@ -196,10 +247,11 @@ export default function ProductSearchPageView({ data }: any) {
                 >
                   <Box px={3} py={2}>
                     <ProductFilterCard
-                      products={sortedProducts}
+                      products={data?.products}
                       filters={filters}
                       changeFilters={handleChangeFilters}
-                      topCategories={navbarData?.categories}
+                      topCategories={data?.filt}
+                      colors={data?.colors || []}
                     />
                   </Box>
                 </Sidenav>
@@ -217,19 +269,20 @@ export default function ProductSearchPageView({ data }: any) {
             sx={{ display: { md: "block", xs: "none" } }}
           >
             <ProductFilterCard
-              products={sortedProducts}
+              products={data?.products}
               filters={filters}
               changeFilters={handleChangeFilters}
-              topCategories={navbarData?.categories}
+              topCategories={data?.filt}
+              colors={data?.colors || []}
             />
           </Grid>
 
           {/* PRODUCT VIEW AREA */}
           <Grid item xl={10} md={9} xs={12}>
             {view === "grid" ? (
-              <ProductsGridView products={sortedProducts} />
+              <ProductsGridView data={data} handlePage={(number: number) => setFilters({ ...filters, page: number })} />
             ) : (
-              <ProductsListView products={sortedProducts} />
+              <ProductsListView data={data} handlePage={(number: number) => setFilters({ ...filters, page: number })} />
             )}
           </Grid>
         </Grid>

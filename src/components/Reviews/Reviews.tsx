@@ -65,8 +65,6 @@ const StyledRating = styled(Rating)(({ theme }) => ({
 }));
 
 const ReviewCard = ({ review }: any) => {
-  console.log(review);
-
   return (
     <Fade in timeout={1000}>
       <StyledCard>
@@ -138,8 +136,6 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  console.log("reviews",review);
-
   const handleSortChange = (event: any) => {
     const value = event.target.value;
     setSortBy(value);
@@ -156,9 +152,9 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     setReviews(sortedReviews);
   };
 
-  const averageRating = (
-    reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length
-  ).toFixed(1);
+  const averageRating = reviews.length ? (
+    reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) / reviews.length
+  ).toFixed(1) : "0";
 
   const sliderSettings = {
     dots: true,

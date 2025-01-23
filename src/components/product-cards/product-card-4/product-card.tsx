@@ -96,11 +96,11 @@ export default function ProductCard4(props: Props) {
       </ImageWrapper>
 
       {/* PRODUCT VIEW DIALOG BOX */}
-      <ProductViewDialog
+      {/* <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
         product={{ title, price, id, slug, imgGroup: [imgUrl, imgUrl] }}
-      />
+      /> */}
 
       <ContentWrapper>
         <Box flex="1 1 0" pt="3px">

@@ -107,11 +107,11 @@ export default function ProductCard5(props: Props) {
       </ImageWrapper>
 
       {/* PRODUCT VIEW DIALOG BOX */}
-      <ProductViewDialog
+      {/* <ProductViewDialog
         openDialog={openModal}
         handleCloseDialog={toggleDialog}
         product={{ title, price, id, slug, imgGroup: [imgUrl, imgUrl] }}
-      />
+      /> */}
 
       <ContentWrapper>
         {/* PRODUCT NAME / TITLE */}

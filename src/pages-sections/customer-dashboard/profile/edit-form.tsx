@@ -17,13 +17,14 @@ import { useDashboardStore } from "store/dashboard";
 import { useRouter } from "next/navigation";
 
 // ==============================================================
-type Props = { user: Profile['genericResponseUser'], token: string };
+type Props = { user: Profile['genericResponseUser'], token: string, image: string };
 // ==============================================================
 
-export default function ProfileEditForm({ user, token }: Props) {
+export default function ProfileEditForm({ user, token, image }: Props) {
   const { setProfileUser } = useDashboardStore();
   const router = useRouter();
   const INITIAL_VALUES = {
+    image: image || "",
     email: user.email || "",
     phone: user.phone || "",
     lastName: user.lastName || "",
@@ -61,10 +62,16 @@ export default function ProfileEditForm({ user, token }: Props) {
 
   return (
     <Formik
-      onSubmit={handleFormSubmit}
-      initialValues={INITIAL_VALUES}
-      validationSchema={VALIDATION_SCHEMA}>
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+    onSubmit={handleFormSubmit}
+    initialValues={INITIAL_VALUES}
+    validationSchema={VALIDATION_SCHEMA}>
+    {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
+      // Sincroniza el cambio de imagen
+      if (values.image !== image) {
+        setFieldValue("image", image);
+      }
+
+      return (
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -127,7 +134,8 @@ export default function ProfileEditForm({ user, token }: Props) {
             </Grid>
           </Grid>
         </form>
-      )}
-    </Formik>
+      );
+    }}
+  </Formik>
   );
 }
