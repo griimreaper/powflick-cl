@@ -33,31 +33,6 @@ export default function ShopDetailsPageView({ shop }: Props) {
         profilePicture={shop.profilePicture}
       />
 
-      <Grid container spacing={3}>
-        {/* SIDEBAR AREA */}
-        <Grid item md={3} xs={12} sx={{ display: { md: "block", xs: "none" } }}>
-          <ProductFilterCard products={[]} />
-        </Grid>
-
-        <Grid item md={9} xs={12}>
-          {/* SMALL DEVICE SIDEBAR AREA */}
-          {isDownMd && (
-            <SideNav
-              position="left"
-              handler={(close) => (
-                <IconButton sx={{ float: "right" }} onClick={close}>
-                  <FilterList fontSize="small" />
-                </IconButton>
-              )}
-            >
-              <ProductFilterCard products={[]} />
-            </SideNav>
-          )}
-
-          {/* PRODUCT LIST AREA */}
-          <ProductsGridView products={shop.products.slice(0, 9)} />
-        </Grid>
-      </Grid>
     </Container>
   );
 }

@@ -32,20 +32,19 @@ import { useQueryClient } from "@tanstack/react-query";
 
 interface ShopLayout1Props extends PropsWithChildren {
   session: Session | null;
-  data: DataStructure["navbar"];
 }
 
 export default function ShopLayout1({
   children,
   session,
-  data,
 }: ShopLayout1Props) {
   const [isFixed, setIsFixed] = useState(false);
   const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
 
   const queryClient = useQueryClient();
 
-  // const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]) || { categories: [], recent: [] };
+  const data = queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], recent: [] };
+console.log(data);
 
   const { profile, setData, removeProfile, setProfileUser } =
     useDashboardStore();
