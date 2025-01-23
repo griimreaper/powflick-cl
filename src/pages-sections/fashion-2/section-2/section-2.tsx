@@ -9,7 +9,7 @@ import api from "utils/__api__/fashion-2";
 import { useEffect, useState } from "react";
 import Service from "models/Service.model";
 
-export default function Section2() {
+export default function Section2({className}: {className: string}) {
   const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Section2() {
   }, []);
 
   return (
-    <Container className="mt-2">
+    <Container className={`mt-2 ${className}`}>
       <RootStyle>
         {services.map(({ id, icon, title, description }) => (
           <ServiceCard3 key={id} icon={icon} title={title} description={description} />

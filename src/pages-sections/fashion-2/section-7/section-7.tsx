@@ -6,11 +6,15 @@ import { H1, H3, Paragraph, Span } from "components/Typography";
 // LOCAL CUSTOM COMPONENT
 import { RootStyle } from "./styles";
 
-export default function Section7() {
+interface Section7Props {
+  url: string;
+}
+
+export default function Section7({ url }: Section7Props) {
   return (
     <RootStyle>
       <img
-        src="/assets/images/banners/prepare-season.jpg"
+        src={`/assets/images/landing/${url}`}
         alt="Promo Sports Banner"
         style={{ width: "100%", height: "auto" }}
       />

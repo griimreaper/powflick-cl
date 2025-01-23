@@ -17,18 +17,19 @@ export default async function Section4({ products }: { products: DataStructure['
 
   return (
     <Container className="mt-4">
-     <Box mb={4} sx={{ textAlign: "center" }}>
-
-       <Typography 
-          variant="h3" 
-          component="h1" 
+      <Box mb={4} sx={{ textAlign: "" }}>
+        <Typography
+          variant="h3"
+          component="h1"
           gutterBottom
-          sx={{ 
-            fontWeight: "bold",
-            background: "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
+          sx={{
+            // fontWeight: "bold",
+            background: "#A30E0E",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            marginBottom: "1rem"
+            marginBottom: "1rem",
+            // fontStyle: "italic", // Añadir estilo cursiva
+            fontFamily: "GYMER",
           }}
         >
           Best Selling Products
@@ -38,9 +39,10 @@ export default async function Section4({ products }: { products: DataStructure['
       <Carousel
         slidesToShow={4}
         responsive={responsive}
-        arrowStyles={{ backgroundColor: "dark.main", top: "37%" }}>
+        arrowStyles={{ backgroundColor: "dark.main", top: "37%" }}
+      >
         {products?.map((product) => (
-          <ProductCard8 key={product.id} product={product} />
+          <ProductCard8 key={product.id} product={product} active={true} />
         ))}
       </Carousel>
     </Container>

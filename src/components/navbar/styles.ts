@@ -13,6 +13,7 @@ export const NAV_LINK_STYLES = {
   transition: "color 150ms ease-in-out",
   "&:hover": { color: "primary.main" },
   "&:last-child": { marginRight: 0 },
+  color: "#FEFCFC",
 };
 
 export const StyledNavLink = styled(NavLink)({ ...NAV_LINK_STYLES });
@@ -49,8 +50,9 @@ export const NavBarWrapper = styled(SportZoneCard, {
   height: "60px",
   display: "block",
   borderRadius: "0px",
-  position: "relative",
-  ...(border && { borderBottom: `1px solid ${theme.palette.grey[200]}` }),
+
+  backgroundColor: "transparent", // Set background to transparent
+  // ...(border && { borderBottom: `1px solid ${theme.palette.grey[200]}` }),
   [theme.breakpoints.down(1150)]: { display: "none" },
 }));
 

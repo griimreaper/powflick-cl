@@ -88,9 +88,9 @@ export default async function FashionShopTwo() {
 
   return (
     <>
-      <ShopLayout1 session={session}>
-        <FashionTwoPageView data={data} />;
-      </ShopLayout1>
+      {/* <ShopLayout1 session={session} data={data.navbar}> */}
+      <FashionTwoPageView data={data} />
+      {/* </ShopLayout1> */}
     </>
   );
 }

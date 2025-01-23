@@ -16,9 +16,34 @@ import { DataStructure } from "models/types";
 
 export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
   return (
-    <Box component="footer" bgcolor="#222935" mb={{ sm: 0, xs: 7 }}>
-      <Box component={Container} color="white" overflow="hidden" py={{ sm: 10, xs: 4 }}>
-        <Grid container spacing={4} >
+    <Box
+      component="footer"
+      bgcolor="#1A1A1A"
+      mb={{ sm: 0, xs: 7 }}
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "50px",
+          background:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
+          zIndex: 1,
+        },
+      }}
+    >
+      <Box
+        component={Container}
+        color="white"
+        py={{ sm: 10, xs: 4 }}
+        position="relative"
+        zIndex={2}
+      >
+        <Grid container spacing={4}>
           <Grid item lg={4} md={3} sm={6} xs={12}>
             <LogoSection />
           </Grid>
@@ -33,7 +58,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
             <CustomerCareLinks />
           </Grid>
 
-          {/* CUSTOMER CARE LINKS */}
+          {/* Categories LINKS */}
           <Grid item lg={2} md={3} sm={6} xs={12}>
             <CategoriesLinks list={data?.categories} />
           </Grid>
@@ -41,7 +66,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
           {/* CONTACT & SOCIAL LINKS */}
           <Grid item lg={2} md={3} sm={6} xs={12}>
             {/* CONTACT INFORMATION */}
-            <Heading>Contact Us</Heading>
+            <Heading style={{ color: "#A30E0E" }}>Contact Us</Heading>
 
             <Paragraph py={0.6} color="grey.500">
               70 Washington Square South, New York, NY 10012, United States

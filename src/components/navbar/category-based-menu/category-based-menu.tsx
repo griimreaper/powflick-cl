@@ -23,13 +23,21 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
 
   return (
     <Wrapper>
-      <FlexRowCenter alignItems="center" display={"flex"} flexDirection={"row"} width={"100%"} gap={"0.3rem"}>
-        <Link href={'/products'}>
-          <Typography sx={{ fontWeight: 600 }}>
+      <FlexRowCenter
+        alignItems="center"
+        display={"flex"}
+        flexDirection={"row"}
+        width={"100%"}
+        gap={"0.3rem"}
+      >
+        <Link href={"/products"}>
+          <Typography sx={{ fontWeight: 600, color: "#FEFCFC" }}>
             {title}
           </Typography>
         </Link>
-        <KeyboardArrowDown sx={{ color: "grey.500", fontSize: "1.1rem", display: "absolute" }} />
+        <KeyboardArrowDown
+          sx={{ color: "#FEFCFC", fontSize: "1.1rem", display: "absolute" }}
+        />
       </FlexRowCenter>
 
       <MenusContainer className="menu-list">

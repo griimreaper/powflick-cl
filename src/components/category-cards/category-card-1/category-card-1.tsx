@@ -13,9 +13,9 @@ export default function CategoryCard1({ image, title }: Props) {
     <Wrapper>
       <LazyImage src={image} width={213} height={213} alt="category" />
 
-      <CategoryTitle className="category-title">
+      {/* <CategoryTitle className="category-title">
         <H4>{title}</H4>
-      </CategoryTitle>
+      </CategoryTitle> */}
     </Wrapper>
   );
 }
