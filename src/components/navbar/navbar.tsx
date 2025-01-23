@@ -21,7 +21,6 @@ export default function Navbar({
   hideCategories = true,
   data,
 }: Props) {
-
   return (
     <NavBarWrapper
       hoverEffect={false}
@@ -29,13 +28,13 @@ export default function Navbar({
       border={border ?? 0}
     >
       {hideCategories ? (
-        <InnerContainer sx={{ justifyContent: "center" }}>
+        <InnerContainer sx={{ justifyContent: "center" } }>
           <NavigationList data={data} />
         </InnerContainer>
       ) : (
         <InnerContainer>
           {/* CATEGORY MEGA MENU */}
-          <Categories data={data}/>
+          <Categories data={data} />
 
           {/* HORIZONTAL MENU */}
           <NavigationList data={data} />

@@ -17,33 +17,67 @@ export default async function Section6({ products }: { products: DataStructure['
   ];
 
   return (
-    <Container className="mt-4">
-       <Box mb={4} sx={{ textAlign: "center" }}>
+    <Box
+      component="section"
+      bgcolor="#1A1A1A"
+      mb={{ sm: 0, xs: 7 }}
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "50px",
+          background:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
+          zIndex: 1,
+        },
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "50px",
+          background:
+            "linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
+          zIndex: 1,
+        },
+      }}
+    >
+      <Container className="mt-4" sx={{ position: "relative", zIndex: 2 }}>
+        <Box mb={4} sx={{ textAlign: "" }}>
+          <Typography
+            variant="h3"
+            component="h1"
+            gutterBottom
+            sx={{
+              // fontWeight: "bold",
+              background: "#A30E0E",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              marginBottom: "1rem",
+              // fontStyle: "italic",
+              fontFamily: "GYMER",
+            }}
+          >
+            Discount Products
+          </Typography>
+        </Box>
 
-       <Typography 
-          variant="h3" 
-          component="h1" 
-          gutterBottom
-          sx={{ 
-            fontWeight: "bold",
-            background: "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            marginBottom: "1rem"
-          }}
+        <Carousel
+          slidesToShow={4}
+          responsive={responsive}
+          arrowStyles={{ backgroundColor: "dark.main", top: "34%" }}
         >
-          Discount Products
-        </Typography>
-      </Box>
-
-      <Carousel
-        slidesToShow={5}
-        responsive={responsive}
-        arrowStyles={{ backgroundColor: "dark.main", top: "34%" }}>
-        {products?.map((product) => (
-          <ProductCard8 key={product.id} product={product} />
-        ))}
-      </Carousel>
-    </Container>
+          {products?.map((product) => (
+            <ProductCard8 key={product.id} product={product} active={true} />
+          ))}
+        </Carousel>
+      </Container>
+    </Box>
   );
 }

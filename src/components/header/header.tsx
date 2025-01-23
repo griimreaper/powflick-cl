@@ -24,11 +24,17 @@ interface Props {
   className?: string;
   midSlot: ReactNode;
   session: Session | null;
-  data: DataStructure['navbar']
+  data: DataStructure["navbar"];
 }
 // ==============================================================
 
-export default function Header({ isFixed, className, midSlot, session, data }: Props) {
+export default function Header({
+  isFixed,
+  className,
+  midSlot,
+  session,
+  data,
+}: Props) {
   const theme = useTheme();
   const downMd = useMediaQuery(theme.breakpoints.down(1150));
   const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
@@ -41,7 +47,7 @@ export default function Header({ isFixed, className, midSlot, session, data }: P
           <LazyImage
             width={50}
             height={40}
-            src="/assets/images/logo/SportZone2.png"
+            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             alt="logo"
           />
         </Link>
@@ -74,7 +80,7 @@ export default function Header({ isFixed, className, midSlot, session, data }: P
   return (
     <HeaderWrapper className={clsx(className)}>
       <StyledContainer>
-        {downMd ? <MobileHeader data={data}/> : CONTENT_FOR_LARGE_DEVICE}
+        {downMd ? <MobileHeader data={data} /> : CONTENT_FOR_LARGE_DEVICE}
       </StyledContainer>
     </HeaderWrapper>
   );

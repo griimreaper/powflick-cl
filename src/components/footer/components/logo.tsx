@@ -12,18 +12,18 @@ export default function LogoSection() {
         <Box display="flex" justifyContent="center">
           <Image
             mb={2.5}
-            width={100}
-            src="/assets/images/logo/SportZone2.png"
+            width={250}
+            src="/assets/images/logo/POWFLICK_LOGO-FOOTER.png"
             alt="logo"
           />
         </Box>
       </Link>
 
-      <Paragraph mb={2.5} color="grey.500">
+      {/* <Paragraph mb={2.5} color="grey.500">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero
         id et, in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel
         ut sollicitudin elit at amet.
-      </Paragraph>
+      </Paragraph> */}
 
       <AppStore />
     </Fragment>

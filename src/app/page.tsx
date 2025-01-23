@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import FashionTwoPageView from "pages-sections/fashion-2/page-view";
 import { getLanding } from "services/Landing";
 
-export const revalidate = 86400 * 7;
+// export const revalidate = 86400 * 7;
 
 export const metadata: Metadata = {
   title: "Sport Zone",
@@ -69,16 +69,16 @@ export const metadata: Metadata = {
 };
 
 export default async function FashionShopTwo() {
-  const data: DataStructure = await getLanding();
+  // const data: DataStructure = await getLanding();
 
   // Obtener la sesión del lado del servidor
-  const session = await getServerSession();
+  // const session = await getServerSession();
 
   return (
     <>
-      <ShopLayout1 session={session} data={data.navbar}>
-        <FashionTwoPageView data={data} />;
-      </ShopLayout1>
+      {/* <ShopLayout1 session={session} data={data.navbar}> */}
+      <FashionTwoPageView />
+      {/* </ShopLayout1> */}
     </>
   );
 }

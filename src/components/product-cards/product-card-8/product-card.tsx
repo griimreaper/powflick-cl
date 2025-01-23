@@ -29,13 +29,14 @@ import { ProductDB } from "models/types";
 import Marquee from "react-fast-marquee";
 import ProductPrice from "components/product-cards/product-price";
 import DiscountChip from "../discount-chip";
+import { BorderBox } from '../../page-sidenav/side-navbar/styles/index';
 
 
 // ==============================================================
-type Props = { product: ProductDB };
+type Props = { product: ProductDB, active?: boolean };
 // ==============================================================
 
-export default function ProductCard8({ product }: Props) {
+export default function ProductCard8({ product, active=false }: Props) {
   const { slug, id, title, price, URL, images, product_categories, discount } =
     product || {};
 
@@ -69,27 +70,29 @@ export default function ProductCard8({ product }: Props) {
 
   return (
     <Card>
-      <CardMedia>
+      <CardMedia style={active ? { border: "1px solid #7B7B7B" } : {}}>
         <DiscountChip discount={discount} />
-        <Link href={`/products/${slug}`}
-        onClick={() => {
-          (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
-          (window as any).dataLayer.push({
-            event: "View item",
-            ecommerce: {
-              items: [
-                {
-                  item_id: `${product.id}`,
-                  item_name: `${product.title}`,
-                  item_list_name: `${product.slug}`,
-                  discount: `${product.discount}`,
-                  item_category: `${product.product_categories.split("|")[0]}`,
-                  price: `${Number(product.price )}`,
-                },
-              ],
-            },
-          });
-        }}>
+        <Link
+          href={`/products/${slug}`}
+          onClick={() => {
+            (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+            (window as any).dataLayer.push({
+              event: "View item",
+              ecommerce: {
+                items: [
+                  {
+                    item_id: `${product.id}`,
+                    item_name: `${product.title}`,
+                    item_list_name: `${product.slug}`,
+                    discount: `${product.discount}`,
+                    item_category: `${product.product_categories.split("|")[0]}`,
+                    price: `${Number(product.price)}`,
+                  },
+                ],
+              },
+            });
+          }}
+        >
           <LazyImage
             width={300}
             height={300}
@@ -216,21 +219,23 @@ export default function ProductCard8({ product }: Props) {
         ) : null}
 
         {/* PRODUCT TITLE / NAME */}
-        <Paragraph fontWeight="bold">{title}</Paragraph>
+        <Paragraph style={{ color: "#A30E0E" }} fontWeight="bold">
+          {title}
+        </Paragraph>
 
         {/* PRODUCT PRICE  */}
         <div style={{ display: "flex", justifyContent: "center" }}>
-
           <ProductPrice discount={discount} price={price} />
         </div>
 
         {/* PRODUCT RATING / REVIEW  */}
-        <FlexRowCenter gap={1}>
-          <Rating name="read-only" value={4} readOnly sx={{ fontSize: 16 }} />
-          <Small fontWeight={600} color="grey.500">
-            {/* ({reviews.length} Reviews) */}
-          </Small>
-        </FlexRowCenter>
+
+        {/* <FlexRowCenter gap={1}> */}
+        {/* <Rating name="read-only" value={4} readOnly sx={{ fontSize: 16 }} /> */}
+        {/* <Small fontWeight={600} color="grey.500"> */}
+        {/* ({reviews.length} Reviews) */}
+        {/* </Small> */}
+        {/* </FlexRowCenter> */}
       </Box>
     </Card>
   );

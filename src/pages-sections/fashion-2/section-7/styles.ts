@@ -4,7 +4,7 @@ import styled from "@mui/material/styles/styled";
 
 export const RootStyle = styled("div")({
   display: "flex",
-  marginTop: "4rem",
+
   alignItems: "center",
   flexDirection: "column",
   justifyContent: "center",
