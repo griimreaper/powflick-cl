@@ -87,7 +87,7 @@ export default function Header() {
                     Storybook
                   </Typography>
                 </a>
-                <a href="https://SportZone-doc.netlify.app/" target="__blank">
+                <a href="https://Pow Flick-doc.netlify.app/" target="__blank">
                   <Typography
                     className="link"
                     color="grey.600"
@@ -167,7 +167,7 @@ export default function Header() {
                     </Scroll>
 
                     <Button
-                      href="https://material-ui.com/store/items/SportZone-pro-react-ecommerce-template/"
+                      href="https://material-ui.com/store/items/Pow Flick-pro-react-ecommerce-template/"
                       LinkComponent={Link}
                       variant="outlined"
                       color="primary"
@@ -178,7 +178,7 @@ export default function Header() {
                   </Box>
                 </SideNav>
               ) : (
-                <a target="__blank" href="https://tinyurl.com/get-SportZone">
+                <a target="__blank" href="https://tinyurl.com/get-Pow Flick">
                   <Button variant="outlined">Purchase Now</Button>
                 </a>
               )}

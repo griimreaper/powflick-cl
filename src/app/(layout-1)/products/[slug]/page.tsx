@@ -49,7 +49,7 @@ export async function generateMetadata({
 
     return {
       metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
-      title: `${product.title} - SportZone`,
+      title: `${product.title} - Pow Flick`,
       authors: [{ name: "devcodelab" }],
       description: product.short_description || "Default Description",
       keywords: [
@@ -68,7 +68,7 @@ export async function generateMetadata({
             url: product.URL,
             width: 800,
             height: 800,
-            alt: product.title || "Sport Zone",
+            alt: product.title || "Pow Flick",
           },
         ],
       },

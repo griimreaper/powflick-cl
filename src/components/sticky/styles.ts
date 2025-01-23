@@ -30,9 +30,8 @@ export const StyledBox = styled("div", {
     zIndex: 1500,
     position: "fixed",
     top: `${fixedOn}px`,
-    boxShadow: theme.shadows[2],
     transition: "all 200ms ease-in-out", // Reducir duración de la transición
-    animation: `${slideDown} 200ms ${theme.transitions.easing.easeInOut}`, // Reducir duración de la animación
+    animation: `${slideDown} 200ms ${theme.transitions.easing.sharp}`, // Reducir duración de la animación
   },
 }));
 

@@ -38,7 +38,7 @@ export default function NewAddressForm({ handleAddNewAddress }: Props) {
 
   const initialValues = {
     name: "UI Lib",
-    street1: "321, Subid SportZone",
+    street1: "321, Subid Pow Flick",
     street2: "",
     phone: "01789123456",
     city: "Sylhet",

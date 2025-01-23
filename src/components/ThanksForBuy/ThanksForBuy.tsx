@@ -70,7 +70,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
                   item_id: id,
                   item_name: title,
                   affiliation: "Google Merchandise Store",
-                  item_brand: "Sport Zone",
+                  item_brand: "Pow Flick",
                   item_category: product_categories,
                   item_category2: sports,
                   item_list_name: slug,
@@ -96,7 +96,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
           startIcon={<ChevronLeft />}
           sx={{ mb: 4 }}
         >
-          Back to <Typography color="primary" sx={{ ml: 1 }}>SportZone</Typography>
+          Back to <Typography color="primary" sx={{ ml: 1 }}>Pow Flick</Typography>
         </Button>
 
         <Typography variant="h6" color="primary">Thank you!</Typography>

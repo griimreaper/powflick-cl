@@ -1,5 +1,5 @@
 module.exports = {
-    siteUrl: 'https://front-six-smoky.vercel.app/',
+    siteUrl: 'https://www.devcodelab.site/',
     generateRobotsTxt: true,
     sitemapSize: 7000,
     exclude: [
@@ -32,7 +32,7 @@ module.exports = {
             },
         ],
         additionalSitemaps: [
-            'https://front-six-smoky.vercel.app/sitemap-1.xml',
+            'https://www.devcodelab.site/sitemap-1.xml',
         ]
     },
 };

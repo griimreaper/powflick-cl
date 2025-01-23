@@ -30,7 +30,7 @@ export default function DashboardSidebar() {
             alt="Logo"
             width={50}
             height={50}
-            src="/assets/images/logo/SportZone2.png"
+            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             style={{ marginLeft: 8 }}
           />
         </Box>

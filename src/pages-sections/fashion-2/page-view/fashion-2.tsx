@@ -1,35 +1,24 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useAnimation, motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 // GLOBAL CUSTOM COMPONENTS
 import Newsletter from "components/newsletter";
 import Reviews from "components/Reviews/Reviews";
 // LOCAL CUSTOM COMPONENTS
-import Section1 from "../section-1";
 import Section2 from "../section-2";
 import Section3 from "../section-3";
 import Section4 from "../section-4";
-import Section5 from "../section-5";
 import Section6 from "../section-6";
 import Section7 from "../section-7";
-import Section8 from "../section-8";
-import Section9 from "../section-9";
-import Section10 from "../section-10";
-import { DataStructure } from "models/types";
-import BannerTop from "components/BannerTop";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDashboardStore } from "store/dashboard";
 import { getProfile } from "services/DashboardUser";
 import { signOut, useSession } from "next-auth/react";
-import { getLanding } from "services/Landing";
-import Topbar from "components/topbar";
-import Sticky from "components/sticky";
 import Header from "components/header";
 import { Navbar } from "components/navbar";
 import { MobileNavigationBar } from "components/mobile-navigation";
-import { SearchInputWithCategory } from "components/search-box";
 import { Footer1 } from "components/footer";
+import { DataStructure } from "models/types";
+import { Session } from "next-auth";
 
 // const AnimatedSection = ({ children }: any) => {
 //   const controls = useAnimation();
@@ -73,15 +62,9 @@ import { Footer1 } from "components/footer";
 
 // layout
 
-export default function FashionTwoPageView({data}:any) {
+export default function FashionTwoPageView({ data, session }: { data: DataStructure, session: Session | null}) {
   const [isFixed, setIsFixed] = useState(false);
-  const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
-  const queryClient = useQueryClient();
-  // const [data, setData] = useState<DataStructure | null>(null);
-  const { data: session } = useSession();
 
-  
-  
   const {
     profile,
     setData: setProfileData,
@@ -92,19 +75,6 @@ export default function FashionTwoPageView({data}:any) {
   let tokenExpiration = session?.user?.name?.split("|")[1];
   let rol = session?.user?.email;
   let image = session?.user?.image;
-
-  // const fetchData = useCallback(async () => {
-  //   if (!data) {
-  //     const landingData = await getLanding();
-  //     setData(landingData);
-  //   }
-  // }, [data]);
-
-  // useEffect(() => {
-  //   if (!data) {
-  //     fetchData();
-  //   }
-  // }, [data, fetchData]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -161,34 +131,7 @@ export default function FashionTwoPageView({data}:any) {
           aspectRatio: "4000 / 4208",
         }}
       >
-        {/* TOP BAR SECTION */}
 
-        {/* <Topbar /> */}
-
-        {/* HEADER */}
-        {/* <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}> */}
-
-        {data?.navbar && (
-          <Header
-            isFixed={isFixed}
-            session={session}
-            data={data.navbar}
-            midSlot={<Navbar elevation={0} border={1} data={data.navbar} />}
-          />
-        )}
-
-        {/* </Sticky> */}
-
-        {/* NAVIGATION BAR */}
-
-        {/* {data && <Navbar elevation={0} border={1} data={data.navbar} />} */}
-
-        {/* SMALL DEVICE BOTTOM NAVIGATION */}
-        {data && <MobileNavigationBar data={data.navbar} />}
-        {/* <BannerTop props={""} textColor={""} /> */}
-
-        {/* Navbar Section */}
-        {/* Promotional Section */}
         <div
           style={{
             position: "absolute",
@@ -297,8 +240,6 @@ export default function FashionTwoPageView({data}:any) {
       {/* Newsletter Subscription Section */}
       <Newsletter />
 
-      {/* FOOTER */}
-      {data && <Footer1 data={data.navbar} />}
     </>
   );
 }

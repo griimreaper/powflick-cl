@@ -384,7 +384,7 @@ export default function ProductIntro({ product }: Props) {
                             item_id: result.productToBag.id,
                             item_name: result.productToBag.title,
                             affiliation: "Google Merchandise Store",
-                            item_brand: "Sport Zone",
+                            item_brand: "Pow Flick",
                             item_category: product.product.product_categories.split("|")[0],
                             item_category2: product.product.sport,
                             item_variant: result.productToBag.colors,
@@ -427,7 +427,7 @@ export default function ProductIntro({ product }: Props) {
           <FlexBox alignItems="center" gap={1} mb={2}>
             <div>Sold By:</div>
             <Link href="/">
-              <H6>Sport Zone</H6>
+              <H6>Pow Flick</H6>
             </Link>
           </FlexBox>
 

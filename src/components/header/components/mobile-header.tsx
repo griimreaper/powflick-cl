@@ -53,7 +53,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           <Image
             height={44}
             width={44}
-            src="/assets/images/logo/SportZone2.png"
+            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             alt="logo"
           />
         </Link>
@@ -85,7 +85,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
       >
         <Box width="auto" padding={2} height="100vh">
           <FlexBetween mb={1}>
-            <Paragraph>Search to SportZone</Paragraph>
+            <Paragraph>Search to Pow Flick</Paragraph>
 
             <IconButton onClick={toggleSearchBar}>
               <Clear />

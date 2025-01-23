@@ -21,11 +21,11 @@ export default function LogoArea() {
       justifyContent={COMPACT ? "center" : "space-between"}
     >
       <Avatar
-        alt="SportZone Logo"
+        alt="Pow Flick Logo"
         src={
           COMPACT
-            ? "/assets/images/logo/SportZone2.png"
-            : "/assets/images/logo/SportZone2.png"
+            ? "/assets/images/logo/POWFLICK_LOGO-HEADER.png"
+            : "/assets/images/logo/POWFLICK_LOGO-HEADER.png"
         }
         sx={{ borderRadius: 0, width: "auto", marginLeft: COMPACT ? 0 : 1 }}
       />

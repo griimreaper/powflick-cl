@@ -22,7 +22,7 @@ export default function NotFound() {
           alt="Not Found!"
           width={100}
           height={100}
-          src="/assets/images/logo/SportZone2.png"
+          src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
         />
       </Box>
 

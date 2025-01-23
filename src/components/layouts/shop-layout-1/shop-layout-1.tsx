@@ -22,6 +22,7 @@ import { getProfile } from "services/DashboardUser";
 import { useDashboardStore } from "store/dashboard";
 import { useNavbar } from "contexts/NavBarContext";
 import { useQueryClient } from "@tanstack/react-query";
+import { Box } from "@mui/material";
 
 /**
  *  USED IN:
@@ -43,8 +44,8 @@ export default function ShopLayout1({
 
   const queryClient = useQueryClient();
 
-  const data = queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], recent: [] };
-console.log(data);
+  const data = JSON.parse(localStorage.getItem("navbarData") || '') || queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], recent: [] };
+  console.log(data);
 
   const { profile, setData, removeProfile, setProfileUser } =
     useDashboardStore();
@@ -95,20 +96,22 @@ console.log(data);
   return (
     <Fragment>
       {/* TOP BAR SECTION */}
-      <Topbar />
+      <Box position={'absolute'} width={'100%'} top={0}>
+        {/* <Topbar /> */}
 
-      {/* HEADER */}
-      <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}>
-        <Header
-          isFixed={isFixed}
-          session={session}
-          data={data}
-          midSlot={<SearchInputWithCategory />}
-        />
-      </Sticky>
+        {/* HEADER */}
+        {/* <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}> */}
+          <Header
+            isFixed={isFixed}
+            session={session}
+            data={data}
+            midSlot={<Navbar elevation={0} border={1} data={data} />}
+          />
+        {/* </Sticky> */}
 
-      {/* NAVIGATION BAR */}
-      <Navbar elevation={0} border={1} data={data} />
+        {/* NAVIGATION BAR */}
+
+      </Box>
 
       {/* BODY CONTENT */}
       {children}
@@ -117,7 +120,7 @@ console.log(data);
       <MobileNavigationBar data={data} />
 
       {/* FOOTER */}
-      <Footer1 data={data}/>
+      <Footer1 data={data} />
     </Fragment>
   );
 }

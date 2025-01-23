@@ -123,11 +123,11 @@ export default function Newsletter({
                 </Paragraph>
 
                 <H1 fontSize={36} fontWeight={700} mb={2}>
-                  Sign up to <Span color="primary.main">SportZone</Span>
+                  Sign up to <Span color="primary.main">Pow Flick</Span>
                 </H1>
 
                 <Paragraph color="grey.600" mb={5}>
-                  Subscribe to the Sport Zone eCommerce newsletter to receive timely
+                  Subscribe to the Pow Flick eCommerce newsletter to receive timely
                   updates from your favorite products.
                 </Paragraph>
 
