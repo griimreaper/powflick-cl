@@ -20,7 +20,7 @@ export default function Footer4() {
         <Grid container spacing={3}>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <Box maxWidth={100}>
-              <LazyImage src="/assets/images/logo/SportZone2.png" alt="logo" />
+              <LazyImage src="/assets/images/logo/POWFLICK_LOGO-HEADER.png" alt="logo" />
             </Box>
 
             <Paragraph mb={2.5} maxWidth={{ xl: 400 }}>

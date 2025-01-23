@@ -1,7 +1,7 @@
 import ShopLayout1 from "components/layouts/shop-layout-1";
 import { DataStructure } from "models/types";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import FashionTwoPageView from "pages-sections/fashion-2/page-view";
 import { cache } from "react";
 import { getLanding } from "services/Landing";
@@ -81,16 +81,16 @@ export const metadata: Metadata = {
 };
 
 export default async function FashionShopTwo() {
-  const [data, session] = await Promise.all([
+  const [data, session]: [DataStructure, Session | null] = await Promise.all([
     getLandingCached(),
     getServerSession(),
   ]);
 
   return (
     <>
-      {/* <ShopLayout1 session={session} data={data.navbar}> */}
-      <FashionTwoPageView data={data} />
-      {/* </ShopLayout1> */}
+      <ShopLayout1 session={session}>
+        <FashionTwoPageView data={data} session={session} />
+      </ShopLayout1>
     </>
   );
 }

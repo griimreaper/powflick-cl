@@ -53,7 +53,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           <Image
             height={44}
             width={44}
-            src="/assets/images/logo/SportZone2.png"
+            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             alt="logo"
           />
         </Link>

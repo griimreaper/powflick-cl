@@ -42,7 +42,7 @@ export default function Header({
   const CONTENT_FOR_LARGE_DEVICE = (
     <Fragment>
       {/* LEFT CONTENT - LOGO AND CATEGORY */}
-      <FlexBox minWidth={100} alignItems="center">
+      <FlexBox minWidth={100} alignItems="center" paddingTop={2}>
         <Link href="/">
           <LazyImage
             width={50}

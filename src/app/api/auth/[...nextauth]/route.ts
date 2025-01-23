@@ -71,7 +71,7 @@ const handler = NextAuth({
   theme: {
     colorScheme: "light",
     brandColor: "#FF0000",
-    logo: "/assets/images/logo/SportZone2.png",
+    logo: "/assets/images/logo/POWFLICK_LOGO-HEADER.png",
   },
 
   pages: {

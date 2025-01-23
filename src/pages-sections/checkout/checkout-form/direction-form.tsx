@@ -67,14 +67,16 @@ export default function DirectionForm({
                 showErrorAlert("Error!", `Failed to create address ${error}`);
                 stopLoading();
             }
+        } else {
+            showErrorAlert("Failed!", `You must be init session.`);
         }
     };
 
     const onSubmit = handleSubmit(async (data) => {
         if (address) {
-            fetchUpdateDirection(token, data);
+            await fetchUpdateDirection(token, data);
         } else {
-            fetchCreateDirection(token, data);
+            await fetchCreateDirection(token, data);
         }
 
         reset();
