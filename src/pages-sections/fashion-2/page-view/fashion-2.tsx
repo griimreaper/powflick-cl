@@ -73,13 +73,15 @@ import { Footer1 } from "components/footer";
 
 // layout
 
-export default function FashionTwoPageView() {
+export default function FashionTwoPageView({data}:any) {
   const [isFixed, setIsFixed] = useState(false);
   const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
   const queryClient = useQueryClient();
-  const [data, setData] = useState<DataStructure | null>(null);
+  // const [data, setData] = useState<DataStructure | null>(null);
   const { data: session } = useSession();
 
+  
+  
   const {
     profile,
     setData: setProfileData,
@@ -91,18 +93,18 @@ export default function FashionTwoPageView() {
   let rol = session?.user?.email;
   let image = session?.user?.image;
 
-  const fetchData = useCallback(async () => {
-    if (!data) {
-      const landingData = await getLanding();
-      setData(landingData);
-    }
-  }, [data]);
+  // const fetchData = useCallback(async () => {
+  //   if (!data) {
+  //     const landingData = await getLanding();
+  //     setData(landingData);
+  //   }
+  // }, [data]);
 
-  useEffect(() => {
-    if (!data) {
-      fetchData();
-    }
-  }, [data, fetchData]);
+  // useEffect(() => {
+  //   if (!data) {
+  //     fetchData();
+  //   }
+  // }, [data, fetchData]);
 
   useEffect(() => {
     const fetchData = async () => {

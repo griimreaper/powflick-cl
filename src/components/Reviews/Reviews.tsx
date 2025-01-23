@@ -152,7 +152,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     setReviews(sortedReviews);
   };
 
-  const averageRating = reviews.length
+  const averageRating = reviews?.length
     ? (
         reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) /
         reviews.length
