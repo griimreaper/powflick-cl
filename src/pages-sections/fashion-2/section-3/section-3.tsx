@@ -11,43 +11,46 @@ const sportsCategories = [
   {
     id: 1,
     title: "Soccer",
-    image: "/assets/images/categories/new/soccer.jpg",
+    image: "/assets/images/landing/categories/POWFLICK_CATEGORIA-SOCCER.png",
   },
   {
     id: 2,
     title: "Basketball",
-    image: "/assets/images/categories/new/basketball.jpg",
+    image:
+      "/assets/images/landing/categories/POWFLICK_CATEGORIA-BASKETBALL.png",
   },
   {
     id: 3,
     title: "Running",
-    image: "/assets/images/categories/new/running.jpg",
+    image: "/assets/images/landing/categories/POWFLICK_CATEGORIA-RUNNING.png",
   },
   {
     id: 4,
     title: "Gamer",
-    image: "/assets/images/categories/new/gamer.jpg",
+    image: "/assets/images/landing/categories/POWFLICK_CATEGORIA-GAMING.png",
   },
 ];
 
-export default async function Section3() {
+export default async function Section3({ className }: { className: string }) {
   return (
-    <Container className="mt-4">
-      <Box mb={4} sx={{ textAlign: "center" }}>
+    <Container className={`mt-4 ${className}`}>
+      <Box mb={4} sx={{ textAlign: "" }}>
         <Typography
           variant="h3"
           component="h1"
           gutterBottom
           sx={{
-            fontWeight: "bold",
+            // fontWeight: "bold",
             background:
-              "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
+              "white",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             marginBottom: "1rem",
+            // fontStyle: "italic",
+            fontFamily: "GYMER", // Añadir la fuente GYMER
           }}
         >
-          Categories
+          CATEGORIES
         </Typography>
       </Box>
 

@@ -10,10 +10,14 @@ type Props = { isDark?: boolean, list?: Category[] };
 export default function CategoriesLinks({ isDark, list }: Props) {
   return (
     <Fragment>
-      <Heading>Categories</Heading>
+      <Heading style={{ color: "#A30E0E" }}>Categories</Heading>
 
       {list?.map((item, ind) => (
-        <StyledLink isDark={isDark} href={`/products?category=${item.title}`} key={ind}>
+        <StyledLink
+          isDark={isDark}
+          href={`/products?category=${item.title}`}
+          key={ind}
+        >
           {item.title}
         </StyledLink>
       ))}

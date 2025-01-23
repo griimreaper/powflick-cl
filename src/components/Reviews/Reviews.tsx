@@ -152,9 +152,12 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     setReviews(sortedReviews);
   };
 
-  const averageRating = reviews.length ? (
-    reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) / reviews.length
-  ).toFixed(1) : "0";
+  const averageRating = reviews?.length
+    ? (
+        reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) /
+        reviews.length
+      ).toFixed(1)
+    : "0";
 
   const sliderSettings = {
     dots: true,
@@ -164,26 +167,50 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     slidesToScroll: 1,
   };
 
+  console.log(reviews);
+  
+
   return (
-    <Container>
-      <Box mb={4} sx={{ textAlign: "center" }}>
-        <Typography
-          variant="h3"
-          component="h1"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            background:
-              "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            marginBottom: "1rem",
-          }}
-        >
-          Customer Reviews
-        </Typography>
-        <Box display="flex" alignItems="center" justifyContent="center" mb={3}>
-          <Typography variant="h5" mr={2} sx={{ color: "#2c3e50" }}>
+    <Box
+      component="section"
+      bgcolor="#1A1A1A"
+      mb={{ sm: 0, xs: 7 }}
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "50px",
+          background:
+            "linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
+          zIndex: 1,
+        },
+      }}
+    >
+      <Container className="mt-4" sx={{ position: "relative", zIndex: 2 }}>
+        <Box mb={4} sx={{ textAlign: "" }}>
+          <Typography
+            variant="h3"
+            component="h1"
+            gutterBottom
+            sx={{
+              // fontWeight: "bold",
+              background: "#A30E0E",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              marginBottom: "1rem",
+              // fontStyle: "italic",
+              fontFamily: "GYMER",
+            }}
+          >
+            People Love Us
+          </Typography>
+          {/* <Box display="flex" alignItems="center" justifyContent="center" mb={3}>
+          <Typography variant="h5" mr={2} sx={{ color: "#2c3e50"}}>
             Average Rating: {averageRating}
           </Typography>
           <StyledRating
@@ -209,28 +236,29 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
             <MenuItem value="date">Sort by Date</MenuItem>
             <MenuItem value="rating">Sort by Rating</MenuItem>
           </Select>
-        </FormControl>
-      </Box>
-      {isMobile ? (
-        <Slider {...sliderSettings}>
-          {reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
-        </Slider>
-      ) : (
-        <Grid container spacing={3}>
-          {reviews.map((review) => (
-            <React.Fragment key={review.id}>
-              {review.type === "ORDER" && (
-                <Grid item xs={12} sm={6} md={4}>
-                  <ReviewCard review={review} />
-                </Grid>
-              )}
-            </React.Fragment>
-          ))}
-        </Grid>
-      )}
-    </Container>
+        </FormControl> */}
+        </Box>
+        {isMobile ? (
+          <Slider {...sliderSettings}>
+            {reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </Slider>
+        ) : (
+          <Grid container spacing={3}>
+            {reviews.map((review) => (
+              <React.Fragment key={review.id}>
+                {review.type === "ORDER" && (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <ReviewCard review={review} />
+                  </Grid>
+                )}
+              </React.Fragment>
+            ))}
+          </Grid>
+        )}
+      </Container>
+    </Box>
   );
 };
 

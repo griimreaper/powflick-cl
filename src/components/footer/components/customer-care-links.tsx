@@ -9,7 +9,7 @@ type Props = { isDark?: boolean };
 export default function CustomerCareLinks({ isDark }: Props) {
   return (
     <Fragment>
-      <Heading>Customer Care</Heading>
+      <Heading style={{ color: "#A30E0E" }}>Customer Care</Heading>
 
       {CUSTOMER_CARE_LINKS.map((item, ind) => (
         <StyledLink isDark={isDark} href={`/${item}`} key={ind}>

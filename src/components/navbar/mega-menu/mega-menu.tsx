@@ -33,7 +33,8 @@ export default function MegaMenu({ title, menuList }: Props) {
 
   const STYLE = { py: 2, ":nth-of-type(odd)": { backgroundColor: "grey.100" } };
 
-  const { elementRef, isLeftOverflowing, isRightOverflowing, checkOverflow } = useOverflowDetect();
+  const { elementRef, isLeftOverflowing, isRightOverflowing, checkOverflow } =
+    useOverflowDetect();
 
   return (
     <Wrapper onMouseOver={checkOverflow}>
@@ -46,8 +47,13 @@ export default function MegaMenu({ title, menuList }: Props) {
         ref={elementRef as React.RefObject<HTMLLIElement>}
         className="menu-list"
         left={isLeftOverflowing}
-        right={isRightOverflowing}>
-        <Card className="card" elevation={3} sx={{ mt: 1.5, overflow: "hidden" }}>
+        right={isRightOverflowing}
+      >
+        <Card
+          className="card"
+          elevation={3}
+          sx={{ mt: 1.5, overflow: "hidden" }}
+        >
           <Grid container>
             {menuList.slice(0, 4).map((category, key) => (
               <Grid item md={grid} key={key} sx={STYLE}>
