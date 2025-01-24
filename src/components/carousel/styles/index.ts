@@ -1,5 +1,6 @@
 "use client";
 
+import { IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import styled from "@mui/material/styles/styled";
 
@@ -15,13 +16,7 @@ export const RootStyle = styled("div", {
 })<{ space: number }>(({ space }) => ({
   ".slick-list": { marginInline: -space },
   ".slick-slide": { paddingInline: space },
-  ":hover": {
-    ".slick-arrow": {
-      opacity: 1,
-      "&.next": { right: 5 },
-      "&.prev": { left: 5 }
-    }
-  }
+
 }));
 
 export const DotList = styled(Box)(({ theme }) => ({
@@ -67,27 +62,27 @@ export const Dot = styled("span", {
   }
 }));
 
-export const ArrowButton = styled(Box)(({ theme }) => ({
-  zIndex: 1,
-  width: 35,
-  height: 35,
-  padding: 0,
-  opacity: 0,
-  top: "50%",
-  display: "flex",
-  cursor: "pointer",
+export const ArrowButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== "left" && prop !== "right",
+})<{ left?: number; right?: number }>(({ theme, left, right }) => ({
   position: "absolute",
-  alignItems: "center",
-  justifyContent: "center",
-  transform: "translate(0, -50%)",
-  transition: "all 0.2s ease-in-out",
-  color: theme.palette.secondary.contrastText,
-  backgroundColor: theme.palette.secondary.main,
-  boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-
-  ...(theme.direction === "rtl" && {
-    ".back-icon, .forward-icon": { rotate: "180deg" }
+  top: "50%",
+  transform: "translateY(-50%)",
+  zIndex: 2,
+  backgroundColor: "#fff", // Fondo blanco
+  color: "#ff0000", // Flecha roja
+  borderRadius: "50%", // Redondeado
+  width: 20,
+  height: 20,
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Sombra para dar efecto
+  "&:hover": {
+    backgroundColor: "#fff", // Mantener el fondo blanco al hover
+    color: "#cc0000", // Oscurecer ligeramente el rojo
+  },
+  ...(left !== undefined && {
+    left: left,
   }),
-
-  "&.slick-disabled": { visibility: "hidden" }
+  ...(right !== undefined && {
+    right: right,
+  }),
 }));

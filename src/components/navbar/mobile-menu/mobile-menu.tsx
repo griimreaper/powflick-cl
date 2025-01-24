@@ -24,7 +24,7 @@ export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
     <Fragment>
       <IconButton
         onClick={() => setOpenDrawer(true)}
-        sx={{ flexShrink: 0, color: "grey.600" }}
+        sx={{ flexShrink: 0, color: "#FFFFFF" }}
       >
         <Menu />
       </IconButton>

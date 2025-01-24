@@ -40,7 +40,6 @@ export default function ShopLayout1({
   session,
 }: ShopLayout1Props) {
   const [isFixed, setIsFixed] = useState(false);
-  const toggleIsFixed = useCallback((fixed: boolean) => setIsFixed(fixed), []);
 
   const queryClient = useQueryClient();
 

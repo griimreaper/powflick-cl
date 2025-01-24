@@ -6,20 +6,24 @@ import styled from "@mui/material/styles/styled";
 export const Wrapper = styled("div")(({ theme }) => ({
   height: "100%",
   cursor: "pointer",
-  overflow: "hidden",
   borderRadius: "4px",
   position: "relative",
+  transition: "all 0.3s",
+  overflow: "visible",
+  alignItems: 'end',
+  display: 'flex',
+  zIndex: 1,
   img: {
     height: "100%",
     objectFit: "cover",
     transition: "all 0.3s",
-    objectPosition: "center center"
+    willChange: "transform",
+    imageRendering: "auto"
   },
   ":hover": {
-    img: { transform: "scale(1.1)" },
-    ".category-title": {
-      color: theme.palette.common.white,
-      backgroundColor: theme.palette.dark.main
+    transform: "translateY(-8px) scale(1.07)", // Elevar el componente
+    img: {
+      objectPosition: "center "
     }
   }
 }));
