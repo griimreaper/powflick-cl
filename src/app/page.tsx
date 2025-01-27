@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     "quick team apparel orders",
   ],
   other: {
-    "google-site-verification": "hl7qB_BtISvVqrpuqzJM_2wZ1OVgAaWkOYm0Z7JQceQ",
+    "google-site-verification": "gLeGcx6wTsSNO3gfrikN4xd4gC0uCQcNlvafGlX5DQM",
   },
 };
 
