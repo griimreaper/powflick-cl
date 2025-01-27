@@ -28,14 +28,13 @@ export default async function RootLayout({
                 height: "8px",
               },
               "*::-webkit-scrollbar-thumb": {
-                backgroundColor: "#888",
-                borderRadius: "4px",
+                backgroundColor: "#CA0B0B",
               },
               "*::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: "#555",
+                backgroundColor: "#CA0B0B",
               },
               "*::-webkit-scrollbar-track": {
-                backgroundColor: "#f0f0f0",
+                backgroundColor: "#1A1A1A",
               },
             }}
           />

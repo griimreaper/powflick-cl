@@ -8,12 +8,7 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import { calculateDiscount, currency } from "lib";
 // STYLED COMPONENTS
 import { PriceText } from "./styles";
-// CUSTOM DATA MODEL
-import Product from "models/Product.model";
-
 import DiscountChip from "../discount-chip";
-import QuantityButtons from "./components/quantity-buttons";
-// LOCAL CUSTOM HOOKS
 import useProduct from "../use-product";
 import { ProductDB } from "models/types";
 
@@ -71,7 +66,7 @@ export default function ProductCard16({ product }: Props) {
             },
           });
         }}>
-        <FlexBox position="relative" bgcolor="grey.50" borderRadius={3} mb={2}>
+        <FlexBox position="relative" bgcolor="transparent" borderRadius={3} mb={2}>
           {URL ? (
             <LazyImage alt={title} width={380} height={379} src={URL} />
           ) : (
@@ -84,7 +79,7 @@ export default function ProductCard16({ product }: Props) {
       <FlexBetween alignItems="flex-end">
         <div>
           <Link href={`/products/${slug}`}>
-            <H6 fontWeight={700} mb={1}>
+            <H6 fontWeight={700} mb={1} >
               {title}
             </H6>
           </Link>

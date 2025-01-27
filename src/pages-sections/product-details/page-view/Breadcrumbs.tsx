@@ -15,11 +15,12 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
     return (
         <MuiBreadcrumbs
             aria-label="breadcrumb"
-            separator={<NavigateNextIcon fontSize="small" style={{ color: "#888" }} />}
+            separator={<NavigateNextIcon fontSize="small" style={{ color: "text.secundary" }} />}
             sx={{
                 "& a": {
                     textDecoration: "none",
                     fontWeight: "bold",
+                    color: "text.secundary",
                     "&:hover": {
                         color: "primary.main",
                     },
@@ -31,8 +32,8 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
         >
             {items.map((item, index) => (
                 item.href ? (
-                    <Link key={index} href={item.href}>
-                        {item.label}
+                    <Link key={index} href={item.href} >
+                        <Typography key={index}>{item.label}</Typography>
                     </Link>
                 ) : (
                     <Typography key={index}>{item.label}</Typography>

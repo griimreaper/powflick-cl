@@ -6,6 +6,7 @@ import { ProductCard9 } from "components/product-cards/product-card-9";
 // CUSTOM DATA MODEL
 import { ProductDB } from "models/types";
 import { useState } from "react";
+import { themeColors } from "theme/theme-colors";
 
 // ==========================================================
 type Props = { data: any, handlePage: (number: number) => void };
@@ -39,7 +40,7 @@ export default function ProductsListView({ data, handlePage }: Props) {
       ))}
 
       <FlexBetween flexWrap="wrap" mt={4}>
-      <Span color="grey.600">Showing {itemsPerPage * (data?.page - 1) + 1}-{Math.min(itemsPerPage * data?.page, data?.count?.total || 0)} of {data?.count?.total || 0} Products</Span>
+      <Span color={themeColors.text.secondary}>Showing {itemsPerPage * (data?.page - 1) + 1}-{Math.min(itemsPerPage * data?.page, data?.count?.total || 0)} of {data?.count?.total || 0} Products</Span>
         <Pagination count={data?.totalPages} page={data?.page} onChange={handleChange} variant="outlined" color="primary" />
       </FlexBetween>
     </div>

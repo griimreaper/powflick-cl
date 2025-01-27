@@ -24,6 +24,7 @@ import {
 } from "./types";
 import { Slider } from "@mui/material";
 import { ProductDB } from "models/types";
+import { themeColors } from "theme/theme-colors";
 
 const OTHERS = [
   { label: "On Sale", value: "discount" },
@@ -141,7 +142,7 @@ export default function ProductFilterCard({
   return (
     <div>
       {/* ACTIVE FILTERS */}
-      <H6 mb={1.25}>Active Filters</H6>
+      <H6 mb={1.25} color={themeColors.text.primary}>Active Filters</H6>
       {topCategories?.map((item) => (
         <Fragment key={item.title}>
           <AccordionHeader
@@ -153,10 +154,9 @@ export default function ProductFilterCard({
             sx={{
               padding: ".5rem 0",
               cursor: "pointer",
-              color: "grey.600",
             }}
           >
-            <Span>{item.title}</Span>
+            <Span color={themeColors.text.secondary}>{item.title}</Span>
           </AccordionHeader>
           <Collapse in={collapsed === item.title}>
             {item.child?.map((subItem: any) => (
@@ -165,9 +165,9 @@ export default function ProductFilterCard({
                 py={0.75}
                 key={subItem.title}
                 fontSize="14px"
-                color="grey.600"
                 sx={{ cursor: "pointer" }}
                 onClick={() => handleChangeSubCategory(subItem.title)}
+                color={themeColors.text.primary}
               >
                 {subItem.title}
               </Paragraph>
@@ -176,15 +176,17 @@ export default function ProductFilterCard({
         </Fragment>
       ))}
       <Box component={Divider} my={3} />
+      <Box component={Divider} my={3} />
 
       {/* PRICE VARIANT FILTER */}
-      <H6 mb={2}>Price Range</H6>
+      <H6 mb={2} color={themeColors.text.primary}>Price Range</H6>
       <Slider
         min={0}
         max={300}
         size="small"
         value={filters.price || [0, 0]}
         valueLabelDisplay="auto"
+        color="primary"
         valueLabelFormat={(v) => `$${v}`}
         onChange={(_, v) => handleChangePrice(v as number[])}
       />
@@ -194,6 +196,7 @@ export default function ProductFilterCard({
           size="small"
           type="number"
           placeholder="0"
+          color="primary"
           value={filters.price?.[0] || 0}
           onChange={(e) =>
             handleChangePrice([+e.target.value, filters.price?.[1] || 0])
@@ -207,6 +210,7 @@ export default function ProductFilterCard({
           size="small"
           type="number"
           placeholder="250"
+          color="primary"
           value={filters.price?.[1] || 0}
           onChange={(e) =>
             handleChangePrice([filters.price?.[0] || 0, +e.target.value])
@@ -261,7 +265,7 @@ export default function ProductFilterCard({
       <Box component={Divider} my={3} />
 
       {/* COLORS VARIANT FILTER */}
-      <H6 mb={2}>Colors</H6>
+      <H6 mb={2} color={themeColors.text.primary}>Colors</H6>
       <FlexBox mb={2} flexWrap="wrap" gap={1.5}>
         {validColors.map((item: string) => (
           <Box

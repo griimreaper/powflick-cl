@@ -48,7 +48,7 @@ const sportsCategories = [
 ];
 
 export default async function Section3({ className }: { className: string }) {
-  const isMobile = useMediaQuery("(max-width: 600px)"); // Detecta si es móvil
+  const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
 
   return (
     <Container className={`mt-2 ${className}`} sx={{ overflow: "visible", position: "relative" }}>
@@ -113,8 +113,8 @@ export default async function Section3({ className }: { className: string }) {
 
       <Carousel slidesToShow={isMobile ? 2 : 4} >
         {sportsCategories.map((item) => (
-          <Box sx={{ position: "relative", mb:8 }}>
-          <CategoryCard1 key={item.title} image={item.image} title={item.title} link={item.link} />
+          <Box key={item.id} sx={{ position: "relative", mb:8 }}>
+          <CategoryCard1 image={item.image} title={item.title} link={item.link} />
           </Box>
         ))}
       </Carousel>

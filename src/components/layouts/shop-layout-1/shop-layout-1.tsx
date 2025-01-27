@@ -33,11 +33,13 @@ import { Box } from "@mui/material";
 
 interface ShopLayout1Props extends PropsWithChildren {
   session: Session | null;
+  landing?: boolean;
 }
 
 export default function ShopLayout1({
   children,
   session,
+  landing = false
 }: ShopLayout1Props) {
   const [isFixed, setIsFixed] = useState(false);
 
@@ -95,17 +97,18 @@ export default function ShopLayout1({
   return (
     <Fragment>
       {/* TOP BAR SECTION */}
-      <Box position={'absolute'} width={'100%'} top={0}>
+      <Box position={landing ? 'absolute' : 'relative'} width={'100%'} top={0}>
         {/* <Topbar /> */}
 
         {/* HEADER */}
         {/* <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}> */}
-          <Header
-            isFixed={isFixed}
-            session={session}
-            data={data}
-            midSlot={<Navbar elevation={0} border={1} data={data} />}
-          />
+        <Header
+          landing={landing}
+          isFixed={isFixed}
+          session={session}
+          data={data}
+          midSlot={<Navbar elevation={0} border={1} data={data} />}
+        />
         {/* </Sticky> */}
 
         {/* NAVIGATION BAR */}

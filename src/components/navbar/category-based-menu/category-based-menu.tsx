@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 // GLOBAL CUSTOM COMPONENT
 import FlexRowCenter from "components/flex-box/flex-row-center";
@@ -10,7 +10,8 @@ import { Wrapper, StyledCard, MenusContainer } from "./styles";
 // DATA TYPES
 import { MenuList } from "./types";
 import Link from "next/link";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 // ===============================================================
 type Props = { menuList: MenuList[]; title: string };
@@ -27,11 +28,11 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
         alignItems="center"
         display={"flex"}
         flexDirection={"row"}
-        width={"100%"}
         gap={"0.3rem"}
+        height={"100%"}
       >
-        <Link href={"/products"}>
-          <Typography sx={{ fontWeight: 600, color: "#FEFCFC" }}>
+        <Link href={"/products"} >
+          <Typography sx={{ fontWeight: 600, color:  "#FEFCFC" }}>
             {title}
           </Typography>
         </Link>
@@ -41,17 +42,19 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
       </FlexRowCenter>
 
       <MenusContainer className="menu-list">
-        <StyledCard>
-          {/* MAIN CATEGORIES SECTION */}
-          <Categories
-            openList={openList}
-            categories={categories}
-            handleOpen={(item) => setOpenList(item)}
-          />
+        <Box sx={{ background:'transparent', position: 'relative', top: 14, height: '100%' }}>
+          <StyledCard >
+            {/* MAIN CATEGORIES SECTION */}
+            <Categories
+              openList={openList}
+              categories={categories}
+              handleOpen={(item) => setOpenList(item)}
+            />
 
-          {/* SUB / CHILD CATEGORIES SECTION */}
-          <ChildCategories categories={subCategories} />
-        </StyledCard>
+            {/* SUB / CHILD CATEGORIES SECTION */}
+            <ChildCategories categories={subCategories} />
+          </StyledCard>
+        </Box>
       </MenusContainer>
     </Wrapper>
   );

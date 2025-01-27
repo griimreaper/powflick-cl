@@ -7,6 +7,10 @@ import SportZoneCard from "components/SportZoneCard";
 const Wrapper = styled("div")(({ theme }) => ({
   cursor: "pointer",
   transition: "color 150ms ease-in-out",
+  height: "100%",
+  alignItems: "center",
+  display: "flex",
+  textAlign: "center",
   ":hover": {
     color: theme.palette.primary.main,
     "& .menu-list": { display: "block" },
@@ -30,13 +34,16 @@ const StyledCard = styled(SportZoneCard)({
   height: "100%",
   display: "flex",
   borderRadius: 0,
+  boxShadow: '0px 9px 20px -10px rgba(0, 0, 0, 0.66)',
+  overflow: "hidden",
 });
 
 const CategoryList = styled(List)(({ theme }) => ({
   padding: 0,
   width: 300,
   height: "100%",
-  borderRight: `1px solid ${theme.palette.grey[200]}`,
+  background: '#CA0B0B',
+  boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.66)',
 }));
 
 const CategoryListItem = styled(ListItem, {
@@ -46,8 +53,8 @@ const CategoryListItem = styled(ListItem, {
   transition: "all 0.3s",
   justifyContent: "space-between",
   ...(active && {
-    color: theme.palette.primary.main,
-    backgroundColor: theme.palette.primary['light'],
+    color: "white",
+    backgroundColor: '#5F0404',
   }),
 }));
 

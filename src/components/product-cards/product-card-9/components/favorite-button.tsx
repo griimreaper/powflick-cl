@@ -2,6 +2,7 @@ import IconButton from "@mui/material/IconButton";
 // MUI ICON COMPONENTS
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import { themeColors } from "theme/theme-colors";
 
 // ==============================================================
 interface Props {
@@ -19,7 +20,7 @@ export default function FavoriteButton({ isFavorite, toggleFavorite }: Props) {
       {isFavorite ? (
         <Favorite color="primary" fontSize="small" />
       ) : (
-        <FavoriteBorder fontSize="small" />
+        <FavoriteBorder fontSize="small" color="primary"/>
       )}
     </IconButton>
   );

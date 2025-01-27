@@ -1,5 +1,5 @@
 module.exports = {
-    siteUrl: 'https://www.devcodelab.site/',
+    siteUrl: 'https://www.powflick.com/',
     generateRobotsTxt: true,
     sitemapSize: 7000,
     exclude: [

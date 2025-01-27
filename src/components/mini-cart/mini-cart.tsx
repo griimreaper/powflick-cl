@@ -15,6 +15,7 @@ import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
 import { useShoppingCartStore } from "store/shoppingCart";
+import { themeColors } from "theme/theme-colors";
 
 // =========================================================
 type Props = { toggleSidenav: () => void };
@@ -33,7 +34,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
   return (
     <Box width="100%" minWidth={380} sx={{ zIndex: 10 }}>
       {/* HEADING SECTION */}
-      <TopHeader toggle={toggleSidenav} total={cartList.length} />
+      <TopHeader toggle={toggleSidenav} total={cartList.length}  />
 
       <Divider />
 

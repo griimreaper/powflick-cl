@@ -18,7 +18,7 @@ import FilterList from "@mui/icons-material/FilterList";
 import ProductFilterCard from "../product-filter-card";
 // GLOBAL CUSTOM COMPONENTS
 import Sidenav from "components/side-nav";
-import { H5, Paragraph } from "components/Typography";
+import { H5, Paragraph, Span } from "components/Typography";
 import { FlexBetween, FlexBox } from "components/flex-box";
 import ProductsGridView from "components/products-view/products-grid-view";
 import ProductsListView from "components/products-view/products-list-view";
@@ -36,6 +36,7 @@ import { DataStructure, ProductDB } from "models/types";
 import Breadcrumbs from "./Breadcrumbs";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getProducts } from "services/Products";
+import { themeColors } from "theme/theme-colors";
 
 const SORT_OPTIONS = [
   { label: "Relevance", value: "relevance" },
@@ -169,10 +170,11 @@ export default function ProductSearchPageView() {
   // const sortedProducts = handleSortProducts(data, sortBy, filters);
 
   return (
-    <div className="bg-white pt-2 pb-4"
+    <div className="pt-2 pb-4"
     style={{
       cursor: isFetching ? 'wait' : 'default', // Cambia el cursor según `isFetching`
       opacity: isFetching ? 0.7 : 1,
+      background: 'white'
     }}>
       <Container>
         {/* Breadcrumbs */}
@@ -184,18 +186,18 @@ export default function ProductSearchPageView() {
         <FlexBetween flexWrap="wrap" gap={2} mb={2}>
           <div>
             {filters.search &&
-              <H5 lineHeight={1} mb={1}>
+              <H5 lineHeight={1} mb={1} color={themeColors.text.secondary}>
                 Searching for “ {filters?.search} ”
               </H5>
             }
-            <Paragraph color="grey.600">
+            <Span  style={{ color: themeColors.text.secondary }}>
               {data?.count?.total} results found
-            </Paragraph>
+            </Span>
           </div>
 
           <FlexBox alignItems="center" columnGap={4} flexWrap="wrap">
             <FlexBox alignItems="center" gap={1} flex="1 1 0">
-              <Paragraph color="grey.600" whiteSpace="pre">
+              <Paragraph whiteSpace="pre">
                 Sort by:
               </Paragraph>
 
@@ -206,11 +208,12 @@ export default function ProductSearchPageView() {
                 value={sortBy}
                 variant="outlined"
                 placeholder="Sort by"
+                color="primary"
                 onChange={(e) => handleChangeSortBy(e.target.value)}
                 sx={{ flex: "1 1 0", minWidth: "150px" }}
               >
                 {SORT_OPTIONS.map((item) => (
-                  <MenuItem value={item.value} key={item.value}>
+                  <MenuItem value={item.value} key={item.value} color="primary" style={{ color: "black" }}>
                     {item.label}
                   </MenuItem>
                 ))}
@@ -218,21 +221,21 @@ export default function ProductSearchPageView() {
             </FlexBox>
 
             <FlexBox alignItems="center" my="0.25rem">
-              <Paragraph color="grey.600" mr={1}>
+              <Paragraph color="#FFFFFF" mr={1}>
                 View:
               </Paragraph>
 
               <IconButton onClick={toggleView("grid")}>
                 <Apps
                   fontSize="small"
-                  color={view === "grid" ? "primary" : "inherit"}
+                  color={view === "grid" ? "primary" : "disabled"}
                 />
               </IconButton>
 
               <IconButton onClick={toggleView("list")}>
                 <ViewList
                   fontSize="small"
-                  color={view === "list" ? "primary" : "inherit"}
+                  color={view === "list" ? "primary" : "disabled"}
                 />
               </IconButton>
 

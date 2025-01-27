@@ -25,12 +25,14 @@ interface Props {
   midSlot: ReactNode;
   session: Session | null;
   data: DataStructure["navbar"];
+  landing: boolean;
 }
 // ==============================================================
 
 export default function Header({
   isFixed,
   className,
+  landing,
   midSlot,
   session,
   data,
@@ -78,7 +80,7 @@ export default function Header({
   );
 
   return (
-    <HeaderWrapper className={clsx(className)}>
+    <HeaderWrapper className={clsx(className)} sx={{ background: landing ? "transparent": "#CA0B0B" }}>
       <StyledContainer>
         {downMd ? <MobileHeader data={data} /> : CONTENT_FOR_LARGE_DEVICE}
       </StyledContainer>

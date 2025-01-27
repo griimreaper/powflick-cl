@@ -179,7 +179,7 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
             }
             @media (max-width: 1440px) {
               div {
-                bottom: 20px;
+                bottom: 0px;
               }
             }
             @media (max-width: 768px) {
@@ -197,6 +197,28 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
           zIndex: 10,
           marginTop: "130px",
         }}>
+          <style jsx>{`
+            @media (max-width: 768px) {
+              div {
+                top: 80px;
+              }
+            }
+            @media (max-width: 600px) {
+              div {
+                top: 40px;
+              }
+            }
+            @media (max-width: 500px) {
+              div {
+                top: 0px;
+              }
+            }
+            @media (max-width: 320px) {
+              div {
+                top: -40px;
+              }
+            }
+          `}</style>
           <Section2 className="section2" />
           <Section3 className="section3" />
         </div>

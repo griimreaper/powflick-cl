@@ -29,8 +29,6 @@ export default function CategoryMenu({ render, data }: Props) {
 
   const handleDocumentClick = useCallback(() => setOpen(false), []);
 
-  console.log(data, '2');
-  
   useEffect(() => {
     window.addEventListener("click", handleDocumentClick);
     return () => window.removeEventListener("click", handleDocumentClick);

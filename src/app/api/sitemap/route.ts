@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
         const links = [...productLinksFromIds];
 
         // Crea un stream de Sitemap
-        const stream = new SitemapStream({ hostname: 'https://www.devcodelab.site' });
+        const stream = new SitemapStream({ hostname: 'https://www.powflick.com' });
 
         // Convierte el stream a una promesa y obtiene el XML
         const xmlString = await streamToPromise(Readable.from(links).pipe(stream)).then((data: any) => data.toString());
