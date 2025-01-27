@@ -21,7 +21,7 @@ export default function ChildCategories({ categories }: Props) {
     <Scrollbar autoHide={false} sx={{ width: "100%" }}>
       <Box px={6} py={2} height="100%">
         {categories?.child?.map((item, key) => (
-          <div key={key}>
+          <div key={key} style={{ textAlign: "start" }}>
             {/* NAV / CATEGORY TITLE */}
             <Link href={`/products?category=${categories.title}&collection=${item.title}`}>
               <H6 fontWeight={700} my={3}>

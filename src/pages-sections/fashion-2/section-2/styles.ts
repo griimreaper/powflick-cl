@@ -8,6 +8,7 @@ import FlexRowCenter from "components/flex-box/flex-row-center";
 export const RootStyle = styled("div")(({ theme }) => ({
   display: "grid",
   padding: "2rem 0",
+  borderRadius: 4,
   boxShadow: theme.shadows[2],
   gridTemplateColumns: "repeat(4, 1fr)",
   backgroundColor: theme.palette.common.white,

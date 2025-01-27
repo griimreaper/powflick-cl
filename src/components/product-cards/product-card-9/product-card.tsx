@@ -19,7 +19,8 @@ const Wrapper = styled(Card)({
   width: "100%",
   overflow: "hidden",
   position: "relative",
-  marginBottom: "1.25rem"
+  marginBottom: "1.25rem",
+  background: 'transparent'
 });
 
 const ContentWrapper = styled("div")(({ theme }) => ({
@@ -98,60 +99,60 @@ export default function ProductCard9(props: Props) {
       {/* PRODUCT FAVORITE BUTTON */}
       <FavoriteButton isFavorite={isFavorite} toggleFavorite={toggleFavorite} />
 
-      <ContentWrapper>
-        <div className="img-wrapper">
-          {/* DISCOUNT PERCENT CHIP IF AVAILABLE */}
-          <DiscountChip discount={off!} />
+      <Link href={`/products/${slug}`}
+        onClick={() => {
+          (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+          (window as any).dataLayer.push({
+            event: "View item",
+            ecommerce: {
+              items: [
+                {
+                  item_id: `${id}`,
+                  item_name: `${title}`,
+                  discount: `${discount}`,
+                  slug: `${slug}`,
+                  item_category: `${product_categories.split("|")[0]}`,
+                  price: `${Number(price)}`,
+                },
+              ],
+            },
+          });
+        }}>
+        <ContentWrapper>
+          <div className="img-wrapper" style={{ background: 'transparent' }}>
+            {/* DISCOUNT PERCENT CHIP IF AVAILABLE */}
+            <DiscountChip discount={off!} />
 
-          {/* PRODUCT IMAGE / THUMBNAIL */}
-          <LazyImage src={imgUrl} alt={title} width={500} height={500} />
-        </div>
+            {/* PRODUCT IMAGE / THUMBNAIL */}
+            <LazyImage src={imgUrl} alt={title} width={500} height={500} />
+          </div>
 
-        <div className="content">
-          <div>
-            {/* PRODUCT TAG LIST */}
-            <ProductTags tags={["Bike", "Motor", "Ducati"]} />
+          <div className="content">
+            <div>
+              {/* PRODUCT TAG LIST */}
+              <ProductTags tags={product_categories.split('|')} />
 
-            {/* PRODUCT TITLE / NAME */}
-            <Link href={`/products/${slug}`}
-              onClick={() => {
-                (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
-                (window as any).dataLayer.push({
-                  event: "View item",
-                  ecommerce: {
-                    items: [
-                      {
-                        item_id: `${id}`,
-                        item_name: `${title}`,
-                        discount: `${discount}`,
-                        slug: `${slug}`,
-                        item_category: `${product_categories.split("|")[0]}`,
-                        price: `${Number(price)}`,
-                      },
-                    ],
-                  },
-                });
-              }}>
+              {/* PRODUCT TITLE / NAME */}
               <H5 fontWeight="700" mt={1} mb={2}>
                 {title}
               </H5>
-            </Link>
 
-            {/* PRODUCT RATING / REVIEW  */}
-            <Rating size="small" value={4} color="warn" readOnly />
+              {/* PRODUCT RATING / REVIEW  */}
+              <Rating size="small" value={4} color="warn" readOnly />
 
-            {/* PRODUCT PRICE */}
-            <ProductPrice price={price} discount={off!} />
-          </div>
+              {/* PRODUCT PRICE */}
+              <ProductPrice price={price} discount={off!} />
+            </div>
 
-          {/* PRODUCT ADD TO CART BUTTON */}
-          {/* <AddToCartButton
+            {/* PRODUCT ADD TO CART BUTTON */}
+            {/* <AddToCartButton
             quantity={cartItem?.qty}
             handleDecrement={handleDecrementQuantity}
             handleIncrement={handleIncrementQuantity}
-          /> */}
-        </div>
-      </ContentWrapper>
-    </Wrapper>
+            /> */}
+          </div>
+        </ContentWrapper>
+      </Link>
+    </Wrapper >
   );
 }

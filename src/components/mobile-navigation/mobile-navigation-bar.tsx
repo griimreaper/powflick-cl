@@ -17,9 +17,9 @@ import { useShoppingCartStore } from "store/shoppingCart";
 
 export default function MobileNavigationBar({ data }: { data?: DataStructure['navbar'] }) {
   const { cart } = useShoppingCartStore();
-  const DOWN_900 = useMediaQuery((theme: Theme) => theme.breakpoints.down(900));
+  const DOWN_768 = useMediaQuery((theme: Theme) => theme.breakpoints.down(768));
 
-  if (DOWN_900) {
+  if (DOWN_768) {
     return (
       <Wrapper>
         {list.map(({ Icon, href, title }) => (

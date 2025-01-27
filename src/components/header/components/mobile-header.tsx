@@ -36,7 +36,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
     toggleSidenav,
   } = useHeader();
 
-  const ICON_STYLE = { color: "grey.600", fontSize: 20 };
+  const ICON_STYLE = { color: "#FFFFFF", fontSize: 20 };
   const { data: session } = useSession();
   const router = useRouter();
 

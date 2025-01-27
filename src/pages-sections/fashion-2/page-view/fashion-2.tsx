@@ -62,8 +62,31 @@ import { Session } from "next-auth";
 
 // layout
 
-export default function FashionTwoPageView({ data, session }: { data: DataStructure, session: Session | null}) {
-  const [isFixed, setIsFixed] = useState(false);
+export default function FashionTwoPageView({ data, session }: { data: DataStructure, session: Session | null }) {
+  const [backgroundImage, setBackgroundImage] = useState(
+    "assets/images/landing/POWFLICK_BANNER_SUPERIOR.png"
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 768) {
+        setBackgroundImage("assets/images/landing/mobile/POWFLICK-_BANNER-SUPERIOR.png");
+      } else if (width <= 1200) {
+        setBackgroundImage("assets/images/landing/POWFLICK_BANNER_SUPERIOR.png");
+      } else {
+        setBackgroundImage("assets/images/landing/POWFLICK_BANNER_SUPERIOR.png");
+      }
+    };
+
+    // Llama la función al cargar la página y al redimensionar
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const {
     profile,
@@ -121,21 +144,29 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
         className="banner-container"
         style={{
           position: "relative",
-          backgroundImage:
-            "url('assets/images/landing/POWFLICK_BANNER_SUPERIOR.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
           width: "100%",
           height: "auto",
           aspectRatio: "4000 / 4208",
         }}
       >
+        <img
+          src={backgroundImage}
+          alt="Banner"
+          style={{
+            width: "100%",
+            height: "auto",
+            position: 'absolute',
+            objectFit: "cover", // Asegura que la imagen mantenga proporciones
+            objectPosition: "top", // Ajusta la posición de la imagen
+            zIndex: 0
+          }}
+        />
 
         <div
           style={{
             position: "absolute",
             width: "100%",
+
           }}
         >
           <Section2 className="section2" />
@@ -148,10 +179,10 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
             }
             @media (max-width: 1440px) {
               div {
-                bottom: 80px;
+                bottom: 0px;
               }
             }
-            @media (max-width: 720px) {
+            @media (max-width: 768px) {
               div {
                 display: none;
               }
@@ -160,11 +191,37 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
         </div>
       </div>
       {/* Secciones que deben respetar el espacio de la imagen de fondo */}
-      {((window.innerWidth > 320 && window.innerWidth < 720) || !data) && (
-        <>
+      {((window.innerWidth > 320 && window.innerWidth < 768) || !data) && (
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          marginTop: "130px",
+        }}>
+          <style jsx>{`
+            @media (max-width: 768px) {
+              div {
+                top: 80px;
+              }
+            }
+            @media (max-width: 600px) {
+              div {
+                top: 40px;
+              }
+            }
+            @media (max-width: 500px) {
+              div {
+                top: 0px;
+              }
+            }
+            @media (max-width: 320px) {
+              div {
+                top: -40px;
+              }
+            }
+          `}</style>
           <Section2 className="section2" />
           <Section3 className="section3" />
-        </>
+        </div>
       )}
       {/* Most Sold Products Section */}
       <Section4 products={data?.landing?.collections?.mostSoldProducts || []} />

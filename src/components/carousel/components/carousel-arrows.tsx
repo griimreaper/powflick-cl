@@ -5,6 +5,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 // STYLED COMPONENT
 import { ArrowButton } from "../styles";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 // ==============================================================
 interface ArrowProps extends CustomArrowProps {
@@ -20,7 +21,7 @@ function NextArrow({ onClick, sx, className }: ArrowProps) {
 
   return (
     <ArrowButton right={0} onClick={onClick} className={`next ${updatedClassName}`} sx={{ ...sx }}>
-      <ArrowForward fontSize="small" color="inherit" className="forward-icon" />
+      <ChevronRight fontSize="small" color="inherit" className="forward-icon" />
     </ArrowButton>
   );
 }
@@ -33,7 +34,7 @@ function PrevArrow({ onClick, sx, className }: ArrowProps) {
 
   return (
     <ArrowButton left={0} onClick={onClick} className={`prev ${updatedClassName}`} sx={{ ...sx }}>
-      <ArrowBack fontSize="small" color="inherit" className="back-icon" />
+      <ChevronLeft fontSize="small" color="inherit" className="back-icon" />
     </ArrowButton>
   );
 }

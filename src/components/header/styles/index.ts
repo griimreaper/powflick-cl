@@ -8,7 +8,6 @@ export const HeaderWrapper = styled("div")(({ theme }) => ({
   position: "relative",
   height: layoutConstant.headerHeight,
   transition: "height 250ms ease-in-out",
-  background: "transparent",
   // borderBottom: `1px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     height: layoutConstant.mobileHeaderHeight

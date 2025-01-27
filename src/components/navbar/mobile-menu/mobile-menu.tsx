@@ -7,15 +7,12 @@ import Clear from "@mui/icons-material/Clear";
 import Scrollbar from "components/scrollbar";
 import { StyledNavLink } from "components/navbar/styles";
 import { renderLevels } from "./render-levels";
-import { updateNavigation } from "./modified-navigation";
 import { DataStructure } from "models/types";
-import { useQueryClient } from "@tanstack/react-query";
+import { themeColors } from "theme/theme-colors";
 
 export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const queryClient = useQueryClient();
 
-  // const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
   const handleClose = () => setOpenDrawer(false);
 
   const storeMenu = { title: 'Store', child: data?.categories }
@@ -24,7 +21,7 @@ export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
     <Fragment>
       <IconButton
         onClick={() => setOpenDrawer(true)}
-        sx={{ flexShrink: 0, color: "grey.600" }}
+        sx={{ flexShrink: 0, color: "#FFFFFF" }}
       >
         <Menu />
       </IconButton>
@@ -35,7 +32,7 @@ export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
         onClose={handleClose}
         sx={{ zIndex: 15001 }}
       >
-        <Box width="100vw" height="100%" position="relative">
+        <Box width="100vw" height="100%" position="relative" sx={{ backgroundColor: "#1A1A1A" }}>
           <Scrollbar autoHide={false} sx={{ height: "100vh" }}>
             <Box
               px={5}
@@ -48,7 +45,7 @@ export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
               {/* CLOSE BUTTON */}
               <IconButton
                 onClick={handleClose}
-                sx={{ position: "absolute", right: 30, top: 15 }}
+                sx={{ position: "absolute", right: 30, top: 15, color: themeColors.text.secondary }}
               >
                 <Clear fontSize="small" />
               </IconButton>

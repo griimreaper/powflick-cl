@@ -54,7 +54,7 @@ const Carousel = forwardRef<Slider, Props>((props, ref) => {
   };
 
   return (
-    <RootStyle space={spaceBetween}>
+    <RootStyle space={spaceBetween} >
       <SlickCarousel ref={ref} {...settings}>
         {children}
       </SlickCarousel>
