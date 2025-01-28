@@ -11,6 +11,7 @@ import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
 import { GlobalStyles } from "@mui/material";
+import { primary } from "theme/theme-colors";
 
 export default async function RootLayout({
   children,
@@ -28,10 +29,10 @@ export default async function RootLayout({
                 height: "8px",
               },
               "*::-webkit-scrollbar-thumb": {
-                backgroundColor: "#CA0B0B",
+                backgroundColor: primary.main,
               },
               "*::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: "#CA0B0B",
+                backgroundColor: primary.main,
               },
               "*::-webkit-scrollbar-track": {
                 backgroundColor: "#1A1A1A",

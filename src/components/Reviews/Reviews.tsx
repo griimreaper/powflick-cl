@@ -18,7 +18,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { keyframes } from "@emotion/react";
-import Slider from "react-slick";
+import Slider, { Settings } from "react-slick";
+import { Carousel } from "components/carousel";
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -49,7 +50,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 
 const ProductImage = styled("img")(({ theme }) => ({
   width: "100%",
-  height: 400,
+  height: 300,
   objectFit: "cover",
   borderRadius: "8px",
   marginBottom: "16px",
@@ -135,7 +136,12 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
   const [reviews, setReviews] = useState(review);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const responsive = [
+    { breakpoint: 1200, settings: { slidesToShow: 4 } },
+    { breakpoint: 1024, settings: { slidesToShow: 3 } },
+    { breakpoint: 650, settings: { slidesToShow: 1 } },
+    { breakpoint: 426, settings: { slidesToShow: 1 } }
+  ];
   const handleSortChange = (event: any) => {
     const value = event.target.value;
     setSortBy(value);
@@ -154,44 +160,44 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
 
   const averageRating = reviews?.length
     ? (
-        reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) /
-        reviews.length
-      ).toFixed(1)
+      reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) /
+      reviews.length
+    ).toFixed(1)
     : "0";
 
-  const sliderSettings = {
+  const sliderSettings: Settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    useCSS: true,
   };
 
   console.log(reviews);
-  
+
 
   return (
     <Box
       component="section"
       bgcolor="#1A1A1A"
-      mb={{ sm: 0, xs: 7 }}
+      mb={{ sm: 0, xs: 12, lg: 4 }}
       sx={{
         position: "relative",
-        overflow: "hidden",
         "&::after": {
           content: '""',
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
-          height: "50px",
+          height: "40px",
           background:
             "linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
           zIndex: 1,
         },
       }}
     >
-      <Container className="mt-4" sx={{ position: "relative", zIndex: 2 }}>
+      <Container className="mt-4" sx={{ position: "relative", zIndex: 4 }}>
         <Box mb={4} sx={{ textAlign: "" }}>
           <Typography
             variant="h3"
@@ -239,11 +245,17 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
         </FormControl> */}
         </Box>
         {isMobile ? (
-          <Slider {...sliderSettings}>
-            {reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+          <Carousel
+            slidesToShow={4}
+            responsive={responsive}
+            arrowStyles={{ backgroundColor: "white", top: "34%" }}
+          >
+            {reviews.slice(0,3).map((review) => (
+              <Box key={review.id} padding={2}>
+                <ReviewCard key={review.id} review={review} />
+              </Box>
             ))}
-          </Slider>
+          </Carousel>
         ) : (
           <Grid container spacing={3}>
             {reviews.map((review) => (

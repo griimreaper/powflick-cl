@@ -13,7 +13,7 @@ export default async function Section6({ products }: { products: DataStructure['
     { breakpoint: 1200, settings: { slidesToShow: 4 } },
     { breakpoint: 1024, settings: { slidesToShow: 3 } },
     { breakpoint: 650, settings: { slidesToShow: 2 } },
-    { breakpoint: 426, settings: { slidesToShow: 1 } }
+    { breakpoint: 426, settings: { slidesToShow: 2 } }
   ];
 
   return (
@@ -71,7 +71,7 @@ export default async function Section6({ products }: { products: DataStructure['
         <Carousel
           slidesToShow={4}
           responsive={responsive}
-          arrowStyles={{ backgroundColor: "dark.main", top: "34%" }}
+          arrowStyles={{ backgroundColor: "white", top: "34%" }}
         >
           {products?.map((product) => (
             <ProductCard8 key={product.id} product={product} active={true} />

@@ -3,6 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import styled from "@mui/material/styles/styled";
 // LOCAL CUSTOM COMPONENT
 import SportZoneCard from "components/SportZoneCard";
+import { primary } from "theme/theme-colors";
 
 const Wrapper = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -42,7 +43,7 @@ const CategoryList = styled(List)(({ theme }) => ({
   padding: 0,
   width: 300,
   height: "100%",
-  background: '#CA0B0B',
+  background: primary.main,
   boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.66)',
 }));
 

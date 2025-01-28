@@ -17,6 +17,7 @@ import LoginCartButtons from "./components/login-cart-buttons";
 import { HeaderWrapper, StyledContainer } from "./styles";
 import { Session } from "next-auth";
 import { DataStructure } from "models/types";
+import { primary } from "theme/theme-colors";
 
 // ==============================================================
 interface Props {
@@ -80,7 +81,7 @@ export default function Header({
   );
 
   return (
-    <HeaderWrapper className={clsx(className)} sx={{ background: landing ? "transparent": "#CA0B0B" }}>
+    <HeaderWrapper className={clsx(className)} sx={{ background: landing ? "transparent": primary.main }}>
       <StyledContainer>
         {downMd ? <MobileHeader data={data} /> : CONTENT_FOR_LARGE_DEVICE}
       </StyledContainer>
