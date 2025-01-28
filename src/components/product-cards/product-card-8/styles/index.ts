@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import styled from "@mui/material/styles/styled";
+import { themeColors } from "theme/theme-colors";
 
 export const Card = styled("div")({
   ":hover": {

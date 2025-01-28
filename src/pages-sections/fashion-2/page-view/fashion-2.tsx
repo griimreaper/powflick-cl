@@ -19,6 +19,10 @@ import { MobileNavigationBar } from "components/mobile-navigation";
 import { Footer1 } from "components/footer";
 import { DataStructure } from "models/types";
 import { Session } from "next-auth";
+import { Box, Button, Typography } from "@mui/material";
+import { primary } from "theme/theme-colors";
+import { Paragraph } from "components/Typography";
+import Section8 from "../section-8";
 
 // const AnimatedSection = ({ children }: any) => {
 //   const controls = useAnimation();
@@ -169,12 +173,45 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
 
           }}
         >
+          <Box sx={{
+            position: "absolute",
+            top: { xs: "-25%", sm: "-15%", md: "-7%", lg: "-25%", xl: "-38%" }, // Posición según pantallas
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 1,
+            textAlign: "center",
+          }}>
+            <Button
+              color="primary"
+              variant="contained"
+              href="/products"
+              sx={{
+                background: (theme) => theme.palette.primary.main,
+                height: "4rem",
+                width: "15rem",
+                borderRadius: 1,
+                "&:hover": { background: (theme) => theme.palette.primary.dark },
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "1rem", sm: "1.2rem" },
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                }}
+              >
+                Shop Now
+              </Typography>
+            </Button>
+          </Box>
+
           <Section2 className="section2" />
           <Section3 className="section3" />
           <style jsx>{`
             @media (max-width: 1920px) {
               div {
-                bottom: 280px;
+                bottom: 30px;
               }
             }
             @media (max-width: 1440px) {
@@ -189,15 +226,16 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
             }
           `}</style>
         </div>
-      </div>
+      </div >
       {/* Secciones que deben respetar el espacio de la imagen de fondo */}
-      {((window.innerWidth > 320 && window.innerWidth < 768) || !data) && (
-        <div style={{
-          position: 'relative',
-          zIndex: 10,
-          marginTop: "130px",
-        }}>
-          <style jsx>{`
+      {
+        ((window.innerWidth > 320 && window.innerWidth < 768) || !data) && (
+          <div style={{
+            position: 'relative',
+            zIndex: 10,
+            marginTop: "130px",
+          }}>
+            <style jsx>{`
             @media (max-width: 768px) {
               div {
                 top: 80px;
@@ -219,10 +257,43 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
               }
             }
           `}</style>
-          <Section2 className="section2" />
-          <Section3 className="section3" />
-        </div>
-      )}
+            <Box sx={{
+              position: "absolute",
+              top: { xs: "-18%", sm: "-18%", md: "-7%", lg: "-25%", xl: "-38%" }, // Posición según pantallas
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 1,
+              textAlign: "center",
+            }}>
+              <Button
+                color="primary"
+                variant="contained"
+                href="/products"
+                sx={{
+                  background: (theme) => theme.palette.primary.main,
+                  height: "3rem",
+                  width: "12rem",
+                  borderRadius: 1,
+                  "&:hover": { background: (theme) => theme.palette.primary.dark },
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontSize: { xs: "1rem", sm: "1.2rem" },
+                    fontWeight: 400,
+                    fontStyle: "italic",
+                  }}
+                >
+                  Shop Now
+                </Typography>
+              </Button>
+            </Box>
+            <Section2 className="section2" />
+            <Section3 className="section3" />
+          </div>
+        )
+      }
       {/* Most Sold Products Section */}
       <Section4 products={data?.landing?.collections?.mostSoldProducts || []} />
 
@@ -243,7 +314,7 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
             height: "auto",
           }}
         />
-        <Section7 url={"POWFLICK-19.png"} />
+        <Section7 />
       </div>
 
       {/* <AnimatedSection> */}
@@ -291,7 +362,7 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
             height: "auto",
           }}
         />
-        <Section7 url={"POWFLICK_BANNER-INFERIOR.png"} />
+        <Section8 />
       </div>
 
       {/* Newsletter Subscription Section */}
