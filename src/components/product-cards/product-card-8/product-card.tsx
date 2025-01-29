@@ -30,6 +30,7 @@ import Marquee from "react-fast-marquee";
 import ProductPrice from "components/product-cards/product-price";
 import DiscountChip from "../discount-chip";
 import { BorderBox } from '../../page-sidenav/side-navbar/styles/index';
+import { themeColors } from "theme/theme-colors";
 
 
 // ==============================================================
@@ -70,7 +71,7 @@ export default function ProductCard8({ product, active=false }: Props) {
 
   return (
     <Card>
-      <CardMedia style={active ? { border: "1px solid #7B7B7B" } : {}}>
+      <CardMedia style={active ? { border: "1px solid #7B7B7B",background: '#1A1A1A', } : {}}>
         <DiscountChip discount={discount} />
         <Link
           href={`/products/${slug}`}

@@ -13,7 +13,7 @@ const StyledLink = styled(Link, {
   position: "relative",
   transition: "color 150ms ease-in-out",
   color: active ? theme.palette.common.black : "inherit",
-  "&:hover": { color: `${theme.palette.primary.main} !important` },
+  "&:hover": { color: `${'#1A1A1A'} !important` },
 }));
 
 // ==============================================================

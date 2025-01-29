@@ -8,11 +8,11 @@ import PlayStore from "icons/PlayStore";
 import AppleStore from "icons/AppleStore";
 
 export const ABOUT_LINKS = [
-  "Careers",
-  "Our Stores",
-  "Our Cares",
-  "Terms & Conditions",
-  "Privacy Policy"
+  // {title: "Careers", link: "/"},
+  // {title: "Our Stores", link: "/"},
+  // {title: "Our Cares", link: "/"},
+  {title: "Terms & Conditions", link: "terms-condition"},
+  {title: "Privacy Policy", link: "privacy-policy"},
 ];
 
 export const CUSTOMER_CARE_LINKS = [

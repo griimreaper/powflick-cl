@@ -64,7 +64,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
             <Icon.Search sx={ICON_STYLE} />
           </IconButton>
 
-          <IconButton onClick={() => { session ? router.push('/profile') : toggleDialog() }}>
+          <IconButton onClick={() => { session ? router.push('/dashboard/profile') : toggleDialog() }}>
             <Icon.User sx={ICON_STYLE} />
           </IconButton>
 

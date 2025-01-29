@@ -9,6 +9,7 @@ const nextConfig = {
       "ideasjersey.com",
       "help.pitpay.com",
       "emmanuela.insyst.info",
+      "sbvajd9r07chtxp5.public.blob.vercel-storage.com",
     ],
   },
 };

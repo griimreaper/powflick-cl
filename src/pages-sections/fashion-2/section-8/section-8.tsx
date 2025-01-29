@@ -1,62 +1,76 @@
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
+"use client";
+
+import Button from "@mui/material/Button";
+import { useMediaQuery, useTheme, Box, Typography } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
-import { H2 } from "components/Typography";
-// Local CUSTOM COMPONENT
-import BlogCard from "./blog-card";
-// API FUNCTIONS
-import api from "utils/__api__/fashion-2";
-import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import Blog from "models/Blog.model";
+import { H1, H3 } from "components/Typography";
+import { RootStyle } from "../section-7/styles";
+// LOCAL CUSTOM COMPONENT
 
-export default function Section8() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+export default function Section7() {
+  const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      const blogs = await api.getBlogs();
-      setBlogs(blogs);
-    };
-
-    fetchBlogs();
-  }, []);
+  // Determina la imagen según el tamaño de la pantalla
+  const backgroundImage = !isMobile ? `/assets/images/landing/POWFLICK_BANNER-INFERIOR.png` : `/assets/images/landing/mobile/HOME_BANNER-SEASON.png`;
 
   return (
-    <Container className="mt-4">
-      {/* <H2 textAlign="center" mb={4}>
-        Latest Articles
-      </H2> */}
-      <Box mb={4} sx={{ textAlign: "center" }}>
+    <RootStyle>
+      {/* Imagen de fondo */}
+      <img
+        src={backgroundImage}
+        alt="Promo Sports Banner"
+        style={{
+          width: "100%",
+          position: "absolute",
+          zIndex: 0,
+        }}
+      />
 
-       <Typography 
-          variant="h3" 
-          component="h1" 
-          gutterBottom
-          sx={{ 
-            fontWeight: "bold",
-            background: "linear-gradient(45deg, #2c3e50 30%,rgb(219, 52, 52) 90%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            marginBottom: "1rem"
-          }}
-        >
-          Latest Articles
-        </Typography>
+      {/* Contenido */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: isMobile ? "flex-end" : "center",
+          alignItems: isMobile ? "center" : "flex-start",
+          textAlign: isMobile ? "end" : "right",
+          width: "100%",
+          mt: isMobile ? 10 : 0,
+          height: "100%",
+          position: "relative",
+          zIndex: 2,
+          mb: isMobile ? 10 : 0,
+          textWrap: 'nowrap',
+          fontFamily: "GYMER",
+          padding: "0 4rem",
+        }}
+      >
+
+        <H1 fontSize={{ xs: 25, sm: 55, md: 80, lg: 120 }} lineHeight={1} mb={1}>
+          PREPARE
+        </H1>
+        <H1 fontSize={{ xs: 25, sm: 55, md: 80, lg: 120 }} lineHeight={1} mb={1} >
+          YOUR SEASON
+        </H1>
+
+        <H3 fontSize={{ xs: 10, sm: 15, md: 15, lg: 20 }} fontWeight={100} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="oblique">
+          WITH THE BEST
+        </H3>
+
+        <Button variant="contained" size="large" color="primary" href="/products" sx={{ borderRadius: 1 }}>
+          <Typography
+            sx={{
+              color: "white",
+              fontSize: { xs: "0.7rem", md: "1rem", sm: "1.2rem" },
+              fontWeight: 400,
+              fontFamily: "sans-serif",
+              fontStyle: "italic",
+            }}
+          >
+            Shop Now
+          </Typography>
+        </Button>
       </Box>
-
-      <Grid container spacing={3}>
-        {blogs.map((item: Blog) => (
-          <Grid item md={4} xs={12} key={item.id}>
-            <BlogCard
-              title={item.title}
-              date={item.createdAt}
-              image={item.thumbnail}
-              description={item.description}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+    </RootStyle>
   );
 }
