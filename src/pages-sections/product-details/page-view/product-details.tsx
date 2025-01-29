@@ -15,7 +15,7 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
   const { product, sugestedProducts, frequentlyBought, reviews } = detail;
 
   return (
-    <Container className="pt-4 mb-2" sx={{ overflow: 'hidden', background: "white"} }>
+    <div className="p-4 mb-2" style={{ overflow: 'hidden', background: "white"} }>
       {/* PRODUCT DETAILS INFO AREA */}
       <ProductIntro product={detail} />
 
@@ -29,6 +29,6 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       {/* <AvailableShops /> */}
       {/* RELATED PRODUCTS AREA */}
       <RelatedProducts products={sugestedProducts} />
-    </Container>
+    </div>
   );
 }
