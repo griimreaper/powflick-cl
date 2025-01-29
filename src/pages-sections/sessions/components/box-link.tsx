@@ -1,22 +1,19 @@
-import Link from "next/link";
-import Box from "@mui/material/Box";
+import { Box, Link } from "@mui/material";
 
 // ==============================================================
-interface Props {
+interface BoxLinkProps {
   title: string;
-  href: string;
+  href?: string;
+  onClick?: () => void; // Hacer que onClick sea opcional
 }
 // ==============================================================
 
-export default function BoxLink({ href, title }: Props) {
+export default function BoxLink({ title, href, onClick }: BoxLinkProps) {
   return (
-    <Box
-      href={href}
-      component={Link}
-      fontWeight={600}
-      borderColor="grey.900"
-      borderBottom="1px solid">
-      {title}
+    <Box>
+      <Link href={href} onClick={onClick}>
+        {title}
+      </Link>
     </Box>
   );
 }
