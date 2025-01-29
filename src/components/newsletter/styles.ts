@@ -7,7 +7,7 @@ export const Wrapper = styled("div", {
   top: "50%",
   padding: 0,
   left: "50%",
-  width: "100%",
+  width: "80%",
   maxWidth: 1020,
   height: "auto",
   borderRadius: 8,
@@ -15,7 +15,7 @@ export const Wrapper = styled("div", {
   position: "absolute",
   boxShadow: theme.shadows[3],
   transform: "translate(-50%, -50%)",
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.background.default,
   ".content": {
     zIndex: 2,
     padding: 24,
@@ -48,8 +48,10 @@ export const Wrapper = styled("div", {
       backgroundImage: `url(${img})`,
       backgroundRepeat: "no-repeat",
       backgroundPosition: "left",
+      backgroundSize: "cover",
       top: 0,
       left: 0,
+      borderRadius: 8,
       zIndex: 1,
       position: "absolute",
       ...(theme.direction === "rtl" && {

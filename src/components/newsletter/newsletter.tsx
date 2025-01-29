@@ -28,13 +28,14 @@ import { useDashboardStore } from "store/dashboard";
 import { createCoupon, createCouponUser } from "services/modals/discount";
 import { getProfile } from "services/DashboardUser";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { themeColors } from "theme/theme-colors";
 
 // ======================================================
 type Props = { image?: string };
 // ======================================================
 
 export default function Newsletter({
-  image = "/assets/images/newsletter/bg-1.png",
+  image = "/assets/images/newsletter/POWFLICK_MODAL.png",
 }: Props) {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -113,20 +114,20 @@ export default function Newsletter({
         sx={{ zIndex: 999999999 }}
       >
         <Wrapper img={image}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} height={"100%"} alignItems="center">
             <Grid item lg={6} md={6} display={{ md: "flex", xs: "none" }} />
 
-            <Grid item lg={6} md={6} xs={12} alignItems="center">
-              <div className="content">
-                <Paragraph fontSize={22} fontWeight={700}>
-                  UP TO <Span color="primary.main">30% OFF</Span>
+            <Grid item lg={6} md={6} xs={12}>
+              <div className="content" style={{ textAlign: "center", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }} >
+                <Paragraph fontSize={22} fontWeight={400}>
+                  <Span color="primary.main">UP TO 30% OFF</Span>
                 </Paragraph>
 
-                <H1 fontSize={36} fontWeight={700} mb={2}>
-                  Sign up to <Span color="primary.main">Pow Flick</Span>
+                <H1 fontSize={{sm:24, md:36}} fontWeight={400} mb={2} fontFamily={"GYMER"} color={"#FFFFFF"}>
+                  Sign up to Pow Flick
                 </H1>
 
-                <Paragraph color="grey.600" mb={5}>
+                <Paragraph color="#FFFFFF" mb={5} width={"80%"} textAlign={"center"}>
                   Subscribe to the Pow Flick eCommerce newsletter to receive timely
                   updates from your favorite products.
                 </Paragraph>
@@ -139,9 +140,9 @@ export default function Newsletter({
 
                 <Button
                   variant="contained"
-                  fullWidth
+
                   color="primary"
-                  sx={{ p: 1.5 }}
+                  sx={{ p: 1.5, width: "15rem " }}
                   onClick={() => handleButton()}
                 >
                   SUBMIT
@@ -149,7 +150,8 @@ export default function Newsletter({
 
                 <SocialIcons />
 
-                <FormControlLabel
+
+                <FormControlLabel sx={{ color: "#FFFFFF" }}
                   control={<Checkbox defaultChecked />}
                   label="No, Thanks"
                 />

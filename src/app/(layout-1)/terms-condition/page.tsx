@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import ContactUs from "./ContactUs";
+import TermsPage from "./Terms";
 
 export const metadata: Metadata = {
-    title: "Contact Us - Pow Flick",
+    title: "Terms & Conditions - Pow Flick",
     description:
         "Pow Flick es una tienda en línea especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizables, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñada para deportistas y equipos que buscan rendimiento y estilo.",
     authors: [{ name: "devcodelab" }],
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <>
-            <ContactUs />
+            <TermsPage />
         </>
     )
 }

@@ -35,7 +35,7 @@ export default function Section7() {
           justifyContent: isMobile ? "flex-end" : "center",
           alignItems: isMobile ? "center" : "flex-end",
           textAlign: isMobile ? "end" : "right",
-          mt: isMobile ? 20 : 0,
+          mt: isMobile ? 10 : 0,
           width: "100%",
           height: "100%",
           position: "relative",
@@ -46,14 +46,14 @@ export default function Section7() {
           padding: "0 4rem",
         }}
       >
-        <H3 fontSize={isMobile ? 15 : 20} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="italic">
+        <H3 fontSize={{ xs: 10, sm: 15, md: 15, lg: 20 }} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="italic">
           Innovation with Artificial intelligence
         </H3>
 
-        <H1 fontSize={isMobile ? 45 : 120} lineHeight={1} mb={1}>
+        <H1 fontSize={{ xs: 25, sm: 55, md: 80, lg: 120 }} lineHeight={1} mb={1}>
           POWERED
         </H1>
-        <H1 fontSize={isMobile ? 45 : 120} lineHeight={1} mb={1}>
+        <H1 fontSize={{ xs: 25, sm: 55, md: 80, lg: 120 }} lineHeight={1} mb={1}>
           CUSTOMIZATION
         </H1>
 
@@ -61,7 +61,7 @@ export default function Section7() {
           <Typography
             sx={{
               color: "white",
-              fontSize: { xs: "1rem", sm: "1.2rem" },
+              fontSize: { xs: "0.7rem", md: "1rem", sm: "1.2rem" },
               fontWeight: 400,
               fontFamily: "sans-serif",
               fontStyle: "italic",

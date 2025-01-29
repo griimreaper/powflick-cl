@@ -30,9 +30,10 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
         flexDirection={"row"}
         gap={"0.3rem"}
         height={"100%"}
+        sx={{ fontWeight: 600, color: "#FEFCFC", '&:hover': { color: "#1A1A1A" } }}
       >
         <Link href={"/products"} >
-          <Typography sx={{ fontWeight: 600, color:  "#FEFCFC" }}>
+          <Typography >
             {title}
           </Typography>
         </Link>

@@ -35,7 +35,7 @@ export default function Section7() {
           alignItems: isMobile ? "center" : "flex-start",
           textAlign: isMobile ? "end" : "right",
           width: "100%",
-          mt: isMobile ? 20 : 0,
+          mt: isMobile ? 10 : 0,
           height: "100%",
           position: "relative",
           zIndex: 2,
@@ -46,14 +46,14 @@ export default function Section7() {
         }}
       >
 
-        <H1 fontSize={isMobile ? 45 : 120} lineHeight={1} mb={1}>
+        <H1 fontSize={{ xs: 25, sm: 55, md: 80, lg: 120 }} lineHeight={1} mb={1}>
           PREPARE
         </H1>
-        <H1 fontSize={isMobile ? 45 : 120} lineHeight={1} mb={1} >
+        <H1 fontSize={{ xs: 25, sm: 55, md: 80, lg: 120 }} lineHeight={1} mb={1} >
           YOUR SEASON
         </H1>
 
-        <H3 fontSize={isMobile ? 15 : 40} fontWeight={100} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="oblique">
+        <H3 fontSize={{ xs: 10, sm: 15, md: 15, lg: 20 }} fontWeight={100} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="oblique">
           WITH THE BEST
         </H3>
 
@@ -61,7 +61,7 @@ export default function Section7() {
           <Typography
             sx={{
               color: "white",
-              fontSize: { xs: "1rem", sm: "1.2rem" },
+              fontSize: { xs: "0.7rem", md: "1rem", sm: "1.2rem" },
               fontWeight: 400,
               fontFamily: "sans-serif",
               fontStyle: "italic",

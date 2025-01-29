@@ -135,10 +135,10 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
   const [sortBy, setSortBy] = useState("date");
   const [reviews, setReviews] = useState(review);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(("(max-width: 768px)"));
   const responsive = [
     { breakpoint: 1200, settings: { slidesToShow: 4 } },
-    { breakpoint: 1024, settings: { slidesToShow: 3 } },
+    { breakpoint: 1024, settings: { slidesToShow: 2 } },
     { breakpoint: 650, settings: { slidesToShow: 1 } },
     { breakpoint: 426, settings: { slidesToShow: 1 } }
   ];
@@ -178,10 +178,11 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
 
 
   return (
+    reviews.length > 0 &&
     <Box
       component="section"
       bgcolor="#1A1A1A"
-      mb={{ sm: 0, xs: 12, lg: 4 }}
+      mb={{ sm: 24, md: 4, xs: 12, lg: 4 }}
       sx={{
         position: "relative",
         "&::after": {
@@ -197,6 +198,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
         },
       }}
     >
+
       <Container className="mt-4" sx={{ position: "relative", zIndex: 4 }}>
         <Box mb={4} sx={{ textAlign: "" }}>
           <Typography
@@ -250,7 +252,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
             responsive={responsive}
             arrowStyles={{ backgroundColor: "white", top: "34%" }}
           >
-            {reviews.slice(0,3).map((review) => (
+            {reviews.slice(0, 3).map((review) => (
               <Box key={review.id} padding={2}>
                 <ReviewCard key={review.id} review={review} />
               </Box>
@@ -271,6 +273,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
         )}
       </Container>
     </Box>
+
   );
 };
 
