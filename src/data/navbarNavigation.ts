@@ -33,7 +33,7 @@ const megaMenus = [
           title: "Order Details",
           url: "/orders/f0ba538b-c8f3-45ce-b6c1-209cf07ba5f8"
         },
-        { title: "View Profile", url: "/profile" },
+        { title: "View Profile", url: "/dashboard/profile" },
         {
           title: "Edit Profile",
           url: "/profile/e42e28ea-528f-4bc8-81fb-97f658d67d75"
@@ -234,7 +234,7 @@ const navbarNavigation = [
       {
         title: "Profile",
         child: [
-          { title: "View Profile", url: "/profile" },
+          { title: "View Profile", url: "/dashboard/profile" },
           {
             title: "Edit Profile",
             url: "/profile/e42e28ea-528f-4bc8-81fb-97f658d67d75"

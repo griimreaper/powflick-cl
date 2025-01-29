@@ -83,5 +83,5 @@ const list = [
   { title: "Home", Icon: Home, href: "/" },
   { title: "Category", Icon: CategoryOutlined },
   { title: "Cart", Icon: ShoppingBagOutlined, href: "/cart" },
-  { title: "Account", Icon: User2, href: "/profile" }
+  { title: "Account", Icon: User2, href: "/dashboard/profile" }
 ];
