@@ -182,7 +182,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     <Box
       component="section"
       bgcolor="#1A1A1A"
-      mb={{ sm: 24, md: 4, xs: 12, lg: 4 }}
+      mb={"10rem"}
       sx={{
         position: "relative",
         "&::after": {

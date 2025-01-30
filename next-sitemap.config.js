@@ -32,7 +32,7 @@ module.exports = {
             },
         ],
         additionalSitemaps: [
-            'https://www.devcodelab.site/sitemap-1.xml',
+            'https://www.powflick.com/sitemap-1.xml',
         ]
     },
 };

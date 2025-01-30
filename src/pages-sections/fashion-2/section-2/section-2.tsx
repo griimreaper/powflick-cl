@@ -23,7 +23,7 @@ export default function Section2({ className }: { className: string }) {
   }, []);
 
   return (
-    <Container className={`mt-2 ${className}`}>
+    <Container className={`${className}`} style={{marginTop: "6vw"}}>
       {isMobile ? (
         // Renderiza dos imágenes para mobile
         <Box display={'flex'} flexDirection={'column'} gap={2} px={4}>

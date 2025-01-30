@@ -51,7 +51,7 @@ export default async function Section3({ className }: { className: string }) {
   const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
 
   return (
-    <Container className={`mt-2 ${className}`} sx={{ overflow: "visible", position: "relative" }}>
+    <Container className={`${className}`} sx={{ overflow: "visible", position: "relative" , my: "3vw"}}>
       {isMobile ? (
         <Box sx={{
           textAlign: "center",
