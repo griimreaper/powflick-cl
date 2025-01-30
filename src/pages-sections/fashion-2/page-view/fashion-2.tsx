@@ -149,7 +149,7 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
         style={{
           position: "relative",
           width: "100%",
-          height: "auto",
+          height: "100%",
           aspectRatio: "4000 / 4208",
         }}
       >
@@ -174,8 +174,9 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
           }}
         >
           <Box sx={{
-            position: "absolute",
-            top: { xs: "-25%", sm: "-15%", md: "-7%", lg: "-25%", xl: "-38%" }, // Posición según pantallas
+            position: "relative",
+            marginTop: "50%", // Posición según pantallas
+            marginBottom: "5%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: 1,
@@ -186,9 +187,11 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
               variant="contained"
               href="/products"
               sx={{
+                width: "clamp(160px, 30vw, 500px)", // Mínimo 150px, escalable con 30vw, máximo 300px
+                minWidth: "150px", // Evita que sea demasiado pequeño
+                maxWidth: "90%", // No ocupa más del 90% del contenedor
+                padding: "clamp(8px, 15vw, 16px) clamp(16px, 4vw, 32px)", // Padding adaptable
                 background: (theme) => theme.palette.primary.main,
-                height: "4rem",
-                width: "15rem",
                 borderRadius: 1,
                 "&:hover": { background: (theme) => theme.palette.primary.dark },
               }}
@@ -196,8 +199,8 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
               <Typography
                 sx={{
                   color: "white",
-                  fontSize: { xs: "1rem", sm: "1.2rem" },
                   fontWeight: 400,
+                  fontSize: "clamp(24px, 2vw, 120px)", // Fuente responsiva
                   fontStyle: "italic",
                 }}
               >
@@ -209,16 +212,7 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
           <Section2 className="section2" />
           <Section3 className="section3" />
           <style jsx>{`
-            @media (max-width: 1920px) {
-              div {
-                bottom: 30px;
-              }
-            }
-            @media (max-width: 1440px) {
-              div {
-                bottom: 0px;
-              }
-            }
+          div {
             @media (max-width: 768px) {
               div {
                 display: none;

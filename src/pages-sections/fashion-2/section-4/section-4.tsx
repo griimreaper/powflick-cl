@@ -18,7 +18,7 @@ export default async function Section4({ products }: { products: DataStructure['
   ];
 
   return (
-    <Container className="mt-2" sx={{ zIndex: 4, position: 'relative', mb: isMobile ? 12 : 0 }}>
+    <Container sx={{ zIndex: 4, position: 'relative', mb: isMobile ? 12 : 0}}>
       <Box mb={4} sx={{ textAlign: "" }}>
         <Typography
           variant="h3"
