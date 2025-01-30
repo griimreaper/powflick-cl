@@ -16,6 +16,8 @@ import {
   initialCustomization,
   useCustomizationStore,
 } from "store/customizationStore";
+import { SearchOutlinedIcon } from "components/search-box/styles";
+import { ZoomInOutlined } from "@mui/icons-material";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -88,15 +90,18 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
             }}
           >
             {useZoom ? (
-              <Zoom>
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  width={imageSize}
-                  height={imageSize}
-                  style={{ borderRadius: "10px" }}
-                />
-              </Zoom>
+              <div>
+                <ZoomInOutlined sx={{ position: "absolute", right: "0", visibility: { md: "hidden" } }} />
+                <Zoom>
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    width={imageSize}
+                    height={imageSize}
+                    style={{ borderRadius: "10px" }}
+                  />
+                </Zoom>
+              </div>
             ) : (
               <Image
                 src={item.image}
@@ -207,24 +212,30 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           `Size Guide`,
           <div style={{ textAlign: "center" }}>
             {detail.SizeGuide.image1 && (
-              <Zoom>
-                <Image
-                  src={detail.SizeGuide.image1}
-                  alt="Size Guide 1"
-                  width={200}
-                  height={100}
-                />
-              </Zoom>
+              <div>
+                <ZoomInOutlined sx={{ position: "absolute", left: "65%" }} />
+                <Zoom>
+                  <img
+                    src={detail.SizeGuide.image1}
+                    alt="Size Guide 1"
+                    width={200}
+                    height={100}
+                  />
+                </Zoom>
+              </div>
             )}
             {detail.SizeGuide.image2 && (
-              <Zoom>
-                <Image
-                  src={detail.SizeGuide.image2}
-                  alt="Size Guide 2"
-                  width={200}
-                  height={100}
-                />
-              </Zoom>
+              <div>
+                <ZoomInOutlined sx={{ position: "absolute", left: "65%" }} />
+                <Zoom>
+                  <img
+                    src={detail.SizeGuide.image2}
+                    alt="Size Guide 2"
+                    width={200}
+                    height={100}
+                  />
+                </Zoom>
+              </div>
             )}
           </div>,
           "size-guide"

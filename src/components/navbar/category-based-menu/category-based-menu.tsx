@@ -33,7 +33,7 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
         sx={{ fontWeight: 600, color: "#FEFCFC", '&:hover': { color: "#1A1A1A" } }}
       >
         <Link href={"/products"} >
-          <Typography >
+          <Typography fontWeight={600}>
             {title}
           </Typography>
         </Link>
