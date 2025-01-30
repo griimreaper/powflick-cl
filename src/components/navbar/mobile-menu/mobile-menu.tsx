@@ -15,7 +15,7 @@ export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
 
   const handleClose = () => setOpenDrawer(false);
 
-  const storeMenu = { title: 'Store', child: data?.categories }
+  const storeMenu = { title: 'Collections', child: data?.categories }
 
   return (
     <Fragment>
@@ -55,6 +55,7 @@ export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
 
               {/* OTHER LINKS */}
               <Box display="flex" flexDirection="column" gap={2}>
+                <StyledNavLink href="/products">Store</StyledNavLink>
                 <StyledNavLink href="/blog">Blog</StyledNavLink>
                 <StyledNavLink href="/contact">Contact</StyledNavLink>
                 <StyledNavLink href="/about-us">About Us</StyledNavLink>
