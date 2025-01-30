@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Open_Sans } from "next/font/google";
+import FloatingWhatsApp from "components/whatsapp/FloatingWhatsApp"; // Ajusta la ruta si es necesario
 
 export const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
         <React.StrictMode>
-        <GlobalStyles
+          <GlobalStyles
             styles={{
               "*::-webkit-scrollbar": {
                 width: "8px",
@@ -39,7 +40,10 @@ export default async function RootLayout({
               },
             }}
           />
-          <GlobalProvider>{children}</GlobalProvider>
+          <GlobalProvider>
+            <FloatingWhatsApp />
+            {children}
+          </GlobalProvider>
           <GoogleAnalytics />
           <GoogleTagManager />
         </React.StrictMode>
