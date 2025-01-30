@@ -51,6 +51,9 @@ export async function generateMetadata({
       metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
       title: `${product.title} - Pow Flick`,
       authors: [{ name: "devcodelab" }],
+      alternates: {
+        canonical: "https://www.powflick.com/products/" + params.slug, // 🔹 URL CANÓNICA DETAIL
+      },
       description: product.short_description || "Default Description",
       keywords: [
         "e-commerce",
