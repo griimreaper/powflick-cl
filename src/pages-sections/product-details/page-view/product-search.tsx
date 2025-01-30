@@ -58,47 +58,46 @@ const initialFilters = {
   featured: undefined,
   discount: undefined,
   mostSold: undefined,
-  order: ""
+  order: "",
 };
 export const useProducts = (params: ProductFilters) => {
   return useQuery({
-    queryKey: ['products', params],
-    queryFn: () => getProducts(
-      params.page,
-      '',
-      params.category[0],
-      params.collection[0],
-      '',
-      params.color[0],
-      params.featured,
-      params.mostSold,
-      params.discount,
-      params.order,
-      params.search,
-      params.price[0],
-      params.price[1],
-      9
-    ),
+    queryKey: ["products", params],
+    queryFn: () =>
+      getProducts(
+        params.page,
+        "",
+        params.category[0],
+        params.collection[0],
+        "",
+        params.color[0],
+        params.featured,
+        params.mostSold,
+        params.discount,
+        params.order,
+        params.search,
+        params.price[0],
+        params.price[1],
+        9
+      ),
     staleTime: 1000 * 60 * 5,
     placeholderData: (previousData, previousQuery) => previousData,
-  },
-  );
+  });
 };
 
 const useGlobalLoadingCursor = (isFetching: boolean) => {
   useEffect(() => {
     if (isFetching) {
-      document.body.style.cursor = 'wait'; // Aplica el cursor a todo el documento
+      document.body.style.cursor = "wait"; // Aplica el cursor a todo el documento
     } else {
-      document.body.style.cursor = 'default'; // Vuelve al estado normal
+      document.body.style.cursor = "default"; // Vuelve al estado normal
     }
 
     return () => {
-      document.body.style.cursor = 'default'; // Limpieza al desmontar
+      document.body.style.cursor = "default"; // Limpieza al desmontar
     };
   }, [isFetching]);
 };
-
 
 export default function ProductSearchPageView() {
   const [view, setView] = useState("grid");
@@ -115,13 +114,23 @@ export default function ProductSearchPageView() {
     const newFilters: any = { ...initialFilters };
 
     if (searchParams) {
-      if (searchParams.get("query")) newFilters.search = searchParams.get("query") || "";
-      if (searchParams.get("category")) newFilters.category = [searchParams.get("category")];
-      if (searchParams.get("collection")) newFilters.collection = [searchParams.get("collection")];
-      if (searchParams.get("color")) newFilters.color = [searchParams.get("color")];
-      if (searchParams.get("minPrice")) newFilters.price[0] = parseInt(searchParams.get("minPrice") || "0", 10);
-      if (searchParams.get("maxPrice")) newFilters.price[1] = parseInt(searchParams.get("maxPrice") || "300", 10);
-      if (searchParams.get("rating")) newFilters.rating = parseInt(searchParams.get("rating") || "0", 10);
+      if (searchParams.get("query"))
+        newFilters.search = searchParams.get("query") || "";
+      if (searchParams.get("category"))
+        newFilters.category = [searchParams.get("category")];
+      if (searchParams.get("collection"))
+        newFilters.collection = [searchParams.get("collection")];
+      if (searchParams.get("color"))
+        newFilters.color = [searchParams.get("color")];
+      if (searchParams.get("minPrice"))
+        newFilters.price[0] = parseInt(searchParams.get("minPrice") || "0", 10);
+      if (searchParams.get("maxPrice"))
+        newFilters.price[1] = parseInt(
+          searchParams.get("maxPrice") || "300",
+          10
+        );
+      if (searchParams.get("rating"))
+        newFilters.rating = parseInt(searchParams.get("rating") || "0", 10);
     }
 
     setFilters(newFilters);
@@ -130,9 +139,30 @@ export default function ProductSearchPageView() {
   const breadcrumbs = [
     { label: "Home", href: "/" },
     { label: "Products", href: "/products" },
-    ...(filters.category[0] ? [{ label: filters.category[0], href: `/products?category=${filters.category[0]}` }] : []),
-    ...(filters.collection[0] ? [{ label: `${filters.collection}`, href: `/products?collection=${filters.collection}` }] : []),
-    ...(filters.color[0] ? [{ label: `${filters.color[0]}`, href: `/products?color=${filters.color[0]}` }] : []),
+    ...(filters.category[0]
+      ? [
+          {
+            label: filters.category[0],
+            href: `/products?category=${filters.category[0]}`,
+          },
+        ]
+      : []),
+    ...(filters.collection[0]
+      ? [
+          {
+            label: `${filters.collection}`,
+            href: `/products?collection=${filters.collection}`,
+          },
+        ]
+      : []),
+    ...(filters.color[0]
+      ? [
+          {
+            label: `${filters.color[0]}`,
+            href: `/products?color=${filters.color[0]}`,
+          },
+        ]
+      : []),
     ...(filters.search ? [{ label: `Search: ${filters.search}` }] : []),
   ];
 
@@ -170,12 +200,14 @@ export default function ProductSearchPageView() {
   // const sortedProducts = handleSortProducts(data, sortBy, filters);
 
   return (
-    <div className="pt-2 pb-4"
-    style={{
-      cursor: isFetching ? 'wait' : 'default', // Cambia el cursor según `isFetching`
-      opacity: isFetching ? 0.7 : 1,
-      background: 'white'
-    }}>
+    <div
+      className="pt-2 pb-4"
+      style={{
+        cursor: isFetching ? "wait" : "default", // Cambia el cursor según `isFetching`
+        opacity: isFetching ? 0.7 : 1,
+        background: "white",
+      }}
+    >
       <Container>
         {/* Breadcrumbs */}
         <Box mb={2}>
@@ -185,21 +217,19 @@ export default function ProductSearchPageView() {
         {/* FILTER ACTION AREA */}
         <FlexBetween flexWrap="wrap" gap={2} mb={2}>
           <div>
-            {filters.search &&
+            {filters.search && (
               <H5 lineHeight={1} mb={1} color={themeColors.text.secondary}>
                 Searching for “ {filters?.search} ”
               </H5>
-            }
-            <Span  style={{ color: themeColors.text.secondary }}>
+            )}
+            <Span style={{ color: themeColors.text.secondary }}>
               {data?.count?.total} results found
             </Span>
           </div>
 
           <FlexBox alignItems="center" columnGap={4} flexWrap="wrap">
             <FlexBox alignItems="center" gap={1} flex="1 1 0">
-              <Paragraph whiteSpace="pre">
-                Sort by:
-              </Paragraph>
+              <Paragraph whiteSpace="pre">Sort by:</Paragraph>
 
               <TextField
                 select
@@ -213,7 +243,12 @@ export default function ProductSearchPageView() {
                 sx={{ flex: "1 1 0", minWidth: "150px" }}
               >
                 {SORT_OPTIONS.map((item) => (
-                  <MenuItem value={item.value} key={item.value} color="primary" style={{ color: "black" }}>
+                  <MenuItem
+                    value={item.value}
+                    key={item.value}
+                    color="primary"
+                    style={{ color: "black" }}
+                  >
                     {item.label}
                   </MenuItem>
                 ))}
@@ -283,9 +318,19 @@ export default function ProductSearchPageView() {
           {/* PRODUCT VIEW AREA */}
           <Grid item xl={10} md={9} xs={12}>
             {view === "grid" ? (
-              <ProductsGridView data={data} handlePage={(number: number) => setFilters({ ...filters, page: number })} />
+              <ProductsGridView
+                data={data}
+                handlePage={(number: number) =>
+                  setFilters({ ...filters, page: number })
+                }
+              />
             ) : (
-              <ProductsListView data={data} handlePage={(number: number) => setFilters({ ...filters, page: number })} />
+              <ProductsListView
+                data={data}
+                handlePage={(number: number) =>
+                  setFilters({ ...filters, page: number })
+                }
+              />
             )}
           </Grid>
         </Grid>

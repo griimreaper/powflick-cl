@@ -168,7 +168,7 @@ const Faqs = () => {
 
   return (
     <>
-      <Box className="faqs-block md:py-20 py-10">
+      <Box className="faqs-block" sx={{ py: 2, backgroundColor: "white" }}>
         <Container>
           <Typography variant="h4" gutterBottom>
             FAQs
@@ -182,6 +182,11 @@ const Faqs = () => {
                     key={index}
                     selected={activeTab === item}
                     onClick={() => handleActiveTab(item)}
+                    sx={{
+                      marginBottom: "0.5rem",
+                      backgroundColor: "#f0f0f0",
+                      "&:hover": { backgroundColor: "#CA0B0B" },
+                    }}
                   >
                     <ListItemText primary={item} />
                   </ListItem>
