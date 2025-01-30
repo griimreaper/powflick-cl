@@ -228,6 +228,7 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
             position: 'relative',
             zIndex: 10,
             marginTop: "130px",
+            marginBottom: "clamp(20%, 12rem, 32%)",
           }}>
             <style jsx>{`
             @media (max-width: 768px) {

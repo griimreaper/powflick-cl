@@ -13,12 +13,12 @@ export default async function Section4({ products }: { products: DataStructure['
 
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 3 } },
-    { breakpoint: 650, settings: { slidesToShow: 2 } },
+    { breakpoint: 768, settings: { slidesToShow: 2 } },
     { breakpoint: 426, settings: { slidesToShow: 2 } }
   ];
 
   return (
-    <Container sx={{ zIndex: 4, position: 'relative', mb: isMobile ? 12 : 0}}>
+    <Container sx={{ zIndex: 4, position: 'relative', mb: isMobile ? "12rem" : 0, height: "100%" ,mt:4}}>
       <Box mb={4} sx={{ textAlign: "" }}>
         <Typography
           variant="h3"

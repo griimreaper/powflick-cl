@@ -13,7 +13,7 @@ import DialogDrawer from "./dialog-drawer";
 // GLOBAL CUSTOM COMPONENTS
 import Image from "components/SportZoneImage";
 import { Paragraph } from "components/Typography";
-import { SearchInput } from "components/search-box";
+import { SearchInput, SearchInputWithCategory } from "components/search-box";
 import { MobileMenu } from "components/navbar/mobile-menu";
 import { FlexBetween, FlexBox } from "components/flex-box";
 // GLOBAL CUSTOM HOOK
@@ -93,7 +93,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           </FlexBetween>
 
           {/* CATEGORY BASED SEARCH FORM */}
-          <SearchInput />
+          <SearchInputWithCategory  />
         </Box>
       </Drawer>
 

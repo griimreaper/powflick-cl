@@ -49,7 +49,7 @@ const AboutUs: React.FC = () => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setIsMobile(width <= 768);
+      setIsMobile(width <= 1150);
     };
 
     // Llama la función al cargar la página y al redimensionar
@@ -79,7 +79,15 @@ const AboutUs: React.FC = () => {
               <p style={{ marginBottom: "3rem" }}>About Us</p>
             </>
           )}
-          <p>
+          <p
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: isMobile ? 12 : 12,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
             {isMobile ? (
               `At PowFlick, we are passionate about designing and creating sportswear
               that combines technology, style, and performance. Our mission is to
@@ -120,7 +128,7 @@ const AboutUs: React.FC = () => {
             height: "100%",
             padding: "5% 10%",
             fontSize: isMobile ? "1rem" : "1.2rem",
-            gap: "2rem",
+            // gap: "2rem",
           }}
         >
           {/* Texto abajo y centrado en mobile */}
@@ -130,6 +138,11 @@ const AboutUs: React.FC = () => {
               textAlign: isMobile ? "center" : "left",
               color: "white",
               order: isMobile ? 2 : 1,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: isMobile ? 12 : 12,
+              WebkitBoxOrient: "vertical",
             }}
           >
             <h2 style={{ marginBottom: "3rem" }}>What Makes Us Unique</h2>

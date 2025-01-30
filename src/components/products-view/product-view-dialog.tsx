@@ -104,6 +104,9 @@ export default function ProductViewDialog(props: Props) {
               </Paragraph>
 
               <Divider sx={{ mb: 2 }} />
+              <Button variant="contained" color="primary" href={"/products/" + product.slug}>
+                Go to Product Page
+              </Button>
 
               {/* {!cartItem?.customizations.length ? (
                 <Button
