@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Image from "next/image";
 // MUI
 import Box from "@mui/material/Box";
@@ -10,6 +10,8 @@ import { Span } from "components/Typography";
 import googleLogo from "../../../../public/assets/images/icons/google-1.svg";
 import facebookLogo from "../../../../public/assets/images/icons/facebook-filled-white.svg";
 import { signIn } from 'next-auth/react';
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import Link from "next/link";
 // =======================================
 interface Props {
   handleGoogle?: () => void;
@@ -18,6 +20,8 @@ interface Props {
 // =======================================
 
 export default function SocialButtons(props: Props) {
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
   return (
     <Fragment>
       {/* DIVIDER */}
@@ -41,13 +45,47 @@ export default function SocialButtons(props: Props) {
       </Button> */}
 
       {/* GOOGLE BUTTON */}
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={acceptedTerms}
+            onChange={(e) => setAcceptedTerms(e.target.checked)}
+            color="primary"
+          />
+        }
+        label={
+          <Typography variant="body2" sx={{ cursor: "default" }}>
+            I accept the{" "}
+            <Link
+              href="/terms-condition"
+              style={{
+                color: "#CA0B0B", textDecoration: "none",
+                fontWeight: "bold",
+              }}
+            >
+              terms and conditions
+            </Link>
+          </Typography>
+        }
+      />
       <Button
         fullWidth
         size="large"
         className="googleButton"
-        sx={{ fontSize: 12 }}
+        sx={{
+          fontSize: 12,
+          transition: "all 0.3s ease",
+          backgroundColor: acceptedTerms ? "#4285F4" : "#BDBDBD", // Color distinto cuando está deshabilitado
+          color: acceptedTerms ? "#FFF" : "#757575", // Texto más apagado cuando está deshabilitado
+          cursor: acceptedTerms ? "pointer" : "not-allowed", // Cambio de cursor
+          opacity: acceptedTerms ? 1 : 0.6, // Opacidad reducida cuando está inactivo
+          "&:hover": {
+            backgroundColor: acceptedTerms ? "#357ae8" : "#BDBDBD",
+          },
+        }}
         startIcon={<Image alt="google" src={googleLogo} />}
         onClick={() => signIn("google", { callbackUrl: "/" })}
+        disabled={!acceptedTerms} // 🔴 Bloquea el botón si no se aceptan los términos
       >
         Continue with Google
       </Button>
