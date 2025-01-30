@@ -22,6 +22,9 @@ const getLandingCached = cache(async (): Promise<DataStructure> => {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
   title: "Pow Flick",
+  alternates: {
+    canonical: "https://www.powflick.com/", // 🔹 URL CANÓNICA PRINCIPAL
+  },
   description: `Pow Flick is a modern e-commerce for selling sports equipment and accessories.`,
   authors: [{ name: "Devcodelab", url: "https://ui-lib.com" }],
   keywords: [
