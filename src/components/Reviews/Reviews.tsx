@@ -174,9 +174,6 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     useCSS: true,
   };
 
-  console.log(reviews);
-
-
   return (
     reviews.length > 0 &&
     <Box

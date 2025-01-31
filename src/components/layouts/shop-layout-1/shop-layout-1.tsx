@@ -16,7 +16,7 @@ import Header from "components/header/header";
 import { SearchInputWithCategory } from "components/search-box";
 import { MobileNavigationBar } from "components/mobile-navigation";
 import { DataStructure } from "models/types";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import { getProfile } from "services/DashboardUser";
 import { useDashboardStore } from "store/dashboard";
@@ -32,13 +32,11 @@ import { Box } from "@mui/material";
  */
 
 interface ShopLayout1Props extends PropsWithChildren {
-  session: Session | null;
   landing?: boolean;
 }
 
 export default function ShopLayout1({
   children,
-  session,
   landing = false
 }: ShopLayout1Props) {
   const [isFixed, setIsFixed] = useState(false);
@@ -46,8 +44,8 @@ export default function ShopLayout1({
   const queryClient = useQueryClient();
 
   const data = JSON.parse(localStorage.getItem("navbarData") || '') || queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], recent: [] };
-  console.log(data);
 
+  const { data: session } = useSession();
   const { profile, setData, removeProfile, setProfileUser } =
     useDashboardStore();
   let token = session?.user?.name?.split("|")[0];
