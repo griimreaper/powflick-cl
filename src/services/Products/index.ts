@@ -70,6 +70,17 @@ export const getAllCategories = async () => {
     }
 };
 
+export const searchByTitle = async (search: string) => {
+    try {
+        const response = await mainApi.get("/products/all/Titles?search=" + search);
+
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+    }
+};
+
 export const getProducts = async (
     currentPage: number,
     sports?: string,
@@ -104,7 +115,7 @@ export const getProducts = async (
         if (maxPrice) queryString += `&maxPrice=${maxPrice}`;
 
         const response = await mainApi.get(queryString);
-        
+
         return response.data;
     } catch (error) {
         console.error("Error fetching products:", error);

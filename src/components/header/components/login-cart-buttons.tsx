@@ -72,13 +72,14 @@ export default function LoginCartButtons({
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
+            top: "20%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "50%",
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
+            borderRadius: "16px"
           }}
         >
           <SearchInputWithCategory />
