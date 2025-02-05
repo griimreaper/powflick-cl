@@ -57,7 +57,7 @@ export default function ProgressBar() {
             width: "100%",
             position: "fixed",
             zIndex: 9999999999,
-            background: theme.palette.primary.main
+            background: "#FFFFFF"
           },
           ".peg": {
             right: 0,

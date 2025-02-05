@@ -12,15 +12,15 @@ import FrequentlyBought from "../frequently-bought";
 import { detailProps, ProductDB } from "models/types";
 
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
-  const { product, sugestedProducts, frequentlyBought, reviews } = detail;
+  const { product, sugestedProducts, frequentlyBought, reviews, PaymentMethods, ShippingTypes } = detail;
 
   return (
-    <div className="p-4 mb-2" style={{ overflow: 'hidden', background: "white"} }>
+    <div className="p-4" style={{ overflow: 'hidden', background: "white" }}>
       {/* PRODUCT DETAILS INFO AREA */}
       <ProductIntro product={detail} />
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
-      <ProductTabs content={product.content} reviews={reviews} productId={product.id} />
+      <ProductTabs content={product.content} reviews={reviews} paymentMethods={PaymentMethods} shippingTypes={ShippingTypes}/>
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
       {/* <FrequentlyBought products={frequentlyBought} /> */}

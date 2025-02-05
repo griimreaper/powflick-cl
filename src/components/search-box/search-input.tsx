@@ -9,7 +9,7 @@ import SearchResult from "./components/search-result";
 import { SearchOutlinedIcon } from "./styles";
 
 export default function SearchInput() {
-  const { handleSearch, parentRef, resultList } = useSearch();
+  const { handleSearch, parentRef, resultList, searchText } = useSearch();
 
   const INPUT_PROPS = {
     sx: {
@@ -32,6 +32,9 @@ export default function SearchInput() {
     startAdornment: <SearchOutlinedIcon fontSize="small" />
   };
 
+  console.log(resultList);
+  
+
   return (
     <Box position="relative" flex="1 1 0" maxWidth="670px" mx="auto" {...{ ref: parentRef }}>
       <TextField
@@ -43,7 +46,7 @@ export default function SearchInput() {
       />
 
       {/* SHOW SEARCH RESULT LIST */}
-      {resultList.length > 0 ? <SearchResult results={resultList} /> : null}
+      {resultList.length > 0 ? <SearchResult results={resultList} query={searchText} /> : null}
     </Box>
   );
 }

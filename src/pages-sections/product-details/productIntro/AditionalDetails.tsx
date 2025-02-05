@@ -185,7 +185,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           renderItems(detail.Materials, "materials", true),
           "materials"
         )}
-      {detail.PaymentMethods &&
+      {/* {detail.PaymentMethods &&
         renderSection(
           `Payment Methods`,
           <div style={{ textAlign: "center" }}>
@@ -206,7 +206,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           `Shipping Types `,
           <Typography>{detail.ShippingTypes}</Typography>,
           "shipping-types"
-        )}
+        )} */}
       {detail.SizeGuide &&
         renderSection(
           `Size Guide`,

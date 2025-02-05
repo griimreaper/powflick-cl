@@ -12,10 +12,8 @@ import Search from "icons/Search";
 
 export default function SearchInputWithCategory() {
   const {
-    categoryTitle,
     parentRef,
     resultList,
-    handleCategoryChange,
     handleSearch,
   } = useSearch();
   const router = useRouter();
@@ -76,7 +74,7 @@ export default function SearchInputWithCategory() {
       />
 
       {/* SHOW SEARCH RESULT LIST */}
-      {resultList.length > 0 ? <SearchResult results={resultList} /> : null}
+      {resultList?.length > 0 ? <SearchResult results={resultList} query={searchText}/> : null}
     </Box>
   );
 }
