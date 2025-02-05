@@ -43,7 +43,7 @@ export default function ShopLayout1({
 
   const queryClient = useQueryClient();
 
-  const data = JSON.parse(localStorage.getItem("navbarData") || '') || queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], recent: [] };
+  const data = queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], collection: [], recent: [] };
 
   const { data: session } = useSession();
   const { profile, setData, removeProfile, setProfileUser } =

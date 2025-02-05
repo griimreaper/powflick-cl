@@ -32,7 +32,7 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         initialData: () => {
             // Intentar obtener los datos de localStorage al iniciar
             const cachedNavbar = localStorage.getItem('navbarData');
-            return cachedNavbar ? JSON.parse(cachedNavbar) : undefined;
+            return cachedNavbar ? JSON.parse(cachedNavbar) : { categories: [], collection: [], recent: [] };
         },
         // Aquí se usa un hook separado para manejar la respuesta después de la carga
 
