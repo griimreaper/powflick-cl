@@ -85,15 +85,14 @@ export const metadata: Metadata = {
 };
 
 export default async function FashionShopTwo() {
-  const [data, session]: [DataStructure, Session | null] = await Promise.all([
+  const [data]: [DataStructure] = await Promise.all([
     getLandingCached(),
-    getServerSession(),
   ]);
 
   return (
     <>
-      <ShopLayout1 session={session} landing>
-        <FashionTwoPageView data={data} session={session} />
+      <ShopLayout1 landing>
+        <FashionTwoPageView data={data}  />
       </ShopLayout1>
     </>
   );

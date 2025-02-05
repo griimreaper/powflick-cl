@@ -66,7 +66,7 @@ import Section8 from "../section-8";
 
 // layout
 
-export default function FashionTwoPageView({ data, session }: { data: DataStructure, session: Session | null }) {
+export default function FashionTwoPageView({ data }: { data: DataStructure }) {
   const [backgroundImage, setBackgroundImage] = useState(
     "assets/images/landing/POWFLICK_BANNER_SUPERIOR.png"
   );
@@ -98,6 +98,8 @@ export default function FashionTwoPageView({ data, session }: { data: DataStruct
     removeProfile,
     setProfileUser,
   } = useDashboardStore();
+
+  const {data: session} = useSession();
   let token = session?.user?.name?.split("|")[0];
   let tokenExpiration = session?.user?.name?.split("|")[1];
   let rol = session?.user?.email;
