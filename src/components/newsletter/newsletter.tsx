@@ -35,7 +35,7 @@ type Props = { image?: string };
 // ======================================================
 
 export default function Newsletter({
-  image = "/assets/images/newsletter/POWFLICK_MODAL.png",
+  image = "/assets/images/newsletter/POWFLICK_MODAL2.png",
 }: Props) {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -118,18 +118,38 @@ export default function Newsletter({
             <Grid item lg={6} md={6} display={{ md: "flex", xs: "none" }} />
 
             <Grid item lg={6} md={6} xs={12}>
-              <div className="content" style={{ textAlign: "center", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }} >
+              <div
+                className="content"
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <Paragraph fontSize={22} fontWeight={400}>
                   <Span color="primary.main">UP TO 30% OFF</Span>
                 </Paragraph>
 
-                <H1 fontSize={{sm:24, md:36}} fontWeight={400} mb={2} fontFamily={"GYMER"} color={"#FFFFFF"}>
+                <H1
+                  fontSize={{ sm: 24, md: 36 }}
+                  fontWeight={400}
+                  mb={2}
+                  fontFamily={"GYMER"}
+                  color={"#FFFFFF"}
+                >
                   Sign up to Pow Flick
                 </H1>
 
-                <Paragraph color="#FFFFFF" mb={5} width={"80%"} textAlign={"center"}>
-                  Subscribe to the Pow Flick eCommerce newsletter to receive timely
-                  updates from your favorite products.
+                <Paragraph
+                  color="#FFFFFF"
+                  mb={5}
+                  width={"80%"}
+                  textAlign={"center"}
+                >
+                  Subscribe to the Pow Flick eCommerce newsletter to receive
+                  timely updates from your favorite products.
                 </Paragraph>
 
                 {/* <TextField
@@ -140,7 +160,6 @@ export default function Newsletter({
 
                 <Button
                   variant="contained"
-
                   color="primary"
                   sx={{ p: 1.5, width: "15rem " }}
                   onClick={() => handleButton()}
@@ -150,8 +169,8 @@ export default function Newsletter({
 
                 <SocialIcons />
 
-
-                <FormControlLabel sx={{ color: "#FFFFFF" }}
+                <FormControlLabel
+                  sx={{ color: "#FFFFFF" }}
                   control={<Checkbox defaultChecked />}
                   label="No, Thanks"
                 />
