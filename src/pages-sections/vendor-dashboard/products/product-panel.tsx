@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ExpandLess as ChevronUpIcon, CheckCircle as CheckCircleIcon, ErrorOutline as ExclamationCircleIcon, HelpOutline as QuestionMarkCircleIcon } from "@mui/icons-material";
-import { Box, Button, IconButton, Input, TextField, Tooltip, Typography } from "@mui/material";
+import { ExpandLess as ChevronUpIcon, CheckCircle as CheckCircleIcon, ErrorOutline as ExclamationCircleIcon, HelpOutline as QuestionMarkCircleIcon, Close } from "@mui/icons-material";
+import { Box, Button, CircularProgress, IconButton, Input, TextField, Tooltip, Typography } from "@mui/material";
 import {
   showErrorAlert,
   showLoader,
@@ -148,10 +148,10 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
         });
 
         console.log("Subiendo archivos de la carpeta:", folderName);
-        const uploadResponse = await uploadFolder(
-          filesByFolder[folderName],
-          folderName
-        );
+          const uploadResponse = await uploadFolder(
+            filesByFolder[folderName],
+            folderName
+          );
         uploadedImagesCount += filesByFolder[folderName].length;
 
         // Calcular y establecer el progreso
@@ -213,131 +213,91 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
 
   return (
     <Box
-      className={`bg-white rounded-lg flex flex-col justify-between w-auto max-w-[350px] absolute lg:end-16 sm:end-12 z-30 transform transition-all duration-500 ease-in-out ${
-        openPanel
-          ? "h-auto p-4 gap-4 border-gray-400 border-2 shadow-lg"
-          : "max-h-0 hidden"
-      }`}
-      style={{
+      sx={{
+        bgcolor: "white",
+        borderRadius: 2,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        width: "auto",
+        maxWidth: 350,
+        position: "absolute",
+        right: { lg: 64, sm: 48 },
+        zIndex: 30,
+        transition: "all 0.5s ease-in-out",
         opacity: openPanel ? 1 : 0,
+        p: openPanel ? 2 : 0,
+        boxShadow: openPanel ? 3 : 0,
+        border: openPanel ? "2px solid #bdbdbd" : "none",
       }}
     >
       <Box
-        className={`col-span-2 py-2 w-full flex sm:justify-between px-2 mb-1 transition-all duration-300 ease-in-out ${
-          openPanel ? "h-8 opacity-100" : "h-0 opacity-0"
-        }`}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "100%",
+          transition: "all 0.3s ease-in-out",
+          height: openPanel ? 32 : 0,
+          opacity: openPanel ? 1 : 0,
+        }}
       >
         <Tooltip title={ExcelColumns.join("\n")} placement="bottom">
           <IconButton>
-            <ExclamationCircleIcon className="w-8 h-8 opacity-50 hover:opacity-100 transition duration-300" />
+            <ExclamationCircleIcon sx={{ fontSize: 32, opacity: 0.5, '&:hover': { opacity: 1 } }} />
           </IconButton>
         </Tooltip>
         <IconButton onClick={() => setOpenPanel(false)}>
-          <ChevronUpIcon className="w-8 h-8 opacity-50 cursor-pointer rounded-3xl bg-gray-200 hover:opacity-100 transition duration-300" />
+          <Close sx={{ fontSize: 32, cursor: "pointer", borderRadius: "50%", bgcolor: "#e0e0e0", '&:hover': { opacity: 1 } }} />
         </IconButton>
       </Box>
-      <Box className="flex flex-col gap-2 col-span-2 w-full items-center justify-between">
-        <Typography
-          variant="h6"
-          className="m-2 font-medium text-base text-center w-full"
+      <Typography variant="h6" align="center" sx={{ mt: 2, fontWeight: 500 }}>
+        Export or insert products excel to reload the database
+      </Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
+        {excelError && (
+          <Tooltip title={excelError} placement="bottom">
+            <ExclamationCircleIcon sx={{ fontSize: 32, color: "#e57373" }} />
+          </Tooltip>
+        )}
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Insert excel url..."
+          onChange={(e) => setInputExcel(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleLoad(inputExcel)}
         >
-          Export or insert products excel to reload the database
-        </Typography>
-      </Box>
-      <Box className="flex flex-col">
-        <Box className="flex flex-row gap-2 col-span-2 w-full items-center justify-between">
-          {excelError && (
-            <Box className="flex w-1/4 justify-center">
-              <Tooltip
-                title={excelError.split("\n").join("\n")}
-                placement="bottom"
-              >
-                <ExclamationCircleIcon className="w-8 h-8 text-red-300" />
+          {loadButton ? <CircularProgress size={24} /> : "Load"}
+        </Button>
+        <input type="file" webkitdirectory="true" directory="true" onChange={handleImageFolderSelection} />
+        <Button variant="contained" color="primary" onClick={uploadImages}>
+          Upload Images
+        </Button>
+        {progress === 100 && (
+          <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+            {goodFolders.length > 0 && (
+              <Tooltip title={["Successfully saved: ", ...goodFolders.join("\n")]} placement="bottom">
+                <CheckCircleIcon sx={{ fontSize: 32, color: "#81c784" }} />
               </Tooltip>
-            </Box>
-          )}
-          <TextField
-            type="text"
-            placeholder="Insert excel url..."
-            className="flex py-2 m-2 w-full text-sm border-gray-300 focus:outline-none focus:ring-neutral focus:border-neutral sm:text-sm rounded-md"
-            onChange={(e) => setInputExcel(e.target.value)}
-            aria-label="Excel URL"
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleLoad(inputExcel)}
-            className="rounded-md bg-neutral py-2 px-4 text-center whitespace-nowrap text-sm font-semibold text-white shadow-sm hover:bg-neutral/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral/80"
-          >
-            {loadButton ? <LoadingComponent /> : "Load"}
-          </Button>
-        </Box>
-        <Box className="flex flex-row gap-2 col-span-2 w-full items-center justify-between">
-          <Input
-            type="file"
-            inputProps={{ webkitdirectory: "true", directory: "true" }}
-            onChange={handleImageFolderSelection}
-            className="flex py-2 m-2 w-3/4"
-            aria-label="Select Image Folder"
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              uploadImages();
-            }}
-            className="rounded-md bg-neutral px-3 py-2 text-center whitespace-nowrap text-sm font-semibold text-white shadow-sm hover:bg-neutral/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral/80"
-          >
-            Upload Images
-          </Button>
-        </Box>
-        <Box className="w-full flex justify-center">
-          {progress === 100 && (
-            <>
-              {goodFolders.length !== 0 && (
-                <Box className="flex w-1/2 justify-center">
-                  <Tooltip
-                    title={["Succesfully saved:", ...goodFolders].join("\n")}
-                    placement="bottom"
-                  >
-                    <CheckCircleIcon className="w-8 h-8 text-green-300" />
-                  </Tooltip>
-                </Box>
-              )}
-              {fixFolders.length !== 0 && (
-                <Box className="flex w-1/2 justify-center">
-                  <Tooltip
-                    title={["Title error:", ...fixFolders].join("\n")}
-                    placement="bottom"
-                  >
-                    <ExclamationCircleIcon className="w-8 h-8 text-red-300" />
-                  </Tooltip>
-                </Box>
-              )}
-            </>
-          )}
-          <Box className="flex w-1/2 justify-center">
-            <Tooltip
-              title={[
-                "this is the right way to foldering files to upload images,",
-              ]}
-              placement="bottom"
-            >
-              <QuestionMarkCircleIcon className="w-8 h-8 text-gray-300" />
+            )}
+            {fixFolders.length > 0 && (
+              <Tooltip title={["Title error: ", ...fixFolders.join(", ")]} placement="bottom">
+                <ExclamationCircleIcon sx={{ fontSize: 32, color: "#e57373" }} />
+              </Tooltip>
+            )}
+            <Tooltip title="This is the right way to folder files for uploading images" placement="bottom">
+              <QuestionMarkCircleIcon sx={{ fontSize: 32, color: "#bdbdbd" }} />
             </Tooltip>
           </Box>
-        </Box>
-        <Box className="flex justify-center items-center mt-4">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleExport()}
-            className="rounded-md bg-neutral px-3 py-2 text-center whitespace-nowrap text-sm font-semibold text-white shadow-sm hover:bg-neutral/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral/80"
-          >
-            {loadExport ? <LoadingComponent /> : "Export"}
-          </Button>
-        </Box>
+        )}
+        <Button variant="contained" color="primary" onClick={handleExport}>
+          {loadExport ? <CircularProgress size={24} /> : "Export"}
+        </Button>
       </Box>
     </Box>
   );
-}
+};

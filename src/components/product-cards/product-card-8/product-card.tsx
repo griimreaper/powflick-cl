@@ -196,7 +196,7 @@ export default function ProductCard8({ product, active=false }: Props) {
           <QuickViewButton
             fullWidth
             size="large"
-            color="dark"
+            color="primary"
             variant="contained"
             className="product-view-action"
             onClick={toggleDialog}

@@ -1,7 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
-import { H2 } from "components/Typography";
+import { H2, Paragraph } from "components/Typography";
 import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
@@ -9,6 +9,7 @@ import { DataStructure } from "models/types";
 
 
 export default async function Section6({ products }: { products: DataStructure['landing']['collections']['discountProducts'] }) {
+  const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
   const responsive = [
     { breakpoint: 1200, settings: { slidesToShow: 4 } },
     { breakpoint: 1024, settings: { slidesToShow: 3 } },
@@ -48,25 +49,66 @@ export default async function Section6({ products }: { products: DataStructure['
         },
       }}
     >
-      <Container className="mt-4" sx={{ position: "relative", zIndex: 2 }}>
-        <Box mb={4} sx={{ textAlign: "" }}>
-          <Typography
-            variant="h3"
-            component="h1"
-            gutterBottom
-            sx={{
-              // fontWeight: "bold",
-              background: "#A30E0E",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              marginBottom: "1rem",
-              // fontStyle: "italic",
-              fontFamily: "GYMER",
-            }}
+      <Container className="mt-4" sx={{ position: "relative", zIndex: 2, mb:4 }}>
+        {isMobile ? (
+          <Box sx={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            mb: 4,
+            justifyContent: "flex-start",
+          }}
           >
-            Discount Products
-          </Typography>
-        </Box>
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{
+                // fontWeight: "bold",
+                fontSize: "1.3rem",
+                background:
+                  "#A30E0E",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                // fontStyle: "italic",
+                fontFamily: "GYMER", // Añadir la fuente GYMER
+                lineHeight: 1,
+              }}
+            >
+              Discount Products
+            </Typography>
+            <Paragraph
+              sx={{
+                fontWeight: "600",
+                color: "white",
+                lineHeight: 3,
+                fontSize: "0.7rem",
+                fontStyle: "italic",
+              }}
+            >
+              All Sports
+            </Paragraph>
+          </Box>
+        ) : (
+          <Box mb={4}>
+            <Typography
+              variant="h3"
+              component="h1"
+              gutterBottom
+              sx={{
+                // fontWeight: "bold",
+                background: "#A30E0E",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                // fontStyle: "italic",
+                fontFamily: "GYMER", // Añadir la fuente GYMER
+              }}
+            >
+              Discount Products
+            </Typography>
+          </Box>
+        )
+        }
 
         <Carousel
           slidesToShow={4}

@@ -13,7 +13,7 @@ const sportsCategories = [
     id: 1,
     title: "Soccer",
     image: "/assets/images/landing/categories/POWFLICK_CATEGORIA-SOCCER.png",
-    link: "/products?category=Custom%Soccer%20Jerseys"
+    link: "/products?category=Custom%20Soccer%20Jerseys"
   },
   {
     id: 2,

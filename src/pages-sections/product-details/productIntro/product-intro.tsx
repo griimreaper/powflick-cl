@@ -81,8 +81,12 @@ export default function ProductIntro({ product }: Props) {
   const { token } = profile;
   const { state, dispatch } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isFav, setIsFav] = useState<boolean>(profile.favorites?.some(({ product }) => product.id === id));
-  const { counter, setCounter, handleCounterChange } = useCounter(product.product.id);
+  const [isFav, setIsFav] = useState<boolean>(
+    profile.favorites?.some(({ product }) => product.id === id)
+  );
+  const { counter, setCounter, handleCounterChange } = useCounter(
+    product.product.id
+  );
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
@@ -242,8 +246,6 @@ export default function ProductIntro({ product }: Props) {
     };
   };
 
-  console.log(product);
-  
   return (
     <Box width="100%">
       <Grid container spacing={3} justifyContent="space-around">
@@ -258,7 +260,7 @@ export default function ProductIntro({ product }: Props) {
           alignItems="center"
         >
           {showCustomization ? (
-            <Box mt={{ xs: 10, sm: 16, lg: 0 }} px={{ xs: 4, sm: 0 }}>
+            <Box mt={{ xs: 10, sm: 16, lg: 0 }} px={{ xs: 0, sm: 0 }}>
               <Customizations {...customizationProps} />
               {/* Agrega aquí los elementos de personalización */}
             </Box>
@@ -349,7 +351,10 @@ export default function ProductIntro({ product }: Props) {
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => { handleCounterChange(-1); }}>
+                  onClick={() => {
+                    handleCounterChange(-1);
+                  }}
+                >
                   <Remove fontSize="small" />
                 </Button>
                 <H3 fontWeight="600" mx={2.5}>
@@ -360,7 +365,10 @@ export default function ProductIntro({ product }: Props) {
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
-                  onClick={() => { handleCounterChange(1); }}>
+                  onClick={() => {
+                    handleCounterChange(1);
+                  }}
+                >
                   <Add fontSize="small" />
                 </Button>
               </FlexBox>
@@ -371,6 +379,7 @@ export default function ProductIntro({ product }: Props) {
                   id="addToBag-button-event-click"
                   color="primary"
                   variant="contained"
+                  sx={{ px: "1.75rem", height: 40 }}
                   onClick={() => {
                     const result = handleAddToBagClick();
                     (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
@@ -380,14 +389,17 @@ export default function ProductIntro({ product }: Props) {
                         currency: "USD",
                         value: Number(total),
                         total_product_price: Number(totalProductsPrice),
-                        total_customization_price: Number(totalCustomizationPrice),
+                        total_customization_price: Number(
+                          totalCustomizationPrice
+                        ),
                         items: [
                           {
                             item_id: result.productToBag.id,
                             item_name: result.productToBag.title,
                             affiliation: "Google Merchandise Store",
                             item_brand: "Pow Flick",
-                            item_category: product.product.product_categories.split("|")[0],
+                            item_category:
+                              product.product.product_categories.split("|")[0],
                             item_category2: product.product.sport,
                             item_variant: result.productToBag.colors,
                             price: Number(result.productToBag.price),
@@ -437,6 +449,9 @@ export default function ProductIntro({ product }: Props) {
           <AditionalDetails
             detail={product}
             handleItemChange={handleItemChange}
+            counter={counter}
+            sport={title.split(" ")[0]}
+            id={id}
           />
         </Grid>
       </Grid>

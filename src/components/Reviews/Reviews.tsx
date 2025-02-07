@@ -20,37 +20,41 @@ import { styled } from "@mui/system";
 import { keyframes } from "@emotion/react";
 import Slider, { Settings } from "react-slick";
 import { Carousel } from "components/carousel";
+import { Paragraph } from "components/Typography";
 
 const pulse = keyframes`
   0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.02); }
   100% { transform: scale(1); }
 `;
-
 const StyledCard = styled(Card)(({ theme }) => ({
-  height: "100%",
   display: "flex",
   flexDirection: "column",
   transition: "all 0.3s ease-in-out",
   background: "linear-gradient(145deg, #ffffff 0%, #f5f5f5 100%)",
-  borderRadius: "16px",
+  borderRadius: "8px",
+  width: "min(500px, 100%)",
+  minHeight: "350px", // Ajusta esto según el contenido
+  height: "auto",
+  overflow: "visible", // Evita que se corte el contenido
   "&:hover": {
-    transform: "translateY(-8px) scale(1.02)",
     boxShadow: "0 12px 20px rgba(0,0,0,0.1)",
     animation: `${pulse} 1s ease-in-out`,
   },
 }));
 
+
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  width: 70,
-  height: 70,
+  width: "clamp(20px, 10vw, 100px)",  // Tamaño responsivo para el avatar
+  height: "clamp(20px, 10vw, 100px)",  // Ajusta la altura también
   border: "3px solid #fff",
   boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
 }));
 
-const ProductImage = styled("img")(({ theme }) => ({
+const ProductImage = styled("img")(() => ({
   width: "100%",
-  height: 300,
+  maxHeight: "min(300px,80%)", // Evita que sea demasiado grande
+  aspectRatio: "1 / 1",
   objectFit: "cover",
   borderRadius: "8px",
   marginBottom: "16px",
@@ -70,22 +74,22 @@ const ReviewCard = ({ review }: any) => {
     <Fade in timeout={1000}>
       <StyledCard>
         <CardContent>
-          <Box display="flex" alignItems="center" mb={2}>
+          <Box display="flex" alignItems="flex-start" mb={1}>
             <StyledAvatar src={review.avatar} alt={review.name} />
             <Box ml={2}>
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ fontWeight: "bold", color: "#2c3e50" }}
+                sx={{ fontWeight: "bold", color: "#2c3e50", fontSize: "clamp(2px,2vw,10vw)", whiteSpace: "nowrap" }}
               >
                 {review.user.firstName} {review.user.lastName}
               </Typography>
-              <Typography variant="body2" sx={{ color: "#7f8c8d" }}>
+              <Typography variant="body2" sx={{ color: "#7f8c8d", fontSize: "clamp(8px,1vw,2vw)" }}>
                 {new Date(review.createdAt).toLocaleDateString()}
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ color: "#7f8c8d", fontWeight: "bold" }}
+                sx={{ color: "#7f8c8d", fontWeight: "bold", fontSize: "clamp(5px,1vw,100%)" }}
               >
                 {review.title}
               </Typography>
@@ -95,7 +99,7 @@ const ReviewCard = ({ review }: any) => {
             value={review.rating}
             readOnly
             precision={0.5}
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, fontSize: "clamp(2px, 2vw, 5vw)" }}
           />
           <ProductImage src={review.image} alt="Product" />
 
@@ -105,18 +109,10 @@ const ReviewCard = ({ review }: any) => {
               color: "#34495e",
               lineHeight: 1.6,
               fontStyle: "italic",
-              "&::before": {
-                content: '"\u201C"',
-                fontSize: "1.5em",
-                marginRight: "4px",
-                color: "#3498db",
-              },
-              "&::after": {
-                content: '"\u201D"',
-                fontSize: "1.5em",
-                marginLeft: "4px",
-                color: "#3498db",
-              },
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "wrap",  // Este asegura que el texto no se divida
+              fontSize: "clamp(8px,1vw,2vw)"
             }}
           >
             {review.review}
@@ -139,8 +135,8 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
   const responsive = [
     { breakpoint: 1200, settings: { slidesToShow: 4 } },
     { breakpoint: 1024, settings: { slidesToShow: 2 } },
-    { breakpoint: 650, settings: { slidesToShow: 1 } },
-    { breakpoint: 426, settings: { slidesToShow: 1 } }
+    { breakpoint: 650, settings: { slidesToShow: 2 } },
+    { breakpoint: 426, settings: { slidesToShow: 2 } }
   ];
   const handleSortChange = (event: any) => {
     const value = event.target.value;
@@ -179,7 +175,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     <Box
       component="section"
       bgcolor="#1A1A1A"
-      mb={"10rem"}
+      mb={isMobile ? "clamp(2vw, 25rem, 40vw)" : "clamp(1vw, 2rem, 30vw)"}
       sx={{
         position: "relative",
         "&::after": {
@@ -188,7 +184,6 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
           bottom: 0,
           left: 0,
           right: 0,
-          height: "40px",
           background:
             "linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
           zIndex: 1,
@@ -196,9 +191,67 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
       }}
     >
 
-      <Container className="mt-4" sx={{ position: "relative", zIndex: 4 }}>
+      <Container sx={{ position: "relative", zIndex: 4, mt:6 }}>
+        {isMobile ? (
+          <Box sx={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+          >
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{
+                // fontWeight: "bold",
+                fontSize: "1.3rem",
+                background:
+                  "#A30E0E",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                // fontStyle: "italic",
+                fontFamily: "GYMER", // Añadir la fuente GYMER
+                lineHeight: 1,
+              }}
+            >
+              PEOPLE LOVE US
+            </Typography>
+            <Paragraph
+              sx={{
+                fontWeight: "600",
+                color: "white",
+                lineHeight: 3,
+                fontSize: "0.7rem",
+                fontStyle: "italic",
+              }}
+            >
+              Customer Reviews
+            </Paragraph>
+          </Box>
+        ) : (
+          <Box mb={4}>
+            <Typography
+              variant="h3"
+              component="h1"
+              gutterBottom
+              sx={{
+                // fontWeight: "bold",
+                background: "#A30E0E",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                // fontStyle: "italic",
+                fontFamily: "GYMER", // Añadir la fuente GYMER
+              }}
+            >
+              PEOPLE LOVE US
+            </Typography>
+          </Box>
+        )
+        }
         <Box mb={4} sx={{ textAlign: "" }}>
-          <Typography
+          {/* <Typography
             variant="h3"
             component="h1"
             gutterBottom
@@ -213,7 +266,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
             }}
           >
             People Love Us
-          </Typography>
+          </Typography> */}
           {/* <Box display="flex" alignItems="center" justifyContent="center" mb={3}>
           <Typography variant="h5" mr={2} sx={{ color: "#2c3e50"}}>
             Average Rating: {averageRating}
@@ -250,7 +303,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
             arrowStyles={{ backgroundColor: "white", top: "34%" }}
           >
             {reviews.slice(0, 3).map((review) => (
-              <Box key={review.id} padding={2}>
+              <Box key={review.id} padding={0.2}>
                 <ReviewCard key={review.id} review={review} />
               </Box>
             ))}
