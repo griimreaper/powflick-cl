@@ -21,7 +21,7 @@ import { ZoomInOutlined } from "@mui/icons-material";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
-  Socks: { name: string; image: string }[];
+  Socks: SocksItem[];
   Shorts: { name: string; image: string }[] | string[] | null;
   Pants: { name: string; image: string }[] | null;
   Size: string[];
@@ -29,6 +29,12 @@ interface detailProps {
   PaymentMethods: { text: string; image: string };
   ShippingTypes: string;
   SizeGuide: { image1: string; image2: string };
+}
+
+interface SocksItem {
+  name: string;
+  image: string;
+  price?: number;
 }
 
 interface AditionalDetailsProps {
@@ -120,6 +126,35 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     </div>
   );
 
+  const renderSocks = (items: SocksItem[], type: keyof Customization) => {
+    const prices = items.map((i) => i.price ?? 0);
+    const allEqual = prices.every((val) => val === prices[0]);
+    return (
+      <div style={{ display: "flex", overflowX: "auto", padding: "0.5rem", gap: "0.5rem", background: "#fff" }}>
+        {/* {allEqual && (
+          <Typography variant="body2" style={{ fontWeight: "bold", marginRight: "1rem" }}>
+            Price: ${8}
+          </Typography>
+        )} */}
+        {items.map((item, index) => (
+          <div key={index} style={{ flex: "0 0 auto", width: "60px", textAlign: "center" }}>
+            {!allEqual && <Typography variant="body2">{item.price}€</Typography>}
+            <Button onClick={() => handleItemChange(type, item.name)} style={{ textTransform: "none" }}>
+              <Image
+                src={item.image}
+                alt={item.name}
+                width={40}
+                height={40}
+                style={{ borderRadius: "8px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
+              />
+            </Button>
+            <Typography variant="caption">{item.name}</Typography>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div style={{ marginTop: "2rem" }}>
       {detail.Size &&
@@ -164,7 +199,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
       {detail.Socks &&
         renderSection(
           `Socks ${customization.socks}`,
-          renderItems(detail.Socks, "socks", false, 25, true),
+          renderSocks(detail.Socks, "socks"),
           "socks"
         )}
       {detail.Shorts &&
