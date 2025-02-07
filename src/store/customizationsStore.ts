@@ -136,38 +136,63 @@ export const useCustomizationsStore = create(
         updateTotal(set);
       },
       removeCustomizationById: (customizationId: string) => {
-        set((state) => ({
-          ...state,
-          list: state.list.map((prod) => {
-            const customizationsToRemove = prod.customizations.find((c) => c.id === customizationId);
-            if (customizationsToRemove) {
-              deleteCustomizationImages(customizationsToRemove);
-            }
-            const updatedCustomizations = prod.customizations.filter((c) => c.id !== customizationId);
-            return {
-              ...prod,
-              customizations: updatedCustomizations,
-              amount: updatedCustomizations.length
-            };
-          }),
-        }));
+        set((state) => {
+          const newState = {
+            ...state,
+            list: state.list.map((prod) => {
+              const customizationsToRemove = prod.customizations.find((c) => c.id === customizationId);
+              if (customizationsToRemove) {
+                deleteCustomizationImages(customizationsToRemove);
+              }
+              const updatedCustomizations = prod.customizations.filter((c) => c.id !== customizationId);
+
+              // Verificamos si las customizaciones son menores a 20
+              if (updatedCustomizations.length < 20) {
+                // Asignamos el valor "socks" a todas las customizaciones si son menos de 20
+                updatedCustomizations.forEach((customization) => {
+                  customization.socks = 'No Socks (+$0.00)';  // Default "socks"
+                });
+              }
+
+              return {
+                ...prod,
+                customizations: updatedCustomizations,
+                amount: updatedCustomizations.length
+              };
+            }),
+          };
+
+          return newState;
+        });
         updateTotal(set);
       },
       trimCustomizations: (productId: string, numCustomizations: number) => {
-        set((state) => ({
-          ...state,
-          list: state.list.map((prod) => {
-            if (prod.productId === productId) {
-              const customizations = prod.customizations.slice(0, numCustomizations);
-              return {
-                ...prod,
-                customizations,
-                amount: customizations.length
-              };
-            }
-            return prod;
-          }),
-        }));
+        set((state) => {
+          const newState = {
+            ...state,
+            list: state.list.map((prod) => {
+              if (prod.productId === productId) {
+                const customizations = prod.customizations.slice(0, numCustomizations);
+
+                // Si el número de customizaciones es menor a 20, asignamos el valor "socks" a todas
+                if (customizations.length < 20) {
+                  customizations.forEach((customization) => {
+                    customization.socks = 'No Socks (+$0.00)';  // Default "socks"
+                  });
+                }
+
+                return {
+                  ...prod,
+                  customizations,
+                  amount: customizations.length
+                };
+              }
+              return prod;
+            }),
+          };
+
+          return newState;
+        });
         updateTotal(set);
       },
       clearCustomization: () => {

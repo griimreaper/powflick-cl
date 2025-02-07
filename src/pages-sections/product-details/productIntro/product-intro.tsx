@@ -242,8 +242,6 @@ export default function ProductIntro({ product }: Props) {
     };
   };
 
-  console.log(product);
-  
   return (
     <Box width="100%">
       <Grid container spacing={3} justifyContent="space-around">
@@ -258,7 +256,7 @@ export default function ProductIntro({ product }: Props) {
           alignItems="center"
         >
           {showCustomization ? (
-            <Box mt={{ xs: 10, sm: 16, lg: 0 }} px={{ xs: 4, sm: 0 }}>
+            <Box mt={{ xs: 10, sm: 16, lg: 0 }} px={{ xs: 0, sm: 0 }}>
               <Customizations {...customizationProps} />
               {/* Agrega aquí los elementos de personalización */}
             </Box>
@@ -437,6 +435,9 @@ export default function ProductIntro({ product }: Props) {
           <AditionalDetails
             detail={product}
             handleItemChange={handleItemChange}
+            counter={counter}
+            sport={title.split(" ")[0]}
+            id={id}
           />
         </Grid>
       </Grid>

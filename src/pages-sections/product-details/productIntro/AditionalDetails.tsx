@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Grid,
+  Box,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
@@ -18,6 +19,8 @@ import {
 } from "store/customizationStore";
 import { SearchOutlinedIcon } from "components/search-box/styles";
 import { ZoomInOutlined } from "@mui/icons-material";
+import { killParenthesisIn } from "utils/tools";
+import { useCustomizationsStore } from "store/customizationsStore";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -39,36 +42,82 @@ interface SocksItem {
 
 interface AditionalDetailsProps {
   detail: detailProps | any;
+  counter: number;
   handleItemChange: (name: keyof Customization, value: string) => void;
+  id: string,
+  sport: string
 }
 
 const defaultCustom = initialCustomization();
 
 const AditionalDetails: FC<AditionalDetailsProps> = ({
   detail,
+  counter,
   handleItemChange,
+  sport,
+  id,
 }) => {
   const { customization } = useCustomizationStore();
+  const { list, setCustomizationsInList } = useCustomizationsStore();
+
+  const handleSetForAll = (name: keyof Customization, value: string) => {
+    const foundItem = list.find(({ productId }) => productId === id);
+    console.log(foundItem);
+
+    if (foundItem) {
+      // Manejar el caso cuando no se encuentra el producto
+      const newList: Customization[] = foundItem.customizations.map(
+        (customization: any) => {
+          return {
+            ...customization,
+            [name]: value,
+          };
+        }
+      );
+
+      setCustomizationsInList(id, newList);
+    }
+  };
+
 
   const renderSection = (
     label: string,
     content: JSX.Element,
-    key: string,
-    extraText?: string
-  ) => (
-    <Accordion key={key}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls={`${key}-content`}
-        id={`${key}-header`}
-      >
-        <Typography>
-          {label} {extraText ? `(${extraText})` : ""}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>{content}</AccordionDetails>
-    </Accordion>
-  );
+    key: keyof Partial<Customization> | string,
+    extraText?: string,
+    button?: boolean,
+  ) => {
+    const isLocked = key === "socks" && counter < 20;
+
+    return (
+      <Accordion key={key} disabled={isLocked}>
+        <AccordionSummary
+          expandIcon={!isLocked ? <ExpandMoreIcon /> : null} // Oculta el icono si está bloqueado
+          aria-controls={`${key}-content`}
+          id={`${key}-header`}
+        >
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {isLocked ?
+              <Typography>
+                {isLocked ? key[0].toUpperCase() + key.split("").splice(1).join("") + " - Available at 20 uniforms" : ""}
+              </Typography>
+              :
+              <Typography>
+                {label} {extraText ? `(${extraText})` : ""}{" "}
+              </Typography>
+            }
+            {button && !isLocked &&
+              <Button variant="contained" color="primary" sx={{ height: 'clamp(10px, 20vh, 30px)', mx: 3, whiteSpace: 'nowrap' }}
+                onClick={(e) => { e.stopPropagation(), handleSetForAll(key as keyof Customization, customization[key as keyof Customization] as string) }}>
+                Set for all
+              </Button>
+            }
+          </Box>
+        </AccordionSummary>
+        {!isLocked && <AccordionDetails>{content}</AccordionDetails>}
+      </Accordion>
+    );
+  };
 
   const renderItems = (
     items: any[],
@@ -77,7 +126,17 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     imageSize: number = 100,
     compact: boolean = false
   ) => (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
+    <div style={{ display: "flex", overflowX: "auto", padding: "0.5rem", gap: "0.5rem", background: "#fff" }}>
+      {type === 'shorts' && (sport === 'Basketball' || sport === 'Soccer') &&
+        <Button variant="outlined" color="primary"
+          onClick={() => handleItemChange(type, 'Default (+$0.00)')}
+          style={{
+            textTransform: "none",
+            padding: 40,
+            flex: compact ? "1 0 15%" : "1 0 21%",
+            margin: compact ? "0.2rem" : "0.5rem",
+          }}>Default Short</Button>
+      }
       {items.map((item, index) => (
         <div
           key={index}
@@ -118,42 +177,13 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               />
             )}
             <Typography variant="body2" align="center">
-              {item.name}
+              {type === 'socks' ? killParenthesisIn(item.name) : item.name}
             </Typography>
           </Button>
         </div>
       ))}
     </div>
-  );
-
-  const renderSocks = (items: SocksItem[], type: keyof Customization) => {
-    const prices = items.map((i) => i.price ?? 0);
-    const allEqual = prices.every((val) => val === prices[0]);
-    return (
-      <div style={{ display: "flex", overflowX: "auto", padding: "0.5rem", gap: "0.5rem", background: "#fff" }}>
-        {/* {allEqual && (
-          <Typography variant="body2" style={{ fontWeight: "bold", marginRight: "1rem" }}>
-            Price: ${8}
-          </Typography>
-        )} */}
-        {items.map((item, index) => (
-          <div key={index} style={{ flex: "0 0 auto", width: "60px", textAlign: "center" }}>
-            {!allEqual && <Typography variant="body2">{item.price}€</Typography>}
-            <Button onClick={() => handleItemChange(type, item.name)} style={{ textTransform: "none" }}>
-              <Image
-                src={item.image}
-                alt={item.name}
-                width={40}
-                height={40}
-                style={{ borderRadius: "8px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
-              />
-            </Button>
-            <Typography variant="caption">{item.name}</Typography>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  )
 
   return (
     <div style={{ marginTop: "2rem" }}>
@@ -194,31 +224,41 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         renderSection(
           `Neck ${customization.neck}`,
           renderItems(detail.Neck, "neck", true),
-          "neck"
+          "neck",
+          undefined,
+          true
         )}
       {detail.Socks &&
         renderSection(
-          `Socks ${customization.socks}`,
-          renderSocks(detail.Socks, "socks"),
-          "socks"
+          `Socks: ${customization.socks}`,
+          renderItems(detail.Socks, "socks", false, 25, true),
+          "socks",
+          undefined,
+          true
         )}
       {detail.Shorts &&
         renderSection(
-          `Shorts ${customization.shorts}`,
+          `Shorts: ${customization.shorts}`,
           renderItems(detail.Shorts, "shorts"),
-          "shorts"
+          "shorts",
+          undefined,
+          true
         )}
       {detail.Pants &&
         renderSection(
-          `Pants ${customization.pants}`,
+          `Pants: ${customization.pants}`,
           renderItems(detail.Pants, "pants"),
-          "pants"
+          "pants",
+          undefined,
+          true
         )}
       {detail.Materials &&
         renderSection(
-          `Materials ${customization.materials}`,
+          `Materials: ${customization.materials}`,
           renderItems(detail.Materials, "materials", true),
-          "materials"
+          "materials",
+          undefined,
+          true
         )}
       {/* {detail.PaymentMethods &&
         renderSection(

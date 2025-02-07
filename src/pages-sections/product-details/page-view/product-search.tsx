@@ -141,27 +141,27 @@ export default function ProductSearchPageView() {
     { label: "Products", href: "/products" },
     ...(filters.category[0]
       ? [
-          {
-            label: filters.category[0],
-            href: `/products?category=${filters.category[0]}`,
-          },
-        ]
+        {
+          label: filters.category[0],
+          href: `/products?category=${filters.category[0]}`,
+        },
+      ]
       : []),
     ...(filters.collection[0]
       ? [
-          {
-            label: `${filters.collection}`,
-            href: `/products?collection=${filters.collection}`,
-          },
-        ]
+        {
+          label: `${filters.collection}`,
+          href: `/products?collection=${filters.collection}`,
+        },
+      ]
       : []),
     ...(filters.color[0]
       ? [
-          {
-            label: `${filters.color[0]}`,
-            href: `/products?color=${filters.color[0]}`,
-          },
-        ]
+        {
+          label: `${filters.color[0]}`,
+          href: `/products?color=${filters.color[0]}`,
+        },
+      ]
       : []),
     ...(filters.search ? [{ label: `Search: ${filters.search}` }] : []),
   ];
@@ -317,21 +317,25 @@ export default function ProductSearchPageView() {
 
           {/* PRODUCT VIEW AREA */}
           <Grid item xl={10} md={9} xs={12}>
-            {view === "grid" ? (
-              <ProductsGridView
-                data={data}
-                handlePage={(number: number) =>
-                  setFilters({ ...filters, page: number })
-                }
-              />
-            ) : (
-              <ProductsListView
-                data={data}
-                handlePage={(number: number) =>
-                  setFilters({ ...filters, page: number })
-                }
-              />
-            )}
+            {data &&
+              <>
+                {view === "grid" ? (
+                  <ProductsGridView
+                    data={data}
+                    handlePage={(number: number) =>
+                      setFilters({ ...filters, page: number })
+                    }
+                  />
+                ) : (
+                  <ProductsListView
+                    data={data}
+                    handlePage={(number: number) =>
+                      setFilters({ ...filters, page: number })
+                    }
+                  />
+                )}
+              </>
+            }
           </Grid>
         </Grid>
       </Container>
