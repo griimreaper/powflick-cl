@@ -22,6 +22,7 @@ import { ProductDB } from "models/types";
 import { deleteProduct, updateProduct } from "services/dashboardAdmin/products";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import Link from "next/link";
 
 // ========================================================================
 interface Product {
@@ -60,9 +61,9 @@ export default function ProductRow({ product, setActualize }: Props) {
 
   const deleteProd = async (id: string) => {
     try {
-        const response = await deleteProduct(id, profile.token as string);
-        showSuccessAlert('Success', response.message)
-        setActualize();
+      const response = await deleteProduct(id, profile.token as string);
+      showSuccessAlert('Success', response.message)
+      setActualize();
     } catch (error) {
       showErrorAlert('Failed', 'Product cannot be deleted,')
     }
@@ -71,14 +72,16 @@ export default function ProductRow({ product, setActualize }: Props) {
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
       <StyledTableCell align="left">
-        <FlexBox alignItems="center" gap={1.5}>
-          <Avatar alt={title} src={URL} sx={{ borderRadius: 2 }} />
+        <Link href={'/products/' + slug}>
+          <FlexBox alignItems="center" gap={1.5}>
+            <Avatar alt={title} src={URL} sx={{ borderRadius: 2 }} />
 
-          <div>
-            <Paragraph fontWeight={600}>{title}</Paragraph>
-            <Small color="grey.600">#{id.split("-")[0] + ' / ' + slug}</Small>
-          </div>
-        </FlexBox>
+            <div>
+              <Paragraph fontWeight={600}>{title}</Paragraph>
+              <Small color="grey.600">#{id.split("-")[0] + ' / ' + slug}</Small>
+            </div>
+          </FlexBox>
+        </Link>
       </StyledTableCell>
 
       <StyledTableCell align="left">

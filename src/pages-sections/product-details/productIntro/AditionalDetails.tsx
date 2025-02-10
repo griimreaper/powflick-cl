@@ -21,6 +21,7 @@ import { SearchOutlinedIcon } from "components/search-box/styles";
 import { ZoomInOutlined } from "@mui/icons-material";
 import { killParenthesisIn } from "utils/tools";
 import { useCustomizationsStore } from "store/customizationsStore";
+import { Paragraph } from "components/Typography";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -59,10 +60,10 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
 }) => {
   const { customization } = useCustomizationStore();
   const { list, setCustomizationsInList } = useCustomizationsStore();
+  const isLocked = counter < 20;
 
   const handleSetForAll = (name: keyof Customization, value: string) => {
     const foundItem = list.find(({ productId }) => productId === id);
-    console.log(foundItem);
 
     if (foundItem) {
       // Manejar el caso cuando no se encuentra el producto
@@ -91,29 +92,42 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
 
     return (
       <Accordion key={key} disabled={isLocked}>
-        <AccordionSummary
-          expandIcon={!isLocked ? <ExpandMoreIcon /> : null} // Oculta el icono si está bloqueado
-          aria-controls={`${key}-content`}
-          id={`${key}-header`}
-        >
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            {isLocked ?
-              <Typography>
-                {isLocked ? key[0].toUpperCase() + key.split("").splice(1).join("") + " - Available at 20 uniforms" : ""}
-              </Typography>
-              :
+        {!isLocked ?
+          <AccordionSummary
+            expandIcon={!isLocked ? <ExpandMoreIcon /> : null} // Oculta el icono si está bloqueado
+            aria-controls={`${key}-content`}
+            id={`${key}-header`}
+          >
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Typography>
                 {label} {extraText ? `(${extraText})` : ""}{" "}
               </Typography>
-            }
-            {button && !isLocked &&
-              <Button variant="contained" color="primary" sx={{ height: 'clamp(10px, 20vh, 30px)', mx: 3, whiteSpace: 'nowrap' }}
-                onClick={(e) => { e.stopPropagation(), handleSetForAll(key as keyof Customization, customization[key as keyof Customization] as string) }}>
-                Set for all
-              </Button>
-            }
-          </Box>
-        </AccordionSummary>
+              {button && !isLocked && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    height: "clamp(32px, 20px, 50px)", // Mantiene una altura adaptable
+                    width: "clamp(40%, 15vw, 180px)", // Mantiene un ancho consistente en distintas pantallas
+                    flexShrink: 0, // Evita que el botón se reduzca si el texto a la izquierda crece
+                    mx: 1,
+                    whiteSpace: "nowrap",
+                    textAlign: "center",
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSetForAll(key as keyof Customization, customization[key as keyof Customization] as string);
+                  }}
+                >
+                  Set for all
+                </Button>
+
+              )}
+
+            </Box>
+          </AccordionSummary>
+          : <></>
+        }
         {!isLocked && <AccordionDetails>{content}</AccordionDetails>}
       </Accordion>
     );
@@ -187,6 +201,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
 
   return (
     <div style={{ marginTop: "2rem" }}>
+      {isLocked ?
+        <Paragraph sx={{ color: 'primary.main', fontWeight: 600, my: 1, ml: 2 }}>Socks available after 20 uniforms</Paragraph> : <></>}
       {detail.Size &&
         renderSection(
           `Size ${customization.size}`,
