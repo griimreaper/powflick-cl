@@ -113,13 +113,46 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   };
 
   const handleRotate = (e: any) => {
-    const newRotation = e.rotate;
+    const newRotation = e.rotate ?? 0; // Si no existe e.rotate, se mantiene en 0
     setRotation(newRotation);
     handleRotation(each.type as string, newRotation, index);
+
     if (e.target) {
       e.target.style.transform = `rotate(${newRotation}deg)`;
     }
   };
+
+  const handlePinch = ({ target, touches, datas }: any) => {
+    if (touches.length < 2) return;
+
+    const [touch1, touch2] = touches;
+
+    // Calculamos el ángulo de los dedos en el primer evento
+    if (!datas.startAngle) {
+      datas.startAngle = Math.atan2(
+        touch2.clientY - touch1.clientY,
+        touch2.clientX - touch1.clientX
+      ) * (180 / Math.PI);
+      return;
+    }
+
+    // Calculamos el ángulo de los dedos en el evento actual
+    const currentAngle =
+      Math.atan2(
+        touch2.clientY - touch1.clientY,
+        touch2.clientX - touch1.clientX
+      ) * (180 / Math.PI);
+
+    const deltaRotation = currentAngle - datas.startAngle;
+    setRotation((prevRotation) => prevRotation + deltaRotation);
+
+    if (target) {
+      target.style.transform = `rotate(${rotation + deltaRotation}deg)`;
+    }
+
+    datas.startAngle = currentAngle; // Actualizamos el ángulo inicial
+  };
+
 
   return (
     <Box
@@ -147,10 +180,9 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           useMutationObserver
           useResizeObserver
           resizable
-          draggable
           renderDirections={["sw", "nw", "ne", "se"]}
           rotatable
-          pinchable
+          pinchable={["rotatable", "resizable"]}
           origin={false}
           checkInput={true}
           viewContainer={parentRef.current}
@@ -162,6 +194,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             e.target.style.width = `${e.width}px`;
             e.target.style.height = `${e.height}px`;
           }}
+          onPinch={handlePinch}
           onRotate={handleRotate}
         />
       )}
