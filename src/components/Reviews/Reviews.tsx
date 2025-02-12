@@ -286,11 +286,9 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
             arrowStyles={{ backgroundColor: "white", top: "50%" }}
             useCSS
           >
-            {Array(4).fill(reviews[0]).map((review) => (
+            {[...reviews, ...reviews].filter(r => r.type === "ORDER").map((review) => (
               <React.Fragment key={review.id}>
-                {review.type === "ORDER" && (
                   <ReviewCard review={review} />
-                )}
               </React.Fragment>
             ))}
           </Carousel>

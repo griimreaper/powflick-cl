@@ -58,6 +58,7 @@ export default async function Section4({ products }: { products: DataStructure['
       <Carousel
         slidesToShow={4}
         responsive={responsive}
+        arrowStyles={{top: "40%" }}
       >
         {products?.map((product) => (
           <ProductCard8 key={product.id} product={product} active={true} />
