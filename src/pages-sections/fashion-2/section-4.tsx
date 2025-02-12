@@ -18,7 +18,7 @@ export default async function Section4({ products }: { products: DataStructure['
   ];
 
   return (
-    <Container sx={{ zIndex: 4, position: 'relative', mb: isMobile ? "clamp(2vw, 25rem, 40vw)" : "clamp(1vw, 4rem, 30vw)", height: "100%", mt: isMobile ? -6 : 6 }}>
+    <Container sx={{ zIndex: 4, position: 'relative', mb: isMobile ? "clamp(2vw, 4rem, 40vw)" : "clamp(1vw, 4rem, 30vw)", height: "100%", mt: isMobile ? -6 : 6 }}>
       <Box sx={{
         textAlign: "center",
         display: "flex",

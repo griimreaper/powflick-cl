@@ -168,7 +168,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     reviews.length > 0 &&
     <Box
       component="section"
-      mb={isMobile ? "clamp(2vw, 25rem, 40vw)" : "clamp(1vw, 4rem, 30vw)"}
+      mb={ isMobile ? "clamp(2vw, 4rem, 40vw)" : "clamp(1vw, 4rem, 30vw)"}
       sx={{
         position: "relative",
         "&::after": {

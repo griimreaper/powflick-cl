@@ -1,11 +1,22 @@
 "use client";
 
 import Button from "@mui/material/Button";
-import { useMediaQuery, useTheme, Box, Typography } from "@mui/material";
+import { useMediaQuery, useTheme, Box, Typography, styled } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
 // LOCAL CUSTOM COMPONENT
-import { RootStyle } from "./styles";
+
+export const RootStyle = styled("div")({
+  display: "flex",
+  position: "relative",
+  width: "100%",
+  alignItems: "center",
+  flexDirection: "column",
+  justifyContent: "center",
+  color: "white",
+  textAlign: "center",
+  backgroundColor: "grey.500",
+});
 
 export default function Section7() {
   const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
@@ -18,14 +29,13 @@ export default function Section7() {
       display: "flex",
       position: "relative",
       width: "100%",
-      height: "100%",
       alignItems: "center",
       flexDirection: "column",
       justifyContent: "center",
       color: "white",
-      aspectRatio: "16/6.5",
       textAlign: "center",
-      backgroundColor: "grey.500",
+      backgroundColor: "transparent",
+      objectFit:"cover",
     }}>
       {/* Imagen de fondo */}
       <img
@@ -33,7 +43,7 @@ export default function Section7() {
         alt="Promo Sports Banner"
         style={{
           width: "100%",
-          position: "absolute",
+          position: "relative",
           zIndex: 0,
         }}
       />
@@ -47,9 +57,8 @@ export default function Section7() {
           alignItems: isMobile ? "center" : "flex-start",
           textAlign: isMobile ? "end" : "right",
           width: "100%",
-          mt: isMobile ? 10 : 0,
           height: "100%",
-          position: "relative",
+          position: "absolute",
           zIndex: 2,
           mb: isMobile ? 10 : 0,
           textWrap: 'nowrap',

@@ -51,7 +51,7 @@ export default async function Section3({ className }: { className: string }) {
   const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
 
   return (
-    <Container className={`${className}`} sx={{ overflow: "visible", position: "relative" , my: "3vw"}}>
+    <Container className={`${className}`} sx={{my:4}}>
       {isMobile ? (
         <Box sx={{
           textAlign: "center",
@@ -113,8 +113,8 @@ export default async function Section3({ className }: { className: string }) {
 
       <Carousel slidesToShow={isMobile ? 2 : 4} >
         {sportsCategories.map((item) => (
-          <Box key={item.id} sx={{ position: "relative", mb:8 }}>
-          <CategoryCard1 image={item.image} title={item.title} link={item.link} />
+          <Box key={item.id} sx={{ position: "relative", mb: 8 }}>
+            <CategoryCard1 image={item.image} title={item.title} link={item.link} />
           </Box>
         ))}
       </Carousel>

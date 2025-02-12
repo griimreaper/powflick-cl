@@ -4,10 +4,10 @@ import Button from "@mui/material/Button";
 import { useMediaQuery, useTheme, Box, Typography } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
-import { RootStyle } from "../section-7/styles";
+import { RootStyle } from "./section-7";
 // LOCAL CUSTOM COMPONENT
 
-export default function Section7() {
+export default function Section8() {
   const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
 
   // Determina la imagen según el tamaño de la pantalla
@@ -21,7 +21,7 @@ export default function Section7() {
         alt="Promo Sports Banner"
         style={{
           width: "100%",
-          position: "absolute",
+          position: "relative",
           zIndex: 0,
         }}
       />
@@ -35,9 +35,8 @@ export default function Section7() {
           alignItems: isMobile ? "center" : "flex-start",
           textAlign: isMobile ? "end" : "right",
           width: "100%",
-          mt: isMobile ? 10 : 0,
           height: "100%",
-          position: "relative",
+          position: "absolute",
           zIndex: 2,
           mb: isMobile ? 10 : 0,
           textWrap: 'nowrap',

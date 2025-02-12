@@ -56,6 +56,7 @@ export default function Section2({ className }: { className: string }) {
           alt="Desktop Image"
           style={{
             width: "100%",
+            borderRadius:6,
             height: "auto",
             objectFit: "cover",
           }}
