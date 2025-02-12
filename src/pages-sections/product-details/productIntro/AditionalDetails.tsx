@@ -108,7 +108,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                   color="primary"
                   sx={{
                     height: "clamp(32px, 20px, 50px)", // Mantiene una altura adaptable
-                    width: "clamp(40%, 15vw, 180px)", // Mantiene un ancho consistente en distintas pantallas
+                    width: "clamp(30px, 30vw, 180px)", // Mantiene un ancho consistente en distintas pantallas
                     flexShrink: 0, // Evita que el botón se reduzca si el texto a la izquierda crece
                     mx: 1,
                     whiteSpace: "nowrap",
