@@ -147,6 +147,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           useMutationObserver
           useResizeObserver
           resizable
+          draggable
           renderDirections={["sw", "nw", "ne", "se"]}
           rotatable
           pinchable
