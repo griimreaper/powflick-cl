@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
+import React, { useState, useRef, LegacyRef, useEffect, RefObject } from "react";
 import Moveable from "react-moveable";
 
 interface ManipulableContainerProps {
@@ -43,6 +43,8 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
   const [isSelected, setIsSelected] = useState(selection.index === index && selection.type === each.type); // Estado para controlar la visibilidad de Moveable
+  const [scale, setScale] = useState(1); // Estado para manejar la escala
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLInputElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
@@ -65,9 +67,9 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   // Aplicar rotación en el DOM
   useEffect(() => {
     if (elementRef.current) {
-      elementRef.current.style.transform = `rotate(${rotation}deg)`; // Aplicar la rotación al elemento DOM
+      elementRef.current.style.transform = `rotate(${rotation}deg) scale(${scale})`; // Aplicar la rotación y escala
     }
-  }, [rotation]); // Ejecuta cuando la rotación cambia
+  }, [rotation, scale]); // Ejecuta cuando la rotación o escala cambian
 
   // Necesario para que el input se seleccione y muestre el editor para editar el elemento
   useEffect(() => {
@@ -76,9 +78,6 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       selection.type === each.type
     )
   }, [selection]);
-
-  useEffect(() => {
-  }, [each.text])
 
   // Manejar clics fuera del componente
   useEffect(() => {
@@ -113,6 +112,8 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   };
 
   const handleRotate = (e: any) => {
+    console.log(e);
+    
     const newRotation = e.rotate ?? 0; // Si no existe e.rotate, se mantiene en 0
     setRotation(newRotation);
     handleRotation(each.type as string, newRotation, index);
@@ -122,37 +123,20 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     }
   };
 
-  const handlePinch = ({ target, touches, datas }: any) => {
-    if (touches.length < 2) return;
-
-    const [touch1, touch2] = touches;
-
-    // Calculamos el ángulo de los dedos en el primer evento
-    if (!datas.startAngle) {
-      datas.startAngle = Math.atan2(
-        touch2.clientY - touch1.clientY,
-        touch2.clientX - touch1.clientX
-      ) * (180 / Math.PI);
+  // Manejo del gesto pinch
+  const handlePinch = ({ target, datas }: any) => {
+    if (!datas.startScale) {
+      datas.startScale = scale; // Almacenar la escala inicial
       return;
     }
 
-    // Calculamos el ángulo de los dedos en el evento actual
-    const currentAngle =
-      Math.atan2(
-        touch2.clientY - touch1.clientY,
-        touch2.clientX - touch1.clientX
-      ) * (180 / Math.PI);
-
-    const deltaRotation = currentAngle - datas.startAngle;
-    setRotation((prevRotation) => prevRotation + deltaRotation);
+    const newScale = datas.startScale * datas.scale; // Escalar en función de la distancia entre los dedos
+    setScale(newScale);
 
     if (target) {
-      target.style.transform = `rotate(${rotation + deltaRotation}deg)`;
+      target.style.transform = `rotate(${rotation}deg) scale(${newScale})`; // Aplicar tanto rotación como escala
     }
-
-    datas.startAngle = currentAngle; // Actualizamos el ángulo inicial
   };
-
 
   return (
     <Box
@@ -182,22 +166,19 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           resizable
           renderDirections={["sw", "nw", "ne", "se"]}
           rotatable
-          pinchable={["rotatable", "resizable"]}
+          pinchable
           origin={false}
           checkInput={true}
           viewContainer={parentRef.current}
           dragContainer={parentRef.current}
           rootContainer={parentRef.current}
           keepRatio={true}
-          onResize={(e) => {
-            handleResize(e);
-            e.target.style.width = `${e.width}px`;
-            e.target.style.height = `${e.height}px`;
-          }}
+          onResize={handleResize}
           onPinch={handlePinch}
           onRotate={handleRotate}
         />
       )}
+
       {each.type !== "Logo" && handleChange !== undefined && (
         <input
           className="focus:outline-none focus:ring-2 focus:ring-transparent text-center p-0"
