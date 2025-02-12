@@ -105,7 +105,8 @@ function EditableContainer({
 
     useEffect(() => {
         if (selection.type && selection.index !== null) {
-            document.getElementById(`${selection.type.toLowerCase()}-input-${selection.index + sideName}`)?.focus();
+            document.getElementById(`${selection.type.toLowerCase()}-input-${selection.index + sideName}`)?.focus({ preventScroll: true });
+
         }
     }, [selection]);
 
@@ -333,6 +334,7 @@ function EditableContainer({
                         />
                         <Button
                             variant="contained"
+                            color='primary'
                             onClick={() => handleSubmit(selection.index)}
                             disabled={!file}
                             sx={{

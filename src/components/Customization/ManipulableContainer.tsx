@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import React, { useState, useRef, LegacyRef, useEffect, RefObject } from "react";
-import Moveable from "react-moveable";
+import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
+import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
 
 interface ManipulableContainerProps {
   parentRef: RefObject<HTMLDivElement>;
@@ -43,8 +43,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
   const [isSelected, setIsSelected] = useState(selection.index === index && selection.type === each.type); // Estado para controlar la visibilidad de Moveable
-  const [scale, setScale] = useState(1); // Estado para manejar la escala
-
+  const [scale, setScale] = useState(0); // Estado para controlar la visibilidad de Moveable
   const containerRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLInputElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
@@ -67,9 +66,9 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   // Aplicar rotación en el DOM
   useEffect(() => {
     if (elementRef.current) {
-      elementRef.current.style.transform = `rotate(${rotation}deg) scale(${scale})`; // Aplicar la rotación y escala
+      elementRef.current.style.transform = `rotate(${rotation}deg)`; // Aplicar la rotación al elemento DOM
     }
-  }, [rotation, scale]); // Ejecuta cuando la rotación o escala cambian
+  }, [rotation]); // Ejecuta cuando la rotación cambia
 
   // Necesario para que el input se seleccione y muestre el editor para editar el elemento
   useEffect(() => {
@@ -78,6 +77,9 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       selection.type === each.type
     )
   }, [selection]);
+
+  useEffect(() => {
+  }, [each.text])
 
   // Manejar clics fuera del componente
   useEffect(() => {
@@ -112,31 +114,27 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   };
 
   const handleRotate = (e: any) => {
-    console.log(e);
-    
-    const newRotation = e.rotate ?? 0; // Si no existe e.rotate, se mantiene en 0
+    const newRotation = e.rotate;
     setRotation(newRotation);
     handleRotation(each.type as string, newRotation, index);
-
     if (e.target) {
       e.target.style.transform = `rotate(${newRotation}deg)`;
     }
   };
 
-  // Manejo del gesto pinch
-  const handlePinch = ({ target, datas }: any) => {
-    if (!datas.startScale) {
-      datas.startScale = scale; // Almacenar la escala inicial
-      return;
-    }
 
-    const newScale = datas.startScale * datas.scale; // Escalar en función de la distancia entre los dedos
-    setScale(newScale);
+  const handlePinch = (e: OnPinch) => {
+    const newRotate = e.currentTarget.rotation
+    const newSize = e.currentTarget.scale
+    // Actualizamos la escala y rotación
+    setRotation(newRotate);
+    handleResize(newSize)
 
-    if (target) {
-      target.style.transform = `rotate(${rotation}deg) scale(${newScale})`; // Aplicar tanto rotación como escala
-    }
+    // Puedes implementar la lógica de cambio en el estado local o persistir los datos.
+    console.log('Pinch event:', {newRotate, newSize });
   };
+
+
 
   return (
     <Box
@@ -146,6 +144,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         zIndex: 0,
         left: each.position.x,
         top: each.position.y,
+        pointerEvents: "auto", // Permitir eventos de clic
       }}
     >
       <Box
@@ -155,6 +154,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           position: 'absolute',
           whiteSpace: 'pre',
           fontFamily: each.font,
+          pointerEvents: "none", // Deshabilita los eventos en el fondo
         }}
       />
 
@@ -172,13 +172,18 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           viewContainer={parentRef.current}
           dragContainer={parentRef.current}
           rootContainer={parentRef.current}
+
           keepRatio={true}
-          onResize={handleResize}
-          onPinch={handlePinch}
+          onResize={(e) => {
+            handleResize(e);
+            e.target.style.width = `${e.width}px`;
+            e.target.style.height = `${e.height}px`;
+          }}
           onRotate={handleRotate}
+          onPinchStart={(e) => console.log('Pinch start event', e)}
+          onPinch={(e: OnPinch) => handlePinch(e)}
         />
       )}
-
       {each.type !== "Logo" && handleChange !== undefined && (
         <input
           className="focus:outline-none focus:ring-2 focus:ring-transparent text-center p-0"
