@@ -81,7 +81,7 @@ export default async function Section3({ className }: { className: string }) {
           <Paragraph
             sx={{
               fontWeight: "bold",
-              color: "darkred",
+              color: "primary.main",
               lineHeight: 1,
               fontSize: "0.7rem",
               fontStyle: "italic",

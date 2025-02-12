@@ -99,7 +99,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
     setProfileUser,
   } = useDashboardStore();
 
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   let token = session?.user?.name?.split("|")[0];
   let tokenExpiration = session?.user?.name?.split("|")[1];
   let rol = session?.user?.email;
@@ -178,7 +178,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
           <Box sx={{
             position: "relative",
             marginTop: "50%", // Posición según pantallas
-            marginBottom: "5%",
+            marginBottom: "clamp(2%, 5vw, 100%)",
             left: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: 1,
@@ -299,7 +299,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
 
       {/* Banner */}
       <div style={{ position: "relative" }}>
-        <img
+        {/* <img
           src="/assets/images/landing/POWFLICK_ELEMENTO-1.png"
           alt="Overlay"
           style={{
@@ -310,7 +310,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
             width: window.innerWidth <= 768 ? "125px" : "250px",
             height: "auto",
           }}
-        />
+        /> */}
         <Section7 />
       </div>
 
@@ -325,7 +325,6 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
 
       {/* Discount Products Section */}
       <Section6 products={data?.landing?.collections?.discountProducts || []} />
-
       {/* Collections Section */}
       {/* {data && (
         <Section10

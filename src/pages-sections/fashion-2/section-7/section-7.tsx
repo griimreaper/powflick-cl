@@ -14,14 +14,25 @@ export default function Section7() {
   const backgroundImage = !isMobile ? `/assets/images/landing/POWFLICK-19.png` : `/assets/images/landing/mobile/POWFLICK-19.png`;
 
   return (
-    <RootStyle>
+    <Box sx={{
+      display: "flex",
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      alignItems: "center",
+      flexDirection: "column",
+      justifyContent: "center",
+      color: "white",
+      aspectRatio: "16/6.5",
+      textAlign: "center",
+      backgroundColor: "grey.500",
+    }}>
       {/* Imagen de fondo */}
       <img
         src={backgroundImage}
         alt="Promo Sports Banner"
         style={{
           width: "100%",
-          height: "fit-content",
           position: "absolute",
           zIndex: 0,
         }}
@@ -33,54 +44,57 @@ export default function Section7() {
           display: "flex",
           flexDirection: "column",
           justifyContent: isMobile ? "flex-end" : "center",
-          alignItems: isMobile ? "center" : "flex-end",
+          alignItems: isMobile ? "center" : "flex-start",
           textAlign: isMobile ? "end" : "right",
-          mt: isMobile ? 10 : 0,
           width: "100%",
+          mt: isMobile ? 10 : 0,
           height: "100%",
           position: "relative",
           zIndex: 2,
-          textWrap: 'nowrap',
           mb: isMobile ? 10 : 0,
+          textWrap: 'nowrap',
           fontFamily: "GYMER",
           padding: "0 4rem",
         }}
       >
-        <H3 fontSize={
-          "clamp(8px, 1.8vw, 30px)"
-        } lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontWeight={100} fontStyle="italic">
-          Innovation with Artificial intelligence
+
+        <H3 fontSize={"clamp(8px, 2.2vw, 30px)"} fontWeight={100} lineHeight={1} mb={2} fontFamily={"sans-serif"} fontStyle="oblique">
+          Got a design? We make it real
         </H3>
 
-        <H1 fontSize="clamp(10px, 10vw, 120px)" lineHeight={1} mb={1}>
-          POWERED
+        <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1}>
+          SEND IT NOW AND
         </H1>
-        <H1 fontSize="clamp(10px, 10vw, 120px)" lineHeight={1} mb={1}>
-          CUSTOMIZATION
+        <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1} >
+          GET YOUR UNIFORM.
         </H1>
 
-        <Button variant="contained" size="large" color="primary" href="/products" sx={{
-          width: "clamp(160px, 30vw, 500px)", // Mínimo 150px, escalable con 30vw, máximo 300px
-          minWidth: "150px", // Evita que sea demasiado pequeño
-          maxWidth: "90%", // No ocupa más del 90% del contenedor
-          padding: "clamp(8px, 15vw, 16px) clamp(16px, 4vw, 32px)", // Padding adaptable
-          background: (theme) => theme.palette.primary.main,
-          borderRadius: 1,
-          "&:hover": { background: (theme) => theme.palette.primary.dark },
-        }}>
+        <Button variant="contained" size="large" href="/products"
+          sx={{
+            width: "clamp(280px, 30vw, 500px)", // Mínimo 150px, escalable con 30vw, máximo 300px
+            minWidth: "150px", // Evita que sea demasiado pequeño
+            maxWidth: "90%", // No ocupa más del 90% del contenedor
+            height: isMobile ? '40px' : '60px',
+            position: 'relative',
+            top: isMobile ? "clamp(4px, 15vw, 16px)" : 40,
+            padding: "clamp(8px, 15vw, 16px) clamp(16px, 4vw, 32px)", // Padding adaptable
+            background: 'white',
+            borderRadius: 1,
+            "&:hover": { background: 'rgb(200,200,200)' },
+          }}>
           <Typography
             sx={{
-              color: "white",
-              fontSize: "clamp(12px, 2vw, 120px)",
+              color: "primary.main",
+              fontSize: "clamp(18px, 2vw, 120px)",
               fontWeight: 400,
               fontFamily: "sans-serif",
               fontStyle: "italic",
             }}
           >
-            Customize Now
+            Send Your Design
           </Typography>
         </Button>
       </Box>
-    </RootStyle>
+    </Box>
   );
 }

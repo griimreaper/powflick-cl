@@ -20,11 +20,13 @@ export default async function Section6({ products }: { products: DataStructure['
   return (
     <Box
       component="section"
-      bgcolor="#1A1A1A"
       mb={{ sm: 0, xs: 7 }}
       sx={{
         position: "relative",
         overflow: "hidden",
+        alignItems: "center",
+        justifyContent: isMobile ? "flex-start" : "space-between",
+        backgroundImage: "url('assets/images/landing/POWFLICK-_FONDO-PRODUCTOS-41.png')", backgroundSize: "cover", backgroundPosition: "center",
         "&::before": {
           content: '""',
           position: "absolute",
@@ -49,66 +51,45 @@ export default async function Section6({ products }: { products: DataStructure['
         },
       }}
     >
-      <Container className="mt-4" sx={{ position: "relative", zIndex: 2, mb:4 }}>
-        {isMobile ? (
-          <Box sx={{
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            mb: 4,
-            justifyContent: "flex-start",
-          }}
+      <Container className="mt-4" sx={{ position: "relative", zIndex: 2, mb: 4 }}>
+        <Box sx={{
+          textAlign: "center",
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          width: '100%',
+          mb: 4,
+          alignItems: "center",
+          justifyContent: isMobile ? "flex-start" : "space-between",
+        }}
+        >
+          <Typography
+            variant="h2"
+            component="h1"
+            color={'primary.main'}
+            sx={{
+              // fontWeight: "bold",
+              fontSize: "1.3rem",
+              background:
+                "primary.main",
+              // fontStyle: "italic",
+              fontFamily: "GYMER", // Añadir la fuente GYMER
+              lineHeight: 1,
+            }}
           >
-            <Typography
-              variant="h2"
-              component="h1"
-              sx={{
-                // fontWeight: "bold",
-                fontSize: "1.3rem",
-                background:
-                  "#A30E0E",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                // fontStyle: "italic",
-                fontFamily: "GYMER", // Añadir la fuente GYMER
-                lineHeight: 1,
-              }}
-            >
-              Discount Products
-            </Typography>
-            <Paragraph
-              sx={{
-                fontWeight: "600",
-                color: "white",
-                lineHeight: 3,
-                fontSize: "0.7rem",
-                fontStyle: "italic",
-              }}
-            >
-              All Sports
-            </Paragraph>
-          </Box>
-        ) : (
-          <Box mb={4}>
-            <Typography
-              variant="h3"
-              component="h1"
-              gutterBottom
-              sx={{
-                // fontWeight: "bold",
-                background: "#A30E0E",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                // fontStyle: "italic",
-                fontFamily: "GYMER", // Añadir la fuente GYMER
-              }}
-            >
-              Discount Products
-            </Typography>
-          </Box>
-        )
-        }
+            Discount Products
+          </Typography>
+          <Paragraph
+            color={isMobile ? 'white' : 'primary.main'}
+            sx={{
+              fontWeight: isMobile ? "600" : "400",
+              lineHeight: 3,
+              fontSize: isMobile ? "0.7rem" : '1rem',
+              fontStyle: "italic",
+            }}
+          >
+            All Sports
+          </Paragraph>
+        </Box>
 
         <Carousel
           slidesToShow={4}
