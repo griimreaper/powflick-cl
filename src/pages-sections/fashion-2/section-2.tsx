@@ -23,10 +23,10 @@ export default function Section2({ className }: { className: string }) {
   }, []);
 
   return (
-    <Container className={`${className}`} style={{marginTop: "4vw", marginBottom: isMobile ? "6vw": "0"}}>
+    <Container className={`${className}`} >
       {isMobile ? (
         // Renderiza dos imágenes para mobile
-        <Box display={'flex'} flexDirection={'column'} gap={2} px={4}>
+        <Box display={'flex'} flexDirection={'column'} gap={2} >
           <img
             src="assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
@@ -56,7 +56,7 @@ export default function Section2({ className }: { className: string }) {
           alt="Desktop Image"
           style={{
             width: "100%",
-            borderRadius:6,
+            borderRadius: 6,
             height: "auto",
             objectFit: "cover",
           }}

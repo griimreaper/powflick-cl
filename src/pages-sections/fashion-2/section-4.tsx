@@ -5,6 +5,7 @@ import { H2, Paragraph } from "components/Typography";
 import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
+import Link from "next/link";
 // API FUNCTIONS
 import api from "utils/__api__/fashion-2";
 
@@ -42,23 +43,25 @@ export default async function Section4({ products }: { products: DataStructure['
         >
           Best Selling Products
         </Typography>
-        <Paragraph
-          color={isMobile ? 'white' : 'primary.main'}
-          sx={{
-            fontWeight: isMobile ? "600" : "400",
-            lineHeight: 3,
-            fontSize: isMobile ? "0.7rem" : '1rem',
-            fontStyle: "italic",
-          }}
-        >
-          All Sports
-        </Paragraph>
+        <Link href={'/products?mostSold=true'}>
+          <Paragraph
+            color={isMobile ? 'white' : 'primary.main'}
+            sx={{
+              fontWeight: isMobile ? "600" : "400",
+              lineHeight: 3,
+              fontSize: isMobile ? "0.7rem" : '1rem',
+              fontStyle: "italic",
+            }}
+          >
+            All Sports
+          </Paragraph>
+        </Link>
       </Box>
 
       <Carousel
         slidesToShow={4}
         responsive={responsive}
-        arrowStyles={{top: "40%" }}
+        arrowStyles={{ top: "40%" }}
       >
         {products?.map((product) => (
           <ProductCard8 key={product.id} product={product} active={true} />

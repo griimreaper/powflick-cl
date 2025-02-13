@@ -45,38 +45,27 @@ export default function Section8() {
         }}
       >
 
-        <H1 fontSize="clamp(10px, 10vw, 120px)" lineHeight={1} mb={1}>
+        <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1}>
           PREPARE
         </H1>
-        <H1 fontSize="clamp(10px, 10vw, 120px)" lineHeight={1} mb={1} >
+        <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1} >
           YOUR SEASON
         </H1>
 
-        <H3 fontSize={"clamp(8px, 1.8vw, 30px)"} fontWeight={100} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="oblique">
+        <H3 fontSize={"clamp(8px, 2.2vw, 30px)"} fontWeight={100} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="oblique">
           WITH THE BEST
         </H3>
 
         <Button variant="contained" size="large" color="primary" href="/products"
-          sx={{
-            width: "clamp(160px, 30vw, 500px)", // Mínimo 150px, escalable con 30vw, máximo 300px
-            minWidth: "150px", // Evita que sea demasiado pequeño
-            maxWidth: "90%", // No ocupa más del 90% del contenedor
-            padding: "clamp(8px, 15vw, 16px) clamp(16px, 4vw, 32px)", // Padding adaptable
-            background: (theme) => theme.palette.primary.main,
+          style={{
+            width: "clamp(140px, 17vw, 500px)",
             borderRadius: 1,
-            "&:hover": { background: (theme) => theme.palette.primary.dark },
+            whiteSpace: "nowrap",
+            fontWeight: 400,
+            fontSize: "clamp(12px, 2vw, 120px)",
+            fontStyle: "italic",
           }}>
-          <Typography
-            sx={{
-              color: "white",
-              fontSize: "clamp(24px, 2vw, 120px)",
-              fontWeight: 400,
-              fontFamily: "sans-serif",
-              fontStyle: "italic",
-            }}
-          >
-            Shop Now
-          </Typography>
+          Shop Now
         </Button>
       </Box>
     </RootStyle>

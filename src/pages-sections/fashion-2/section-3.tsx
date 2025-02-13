@@ -7,6 +7,7 @@ import CategoryCard1 from "components/category-cards/category-card-1";
 import api from "utils/__api__/fashion-2";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { Carousel } from "components/carousel";
+import Link from "next/link";
 
 const sportsCategories = [
   {
@@ -51,7 +52,7 @@ export default async function Section3({ className }: { className: string }) {
   const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
 
   return (
-    <Container className={`${className}`} sx={{my:4}}>
+    <Container className={`${className}`}>
       {isMobile ? (
         <Box sx={{
           textAlign: "center",
@@ -78,17 +79,19 @@ export default async function Section3({ className }: { className: string }) {
           >
             CATEGORIES
           </Typography>
-          <Paragraph
-            sx={{
-              fontWeight: "bold",
-              color: "primary.main",
-              lineHeight: 1,
-              fontSize: "0.7rem",
-              fontStyle: "italic",
-            }}
-          >
-            All Sports
-          </Paragraph>
+          <Link href={'/products'}>
+            <Paragraph
+              sx={{
+                fontWeight: "bold",
+                color: "primary.main",
+                lineHeight: 1,
+                fontSize: "0.7rem",
+                fontStyle: "italic",
+              }}
+            >
+              All Sports
+            </Paragraph>
+          </Link>
         </Box>
       ) : (
         <Box mb={4}>
@@ -113,7 +116,7 @@ export default async function Section3({ className }: { className: string }) {
 
       <Carousel slidesToShow={isMobile ? 2 : 4} >
         {sportsCategories.map((item) => (
-          <Box key={item.id} sx={{ position: "relative", mb: 8 }}>
+          <Box key={item.id} sx={{ position: "relative" }}>
             <CategoryCard1 image={item.image} title={item.title} link={item.link} />
           </Box>
         ))}

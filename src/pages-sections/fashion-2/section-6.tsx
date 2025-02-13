@@ -5,6 +5,7 @@ import { H2, Paragraph } from "components/Typography";
 import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
+import Link from "next/link";
 // API FUNCTIONS
 
 
@@ -78,17 +79,19 @@ export default async function Section6({ products }: { products: DataStructure['
           >
             Discount Products
           </Typography>
-          <Paragraph
-            color={isMobile ? 'white' : 'primary.main'}
-            sx={{
-              fontWeight: isMobile ? "600" : "400",
-              lineHeight: 3,
-              fontSize: isMobile ? "0.7rem" : '1rem',
-              fontStyle: "italic",
-            }}
-          >
-            All Sports
-          </Paragraph>
+          <Link href={'/products?discount=true'}>
+            <Paragraph
+              color={isMobile ? 'white' : 'primary.main'}
+              sx={{
+                fontWeight: isMobile ? "600" : "400",
+                lineHeight: 3,
+                fontSize: isMobile ? "0.7rem" : '1rem',
+                fontStyle: "italic",
+              }}
+            >
+              All Sports
+            </Paragraph>
+          </Link>
         </Box>
 
         <Carousel

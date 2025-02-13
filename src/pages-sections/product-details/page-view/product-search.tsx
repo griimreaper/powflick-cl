@@ -131,6 +131,12 @@ export default function ProductSearchPageView() {
         );
       if (searchParams.get("rating"))
         newFilters.rating = parseInt(searchParams.get("rating") || "0", 10);
+      if (searchParams.get("featured"))
+        newFilters.featured = searchParams.get("featured") === "true";
+      if (searchParams.get("discount"))
+        newFilters.discount = searchParams.get("discount") === "true";
+      if (searchParams.get("mostSold"))
+        newFilters.mostSold = searchParams.get("mostSold") === "true";
     }
 
     setFilters(newFilters);

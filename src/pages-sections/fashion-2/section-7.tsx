@@ -35,7 +35,7 @@ export default function Section7() {
       color: "white",
       textAlign: "center",
       backgroundColor: "transparent",
-      objectFit:"cover",
+      objectFit: "cover",
     }}>
       {/* Imagen de fondo */}
       <img
@@ -80,28 +80,17 @@ export default function Section7() {
 
         <Button variant="contained" size="large" href="/products"
           sx={{
-            width: "clamp(280px, 30vw, 500px)", // Mínimo 150px, escalable con 30vw, máximo 300px
-            minWidth: "150px", // Evita que sea demasiado pequeño
-            maxWidth: "90%", // No ocupa más del 90% del contenedor
-            height: isMobile ? '40px' : '60px',
-            position: 'relative',
-            top: isMobile ? "clamp(4px, 15vw, 16px)" : 40,
-            padding: "clamp(8px, 15vw, 16px) clamp(16px, 4vw, 32px)", // Padding adaptable
-            background: 'white',
+            width: "clamp(140px, 17vw, 500px)",
             borderRadius: 1,
+            whiteSpace: "nowrap",
+            fontWeight: 400,
+            fontSize: "clamp(12px, 2vw, 120px)",
+            fontStyle: "italic",
+            color: 'primary.main',
+            background: 'white',
             "&:hover": { background: 'rgb(200,200,200)' },
           }}>
-          <Typography
-            sx={{
-              color: "primary.main",
-              fontSize: "clamp(18px, 2vw, 120px)",
-              fontWeight: 400,
-              fontFamily: "sans-serif",
-              fontStyle: "italic",
-            }}
-          >
-            Send Your Design
-          </Typography>
+          Send Your Design
         </Button>
       </Box>
     </Box>
