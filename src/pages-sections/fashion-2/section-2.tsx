@@ -23,7 +23,7 @@ export default function Section2({ className }: { className: string }) {
   }, []);
 
   return (
-    <Container className={`${className}`} >
+    <Container className={`${className}`} sx={{ height: isMobile ? '30%' : '25%' }} >
       {isMobile ? (
         // Renderiza dos imágenes para mobile
         <Box display={'flex'} flexDirection={'column'} gap={2} >

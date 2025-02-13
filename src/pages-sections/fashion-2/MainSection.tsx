@@ -46,7 +46,7 @@ export default function MainSection() {
                     textAlign: "center",
                     width: "100%",
                     height: "100%",
-                    gap: isMobile ? 2 : 5,
+                    gap: isMobile ? 2 : 3,
                     position: "absolute",
                     zIndex: 2,
                     fontFamily: "GYMER",
@@ -62,7 +62,7 @@ export default function MainSection() {
                         color: "white",
                         whiteSpace: "nowrap",
                         fontWeight: 400,
-                        fontSize: "clamp(12px, 2vw, 120px)",
+                        fontSize: "clamp(12px, 2.5vw, 120px)",
                         fontStyle: "italic",
                     }}
                 >
@@ -77,7 +77,7 @@ export default function MainSection() {
                     alignItems: 'center',
                     top: isMobile ? 'clamp(0px,5%,200px)' : 'clamp(0px,8%,200px)',
                     display: 'flex',
-                    gap: 20,
+                    gap: 5,
                 }}>
                     <Section2 className="section2" />
                     <Section3 className="section3" />
