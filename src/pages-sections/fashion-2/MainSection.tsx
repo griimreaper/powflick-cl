@@ -4,9 +4,7 @@ import Section2 from './section-2'
 import Section3 from './section-3'
 
 export default function MainSection() {
-    const isSmallMobile = useMediaQuery("(max-width: 480px)")
     const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
-    const isExtraLarge = useMediaQuery("(max-width: 1208px)");
 
     const backgroundImage = isMobile ?
         "assets/images/landing/mobile/POWFLICK-_BANNER-SUPERIOR.png"

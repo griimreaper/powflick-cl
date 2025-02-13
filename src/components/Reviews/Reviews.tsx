@@ -127,10 +127,9 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(("(max-width: 768px)"));
   const responsive = [
-    { breakpoint: 1200, settings: { slidesToShow: 4 } },
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
-    { breakpoint: 650, settings: { slidesToShow: 2 } },
-    { breakpoint: 426, settings: { slidesToShow: 2 } }
+    { breakpoint: 768, settings: { slidesToShow: 3 } },
+    { breakpoint: 600, settings: { slidesToShow: 2 } }
   ];
   const handleSortChange = (event: any) => {
     const value = event.target.value;
@@ -168,7 +167,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
     reviews.length > 0 &&
     <Box
       component="section"
-      mb={ isMobile ? "clamp(2vw, 4rem, 40vw)" : "clamp(1vw, 4rem, 30vw)"}
+      mb={isMobile ? "clamp(2vw, 4rem, 40vw)" : "clamp(1vw, 4rem, 30vw)"}
       sx={{
         position: "relative",
         "&::after": {
@@ -288,7 +287,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
           >
             {[...reviews, ...reviews].filter(r => r.type === "ORDER").map((review) => (
               <React.Fragment key={review.id}>
-                  <ReviewCard review={review} />
+                <ReviewCard review={review} />
               </React.Fragment>
             ))}
           </Carousel>

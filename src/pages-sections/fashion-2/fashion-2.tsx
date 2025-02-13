@@ -69,7 +69,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
   }, [tokenExpiration]);
 
   return (
-    <>
+    <Box sx={{ width:'100%' }}>
       <MainSection />
       {/* Most Sold Products Section */}
       <Section4 products={data?.landing?.collections?.mostSoldProducts || []} />
@@ -116,6 +116,6 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
       {/* Newsletter Subscription Section */}
       <Newsletter />
 
-    </>
+    </Box>
   );
 }

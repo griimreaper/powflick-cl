@@ -11,11 +11,11 @@ import Link from "next/link";
 
 export default async function Section6({ products }: { products: DataStructure['landing']['collections']['discountProducts'] }) {
   const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
+
   const responsive = [
-    { breakpoint: 1200, settings: { slidesToShow: 4 } },
-    { breakpoint: 1024, settings: { slidesToShow: 3 } },
-    { breakpoint: 650, settings: { slidesToShow: 2 } },
-    { breakpoint: 426, settings: { slidesToShow: 2 } }
+    { breakpoint: 1024, settings: { slidesToShow: 4 } },
+    { breakpoint: 768, settings: { slidesToShow: 3 } },
+    { breakpoint: 600, settings: { slidesToShow: 2 } }
   ];
 
   return (

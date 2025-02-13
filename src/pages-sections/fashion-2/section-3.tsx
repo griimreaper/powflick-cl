@@ -51,8 +51,14 @@ const sportsCategories = [
 export default async function Section3({ className }: { className: string }) {
   const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
 
+  const responsive = [
+    { breakpoint: 1024, settings: { slidesToShow: 4 } },
+    { breakpoint: 768, settings: { slidesToShow: 3 } },
+    { breakpoint: 600, settings: { slidesToShow: 2 } }
+  ];
+
   return (
-    <Container className={`${className}`}>
+    <Container className={`${className}`} style={{ display: 'flex', height: isMobile ? '45%' : '50%', justifyContent: 'flex-end', gap: 8, width: '100%', flexDirection: 'column' }}>
       {isMobile ? (
         <Box sx={{
           textAlign: "center",
@@ -114,7 +120,7 @@ export default async function Section3({ className }: { className: string }) {
       )
       }
 
-      <Carousel slidesToShow={isMobile ? 2 : 4} >
+      <Carousel responsive={responsive} >
         {sportsCategories.map((item) => (
           <Box key={item.id} sx={{ position: "relative" }}>
             <CategoryCard1 image={item.image} title={item.title} link={item.link} />
