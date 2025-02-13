@@ -274,6 +274,8 @@ export default function PanelSides({
                 handleShowItem("Logo");
                 setShowInputsEdit("");
               }}
+              variant="contained"
+              color="primary"
               sx={{
                 width: { xs: "64px", sm: "112px" },
                 margin: "0 auto",
@@ -282,11 +284,7 @@ export default function PanelSides({
                 alignItems: "center",
                 borderRadius: 1,
                 backgroundColor: "#D23F57",
-                color: "white",
                 textTransform: "none",
-                "&:hover": {
-                  backgroundColor: "darkred",
-                },
                 "&:focus": {
                   outline: "none",
                   ring: 2,
@@ -327,6 +325,8 @@ export default function PanelSides({
                 handleShowItem("Text");
                 setShowInputsEdit("");
               }}
+              variant="contained"
+              color="primary"
               sx={{
                 width: { xs: "64px", sm: "112px" },
                 margin: "0 auto",
@@ -334,12 +334,7 @@ export default function PanelSides({
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 1,
-                backgroundColor: "#D23F57",
-                color: "white",
                 textTransform: "none",
-                "&:hover": {
-                  backgroundColor: "darkred",
-                },
                 "&:focus": {
                   outline: "none",
                   ring: 2,
@@ -380,6 +375,8 @@ export default function PanelSides({
                 handleShowItem("Number");
                 setShowInputsEdit("");
               }}
+              variant="contained"
+              color="primary"
               sx={{
                 width: { xs: "64px", sm: "112px" },
                 margin: "0 auto",
@@ -387,12 +384,7 @@ export default function PanelSides({
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 1,
-                backgroundColor: "#D23F57",
-                color: "white",
                 textTransform: "none",
-                "&:hover": {
-                  backgroundColor: "darkred",
-                },
                 "&:focus": {
                   outline: "none",
                   ring: 2,
