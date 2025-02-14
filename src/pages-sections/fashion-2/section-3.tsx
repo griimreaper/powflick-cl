@@ -58,15 +58,26 @@ export default async function Section3({ className }: { className: string }) {
   ];
 
   return (
-    <Container className={`${className}`} style={{ display: 'flex', height: isMobile ? '45%' : '50%', justifyContent: 'flex-end', gap: 8, width: '100%', flexDirection: 'column' }}>
+    <Container
+      className={`${className}`}
+      style={{
+        display: "flex",
+        height: isMobile ? "45%" : "50%",
+        justifyContent: "flex-end",
+        gap: 8,
+        width: "100%",
+        flexDirection: "column",
+      }}
+    >
       {isMobile ? (
-        <Box sx={{
-          textAlign: "center",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
+        <Box
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
         >
           <Typography
             variant="h2"
@@ -74,8 +85,7 @@ export default async function Section3({ className }: { className: string }) {
             sx={{
               // fontWeight: "bold",
               fontSize: "1.3rem",
-              background:
-                "white",
+              background: "white",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               // fontStyle: "italic",
@@ -85,7 +95,7 @@ export default async function Section3({ className }: { className: string }) {
           >
             CATEGORIES
           </Typography>
-          <Link href={'/products'}>
+          <Link href={"/products"}>
             <Paragraph
               sx={{
                 fontWeight: "bold",
@@ -106,27 +116,30 @@ export default async function Section3({ className }: { className: string }) {
             component="h1"
             sx={{
               // fontWeight: "bold",
-              background:
-                "white",
+              background: "white",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               // fontStyle: "italic",
               fontFamily: "GYMER", // Añadir la fuente GYMER
+              textAlign: "left",
             }}
           >
             CATEGORIES
           </Typography>
         </Box>
-      )
-      }
+      )}
 
-      <Carousel responsive={responsive} >
+      <Carousel responsive={responsive}>
         {sportsCategories.map((item) => (
           <Box key={item.id} sx={{ position: "relative" }}>
-            <CategoryCard1 image={item.image} title={item.title} link={item.link} />
+            <CategoryCard1
+              image={item.image}
+              title={item.title}
+              link={item.link}
+            />
           </Box>
         ))}
       </Carousel>
-    </Container >
+    </Container>
   );
 }
