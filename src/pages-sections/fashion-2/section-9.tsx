@@ -5,13 +5,13 @@ import { useMediaQuery, useTheme, Box, Typography } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
 // LOCAL CUSTOM COMPONENT
-import { RootStyle } from "./styles";
+import { RootStyle } from "./section-7";
 
-export default function Section7() {
+export default function Section9() {
   const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
 
   // Determina la imagen según el tamaño de la pantalla
-  const backgroundImage = !isMobile ? `/assets/images/landing/POWFLICK-19.png` : `/assets/images/landing/mobile/POWFLICK-19.png`;
+  const backgroundImage = !isMobile ? `/assets/images/landing/POWFLICK-20.png` : `/assets/images/landing/mobile/POWFLICK-20.png`;
 
   return (
     <RootStyle>
