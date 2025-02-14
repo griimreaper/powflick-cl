@@ -283,7 +283,6 @@ export default function PanelSides({
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 1,
-                backgroundColor: "#D23F57",
                 textTransform: "none",
                 "&:focus": {
                   outline: "none",
