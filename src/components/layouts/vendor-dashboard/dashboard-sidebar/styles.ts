@@ -22,7 +22,7 @@ const SidebarWrapper = styled("div", {
   transition: "all .2s ease",
   zIndex: theme.zIndex.drawer,
   color: theme.palette.common.white,
-  backgroundColor: theme.palette.grey[900],
+  backgroundColor: '#ca0b0b',
   ...(compact && { width: 86, "&:hover": { width: 280 } }),
 }));
 
@@ -37,10 +37,10 @@ const NavItemButton = styled(ButtonBase, {
   justifyContent: "flex-start",
   transition: "all 0.15s ease",
   ...(active && {
-    color: theme.palette.info.main,
-    backgroundColor: alpha(theme.palette.grey[800], 0.6),
+    color: 'white',
+    backgroundColor: alpha('#1A1A1A', 0.6),
     "& .MuiSvgIcon-root .secondary": {
-      color: theme.palette.info.main,
+      color: '#CA0B0B',
       opacity: 1,
     },
   }),
@@ -98,7 +98,7 @@ const BulletIcon = styled("div", {
   overflow: "hidden",
   borderRadius: "50%",
   marginRight: "1.3rem",
-  background: active ? theme.palette.info.main : theme.palette.common.white,
+  background: active ? theme.palette.common.white : '#ca0b0b',
   boxShadow: active
     ? `0px 0px 0px 4px ${alpha(theme.palette.info['light'], 0.2)}`
     : "none",

@@ -369,7 +369,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
               </Grid>
 
               <Grid item xs={12}>
-                <DropZone onChange={(files: any) => handleChangeDropZone(files)} />
+                {/* <DropZone onChange={(files: any) => handleChangeDropZone(files)} /> */}
 
                 <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
                   {files.map((file, index) => (
