@@ -99,7 +99,7 @@ export default function ShopLayout1({
         {/* <Topbar /> */}
 
         {/* HEADER */}
-        {/* <Sticky fixedOn={0} onSticky={toggleIsFixed} scrollDistance={300}> */}
+        {/* <Sticky fixedOn={0} onSticky={setIsFixed} scrollDistance={300}> */}
         <Header
           landing={landing}
           isFixed={isFixed}

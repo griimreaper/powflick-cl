@@ -142,7 +142,7 @@ function EditableContainer({
     };
 
     const handleFontChange = (
-        event: SelectChangeEvent ,
+        event: SelectChangeEvent,
         index: number,
         type: "Text" | "Number"
     ) => {
@@ -358,8 +358,9 @@ function EditableContainer({
                         </Button>
 
                         <Button
-                            variant="contained"
                             onClick={() => handleSetForAll("Logo")}
+                            variant='contained'
+                            color='primary'
                             disabled={customizations?.length === 1 || !logos[selection.index]?.logoUrl}
                             sx={{
                                 backgroundColor:
@@ -416,11 +417,11 @@ function EditableContainer({
                                     sx={{
                                         width: `${(each.text ?? "").length + 2}ch`,
                                         "&.Mui-focused": {
-                                            backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                            backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         },
-                                        backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                        backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         cursor: selection.index === index ? "default" : "pointer",
-                                        "&:hover": { backgroundColor: "#D23F57" },
+                                        "&:hover": { backgroundColor: "primary.400" },
                                     }}
                                 />
                             )
@@ -503,14 +504,11 @@ function EditableContainer({
                             </Box>
                             <Button
                                 onClick={() => handleSetForAll("Text")}
+                                variant='contained'
+                                color='primary'
                                 disabled={customizations?.length === 1}
                                 sx={{
                                     gap: 1,
-                                    color: "white",
-                                    backgroundColor: customizations?.length === 1 ? "#e0e0e0" : "#D23F57",
-                                    "&:hover": {
-                                        backgroundColor: customizations?.length === 1 ? "#D23F57" : "#D23F57",
-                                    },
                                 }}
                             >
                                 Set For All
@@ -564,15 +562,14 @@ function EditableContainer({
                                             width: `${(each.number ?? "").length + 1}ch`,
                                         },
                                     }}
-                                    variant="outlined"
                                     size="small"
                                     sx={{
                                         "&.Mui-focused": {
-                                            backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                            backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         },
-                                        backgroundColor: selection.index === index ? "#D23F57" : "#f5f5f5",
+                                        backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         cursor: selection.index === index ? "default" : "pointer",
-                                        "&:hover": { backgroundColor: "#D23F57", color: "#fff" },
+                                        "&:hover": { backgroundColor: "primary.400" },
                                     }}
                                 />
                             )
@@ -660,13 +657,10 @@ function EditableContainer({
                             <Button
                                 onClick={() => handleSetForAll("Number")}
                                 disabled={customizations?.length === 1}
+                                variant="contained"
+                                color='primary'
                                 sx={{
                                     gap: 1,
-                                    color: "white",
-                                    backgroundColor: customizations?.length === 1 ? "#e0e0e0" : "#D23F57",
-                                    "&:hover": {
-                                        backgroundColor: customizations?.length === 1 ? "#D23F57" : "#D23F57",
-                                    },
                                 }}
                             >
                                 Set For All
@@ -694,7 +688,7 @@ function EditableContainer({
                     </Box>
                 </Box>
             )}
-            <Box sx={{ width: "100%"        }}>
+            <Box sx={{ width: "100%" }}>
                 {showInputsEdit === "Text" ? (
                     <InputTeam
                         sideName={sideName}

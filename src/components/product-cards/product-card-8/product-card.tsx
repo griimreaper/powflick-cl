@@ -71,7 +71,7 @@ export default function ProductCard8({ product, active=false }: Props) {
 
   return (
     <Card>
-      <CardMedia style={active ? { border: "1px solid #7B7B7B",background: '#1A1A1A', } : {}}>
+      <CardMedia style={active ? { border: "1px solid #7B7B7B",background: 'transparent', } : {}}>
         <DiscountChip discount={discount} />
         <Link
           href={`/products/${slug}`}
@@ -220,7 +220,7 @@ export default function ProductCard8({ product, active=false }: Props) {
         ) : null}
 
         {/* PRODUCT TITLE / NAME */}
-        <Paragraph style={{ color: "#A30E0E" }} fontWeight="bold">
+        <Paragraph color='primary.main' fontWeight="bold">
           {title}
         </Paragraph>
 

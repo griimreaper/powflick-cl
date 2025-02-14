@@ -25,6 +25,7 @@ import {
 import { Slider } from "@mui/material";
 import { ProductDB } from "models/types";
 import { themeColors } from "theme/theme-colors";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const OTHERS = [
   { label: "On Sale", value: "discount" },
@@ -58,6 +59,35 @@ export default function ProductFilterCard({
   colors,
 }: Props) {
   const [collapsed, setCollapsed] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Función para actualizar los filtros en la URL
+  const updateURL = (key: ProductFilterKeys, value: ProductFilterValues) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (Array.isArray(value) && value.length > 0) {
+      params.set(key, value.join(",")); // Convierte array a string separada por comas
+    } else if (typeof value === "string" || typeof value === "number") {
+      params.set(key, String(value));
+    } else {
+      params.delete(key); // Elimina el parámetro si está vacío o es undefined
+    }
+
+    router.push(`?${params.toString()}`, { scroll: false }); // Actualiza la URL sin recargar la página
+  };
+
+  const handleChangePrice = (values: number[]) => {
+    changeFilters && changeFilters("price", values);
+  };
+  const handleChangeColor = (value: string) => updateURL("color", [[value.split('')[0].toUpperCase() + value.slice(1)].join("")]);
+  const handleChangeCategory = (value: string) => updateURL("category", [value]);
+  const handleChangeSubCategory = (value: string) => updateURL("collection", [value]);
+
+  const handleResetFilters = () => {
+    router.push("?", { scroll: false }); // Reinicia los filtros a su estado inicial
+  };
+
 
   const isValidColor = (color: string) => {
     if (typeof window === "undefined") return false; // No se puede validar en el servidor
@@ -69,16 +99,6 @@ export default function ProductFilterCard({
 
   const validColors = colors?.map(c => c.trim().toLowerCase())
     .filter(isValidColor);
-
-  const handleChangePrice = (values: number[]) => {
-    changeFilters && changeFilters("price", values);
-  };
-
-  const handleChangeColor = (value: string) => {
-    const firstLetterUp = value.split('')[0].toUpperCase()
-    value = [firstLetterUp, ...value.split('').splice(1)].join('');
-    changeFilters && changeFilters("color", [value]);
-  };
 
   // const handleChangeBrand = (value: string) => {
   //   const values = filters.brand?.includes(value)
@@ -103,37 +123,15 @@ export default function ProductFilterCard({
       changeFilters && changeFilters("sales", values?.length ? values : undefined);
     }
   };
-  
+
 
   const handleChangeRating = (value: number) => {
-    changeFilters && changeFilters("rating", value);
+    updateURL("rating", value);
   };
 
-  const handleChangeCategory = (value: string) => {
-    changeFilters && changeFilters("category", [value]);
-    changeFilters && changeFilters("collection", []); // Limpiar subcategoría seleccionada
-  };
-
-  const handleChangeSubCategory = (value: string) => {
-    changeFilters && changeFilters("collection", [value]);
-  };
 
   const toggleCollapse = (categoryId: string) => {
     setCollapsed((prev) => (prev === categoryId ? null : categoryId));
-  };
-
-  const handleResetFilters = () => {
-    changeFilters && changeFilters("price", initialFilters.price);
-    changeFilters && changeFilters("color", initialFilters.color);
-    changeFilters && changeFilters("brand", initialFilters.brand);
-    changeFilters && changeFilters("sales", initialFilters.sales);
-    changeFilters && changeFilters("rating", initialFilters.rating);
-    changeFilters && changeFilters("category", initialFilters.category);
-    changeFilters && changeFilters("mostSold", undefined);
-    changeFilters && changeFilters("discount", undefined);
-    changeFilters && changeFilters("featured", undefined);
-    changeFilters && changeFilters("collection", initialFilters.collection);
-    changeFilters && changeFilters("search", initialFilters.search);
   };
 
   console.log(filters);

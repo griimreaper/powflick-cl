@@ -57,7 +57,12 @@ export default function LoginCartButtons({
         <PersonOutline sx={ICON_COLOR} />
       </IconButton>
 
-      <Badge badgeContent={cart?.length} color="primary">
+      <Badge badgeContent={cart?.length} color="primary" sx={{
+        "& .MuiBadge-badge": {
+          backgroundColor: "#FEFCFC", // Cambia el color de fondo
+          color: "primary.main", // Cambia el color del número
+        }
+      }}>
         <IconButton onClick={toggleSidenav}>
           <ShoppingBagOutlined sx={ICON_COLOR} />
         </IconButton>
