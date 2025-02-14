@@ -10,8 +10,13 @@ import {
   Grid,
 } from "@mui/material";
 import Image from "next/image";
+import BeforeAfterSlider from "react-before-after-slider-component";
+import "react-before-after-slider-component/dist/build.css";
 
 export default function Home() {
+  const beforeImage = { imageUrl: "/DESIGN_MAN_1.png" }; // Ruta de la imagen antes
+  const afterImage = { imageUrl: "/DESIGN_MAN_2.png" }; // Ruta de la imagen después
+
   return (
     <Container maxWidth={false} style={{ backgroundColor: "white" }}>
       {/* Hero Section */}
@@ -26,7 +31,20 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        {/* Puedes agregar contenido adicional aquí */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            right: "5%",
+            width: "50%",
+            height: "100%",
+          }}
+        >
+          <BeforeAfterSlider
+            firstImage={beforeImage}
+            secondImage={afterImage}
+          />
+        </div>
       </Box>
 
       {/* Banner Section */}
