@@ -374,32 +374,35 @@ export default function ProductIntro({ product }: Props) {
               </FlexBox>
 
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              <FlexBox alignItems="center" gap={2}>
+              <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
                 <Button
                   id="addToBag-button-event-click"
                   color="primary"
                   variant="contained"
-                  sx={{ px: "1.75rem", height: 40 }}
+                  sx={{
+                    width: "clamp(120px, 30vw, 300px)", // Ajusta dinámicamente el tamaño del botón
+                    px: "clamp(1rem, 5vw, 1.75rem)", // Ajusta el padding según la pantalla
+                    height: 40,
+                    whiteSpace: "nowrap",
+                    flex: 1, // Permite que los botones se distribuyan equitativamente
+                  }}
                   onClick={() => {
                     const result = handleAddToBagClick();
-                    (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+                    (window as any).dataLayer.push({ ecommerce: null });
                     (window as any).dataLayer.push({
                       event: "Add To Cart",
                       ecommerce: {
                         currency: "USD",
                         value: Number(total),
                         total_product_price: Number(totalProductsPrice),
-                        total_customization_price: Number(
-                          totalCustomizationPrice
-                        ),
+                        total_customization_price: Number(totalCustomizationPrice),
                         items: [
                           {
                             item_id: result.productToBag.id,
                             item_name: result.productToBag.title,
                             affiliation: "Google Merchandise Store",
                             item_brand: "Pow Flick",
-                            item_category:
-                              product.product.product_categories.split("|")[0],
+                            item_category: product.product.product_categories.split("|")[0],
                             item_category2: product.product.sport,
                             item_variant: result.productToBag.colors,
                             price: Number(result.productToBag.price),
@@ -407,7 +410,6 @@ export default function ProductIntro({ product }: Props) {
                           },
                         ],
                       },
-                      // Your dataLayer push code here
                     });
                   }}
                 >
@@ -416,24 +418,31 @@ export default function ProductIntro({ product }: Props) {
 
                 <Button
                   onClick={handleAddToFav}
-                  sx={{ px: "1.75rem", height: 40 }}
+                  sx={{
+                    width: "clamp(120px, 30%, 200px)",
+                    px: "clamp(1rem, 5vw, 1.75rem)",
+                    height: 40,
+                    flex: 1,
+                  }}
                 >
-                  {isFav ? (
-                    <FavoriteOutlined color="primary" />
-                  ) : (
-                    <FavoriteBorderOutlined color={"inherit"} />
-                  )}
+                  {isFav ? <FavoriteOutlined color="primary" /> : <FavoriteBorderOutlined color={"inherit"} />}
                 </Button>
 
                 <Button
                   color="primary"
                   variant="contained"
                   onClick={handleCustomizationClick}
-                  sx={{ px: "1.75rem", height: 40 }}
+                  sx={{
+                    width: "clamp(120px, 30vw, 300px)",
+                    px: "clamp(1rem, 5vw, 1.75rem)",
+                    height: 40,
+                    flex: 1,
+                  }}
                 >
                   Customize
                 </Button>
               </FlexBox>
+
             </Box>
           </Box>
 

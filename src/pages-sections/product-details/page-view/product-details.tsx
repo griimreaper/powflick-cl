@@ -10,17 +10,18 @@ import FrequentlyBought from "../frequently-bought";
 
 // CUSTOM DATA MODEL
 import { detailProps, ProductDB } from "models/types";
+import { Box } from "@mui/material";
 
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
   const { product, sugestedProducts, frequentlyBought, reviews, PaymentMethods, ShippingTypes } = detail;
 
   return (
-    <div className="p-4" style={{ overflow: 'hidden', background: "white" }}>
+    <Box p={{ xs:2, sm: 4, md:6 }} style={{ overflow: 'hidden', background: "white" }}>
       {/* PRODUCT DETAILS INFO AREA */}
       <ProductIntro product={detail} />
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
-      <ProductTabs content={product.content} reviews={reviews} paymentMethods={PaymentMethods} shippingTypes={ShippingTypes}/>
+      <ProductTabs content={product.content} reviews={reviews} paymentMethods={PaymentMethods} shippingTypes={ShippingTypes} />
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
       {/* <FrequentlyBought products={frequentlyBought} /> */}
@@ -29,6 +30,6 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       {/* <AvailableShops /> */}
       {/* RELATED PRODUCTS AREA */}
       <RelatedProducts products={sugestedProducts} />
-    </div>
+    </Box>
   );
 }

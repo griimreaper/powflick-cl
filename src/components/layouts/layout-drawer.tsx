@@ -11,7 +11,7 @@ const Wrapper = styled("div")(({ theme }) => ({
   boxShadow: theme.shadows[1],
   zIndex: theme.zIndex.drawer + 3,
   color: theme.palette.common.white,
-  backgroundColor: theme.palette.grey[900]
+  backgroundColor: '#ca0b0b'
 }));
 
 // ==========================================================
