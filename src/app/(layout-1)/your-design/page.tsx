@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import BeforeAfterSlider from "react-before-after-slider-component";
 import "react-before-after-slider-component/dist/build.css";
+import Form from "./Form";
 
 export default function Home() {
   const beforeImage = { imageUrl: "/DESIGN_MAN_1.png" }; // Ruta de la imagen antes
@@ -45,6 +46,31 @@ export default function Home() {
             secondImage={afterImage}
           />
         </div>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "70%",
+            left: "7%",
+            transform: "translateY(-50%)",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "red",
+              color: "white",
+              fontSize: {
+                xs: "0.5rem",
+                sm: "0.50rem",
+                md: "1.5rem",
+                xl: "2rem",
+              },
+              padding: { xs: "4px 8px", sm: "4px 8px", md: "8px 16px" },
+            }}
+          >
+            Customize Now
+          </Button>
+        </Box>
       </Box>
 
       {/* Banner Section */}
@@ -71,53 +97,36 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-      ></Box>
-
-      {/* Form Section */}
-      <Box sx={{ py: 5 }}>
-        <Typography variant="h5" fontWeight="bold" textAlign="center">
-          FILL OUT THE REQUEST FORM
-        </Typography>
-        <Grid container spacing={2} sx={{ mt: 3 }}>
-          <Grid item xs={12}>
-            <TextField fullWidth label="Team Name / Team" variant="outlined" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              select
-              fullWidth
-              label="Select a sport"
-              variant="outlined"
-            >
-              <MenuItem value="soccer">Soccer</MenuItem>
-              <MenuItem value="basketball">Basketball</MenuItem>
-              <MenuItem value="football">Football</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Quantity"
-              type="number"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              multiline
-              rows={4}
-              label="Your request"
-              variant="outlined"
-            />
-          </Grid>
-        </Grid>
-        <Box textAlign="center" sx={{ mt: 3 }}>
-          <Button variant="contained" sx={{ bgcolor: "red" }}>
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: "20%", // Ajusta la posición vertical del botón
+            left: "50%",
+            transform: "translateX(-50%)", // Centra el botón horizontalmente
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "red",
+              color: "white",
+              fontSize: {
+                xs: "0.5rem",
+                sm: "0.50rem",
+                md: "1.5rem",
+                xl: "2rem",
+              },
+              padding: { xs: "4px 8px", sm: "4px 8px", md: "8px 16px" },
+            }}
+          >
             Customize Now
           </Button>
         </Box>
       </Box>
+
+      {/* Form Section */}
+      <Form />
     </Container>
   );
 }
