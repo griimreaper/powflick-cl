@@ -73,11 +73,7 @@ export default async function Section3({ className }: { className: string }) {
             component="h1"
             sx={{
               // fontWeight: "bold",
-              fontSize: "1.3rem",
-              background:
-                "white",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color:'white',
               // fontStyle: "italic",
               fontFamily: "GYMER", // Añadir la fuente GYMER
               lineHeight: 1,
@@ -100,17 +96,13 @@ export default async function Section3({ className }: { className: string }) {
           </Link>
         </Box>
       ) : (
-        <Box mb={4}>
+        <Box mb={4} overflow={'visible'}>
           <Typography
             variant="h3"
             component="h1"
             sx={{
-              // fontWeight: "bold",
-              background:
-                "white",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              // fontStyle: "italic",
+              textAlign: 'start',
+              color: "white",
               fontFamily: "GYMER", // Añadir la fuente GYMER
             }}
           >
