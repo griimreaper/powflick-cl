@@ -42,7 +42,9 @@ export default function ProductTabs({ content, reviews, paymentMethods, shipping
         textColor="primary"
         value={selectedOption}
         indicatorColor="primary"
-        onChange={handleOptionClick}>
+        onChange={handleOptionClick}
+        variant='scrollable'
+      >
         <Tab className="inner-tab" label="Description" />
         <Tab className="inner-tab" label={`Review (${reviews.length})`} />
         <Tab className="inner-tab" label={`Payment Method`} />
