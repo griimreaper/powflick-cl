@@ -13,6 +13,7 @@ import Image from "next/image";
 import BeforeAfterSlider from "react-before-after-slider-component";
 import "react-before-after-slider-component/dist/build.css";
 import Form from "./Form";
+import { primary } from "theme/theme-colors";
 
 export default function Home() {
   const beforeImage = { imageUrl: "/DESIGN_MAN_1.png" }; // Ruta de la imagen antes
@@ -56,8 +57,9 @@ export default function Home() {
         >
           <Button
             variant="contained"
+            color="error"
             sx={{
-              bgcolor: "red",
+              bgcolor: "primary.main",
               color: "white",
               fontSize: {
                 xs: "0.5rem",
@@ -108,8 +110,9 @@ export default function Home() {
         >
           <Button
             variant="contained"
+            color="error"
             sx={{
-              bgcolor: "red",
+              bgcolor: "primary.main",
               color: "white",
               fontSize: {
                 xs: "0.5rem",

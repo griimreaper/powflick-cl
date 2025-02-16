@@ -21,17 +21,33 @@ const sports = [
   "Gaming",
 ];
 const colors = [
-  "Red",
-  "Blue",
-  "Green",
-  "Black",
-  "Brown",
-  "Crimson",
-  "Cyan",
-  "Indigo",
-  "Magenta",
-  "Maroon",
-  "Navy",
+  "#000000",
+  "#FF0000",
+  "#FFFF00",
+  "#00FF00",
+  "#0000FF",
+  "#FF00FF",
+  "#8B0000",
+  "#FFA500",
+  "#BDB76B",
+  "#9ACD32",
+  "#008000",
+  "#006400",
+  "#3CB371",
+  "#20B2AA",
+  "#4682B4",
+  "#191970",
+  "#4B0082",
+  "#800080",
+  "#8B008B",
+  "#D2B48C",
+  "#A9A9A9",
+  "#696969",
+  "#8B4513",
+  "#A52A2A",
+  "#D2691E",
+  "#8B0000",
+  "#654321",
 ];
 
 export default function RequestForm() {
@@ -63,7 +79,12 @@ export default function RequestForm() {
         gutterBottom
         align="center"
         mb={10}
-        sx={{ fontStyle: "italic", fontWeight: "bold" }}
+        sx={{
+          fontStyle: "italic",
+          fontWeight: "bold",
+          fontFamily: "GYMER",
+          color: "primary.main",
+        }}
       >
         Fill out the request form
       </Typography>
@@ -73,7 +94,7 @@ export default function RequestForm() {
         gutterBottom
         align="left"
         mb={2}
-        sx={{ fontStyle: "italic", fontWeight: "bold" }}
+        sx={{ fontStyle: "italic", fontWeight: "800" }}
       >
         Type of request
       </Typography>
@@ -82,7 +103,7 @@ export default function RequestForm() {
           variant="contained"
           color="error"
           fullWidth
-          sx={{ color: "white", py: 1.5, }}
+          sx={{ color: "white", py: 1.5, bgcolor: "primary.main" }}
         >
           Single cost for graphic service
         </Button>
@@ -90,7 +111,7 @@ export default function RequestForm() {
           variant="contained"
           color="error"
           fullWidth
-          sx={{ color: "white", py: 1.5 }}
+          sx={{ color: "white", py: 1.5, bgcolor: "primary.main" }}
         >
           I already have a sketch and print files
         </Button>
@@ -102,7 +123,7 @@ export default function RequestForm() {
           gutterBottom
           align="left"
           mb={2}
-          sx={{ fontStyle: "italic", fontWeight: "bold" }}
+          sx={{ fontStyle: "italic", fontWeight: "800" }}
         >
           Team Name / Team
         </Typography>
@@ -113,6 +134,7 @@ export default function RequestForm() {
           value={form.teamName}
           onChange={handleChange}
           required
+          sx={{ border: "0.5px solid lightcoral", borderRadius: 2 }}
         />
 
         <FormControl fullWidth margin="normal">
@@ -121,7 +143,7 @@ export default function RequestForm() {
             gutterBottom
             align="left"
             mb={2}
-            sx={{ fontStyle: "italic", fontWeight: "bold" }}
+            sx={{ fontStyle: "italic", fontWeight: "800" }}
           >
             Select sport
           </Typography>
@@ -130,7 +152,12 @@ export default function RequestForm() {
             value={form.sport}
             onChange={handleChange}
             required
+            sx={{ border: "0.5px solid lightcoral", borderRadius: 2 }}
+            displayEmpty
           >
+            <MenuItem value="" disabled>
+              Please select
+            </MenuItem>
             {sports.map((sport) => (
               <MenuItem key={sport} value={sport}>
                 {sport}
@@ -144,12 +171,16 @@ export default function RequestForm() {
           gutterBottom
           align="left"
           mb={2}
-          sx={{ fontStyle: "italic", fontWeight: "bold" }}
+          sx={{ fontStyle: "italic", fontWeight: "800" }}
         >
           Quantity
         </Typography>
         <TextField
-          sx={{ width: "20%" }}
+          sx={{
+            width: "20%",
+            border: "0.5px solid lightcoral",
+            borderRadius: 2,
+          }}
           type="number"
           name="quantity"
           margin="normal"
@@ -164,7 +195,7 @@ export default function RequestForm() {
             gutterBottom
             align="left"
             mb={2}
-            sx={{ fontStyle: "italic", fontWeight: "bold" }}
+            sx={{ fontStyle: "italic", fontWeight: "800" }}
           >
             Color
           </Typography>
@@ -200,7 +231,7 @@ export default function RequestForm() {
           gutterBottom
           align="left"
           mb={2}
-          sx={{ fontStyle: "italic", fontWeight: "bold" }}
+          sx={{ fontStyle: "italic", fontWeight: "800" }}
         >
           Your request
         </Typography>
@@ -208,19 +239,22 @@ export default function RequestForm() {
           fullWidth
           multiline
           rows={4}
-          label="Describe your project in detail"
+          label="Describe your project in detail, indicate the model you have chosen, the colors and the positioning o f the logos and graphics. Requests that do not meet these characteristics will not be processed."
           name="description"
           margin="normal"
           value={form.description}
           onChange={handleChange}
           required
+          sx={{ border: "0.5px solid lightcoral", borderRadius: 2 }}
         />
 
         <Button
           variant="contained"
+          color="error"
           sx={{
-            bgcolor: "red",
+            bgcolor: "primary.main",
             color: "white",
+            marginTop: 4,
           }}
         >
           Customize Now
