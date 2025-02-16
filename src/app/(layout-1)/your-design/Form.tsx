@@ -94,11 +94,20 @@ export default function RequestForm() {
         gutterBottom
         align="left"
         mb={2}
-        sx={{ fontStyle: "italic", fontWeight: "800" }}
+        sx={{
+          fontStyle: "italic",
+          fontWeight: "800",
+          textAlign: { xs: "center", md: "left" },
+        }}
       >
         Type of request
       </Typography>
-      <Stack direction="row" spacing={2} justifyContent="center" sx={{ mb: 2 }}>
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={2}
+        justifyContent="center"
+        sx={{ mb: 2 }}
+      >
         <Button
           variant="contained"
           color="error"
@@ -123,7 +132,11 @@ export default function RequestForm() {
           gutterBottom
           align="left"
           mb={2}
-          sx={{ fontStyle: "italic", fontWeight: "800" }}
+          sx={{
+            fontStyle: "italic",
+            fontWeight: "800",
+            textAlign: { xs: "center", md: "left" },
+          }}
         >
           Team Name / Team
         </Typography>
@@ -143,7 +156,11 @@ export default function RequestForm() {
             gutterBottom
             align="left"
             mb={2}
-            sx={{ fontStyle: "italic", fontWeight: "800" }}
+            sx={{
+              fontStyle: "italic",
+              fontWeight: "800",
+              textAlign: { xs: "center", md: "left" },
+            }}
           >
             Select sport
           </Typography>
@@ -171,7 +188,11 @@ export default function RequestForm() {
           gutterBottom
           align="left"
           mb={2}
-          sx={{ fontStyle: "italic", fontWeight: "800" }}
+          sx={{
+            fontStyle: "italic",
+            fontWeight: "800",
+            textAlign: { xs: "center", md: "left" },
+          }}
         >
           Quantity
         </Typography>
@@ -180,6 +201,9 @@ export default function RequestForm() {
             width: "20%",
             border: "0.5px solid lightcoral",
             borderRadius: 2,
+            display: { xs: "block", md: "inline-block" }, // En mobile se comporta como bloque para centrarse
+            margin: { xs: "0 auto", md: "0" }, // Centrado solo en xs, normal en md+
+            textAlign: { xs: "center", md: "left" }, // Asegura que el contenido esté alineado correctamente
           }}
           type="number"
           name="quantity"
@@ -195,7 +219,11 @@ export default function RequestForm() {
             gutterBottom
             align="left"
             mb={2}
-            sx={{ fontStyle: "italic", fontWeight: "800" }}
+            sx={{
+              fontStyle: "italic",
+              fontWeight: "800",
+              textAlign: { xs: "center", md: "left" },
+            }}
           >
             Color
           </Typography>
@@ -238,8 +266,8 @@ export default function RequestForm() {
         <TextField
           fullWidth
           multiline
-          rows={4}
-          label="Describe your project in detail, indicate the model you have chosen, the colors and the positioning o f the logos and graphics. Requests that do not meet these characteristics will not be processed."
+          rows={10}
+          placeholder="Describe your project in detail, indicate the model you have chosen, the colors and the positioning of the logos and graphics. Requests that do not meet these characteristics will not be processed."
           name="description"
           margin="normal"
           value={form.description}

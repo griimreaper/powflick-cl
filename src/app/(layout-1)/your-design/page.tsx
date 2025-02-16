@@ -27,18 +27,24 @@ export default function Home() {
           position: "relative",
           width: "100%",
           height: 0,
-          paddingTop: "56.25%", // 1920x1080 aspect ratio (1080/1920 = 0.5625)
-          backgroundImage: "url('/DESIGN_BACKGROUND.png')",
+          paddingTop: {
+            xs: "178.13%", // 768x1370 aspect ratio (1370/768 = 1.7813)
+            md: "56.25%", // 1920x1080 aspect ratio (1080/1920 = 0.5625)
+          },
+          backgroundImage: {
+            xs: "url('/DESIGN_BACKGROUND_MOBILE.png')", // Imagen para dispositivos móviles
+            md: "url('/DESIGN_BACKGROUND.png')", // Imagen para dispositivos no móviles
+          },
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             position: "absolute",
-            top: 0,
-            right: "5%",
-            width: "50%",
+            top: { xs: "48%", md: 0 },
+            right: { xs: 0, md: "5%" },
+            width: { xs: "80%", md: "50%" },
             height: "100%",
           }}
         >
@@ -46,9 +52,10 @@ export default function Home() {
             firstImage={beforeImage}
             secondImage={afterImage}
           />
-        </div>
+        </Box>
         <Box
           sx={{
+            display: { xs: "none", md: "block" },
             position: "absolute",
             top: "70%",
             left: "7%",
@@ -81,8 +88,14 @@ export default function Home() {
           position: "relative",
           width: "100%",
           height: 0,
-          paddingTop: "33.8%", // 1920x649 aspect ratio (649/1920 = 0.338)
-          backgroundImage: "url('/DESIGN_INFERIOR.png')",
+          paddingTop: {
+            xs: "84.375%", // 768x648 aspect ratio (648/768 = 0.84375)
+            md: "33.8%", // 1920x1080 aspect ratio (1080/1920 = 0.5625)
+          },
+          backgroundImage: {
+            xs: "url('/DESIGN_INFERIOR_MOBILE.png')",
+            md: "url('/DESIGN_INFERIOR.png')",
+          },
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -94,8 +107,14 @@ export default function Home() {
           position: "relative",
           width: "100%",
           height: 0,
-          paddingTop: "51.77%", // 1920x994 aspect ratio (994/1920 = 0.5177)
-          backgroundImage: "url('/DESIGN_WORK.png')",
+          paddingTop: {
+            xs: "220.3125%", // 768x1690 aspect ratio (1690/768 = 2.203125)
+            md: "51.77%", // 1920x994 aspect ratio (994/1920 = 0.5177)
+          },
+          backgroundImage: {
+            xs: "url('/DESIGN_WORK_MOBILE.png')",
+            md: "url('/DESIGN_WORK.png')",
+          },
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
