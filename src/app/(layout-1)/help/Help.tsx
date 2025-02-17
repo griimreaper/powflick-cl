@@ -98,7 +98,7 @@ const sectionsData = {
 
 export default function FAQSection() {
   const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
-  const [activeTab, setActiveTab] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string | null>('orders');
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
 
   const handleActiveTab = (tab: string) => {
@@ -148,6 +148,20 @@ export default function FAQSection() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", background: 'white' }}>
+      <Box style={{ position: "relative", width: "100%" }}>
+        <img
+          src="/assets/images/faqs/FAQS_FORMAS-4.png"
+          alt="Overlay"
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            zIndex: 2,
+            width: window.innerWidth <= 768 ? "75px" : "180px",
+            height: "auto",
+          }}
+        />
+      </Box>
       <Box
         sx={{
           position: "relative",
@@ -164,22 +178,9 @@ export default function FAQSection() {
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <Box style={{ position: "relative", width: "100%" }}>
-          <img
-            src="/assets/images/faqs/FAQS_FORMAS-4.png"
-            alt="Overlay"
-            style={{
-              position: "absolute",
-              right: 0,
-              top: -175,
-              zIndex: 0,
-              width: window.innerWidth <= 768 ? "125px" : "180px",
-              height: "auto",
-            }}
-          />
-        </Box>
+
         <Box sx={{ width: isMobile ? '100%' : '80%', p: isMobile ? 4 : 0 }}>
-          <Typography variant="h3" component={'h1'} sx={{ fontWeight: '400', fontFamily: "GYMER", fontSize: isMobile ? '1.2rem' : '2rem', textAlign: 'center', mb: 2, color: 'white' }}>
+          <Typography variant="h3" component={'h1'} sx={{ fontWeight: '400', fontFamily: "GYMER", fontSize: isMobile ? '1.3rem' : '2rem', textAlign: 'center', mb: 2, color: 'white', position: 'relative', zIndex:3 }}>
             We want your experience to be perfect!
           </Typography>
           <Typography variant="h5" component={'h2'} sx={{ textAlign: 'center', color: 'white', fontSize: isMobile ? '1rem' : '2rem' }}>
@@ -194,9 +195,9 @@ export default function FAQSection() {
           style={{
             position: "absolute",
             left: 0,
-            bottom: -300,
+            bottom: window.innerWidth <= 768 ? -100 : -300,
             zIndex: 0,
-            width: window.innerWidth <= 768 ? "125px" : "180px",
+            width: window.innerWidth <= 768 ? "75px" : "180px",
             height: "auto",
           }}
         />
@@ -238,7 +239,7 @@ export default function FAQSection() {
             right: 0,
             bottom: -32,
             zIndex: 0,
-            width: window.innerWidth <= 768 ? "125px" : "180px",
+            width: window.innerWidth <= 768 ? "75px" : "180px",
             height: "auto",
           }}
         />
