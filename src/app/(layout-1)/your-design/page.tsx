@@ -20,7 +20,7 @@ export default function Home() {
   const afterImage = { imageUrl: "/DESIGN_MAN_2.png" }; // Ruta de la imagen después
 
   return (
-    <Container maxWidth={false} style={{ backgroundColor: "white" }}>
+    <Box style={{ backgroundColor: "white" }}>
       {/* Hero Section */}
       <Box
         sx={{
@@ -42,6 +42,7 @@ export default function Home() {
         <Box
           sx={{
             position: "absolute",
+            overflow: "hidden",
             top: { xs: "48%", md: 0 },
             right: { xs: 0, md: "5%" },
             width: { xs: "80%", md: "50%" },
@@ -149,6 +150,6 @@ export default function Home() {
 
       {/* Form Section */}
       <Form />
-    </Container>
+    </Box>
   );
 }
