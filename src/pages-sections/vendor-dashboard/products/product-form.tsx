@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -16,10 +16,11 @@ import { FlexBox } from "components/flex-box";
 import { UploadImageBox, StyledClear } from "../styles";
 import { Paragraph } from "components/Typography";
 import { FormControlLabel, Switch } from "@mui/material";
-import { createProduct, updateProduct } from "services/dashboardAdmin/products";
+import { createProduct, updateProduct, uploadFolder } from "services/dashboardAdmin/products";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { useRouter } from "next/navigation";
+import ImageUploader from "components/DropZone";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -32,14 +33,14 @@ const VALIDATION_SCHEMA = yup.object().shape({
   sports: yup.string().required("Sport is required!"),
   status: yup.string().required("Status is required!"),
   regular_price: yup
-  .number()
-  .required("Price is required!")
-  .positive("Price must be greater than 0!"),
+    .number()
+    .required("Price is required!")
+    .positive("Price must be greater than 0!"),
   discount: yup.number().optional(),
-  product_categories:  yup
-  .array()
-  .min(0, 'No Category selected')  // Permite que no se seleccione ninguna colección
-  .optional(),  // Permite que el campo sea opcional
+  product_categories: yup
+    .array()
+    .min(0, 'No Category selected')  // Permite que no se seleccione ninguna colección
+    .optional(),  // Permite que el campo sea opcional
   featured: yup.boolean(),
   mostSold: yup.boolean(),
 });
@@ -59,6 +60,20 @@ interface Props {
   collectionsList: string[]
   categoriesList: string[]
 }
+type ProductFormData = {
+  [key: string]: any;
+  title: any;
+  collections: any;
+  content: any;
+  status: any;
+  sports: any;
+  regular_price: any;
+  discount: any;
+  product_categories: any;
+  featured: any;
+  mostSold: any;
+};
+
 // ================================================================
 
 export default function ProductForm({ product, collectionsList, categoriesList }: Props) {
@@ -79,7 +94,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
     collections,
   } = product || {};
 
-  const INITIAL_VALUES = {
+  const INITIAL_VALUES: ProductFormData = {
     title: title || "",
     collections: collections ? collections.map(({ title }: { title: string }) => title) : [],
     content: content || "",
@@ -91,14 +106,35 @@ export default function ProductForm({ product, collectionsList, categoriesList }
     featured: featured || false,
     mostSold: mostSold || false,
   };
-
   const [files, setFiles] = useState<File[]>([]);
+
+  const uploadImages = async () => {
+    try {
+      const main = files.filter(f => f && !f?.name.includes('customization'))
+      const custom = files.filter(f => f && f?.name.includes('customization'))
+      if (main.length > 0) {
+        await uploadFolder(
+          main,
+          title,
+        );
+      }
+      if (custom.length > 0) {
+        await uploadFolder(
+          custom,
+          title + '/SinLogo',
+        );
+      }
+    } catch (error) {
+      showErrorAlert('Failed', 'The product images cannot be updated')
+    }
+  }
 
   const update = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await updateProduct(id, values, profile.token as string);
-      console.log(response);
+      await uploadImages();
       showSuccessAlert('Success', response.message)
+
     } catch (error) {
       showErrorAlert('Failed', 'The product could not be updated')
     }
@@ -107,31 +143,31 @@ export default function ProductForm({ product, collectionsList, categoriesList }
   const create = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await createProduct(values, profile.token as string);
-      console.log(response);
+      await uploadImages();
       showSuccessAlert('Success', response.message)
-      router.push('/admin/products/'+ response.createdProduct.id)
+      router.push('/admin/products/' + response.createdProduct.id)
     } catch (error: any) {
       showErrorAlert('Failed', error.response.data.message)
     }
   }
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
-    if (!product) {
-      create(values)
-    } else {
-      update(values)
+    console.log(files.filter(f => f));
+    
+    if (files.filter(f => f).length < 4 && files.filter(f => f).length !== 0) {
+      // Mostrar el toast si no hay 4 archivos o ninguno
+      showErrorAlert('Error', 'You must upload exactly 4 files or none.');
+      return; // Evitar el envío del formulario si no se cumple la validación
     }
-  };
 
-  // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-  const handleChangeDropZone = (files: File[]) => {
-    files.forEach((file) => Object.assign(file, { preview: URL.createObjectURL(file) }));
-    setFiles(files);
-  };
+    if (!product) {
+      await create(values)
+      window.location.reload();
+    } else {
+      await update(values)
+      window.location.reload();
+    }
 
-  // HANDLE DELETE UPLOAD IMAGE
-  const handleFileDelete = (file: File) => () => {
-    setFiles((files) => files?.filter((item) => item.name !== file.name));
   };
 
   return (
@@ -369,16 +405,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
               </Grid>
 
               <Grid item xs={12}>
-                {/* <DropZone onChange={(files: any) => handleChangeDropZone(files)} /> */}
-
-                <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
-                  {files.map((file, index) => (
-                    <UploadImageBox key={index}>
-                      <Box component="img" src={''} width="100%" />
-                      <StyledClear onClick={handleFileDelete(file)} />
-                    </UploadImageBox>
-                  ))}
-                </FlexBox>
+                <ImageUploader defaultImages={product?.images} onChange={(newImages: any) => setFiles(newImages)} />
               </Grid>
 
               <Grid item sm={6} xs={12}>
