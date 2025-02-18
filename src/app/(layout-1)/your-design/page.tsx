@@ -56,9 +56,12 @@ export default function Home() {
         </Box>
         <Box
           sx={{
-            display: { xs: "none", md: "block" },
+            display: { xs: "", md: "block" },
             position: "absolute",
-            top: "70%",
+            top: {
+              xs: "35%",
+              md: "70%",
+            },
             left: "7%",
             transform: "translateY(-50%)",
           }}
@@ -71,11 +74,12 @@ export default function Home() {
               color: "white",
               fontSize: {
                 xs: "0.5rem",
-                sm: "0.50rem",
-                md: "1.5rem",
+                sm: "1.0rem",
+                md: "1.0rem",
+                lg: "1.5rem",
                 xl: "2rem",
               },
-              padding: { xs: "4px 8px", sm: "4px 8px", md: "8px 16px" },
+              padding: { xs: "8px 16px", sm: "8px 16px", md: "8px 16px" },
             }}
           >
             Customize Now
@@ -123,7 +127,7 @@ export default function Home() {
         <Box
           sx={{
             position: "absolute",
-            bottom: "20%", // Ajusta la posición vertical del botón
+            bottom: "7%", // Ajusta la posición vertical del botón
             left: "50%",
             transform: "translateX(-50%)", // Centra el botón horizontalmente
           }}
@@ -136,11 +140,12 @@ export default function Home() {
               color: "white",
               fontSize: {
                 xs: "0.5rem",
-                sm: "0.50rem",
-                md: "1.5rem",
+                sm: "1.0rem",
+                md: "1.0rem",
+                lg: "1.5rem",
                 xl: "2rem",
               },
-              padding: { xs: "4px 8px", sm: "4px 8px", md: "8px 16px" },
+              padding: { xs: "8px 16px", sm: "8px 16px", md: "8px 16px" },
             }}
           >
             Customize Now

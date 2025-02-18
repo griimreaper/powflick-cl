@@ -289,7 +289,18 @@ export default function RequestForm() {
           sx={{
             bgcolor: "primary.main",
             color: "white",
+            fontSize: {
+              xs: "0.5rem",
+              sm: "1.0rem",
+              md: "1.0rem",
+              lg: "1.5rem",
+              xl: "2rem",
+            },
+            padding: { xs: "8px 16px", sm: "8px 16px", md: "8px 16px" },
             marginTop: 4,
+            display: { xs: "block" },
+            marginLeft: { xs: "auto", md: 0 },
+            marginRight: { xs: "auto", md: 0 },
           }}
         >
           Customize Now
