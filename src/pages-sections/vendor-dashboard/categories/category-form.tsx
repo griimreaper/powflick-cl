@@ -92,7 +92,7 @@ export default function CategoryForm({ category, availableProducts }: Props) {
                   fullWidth
                   name="name"
                   label="Name"
-                  color="info"
+                  color="primary"
                   size="medium"
                   placeholder="Name"
                   value={values.name}
@@ -121,7 +121,7 @@ export default function CategoryForm({ category, availableProducts }: Props) {
                     <TextField
                       {...params}
                       label="Select Products"
-                      color="info"
+                      color="primary"
                       size="medium"
                       placeholder="Search products"
                     />
@@ -135,7 +135,7 @@ export default function CategoryForm({ category, availableProducts }: Props) {
                 <TextField
                   select
                   fullWidth
-                  color="info"
+                  color="primary"
                   size="medium"
                   name="parent"
                   onBlur={handleBlur}
@@ -154,7 +154,7 @@ export default function CategoryForm({ category, availableProducts }: Props) {
                   label="Featured Category"
                   control={
                     <Checkbox
-                      color="info"
+                      color="primary"
                       name="featured"
                       onBlur={handleBlur}
                       onChange={handleChange}
@@ -165,7 +165,7 @@ export default function CategoryForm({ category, availableProducts }: Props) {
               </Grid> */}
 
               <Grid item xs={12}>
-                <Button variant="contained" color="info" type="submit">
+                <Button variant="contained" color="primary" type="submit">
                 {!category ? 'Create category' : 'Save category'}
                 </Button>
               </Grid>

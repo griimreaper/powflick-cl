@@ -20,6 +20,9 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
       transform: "translateY(-50%)",
     },
   },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: '#CA0B0B',
+  },
   "& .MuiSwitch-thumb": {
     width: 16,
     height: 16,
@@ -28,7 +31,7 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
     backgroundColor: theme.palette.grey[600],
   },
   "& .MuiSwitch-switchBase.Mui-checked .MuiSwitch-thumb": {
-    backgroundColor: theme.palette.info.main,
+    backgroundColor: '#CA0B0B',
   },
 }));
 

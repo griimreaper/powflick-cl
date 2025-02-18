@@ -7,7 +7,7 @@ import { themeColors } from "theme/theme-colors";
 
 // ==============================================================
 
-type Props = { results: string[], query: string }; // Añadir `query` como prop
+type Props = { results: string[], query: string, onClose: Function }; // Añadir `query` como prop
 
 // Función para resaltar el texto
 // Función para resaltar el texto
@@ -37,11 +37,12 @@ const highlightMatch = (text: string, query: string) => {
 
 // ==============================================================
 
-export default function SearchResult({ results, query }: Props) {
+export default function SearchResult({ results, query, onClose }: Props) {
+
   return (
     <SearchResultCard elevation={2}>
       {results.map((item) => (
-        <Link href={`/products/${item[1]}`} key={item[0]}>
+        <Link href={`/products/${item[1]}`} onClick={() => onClose()} key={item[0]}>
           <MenuItem>
             {highlightMatch(item[0], query)} {/* Llamar a la función para resaltar */}
           </MenuItem>
