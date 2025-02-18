@@ -194,7 +194,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
         }}
         >
           <Typography
-            variant="h2"
+            variant="h3"
             component="h1"
             color={'primary.main'}
             sx={{
