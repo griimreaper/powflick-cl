@@ -64,7 +64,7 @@ export default async function Section6({ products }: { products: DataStructure['
         }}
         >
           <Typography
-            variant="h2"
+            variant="h3"
             component="h1"
             color={'primary.main'}
             sx={{

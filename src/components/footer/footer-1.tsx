@@ -44,27 +44,27 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
         zIndex={2}
       >
         <Grid container spacing={4}>
-          <Grid item lg={4} md={3} sm={6} xs={12}>
+          <Grid item lg={4} md={4} sm={6} xs={12}>
             <LogoSection />
           </Grid>
 
           {/* ABOUT US LINKS */}
-          <Grid item lg={2} md={3} sm={6} xs={12}>
+          <Grid item lg={2} md={2} sm={6} xs={12}>
             <AboutLinks />
           </Grid>
 
           {/* CUSTOMER CARE LINKS */}
-          <Grid item lg={2} md={3} sm={6} xs={12}>
+          <Grid item lg={2} md={2} sm={6} xs={12}>
             <CustomerCareLinks />
           </Grid>
 
           {/* Categories LINKS */}
-          <Grid item lg={2} md={3} sm={6} xs={12}>
+          <Grid item lg={2} md={4} sm={6} xs={12}>
             <CategoriesLinks list={data?.categories} />
           </Grid>
 
           {/* CONTACT & SOCIAL LINKS */}
-          <Grid item lg={2} md={3} sm={6} xs={12}>
+          <Grid item lg={2} md={4} sm={6} xs={12}>
             {/* CONTACT INFORMATION */}
             <Heading style={{ color: "#A30E0E" }}>Contact Us</Heading>
 

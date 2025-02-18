@@ -30,12 +30,11 @@ export default async function Section4({ products }: { products: DataStructure['
       }}
       >
         <Typography
-          variant="h2"
+          variant="h3"
           component="h1"
           color={'primary.main'}
           sx={{
             // fontWeight: "bold",
-            fontSize: "1.3rem",
             // fontStyle: "italic",
             fontFamily: "GYMER", // Añadir la fuente GYMER
             lineHeight: 1,
