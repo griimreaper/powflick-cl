@@ -110,17 +110,17 @@ export default function RequestForm() {
       >
         <Button
           variant="contained"
-          color="error"
+          color="primary"
           fullWidth
-          sx={{ color: "white", py: 1.5, bgcolor: "primary.main" }}
+          sx={{ py: 1.5 }}
         >
           Single cost for graphic service
         </Button>
         <Button
           variant="contained"
-          color="error"
+          color="primary"
           fullWidth
-          sx={{ color: "white", py: 1.5, bgcolor: "primary.main" }}
+          sx={{ py: 1.5 }}
         >
           I already have a sketch and print files
         </Button>
@@ -285,10 +285,8 @@ export default function RequestForm() {
 
         <Button
           variant="contained"
-          color="error"
+          color="primary"
           sx={{
-            bgcolor: "primary.main",
-            color: "white",
             fontSize: {
               xs: "0.5rem",
               sm: "1.0rem",

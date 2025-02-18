@@ -68,10 +68,8 @@ export default function Home() {
         >
           <Button
             variant="contained"
-            color="error"
+            color="primary"
             sx={{
-              bgcolor: "primary.main",
-              color: "white",
               fontSize: {
                 xs: "0.5rem",
                 sm: "1.0rem",
@@ -134,10 +132,8 @@ export default function Home() {
         >
           <Button
             variant="contained"
-            color="error"
+            color="primary"
             sx={{
-              bgcolor: "primary.main",
-              color: "white",
               fontSize: {
                 xs: "0.5rem",
                 sm: "1.0rem",
