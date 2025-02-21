@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Service from "models/Service.model";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/material";
+import Image from "next/image";
 
 export default function Section2({ className }: { className: string }) {
   const [services, setServices] = useState<Service[]>([]);
@@ -23,13 +24,18 @@ export default function Section2({ className }: { className: string }) {
   }, []);
 
   return (
-    <Container className={`${className}`} sx={{ height: isMobile ? '30%' : '25%' }} >
+    <Container
+      className={`${className}`}
+      sx={{ height: isMobile ? "30%" : "25%" }}
+    >
       {isMobile ? (
         // Renderiza dos imágenes para mobile
-        <Box display={'flex'} flexDirection={'column'} gap={2} >
-          <img
-            src="assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
+        <Box display={"flex"} flexDirection={"column"} gap={2}>
+          <Image
+            src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
+            width={1920} // Ajustar a un valor numérico adecuado
+            height={1080} // Ajustar a un valor numérico adecuado
             style={{
               borderRadius: 6,
               width: "100%",
@@ -38,9 +44,11 @@ export default function Section2({ className }: { className: string }) {
               marginBottom: "8px", // Espaciado entre imágenes
             }}
           />
-          <img
-            src="assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
+          <Image
+            src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
             alt="Mobile Image 2"
+            width={1920} // Ajustar a un valor numérico adecuado
+            height={1080} // Ajustar a un valor numérico adecuado
             style={{
               borderRadius: 6,
               width: "100%",
@@ -51,9 +59,11 @@ export default function Section2({ className }: { className: string }) {
         </Box>
       ) : (
         // Renderiza una sola imagen para desktop
-        <img
-          src="assets/images/landing/POWFLICK_PROMESAS DE MARCA.png"
+        <Image
+          src="/assets/images/landing/POWFLICK_PROMESAS DE MARCA.png"
           alt="Desktop Image"
+          width={1920} // Ajustar a un valor numérico adecuado
+          height={1080} // Ajustar a un valor numérico adecuado
           style={{
             width: "100%",
             borderRadius: 6,
