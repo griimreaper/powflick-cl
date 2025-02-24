@@ -64,9 +64,9 @@ export default async function Section3({ className }: { className: string }) {
         display: "flex",
         height: isMobile ? "45%" : "50%",
         justifyContent: "flex-end",
-        gap: 8,
         width: "100%",
         flexDirection: "column",
+        marginTop: isMobile ? '4vw' : 0,
       }}
     >
       {isMobile ? (
