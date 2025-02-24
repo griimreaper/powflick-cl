@@ -104,10 +104,7 @@ function EditableContainer({
     };
 
     useEffect(() => {
-        if (selection.type && selection.index !== null) {
-            document.getElementById(`${selection.type.toLowerCase()}-input-${selection.index + sideName}`)?.focus({ preventScroll: true });
-
-        }
+        document.getElementById(`${selection.type.toLowerCase()}-input-${selection.index + sideName}`)?.focus({ preventScroll: true });
     }, [selection]);
 
     const removeLogo = async (index: number) => {

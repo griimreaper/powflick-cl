@@ -68,7 +68,7 @@ export default function PanelSides({
   const [texts, setTexts] = useState<Text[]>([
     {
       type: "Text",
-      text: "",
+      text: "Insert Text",
       font: typeof font === "string" && fonts[font] ? font : "",
       textColor: (typeof fontColor === "string" && fontColor) || "black",
       textSize: 24,
@@ -80,7 +80,7 @@ export default function PanelSides({
   const [numbers, setNumbers] = useState<Numb[]>([
     {
       type: 'Number',
-      number: "",
+      number: "0",
       font: typeof font === "string" && fonts[font] ? font : "",
       numberColor: (typeof fontColor === "string" && fontColor) || "black",
       numberPosition: { x: 80, y: 100 },
@@ -120,7 +120,7 @@ export default function PanelSides({
 
   const handleShowItem = (name: 'Text' | 'Number' | 'Logo' | '') => {
     selection.type === name ? setSelection({ index: 0, type: '' }) : setSelection({ index: 0, type: name });
-    const generateText = selection.type ? false : true;
+    const generateText = selection.type && name === '' ? false : true;
     if (name === 'Text' && !texts.some(t => t.text) && generateText) {
       setTexts(texts.map((t, i) => i === 0 ? t = { ...t, text: 'Insert Text' } : t))
     } else if (name === 'Number' && !numbers.some(t => t.number) && generateText) {
