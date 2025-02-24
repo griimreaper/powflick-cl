@@ -4,6 +4,7 @@ import { deleteImage } from "services/imageStorage";
 import { PersistStorage, StorageValue, persist } from 'zustand/middleware';
 import { Customization } from "models/types";
 import { CustomizationsStoreType } from "./interfaces/interface";
+import { initialCustomization } from "./customizationStore";
 
 // SessionStorageAdapter handles session storage operations
 const sessionStorageAdapter: PersistStorage<CustomizationsStoreType> = {
@@ -159,6 +160,35 @@ export const useCustomizationsStore = create(
                 customizations: updatedCustomizations,
                 amount: updatedCustomizations.length
               };
+            }),
+          };
+
+          return newState;
+        });
+        updateTotal(set);
+      },
+      addCustomizations: (productId: string, numCustomizations: number) => {
+        set((state) => {
+          const newState = {
+            ...state,
+            list: state.list.map((prod) => {
+              if (prod.productId === productId) {
+                let currentCustomizations = [...prod.customizations];
+
+                // Si hay menos customizaciones de las necesarias, agregamos más
+                while (currentCustomizations.length < numCustomizations) {
+                  currentCustomizations.push({
+                    ...initialCustomization(),
+                  });
+                }
+
+                return {
+                  ...prod,
+                  customizations: currentCustomizations,
+                  amount: currentCustomizations.length,
+                };
+              }
+              return prod;
             }),
           };
 
