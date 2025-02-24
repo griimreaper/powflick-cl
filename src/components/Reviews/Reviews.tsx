@@ -67,6 +67,8 @@ const StyledRating = styled(Rating)(({ theme }) => ({
 }));
 
 const ReviewCard = ({ review }: any) => {
+  console.log(review);
+  
   return (
     <Fade in timeout={1000}>
       <StyledCard>

@@ -121,7 +121,6 @@ export default function ProductForm({ product, collectionsList, categoriesList }
           images.map(async (image: string, index: number) => {
             const response = await fetch(image);
             const blob = await response.blob();
-
             // Extraer el nombre del archivo desde la URL
             const fileNameFromUrl = image.split("/").pop() || "";
 

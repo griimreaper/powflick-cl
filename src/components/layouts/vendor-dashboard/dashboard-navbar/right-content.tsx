@@ -14,7 +14,7 @@ export default function RightContent() {
         startAdornment={<Search sx={{ color: "grey.500" }} />}
       /> */}
 
-      <NotificationsPopover />
+      {/* <NotificationsPopover /> */}
       <AccountPopover />
     </FlexBox>
   );
