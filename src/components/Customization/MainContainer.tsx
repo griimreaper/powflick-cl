@@ -11,6 +11,7 @@ interface MainContainerProps {
     }
     setSelection: Function;
     image: string;
+    sideName: string;
     logos: Logo[] & any;
     setLogos: Function;
     texts: Text[] & any;
@@ -36,7 +37,8 @@ function MainContainer({
     setNumbers,
     handleNumberChange,
     saveDataToLocal,
-    setActualize
+    setActualize,
+    sideName
 }: MainContainerProps) {
     const panelRef = useRef<HTMLDivElement>(null);
     const [isDraggingLogo, setIsDraggingLogo] = useFlag();
@@ -146,10 +148,16 @@ function MainContainer({
         }
     };
 
+    const handleFocus = () => {
+        const input = document.getElementById(`${selection.type.toLowerCase()}-input-${selection.index + sideName}`);
+        input?.focus({ preventScroll: true });
+    };
+
     const handleLogoTouchStart = (
         event: React.TouchEvent<HTMLImageElement>,
         index: number
     ) => {
+        handleFocus();
         setIsDraggingLogo(true);
         const panelRect = panelRef.current?.getBoundingClientRect();
         if (panelRect) {
@@ -209,6 +217,7 @@ function MainContainer({
         event: React.TouchEvent<HTMLDivElement>,
         index: number
     ) => {
+        handleFocus();
         setIsDraggingText(true);
         const panelRect = panelRef.current?.getBoundingClientRect();
         if (panelRect) {
@@ -269,6 +278,7 @@ function MainContainer({
         index: number
     ) => {
         setIsDraggingNumber(true);
+        handleFocus();
         const panelRect = panelRef.current?.getBoundingClientRect();
         if (panelRect) {
             setSelection({ type: 'Number', index });
@@ -431,7 +441,7 @@ function MainContainer({
     };
 
     return (
-        <Box sx={{width: "full", justifyContent: 'center', display: 'flex'}}>
+        <Box sx={{ width: "full", justifyContent: 'center', display: 'flex' }}>
             <Box
                 ref={panelRef}
                 id="customization-panel"
@@ -440,7 +450,7 @@ function MainContainer({
                     width: "500px",
                     height: "500px",
                     overflow: "hidden",
-                    justifyContent:'center',
+                    justifyContent: 'center',
                 }}
                 onMouseMove={handleDragMove}
                 onMouseUp={handleDragEnd}
