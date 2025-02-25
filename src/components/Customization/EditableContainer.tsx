@@ -106,23 +106,17 @@ function EditableContainer({
     useEffect(() => {
         const input = document.getElementById(
             `${selection.type.toLowerCase()}-input-${selection.index + sideName}`
-        ) as HTMLInputElement;
+        );
 
-        if (input) {
-            const preventScroll = (e: Event) => e.preventDefault();
+        const preventFocus = (event: TouchEvent) => {
+            event.preventDefault();  // Evita que el teclado se muestre
+        };
 
-            // Bloquea el scroll
-            document.body.style.overflow = "hidden";
-            document.addEventListener("touchmove", preventScroll, { passive: false });
+        input?.addEventListener('touchstart', preventFocus);
 
-            setTimeout(() => {
-                input.focus({ preventScroll: true });
-
-                // Restaura el scroll después de enfocar
-                document.body.style.overflow = "";
-                document.removeEventListener("touchmove", preventScroll);
-            }, 50); // Pequeño delay para evitar el scroll antes de enfocar
-        }
+        return () => {
+            input?.removeEventListener('touchstart', preventFocus);
+        };
     }, [selection]);
 
     const removeLogo = async (index: number) => {
