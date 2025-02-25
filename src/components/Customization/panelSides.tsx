@@ -250,7 +250,6 @@ export default function PanelSides({
         handleTextChange={handleTextChange}
         numbers={numbers}
         setNumbers={setNumbers}
-        sideName={sideName}
         handleNumberChange={handleNumberChange}
         saveDataToLocal={saveDataToLocal}
         setActualize={setActualize}

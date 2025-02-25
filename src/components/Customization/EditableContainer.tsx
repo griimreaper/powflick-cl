@@ -104,7 +104,25 @@ function EditableContainer({
     };
 
     useEffect(() => {
-        document.getElementById(`${selection.type.toLowerCase()}-input-${selection.index + sideName}`)?.focus({ preventScroll: true });
+        const input = document.getElementById(
+            `${selection.type.toLowerCase()}-input-${selection.index + sideName}`
+        ) as HTMLInputElement;
+
+        if (input) {
+            const preventScroll = (e: Event) => e.preventDefault();
+
+            // Bloquea el scroll
+            document.body.style.overflow = "hidden";
+            document.addEventListener("touchmove", preventScroll, { passive: false });
+
+            setTimeout(() => {
+                input.focus({ preventScroll: true });
+
+                // Restaura el scroll después de enfocar
+                document.body.style.overflow = "";
+                document.removeEventListener("touchmove", preventScroll);
+            }, 50); // Pequeño delay para evitar el scroll antes de enfocar
+        }
     }, [selection]);
 
     const removeLogo = async (index: number) => {
@@ -428,6 +446,7 @@ function EditableContainer({
                                         backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         cursor: selection.index === index ? "default" : "pointer",
                                         "&:hover": { backgroundColor: "primary.400" },
+                                        touchAction: "none",
                                     }}
                                 />
                             )
@@ -577,7 +596,9 @@ function EditableContainer({
                                         backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         cursor: selection.index === index ? "default" : "pointer",
                                         "&:hover": { backgroundColor: "primary.400" },
+                                        touchAction: "none",
                                     }}
+
                                 />
                             )
                         ))}
