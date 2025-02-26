@@ -58,8 +58,9 @@ export default function DashboardHeader({ title, buttonText, href, Icon }: Props
     <Button
       href={href}
       color="primary"
+      variant="contained"
       LinkComponent={Link}
-      sx={{ bgcolor: "primary.light", px: 4 }}>
+      >
       {buttonText}
     </Button>
   );
@@ -70,7 +71,7 @@ export default function DashboardHeader({ title, buttonText, href, Icon }: Props
         <FlexBox alignItems="center" gap={1.5}>
           {Icon && <Icon color="primary" />}
 
-          <H2 my={0} lineHeight={1} ellipsis>
+          <H2 my={0} lineHeight={1} ellipsis color={'white'}>
             {title}
           </H2>
         </FlexBox>

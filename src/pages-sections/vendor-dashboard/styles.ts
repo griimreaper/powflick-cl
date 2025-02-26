@@ -34,7 +34,7 @@ const StyledTableRow = styled(TableRow)({
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.grey[600],
   "& .MuiSvgIcon-root": { fontSize: 19 },
-  ":hover": { color: theme.palette.info.main },
+  ":hover": { color: '#CA0B0B' },
 }));
 
 type StatusType = {
