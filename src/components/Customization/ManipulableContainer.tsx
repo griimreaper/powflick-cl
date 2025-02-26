@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
-import Moveable from "react-moveable";
+import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
 
 interface ManipulableContainerProps {
   parentRef: RefObject<HTMLDivElement>;
@@ -43,6 +43,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
   const [isSelected, setIsSelected] = useState(selection.index === index && selection.type === each.type); // Estado para controlar la visibilidad de Moveable
+  const [scale, setScale] = useState(0); // Estado para controlar la visibilidad de Moveable
   const containerRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLInputElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
@@ -121,6 +122,20 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     }
   };
 
+
+  const handlePinch = (e: OnPinch) => {
+    const newRotate = e.currentTarget.rotation
+    const newSize = e.currentTarget.scale
+    // Actualizamos la escala y rotación
+    setRotation(newRotate);
+    handleResize(newSize)
+
+    // Puedes implementar la lógica de cambio en el estado local o persistir los datos.
+    console.log('Pinch event:', {newRotate, newSize });
+  };
+
+
+
   return (
     <Box
       ref={containerRef}
@@ -129,6 +144,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         zIndex: 0,
         left: each.position.x,
         top: each.position.y,
+        pointerEvents: "auto", // Permitir eventos de clic
       }}
     >
       <Box
@@ -138,6 +154,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           position: 'absolute',
           whiteSpace: 'pre',
           fontFamily: each.font,
+          pointerEvents: "none", // Deshabilita los eventos en el fondo
         }}
       />
 
@@ -155,6 +172,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           viewContainer={parentRef.current}
           dragContainer={parentRef.current}
           rootContainer={parentRef.current}
+
           keepRatio={true}
           onResize={(e) => {
             handleResize(e);
@@ -162,6 +180,8 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             e.target.style.height = `${e.height}px`;
           }}
           onRotate={handleRotate}
+          onPinchStart={(e) => console.log('Pinch start event', e)}
+          onPinch={(e: OnPinch) => handlePinch(e)}
         />
       )}
       {each.type !== "Logo" && handleChange !== undefined && (
