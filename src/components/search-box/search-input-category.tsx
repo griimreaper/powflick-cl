@@ -10,7 +10,7 @@ import useSearch from "./hooks/use-search";
 // CUSTOM ICON COMPONENT
 import Search from "icons/Search";
 
-export default function SearchInputWithCategory() {
+export default function SearchInputWithCategory({onClose}: any) {
   const {
     parentRef,
     resultList,
@@ -22,6 +22,7 @@ export default function SearchInputWithCategory() {
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
       router.push(`/products?query=${searchText}`);
+      onClose();
     }
   };
 
@@ -74,7 +75,7 @@ export default function SearchInputWithCategory() {
       />
 
       {/* SHOW SEARCH RESULT LIST */}
-      {resultList?.length > 0 ? <SearchResult results={resultList} query={searchText}/> : null}
+      {resultList?.length > 0 ? <SearchResult results={resultList} query={searchText} onClose={onClose}/> : null}
     </Box>
   );
 }
