@@ -56,7 +56,8 @@ export default function MobileMenu({data}: {data: DataStructure['navbar']}) {
               {/* OTHER LINKS */}
               <Box display="flex" flexDirection="column" gap={2}>
                 <StyledNavLink href="/products">Store</StyledNavLink>
-                <StyledNavLink href="/blog">Blog</StyledNavLink>
+                <StyledNavLink href="/your-design">Super Design</StyledNavLink>
+                {/* <StyledNavLink href="/blog">Blog</StyledNavLink> */}
                 <StyledNavLink href="/contact">Contact</StyledNavLink>
                 <StyledNavLink href="/about-us">About Us</StyledNavLink>
                 <StyledNavLink href="/help">Help</StyledNavLink>

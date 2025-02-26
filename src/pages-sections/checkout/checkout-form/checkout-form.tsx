@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -11,6 +11,8 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import useFlag from "hooks/useFlag";
 import { createOrder } from "services/Order";
 import Image from "next/image";
+import DialogDrawer from "components/header/components/dialog-drawer";
+import useHeader from "components/header/hooks/use-header";
 
 export default function CheckoutForm() {
   const router = useRouter();
@@ -22,6 +24,7 @@ export default function CheckoutForm() {
   const { token } = profile;
   const [selectedDirection, setSelectedDirection] = useState<Direction | null>(null);
   const [loading, setLoading] = useFlag();
+  const { toggleDialog, dialogOpen } = useHeader();
 
   const handleDirectionChange = (event: any) => {
     const selectedIndex = event.target.value;
@@ -31,6 +34,13 @@ export default function CheckoutForm() {
       setSelectedDirection(directions.find((dir) => dir.id === selectedIndex) || null);
     }
   };
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("pendingAddress");
+    if (savedData) {
+      setShowForm(true);
+    }
+  }, []);
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -60,6 +70,7 @@ export default function CheckoutForm() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <DialogDrawer dialogOpen={dialogOpen} toggleDialog={toggleDialog} redirectUrl="/checkout"></DialogDrawer>
       <Card>
         <CardContent>
           {/* Selector de direcciones */}
@@ -94,7 +105,7 @@ export default function CheckoutForm() {
           </Box>
 
           {/* Formulario para nueva dirección */}
-          {showForm && <DirectionForm address={null} toggleForm={toggleForm} />}
+          {showForm && <DirectionForm address={null} toggleForm={toggleForm} toggleDialog={toggleDialog} />}
         </CardContent>
       </Card>
 
