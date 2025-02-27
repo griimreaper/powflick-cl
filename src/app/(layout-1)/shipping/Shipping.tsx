@@ -101,7 +101,9 @@ const Shipping = () => {
 
       {/* Descripción */}
       <Box sx={{ position: "relative", zIndex: 1 }}>
-        <img
+        <Box
+          sx={{ width: { xs: "20%", md: "10%" } }}
+          component="img"
           src="/shipping/forms/TIME_SHIPPING_FORMAS-5.png"
           alt="Banner Icon"
           style={{
@@ -109,7 +111,6 @@ const Shipping = () => {
             top: -50,
             right: 0,
             zIndex: -1,
-            width: 200,
           }}
         />
         <Container
@@ -140,15 +141,16 @@ const Shipping = () => {
             options, and how to track your order <br /> from start to finish.
           </Typography>
         </Container>
-        <img
+        <Box
+          sx={{ width: { xs: "20%", md: "10%" } }}
+          component="img"
           src="/shipping/forms/TIME_SHIPPING_FORMAS-6.png"
           alt="Banner Icon"
           style={{
             position: "absolute",
-            top: -50,
+            top: "50%",
             left: 0,
             zIndex: -1,
-            width: 200,
           }}
         />
 
@@ -210,15 +212,16 @@ const Shipping = () => {
       >
         <Box
           sx={{
-            maxWidth: "50%",
+            maxWidth: { xs: "100%", md: "50%" },
             margin: "0 auto",
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             justifyContent: "center",
             alignItems: "center",
             gap: 16,
           }}
         >
-          <Box sx={{ width: "50%" }}>
+          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             <Typography
               variant="h6"
               fontWeight="bold"
@@ -235,7 +238,7 @@ const Shipping = () => {
               complexity of your order and seasonal demand.
             </Typography>
           </Box>
-          <Box sx={{ width: "50%" }}>
+          <Box sx={{ width: { xs: "100%", md: "50%" } }}>
             <Typography
               variant="h6"
               fontWeight="bold"
@@ -279,7 +282,9 @@ const Shipping = () => {
           zIndex: 1,
         }}
       >
-        <img
+        <Box
+          sx={{ width: { xs: "20%", md: "10%" } }}
+          component="img"
           src="/shipping/forms/TIME_SHIPPING_FORMAS-7.png"
           alt="Banner Icon"
           style={{
@@ -287,10 +292,9 @@ const Shipping = () => {
             top: -150,
             right: 0,
             zIndex: -1,
-            width: 200,
           }}
         />
-        <Box sx={{ width: "50%" }}>
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
           <Typography
             variant="h6"
             fontWeight="bold"
@@ -306,7 +310,7 @@ const Shipping = () => {
             DHL and FedEx.
           </Typography>
         </Box>
-        <Box sx={{ width: "50%" }}>
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
           <Typography
             variant="h6"
             fontWeight="bold"
@@ -320,7 +324,7 @@ const Shipping = () => {
             email so you can monitor your delivery in real-time.
           </Typography>
         </Box>
-        <Box sx={{ width: "50%" }}>
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
           <Typography
             variant="h6"
             fontWeight="bold"
@@ -336,7 +340,9 @@ const Shipping = () => {
             will contact you if needed.
           </Typography>
         </Box>
-        <img
+        <Box
+          sx={{ width: { xs: "20%", md: "10%" } }}
+          component="img"
           src="/shipping/forms/TIME_SHIPPING_FORMAS-8.png"
           alt="Banner Icon"
           style={{
@@ -344,7 +350,6 @@ const Shipping = () => {
             bottom: -80,
             left: 0,
             zIndex: -1,
-            width: 200,
           }}
         />
       </Container>
@@ -354,8 +359,9 @@ const Shipping = () => {
         sx={{
           position: "relative",
           width: "100%",
-          height: 300,
+          height: { xs: "auto", md: 300 },
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
@@ -373,18 +379,20 @@ const Shipping = () => {
           style={{ zIndex: 1 }}
         />
         <Box sx={{ position: "relative", zIndex: 1, px: 2 }}>
-          <Image
-            src={"/shipping/TIME_SHIPPING_FORMAS-4.png"}
-            alt="Banner Icon"
-            width={60}
-            height={60}
-          />
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <Image
+              src={"/shipping/TIME_SHIPPING_FORMAS-4.png"}
+              alt="Banner Icon"
+              width={60}
+              height={60}
+            />
+          </Box>
           <Typography
             variant="h4"
             fontWeight="bold"
             sx={{
               color: "white",
-              textAlign: "left",
+              textAlign: { xs: "center", md: "left" },
             }}
           >
             Questions?
