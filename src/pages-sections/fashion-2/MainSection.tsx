@@ -30,6 +30,8 @@ export default function MainSection() {
         src={backgroundImage}
         alt="Banner"
         priority
+        quality={80}
+        loading="eager"
         sizes="(max-width: 768px) 100vw, 1920px" // Ajusta según el tamaño de pantalla
         width={1920} // Ajustar a un valor numérico adecuado
         height={1080} // Ajustar a un valor numérico adecuado
@@ -61,7 +63,7 @@ export default function MainSection() {
           color="primary"
           variant="contained"
           href="/products"
-          style={{
+          sx={{
             width: "clamp(140px, 17vw, 500px)",
             borderRadius: 1,
             color: "white",

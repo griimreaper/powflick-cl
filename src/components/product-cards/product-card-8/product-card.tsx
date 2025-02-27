@@ -31,6 +31,7 @@ import ProductPrice from "components/product-cards/product-price";
 import DiscountChip from "../discount-chip";
 import { BorderBox } from '../../page-sidenav/side-navbar/styles/index';
 import { themeColors } from "theme/theme-colors";
+import Image from "next/image";
 
 
 // ==============================================================
@@ -94,11 +95,13 @@ export default function ProductCard8({ product, active=false }: Props) {
             });
           }}
         >
-          <LazyImage
+          <Image
             width={300}
             height={300}
+            layout="responsive"
             alt="category"
             className="product-img"
+            loading="lazy"
             src={URL}
           />
         </Link>

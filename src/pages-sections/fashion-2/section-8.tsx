@@ -23,8 +23,8 @@ export default function Section8() {
         layout="responsive" // Se adapta al tamaño original manteniendo la relación de aspecto
         width={1920} // Ajusta según el tamaño real de tu imagen
         height={1080} // Ajusta según el tamaño real de tu imagen
-        priority // Carga antes si es parte del LCP
-        quality={100} // Reduce el peso sin perder calidad
+        loading="lazy"
+        quality={80} // Reduce el peso sin perder calidad
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1920px"
         style={{
           position: "relative",

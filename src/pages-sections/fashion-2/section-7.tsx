@@ -53,8 +53,8 @@ export default function Section7() {
         layout="responsive"
         width={1920} // Ajusta según el tamaño real de tu imagen
         height={1080} // Ajusta según el tamaño real de tu imagen
-        priority // Da prioridad si es parte del LCP
-        quality={100} // Ajusta la calidad para optimizar el tamaño
+        loading="lazy"
+        quality={80} // Ajusta la calidad para optimizar el tamaño
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1920px"
         style={{
           zIndex: 0,

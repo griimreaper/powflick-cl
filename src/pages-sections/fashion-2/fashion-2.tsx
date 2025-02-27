@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 // GLOBAL CUSTOM COMPONENTS
 import Newsletter from "components/newsletter";
 import Reviews from "components/Reviews/Reviews";
@@ -16,7 +16,7 @@ import MainSection from "./MainSection";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
-export default function FashionTwoPageView({ data }: { data: DataStructure }) {
+const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
   const {
     profile,
     setData: setProfileData,
@@ -104,7 +104,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
           alt="Overlay"
           width={250} // Tamaño en escritorio
           height={0} // Se ajusta automáticamente con style={{ height: "auto" }}
-          priority
+          loading="lazy"
           style={{
             position: "absolute",
             left: 0,
@@ -123,3 +123,5 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
     </Box>
   );
 }
+
+export default memo(FashionTwoPageView);

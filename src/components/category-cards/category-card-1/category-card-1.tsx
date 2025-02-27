@@ -14,7 +14,8 @@ export default function CategoryCard1({ image, title, link }: Props) {
           alt="category"
           width={300} // Define un tamaño explícito
           height={200} // Ajusta según necesidad
-          quality={100}
+          quality={80}
+          loading="lazy"
           style={{
             objectFit: "cover", // Mantiene la relación de aspecto
             display: "block",

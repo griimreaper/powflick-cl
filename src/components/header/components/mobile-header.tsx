@@ -53,8 +53,8 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           <Image
             height={44}
             width={44}
-            priority
-            quality={100}
+            loading="lazy"
+            quality={80}
             src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             alt="logo"
           />

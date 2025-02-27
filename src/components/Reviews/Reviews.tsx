@@ -15,6 +15,7 @@ import { styled } from "@mui/system";
 import { Settings } from "react-slick";
 import { Carousel } from "components/carousel";
 import { Paragraph } from "components/Typography";
+import Image from "next/image";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -85,7 +86,20 @@ const ReviewCard = ({ review }: any) => {
           precision={0.5}
           sx={{ mb: 1, fontSize: "clamp(1vw, 1.5vw, 100%)" }}
         />
-        <ProductImage src={review.image} alt="Product" />
+        <Image
+          src={review.image}
+          alt="Product"
+          width={500}
+          height={0}
+          layout="responsive"
+          loading="lazy"
+          style={{
+            width: "min(500px,100%)",
+            aspectRatio: "1 / 1",
+            objectFit: "cover",
+            borderRadius: "8px",
+            marginBottom: "16px",
+          }} />
 
         <Typography
           variant="body1"
