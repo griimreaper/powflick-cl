@@ -1,9 +1,8 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import AppStore from "./app-store";
-import Image from "components/SportZoneImage";
-import { Paragraph } from "components/Typography";
 import { Box } from "@mui/material";
+import Image from "next/image";
 
 export default function LogoSection() {
   return (
@@ -11,10 +10,11 @@ export default function LogoSection() {
       <Link href="/">
         <Box display="flex" justifyContent="center">
           <Image
-            mb={2.5}
             width={250}
+            height={0}
             src="/assets/images/logo/POWFLICK_LOGO-FOOTER.png"
             alt="logo"
+            layout="intrinsic"
           />
         </Box>
       </Link>

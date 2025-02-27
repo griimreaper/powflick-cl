@@ -11,7 +11,6 @@ import Icon from "icons";
 // LOCAL CUSTOM COMPONENTS
 import DialogDrawer from "./dialog-drawer";
 // GLOBAL CUSTOM COMPONENTS
-import Image from "components/SportZoneImage";
 import { Paragraph } from "components/Typography";
 import { SearchInput, SearchInputWithCategory } from "components/search-box";
 import { MobileMenu } from "components/navbar/mobile-menu";
@@ -24,6 +23,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { DataStructure } from "models/types";
+import Image from "next/image";
 
 export default function MobileHeader({ data }: { data: DataStructure['navbar'] }) {
   const { cart } = useShoppingCartStore();
@@ -53,6 +53,8 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           <Image
             height={44}
             width={44}
+            priority
+            quality={100}
             src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             alt="logo"
           />

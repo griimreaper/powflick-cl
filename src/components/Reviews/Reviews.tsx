@@ -3,14 +3,9 @@ import React, { useState } from "react";
 import {
   Box,
   Card,
-  CardContent,
   Typography,
   Avatar,
   Rating,
-  Grid,
-  FormControl,
-  Select,
-  MenuItem,
   Container,
   Fade,
   useMediaQuery,
@@ -18,7 +13,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { keyframes } from "@emotion/react";
-import Slider, { Settings } from "react-slick";
+import { Settings } from "react-slick";
 import { Carousel } from "components/carousel";
 import { Paragraph } from "components/Typography";
 
@@ -67,8 +62,6 @@ const StyledRating = styled(Rating)(({ theme }) => ({
 }));
 
 const ReviewCard = ({ review }: any) => {
-  console.log(review);
-  
   return (
     <Fade in timeout={1000}>
       <StyledCard>
@@ -93,7 +86,7 @@ const ReviewCard = ({ review }: any) => {
           </Box>
         </Box>
         <StyledRating
-          value={review.rating}
+          value={Number(review.rating)}
           readOnly
           precision={0.5}
           sx={{ mb: 1, fontSize: "clamp(1vw, 1.5vw, 100%)" }}

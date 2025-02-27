@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import React from "react";
 import Section2 from "./section-2";
 import Section3 from "./section-3";
@@ -30,6 +30,7 @@ export default function MainSection() {
         src={backgroundImage}
         alt="Banner"
         priority
+        sizes="(max-width: 768px) 100vw, 1920px" // Ajusta según el tamaño de pantalla
         width={1920} // Ajustar a un valor numérico adecuado
         height={1080} // Ajustar a un valor numérico adecuado
         style={{
