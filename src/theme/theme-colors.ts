@@ -197,6 +197,7 @@ export const themeColors = {
   bluish,
   warning,
   success,
+  primary,
   secondary,
   info: blue,
   divider: grey[200],

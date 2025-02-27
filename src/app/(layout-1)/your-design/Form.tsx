@@ -110,17 +110,17 @@ export default function RequestForm() {
       >
         <Button
           variant="contained"
-          color="error"
+          color="primary"
           fullWidth
-          sx={{ color: "white", py: 1.5, bgcolor: "primary.main" }}
+          sx={{ py: 1.5 }}
         >
           Single cost for graphic service
         </Button>
         <Button
           variant="contained"
-          color="error"
+          color="primary"
           fullWidth
-          sx={{ color: "white", py: 1.5, bgcolor: "primary.main" }}
+          sx={{ py: 1.5 }}
         >
           I already have a sketch and print files
         </Button>
@@ -201,15 +201,21 @@ export default function RequestForm() {
             width: "20%",
             border: "0.5px solid lightcoral",
             borderRadius: 2,
-            display: { xs: "block", md: "inline-block" }, // En mobile se comporta como bloque para centrarse
-            margin: { xs: "0 auto", md: "0" }, // Centrado solo en xs, normal en md+
-            textAlign: { xs: "center", md: "left" }, // Asegura que el contenido esté alineado correctamente
+            display: { xs: "block", md: "inline-block" },
+            margin: { xs: "0 auto", md: "0" },
+            textAlign: { xs: "center", md: "left" },
           }}
           type="number"
           name="quantity"
           margin="normal"
           value={form.quantity}
-          onChange={handleChange}
+          onChange={(e) => {
+            const value = Number(e.target.value);
+            if (value >= 1) {
+              handleChange(e); // Solo actualiza el estado si el número es >= 1
+            }
+          }}
+          inputProps={{ min: 1 }} // Evita que el usuario baje de 1 con los controles del input
           required
         />
 
@@ -231,6 +237,7 @@ export default function RequestForm() {
             sx={{
               display: "flex",
               flexWrap: "wrap",
+              gap: 1,
               mb: 2,
               bgcolor: "white",
               p: 1,
@@ -241,8 +248,8 @@ export default function RequestForm() {
                 key={color}
                 onClick={() => handleColorSelect(color)}
                 sx={{
-                  width: 20,
-                  height: 20,
+                  width: 25,
+                  height: 25,
                   borderRadius: "50%",
                   backgroundColor: color.toLowerCase(),
                   marginRight: 1,
@@ -278,11 +285,20 @@ export default function RequestForm() {
 
         <Button
           variant="contained"
-          color="error"
+          color="primary"
           sx={{
-            bgcolor: "primary.main",
-            color: "white",
+            fontSize: {
+              xs: "0.5rem",
+              sm: "1.0rem",
+              md: "1.0rem",
+              lg: "1.5rem",
+              xl: "2rem",
+            },
+            padding: { xs: "8px 16px", sm: "8px 16px", md: "8px 16px" },
             marginTop: 4,
+            display: { xs: "block" },
+            marginLeft: { xs: "auto", md: 0 },
+            marginRight: { xs: "auto", md: 0 },
           }}
         >
           Customize Now

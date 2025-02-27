@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -9,21 +9,20 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
 import * as yup from "yup";
-// GLOBAL CUSTOM COMPONENTS
-import DropZone from "components/DropZone";
-import { FlexBox } from "components/flex-box";
 // STYLED COMPONENTS
-import { UploadImageBox, StyledClear } from "../styles";
-import { Paragraph } from "components/Typography";
-import { FormControlLabel, Switch } from "@mui/material";
-import { createProduct, updateProduct } from "services/dashboardAdmin/products";
+import { H3, Paragraph } from "components/Typography";
+import { FormControlLabel, IconButton, Switch, Tooltip } from "@mui/material";
+import { createProduct, updateProduct, uploadFolder } from "services/dashboardAdmin/products";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { useRouter } from "next/navigation";
+import ImageUploader from "components/DropZone";
+import { Info } from "@mui/icons-material";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
   title: yup.string().required("Name is required!"),
+  slug: yup.string().required("Slug is required!"),
   collections: yup
     .array()
     .min(0, 'No collections selected')  // Permite que no se seleccione ninguna colección
@@ -32,14 +31,14 @@ const VALIDATION_SCHEMA = yup.object().shape({
   sports: yup.string().required("Sport is required!"),
   status: yup.string().required("Status is required!"),
   regular_price: yup
-  .number()
-  .required("Price is required!")
-  .positive("Price must be greater than 0!"),
+    .number()
+    .required("Price is required!")
+    .positive("Price must be greater than 0!"),
   discount: yup.number().optional(),
-  product_categories:  yup
-  .array()
-  .min(0, 'No Category selected')  // Permite que no se seleccione ninguna colección
-  .optional(),  // Permite que el campo sea opcional
+  product_categories: yup
+    .array()
+    .min(0, 'No Category selected')  // Permite que no se seleccione ninguna colección
+    .optional(),  // Permite que el campo sea opcional
   featured: yup.boolean(),
   mostSold: yup.boolean(),
 });
@@ -59,6 +58,20 @@ interface Props {
   collectionsList: string[]
   categoriesList: string[]
 }
+type ProductFormData = {
+  [key: string]: any;
+  title: any;
+  collections: any;
+  content: any;
+  status: any;
+  sports: any;
+  regular_price: any;
+  discount: any;
+  product_categories: any;
+  featured: any;
+  mostSold: any;
+};
+
 // ================================================================
 
 export default function ProductForm({ product, collectionsList, categoriesList }: Props) {
@@ -75,11 +88,13 @@ export default function ProductForm({ product, collectionsList, categoriesList }
     regular_price,
     id,
     discount,
+    slug,
+    images,
     sports,
     collections,
   } = product || {};
 
-  const INITIAL_VALUES = {
+  const INITIAL_VALUES: ProductFormData = {
     title: title || "",
     collections: collections ? collections.map(({ title }: { title: string }) => title) : [],
     content: content || "",
@@ -90,15 +105,80 @@ export default function ProductForm({ product, collectionsList, categoriesList }
     product_categories: product_categories ? product_categories.split('|') : [],
     featured: featured || false,
     mostSold: mostSold || false,
+    slug: slug || "",
   };
-
   const [files, setFiles] = useState<File[]>([]);
+
+  useEffect(() => {
+    if (!images || images.length === 0) return;
+
+    const fetchImages = async () => {
+      try {
+        const nameFile: { [key: number]: string } = {};
+        let additionalCount = 3;
+
+        const imageFiles = await Promise.all(
+          images.map(async (image: string, index: number) => {
+            const response = await fetch(image);
+            const blob = await response.blob();
+            // Extraer el nombre del archivo desde la URL
+            const fileNameFromUrl = image.split("/").pop() || "";
+
+            // Definir nombres clave
+            let fileName = `ADDITIONAL_${additionalCount}.jpg`;
+
+            if (fileNameFromUrl.includes("Front_1")) {
+              fileName = "Front_1.png";
+            } else if (fileNameFromUrl.includes("Back_2")) {
+              fileName = "Back_2.png";
+            } else if (fileNameFromUrl.includes("customization_1")) {
+              fileName = "Front-customization_1.png";
+            } else if (fileNameFromUrl.includes("customization_2")) {
+              fileName = "Back_customization_2.png";
+            } else {
+              additionalCount++; // Aumentar el contador para archivos adicionales
+            }
+
+            return new File([blob], fileName, { type: blob.type });
+          })
+        );
+
+        setFiles(imageFiles);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    fetchImages();
+  }, [images]);
+
+  const uploadImages = async () => {
+    try {
+      const main = files.filter(f => f && !f?.name.includes('customization'))
+      const custom = files.filter(f => f && f?.name.includes('customization'))
+      if (main.length > 0) {
+        await uploadFolder(
+          main,
+          title,
+        );
+      }
+      if (custom.length > 0) {
+        await uploadFolder(
+          custom,
+          title + '/SinLogo',
+        );
+      }
+    } catch (error) {
+      showErrorAlert('Failed', 'The product images cannot be updated')
+    }
+  }
 
   const update = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await updateProduct(id, values, profile.token as string);
-      console.log(response);
+      await uploadImages();
       showSuccessAlert('Success', response.message)
+
     } catch (error) {
       showErrorAlert('Failed', 'The product could not be updated')
     }
@@ -107,31 +187,29 @@ export default function ProductForm({ product, collectionsList, categoriesList }
   const create = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await createProduct(values, profile.token as string);
-      console.log(response);
+      await uploadImages();
       showSuccessAlert('Success', response.message)
-      router.push('/admin/products/'+ response.createdProduct.id)
+      router.push('/admin/products/' + response.createdProduct.id)
     } catch (error: any) {
       showErrorAlert('Failed', error.response.data.message)
     }
   }
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
-    if (!product) {
-      create(values)
-    } else {
-      update(values)
+    if (files.filter(f => f).length < 4 && files.filter(f => f).length !== 0) {
+      // Mostrar el toast si no hay 4 archivos o ninguno
+      showErrorAlert('Error', 'You must upload exactly 4 files or none.');
+      return; // Evitar el envío del formulario si no se cumple la validación
     }
-  };
 
-  // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-  const handleChangeDropZone = (files: File[]) => {
-    files.forEach((file) => Object.assign(file, { preview: URL.createObjectURL(file) }));
-    setFiles(files);
-  };
+    if (!product) {
+      await create(values)
+      window.location.reload();
+    } else {
+      await update(values)
+      window.location.reload();
+    }
 
-  // HANDLE DELETE UPLOAD IMAGE
-  const handleFileDelete = (file: File) => () => {
-    setFiles((files) => files?.filter((item) => item.name !== file.name));
   };
 
   return (
@@ -143,13 +221,14 @@ export default function ProductForm({ product, collectionsList, categoriesList }
       >
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
+            <H3 mb={4}>Product Detail</H3>
             <Grid container spacing={3}>
               <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="title"
                   label="Name"
-                  color="info"
+                  color="primary"
                   size="medium"
                   placeholder="Name"
                   value={values.title}
@@ -162,9 +241,25 @@ export default function ProductForm({ product, collectionsList, categoriesList }
 
               <Grid item sm={6} xs={12}>
                 <TextField
+                  fullWidth
+                  name="slug"
+                  label="Slug"
+                  color="primary"
+                  size="medium"
+                  placeholder="Name"
+                  value={values.slug}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  helperText={touched.slug && errors.slug as string}
+                  error={Boolean(touched.slug && errors.slug)}
+                />
+              </Grid>
+
+              <Grid item sm={6} xs={12}>
+                <TextField
                   select
                   fullWidth
-                  color="info"
+                  color="primary"
                   size="medium"
                   name="collections"
                   label="Collections"
@@ -192,7 +287,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                   fullWidth
                   name="status"
                   label="Status"
-                  color="info"
+                  color="primary"
                   size="medium"
                   placeholder="Status"
                   onBlur={handleBlur}
@@ -210,7 +305,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                 <TextField
                   select
                   fullWidth
-                  color="info"
+                  color="primary"
                   size="medium"
                   name="product_categories"
                   onBlur={handleBlur}
@@ -237,7 +332,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                 <TextField
                   select
                   fullWidth
-                  color="info"
+                  color="primary"
                   size="medium"
                   name="sports"
                   onBlur={handleBlur}
@@ -258,7 +353,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                 <TextField
                   fullWidth
                   name="regular_price"
-                  color="info"
+                  color="primary"
                   size="medium"
                   type="number"
                   onBlur={handleBlur}
@@ -275,7 +370,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                 <TextField
                   fullWidth
                   name="discount"
-                  color="info"
+                  color="primary"
                   size="medium"
                   type="number"
                   onBlur={handleBlur}
@@ -304,7 +399,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
               <Grid item sm={12} xs={12}>
                 <TextField
                   fullWidth
-                  color="info"
+                  color="primary"
                   size="medium"
                   name="content"
                   label="Description"
@@ -325,7 +420,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                       checked={values.featured} // El valor es booleano
                       onChange={handleChange} // Maneja el cambio de valor
                       name="featured" // El nombre del campo
-                      color="info"
+                      color="primary"
                     />
                   }
                   label="Featured"
@@ -339,7 +434,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                       checked={values.mostSold} // El valor es booleano
                       onChange={handleChange} // Maneja el cambio de valor
                       name="mostSold" // El nombre del campo
-                      color="info"
+                      color="primary"
                     />
                   }
                   label="Most Sold"
@@ -361,7 +456,7 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                         })
                       }}
                       name="Publish" // El nombre del campo
-                      color="info"
+                      color="primary"
                     />
                   }
                   label="Publish"
@@ -369,20 +464,24 @@ export default function ProductForm({ product, collectionsList, categoriesList }
               </Grid>
 
               <Grid item xs={12}>
-                {/* <DropZone onChange={(files: any) => handleChangeDropZone(files)} /> */}
-
-                <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
-                  {files.map((file, index) => (
-                    <UploadImageBox key={index}>
-                      <Box component="img" src={''} width="100%" />
-                      <StyledClear onClick={handleFileDelete(file)} />
-                    </UploadImageBox>
-                  ))}
-                </FlexBox>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                  <H3 sx={{ marginBottom: 0 }}>Product Images</H3>
+                  <Tooltip
+                    title="The image file only supports 'png' format for better resolution."
+                    arrow
+                    enterTouchDelay={0} // Permite que se pueda ver en mobile con toque
+                    leaveTouchDelay={3000} // Mantiene el tooltip visible un poco más en mobile
+                  >
+                    <IconButton size="small" sx={{ padding: "4px" }}>
+                      <Info fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+                <ImageUploader defaultImages={images} onChange={(newImages: any) => setFiles(newImages)} />
               </Grid>
 
               <Grid item sm={6} xs={12}>
-                <Button variant="contained" color="info" type="submit">
+                <Button variant="contained" color="primary" type="submit">
                   {!product ? 'Create product' : 'Save product'}
                 </Button>
               </Grid>

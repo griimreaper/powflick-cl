@@ -8,9 +8,7 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 // GLOBAL CUSTOM COMPONENTS
 import Scrollbar from "components/scrollbar";
-import { TableHeader, TablePagination } from "components/data-table";
-// GLOBAL CUSTOM HOOK
-import useMuiTable from "hooks/useMuiTable";
+import { TableHeader } from "components/data-table";
 //  LOCAL CUSTOM COMPONENT
 import ProductRow from "../product-row";
 import SearchArea from "../../search-box";
@@ -18,11 +16,8 @@ import PageWrapper from "../../page-wrapper";
 // CUSTOM DATA MODEL
 import { useDashboardStore } from "store/dashboard";
 import { getProductsAdmin } from "services/dashboardAdmin/products";
-import useLoading from "hooks/useLoading";
 import { Filters, ProductData } from ".";
 import Pagination from "./Pagination";
-import LoadingComponent from "components/Loaders/LoadingComponent";
-import { Box } from "@mui/material";
 import useHearingEvent from "hooks/hearingEvent";
 
 export default function ProductsPageView() {

@@ -39,6 +39,7 @@ export const updateReview = async (data: updateReview, token: string) => {
     const response = await mainApi.patch("/reviews/update", data, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    await fetch("/api/revalidate", { method: "POST" });
     return response.data;
   } catch (error) {
     console.error("Error updating status review:", error);
@@ -51,6 +52,7 @@ export const deleteReview = async (id: string, token: string) => {
     const response = await mainApi.delete("/reviews/" + id, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    await fetch("/api/revalidate", { method: "POST" });
 
     return response.data;
   } catch (error) {

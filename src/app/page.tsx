@@ -6,7 +6,7 @@ import FashionTwoPageView from "pages-sections/fashion-2/fashion-2";
 import { cache } from "react";
 import { getLanding } from "services/Landing";
 
-export const revalidate = 86400;
+export const revalidate = 3600;
 export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales
 export const dynamic = "force-dynamic"; // Fuerza el comportamiento estático
 
