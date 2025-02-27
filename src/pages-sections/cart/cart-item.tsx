@@ -20,7 +20,6 @@ import { Box, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { CustomizationModal } from "./CustomizationModal";
 import { useShoppingCartStore } from "store/shoppingCart";
-import useCounter from "hooks/useCounter";
 
 // =========================================================
 type Props = {
