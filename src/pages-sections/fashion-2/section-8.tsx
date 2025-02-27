@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@mui/material/Button";
-import { useMediaQuery, useTheme, Box, Typography } from "@mui/material";
+import { useMediaQuery, Box } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
 import { RootStyle } from "./section-7";

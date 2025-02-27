@@ -3,9 +3,7 @@
 import Button from "@mui/material/Button";
 import {
   useMediaQuery,
-  useTheme,
   Box,
-  Typography,
   styled,
 } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS

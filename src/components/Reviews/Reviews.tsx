@@ -12,16 +12,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { keyframes } from "@emotion/react";
 import { Settings } from "react-slick";
 import { Carousel } from "components/carousel";
 import { Paragraph } from "components/Typography";
 
-const pulse = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-`;
 const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
   padding: 8,

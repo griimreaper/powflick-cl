@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 // MUI ICON COMPONENT
 import Delete from "@mui/icons-material/Delete";
 // GLOBAL CUSTOM COMPONENTS
-import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
 
 export default function PageSettings() {
@@ -33,11 +32,7 @@ export default function PageSettings() {
   return (
     <div>
       <Stack spacing={3} mb={3}>
-        <DropZone
-          onChange={(files) => console.log(files)}
-          title="Main Banner (1920 x 360) *"
-          imageSize="We had to limit height to maintian consistancy. Some device both side of the banner might cropped for height limitation."
-        />
+
 
         <TextField
           select
@@ -52,11 +47,6 @@ export default function PageSettings() {
           <MenuItem value="fashion">Fashion</MenuItem>
         </TextField>
 
-        <DropZone
-          onChange={(files) => console.log(files)}
-          title="All products page banner * (Recommended size 1025x120)"
-          imageSize="We had to limit height to maintian consistancy. Some device both side of the banner might cropped for height limitation."
-        />
       </Stack>
 
       <Box mb={4}>

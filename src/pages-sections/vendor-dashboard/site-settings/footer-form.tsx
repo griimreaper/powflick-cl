@@ -8,7 +8,7 @@ import { FieldArray, Formik } from "formik";
 // MUI ICON COMPONENT
 import Delete from "@mui/icons-material/Delete";
 // GLOBAL CUSTOM COMPONENTS
-import DropZone from "components/DropZone";
+
 import { H4 } from "components/Typography";
 import { FlexBetween } from "components/flex-box";
 
@@ -36,10 +36,6 @@ const FooterForm = () => {
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <DropZone
-                onChange={(files) => console.log(files)}
-                title="Drag & Drop Footer Logo"
-              />
             </Grid>
 
             <Grid item xs={12}>
