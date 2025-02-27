@@ -12,19 +12,21 @@ import { Wrapper } from "pages-sections/sessions/styles";
 import LogoWithTitle from "pages-sections/sessions/components/logo-title";
 import LoginBottom from "pages-sections/sessions/components/login-bottom";
 import SocialButtons from "pages-sections/sessions/components/social-buttons";
+import { redirect } from "next/dist/server/api-utils";
 
 // ==============================================================
 interface Props {
   dialogOpen: boolean;
-  sidenavOpen: boolean;
+  sidenavOpen?: boolean;
+  redirectUrl?: string;
   toggleDialog: () => void;
-  toggleSidenav: () => void;
-  session: boolean;
+  toggleSidenav?: () => void;
+  session?: boolean;
 }
 // ==============================================================
 
 export default function DialogDrawer(props: Props) {
-  const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav, session } =
+  const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav, session, redirectUrl } =
     props;
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("xs")
@@ -42,8 +44,8 @@ export default function DialogDrawer(props: Props) {
         >
           <Wrapper>
             <LogoWithTitle />
-            <LoginPageView closeDialog={toggleDialog} />
-            <SocialButtons />
+            <LoginPageView closeDialog={toggleDialog} redirectUrl={redirectUrl} />
+            <SocialButtons redirectUrl={redirectUrl} />
             <LoginBottom />
           </Wrapper>
         </Dialog>
@@ -57,7 +59,7 @@ export default function DialogDrawer(props: Props) {
         onClose={toggleSidenav}
         sx={{ zIndex: 1000 }}
       >
-        <MiniCart toggleSidenav={toggleSidenav} />
+        <MiniCart toggleSidenav={toggleSidenav!} />
       </Drawer>
     </Fragment>
   );
