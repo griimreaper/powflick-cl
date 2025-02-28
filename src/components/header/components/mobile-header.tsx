@@ -51,11 +51,13 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           <Image
             height={44}
             width={44}
-            loading="lazy"
+            loading="eager"
             quality={80}
-            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
+            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png?w=44 44w, /assets/images/logo/POWFLICK_LOGO-HEADER.png?w=88 88w"
             alt="logo"
+            priority
           />
+
         </Link>
 
         {/* RIGHT CONTENT - LOGIN, CART, SEARCH BUTTON */}
@@ -93,7 +95,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           </FlexBetween>
 
           {/* CATEGORY BASED SEARCH FORM */}
-          <SearchInputWithCategory onClose={toggleSearchBar}/>
+          <SearchInputWithCategory onClose={toggleSearchBar} />
         </Box>
       </Drawer>
 

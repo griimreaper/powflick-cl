@@ -7,6 +7,8 @@ import {
   useState,
 } from "react";
 // GLOBAL CUSTOM COMPONENTS
+import { Navbar } from "components/navbar";
+import Header from "components/header/header";
 import { DataStructure } from "models/types";
 import { signOut, useSession } from "next-auth/react";
 import { getProfile } from "services/DashboardUser";
@@ -14,11 +16,10 @@ import { useDashboardStore } from "store/dashboard";
 import { useQueryClient } from "@tanstack/react-query";
 import { Box } from "@mui/material";
 import dynamic from "next/dynamic";
-import { Navbar } from "components/navbar";
-import Header from "components/header";
 
-const Footer1 = dynamic(() => import("components/footer").then(mod => mod.Footer1));
-const MobileNavigationBar = dynamic(() => import("components/mobile-navigation").then(mod => mod.MobileNavigationBar));
+// Carga dinámica de componentes
+const Footer1 = dynamic(() => import("components/footer").then((mod) => mod.Footer1));
+const MobileNavigationBar = dynamic(() => import("components/mobile-navigation").then((mod) => mod.MobileNavigationBar));
 
 /**
  *  USED IN:

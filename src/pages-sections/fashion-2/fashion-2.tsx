@@ -108,7 +108,6 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
           alt="Overlay"
           width={250} // Tamaño en escritorio
           height={0} // Se ajusta automáticamente con style={{ height: "auto" }}
-          quality={80}
           loading="lazy"
           style={{
             position: "absolute",
