@@ -3,6 +3,7 @@
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 // LOCAL CUSTOM COMPONENT
 import OrderActions from "../order-actions";
 import TotalSummery from "../total-summery";
@@ -20,9 +21,9 @@ import { useRouter } from "next/navigation";
 // ==============================================================
 type Props = {
   data: {
-    data: Order,
-    directions: Direction[],
-  }
+    data: Order;
+    directions: Direction[];
+  };
 };
 // ==============================================================
 
@@ -38,19 +39,25 @@ export default function OrderDetailsPageView({ data }: Props) {
     state: string;
     directionId: string;
     note: string;
+    trackingCode: string;
   }>({
     orderId: String(order.id),
     state: order.state,
     directionId: order.direction.id,
     note: order.note,
+    trackingCode: order.trackingCode || "",
   });
+
+  console.log("updatedOrder", updatedOrder);
+  
+  
 
   const handleSaveChanges = async () => {
     try {
       const response = await updateOrder(updatedOrder, token as string);
 
       showSuccessAlert("Success", response.message);
-      router.push('/admin/orders')
+      router.push("/admin/orders");
     } catch (error) {
       console.error("Error updating order:", error);
       showErrorAlert("Error", "Failed to update the order. Please try again.");
@@ -68,12 +75,36 @@ export default function OrderDetailsPageView({ data }: Props) {
               createdAt={order.createdAt}
               status={order.state}
               customer={order.user}
-              onStatusChange={(newStatus) => setUpdatedOrder((prev) => ({ ...prev, state: newStatus }))} />
+              onStatusChange={(newStatus) =>
+                setUpdatedOrder((prev) => ({ ...prev, state: newStatus }))
+              }
+            />
 
             {/* ORDERED PRODUCT LIST */}
             {order?.products?.map((item, index) => (
-              <OrderedProduct product={item} customizations={order.customizations.filter(c => c.productId === item.id)} key={index} />
+              <OrderedProduct
+                product={item}
+                customizations={order.customizations.filter(
+                  (c) => c.productId === item.id
+                )}
+                key={index}
+              />
             ))}
+
+            {/* TRACKING CODE INPUT */}
+            <TextField
+              label="Tracking Code"
+              value={updatedOrder.trackingCode}
+              onChange={(e) =>
+                setUpdatedOrder((prev) => ({
+                  ...prev,
+                  trackingCode: e.target.value,
+                }))
+              }
+              fullWidth={false}
+              margin="normal"
+              sx={{ width: "50%" }}
+            />
           </Card>
         </Grid>
 
@@ -83,18 +114,21 @@ export default function OrderDetailsPageView({ data }: Props) {
             direction={order?.direction}
             note={order.note}
             directions={directions}
-            setUpdateOrder={setUpdatedOrder} />
+            setUpdateOrder={setUpdatedOrder}
+          />
         </Grid>
 
         {/* TOTAL SUMMERY OF ORDER */}
         <Grid item md={6} xs={12}>
-          <TotalSummery total={order?.total} discount={order?.coupon?.discount} />
+          <TotalSummery
+            total={order?.total}
+            discount={order?.coupon?.discount}
+          />
         </Grid>
 
         {/* CHANGE BUTTON */}
         <Grid item xs={12}>
-          <Button variant="contained" color="info"
-            onClick={handleSaveChanges}>
+          <Button variant="contained" color="info" onClick={handleSaveChanges}>
             Save Changes
           </Button>
         </Grid>

@@ -7,6 +7,7 @@ import OrderSummery from "../order-summery";
 import OrderProgress from "../order-progress";
 import OrderedProducts from "../ordered-products";
 import DashboardHeader from "../../dashboard-header";
+import TrackingCode from "../tracking-code";
 import { Order } from "models/types";
 // CUSTOM DATA MODEL
 
@@ -18,13 +19,17 @@ export default function OrderDetailsPageView({ order }: Props) {
   return (
     <Fragment>
       {/* TITLE HEADER AREA */}
-      <DashboardHeader
-        Icon={ShoppingBag}
-        title="Order Details"
+      <DashboardHeader Icon={ShoppingBag} title="Order Details" />
+
+      {/* TRACKING CODE AREA */}
+      <TrackingCode
+        trackingCode={order.trackingCode}
+        orderId={order.id}
+        state={order.state}
       />
 
       {/* ORDER PROGRESS AREA */}
-      <OrderProgress status={order?.state}/>
+      {/* <OrderProgress status={order?.state}/> */}
 
       {/* ORDERED PRODUCT LIST */}
       <OrderedProducts order={order} />

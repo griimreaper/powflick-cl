@@ -8,9 +8,13 @@ import {
   StepLabel,
   Stepper,
   StepConnector,
+  Button, // Importar Button
 } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react"; // Importar useSession
+import { getOrder } from "services/ThanksForBuying";
 
 const steps = [
   {
@@ -39,6 +43,34 @@ const steps = [
 
 const Shipping = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [trackingCode, setTrackingCode] = useState(""); // Estado para almacenar el código de seguimiento
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId"); // Extraer 'orderId' de la URL
+  const { data: session } = useSession(); // Obtener la sesión
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      let token = session?.user?.name?.split("|")[0];
+
+      const { data } = await getOrder(String(orderId), token as string);
+
+      const stepIndex = steps.findIndex(
+        (step) => step.label.toLowerCase() === data.state.toLowerCase()
+      );
+
+      if (stepIndex !== -1) {
+        setActiveStep(stepIndex);
+      }
+
+      if (data.trackingCode) {
+        setTrackingCode(data.trackingCode); // Almacenar el código de seguimiento
+      }
+    };
+
+    if (session && orderId) {
+      fetchOrder();
+    }
+  }, [session, orderId]);
 
   return (
     <Box sx={{ backgroundColor: "white" }}>
@@ -179,6 +211,11 @@ const Shipping = () => {
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
+                      backgroundColor:
+                        index === activeStep ? "primary.main" : "transparent", // Resaltar el paso activo
+                      padding: index === activeStep ? 1 : 0, // Añadir padding para resaltar mejor
+                      borderRadius: 1, // Añadir borde redondeado
+                      transition: "background-color 0.3s ease", // Añadir transición para suavizar el cambio de color
                     }}
                   >
                     {/* Imagen arriba del Step */}
@@ -340,6 +377,29 @@ const Shipping = () => {
             will contact you if needed.
           </Typography>
         </Box>
+        {trackingCode && (
+          <Box sx={{ width: { xs: "100%", md: "50%" }, textAlign: "center" }}>
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              sx={{ fontStyle: "italic", color: "red" }}
+            >
+              Tracking Code
+            </Typography>
+            <Typography textAlign="center" mt={2}>
+              Your tracking code is: {trackingCode}
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+              href={`https://www.17track.net/es?nums=${trackingCode}`}
+              target="_blank"
+            >
+              Track Your Order
+            </Button>
+          </Box>
+        )}
         <Box
           sx={{ width: { xs: "20%", md: "10%" } }}
           component="img"
