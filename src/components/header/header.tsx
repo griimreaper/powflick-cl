@@ -50,6 +50,7 @@ export default function Header({
           <Image
             width={50}
             height={50}
+            quality={80}
             priority
             src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             alt="logo"

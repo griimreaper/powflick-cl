@@ -8,7 +8,6 @@ import { getLanding } from "services/Landing";
 
 export const revalidate = 3600;
 export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales
-export const dynamic = "force-dynamic"; // Fuerza el comportamiento estático
 
 const getLandingCached = cache(async (): Promise<DataStructure> => {
   try {

@@ -1,11 +1,12 @@
+import dynamic from "next/dynamic";
 import { Box, Button, useMediaQuery } from "@mui/material";
-import React from "react";
-import Section2 from "./section-2";
-import Section3 from "./section-3";
 import Image from "next/image";
 
+const Section2 = dynamic(() => import("./section-2"), { ssr: false });
+const Section3 = dynamic(() => import("./section-3"), { ssr: false });
+
 export default function MainSection() {
-  const isMobile = useMediaQuery("(max-width: 768px)"); // Detecta pantallas menores a 600px (breakpoint "sm")
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const backgroundImage = isMobile
     ? "/assets/images/landing/mobile/POWFLICK-_BANNER-SUPERIOR.png"
@@ -39,8 +40,8 @@ export default function MainSection() {
           width: "100%",
           height: "auto",
           position: "relative",
-          objectFit: "cover", // Asegura que la imagen mantenga proporciones
-          objectPosition: "top", // Ajusta la posición de la imagen
+          objectFit: "cover",
+          objectPosition: "top",
           zIndex: 0,
         }}
       />
@@ -48,12 +49,12 @@ export default function MainSection() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end", // Centra verticalmente
-          alignItems: "center", // Centra horizontalmente
+          justifyContent: "flex-end",
+          alignItems: "center",
           textAlign: "center",
           width: "100%",
           height: "100%",
-          gap: isMobile ? '1vw' : 3,
+          gap: isMobile ? "1vw" : 3,
           position: "absolute",
           zIndex: 2,
           fontFamily: "GYMER",

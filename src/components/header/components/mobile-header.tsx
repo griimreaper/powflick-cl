@@ -12,11 +12,9 @@ import Icon from "icons";
 import DialogDrawer from "./dialog-drawer";
 // GLOBAL CUSTOM COMPONENTS
 import { Paragraph } from "components/Typography";
-import { SearchInput, SearchInputWithCategory } from "components/search-box";
+import { SearchInputWithCategory } from "components/search-box";
 import { MobileMenu } from "components/navbar/mobile-menu";
 import { FlexBetween, FlexBox } from "components/flex-box";
-// GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 // LOCAL CUSTOM HOOK
 import useHeader from "../hooks/use-header";
 import { useSession } from "next-auth/react";

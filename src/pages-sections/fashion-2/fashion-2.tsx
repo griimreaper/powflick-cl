@@ -1,20 +1,24 @@
 "use client";
-import { memo, useEffect } from "react";
-// GLOBAL CUSTOM COMPONENTS
-import Newsletter from "components/newsletter";
-import Reviews from "components/Reviews/Reviews";
-// LOCAL CUSTOM COMPONENTS
-import Section4 from "./section-4";
-import Section6 from "./section-6";
-import Section7 from "./section-7";
-import { useDashboardStore } from "store/dashboard";
-import { getProfile } from "services/DashboardUser";
-import { signOut, useSession } from "next-auth/react";
-import { DataStructure } from "models/types";
-import Section8 from "./section-8";
-import MainSection from "./MainSection";
+
+import { memo } from "react";
 import { Box } from "@mui/material";
+import { DataStructure } from "models/types";
+import { signOut, useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useEffect } from "react";
+import { getProfile } from "services/DashboardUser";
+import { useDashboardStore } from "store/dashboard";
+import MainSection from "./MainSection";
+// GLOBAL CUSTOM COMPONENTS
+const Newsletter = dynamic(() => import("components/newsletter"));
+const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
+
+// LOCAL CUSTOM COMPONENTS
+const Section4 = dynamic(() => import("./section-4"));
+const Section6 = dynamic(() => import("./section-6"));
+const Section7 = dynamic(() => import("./section-7"));
+const Section8 = dynamic(() => import("./section-8"));
 
 const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
   const {
@@ -104,6 +108,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
           alt="Overlay"
           width={250} // Tamaño en escritorio
           height={0} // Se ajusta automáticamente con style={{ height: "auto" }}
+          quality={80}
           loading="lazy"
           style={{
             position: "absolute",
