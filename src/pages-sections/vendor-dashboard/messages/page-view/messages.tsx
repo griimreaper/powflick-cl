@@ -37,8 +37,6 @@ export default function MessagesPageView({ type }: { type: "Complaint or Claim" 
     const { profile } = useDashboardStore();
     const { token } = profile;
 
-    console.log(type);
-
     const [filters, setFilters] = useState<Filters>({
         showAnswered: null,
         orderByDate: "ASC",
@@ -48,8 +46,6 @@ export default function MessagesPageView({ type }: { type: "Complaint or Claim" 
         page: 1,
         limit: 6,
     });
-
-    console.log(filters);
 
     useEffect(() => {
         const fetchData = async () => {

@@ -43,6 +43,7 @@ export type CustomizationsStoreType = {
   removeCustomizationById: (customizationId: string) => void;
   clearCustomization: () => void;
   trimCustomizations: (productId: string, numCustomizations: number) => void;
+  addCustomizations: (productId: string, numCustomizations: number) => void;
 };
 
 export type ProductToBagType = {

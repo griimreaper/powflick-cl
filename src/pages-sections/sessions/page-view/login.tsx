@@ -16,10 +16,11 @@ import { signIn } from "next-auth/react";
 // ==============================================================
 interface Props {
   closeDialog?: () => void;
+  redirectUrl?: string;
 }
 // ==============================================================
 
-const LoginPageView = ({ closeDialog }: Props) => {
+const LoginPageView = ({ closeDialog, redirectUrl }: Props) => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
   const router = useRouter();
 
@@ -51,9 +52,9 @@ const LoginPageView = ({ closeDialog }: Props) => {
         showErrorAlert("Error!", `Error to init session ${response?.error}`);
       } else {
         showSuccessAlert("Success!", "Session started successfully");
-  
+
         setTimeout(() => {
-          window.location.href = `/`;
+          window.location.href = redirectUrl || "/";
         }, 1000);
       }
     }

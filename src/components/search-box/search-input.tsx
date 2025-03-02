@@ -32,9 +32,6 @@ export default function SearchInput() {
     startAdornment: <SearchOutlinedIcon fontSize="small" />
   };
 
-  console.log(resultList);
-  
-
   return (
     <Box position="relative" flex="1 1 0" maxWidth="670px" mx="auto" {...{ ref: parentRef }}>
       <TextField
@@ -46,7 +43,7 @@ export default function SearchInput() {
       />
 
       {/* SHOW SEARCH RESULT LIST */}
-      {resultList.length > 0 ? <SearchResult results={resultList} query={searchText} /> : null}
+      {resultList.length > 0 ? <SearchResult results={resultList} query={searchText} onClose={() => {}}/> : null}
     </Box>
   );
 }

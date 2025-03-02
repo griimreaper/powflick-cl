@@ -16,10 +16,11 @@ import Link from "next/link";
 interface Props {
   handleGoogle?: () => void;
   handleFacebook?: () => void;
+  redirectUrl?: string;
 }
 // =======================================
 
-export default function SocialButtons(props: Props) {
+export default function SocialButtons({ redirectUrl }: Props) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   return (
@@ -84,7 +85,7 @@ export default function SocialButtons(props: Props) {
           },
         }}
         startIcon={<Image alt="google" src={googleLogo} />}
-        onClick={() => signIn("google", { callbackUrl: "/" })}
+        onClick={() => signIn("google", { callbackUrl: redirectUrl || "/" })}
         disabled={!acceptedTerms} // 🔴 Bloquea el botón si no se aceptan los términos
       >
         Continue with Google

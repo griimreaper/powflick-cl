@@ -93,7 +93,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           </FlexBetween>
 
           {/* CATEGORY BASED SEARCH FORM */}
-          <SearchInputWithCategory  />
+          <SearchInputWithCategory onClose={toggleSearchBar}/>
         </Box>
       </Drawer>
 

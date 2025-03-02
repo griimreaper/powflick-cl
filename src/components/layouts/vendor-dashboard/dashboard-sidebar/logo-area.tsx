@@ -5,6 +5,7 @@ import FlexBetween from "components/flex-box/flex-between";
 import { useLayout } from "../dashboard-layout-context";
 // STYLED COMPONENT
 import { ChevronLeftIcon } from "./styles";
+import Link from "next/link";
 
 export default function LogoArea() {
   const {
@@ -20,15 +21,17 @@ export default function LogoArea() {
       maxHeight={TOP_HEADER_AREA}
       justifyContent={COMPACT ? "center" : "space-between"}
     >
-      <Avatar
-        alt="Pow Flick Logo"
-        src={
-          COMPACT
-            ? "/assets/images/logo/POWFLICK_LOGO-HEADER.png"
-            : "/assets/images/logo/POWFLICK_LOGO-HEADER.png"
-        }
-        sx={{ borderRadius: 0, width: "auto", marginLeft: COMPACT ? 0 : 1 }}
-      />
+      <Link href='/'>
+        <Avatar
+          alt="Pow Flick Logo"
+          src={
+            COMPACT
+              ? "/assets/images/logo/POWFLICK_LOGO-HEADER.png"
+              : "/assets/images/logo/POWFLICK_LOGO-HEADER.png"
+          }
+          sx={{ borderRadius: 0, width: "auto", marginLeft: COMPACT ? 0 : 1 }}
+        />
+      </Link>
 
       <ChevronLeftIcon
         color="disabled"

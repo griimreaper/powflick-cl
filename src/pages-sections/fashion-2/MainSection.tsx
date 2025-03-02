@@ -50,7 +50,7 @@ export default function MainSection() {
           textAlign: "center",
           width: "100%",
           height: "100%",
-          gap: isMobile ? 2 : 3,
+          gap: isMobile ? '1vw' : 3,
           position: "absolute",
           zIndex: 2,
           fontFamily: "GYMER",

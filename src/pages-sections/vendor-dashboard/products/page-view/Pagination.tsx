@@ -92,7 +92,8 @@ const Pagination: FC<paginationProps> = ({
               backgroundColor: pageNumber === page ? "primary.main" : "transparent",
               color: pageNumber === page ? "#FFF" : "text.primary",
               "&:hover": {
-                backgroundColor: pageNumber !== page && pageNumber !== "..." ? "action.hover" : "#A7C7E7",
+                color: pageNumber !== "..." ? '#ffffff' : '',
+                backgroundColor: pageNumber !== page && pageNumber !== "..." ? "primary.600" : "",
               },
             }}
           >

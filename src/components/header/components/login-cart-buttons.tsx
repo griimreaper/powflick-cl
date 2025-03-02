@@ -13,7 +13,6 @@ import useCart from "hooks/useCart";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useShoppingCartStore } from "store/shoppingCart";
-import SearchInput from "components/search-box/search-input";
 import { SearchInputWithCategory } from "components/search-box";
 
 // ==============================================================
@@ -87,7 +86,7 @@ export default function LoginCartButtons({
             borderRadius: "16px"
           }}
         >
-          <SearchInputWithCategory />
+          <SearchInputWithCategory onClose={toggleSearchBar}/>
         </Box>
       </Modal>
     </div>

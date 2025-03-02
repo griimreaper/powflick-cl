@@ -46,7 +46,10 @@ export default function MessageForm({ token, messageId, setMess, from }: { token
         placeholder="Write your message here..."
         helperText={touched.message && errors.message}
         error={Boolean(touched.message && errors.message)}
-        sx={{ mb: 2 }}
+        sx={{
+          mb: 2, '& .MuiInputBase-input': { color: 'white' }, // Color del texto
+          '& .MuiInputBase-input::placeholder': { color: 'gray' } // Color del placeholder 
+        }}
       />
 
       <Button type="submit" color="primary" variant="contained">

@@ -28,7 +28,18 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         queryKey: ['navbarData'],   // Clave de la consulta
         queryFn: fetchNavbar,       // Función para obtener los datos
         staleTime: 86400,     // 1 día en milisegundos
-        enabled: !localStorage.getItem('navbarData'),
+        enabled: (() => {
+            const storedData = localStorage.getItem('navbarData');
+            if (!storedData) return true; // Si no hay datos, habilitar la consulta
+
+            try {
+                const parsedData = JSON.parse(storedData);
+                return parsedData.categories.length === 0 &&
+                    parsedData.collection.length === 0
+            } catch (error) {
+                return true; // Si hay un error al parsear, habilitar la consulta
+            }
+        })(),
         initialData: () => {
             // Intentar obtener los datos de localStorage al iniciar
             const cachedNavbar = localStorage.getItem('navbarData');

@@ -23,6 +23,7 @@ import { deleteProduct, updateProduct } from "services/dashboardAdmin/products";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import Link from "next/link";
+import { Box } from "@mui/material";
 
 // ========================================================================
 interface Product {
@@ -75,11 +76,10 @@ export default function ProductRow({ product, setActualize }: Props) {
         <Link href={'/products/' + slug}>
           <FlexBox alignItems="center" gap={1.5}>
             <Avatar alt={title} src={URL} sx={{ borderRadius: 2 }} />
-
-            <div>
-              <Paragraph fontWeight={600}>{title}</Paragraph>
+            <Box>
+              <Paragraph fontWeight={600} whiteSpace={'nowrap'}>{title}</Paragraph>
               <Small color="grey.600">#{id.split("-")[0] + ' / ' + slug}</Small>
-            </div>
+            </Box>
           </FlexBox>
         </Link>
       </StyledTableCell>
@@ -96,7 +96,6 @@ export default function ProductRow({ product, setActualize }: Props) {
 
       <StyledTableCell align="left">
         <SportZoneSwitch
-          color="info"
           checked={productPublish}
           onChange={() => handlePublish(!productPublish)}
         />
