@@ -11,8 +11,9 @@ export const ABOUT_LINKS = [
   // {title: "Careers", link: "/"},
   // {title: "Our Stores", link: "/"},
   // {title: "Our Cares", link: "/"},
-  {title: "Terms & Conditions", link: "terms-condition"},
-  {title: "Privacy Policy", link: "privacy-policy"},
+  { title: "Terms & Conditions", link: "terms-condition" },
+  { title: "Privacy Policy", link: "privacy-policy" },
+  { title: "Time an Shipping", link: "shipping" },
 ];
 
 export const CUSTOMER_CARE_LINKS = [
