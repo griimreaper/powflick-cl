@@ -28,7 +28,7 @@ export default function RecentPurchase({ data }: Props) {
       <FlexBetween px={3} py={2.5}>
         <H5>Recent Purchases</H5>
 
-        <Button size="small" color="info" variant="outlined">
+        <Button size="small" color="primary" variant="outlined">
           All Orders
         </Button>
       </FlexBetween>

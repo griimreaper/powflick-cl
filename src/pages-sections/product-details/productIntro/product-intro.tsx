@@ -38,8 +38,9 @@ import { useCustomizationStore } from "store/customizationStore";
 import { useCustomizationsStore } from "store/customizationsStore";
 import AditionalDetails from "./AditionalDetails";
 import Customizations from "components/Customization/customization";
-import useCounter from "hooks/useCounter";
 import { useShoppingCartStore } from "store/shoppingCart";
+import { TextField } from "@mui/material";
+import { useCounter } from "hooks/useCounter";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -84,7 +85,7 @@ export default function ProductIntro({ product }: Props) {
   const [isFav, setIsFav] = useState<boolean>(
     profile.favorites?.some(({ product }) => product.id === id)
   );
-  const { counter, setCounter, handleCounterChange } = useCounter(
+  const { counter, decrement, increment, setCounter, handleInputChange } = useCounter(
     product.product.id
   );
   const [font, setFont] = useState<string>(fontDefault || "Arial");
@@ -324,7 +325,9 @@ export default function ProductIntro({ product }: Props) {
           {/* PRODUCT BRAND */}
           <FlexBox alignItems="center" mb={1} gap={1}>
             <div>Categories: </div>
-            <H6> {product.product.product_categories.split("|")[0]}</H6>
+            <Link href={`/products?category=${product.product.product_categories.split("|")[0]}`} >
+              <H6> {product.product.product_categories.split("|")[0]}</H6>
+            </Link>
           </FlexBox>
 
           {/* PRODUCT RATING */}
@@ -352,21 +355,43 @@ export default function ProductIntro({ product }: Props) {
                   color="primary"
                   variant="outlined"
                   onClick={() => {
-                    handleCounterChange(-1);
+                    decrement();
                   }}
                 >
                   <Remove fontSize="small" />
                 </Button>
-                <H3 fontWeight="600" mx={2.5}>
-                  {counter}
-                </H3>
+
+                <TextField
+                  value={counter}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+
+                    if (newValue === "") {
+                      // Si el campo está vacío, no hacer nada
+                      handleInputChange(0) // Deja el estado vacío
+                    } else {
+                      const parsedValue = parseInt(newValue, 10);
+
+                      if (!isNaN(parsedValue) && parsedValue >= 1 && parsedValue <= 99) {
+                        handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
+                        setCounter(parsedValue); // Actualiza el estado con el nuevo valor
+                      }
+                    }
+                  }}
+                  inputProps={{
+                    min: 1, // Evita valores negativos si es necesario
+                    style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
+                  }}
+                  sx={{ mx: 2.5 }}
+                />
+
                 <Button
                   size="small"
                   sx={{ p: 1 }}
                   color="primary"
                   variant="outlined"
                   onClick={() => {
-                    handleCounterChange(1);
+                    increment();
                   }}
                 >
                   <Add fontSize="small" />

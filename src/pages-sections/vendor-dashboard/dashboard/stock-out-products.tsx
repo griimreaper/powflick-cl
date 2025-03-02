@@ -27,7 +27,7 @@ export default function StockOutProducts({ data }: Props) {
       <FlexBetween px={3} py={2.5}>
         <H5>Stock Out Products</H5>
 
-        <Button size="small" color="info" variant="outlined">
+        <Button size="small" color="primary" variant="outlined">
           All Products
         </Button>
       </FlexBetween>

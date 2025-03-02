@@ -10,6 +10,7 @@ import MultiLevelMenu from "./multi-level-menu";
 import { useLayout } from "../dashboard-layout-context";
 // STYLED COMPONENT
 import { SidebarWrapper } from "./styles";
+import Link from "next/link";
 
 export default function DashboardSidebar() {
   const {
@@ -26,13 +27,15 @@ export default function DashboardSidebar() {
     return (
       <LayoutDrawer open={showMobileSideBar ? true : false} onClose={handleCloseMobileSidebar}>
         <Box p={2} maxHeight={TOP_HEADER_AREA}>
-          <Image
-            alt="Logo"
-            width={50}
-            height={50}
-            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
-            style={{ marginLeft: 8 }}
-          />
+          <Link href={"/"}>
+            <Image
+              alt="Logo"
+              width={50}
+              height={50}
+              src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
+              style={{ marginLeft: 8 }}
+            />
+          </Link>
         </Box>
 
         <MultiLevelMenu />

@@ -104,7 +104,7 @@ export default function CollectionForm({ collection, availableProducts }: Props)
                   fullWidth
                   name="title"
                   label="Title"
-                  color="info"
+                  color="primary"
                   size="medium"
                   placeholder="Title"
                   value={values.title}
@@ -121,7 +121,7 @@ export default function CollectionForm({ collection, availableProducts }: Props)
                   fullWidth
                   name="type"
                   label="Type"
-                  color="info"
+                  color="primary"
                   size="medium"
                   placeholder="Type"
                   value={values.type}
@@ -142,7 +142,7 @@ export default function CollectionForm({ collection, availableProducts }: Props)
                   name="order"
                   type="number"
                   label="Order"
-                  color="info"
+                  color="primary"
                   size="medium"
                   onChange={(e) => {
                     const value = e.target.value;
@@ -163,7 +163,7 @@ export default function CollectionForm({ collection, availableProducts }: Props)
                   fullWidth
                   name="content"
                   label="Content"
-                  color="info"
+                  color="primary"
                   size="medium"
                   placeholder="Content"
                   value={values.content}
@@ -191,7 +191,7 @@ export default function CollectionForm({ collection, availableProducts }: Props)
                     <TextField
                       {...params}
                       label="Select Products"
-                      color="info"
+                      color="primary"
                       size="medium"
                       placeholder="Search products"
                     />
@@ -201,7 +201,7 @@ export default function CollectionForm({ collection, availableProducts }: Props)
               </Grid>
 
               <Grid item xs={12}>
-                <Button variant="contained" color="info" type="submit">
+                <Button variant="contained" color="primary" type="submit">
                   Save category
                 </Button>
               </Grid>

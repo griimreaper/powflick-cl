@@ -45,8 +45,8 @@ interface AditionalDetailsProps {
   detail: detailProps | any;
   counter: number;
   handleItemChange: (name: keyof Customization, value: string) => void;
-  id: string,
-  sport: string
+  id: string;
+  sport: string;
 }
 
 const defaultCustom = initialCustomization();
@@ -80,25 +80,31 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     }
   };
 
-
   const renderSection = (
     label: string,
     content: JSX.Element,
     key: keyof Partial<Customization> | string,
     extraText?: string,
-    button?: boolean,
+    button?: boolean
   ) => {
     const isLocked = key === "socks" && counter < 20;
 
     return (
       <Accordion key={key} disabled={isLocked}>
-        {!isLocked ?
+        {!isLocked ? (
           <AccordionSummary
             expandIcon={!isLocked ? <ExpandMoreIcon /> : null} // Oculta el icono si está bloqueado
             aria-controls={`${key}-content`}
             id={`${key}-header`}
           >
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <Typography>
                 {label} {extraText ? `(${extraText})` : ""}{" "}
               </Typography>
@@ -116,18 +122,20 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleSetForAll(key as keyof Customization, customization[key as keyof Customization] as string);
+                    handleSetForAll(
+                      key as keyof Customization,
+                      customization[key as keyof Customization] as string
+                    );
                   }}
                 >
                   Set for all
                 </Button>
-
               )}
-
             </Box>
           </AccordionSummary>
-          : <></>
-        }
+        ) : (
+          <></>
+        )}
         {!isLocked && <AccordionDetails>{content}</AccordionDetails>}
       </Accordion>
     );
@@ -140,17 +148,30 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     imageSize: number = 100,
     compact: boolean = false
   ) => (
-    <div style={{ display: "flex", overflowX: "auto", padding: "0.5rem", gap: "0.5rem", background: "#fff" }}>
-      {type === 'shorts' && (sport === 'Basketball' || sport === 'Soccer') &&
-        <Button variant="outlined" color="primary"
-          onClick={() => handleItemChange(type, 'Default (+$0.00)')}
+    <div
+      style={{
+        display: "flex",
+        overflowX: "auto",
+        padding: "0.5rem",
+        gap: "0.5rem",
+        background: "#fff",
+      }}
+    >
+      {type === "shorts" && (sport === "Basketball" || sport === "Soccer") && (
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => handleItemChange(type, "Default (+$0.00)")}
           style={{
             textTransform: "none",
             padding: 40,
             flex: compact ? "1 0 15%" : "1 0 21%",
             margin: compact ? "0.2rem" : "0.5rem",
-          }}>Default Short</Button>
-      }
+          }}
+        >
+          Default Short
+        </Button>
+      )}
       {items.map((item, index) => (
         <div
           key={index}
@@ -166,11 +187,19 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               display: "block",
               width: "100%",
               padding: compact ? "0.2rem" : "0.5rem",
+              background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
+              color: customization[type] === item.name ? "white" : "black", // Texto blanco si está seleccionado
             }}
           >
             {useZoom ? (
               <div>
-                <ZoomInOutlined sx={{ position: "absolute", right: "0", visibility: { md: "hidden" } }} />
+                <ZoomInOutlined
+                  sx={{
+                    position: "absolute",
+                    right: "0",
+                    visibility: { md: "hidden" },
+                  }}
+                />
                 <Zoom>
                   <img
                     src={item.image}
@@ -191,18 +220,25 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               />
             )}
             <Typography variant="body2" align="center">
-              {type === 'socks' ? killParenthesisIn(item.name) : item.name}
+              {type === "socks" ? killParenthesisIn(item.name) : item.name}
             </Typography>
           </Button>
         </div>
       ))}
     </div>
-  )
+  );
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      {isLocked ?
-        <Paragraph sx={{ color: 'primary.main', fontWeight: 600, my: 1, ml: 2 }}>Socks available after 20 uniforms</Paragraph> : <></>}
+      {isLocked ? (
+        <Paragraph
+          sx={{ color: "primary.main", fontWeight: 600, my: 1, ml: 2 }}
+        >
+          Socks available after 20 uniforms
+        </Paragraph>
+      ) : (
+        <></>
+      )}
       {detail.Size &&
         renderSection(
           `Size ${customization.size}`,

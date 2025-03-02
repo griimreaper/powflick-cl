@@ -6,12 +6,15 @@ import { useDashboardStore } from "store/dashboard";
 import { createDirection, deleteDirection, updateDirection } from "services/Directions";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import useLoading from "hooks/useLoading";
+import useHeader from "components/header/hooks/use-header";
 
 export default function DirectionForm({
     toggleForm,
     address,
+    toggleDialog,
 }: {
     toggleForm: () => void;
+    toggleDialog?: () => void;
     address: Direction | null;
 }) {
     const {
@@ -25,7 +28,10 @@ export default function DirectionForm({
     const { token } = profile;
 
     useEffect(() => {
-        if (address) {
+        const savedData = localStorage.getItem("pendingAddress");
+        if (savedData && !address) {
+            reset(JSON.parse(savedData)); // Restaurar datos guardados en localStorage
+        } else if (address) {
             reset(address);
         }
     }, [address, reset]);
@@ -50,6 +56,8 @@ export default function DirectionForm({
             }
             if (response.status === 204 || response.status === 200) {
                 showSuccessAlert("Success!", response.message);
+                toggleForm();
+                reset();
                 addOrUpdateUserDirection(response.direction);
             }
         }
@@ -63,12 +71,16 @@ export default function DirectionForm({
                 showSuccessAlert("Success!", "Address created correctly");
                 addOrUpdateUserDirection(response.direction);
                 stopLoading();
+                toggleForm();
+                localStorage.removeItem("pendingAddress");
+                reset();
             } catch (error) {
                 showErrorAlert("Error!", `Failed to create address ${error}`);
                 stopLoading();
             }
         } else {
-            showErrorAlert("Failed!", `You must be init session.`);
+            localStorage.setItem("pendingAddress", JSON.stringify(data)); // Guardar formulario antes de redirigir
+            toggleDialog!();
         }
     };
 
@@ -78,9 +90,6 @@ export default function DirectionForm({
         } else {
             await fetchCreateDirection(token, data);
         }
-
-        reset();
-        toggleForm();
     });
 
     return (

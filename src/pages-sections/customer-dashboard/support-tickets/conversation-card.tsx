@@ -42,8 +42,8 @@ export default function ConversationCard({ message }: Props) {
 
         <Box
           borderRadius={2}
-          bgcolor="grey.300"
-          p={2}
+          bgcolor="primary.main"
+          p={1}
           mt={2}
           lineHeight={1.7}
           textAlign="justify"

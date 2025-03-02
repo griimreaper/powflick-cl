@@ -1,5 +1,5 @@
 import { Customization, Logo, Number as Numb, Text } from 'models/types';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCustomizationsStore } from 'store/customizationsStore';
 import { deleteImage, setImageBlob } from 'services/imageStorage';
 import CustomTooltip from 'components/Tooltip/tooltip';
@@ -102,6 +102,22 @@ function EditableContainer({
             }
         }
     };
+
+    useEffect(() => {
+        const input = document.getElementById(
+            `${selection.type.toLowerCase()}-input-${selection.index + sideName}`
+        );
+
+        const preventFocus = (event: TouchEvent) => {
+            event.preventDefault();  // Evita que el teclado se muestre
+        };
+
+        input?.addEventListener('touchstart', preventFocus);
+
+        return () => {
+            input?.removeEventListener('touchstart', preventFocus);
+        };
+    }, [selection]);
 
     const removeLogo = async (index: number) => {
         if (logos[index].logoUrl !== "") {
@@ -327,6 +343,7 @@ function EditableContainer({
                         />
                         <Button
                             variant="contained"
+                            color='primary'
                             onClick={() => handleSubmit(selection.index)}
                             disabled={!file}
                             sx={{
@@ -405,6 +422,7 @@ function EditableContainer({
                         {texts.map((each: Text, index: number) => (
                             (each.text || selection.index === index) && (
                                 <TextField
+                                    id={`text-input-${index + sideName}`}
                                     key={index + "texts" + sideName}
                                     variant="outlined"
                                     size="small"
@@ -422,6 +440,7 @@ function EditableContainer({
                                         backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         cursor: selection.index === index ? "default" : "pointer",
                                         "&:hover": { backgroundColor: "primary.400" },
+                                        touchAction: "none",
                                     }}
                                 />
                             )
@@ -551,6 +570,7 @@ function EditableContainer({
                         {numbers?.map((each: Numb, index: number) => (
                             (each.number || selection.index === index) && (
                                 <TextField
+                                    id={`number-input-${index + sideName}`}
                                     key={index + "numbers" + sideName}
                                     value={each.number}
                                     color='primary'
@@ -570,7 +590,9 @@ function EditableContainer({
                                         backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         cursor: selection.index === index ? "default" : "pointer",
                                         "&:hover": { backgroundColor: "primary.400" },
+                                        touchAction: "none",
                                     }}
+
                                 />
                             )
                         ))}
@@ -630,7 +652,7 @@ function EditableContainer({
                                 <Select
                                     labelId="font-select-label"
                                     value={numbers[selection.index]?.font || ""}
-                                    onChange={(e) => handleFontChange(e, selection.index, "Text")}
+                                    onChange={(e) => handleFontChange(e, selection.index, "Number")}
                                     defaultValue={font}
                                 >
                                     {Object.entries(fonts).map(([fontName, fontFamily]) => (

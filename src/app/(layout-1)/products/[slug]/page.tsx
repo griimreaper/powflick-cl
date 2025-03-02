@@ -19,10 +19,7 @@ const getProductsBySlugCached = cache(async (slug: string): Promise<detailProps 
   return result;
 });
 
-export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales
-export const dynamic = "force-static"; // Fuerza el comportamiento estático
-export const revalidate = 3600; // Revalidar cada 1 hora
-export const dynamicParams = true;
+
 
 // Helper: Maneja el caché de manera centralizada
 async function fetchProductDetails(slug: string): Promise<detailProps | null> {
