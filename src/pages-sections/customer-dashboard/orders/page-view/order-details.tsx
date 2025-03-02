@@ -29,7 +29,7 @@ export default function OrderDetailsPageView({ order }: Props) {
       />
 
       {/* ORDER PROGRESS AREA */}
-      {/* <OrderProgress status={order?.state}/> */}
+      <OrderProgress status={order?.state}/>
 
       {/* ORDERED PRODUCT LIST */}
       <OrderedProducts order={order} />

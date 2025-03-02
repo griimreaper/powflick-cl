@@ -48,10 +48,6 @@ export default function OrderDetailsPageView({ data }: Props) {
     trackingCode: order.trackingCode || "",
   });
 
-  console.log("updatedOrder", updatedOrder);
-  
-  
-
   const handleSaveChanges = async () => {
     try {
       const response = await updateOrder(updatedOrder, token as string);

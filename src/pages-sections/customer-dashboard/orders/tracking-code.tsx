@@ -1,8 +1,6 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { primary } from "theme/theme-colors";
 import Link from "next/link";
-import { StaticDateTimePicker } from "@mui/x-date-pickers";
 
 type Props = {
   trackingCode?: string;
@@ -15,34 +13,69 @@ const TrackingCode: React.FC<Props> = ({ trackingCode, orderId, state }) => {
     <Box
       sx={{
         backgroundColor: "white",
-        p: 2,
+        p: 4,
         borderRadius: 2,
-        maxWidth: "auto",
+        width: "100%",
         marginBottom: 4,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "space-between" }}>
-        <Typography variant="h6" sx={{ color: "black" }}>
-          State:
-        </Typography>
-        <Typography variant="body1" sx={{ alignSelf: "center" }}>
-          {state || "No status available"}
-        </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 2, // Se reduce el espacio entre elementos
+        }}
+      >
+        {/* Estado del pedido */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            flex: 1,
+          }}
+        >
+          <Typography variant="h6" sx={{ color: "black" }}>
+            State:
+          </Typography>
+          <Typography variant="body1" sx={{ textAlign: "center" }}>
+            {state || "No status available"}
+          </Typography>
+        </Box>
 
-        <Typography variant="h6" sx={{ color: "black" }}>
-          Tracking Code:
-        </Typography>
-        <Typography variant="body1" sx={{ alignSelf: "center" }}>
-          {trackingCode || "No tracking code available"}
-        </Typography>
-        {trackingCode && (
-          <Link href={`/shipping?orderId=${orderId}`} passHref>
+        {/* Código de rastreo */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            flex: 1,
+          }}
+        >
+          <Typography variant="h6" sx={{ color: "black" }}>
+            Tracking Code:
+          </Typography>
+          <Typography variant="body1" sx={{ textAlign: "center" }}>
+            {trackingCode || "No tracking code available"}
+          </Typography>
+        </Box>
+      </Box>
+
+      {/* Botón de seguimiento */}
+      {trackingCode && (
+        <Box sx={{ textAlign: "center", marginTop: 2 }}>
+          <Link
+            href={`https://www.17track.net/es?nums=${trackingCode}`}
+            passHref
+          >
             <Button variant="contained" color="primary">
               Track Order
             </Button>
           </Link>
-        )}
-      </Box>
+        </Box>
+      )}
     </Box>
   );
 };
