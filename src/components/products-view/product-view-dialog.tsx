@@ -20,7 +20,6 @@ import useCart from "hooks/useCart";
 import { currency } from "lib";
 import { ProductDB } from "models/types";
 import { useShoppingCartStore } from "store/shoppingCart";
-import useCounter from "hooks/useCounter";
 
 // =====================================================
 interface Props {

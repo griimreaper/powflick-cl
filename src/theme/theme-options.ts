@@ -47,63 +47,9 @@ const themesOptionList = {
     typography,
     components,
     breakpoints,
-    palette: { primary: { ...primary, light: primary[100] }, ...themeColors }
-  },
-  [THEMES.GROCERY]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...primary, light: primary[100] }, ...themeColors }
-  },
-  [THEMES.PASTE]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...paste, light: paste[100] }, ...themeColors }
-  },
-  [THEMES.HEALTH]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...blue, light: blue[100] }, ...themeColors }
-  },
-  [THEMES.GIFT]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...marron, light: marron[100] }, ...themeColors }
-  },
-  [THEMES.ORANGE]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...orange }, ...themeColors }
-  },
-  [THEMES.GOLD]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...gold }, ...themeColors }
-  },
-  [THEMES.BLUISH]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...bluish }, ...themeColors }
-  },
-  [THEMES.GREEN]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...success }, ...themeColors }
+    palette: { ...themeColors }
   },
 
-  [THEMES.YELLOW]: {
-    typography,
-    components,
-    breakpoints,
-    palette: { primary: { ...warning }, ...themeColors }
-  }
 };
 
 const themeOptions = (pathname: string) => {

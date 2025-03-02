@@ -1,14 +1,13 @@
 import ShopLayout1 from "components/layouts/shop-layout-1";
 import { DataStructure } from "models/types";
 import { Metadata } from "next";
-import { getServerSession, Session } from "next-auth";
 import FashionTwoPageView from "pages-sections/fashion-2/fashion-2";
 import { cache } from "react";
 import { getLanding } from "services/Landing";
 
 export const revalidate = 3600;
 export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales
-export const dynamic = "force-dynamic"; // Fuerza el comportamiento estático
+export const dynamic = "force-static"; // Fuerza el comportamiento estático
 
 const getLandingCached = cache(async (): Promise<DataStructure> => {
   try {

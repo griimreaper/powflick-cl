@@ -1,29 +1,29 @@
-// GLOBAL CUSTOM COMPONENTS
-import { H4 } from "components/Typography";
-import LazyImage from "components/LazyImage";
-// STYLED COMPONENTS
-import { CategoryTitle, Wrapper } from "./styles";
+import Image from "next/image";
 import Link from "next/link";
 
 // ============================================================
-type Props = { image: string; title: string, link: string };
+type Props = { image: string; title: string; link: string };
 // ============================================================
 
 export default function CategoryCard1({ image, title, link }: Props) {
   return (
-    <Wrapper >
+    <div style={{ position: "relative", width: "100%", height: "auto" }}>
       <Link href={link}>
-        <img src={image} style={{
-          width: "100%",
-          height: "100%",       // Rellena completamente el contenedor
-          objectFit: "cover",   // Evita deformaciones y recorta el contenido sobrante
-          display: "block",
-        }} alt="category" />
+        <Image
+          src={image}
+          alt="category"
+          width={300} // Define un tamaño explícito
+          height={200} // Ajusta según necesidad
+          quality={80}
+          loading="lazy"
+          style={{
+            objectFit: "cover", // Mantiene la relación de aspecto
+            display: "block",
+            width: "100%", // Permite adaptarse al contenedor
+            height: "auto",
+          }}
+        />
       </Link>
-
-      {/* <CategoryTitle className="category-title">
-        <H4>{title}</H4>
-      </CategoryTitle> */}
-    </Wrapper>
+    </div>
   );
 }

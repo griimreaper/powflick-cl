@@ -15,7 +15,6 @@ import { currency } from "lib";
 // CUSTOM DATA MODEL
 import { CartItem } from "contexts/CartContext";
 import { ShoppingCartStoreType } from "store/interfaces/interface";
-import useCounter from "hooks/useCounter";
 import { useShoppingCartStore } from "store/shoppingCart";
 
 import { useRef, useState } from "react";

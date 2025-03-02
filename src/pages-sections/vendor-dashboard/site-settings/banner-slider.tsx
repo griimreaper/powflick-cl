@@ -48,11 +48,6 @@ const BannerSlider = () => {
     <form onSubmit={handleFormSubmit} encType="multipart/form-data">
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <DropZone
-            title="Drag and Drop slide image here"
-            imageSize="upload landscape photo"
-            onChange={(files) => console.log(files)}
-          />
 
           {/* PREVIEW UPLOAD IMAGES */}
           {newFiles.length > 0 ? (

@@ -3,8 +3,6 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
 import * as yup from "yup";
-// GLOBAL CUSTOM COMPONENT
-import DropZone from "components/DropZone";
 
 // form field validation
 const validationSchema = yup.object().shape({
@@ -33,7 +31,7 @@ const GeneralForm = () => {
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <DropZone onChange={(files) => console.log(files)} title="Drag & Drop Site Logo" />
+
             </Grid>
 
             <Grid item md={6} xs={12}>
@@ -84,10 +82,7 @@ const GeneralForm = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <DropZone
-                onChange={(files) => console.log(files)}
-                title="Drag & Drop Site Banner Image"
-              />
+
             </Grid>
 
             <Grid item xs={12}>

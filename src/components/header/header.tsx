@@ -6,7 +6,6 @@ import clsx from "clsx";
 // LOCAL CUSTOM HOOKS
 import useHeader from "./hooks/use-header";
 // GLOBAL CUSTOM COMPONENTS
-import LazyImage from "components/LazyImage";
 import FlexBox from "components/flex-box/flex-box";
 // LOCAL CUSTOM COMPONENTS
 import MobileHeader from "./components/mobile-header";
@@ -18,6 +17,7 @@ import { HeaderWrapper, StyledContainer } from "./styles";
 import { Session } from "next-auth";
 import { DataStructure } from "models/types";
 import { primary } from "theme/theme-colors";
+import Image from "next/image";
 
 // ==============================================================
 interface Props {
@@ -47,9 +47,11 @@ export default function Header({
       {/* LEFT CONTENT - LOGO AND CATEGORY */}
       <FlexBox minWidth={100} alignItems="center" paddingTop={2}>
         <Link href="/">
-          <LazyImage
+          <Image
             width={50}
-            height={40}
+            height={50}
+            quality={80}
+            priority
             src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
             alt="logo"
           />
