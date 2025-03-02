@@ -1,10 +1,9 @@
-import Grid from "@mui/material/Grid";
+'use client';
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
-import { H2, Paragraph } from "components/Typography";
+import { Paragraph } from "components/Typography";
 import CategoryCard1 from "components/category-cards/category-card-1";
 // API FUNCTIONS
-import api from "utils/__api__/fashion-2";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import { Carousel } from "components/carousel";
 import Link from "next/link";
@@ -48,7 +47,7 @@ const sportsCategories = [
   },
 ];
 
-export default async function Section3({ className }: { className: string }) {
+export default function Section3({ className }: { className: string }) {
   const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
 
   const responsive = [

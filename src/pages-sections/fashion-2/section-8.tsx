@@ -1,10 +1,11 @@
 "use client";
 
 import Button from "@mui/material/Button";
-import { useMediaQuery, useTheme, Box, Typography } from "@mui/material";
+import { useMediaQuery, Box } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
 import { RootStyle } from "./section-7";
+import Image from "next/image";
 // LOCAL CUSTOM COMPONENT
 
 export default function Section8() {
@@ -16,11 +17,16 @@ export default function Section8() {
   return (
     <RootStyle>
       {/* Imagen de fondo */}
-      <img
+      <Image
         src={backgroundImage}
         alt="Promo Sports Banner"
+        layout="responsive" // Se adapta al tamaño original manteniendo la relación de aspecto
+        width={1920} // Ajusta según el tamaño real de tu imagen
+        height={1080} // Ajusta según el tamaño real de tu imagen
+        loading="lazy"
+        quality={80} // Reduce el peso sin perder calidad
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1920px"
         style={{
-          width: "100%",
           position: "relative",
           zIndex: 0,
         }}

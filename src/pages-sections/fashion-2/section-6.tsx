@@ -1,7 +1,8 @@
+'use client';
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
-import { H2, Paragraph } from "components/Typography";
+import { Paragraph } from "components/Typography";
 import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
@@ -9,7 +10,7 @@ import Link from "next/link";
 // API FUNCTIONS
 
 
-export default async function Section6({ products }: { products: DataStructure['landing']['collections']['discountProducts'] }) {
+export default function Section6({ products }: { products: DataStructure['landing']['collections']['discountProducts'] }) {
   const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
 
   const responsive = [

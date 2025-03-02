@@ -1,21 +1,26 @@
 "use client";
-import { useEffect } from "react";
-// GLOBAL CUSTOM COMPONENTS
-import Newsletter from "components/newsletter";
-import Reviews from "components/Reviews/Reviews";
-// LOCAL CUSTOM COMPONENTS
-import Section4 from "./section-4";
-import Section6 from "./section-6";
-import Section7 from "./section-7";
-import { useDashboardStore } from "store/dashboard";
-import { getProfile } from "services/DashboardUser";
-import { signOut, useSession } from "next-auth/react";
-import { DataStructure } from "models/types";
-import Section8 from "./section-8";
-import MainSection from "./MainSection";
-import { Box } from "@mui/material";
 
-export default function FashionTwoPageView({ data }: { data: DataStructure }) {
+import { memo } from "react";
+import { Box } from "@mui/material";
+import { DataStructure } from "models/types";
+import { signOut, useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useEffect } from "react";
+import { getProfile } from "services/DashboardUser";
+import { useDashboardStore } from "store/dashboard";
+import MainSection from "./MainSection";
+// GLOBAL CUSTOM COMPONENTS
+const Newsletter = dynamic(() => import("components/newsletter"));
+const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
+
+// LOCAL CUSTOM COMPONENTS
+const Section4 = dynamic(() => import("./section-4"));
+const Section6 = dynamic(() => import("./section-6"));
+const Section7 = dynamic(() => import("./section-7"));
+const Section8 = dynamic(() => import("./section-8"));
+
+const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
   const {
     profile,
     setData: setProfileData,
@@ -69,7 +74,7 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
   }, [tokenExpiration]);
 
   return (
-    <Box sx={{ width:'100%' }}>
+    <Box sx={{ width: '100%' }}>
       <MainSection />
       {/* Most Sold Products Section */}
       <Section4 products={data?.landing?.collections?.mostSoldProducts || []} />
@@ -98,15 +103,18 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
       {data && <Reviews review={data?.landing?.reviews} />}
 
       <Box style={{ position: "relative" }}>
-        <img
+        <Image
           src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
           alt="Overlay"
+          width={250} // Tamaño en escritorio
+          height={0} // Se ajusta automáticamente con style={{ height: "auto" }}
+          loading="lazy"
           style={{
             position: "absolute",
             left: 0,
-            top: window.innerWidth <= 768 ? "-50px" : "-200px",
+            top: typeof window !== "undefined" && window.innerWidth <= 768 ? "-50px" : "-200px",
             zIndex: 2,
-            width: window.innerWidth <= 768 ? "125px" : "250px",
+            width: typeof window !== "undefined" && window.innerWidth <= 768 ? "125px" : "250px",
             height: "auto",
           }}
         />
@@ -119,3 +127,5 @@ export default function FashionTwoPageView({ data }: { data: DataStructure }) {
     </Box>
   );
 }
+
+export default memo(FashionTwoPageView);

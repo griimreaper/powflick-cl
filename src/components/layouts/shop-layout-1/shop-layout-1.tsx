@@ -3,26 +3,23 @@
 import {
   Fragment,
   PropsWithChildren,
-  useCallback,
   useEffect,
   useState,
 } from "react";
 // GLOBAL CUSTOM COMPONENTS
-import Sticky from "components/sticky";
-import Topbar from "components/topbar";
 import { Navbar } from "components/navbar";
-import { Footer1, Footer2, Footer3, Footer4 } from "components/footer";
 import Header from "components/header/header";
-import { SearchInputWithCategory } from "components/search-box";
-import { MobileNavigationBar } from "components/mobile-navigation";
 import { DataStructure } from "models/types";
 import { signOut, useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import { getProfile } from "services/DashboardUser";
 import { useDashboardStore } from "store/dashboard";
-import { useNavbar } from "contexts/NavBarContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { Box } from "@mui/material";
+import dynamic from "next/dynamic";
+
+// Carga dinámica de componentes
+const Footer1 = dynamic(() => import("components/footer").then((mod) => mod.Footer1));
+const MobileNavigationBar = dynamic(() => import("components/mobile-navigation").then((mod) => mod.MobileNavigationBar));
 
 /**
  *  USED IN:

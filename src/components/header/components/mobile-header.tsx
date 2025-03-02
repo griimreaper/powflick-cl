@@ -11,19 +11,17 @@ import Icon from "icons";
 // LOCAL CUSTOM COMPONENTS
 import DialogDrawer from "./dialog-drawer";
 // GLOBAL CUSTOM COMPONENTS
-import Image from "components/SportZoneImage";
 import { Paragraph } from "components/Typography";
-import { SearchInput, SearchInputWithCategory } from "components/search-box";
+import { SearchInputWithCategory } from "components/search-box";
 import { MobileMenu } from "components/navbar/mobile-menu";
 import { FlexBetween, FlexBox } from "components/flex-box";
-// GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 // LOCAL CUSTOM HOOK
 import useHeader from "../hooks/use-header";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { DataStructure } from "models/types";
+import Image from "next/image";
 
 export default function MobileHeader({ data }: { data: DataStructure['navbar'] }) {
   const { cart } = useShoppingCartStore();
@@ -53,9 +51,13 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           <Image
             height={44}
             width={44}
-            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png"
+            loading="eager"
+            quality={80}
+            src="/assets/images/logo/POWFLICK_LOGO-HEADER.png?w=44 44w, /assets/images/logo/POWFLICK_LOGO-HEADER.png?w=88 88w"
             alt="logo"
+            priority
           />
+
         </Link>
 
         {/* RIGHT CONTENT - LOGIN, CART, SEARCH BUTTON */}
@@ -93,7 +95,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
           </FlexBetween>
 
           {/* CATEGORY BASED SEARCH FORM */}
-          <SearchInputWithCategory onClose={toggleSearchBar}/>
+          <SearchInputWithCategory onClose={toggleSearchBar} />
         </Box>
       </Drawer>
 

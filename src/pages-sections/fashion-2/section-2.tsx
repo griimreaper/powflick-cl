@@ -1,27 +1,13 @@
 "use client";
 import Container from "@mui/material/Container";
 // API FUNCTIONS
-import api from "utils/__api__/fashion-2";
-import { useEffect, useState } from "react";
-import Service from "models/Service.model";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
 export default function Section2({ className }: { className: string }) {
-  const [services, setServices] = useState<Service[]>([]);
-
   // Media query breakpoints
   const isMobile = useMediaQuery("(max-width: 768px)"); // Detecta si es móvil
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      const services = await api.getServices();
-      setServices(services);
-    };
-
-    fetchServices();
-  }, []);
 
   return (
     <Container
@@ -34,9 +20,10 @@ export default function Section2({ className }: { className: string }) {
           <Image
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
-            priority
-            width={1920} // Ajustar a un valor numérico adecuado
-            height={300} // Ajustar a un valor numérico adecuado
+            width={648} // Ajustar a un valor numérico adecuado
+            height={115} // Ajustar a un valor numérico adecuado
+            loading="lazy"
+            sizes="(max-width: 769px) 100vw, 1000px"
             style={{
               borderRadius: 6,
               width: "100%",
@@ -48,9 +35,11 @@ export default function Section2({ className }: { className: string }) {
           <Image
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
             alt="Mobile Image 2"
-            priority
-            width={1920} // Ajustar a un valor numérico adecuado
-            height={300} // Ajustar a un valor numérico adecuado
+            width={648} // Ajustar a un valor numérico adecuado
+            height={115} // Ajustar a un valor numérico adecuado
+            quality={80}
+            sizes="(max-width: 769px) 100vw, 1000px"
+            loading="lazy"
             style={{
               borderRadius: 6,
               width: "100%",
@@ -62,11 +51,13 @@ export default function Section2({ className }: { className: string }) {
       ) : (
         // Renderiza una sola imagen para desktop
         <Image
-          src="/assets/images/landing/POWFLICK_PROMESAS DE MARCA.png"
+          src="/assets/images/landing/POWFLICK_PROMESAS-DE-MARCA.png"
           alt="Desktop Image"
-          priority
-          width={1920} // Ajustar a un valor numérico adecuado
-          height={300} // Ajustar a un valor numérico adecuado
+          quality={80}
+          loading="lazy"
+          width={1578} // Ajustar a un valor numérico adecuado
+          height={138} // Ajustar a un valor numérico adecuado
+          sizes="(min-width: 769px) 100vw, 1000px"
           style={{
             width: "100%",
             borderRadius: 6,

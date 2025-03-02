@@ -32,7 +32,7 @@ const themesOptionList = {
     typography,
     breakpoints,
     components: { ...components },
-    palette: { primary: { ...primary, light: primary[100] }, ...themeColors },
+    palette: { ...themeColors },
   },
   //   [THEMES.GROCERY]: {
   //     typography,

@@ -6,6 +6,7 @@ import styled from "@mui/material/styles/styled";
 import FlexBox from "components/flex-box/flex-box";
 // DATA
 import { SOCIAL_ICON_LINKS } from "../data";
+import Link from "next/link";
 
 // STYLED COMPONENTS
 const StyledIconButton = styled(IconButton, {
@@ -32,11 +33,11 @@ export default function SocialLinks({ variant = "light" }: Props) {
   return (
     <FlexBox className="flex" mx={-0.625}>
       {SOCIAL_ICON_LINKS.map(({ Icon, url }, ind) => (
-        <a href={url} target="_blank" rel="noreferrer noopenner" key={ind}>
+        <Link href={url} target="_blank" rel="noreferrer noopenner" key={ind} title={ind.toString()}>
           <StyledIconButton variant={variant}>
             <Icon fontSize="inherit" className="icon" />
           </StyledIconButton>
-        </a>
+        </Link>
       ))}
     </FlexBox>
   );

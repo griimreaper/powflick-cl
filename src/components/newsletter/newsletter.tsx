@@ -7,7 +7,6 @@ import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -28,7 +27,6 @@ import { useDashboardStore } from "store/dashboard";
 import { createCoupon, createCouponUser } from "services/modals/discount";
 import { getProfile } from "services/DashboardUser";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
-import { themeColors } from "theme/theme-colors";
 
 // ======================================================
 type Props = { image?: string };

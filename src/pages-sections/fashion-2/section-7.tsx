@@ -3,13 +3,12 @@
 import Button from "@mui/material/Button";
 import {
   useMediaQuery,
-  useTheme,
   Box,
-  Typography,
   styled,
 } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
+import Image from "next/image";
 // LOCAL CUSTOM COMPONENT
 
 export const RootStyle = styled("div")({
@@ -48,13 +47,18 @@ export default function Section7() {
       }}
     >
       {/* Imagen de fondo */}
-      <img
+      <Image
         src={backgroundImage}
         alt="Promo Sports Banner"
+        layout="responsive"
+        width={1920} // Ajusta según el tamaño real de tu imagen
+        height={1080} // Ajusta según el tamaño real de tu imagen
+        loading="lazy"
+        quality={80} // Ajusta la calidad para optimizar el tamaño
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1920px"
         style={{
-          width: "100%",
-          position: "relative",
           zIndex: 0,
+          position: "relative",
         }}
       />
 
