@@ -7,11 +7,12 @@ import Image from "next/image";
 export default function LogoSection() {
   return (
     <Fragment>
-      <Link href="/">
+      <Link href="/" draggable={false}>
         <Box display="flex" justifyContent="center">
           <Image
             width={250}
             height={0}
+            draggable={false}
             src="/assets/images/logo/POWFLICK_LOGO-FOOTER.png"
             alt="logo"
             layout="intrinsic"

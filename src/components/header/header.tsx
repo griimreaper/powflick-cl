@@ -48,6 +48,7 @@ export default function Header({
       <FlexBox minWidth={100} alignItems="center" paddingTop={2}>
         <Link href="/">
           <Image
+            draggable={false}
             width={50}
             height={50}
             quality={80}
@@ -83,7 +84,7 @@ export default function Header({
   );
 
   return (
-    <HeaderWrapper className={clsx(className)} sx={{ background: landing ? "transparent": primary.main }}>
+    <HeaderWrapper className={clsx(className)} sx={{ background: landing ? "transparent" : primary.main }}>
       <StyledContainer>
         {downMd ? <MobileHeader data={data} /> : CONTENT_FOR_LARGE_DEVICE}
       </StyledContainer>

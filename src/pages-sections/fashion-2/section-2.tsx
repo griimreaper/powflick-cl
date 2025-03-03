@@ -18,6 +18,7 @@ export default function Section2({ className }: { className: string }) {
         // Renderiza dos imágenes para mobile
         <Box display={"flex"} flexDirection={"column"} gap={2}>
           <Image
+            draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
             width={648} // Ajustar a un valor numérico adecuado
@@ -33,6 +34,7 @@ export default function Section2({ className }: { className: string }) {
             }}
           />
           <Image
+            draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
             alt="Mobile Image 2"
             width={648} // Ajustar a un valor numérico adecuado
@@ -51,6 +53,7 @@ export default function Section2({ className }: { className: string }) {
       ) : (
         // Renderiza una sola imagen para desktop
         <Image
+          draggable={false}
           src="/assets/images/landing/POWFLICK_PROMESAS-DE-MARCA.png"
           alt="Desktop Image"
           quality={80}

@@ -49,6 +49,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
         {/* MIDDLE CONTENT - LOGO */}
         <Link href="/">
           <Image
+            draggable={false}
             height={44}
             width={44}
             loading="eager"
