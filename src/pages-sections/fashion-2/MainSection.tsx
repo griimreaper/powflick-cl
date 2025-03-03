@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
 import { Box, Button, useMediaQuery } from "@mui/material";
 import Image from "next/image";
+import Section2 from "./section-2";
 
-const Section2 = dynamic(() => import("./section-2"), { ssr: false });
 const Section3 = dynamic(() => import("./section-3"), { ssr: false });
 
 export default function MainSection() {

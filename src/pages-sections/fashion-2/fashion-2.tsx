@@ -1,18 +1,19 @@
 "use client";
 
-import { memo } from "react";
-import { Box } from "@mui/material";
+import { memo, useMemo, useState } from "react";
 import { DataStructure } from "models/types";
-import { signOut, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect } from "react";
-import { getProfile } from "services/DashboardUser";
-import { useDashboardStore } from "store/dashboard";
 import MainSection from "./MainSection";
 // GLOBAL CUSTOM COMPONENTS
-const Newsletter = dynamic(() => import("components/newsletter"));
-const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
+const Newsletter = dynamic(() => import("components/newsletter"), {
+  loading: () => <div>Cargando...</div>, // Placeholder de carga
+});
+const Reviews = dynamic(() => import("components/Reviews/Reviews"), {
+  ssr: false,
+  loading: () => <div>Loading reviews...</div>,
+});
 
 // LOCAL CUSTOM COMPONENTS
 const Section4 = dynamic(() => import("./section-4"));
@@ -21,66 +22,24 @@ const Section7 = dynamic(() => import("./section-7"));
 const Section8 = dynamic(() => import("./section-8"));
 
 const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
-  const {
-    profile,
-    setData: setProfileData,
-    removeProfile,
-    setProfileUser,
-  } = useDashboardStore();
-
-  const { data: session } = useSession();
-  let token = session?.user?.name?.split("|")[0];
-  let tokenExpiration = session?.user?.name?.split("|")[1];
-  let rol = session?.user?.email;
-  let image = session?.user?.image;
+  const memoizedData = useMemo(() => data?.landing || {}, [data]);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (token && token !== undefined && !profile.token) {
-        localStorage.setItem("termsAccepted", "true");
-        const response = await getProfile(token);
-
-        setProfileData({ ...response, token, rol });
-        if (image) setProfileUser({ image: image });
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
-  useEffect(() => {
-    let logoutTimer: NodeJS.Timeout;
-
-    if (tokenExpiration) {
-      const now = new Date();
-      const tokenExpDate = new Date(String(tokenExpiration));
-      const timeUntilExpiration = tokenExpDate.getTime() - now.getTime();
-
-      if (timeUntilExpiration > 0) {
-        logoutTimer = setTimeout(() => {
-          console.log("El token ha caducado. Deslogueando al usuario...");
-          signOut();
-          removeProfile();
-        }, timeUntilExpiration);
-      } else {
-        signOut();
-        removeProfile();
-      }
-    }
-
-    return () => {
-      clearTimeout(logoutTimer);
-    };
-  }, [tokenExpiration]);
+    const updateSize = () => setIsMobile(window.innerWidth <= 768);
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <div style={{ width: '100%' }}>
       <MainSection />
       {/* Most Sold Products Section */}
-      <Section4 products={data?.landing?.collections?.mostSoldProducts || []} />
+      <Section4 products={memoizedData?.collections?.mostSoldProducts || []} />
 
       {/* Banner */}
-      <Box style={{ position: "relative" }}>
+      <div style={{ position: "relative" }}>
         {/* <img
           src="/assets/images/landing/POWFLICK_ELEMENTO-1.png"
           alt="Overlay"
@@ -94,37 +53,38 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
           }}
         /> */}
         <Section7 />
-      </Box>
+      </div>
 
       {/* Discount Products Section */}
-      <Section6 products={data?.landing?.collections?.discountProducts || []} />
+      <Section6 products={memoizedData?.collections?.discountProducts || []} />
 
       {/* Customer Reviews Section */}
-      {data && <Reviews review={data?.landing?.reviews} />}
+      {data && <Reviews review={memoizedData?.reviews} />}
 
-      <Box style={{ position: "relative" }}>
+      <div style={{ position: "relative" }}>
         <Image
           src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
           alt="Overlay"
           width={250} // Tamaño en escritorio
-          height={0} // Se ajusta automáticamente con style={{ height: "auto" }}
-          loading="lazy"
+          height={200} // Se ajusta automáticamente con style={{ height: "auto" }}
+          priority
+          draggable={false}
           style={{
             position: "absolute",
             left: 0,
-            top: typeof window !== "undefined" && window.innerWidth <= 768 ? "-50px" : "-200px",
+            top: isMobile ? "-50px" : "-200px",
             zIndex: 2,
-            width: typeof window !== "undefined" && window.innerWidth <= 768 ? "125px" : "250px",
+            width: isMobile ? "125px" : "250px",
             height: "auto",
           }}
         />
         <Section8 />
-      </Box>
+      </div>
 
       {/* Newsletter Subscription Section */}
       <Newsletter />
 
-    </Box>
+    </div>
   );
 }
 
