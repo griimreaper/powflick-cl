@@ -4,17 +4,17 @@ export interface Category {
   id: string;
   title: string;
   name?: string;
-  products: ProductDB[]
+  products: ProductDB[];
   // parentId: string | null;
   // link: string;
   // subcategories: Category[];
 }
 
 export enum CollectionType {
-  NAVBAR = 'navbar',
-  STORE = 'store',
-  BOTH = 'both',
-  NONE = 'none',
+  NAVBAR = "navbar",
+  STORE = "store",
+  BOTH = "both",
+  NONE = "none",
 }
 
 export interface Collection {
@@ -23,7 +23,7 @@ export interface Collection {
   content: string;
   order: number;
   type: CollectionType;
-  products: ProductDB[]
+  products: ProductDB[];
 }
 
 export interface ProductDB {
@@ -111,7 +111,7 @@ export interface Coupon {
 }
 
 export interface Logo {
-  type?: 'Logo';
+  type?: "Logo";
   logoUrl: string;
   logoId?: string;
   logoPosition: { x: number; y: number };
@@ -121,7 +121,7 @@ export interface Logo {
 }
 
 export interface Text {
-  type?: 'Text';
+  type?: "Text";
   text?: string;
   font?: string;
   textPosition: { x: number; y: number };
@@ -132,7 +132,7 @@ export interface Text {
 }
 
 export interface Number {
-  type?: 'Number';
+  type?: "Number";
   number?: string;
   font?: string;
   numberPosition: { x: number; y: number };
@@ -166,7 +166,13 @@ export enum OrderStateEnum {
   APROBADO = "APPROVED",
   PAGO = "PAID",
   RECHAZADO = "REJECTED",
-  DESPACHO = "DISPATCHED",
+  DESIGN_CREATION = "DESIGN CREATION",
+  DESIGN_APPROVAL = "DESIGN APPROVAL",
+  FABRIC_SAMPLE_CONFIRMATION = "FABRIC SAMPLE CONFIRMATION",
+  PRODUCTION_QUEUE = "PRODUCTION QUEUE",
+  PRINTING = "PRINTING",
+  TAILORING = "TAILORING",
+  SHIPPING_TRACKING = "SHIPPING & TRACKING",
   ENCAMINO = "ONTHEWAY",
   PENDIENTE = "PENDING",
   ENTREGADO = "DELIVERED",
@@ -198,6 +204,7 @@ export interface Order {
     lastName: string;
     phone: string;
   };
+  trackingCode?: string;
 }
 
 export interface Favorite {
@@ -247,9 +254,9 @@ export interface User {
 }
 
 export enum ShowType {
-  LANDING = 'LANDING',
-  DETAIL = 'DETAIL',
-  BOTH = 'BOTH',
+  LANDING = "LANDING",
+  DETAIL = "DETAIL",
+  BOTH = "BOTH",
 }
 
 export interface Review {
