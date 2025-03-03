@@ -46,7 +46,14 @@ type StatusType = {
     | "ONTHEWAY"
     | "PENDING"
     | "DELIVERED"
-    | "CANCELLED";
+    | "CANCELLED"
+    | "DESIGN CREATION"
+    | "DESIGN APPROVAL"
+    | "FABRIC SAMPLE CONFIRMATION"
+    | "PRODUCTION QUEUE"
+    | "PRINTING"
+    | "TAILORING"
+    | "SHIPPING & TRACKING";
 };
 
 const StatusWrapper = styled(Box, {
