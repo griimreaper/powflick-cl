@@ -40,7 +40,7 @@ export default function Header({
   data,
 }: Props) {
   const theme = useTheme();
-  const downMd = useMediaQuery(theme.breakpoints.down(768));
+  const downMd = useMediaQuery(theme.breakpoints.down(1150));
   const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
 
   const CONTENT_FOR_LARGE_DEVICE = (
