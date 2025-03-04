@@ -10,13 +10,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import merge from "lodash/merge";
 
-import useSettings from "hooks/useSettings";
 import customThemeOptions from "./theme-options";
-import NextAppDirEmotionCacheProvider from "./emotion-cache";
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname() || "";
-  const { settings } = useSettings();
 
   const themeOptions = customThemeOptions(pathname);
 
@@ -34,12 +31,10 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <NextAppDirEmotionCacheProvider options={{ key: "css" }}>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          {children}
-        </MuiThemeProvider>
-      </NextAppDirEmotionCacheProvider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </MuiThemeProvider>
     </LocalizationProvider>
   );
 };
