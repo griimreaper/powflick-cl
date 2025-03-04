@@ -1,21 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 // GLOBAL CUSTOM COMPONENT
 import FlexRowCenter from "components/flex-box/flex-row-center";
-// LOCAL CUSTOM COMPONENTS
-import Categories from "./components/categories";
-import ChildCategories from "./components/child-categories";
+// LOCAL CUSTOM COMPONENTS - Dynamic import
+import dynamic from "next/dynamic";
 // STYLED COMPONENTS
 import { Wrapper, StyledCard, MenusContainer } from "./styles";
 // DATA TYPES
 import { MenuList } from "./types";
 import Link from "next/link";
 import { Box, Typography } from "@mui/material";
-import { useRouter } from "next/router";
 
 // ===============================================================
 type Props = { menuList: MenuList[]; title: string };
 // ===============================================================
+
+// Importa los componentes de manera dinámica
+const Categories = dynamic(() => import("./components/categories"), { ssr: false });
+const ChildCategories = dynamic(() => import("./components/child-categories"), { ssr: false });
 
 export default function CategoryBasedMenu({ title, menuList }: Props) {
   const [openList, setOpenList] = useState(menuList[0]?.title || "");
@@ -33,9 +35,9 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
         sx={{ fontWeight: 600, color: "#FEFCFC", '&:hover': { color: "#1A1A1A" } }}
       >
         <Link href={"/products"} >
-            <Typography sx={{ fontWeight: 'bold' }}>
+          <Typography sx={{ fontWeight: 'bold' }}>
             {title}
-            </Typography>
+          </Typography>
         </Link>
         <KeyboardArrowDown
           sx={{ color: "#FEFCFC", fontSize: "1.1rem", display: "absolute" }}
@@ -43,7 +45,7 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
       </FlexRowCenter>
 
       <MenusContainer className="menu-list">
-        <Box sx={{ background:'transparent', position: 'relative', top: 14, height: '100%' }}>
+        <Box sx={{ background: 'transparent', position: 'relative', top: 14, height: '100%' }}>
           <StyledCard >
             {/* MAIN CATEGORIES SECTION */}
             <Categories

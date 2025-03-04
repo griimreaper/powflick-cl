@@ -11,7 +11,6 @@ import "./global.css";
 import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
-import Head from "next/head";
 
 export default function RootLayout({
   children,

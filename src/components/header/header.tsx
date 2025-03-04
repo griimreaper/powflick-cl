@@ -8,15 +8,13 @@ import useHeader from "./hooks/use-header";
 // GLOBAL CUSTOM COMPONENTS
 import FlexBox from "components/flex-box/flex-box";
 // LOCAL CUSTOM COMPONENTS
-import MobileHeader from "./components/mobile-header";
-// STYLED COMPONENTS
 import { HeaderWrapper, StyledContainer } from "./styles";
 import { Session } from "next-auth";
 import { DataStructure } from "models/types";
 import { primary } from "theme/theme-colors";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import LoginCartButtons from "./components/login-cart-buttons";
+import DialogDrawer from "./components/dialog-drawer";
 
 // ==============================================================
 interface Props {
@@ -29,7 +27,8 @@ interface Props {
 }
 // ==============================================================
 
-const DialogDrawer = dynamic(() => import("./components/dialog-drawer"), { ssr: false });
+const MobileHeader = dynamic(() => import("./components/mobile-header"), { ssr: false });
+const LoginCartButtons = dynamic(() => import("./components/login-cart-buttons"), { ssr: false });
 
 export default function Header({
   // isFixed,
