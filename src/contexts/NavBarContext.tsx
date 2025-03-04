@@ -11,7 +11,7 @@ interface NavBarContextProps {
 }
 
 interface NavbarContextType {
-    navbarData: DataStructure['navbar'];
+    navbarData: DataStructure['navbar'] | undefined;
 }
 
 const NavbarContext = createContext<NavbarContextType | null>(null);
@@ -19,6 +19,8 @@ const NavbarContext = createContext<NavbarContextType | null>(null);
 // Función para obtener los datos de la barra de navegación
 const fetchNavbar = async (): Promise<DataStructure['navbar']> => {
     const { navbar } = await getLanding(); // Llamada a la API para obtener los datos
+    console.log(navbar, 'nav');
+
     return navbar;
 };
 
@@ -30,21 +32,16 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         staleTime: 86400,     // 1 día en milisegundos
         enabled: (() => {
             const storedData = localStorage.getItem('navbarData');
-            if (!storedData) return true; // Si no hay datos, habilitar la consulta
 
+            if (!storedData) return true; // Si no hay datos, habilitar la consulta
             try {
                 const parsedData = JSON.parse(storedData);
-                return parsedData.categories.length === 0 &&
-                    parsedData.collection.length === 0
+                return (parsedData.categories.length === 0 &&
+                    parsedData.collection.length === 0)
             } catch (error) {
-                return true; // Si hay un error al parsear, habilitar la consulta
+                return true
             }
         })(),
-        initialData: () => {
-            // Intentar obtener los datos de localStorage al iniciar
-            const cachedNavbar = localStorage.getItem('navbarData');
-            return cachedNavbar ? JSON.parse(cachedNavbar) : { categories: [], collection: [], recent: [] };
-        },
         // Aquí se usa un hook separado para manejar la respuesta después de la carga
 
     });
