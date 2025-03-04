@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import MainSection from "./MainSection";
 // GLOBAL CUSTOM COMPONENTS
 const Newsletter = dynamic(() => import("components/newsletter"), {
+  ssr: false,
   loading: () => <div>Cargando...</div>, // Placeholder de carga
 });
 const Reviews = dynamic(() => import("components/Reviews/Reviews"), {

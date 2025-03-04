@@ -1,8 +1,6 @@
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 // LOCAL CUSTOM COMPONENT
-// API FUNCTIONS
-import api from "utils/__api__/fashion-2";
 import { DataStructure, ProductDB } from "models/types";
 import { Rating, styled } from "@mui/material";
 import { Fragment } from "react";

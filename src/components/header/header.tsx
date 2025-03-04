@@ -9,15 +9,14 @@ import useHeader from "./hooks/use-header";
 import FlexBox from "components/flex-box/flex-box";
 // LOCAL CUSTOM COMPONENTS
 import MobileHeader from "./components/mobile-header";
-import DialogDrawer from "./components/dialog-drawer";
-import CategoriesMenu from "./components/categories-menu";
-import LoginCartButtons from "./components/login-cart-buttons";
 // STYLED COMPONENTS
 import { HeaderWrapper, StyledContainer } from "./styles";
 import { Session } from "next-auth";
 import { DataStructure } from "models/types";
 import { primary } from "theme/theme-colors";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import LoginCartButtons from "./components/login-cart-buttons";
 
 // ==============================================================
 interface Props {
@@ -30,8 +29,10 @@ interface Props {
 }
 // ==============================================================
 
+const DialogDrawer = dynamic(() => import("./components/dialog-drawer"), { ssr: false });
+
 export default function Header({
-  isFixed,
+  // isFixed,
   className,
   landing,
   midSlot,
@@ -39,7 +40,7 @@ export default function Header({
   data,
 }: Props) {
   const theme = useTheme();
-  const downMd = useMediaQuery(theme.breakpoints.down(1150));
+  const downMd = useMediaQuery(theme.breakpoints.down(768));
   const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
 
   const CONTENT_FOR_LARGE_DEVICE = (
@@ -59,7 +60,7 @@ export default function Header({
         </Link>
 
         {/* SHOW DROP DOWN CATEGORY BUTTON WHEN HEADER FIXED */}
-        {isFixed ? <CategoriesMenu data={data} /> : null}
+        {/* {isFixed ? <CategoriesMenu data={data} /> : null} */}
       </FlexBox>
 
       {/* SEARCH FORM | NAVIGATION */}

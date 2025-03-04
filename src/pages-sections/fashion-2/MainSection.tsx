@@ -4,6 +4,7 @@ import Image from "next/image";
 import Section2 from "./section-2";
 
 const Section3 = dynamic(() => import("./section-3"), { ssr: false });
+const DynamicButton = dynamic(() => import("./DynamicButton"), { ssr: false });
 
 export default function MainSection() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -32,7 +33,6 @@ export default function MainSection() {
         alt="Banner"
         priority
         quality={80}
-        loading="eager"
         sizes="(max-width: 768px) 100vw, 1920px" // Ajusta según el tamaño de pantalla
         width={1920} // Ajustar a un valor numérico adecuado
         height={1080} // Ajustar a un valor numérico adecuado

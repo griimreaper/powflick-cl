@@ -21,9 +21,10 @@ export default function Section2({ className }: { className: string }) {
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
-            width={648} // Ajustar a un valor numérico adecuado
-            height={115} // Ajustar a un valor numérico adecuado
-            loading="lazy"
+            width={18} // Ajustar a un valor numérico adecuado
+            height={18} // Ajustar a un valor numérico adecuado
+            priority
+            quality={80}
             sizes="(max-width: 769px) 100vw, 1000px"
             style={{
               borderRadius: 6,
@@ -37,11 +38,11 @@ export default function Section2({ className }: { className: string }) {
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
             alt="Mobile Image 2"
-            width={648} // Ajustar a un valor numérico adecuado
-            height={115} // Ajustar a un valor numérico adecuado
+            width={18} // Ajustar a un valor numérico adecuado
+            height={18} // Ajustar a un valor numérico adecuado
             quality={80}
             sizes="(max-width: 769px) 100vw, 1000px"
-            loading="lazy"
+            priority
             style={{
               borderRadius: 6,
               width: "100%",
@@ -57,9 +58,9 @@ export default function Section2({ className }: { className: string }) {
           src="/assets/images/landing/POWFLICK_PROMESAS-DE-MARCA.png"
           alt="Desktop Image"
           quality={80}
-          loading="lazy"
-          width={1578} // Ajustar a un valor numérico adecuado
-          height={138} // Ajustar a un valor numérico adecuado
+          priority
+          width={18} // Ajustar a un valor numérico adecuado
+          height={18} // Ajustar a un valor numérico adecuado
           sizes="(min-width: 769px) 100vw, 1000px"
           style={{
             width: "100%",

@@ -1,6 +1,7 @@
 import { DataStructure } from "models/types";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
+import Fashion2 from "pages-sections/fashion-2/fashion-2";
 import { cache } from "react";
 import { getLanding } from "services/Landing";
 
@@ -8,9 +9,6 @@ export const revalidate = 3600;
 export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales
 
 const ShopLayout1 = dynamic(() => import("components/layouts/shop-layout-1"), {
-  ssr: false,
-});
-const FashionTwoPageView = dynamic(() => import("pages-sections/fashion-2/fashion-2"), {
   ssr: false,
 });
 
@@ -95,7 +93,7 @@ export default async function FashionShopTwo() {
 
   return (
     <ShopLayout1 landing>
-      <FashionTwoPageView data={data} />
+      <Fashion2 data={data} />
     </ShopLayout1>
   );
 }

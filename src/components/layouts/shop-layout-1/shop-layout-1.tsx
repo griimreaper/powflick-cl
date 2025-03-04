@@ -5,7 +5,6 @@ import {
   PropsWithChildren,
   useEffect,
   useMemo,
-  useState,
 } from "react";
 // GLOBAL CUSTOM COMPONENTS
 import { Navbar } from "components/navbar";
@@ -20,7 +19,9 @@ import dynamic from "next/dynamic";
 import { MobileNavigationBar } from "components/mobile-navigation";
 
 // Carga dinámica de componentes
-const Footer1 = dynamic(() => import("components/footer").then((mod) => mod.Footer1));
+const Footer1 = dynamic(() => import("components/footer/footer-1"), {
+  ssr: false
+});
 
 /**
  *  USED IN:
@@ -37,8 +38,6 @@ export default function ShopLayout1({
   children,
   landing = false
 }: ShopLayout1Props) {
-  const [isFixed, setIsFixed] = useState(false);
-
   const queryClient = useQueryClient();
 
   const data = queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], collection: [], recent: [] };
@@ -97,7 +96,6 @@ export default function ShopLayout1({
         {/* <Sticky fixedOn={0} onSticky={setIsFixed} scrollDistance={300}> */}
         <Header
           landing={landing}
-          isFixed={isFixed}
           session={session}
           data={data}
           midSlot={<Navbar elevation={0} border={1} data={data} />}

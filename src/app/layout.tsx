@@ -11,42 +11,24 @@ import "./global.css";
 import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
-import { GlobalStyles } from "@mui/material";
-import { primary } from "theme/theme-colors";
+import Head from "next/head";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
+  const MemoizedWhatsApp = React.useMemo(() => <FloatingWhatsApp />, []);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
-        <React.StrictMode>
-          <GlobalStyles
-            styles={{
-              "*::-webkit-scrollbar": {
-                width: "8px",
-                height: "8px",
-              },
-              "*::-webkit-scrollbar-thumb": {
-                backgroundColor: primary.main,
-              },
-              "*::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: primary.main,
-              },
-              "*::-webkit-scrollbar-track": {
-                backgroundColor: "#1A1A1A",
-              },
-            }}
-          />
-          <GlobalProvider>
-            <FloatingWhatsApp />
-            {children}
-          </GlobalProvider>
-          <GoogleAnalytics />
-          <GoogleTagManager />
-        </React.StrictMode>
+        <GlobalProvider>
+          {MemoizedWhatsApp}
+          {children}
+        </GlobalProvider>
+        <GoogleAnalytics />
+        <GoogleTagManager />
       </body>
     </html>
   );

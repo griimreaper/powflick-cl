@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Card,
@@ -9,10 +9,8 @@ import {
   Container,
   Fade,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { Settings } from "react-slick";
 import { Carousel } from "components/carousel";
 import { Paragraph } from "components/Typography";
 import Image from "next/image";
@@ -37,14 +35,6 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   height: "clamp(30px, 4vw, 100px)",  // Ajusta la altura también
   border: "3px solid #fff",
   boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-}));
-
-const ProductImage = styled("img")(() => ({
-  width: "min(500px,100%)",
-  aspectRatio: "1 / 1",
-  objectFit: "cover",
-  borderRadius: "8px",
-  marginBottom: "16px",
 }));
 
 const StyledRating = styled(Rating)(({ theme }) => ({
@@ -125,49 +115,15 @@ interface ReviewsProps {
 }
 
 const Reviews: React.FC<ReviewsProps> = ({ review }) => {
-  const [sortBy, setSortBy] = useState("date");
-  const [reviews, setReviews] = useState(review);
-  const theme = useTheme();
   const isMobile = useMediaQuery(("(max-width: 768px)"));
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
     { breakpoint: 768, settings: { slidesToShow: 3 } },
     { breakpoint: 600, settings: { slidesToShow: 2 } }
   ];
-  const handleSortChange = (event: any) => {
-    const value = event.target.value;
-    setSortBy(value);
-    let sortedReviews = [...reviews];
-
-    if (value === "date") {
-      sortedReviews.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-    } else if (value === "rating") {
-      sortedReviews.sort((a, b) => b.rating - a.rating);
-    }
-
-    setReviews(sortedReviews);
-  };
-
-  const averageRating = reviews?.length
-    ? (
-      reviews.reduce((acc, curr) => Number(acc) + Number(curr.rating), 0) /
-      reviews.length
-    ).toFixed(1)
-    : "0";
-
-  const sliderSettings: Settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    useCSS: true,
-  };
 
   return (
-    reviews.length > 0 &&
+    review.length > 0 &&
     <Box
       component="section"
       mb={isMobile ? "clamp(2vw, 4rem, 40vw)" : "clamp(1vw, 4rem, 30vw)"}
@@ -186,10 +142,11 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
       }}
     >
 
-      <Container sx={{ position: "relative", zIndex: 4, mt: 6 }}>
+      <Container sx={{ position: "relative", zIndex: 4 }}>
         <Box sx={{
           textAlign: "center",
           display: "flex",
+          my: 6,
           flexDirection: isMobile ? "column" : "row",
           width: '100%',
           alignItems: "center",
@@ -222,59 +179,13 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
             Customer Reviews
           </Paragraph>
         </Box>
-        <Box mb={4} sx={{ textAlign: "" }}>
-          {/* <Typography
-            variant="h3"
-            component="h1"
-            gutterBottom
-            sx={{
-              // fontWeight: "bold",
-              background: "#A30E0E",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              marginBottom: "1rem",
-              // fontStyle: "italic",
-              fontFamily: "GYMER",
-            }}
-          >
-            People Love Us
-          </Typography> */}
-          {/* <Box display="flex" alignItems="center" justifyContent="center" mb={3}>
-          <Typography variant="h5" mr={2} sx={{ color: "#2c3e50"}}>
-            Average Rating: {averageRating}
-          </Typography>
-          <StyledRating
-            value={parseFloat(averageRating)}
-            readOnly
-            precision={0.1}
-            size="large"
-          />
-        </Box>
-        <FormControl
-          sx={{
-            minWidth: 200,
-            "& .MuiOutlinedInput-root": {
-              borderRadius: "25px",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                backgroundColor: "#f5f5f5",
-              },
-            },
-          }}
-        >
-          <Select value={sortBy} onChange={handleSortChange}>
-            <MenuItem value="date">Sort by Date</MenuItem>
-            <MenuItem value="rating">Sort by Rating</MenuItem>
-          </Select>
-        </FormControl> */}
-        </Box>
         {isMobile ? (
           <Carousel
             slidesToShow={4}
             responsive={responsive}
             arrowStyles={{ backgroundColor: "white", top: "45%" }}
           >
-            {reviews.slice(0, 3).map((review) => (
+            {review.slice(0, 3).map((review) => (
               <Box key={review.id} padding={0.2}>
                 <ReviewCard key={review.id} review={review} />
               </Box>
@@ -288,10 +199,8 @@ const Reviews: React.FC<ReviewsProps> = ({ review }) => {
             arrowStyles={{ backgroundColor: "white", top: "50%" }}
             useCSS
           >
-            {[...reviews, ...reviews].filter(r => r.type === "ORDER").map((review) => (
-              <React.Fragment key={review.id}>
-                <ReviewCard review={review} />
-              </React.Fragment>
+            {[...review, ...review].filter(r => r.type === "ORDER").map((review, id) => (
+              <ReviewCard review={review} key={id} />
             ))}
           </Carousel>
         )}

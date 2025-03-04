@@ -1,11 +1,7 @@
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
 import { Carousel } from "components/carousel";
 import CarouselCard1 from "components/carousel-cards/carousel-card-1";
 import { DataStructure } from "models/types";
-// API FUNCTIONS
-import api from "utils/__api__/fashion-2";
 
 export default function Section1({ data }: { data: DataStructure["navbar"] }) {
   const carouselData = [
