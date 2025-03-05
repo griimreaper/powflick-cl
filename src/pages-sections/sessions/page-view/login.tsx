@@ -10,7 +10,6 @@ import usePasswordVisible from "../use-password-visible";
 // GLOBAL CUSTOM COMPONENTS
 import SportZoneTextField from "components/SportZoneTextField";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 // ==============================================================
@@ -22,7 +21,6 @@ interface Props {
 
 const LoginPageView = ({ closeDialog, redirectUrl }: Props) => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
-  const router = useRouter();
 
   // LOGIN FORM FIELDS INITIAL VALUES
   const initialValues = { email: "", password: "" };

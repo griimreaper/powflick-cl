@@ -8,12 +8,9 @@ import IconButton from "@mui/material/IconButton";
 import Clear from "@mui/icons-material/Clear";
 // CUSTOM ICON COMPONENTS
 import Icon from "icons";
-// LOCAL CUSTOM COMPONENTS
-import DialogDrawer from "./dialog-drawer";
 // GLOBAL CUSTOM COMPONENTS
 import { Paragraph } from "components/Typography";
 import { SearchInputWithCategory } from "components/search-box";
-import { MobileMenu } from "components/navbar/mobile-menu";
 import { FlexBetween, FlexBox } from "components/flex-box";
 // LOCAL CUSTOM HOOK
 import useHeader from "../hooks/use-header";
@@ -22,6 +19,10 @@ import { useRouter } from "next/navigation";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { DataStructure } from "models/types";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import MobileMenu from "components/navbar/mobile-menu/mobile-menu";
+
+const DialogDrawer = dynamic(() => import("./dialog-drawer"));
 
 export default function MobileHeader({ data }: { data: DataStructure['navbar'] }) {
   const { cart } = useShoppingCartStore();

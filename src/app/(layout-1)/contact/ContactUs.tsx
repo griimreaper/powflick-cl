@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import { sendMessage } from "services/messages";
-import { ContactType } from "app/types";
+import { ContactType } from "models/types";
 import { showSuccessAlert, showErrorAlert } from "utils/alerts";
 import { useDashboardStore } from "store/dashboard";
 import { Span } from "components/Typography";
