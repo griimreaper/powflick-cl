@@ -13,6 +13,7 @@ import ProductPrice from "../product-price";
 import ProductTags from "./components/tags";
 import AddToCartButton from "./components/add-to-cart";
 import FavoriteButton from "./components/favorite-button";
+import { viewItem } from "../../../../fpixel";
 
 // STYLED COMPONENT
 const Wrapper = styled(Card)({
@@ -117,6 +118,20 @@ export default function ProductCard9(props: Props) {
               ],
             },
           });
+            viewItem("View item", {
+              ecommerce: {
+                items: [
+                  {
+                    item_id: `${id}`,
+                    item_name: `${title}`,
+                    discount: `${discount}`,
+                    slug: `${slug}`,
+                    item_category: `${product_categories.split("|")[0]}`,
+                    price: `${Number(price)}`,
+                  },
+                ],
+              },
+            });
         }}>
         <ContentWrapper>
           <div className="img-wrapper" style={{ background: 'transparent' }}>
