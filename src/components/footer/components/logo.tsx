@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Link from "next/link";
 import AppStore from "./app-store";
 import { Box } from "@mui/material";
@@ -6,18 +5,18 @@ import Image from "next/image";
 
 export default function LogoSection() {
   return (
-    <Fragment>
+    <>
       <Link href="/" draggable={false}>
         <Box display="flex" justifyContent="center">
           <Image
             width={250}
-            height={0}
+            height={250}
             draggable={false}
             loading="lazy"
             quality={80}
             src="/assets/images/logo/POWFLICK_LOGO-FOOTER.png"
             alt="logo"
-            layout="intrinsic"
+            layout="responsive"
           />
         </Box>
       </Link>
@@ -29,6 +28,6 @@ export default function LogoSection() {
       </Paragraph> */}
 
       <AppStore />
-    </Fragment>
+    </>
   );
 }

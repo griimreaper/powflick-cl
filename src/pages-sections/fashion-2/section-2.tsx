@@ -26,11 +26,9 @@ export default function Section2({ className }: { className: string }) {
             priority
             quality={80}
             layout="responsive"
-            sizes="(max-width: 769px) 100vw, 1000px"
+            sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             style={{
               borderRadius: 6,
-              width: "100%",
-              height: "auto",
               objectFit: "cover",
               marginBottom: "8px", // Espaciado entre imágenes
             }}
@@ -43,7 +41,7 @@ export default function Section2({ className }: { className: string }) {
             height={300} // Ajuste adecuado según el tamaño de la imagen
             quality={80}
             layout="responsive"
-            sizes="(max-width: 769px) 100vw, 1000px"
+            sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             priority
             style={{
               borderRadius: 6,
