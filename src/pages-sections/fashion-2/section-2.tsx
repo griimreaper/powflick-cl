@@ -21,10 +21,11 @@ export default function Section2({ className }: { className: string }) {
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
-            width={18} // Ajustar a un valor numérico adecuado
-            height={18} // Ajustar a un valor numérico adecuado
+            width={500} // Ajuste adecuado según el tamaño de la imagen
+            height={300} // Ajuste adecuado según el tamaño de la imagen
             priority
             quality={80}
+            layout="responsive"
             sizes="(max-width: 769px) 100vw, 1000px"
             style={{
               borderRadius: 6,
@@ -38,9 +39,10 @@ export default function Section2({ className }: { className: string }) {
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
             alt="Mobile Image 2"
-            width={18} // Ajustar a un valor numérico adecuado
-            height={18} // Ajustar a un valor numérico adecuado
+            width={500} // Ajuste adecuado según el tamaño de la imagen
+            height={300} // Ajuste adecuado según el tamaño de la imagen
             quality={80}
+            layout="responsive"
             sizes="(max-width: 769px) 100vw, 1000px"
             priority
             style={{
@@ -59,8 +61,9 @@ export default function Section2({ className }: { className: string }) {
           alt="Desktop Image"
           quality={80}
           priority
-          width={18} // Ajustar a un valor numérico adecuado
-          height={18} // Ajustar a un valor numérico adecuado
+          layout="responsive"
+          width={1200} // Ajuste adecuado según el tamaño de la imagen
+          height={600} // Ajuste adecuado según el tamaño de la imagen
           sizes="(min-width: 769px) 100vw, 1000px"
           style={{
             width: "100%",

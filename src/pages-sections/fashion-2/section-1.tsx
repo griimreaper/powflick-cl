@@ -1,7 +1,12 @@
 // GLOBAL CUSTOM COMPONENTS
-import { Carousel } from "components/carousel";
+const Carousel = dynamic(() => import("components/carousel").then(m => m.Carousel), {
+  ssr: false,
+  loading: () => <p>Loading...</p> // Placeholder mientras carga
+});
+
 import CarouselCard1 from "components/carousel-cards/carousel-card-1";
 import { DataStructure } from "models/types";
+import dynamic from "next/dynamic";
 
 export default function Section1({ data }: { data: DataStructure["navbar"] }) {
   const carouselData = [

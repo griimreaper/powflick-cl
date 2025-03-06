@@ -13,6 +13,8 @@ export default function LogoSection() {
             width={250}
             height={0}
             draggable={false}
+            loading="lazy"
+            quality={80}
             src="/assets/images/logo/POWFLICK_LOGO-FOOTER.png"
             alt="logo"
             layout="intrinsic"

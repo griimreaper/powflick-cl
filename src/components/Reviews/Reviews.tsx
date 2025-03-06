@@ -11,9 +11,14 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { Carousel } from "components/carousel";
 import { Paragraph } from "components/Typography";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Carousel = dynamic(() => import("components/carousel").then(m => m.Carousel), {
+  ssr: false,
+  loading: () => <p>Loading...</p> // Placeholder mientras carga
+});
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",

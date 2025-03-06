@@ -3,10 +3,15 @@ import { Box, Typography, useMediaQuery } from "@mui/material";
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
 import { Paragraph } from "components/Typography";
-import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+
+const Carousel = dynamic(() => import("components/carousel").then(m => m.Carousel), {
+  ssr: false,
+  loading: () => <p>Loading...</p> // Placeholder mientras carga
+});
 
 export default function Section4({ products }: { products: DataStructure['landing']['collections']['mostSoldProducts'] }) {
   const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")

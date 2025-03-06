@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { Box, Button, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import Section2 from "./section-2";

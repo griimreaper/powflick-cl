@@ -5,8 +5,14 @@ import { Paragraph } from "components/Typography";
 import CategoryCard1 from "components/category-cards/category-card-1";
 // API FUNCTIONS
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { Carousel } from "components/carousel";
+
+const Carousel = dynamic(() => import("components/carousel").then(m => m.Carousel), {
+  ssr: false,
+  loading: () => <p>Loading...</p> // Placeholder mientras carga
+});
+
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 const sportsCategories = [
   {
