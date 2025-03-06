@@ -10,3 +10,14 @@ export const getLanding = async () => {
         return { };
     }
 }
+
+export const getNavbar = async () => {
+    try {
+        const response: any = await mainApi.get("/navbar");
+
+        return response.data;
+    } catch (error) {
+        console.error("Error getting posts:", error);
+        return { };
+    }
+}
