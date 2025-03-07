@@ -67,7 +67,7 @@ const ContactUs = () => {
 
   return (
     <>
-      <Container sx={{ py: 10 }} style={{
+      <Box sx={{ py: 10 }} style={{
         padding: 20,
         width: "100%",
         height: "100%",
@@ -198,7 +198,7 @@ const ContactUs = () => {
             </Box>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     </>
   );
 };
