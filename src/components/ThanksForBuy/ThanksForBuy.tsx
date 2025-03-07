@@ -16,6 +16,7 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
+import { purchase } from "../../../fpixel";
 
 export default function ThanksForBuy({ id }: { id: string }) {
   const [order, setOrder] = useState<any>({});
@@ -81,6 +82,46 @@ export default function ThanksForBuy({ id }: { id: string }) {
               ),
             },
           });
+          purchase("purchase", {
+            ecommerce: {
+              transaction_id: order.id,
+              value: order.total,
+              currency: "USD",
+              coupon: order.coupon?.title || null,
+              discount: order.coupon
+                ? ((order.total * order.coupon.discount) / 100).toFixed(2)
+                : 0,
+              shippingAddress: {
+                address: order?.data?.direction?.address,
+                postalCode: order?.data?.direction?.postalCode,
+                district: order?.data?.direction?.district,
+                city: order?.data?.direction?.city,
+                country: order?.data?.direction?.country,
+              },
+              items: order?.products?.map(
+                ({
+                  title,
+                  id,
+                  product_categories,
+                  sports,
+                  colors,
+                  slug,
+                  OrderProduct,
+                }: any) => ({
+                  item_id: id,
+                  item_name: title,
+                  // affiliation: "Google Merchandise Store",
+                  item_brand: "Pow Flick",
+                  item_category: product_categories,
+                  item_category2: sports,
+                  item_list_name: slug,
+                  item_variant: colors[0],
+                  price: OrderProduct.price,
+                  quantity: OrderProduct.amount,
+                })
+              ),
+            },
+          });
         }
       }
     };
@@ -89,17 +130,25 @@ export default function ThanksForBuy({ id }: { id: string }) {
   }, [token]);
 
   return (
-    <Box component="main" sx={{ bgcolor: "background.paper", px: 4, pb: 6, pt: 4 }}>
+    <Box
+      component="main"
+      sx={{ bgcolor: "background.paper", px: 4, pb: 6, pt: 4 }}
+    >
       <Box sx={{ maxWidth: 800, mx: "auto" }}>
         <Button
           onClick={handleBackClick}
           startIcon={<ChevronLeft />}
           sx={{ mb: 4 }}
         >
-          Back to <Typography color="primary" sx={{ ml: 1 }}>Pow Flick</Typography>
+          Back to{" "}
+          <Typography color="primary" sx={{ ml: 1 }}>
+            Pow Flick
+          </Typography>
         </Button>
 
-        <Typography variant="h6" color="primary">Thank you!</Typography>
+        <Typography variant="h6" color="primary">
+          Thank you!
+        </Typography>
         <Typography variant="h3" fontWeight="bold" gutterBottom>
           {"It's on the way!"}
         </Typography>
@@ -142,8 +191,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
                   Quantity: {product.OrderProduct.amount}
                 </Typography>
                 <Typography variant="body2" fontWeight="bold">
-                  Price: $
-                  {product.OrderProduct.price}
+                  Price: ${product.OrderProduct.price}
                 </Typography>
               </Box>
             </CardContent>
@@ -203,7 +251,8 @@ export default function ThanksForBuy({ id }: { id: string }) {
                 {order?.paymentData?.card?.wallet?.type}
               </Typography>
               <Typography variant="body2">
-                {order?.paymentData?.card?.brand} ({order?.paymentData?.card?.funding})
+                {order?.paymentData?.card?.brand} (
+                {order?.paymentData?.card?.funding})
               </Typography>
               <Typography variant="body2">
                 Ending in {order?.paymentData?.card?.last4}
@@ -216,7 +265,9 @@ export default function ThanksForBuy({ id }: { id: string }) {
                 Shipping Method
               </Typography>
               <Typography variant="body2">DHL</Typography>
-              <Typography variant="body2">Takes up to 3 working days</Typography>
+              <Typography variant="body2">
+                Takes up to 3 working days
+              </Typography>
             </Paper>
           </Grid>
         </Grid>

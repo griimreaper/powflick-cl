@@ -41,6 +41,7 @@ import Customizations from "components/Customization/customization";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { TextField } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
+import { addToCart } from "../../../../fpixel";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -428,6 +429,25 @@ export default function ProductIntro({ product }: Props) {
                             affiliation: "Google Merchandise Store",
                             item_brand: "Pow Flick",
                             item_category: product.product.product_categories.split("|")[0],
+                            item_category2: product.product.sport,
+                            item_variant: result.productToBag.colors,
+                            price: Number(result.productToBag.price),
+                            quantity: result.amount,
+                          },
+                        ],
+                      },
+                    });
+                    
+                    addToCart("Add To Cart", {
+                      ecommerce: {
+                        items: [
+                          {
+                            item_id: result.productToBag.id,
+                            item_name: result.productToBag.title,
+                            affiliation: "Google Merchandise Store",
+                            item_brand: "Pow Flick",
+                            item_category:
+                              product.product.product_categories.split("|")[0],
                             item_category2: product.product.sport,
                             item_variant: result.productToBag.colors,
                             price: Number(result.productToBag.price),

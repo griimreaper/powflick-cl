@@ -32,6 +32,8 @@ import DiscountChip from "../discount-chip";
 import { BorderBox } from '../../page-sidenav/side-navbar/styles/index';
 import { themeColors } from "theme/theme-colors";
 import Image from "next/image";
+import { track } from "react-facebook-pixel";
+import { viewItem } from "../../../../fpixel";
 
 
 // ==============================================================
@@ -93,6 +95,21 @@ export default function ProductCard8({ product, active=false }: Props) {
                 ],
               },
             });
+
+              viewItem("View item", {
+                ecommerce: {
+                  items: [
+                    {
+                      item_id: `${product.id}`,
+                      item_name: `${product.title}`,
+                      item_list_name: `${product.slug}`,
+                      discount: `${product.discount}`,
+                      item_category: `${product.product_categories.split("|")[0]}`,
+                      price: `${Number(product.price)}`,
+                    },
+                  ],
+                },
+              });
           }}
         >
           <Image

@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { getProfile } from "services/DashboardUser";
 import { useDashboardStore } from "store/dashboard";
 import MainSection from "./MainSection";
+import * as fbq from '../../../fpixel';
 // GLOBAL CUSTOM COMPONENTS
 const Newsletter = dynamic(() => import("components/newsletter"));
 const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
@@ -47,6 +48,11 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
 
     fetchData();
   }, [token]);
+
+ useEffect(() => {
+   fbq.init();
+ }, []);
+
 
   useEffect(() => {
     let logoutTimer: NodeJS.Timeout;

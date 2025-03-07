@@ -13,6 +13,7 @@ import { createOrder } from "services/Order";
 import Image from "next/image";
 import DialogDrawer from "components/header/components/dialog-drawer";
 import useHeader from "components/header/hooks/use-header";
+import { goToStripe } from "../../../../fpixel";
 
 export default function CheckoutForm() {
   const router = useRouter();
@@ -201,6 +202,46 @@ export default function CheckoutForm() {
                           item_id: id,
                           item_name: title,
                           affiliation: "Google Merchandise Store",
+                          item_brand: "Pow Flick",
+                          item_category: product_categories.split("|")[0],
+                          item_category2: sport,
+                          item_list_name: slug,
+                          item_variant: colors ? colors[0] : null,
+                          price: Number(price),
+                          quantity: amount,
+                          total_product: Number(totalProduct),
+                          total_customizations: Number(totalCustomization),
+                        };
+                      }
+                    ),
+                  },
+                });
+                goToStripe("goToStripe", {
+                  ecommerce: {
+                    currency: "USD",
+                    value: Number(total * (1 - (coupon?.discount || 0) / 100)),
+                    coupon: coupon?.title || null,
+                    discount: coupon?.discount || 0,
+                    items: cart.map(
+                      ({
+                        product,
+                        totalCustomization,
+                        totalProduct,
+                        amount,
+                      }) => {
+                        const {
+                          id,
+                          price,
+                          title,
+                          product_categories,
+                          colors,
+                          slug,
+                          sport,
+                        } = product;
+                        return {
+                          item_id: id,
+                          item_name: title,
+                          // affiliation: "Google Merchandise Store",
                           item_brand: "Pow Flick",
                           item_category: product_categories.split("|")[0],
                           item_category2: sport,
