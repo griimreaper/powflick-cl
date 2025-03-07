@@ -73,7 +73,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
             </Paragraph>
 
             <Paragraph py={0.6} color="grey.500">
-              Email: uilib.help@gmail.com
+              Email: info@powflick.com
             </Paragraph>
 
             <Paragraph py={0.6} mb={2} color="grey.500">
