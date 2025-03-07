@@ -21,6 +21,23 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Precargar la fuente GYMER */}
+        <link
+          rel="preload"
+          href="/fonts/GYMER/GYMER.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/GYMER/GYMER.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={openSans.className}>
         <GlobalProvider>
           {MemoizedWhatsApp}

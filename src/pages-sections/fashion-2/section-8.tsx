@@ -1,16 +1,14 @@
 "use client";
 
 import Button from "@mui/material/Button";
-import { useMediaQuery, Box } from "@mui/material";
+import { Box } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
 import { RootStyle } from "./section-7";
 import Image from "next/image";
 // LOCAL CUSTOM COMPONENT
 
-export default function Section8() {
-  const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
-
+export default function Section8({ isMobile }: { isMobile: boolean }) {
   // Determina la imagen según el tamaño de la pantalla
   const backgroundImage = !isMobile ? `/assets/images/landing/POWFLICK_BANNER-INFERIOR.png` : `/assets/images/landing/mobile/HOME_BANNER-SEASON.png`;
 

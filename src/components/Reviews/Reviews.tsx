@@ -14,11 +14,7 @@ import { styled } from "@mui/system";
 import { Paragraph } from "components/Typography";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-
-const Carousel = dynamic(() => import("components/carousel").then(m => m.Carousel), {
-  ssr: false,
-  loading: () => <p>Loading...</p> // Placeholder mientras carga
-});
+import { Carousel } from "components/carousel";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -117,10 +113,10 @@ const ReviewCard = ({ review }: any) => {
 
 interface ReviewsProps {
   review: any[];
+  isMobile?: boolean;
 }
 
-const Reviews: React.FC<ReviewsProps> = ({ review }) => {
-  const isMobile = useMediaQuery(("(max-width: 768px)"));
+const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
     { breakpoint: 768, settings: { slidesToShow: 3 } },

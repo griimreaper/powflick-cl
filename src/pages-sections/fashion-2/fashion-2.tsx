@@ -1,15 +1,16 @@
 "use client";
 
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo } from "react";
 import { DataStructure } from "models/types";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useMediaQuery } from "@mui/material";
 import MainSection from "./MainSection";
+
 // GLOBAL CUSTOM COMPONENTS
 const Newsletter = dynamic(() => import("components/newsletter"), {
   ssr: false,
-  loading: () => <div>Cargando...</div>, // Placeholder de carga
+  loading: () => <div>Cargando...</div>,
 });
 const Reviews = dynamic(() => import("components/Reviews/Reviews"), {
   ssr: false,
@@ -25,50 +26,32 @@ const Box = dynamic(() => import("@mui/material/Box"));
 
 const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
   const memoizedData = useMemo(() => data?.landing || {}, [data]);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const updateSize = () => setIsMobile(window.innerWidth <= 768);
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
 
   return (
-    <div style={{ width: '100%' }}>
-      <MainSection />
+    <div style={{ width: "100%" }}>
+      <MainSection isMobile={isMobile} />
+
       {/* Most Sold Products Section */}
-      <Section4 products={memoizedData?.collections?.mostSoldProducts || []} />
+      <Section4 products={memoizedData?.collections?.mostSoldProducts || []} isMobile={isMobile} />
 
       {/* Banner */}
       <div style={{ position: "relative" }}>
-        {/* <img
-          src="/assets/images/landing/POWFLICK_ELEMENTO-1.png"
-          alt="Overlay"
-          style={{
-            position: "absolute",
-            right: 0,
-            top: window.innerWidth <= 768 ? "-200px" : "-300px",
-            zIndex: 2,
-            width: window.innerWidth <= 768 ? "125px" : "250px",
-            height: "auto",
-          }}
-        /> */}
-        <Section7 />
+        <Section7 isMobile={isMobile} />
       </div>
 
       {/* Discount Products Section */}
-      <Section6 products={memoizedData?.collections?.discountProducts || []} />
+      <Section6 products={memoizedData?.collections?.discountProducts || []} isMobile={isMobile} />
 
       {/* Customer Reviews Section */}
-      {data && <Reviews review={memoizedData?.reviews} />}
+      {data && <Reviews review={memoizedData?.reviews} isMobile={isMobile} />}
 
       <Box style={{ position: "relative" }}>
         <Image
           src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
           alt="Overlay"
-          width={250} // Tamaño en escritorio
-          height={200} // Se ajusta automáticamente con style={{ height: "auto" }}
+          width={250}
+          height={200}
           priority
           draggable={false}
           style={{
@@ -80,14 +63,13 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
             height: "auto",
           }}
         />
-        <Section8 />
+        <Section8 isMobile={isMobile} />
       </Box>
 
       {/* Newsletter Subscription Section */}
       <Newsletter />
-
     </div>
   );
-}
+};
 
 export default memo(FashionTwoPageView);

@@ -1,5 +1,5 @@
 'use client';
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 // GLOBAL CUSTOM COMPONENTS
 import { Paragraph } from "components/Typography";
@@ -9,9 +9,7 @@ import { DataStructure } from "models/types";
 import Link from "next/link";
 // API FUNCTIONS
 
-export default function Section6({ products }: { products: DataStructure['landing']['collections']['discountProducts'] }) {
-  const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
-
+export default function Section6({ products, isMobile }: { products: DataStructure['landing']['collections']['discountProducts'], isMobile: boolean }) {
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
     { breakpoint: 768, settings: { slidesToShow: 3 } },

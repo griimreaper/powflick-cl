@@ -1,14 +1,10 @@
 "use client";
 import Container from "@mui/material/Container";
 // API FUNCTIONS
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/material";
 import Image from "next/image";
 
-export default function Section2({ className }: { className: string }) {
-  // Media query breakpoints
-  const isMobile = useMediaQuery("(max-width: 768px)"); // Detecta si es móvil
-
+export default function Section2({ className, isMobile }: { className: string, isMobile: boolean }) {
   return (
     <Container
       className={`${className}`}

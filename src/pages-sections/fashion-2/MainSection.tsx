@@ -1,11 +1,9 @@
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Image from "next/image";
 import Section2 from "./section-2";
 import Section3 from "./section-3";
 
-export default function MainSection() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
+export default function MainSection({ isMobile }: { isMobile: boolean }) {
   const backgroundImage = isMobile
     ? "/assets/images/landing/mobile/POWFLICK-_BANNER-SUPERIOR.png"
     : "/assets/images/landing/POWFLICK_BANNER_SUPERIOR.png";
@@ -87,8 +85,8 @@ export default function MainSection() {
             gap: 5,
           }}
         >
-          <Section2 className="section2" />
-          <Section3 className="section3" />
+          <Section2 className="section2" isMobile={isMobile} />
+          <Section3 className="section3" isMobile={isMobile}/>
         </Box>
       </Box>
     </Box>
