@@ -13,7 +13,7 @@ export const ABOUT_LINKS = [
   // {title: "Our Cares", link: "/"},
   { title: "Terms & Conditions", link: "terms-condition" },
   { title: "Privacy Policy", link: "privacy-policy" },
-  { title: "Time an Shipping", link: "shipping" },
+  { title: "Time and Shipping", link: "shipping" },
 ];
 
 export const PAGES = [
