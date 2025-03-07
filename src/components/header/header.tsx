@@ -13,8 +13,9 @@ import { Session } from "next-auth";
 import { DataStructure } from "models/types";
 import { primary } from "theme/theme-colors";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import DialogDrawer from "./components/dialog-drawer";
+import LoginCartButtons from "./components/login-cart-buttons";
+import MobileHeader from "./components/mobile-header";
 
 // ==============================================================
 interface Props {
@@ -26,9 +27,6 @@ interface Props {
   landing: boolean;
 }
 // ==============================================================
-
-const MobileHeader = dynamic(() => import("./components/mobile-header"), { ssr: false });
-const LoginCartButtons = dynamic(() => import("./components/login-cart-buttons"), { ssr: false });
 
 export default function Header({
   // isFixed,

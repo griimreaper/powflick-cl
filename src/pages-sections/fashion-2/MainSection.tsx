@@ -30,9 +30,10 @@ export default function MainSection() {
         alt="Banner"
         priority
         quality={80}
-        loading="eager"
-        width={1920} // Ajustar a un valor numérico adecuado
-        height={1080} // Ajustar a un valor numérico adecuado
+        fetchPriority="high"
+        layout="responsive"
+        width={isMobile ? 313 : 1417} // Ajustar a un valor numérico adecuado
+        height={isMobile ? 755 : 1491} // Ajustar a un valor numérico adecuado
         style={{
           width: "100%",
           height: "auto",

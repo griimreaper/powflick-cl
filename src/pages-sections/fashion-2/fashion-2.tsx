@@ -21,6 +21,7 @@ const Section4 = dynamic(() => import("./section-4"));
 const Section6 = dynamic(() => import("./section-6"));
 const Section7 = dynamic(() => import("./section-7"));
 const Section8 = dynamic(() => import("./section-8"));
+const Box = dynamic(() => import("@mui/material/Box"));
 
 const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
   const memoizedData = useMemo(() => data?.landing || {}, [data]);
@@ -62,7 +63,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
       {/* Customer Reviews Section */}
       {data && <Reviews review={memoizedData?.reviews} />}
 
-      <div style={{ position: "relative" }}>
+      <Box style={{ position: "relative" }}>
         <Image
           src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
           alt="Overlay"
@@ -80,7 +81,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
           }}
         />
         <Section8 />
-      </div>
+      </Box>
 
       {/* Newsletter Subscription Section */}
       <Newsletter />

@@ -69,8 +69,8 @@ export default function ProductCard8({ product, active = false }: Props) {
           }}
         >
           <Image
-            width={300}
-            height={300}
+            width={325}
+            height={325}
             layout="responsive"
             alt="category"
             className="product-img"
