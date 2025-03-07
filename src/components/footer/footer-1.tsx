@@ -69,7 +69,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
             <Heading style={{ color: "#A30E0E" }}>Contact Us</Heading>
 
             <Paragraph py={0.6} color="grey.500">
-              70 Washington Square South, New York, NY 10012, United States
+              B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China.
             </Paragraph>
 
             <Paragraph py={0.6} color="grey.500">
@@ -77,7 +77,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
             </Paragraph>
 
             <Paragraph py={0.6} mb={2} color="grey.500">
-              Phone: +1 1123 456 780
+              Phone: +86 159 2011 0846
             </Paragraph>
 
             {/* SOCIAL LINKS WITH ICON */}

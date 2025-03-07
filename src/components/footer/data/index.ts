@@ -16,11 +16,11 @@ export const ABOUT_LINKS = [
   { title: "Time an Shipping", link: "shipping" },
 ];
 
-export const CUSTOMER_CARE_LINKS = [
-  "Help Center",
-  "Track Your Order",
-  "Corporate & Bulk Purchasing",
-  "Returns & Refunds"
+export const PAGES = [
+  ["Super Design", "your-design"],
+  ["Contact", "contact"],
+  ["About Us", "about-us"],
+  ["Help", "help"],
 ];
 
 export const SOCIAL_ICON_LINKS = [
