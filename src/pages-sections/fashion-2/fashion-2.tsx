@@ -1,21 +1,16 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { DataStructure } from "models/types";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 import MainSection from "./MainSection";
+import { LazyLoadSection } from "./LazyLoadSection";
 
 // GLOBAL CUSTOM COMPONENTS
-const Newsletter = dynamic(() => import("components/newsletter"), {
-  ssr: false,
-  loading: () => <div>Cargando...</div>,
-});
-const Reviews = dynamic(() => import("components/Reviews/Reviews"), {
-  ssr: false,
-  loading: () => <div>Loading reviews...</div>,
-});
+const Newsletter = dynamic(() => import("components/newsletter"), { ssr: false });
+const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
 
 // LOCAL CUSTOM COMPONENTS
 const Section4 = dynamic(() => import("./section-4"));
@@ -33,41 +28,52 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
       <MainSection isMobile={isMobile} />
 
       {/* Most Sold Products Section */}
-      <Section4 products={memoizedData?.collections?.mostSoldProducts || []} isMobile={isMobile} />
+      <LazyLoadSection id="section4">
+        <Section4 products={memoizedData?.collections?.mostSoldProducts || []} isMobile={isMobile} />
+      </LazyLoadSection>
 
       {/* Banner */}
-      <div style={{ position: "relative" }}>
+      <LazyLoadSection id="section7">
         <Section7 isMobile={isMobile} />
-      </div>
+      </LazyLoadSection>
 
       {/* Discount Products Section */}
-      <Section6 products={memoizedData?.collections?.discountProducts || []} isMobile={isMobile} />
+      <LazyLoadSection id="section6">
+        <Section6 products={memoizedData?.collections?.discountProducts || []} isMobile={isMobile} />
+      </LazyLoadSection>
 
       {/* Customer Reviews Section */}
-      {data && <Reviews review={memoizedData?.reviews} isMobile={isMobile} />}
+      <LazyLoadSection id="reviews">
+        {data && <Reviews review={memoizedData?.reviews} isMobile={isMobile} />}
+      </LazyLoadSection>
 
-      <Box style={{ position: "relative" }}>
-        <Image
-          src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
-          alt="Overlay"
-          width={250}
-          height={200}
-          priority
-          draggable={false}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: isMobile ? "-50px" : "-200px",
-            zIndex: 2,
-            width: isMobile ? "125px" : "250px",
-            height: "auto",
-          }}
-        />
-        <Section8 isMobile={isMobile} />
-      </Box>
+      {/* Imagen y Sección 8 */}
+      <LazyLoadSection id="section8">
+        <Box style={{ position: "relative" }}>
+          <Image
+            src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
+            alt="Overlay"
+            width={250}
+            height={200}
+            priority
+            draggable={false}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: isMobile ? "-50px" : "-200px",
+              zIndex: 2,
+              width: isMobile ? "125px" : "250px",
+              height: "auto",
+            }}
+          />
+          <Section8 isMobile={isMobile} />
+        </Box>
+      </LazyLoadSection>
 
       {/* Newsletter Subscription Section */}
-      <Newsletter />
+      <LazyLoadSection id="newsletter">
+        <Newsletter />
+      </LazyLoadSection>
     </div>
   );
 };

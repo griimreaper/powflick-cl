@@ -1,14 +1,15 @@
-"use client";
-import Container from "@mui/material/Container";
-// API FUNCTIONS
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Image from "next/image";
 
 export default function Section2({ className, isMobile }: { className: string, isMobile: boolean }) {
   return (
     <Container
-      className={`${className}`}
-      sx={{ height: isMobile ? "30%" : "25%" }}
+      className={className}
+      sx={{
+        height: isMobile ? "30%" : "25%", // Contenedor con una altura relativa
+        position: "relative", // Necesario si usas layout="fill"
+        overflow: "hidden", // Opcional para cortar la imagen si se sale
+      }}
     >
       {isMobile ? (
         // Renderiza dos imágenes para mobile
@@ -17,32 +18,29 @@ export default function Section2({ className, isMobile }: { className: string, i
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
-            width={500} // Ajuste adecuado según el tamaño de la imagen
-            height={300} // Ajuste adecuado según el tamaño de la imagen
-            priority
+            layout="responsive" // Para mantener la proporción
+            width={500} // Ajuste adecuado
+            height={300} // Ajuste adecuado
             quality={80}
-            layout="responsive"
+            priority
             sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             style={{
               borderRadius: 6,
               objectFit: "cover",
-              marginBottom: "8px", // Espaciado entre imágenes
             }}
           />
           <Image
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
             alt="Mobile Image 2"
-            width={500} // Ajuste adecuado según el tamaño de la imagen
-            height={300} // Ajuste adecuado según el tamaño de la imagen
+            layout="responsive" // Para mantener la proporción
+            width={500} // Ajuste adecuado
+            height={300} // Ajuste adecuado
             quality={80}
-            layout="responsive"
-            sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             priority
+            sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             style={{
               borderRadius: 6,
-              width: "100%",
-              height: "auto",
               objectFit: "cover",
             }}
           />
@@ -56,8 +54,8 @@ export default function Section2({ className, isMobile }: { className: string, i
           quality={80}
           priority
           layout="responsive"
-          width={1200} // Ajuste adecuado según el tamaño de la imagen
-          height={600} // Ajuste adecuado según el tamaño de la imagen
+          width={1200}
+          height={600}
           sizes="(min-width: 769px) 100vw, 1000px"
           style={{
             width: "100%",

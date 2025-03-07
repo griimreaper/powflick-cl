@@ -5,12 +5,12 @@ import Image from "next/image";
 
 export default function LogoSection() {
   return (
-    <>
+    <Box width={'100%'} display="flex" flexDirection={"column"} justifyContent="center" alignItems="center">
       <Link href="/" draggable={false}>
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifyContent="center" width={'80%'}>
           <Image
-            width={250}
-            height={250}
+            width={200}
+            height={200}
             draggable={false}
             loading="lazy"
             quality={80}
@@ -28,6 +28,6 @@ export default function LogoSection() {
       </Paragraph> */}
 
       <AppStore />
-    </>
+    </Box>
   );
 }

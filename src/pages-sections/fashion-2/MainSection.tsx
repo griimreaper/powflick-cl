@@ -86,7 +86,7 @@ export default function MainSection({ isMobile }: { isMobile: boolean }) {
           }}
         >
           <Section2 className="section2" isMobile={isMobile} />
-          <Section3 className="section3" isMobile={isMobile}/>
+          <Section3 className="section3" isMobile={isMobile} />
         </Box>
       </Box>
     </Box>

@@ -17,6 +17,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Box } from "@mui/material";
 import dynamic from "next/dynamic";
 import { MobileNavigationBar } from "components/mobile-navigation";
+import { LazyLoadSection } from "pages-sections/fashion-2/LazyLoadSection";
 
 // Carga dinámica de componentes
 const Footer1 = dynamic(() => import("components/footer/footer-1"), {
@@ -113,7 +114,9 @@ export default function ShopLayout1({
       <MobileNavigationBar data={data} />
 
       {/* FOOTER */}
-      <Footer1 data={data} />
+      <LazyLoadSection id="footer">
+        <Footer1 data={data} />
+      </LazyLoadSection>
     </Fragment>
   );
 }

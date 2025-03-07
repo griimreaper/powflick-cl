@@ -5,12 +5,9 @@ import dynamic from "next/dynamic";
 // DATA TYPES
 import { NavList } from "../types";
 import { DataStructure } from "models/types";
+import CategoryBasedMenu from "../category-based-menu";
+import { StyledNavLink } from "../styles";
 
-// =====================================================
-// Dynamic Imports
-const CategoryBasedMenu = dynamic(() => import("../category-based-menu"), { ssr: false });
-const StyledNavLink = dynamic(() => import("../styles").then(m => m.StyledNavLink), { ssr: false });
-// =====================================================
 
 export default function NavigationList({
   data,

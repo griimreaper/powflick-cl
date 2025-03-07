@@ -7,6 +7,7 @@ import CategoryCard1 from "components/category-cards/category-card-1";
 import { Box, Typography } from "@mui/material";
 import Link from "next/link";
 import { Carousel } from "components/carousel";
+import { LazyLoadSection } from "./LazyLoadSection";
 
 const sportsCategories = [
   {
@@ -81,7 +82,7 @@ export default function Section3({ className, isMobile }: { className: string, i
             component="h1"
             sx={{
               // fontWeight: "bold",
-              color:'white',
+              color: 'white',
               // fontStyle: "italic",
               fontFamily: "GYMER", // Añadir la fuente GYMER
               lineHeight: 1,

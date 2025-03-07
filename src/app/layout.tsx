@@ -17,8 +17,6 @@ export default function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const MemoizedWhatsApp = React.useMemo(() => <FloatingWhatsApp />, []);
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -40,7 +38,7 @@ export default function RootLayout({
       </head>
       <body className={openSans.className}>
         <GlobalProvider>
-          {MemoizedWhatsApp}
+          <FloatingWhatsApp />
           {children}
         </GlobalProvider>
         <GoogleAnalytics />

@@ -12,6 +12,7 @@ const GoogleTagManager = () => {
             <Script
                 strategy="afterInteractive"
                 src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
+                async
             />
 
             {/* Fallback para navegadores sin JavaScript */}
