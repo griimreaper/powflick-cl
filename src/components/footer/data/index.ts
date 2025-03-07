@@ -17,6 +17,7 @@ export const ABOUT_LINKS = [
 ];
 
 export const PAGES = [
+  ["Store", "products"],
   ["Super Design", "your-design"],
   ["Contact", "contact"],
   ["About Us", "about-us"],
