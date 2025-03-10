@@ -73,7 +73,7 @@ function EditableContainer({
 
     const handleSubmit = async (index: number) => {
         if (file) {
-            if (logos[index].logoUrl !== "") {
+            if (logos[index]?.logoUrl !== "") {
                 try {
                     await deleteImage(logos[index].logoUrl);
                     setLogos(
@@ -328,18 +328,18 @@ function EditableContainer({
                     </Box>
                     {/* Logo */}
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-                        <Input
+                        <input
                             type="file"
+                            accept="image/png"
                             onChange={handleFileChange}
-                            sx={{
-                                py: 1,
+                            style={{
+                                paddingTop: 1,
+                                paddingBottom: 1,
                                 fontSize: "0.875rem",
-                                "&:focus": {
-                                    outline: "none",
-                                    borderColor: "primary.main",
-                                    ring: "2px solid primary.main",
-                                },
-                            }}
+                                outline: "none",
+                                borderColor: "primary.main",
+                            }
+                            }
                         />
                         <Button
                             variant="contained"

@@ -3,7 +3,7 @@ import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "r
 import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
 import "./MoveableComponent.css";
 import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
-import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, RedoOutlined } from "@mui/icons-material";
+import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, RedoOutlined } from "@mui/icons-material";
 
 interface ManipulableContainerProps {
   parentRef: RefObject<HTMLDivElement>;
@@ -17,6 +17,7 @@ interface ManipulableContainerProps {
   sizeChange: Function;
   handleChange?: Function;
   onTouchStart: (e: any, index: number) => void;
+  deleteElement: (e: string, index: number) => void;
   handleRotation: (type: string, rotate: number, index: number) => void;
   each: {
     type?: "Logo" | "Text" | "Number";
@@ -40,6 +41,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   each,
   handleChange,
   handleRotation,
+  deleteElement,
   sizeChange,
 }) => {
   const [rotation, setRotation] = useState(each.rotate); // Usar el valor inicial de rotación
@@ -204,15 +206,15 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             onPinchStart={(e) => console.log('Pinch start event', e)}
             onPinch={(e: OnPinch) => handlePinch(e)}
           />
-          <Box ref={BoxRef} width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`} height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`} position={"absolute"} >
+          {each.size && <Box ref={BoxRef} width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`} height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`} position={"absolute"} >
 
             <ArrowLeft
               sx={{
                 position: "absolute",
-                left: "-23px", // Ajusta según el tamaño de tu manejador
+                left: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
                 top: "50%",
                 transform: "translateY(-50%)",
-                fontSize: "40px",
+                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
                 cursor: "pointer",
                 color: "primary.main",
               }}
@@ -220,10 +222,10 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             <ArrowRight
               sx={{
                 position: "absolute",
-                right: "-23px", // Ajusta según el tamaño de tu manejador
+                right: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
                 top: "50%",
                 transform: "translateY(-50%)",
-                fontSize: "40px",
+                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
                 cursor: "pointer",
                 color: "primary.main",
               }}
@@ -231,10 +233,10 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             <ArrowDropDown
               sx={{
                 position: "absolute",
-                bottom: "-23px", // Ajusta según el tamaño de tu manejador
+                bottom: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
                 left: "50%",
                 transform: "translateX(-50%)",
-                fontSize: "40px",
+                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
                 cursor: "pointer",
                 color: "primary.main",
               }}
@@ -242,10 +244,10 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             <ArrowDropUp
               sx={{
                 position: "absolute",
-                top: "-23px", // Ajusta según el tamaño de tu manejador
+                top: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
                 left: "50%",
                 transform: "translateX(-50%)",
-                fontSize: "40px",
+                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
                 cursor: "pointer",
                 color: "primary.main",
               }}
@@ -258,7 +260,24 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
                 color: "white",
                 transform: "translateX(-50%)",
                 cursor: "pointer",
-                zIndex: 2,
+                width: "25px",
+                height: "25px",
+                backgroundColor: "primary.main",
+                borderRadius: "100%",
+              }}
+            />
+            <DeleteForever
+              onClick={() => {
+                deleteElement(each.type as string, index);
+              }
+              }
+              sx={{
+                position: "absolute",
+                bottom: "-50px", // Ajusta según el tamaño de tu manejador
+                left: "50%",
+                color: "white",
+                transform: "translateX(-50%)",
+                cursor: "pointer",
                 width: "25px",
                 height: "25px",
                 backgroundColor: "primary.main",
@@ -266,6 +285,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
               }}
             />
           </Box>
+          }
         </>
       )}
       {each.type !== "Logo" && handleChange !== undefined && (
@@ -276,6 +296,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             border: isSelected ? "none" : "2px dashed rgba(9, 9, 9, 0.5)",
             fontFamily: each.font,
             userSelect: "none",
+            outline: "none",
             color: each.color,
             cursor:
               isDragging && selection.index === index ? "grabbing" : "grab",
