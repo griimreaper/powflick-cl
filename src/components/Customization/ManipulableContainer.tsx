@@ -1,6 +1,9 @@
 import { Box } from "@mui/material";
 import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
 import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
+import "./MoveableComponent.css";
+import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
+import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, RedoOutlined } from "@mui/icons-material";
 
 interface ManipulableContainerProps {
   parentRef: RefObject<HTMLDivElement>;
@@ -43,11 +46,11 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
   const [isSelected, setIsSelected] = useState(selection.index === index && selection.type === each.type); // Estado para controlar la visibilidad de Moveable
-  const [scale, setScale] = useState(0); // Estado para controlar la visibilidad de Moveable
   const containerRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLInputElement | null>(null);
+  const BoxRef = useRef<HTMLDivElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
-
+  const [imageHeight, setImageHeight] = useState(0);
   // Calcular el ancho del input basado en el texto
   useEffect(() => {
     if (hiddenDivRef.current) {
@@ -65,10 +68,13 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
 
   // Aplicar rotación en el DOM
   useEffect(() => {
+    if (BoxRef.current) {
+      BoxRef.current.style.transform = `rotate(${rotation}deg)`; // Aplicar la rotación al elemento DOM
+    }
     if (elementRef.current) {
       elementRef.current.style.transform = `rotate(${rotation}deg)`; // Aplicar la rotación al elemento DOM
     }
-  }, [rotation]); // Ejecuta cuando la rotación cambia
+  }, [rotation, isSelected]); // Ejecuta cuando la rotación cambia
 
   // Necesario para que el input se seleccione y muestre el editor para editar el elemento
   useEffect(() => {
@@ -80,6 +86,21 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
 
   useEffect(() => {
   }, [each.text])
+
+  useEffect(() => {
+    if (!elementRef.current) return;
+
+    // Crear ResizeObserver para detectar cambios en el tamaño de la imagen
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        setImageHeight(entry.contentRect.height); // Actualiza la altura de la imagen
+      }
+    });
+
+    observer.observe(elementRef.current);
+
+    return () => observer.disconnect(); // Limpiar observer al desmontar
+  }, []);
 
   // Manejar clics fuera del componente
   useEffect(() => {
@@ -131,7 +152,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     handleResize(newSize)
 
     // Puedes implementar la lógica de cambio en el estado local o persistir los datos.
-    console.log('Pinch event:', {newRotate, newSize });
+    console.log('Pinch event:', { newRotate, newSize });
   };
 
 
@@ -159,38 +180,100 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       />
 
       {isSelected && (
-        <Moveable
-          target={elementRef.current}
-          useMutationObserver
-          useResizeObserver
-          resizable
-          renderDirections={["sw", "nw", "ne", "se"]}
-          rotatable
-          pinchable
-          origin={false}
-          checkInput={true}
-          viewContainer={parentRef.current}
-          dragContainer={parentRef.current}
-          rootContainer={parentRef.current}
+        <>
+          <Moveable
+            className="custom-moveable"
+            target={elementRef.current}
+            useMutationObserver
+            useResizeObserver
+            resizable
+            rotatable
+            pinchable
+            origin={false}
+            checkInput={true}
+            viewContainer={parentRef.current}
+            dragContainer={parentRef.current}
+            rootContainer={parentRef.current}
+            keepRatio={true}
+            onResize={(e) => {
+              handleResize(e);
+              e.target.style.width = `${e.width}px`;
+              e.target.style.height = `${e.height}px`;
+            }}
+            onRotate={handleRotate}
+            onPinchStart={(e) => console.log('Pinch start event', e)}
+            onPinch={(e: OnPinch) => handlePinch(e)}
+          />
+          <Box ref={BoxRef} width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`} height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`} position={"absolute"} >
 
-          keepRatio={true}
-          onResize={(e) => {
-            handleResize(e);
-            e.target.style.width = `${e.width}px`;
-            e.target.style.height = `${e.height}px`;
-          }}
-          onRotate={handleRotate}
-          onPinchStart={(e) => console.log('Pinch start event', e)}
-          onPinch={(e: OnPinch) => handlePinch(e)}
-        />
+            <ArrowLeft
+              sx={{
+                position: "absolute",
+                left: "-23px", // Ajusta según el tamaño de tu manejador
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: "40px",
+                cursor: "pointer",
+                color: "primary.main",
+              }}
+            />
+            <ArrowRight
+              sx={{
+                position: "absolute",
+                right: "-23px", // Ajusta según el tamaño de tu manejador
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: "40px",
+                cursor: "pointer",
+                color: "primary.main",
+              }}
+            />
+            <ArrowDropDown
+              sx={{
+                position: "absolute",
+                bottom: "-23px", // Ajusta según el tamaño de tu manejador
+                left: "50%",
+                transform: "translateX(-50%)",
+                fontSize: "40px",
+                cursor: "pointer",
+                color: "primary.main",
+              }}
+            />
+            <ArrowDropUp
+              sx={{
+                position: "absolute",
+                top: "-23px", // Ajusta según el tamaño de tu manejador
+                left: "50%",
+                transform: "translateX(-50%)",
+                fontSize: "40px",
+                cursor: "pointer",
+                color: "primary.main",
+              }}
+            />
+            <RedoOutlined
+              sx={{
+                position: "absolute",
+                top: "-50px", // Ajusta según el tamaño de tu manejador
+                left: "50%",
+                color: "white",
+                transform: "translateX(-50%)",
+                cursor: "pointer",
+                zIndex: 2,
+                width: "25px",
+                height: "25px",
+                backgroundColor: "primary.main",
+                borderRadius: "100%",
+              }}
+            />
+          </Box>
+        </>
       )}
       {each.type !== "Logo" && handleChange !== undefined && (
         <input
-          className="focus:outline-none focus:ring-2 focus:ring-transparent text-center p-0"
           ref={elementRef as LegacyRef<HTMLInputElement>}
           style={{
             background: "transparent",
-            border: "none",
+            border: isSelected ? "none" : "2px dashed rgba(9, 9, 9, 0.5)",
             fontFamily: each.font,
             userSelect: "none",
             color: each.color,
@@ -218,10 +301,11 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         />
       )}
       {each.type === "Logo" && each.logoUrl && (
-        <div ref={elementRef}>
+        <div ref={elementRef} style={{ height: "auto" }}>
           <img
             src={each.logoUrl}
             style={{
+              border: isSelected ? "" : "2px dashed rgba(9, 9, 9, 0.5)",
               width: `${each.size}px`,
               height: "auto",
               cursor:

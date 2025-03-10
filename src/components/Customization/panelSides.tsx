@@ -122,9 +122,9 @@ export default function PanelSides({
     selection.type === name ? setSelection({ index: 0, type: '' }) : setSelection({ index: 0, type: name });
     const generateText = selection.type && name === '' ? false : true;
     if (name === 'Text' && !texts.some(t => t.text) && generateText) {
-      setTexts(texts.map((t, i) => i === 0 ? t = { ...t, text: 'Insert Text' } : t))
+      setTexts(texts.map((t, i) => i === 0 ? t = { ...t, text: 'Insert Text', font: font, textColor: fontColor } : t))
     } else if (name === 'Number' && !numbers.some(t => t.number) && generateText) {
-      setNumbers(numbers.map((n, i) => i === 0 ? n = { ...n, number: '0' } : n))
+      setNumbers(numbers.map((n, i) => i === 0 ? n = { ...n, number: '0', font: font, numberColor: fontColor } : n))
     }
   };
 

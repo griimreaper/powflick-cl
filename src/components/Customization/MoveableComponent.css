@@ -1,0 +1,34 @@
+.moveable-control {
+    overflow: visible !important;
+    z-index: 0 !important;
+}
+
+.moveable-control.moveable-direction {
+    background-color: blue !important;
+    border-color: transparent !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.moveable-control.moveable-rotation-control {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    width: 25px !important;
+    height: 25px !important;
+    position: absolute !important;
+    left: -4.6px !important;
+    top: -3px !important;
+}
+
+.moveable-line.moveable-direction {
+    border: 2px dashed #CA0B0B !important;
+    background-color: transparent !important;
+}
+
+.moveable-line.moveable-rotation-line {
+    background-color: transparent !important;
+    top: 3px !important;
+    z-index: 0 !important;
+    border: 2px dashed #CA0B0B !important;
+    height: 30px !important;
+}
