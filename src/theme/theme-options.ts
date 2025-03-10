@@ -97,8 +97,6 @@ const themeOptions = (pathname: string) => {
         themeOption = themesOptionList[THEMES.GREEN];
       } else if (pathname.startsWith("/gadget-3")) {
         themeOption = themesOptionList[THEMES.HEALTH];
-      } else if (pathname.startsWith("/admin") || pathname.startsWith("/vendor")) {
-        themeOption = themesOptionList[THEMES.HEALTH];
       } else {
         themeOption = themesOptionList[THEMES.DEFAULT];
       }
