@@ -226,7 +226,7 @@ const AboutUs: React.FC = () => {
             fontSize: isMobile ? "1rem" : "1.2rem",
           }}
         >
-          <h1 style={{ fontFamily: "GYMER" }}>OUR PRMISE</h1>
+          <h1 style={{ fontFamily: "GYMER" }}>OUR PROMISE</h1>
           <p>
             Every PowFlick garment is a testament to quality, innovation, and
             attention to detail, designed to support you in every step of your

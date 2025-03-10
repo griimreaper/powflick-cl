@@ -11,6 +11,7 @@ import { PriceText } from "./styles";
 import DiscountChip from "../discount-chip";
 import useProduct from "../use-product";
 import { ProductDB } from "models/types";
+import { viewItem } from "../../../../fpixel";
 
 // ==============================================================
 type Props = { product: ProductDB };
@@ -28,7 +29,7 @@ export default function ProductCard16({ product }: Props) {
       price,
       name: title,
       imgUrl: URL,
-      qty: (cartItem?.qty || 0) + 1
+      qty: (cartItem?.qty || 0) + 1,
     };
     handleCartAmountChange(product);
   };
@@ -40,14 +41,15 @@ export default function ProductCard16({ product }: Props) {
       price,
       name: title,
       imgUrl: URL,
-      qty: (cartItem?.qty || 0) - 1
+      qty: (cartItem?.qty || 0) - 1,
     };
     handleCartAmountChange(product, "remove");
   };
 
   return (
     <div>
-      <Link href={`/products/${slug}`}
+      <Link
+        href={`/products/${slug}`}
         onClick={() => {
           (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
           (window as any).dataLayer.push({
@@ -65,21 +67,43 @@ export default function ProductCard16({ product }: Props) {
               ],
             },
           });
-        }}>
-        <FlexBox position="relative" bgcolor="transparent" borderRadius={3} mb={2}>
+          viewItem("View item", {
+            ecommerce: {
+              items: [
+                {
+                  item_id: `${product.id}`,
+                  item_name: `${product.title}`,
+                  item_list_name: `${product.slug}`,
+                  discount: `${product.discount}`,
+                  item_category: `${product.product_categories.split("|")[0]}`,
+                  price: `${Number(product.price)}`,
+                },
+              ],
+            },
+          });
+        }}
+      >
+        <FlexBox
+          position="relative"
+          bgcolor="transparent"
+          borderRadius={3}
+          mb={2}
+        >
           {URL ? (
             <LazyImage alt={title} width={380} height={379} src={URL} />
           ) : (
             <div>No image available</div>
           )}
-          {discount ? <DiscountChip discount={discount} sx={{ left: 20, top: 20 }} /> : null}
+          {discount ? (
+            <DiscountChip discount={discount} sx={{ left: 20, top: 20 }} />
+          ) : null}
         </FlexBox>
       </Link>
 
       <FlexBetween alignItems="flex-end">
         <div>
           <Link href={`/products/${slug}`}>
-            <H6 fontWeight={700} mb={1} >
+            <H6 fontWeight={700} mb={1}>
               {title}
             </H6>
           </Link>
@@ -87,7 +111,9 @@ export default function ProductCard16({ product }: Props) {
           <Rating readOnly value={4} size="small" precision={0.5} />
 
           <PriceText>
-            {discount ? <span className="base-price">{currency(price)}</span> : null}
+            {discount ? (
+              <span className="base-price">{currency(price)}</span>
+            ) : null}
             {calculateDiscount(price, discount)}
           </PriceText>
         </div>
