@@ -8,7 +8,7 @@ import SocialLinks from "./components/social-links";
 import SportZoneImage from "components/SportZoneImage";
 import { Paragraph } from "components/Typography";
 // DATA
-import { CUSTOMER_CARE_LINKS } from "./data";
+import { PAGES } from "./data";
 // STYLED COMPONENTS
 import { StyledFooter, StyledLink } from "./styles";
 
@@ -41,9 +41,9 @@ export default function Footer2() {
         <Grid item sm={6} xs={12}>
           {/* CUSTOMER CARE LINKS */}
           <Box mb={2} mt={{ md: 6, xs: 2 }}>
-            {CUSTOMER_CARE_LINKS.map((item, ind) => (
-              <StyledLink href="/" key={ind}>
-                {item}
+            {PAGES.map((item, ind) => (
+              <StyledLink href={"/" + item[1]} key={ind}>
+                {item[0]}
               </StyledLink>
             ))}
           </Box>
