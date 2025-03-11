@@ -421,6 +421,32 @@ function MainContainer({
     setActualize();
   };
 
+  const duplicateElement = (type: string, index: number) => {
+    if (type === "Logo") {
+      setLogos((prevLogos: any) => {
+        const newLogos = [...prevLogos];
+        newLogos.splice(index + 1, 0, prevLogos[index]); // Inserta el duplicado después del original
+        return newLogos;
+      });
+    } else if (type === "Text") {
+      setTexts((prevTexts: any) => {
+        const newTexts = [...prevTexts];
+        newTexts.splice(index + 1, 0, prevTexts[index]);
+        return newTexts;
+      });
+    } else if (type === "Number") {
+      setNumbers((prevNumbers: any) => {
+        const newNumbers = [...prevNumbers];
+        newNumbers.splice(index + 1, 0, prevNumbers[index]);
+        return newNumbers;
+      });
+    }
+
+    setSelection({ type, index: index + 1 }); // Selecciona el nuevo duplicado
+    saveDataToLocal();
+    setActualize();
+  };
+
   return (
     <Box sx={{ width: "full", justifyContent: "center", display: "flex" }}>
       <Box
@@ -467,6 +493,7 @@ function MainContainer({
                   sizeChange={handleLogoSizeChanger}
                   handleRotation={handleRotation}
                   deleteElement={deleteElement}
+                  duplicateElement={duplicateElement}
                   each={{
                     position: logoPosition,
                     size: logoSize,
@@ -495,6 +522,7 @@ function MainContainer({
                 sizeChange={handleTextSizeChanger}
                 handleRotation={handleRotation}
                 deleteElement={deleteElement}
+                duplicateElement={duplicateElement}
                 each={{
                   text: text,
                   font,
@@ -532,6 +560,7 @@ function MainContainer({
                 sizeChange={handleNumberSizeChanger}
                 handleRotation={handleRotation}
                 deleteElement={deleteElement}
+                duplicateElement={duplicateElement}
                 each={{
                   font,
                   text: number,

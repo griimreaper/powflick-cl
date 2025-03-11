@@ -5,6 +5,16 @@
     height: 18px !important;
 }
 
+.moveable-control.moveable-direction.moveable-se {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    width: 18px !important;
+    top: 2em !important;
+    left: -15px !important;
+    width: 25px !important;
+    height: 25px !important;
+}
+
 .moveable-control.moveable-rotation-control {
     background-color: transparent !important;
     border-color: transparent !important;
@@ -22,6 +32,5 @@
 .moveable-line.moveable-rotation-line {
     background-color: transparent !important;
     top: 3px !important;
-    border: 1.5px dashed #CA0B0B !important;
     height: 30px !important;
 }

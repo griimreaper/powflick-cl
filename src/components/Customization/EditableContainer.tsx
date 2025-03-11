@@ -433,7 +433,8 @@ function EditableContainer({
                                         style: { textAlign: "center" },
                                     }}
                                     sx={{
-                                        width: `${(each.text ?? "").length + 2}ch`,
+                                        overflow: "visible",
+                                        width: `${(each.text ?? "").length + 4}ch`,
                                         "&.Mui-focused": {
                                             backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         },

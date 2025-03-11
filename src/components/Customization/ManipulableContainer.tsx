@@ -3,7 +3,7 @@ import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "r
 import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
 import "./MoveableComponent.css";
 import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
-import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, RedoOutlined } from "@mui/icons-material";
+import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, OpenInFull, RedoOutlined } from "@mui/icons-material";
 
 interface ManipulableContainerProps {
   parentRef: RefObject<HTMLDivElement>;
@@ -17,6 +17,7 @@ interface ManipulableContainerProps {
   sizeChange: Function;
   handleChange?: Function;
   onTouchStart: (e: any, index: number) => void;
+  duplicateElement: (e: string, index: number) => void;
   deleteElement: (e: string, index: number) => void;
   handleRotation: (type: string, rotate: number, index: number) => void;
   each: {
@@ -42,6 +43,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   handleChange,
   handleRotation,
   deleteElement,
+  duplicateElement,
   sizeChange,
 }) => {
   const [rotation, setRotation] = useState(each.rotate); // Usar el valor inicial de rotación
@@ -157,8 +159,6 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     console.log('Pinch event:', { newRotate, newSize });
   };
 
-
-
   return (
     <Box
       ref={containerRef}
@@ -266,9 +266,9 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
                 borderRadius: "100%",
               }}
             />
-            <DeleteForever
+            <Box
               onClick={() => {
-                deleteElement(each.type as string, index);
+                duplicateElement(each.type as string, index);
               }
               }
               sx={{
@@ -278,6 +278,39 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
                 color: "white",
                 transform: "translateX(-50%)",
                 cursor: "pointer",
+                width: "25px",
+                height: "25px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "bold",
+                backgroundColor: "primary.main",
+                borderRadius: "100%",
+              }}
+            >x2</Box>
+            <DeleteForever
+              onClick={() => {
+                deleteElement(each.type as string, index);
+              }}
+              sx={{
+                position: "absolute",
+                bottom: "-50px", // Ajusta según el tamaño de tu manejador
+                left: "0%",
+                color: "white",
+                cursor: "pointer",
+                width: "25px",
+                height: "25px",
+                backgroundColor: "primary.main",
+                borderRadius: "100%",
+              }}
+            />
+            <OpenInFull
+              sx={{
+                position: "absolute",
+                bottom: "-50px", // Ajusta según el tamaño de tu manejador
+                right: "0%",
+                color: "white",
+                cursor: "sw-resize",
                 width: "25px",
                 height: "25px",
                 backgroundColor: "primary.main",
@@ -301,7 +334,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             cursor:
               isDragging && selection.index === index ? "grabbing" : "grab",
             fontSize: `${each.size}px`,
-            width: `${inputWidth}px`,
+            width: `${inputWidth+1}px`,
             touchAction: "none",
           }}
           value={each.text}
