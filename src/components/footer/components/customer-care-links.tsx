@@ -1,19 +1,19 @@
 import { Fragment } from "react";
 import { Heading, StyledLink } from "../styles";
-import { CUSTOMER_CARE_LINKS } from "../data";
+import { PAGES } from "../data";
 
 // ==============================================================
 type Props = { isDark?: boolean };
 // ==============================================================
 
-export default function CustomerCareLinks({ isDark }: Props) {
+export default function Pages({ isDark }: Props) {
   return (
     <Fragment>
-      <Heading style={{ color: "#A30E0E" }}>Customer Care</Heading>
+      <Heading style={{ color: "#A30E0E" }}>Pages</Heading>
 
-      {CUSTOMER_CARE_LINKS.map((item, ind) => (
-        <StyledLink isDark={isDark} href={`/${item}`} key={ind}>
-          {item}
+      {PAGES.map(([title, link], ind) => (
+        <StyledLink isDark={isDark} href={`/${link}`} key={ind}>
+          {title}
         </StyledLink>
       ))}
     </Fragment>
