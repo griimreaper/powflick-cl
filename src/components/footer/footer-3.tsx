@@ -10,7 +10,7 @@ import SocialLinks from "./components/social-links";
 import SportZoneImage from "components/SportZoneImage";
 import { Paragraph } from "components/Typography";
 // DATA
-import { CUSTOMER_CARE_LINKS } from "./data";
+import { PAGES } from "./data";
 // STYLED COMPONENTS
 import { StyledRoot, StyledLink } from "./styles";
 
@@ -40,9 +40,9 @@ export default function Footer3() {
           <Grid item md={5} xs={12}>
             {/* CUSTOMER CARE LINKS */}
             <Box mb={2} mt={{ md: 6, xs: 2 }}>
-              {CUSTOMER_CARE_LINKS.map((item, ind) => (
-                <StyledLink href="/" key={ind} sx={{ color: "grey.300" }}>
-                  {item}
+              {PAGES.map((item, ind) => (
+                <StyledLink href={"/" + item[1]} key={ind} sx={{ color: "grey.300" }}>
+                  {item[0]}
                 </StyledLink>
               ))}
             </Box>
