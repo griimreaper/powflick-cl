@@ -1,12 +1,13 @@
 "use client";
 
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { DataStructure } from "models/types";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 import MainSection from "./MainSection";
 import { LazyLoadSection } from "./LazyLoadSection";
+import * as fbq from '../../../fpixel';
 
 // GLOBAL CUSTOM COMPONENTS
 const Newsletter = dynamic(() => import("components/newsletter"), { ssr: false });
@@ -22,6 +23,10 @@ const Box = dynamic(() => import("@mui/material/Box"));
 const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
   const memoizedData = useMemo(() => data?.landing || {}, [data]);
   const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
+
+  useEffect(() => {
+    fbq.init();
+  }, []);
 
   return (
     <div style={{ width: "100%" }}>

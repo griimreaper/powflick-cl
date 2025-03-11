@@ -37,12 +37,14 @@ export default function RootLayout({
         />
       </head>
       <body className={openSans.className}>
-        <GlobalProvider>
-          <FloatingWhatsApp />
-          {children}
-        </GlobalProvider>
-        <GoogleAnalytics />
-        <GoogleTagManager />
+        <React.StrictMode>
+          <GlobalProvider>
+            <FloatingWhatsApp />
+            {children}
+          </GlobalProvider>
+          <GoogleAnalytics />
+          <GoogleTagManager />
+        </React.StrictMode>
       </body>
     </html>
   );

@@ -1,9 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, ReactNode } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query'; // Importamos useQuery
-import { getLanding } from 'services/Landing'; // Función que hace la llamada a la API
+import { useQuery } from '@tanstack/react-query'; // Importamos useQuery
 import { DataStructure } from 'models/types';
+import { getNavbar } from 'services/Landing';
 
 // Contexto para la barra de navegación
 interface NavBarContextProps {
@@ -18,9 +18,7 @@ const NavbarContext = createContext<NavbarContextType | null>(null);
 
 // Función para obtener los datos de la barra de navegación
 const fetchNavbar = async (): Promise<DataStructure['navbar']> => {
-    const { navbar } = await getLanding(); // Llamada a la API para obtener los datos
-    console.log(navbar, 'nav');
-
+    const { navbar } = await getNavbar(); // Llamada a la API para obtener los datos
     return navbar;
 };
 
@@ -40,6 +38,15 @@ export function NavbarProvider({ children }: NavBarContextProps) {
                     parsedData.collection.length === 0)
             } catch (error) {
                 return true
+            }
+        })(),
+        initialData: (() => {
+            const storedData = localStorage.getItem('navbarData');
+            if (!storedData) return undefined; // Si no hay datos, no se usa initialData
+            try {
+                return JSON.parse(storedData);
+            } catch (error) {
+                return undefined;
             }
         })(),
         // Aquí se usa un hook separado para manejar la respuesta después de la carga

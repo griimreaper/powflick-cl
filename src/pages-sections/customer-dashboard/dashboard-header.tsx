@@ -71,7 +71,7 @@ export default function DashboardHeader({ title, buttonText, href, Icon }: Props
         <FlexBox alignItems="center" gap={1.5}>
           {Icon && <Icon color="primary" />}
 
-          <H2 my={0} lineHeight={1} ellipsis color={'white'}>
+          <H2 my={0} lineHeight={1} ellipsis color={"white"}>
             {title}
           </H2>
         </FlexBox>
@@ -80,11 +80,12 @@ export default function DashboardHeader({ title, buttonText, href, Icon }: Props
           <SideNav
             position="left"
             handler={(close) => (
-              <IconButton onClick={close}>
+              <IconButton onClick={close} sx={{ color: "white" }}>
                 <Menu fontSize="small" />
               </IconButton>
-            )}>
-            <Navigation profile={profile}/>
+            )}
+          >
+            <Navigation profile={profile} />
           </SideNav>
         </div>
 

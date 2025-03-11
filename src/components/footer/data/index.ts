@@ -13,14 +13,15 @@ export const ABOUT_LINKS = [
   // {title: "Our Cares", link: "/"},
   { title: "Terms & Conditions", link: "terms-condition" },
   { title: "Privacy Policy", link: "privacy-policy" },
-  { title: "Time an Shipping", link: "shipping" },
+  { title: "Time and Shipping", link: "shipping" },
 ];
 
-export const CUSTOMER_CARE_LINKS = [
-  "Help Center",
-  "Track Your Order",
-  "Corporate & Bulk Purchasing",
-  "Returns & Refunds"
+export const PAGES = [
+  ["Store", "products"],
+  ["Super Design", "your-design"],
+  ["Contact", "contact"],
+  ["About Us", "about-us"],
+  ["Help", "help"],
 ];
 
 export const SOCIAL_ICON_LINKS = [
