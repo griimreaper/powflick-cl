@@ -1,7 +1,5 @@
 import { Metadata } from "next";
 import { WishListPageView } from "pages-sections/customer-dashboard/wish-list";
-// API FUNCTIONS
-import { getWishListProducts } from "utils/__api__/wish-list";
 
 export const metadata: Metadata = {
   title: "Wish List - Pow Flick",

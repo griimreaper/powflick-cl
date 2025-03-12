@@ -1,13 +1,9 @@
-import dynamic from "next/dynamic";
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Image from "next/image";
+import Section2 from "./section-2";
+import Section3 from "./section-3";
 
-const Section2 = dynamic(() => import("./section-2"), { ssr: false });
-const Section3 = dynamic(() => import("./section-3"), { ssr: false });
-
-export default function MainSection() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
+export default function MainSection({ isMobile }: { isMobile: boolean }) {
   const backgroundImage = isMobile
     ? "/assets/images/landing/mobile/POWFLICK-_BANNER-SUPERIOR.png"
     : "/assets/images/landing/POWFLICK_BANNER_SUPERIOR.png";
@@ -32,10 +28,10 @@ export default function MainSection() {
         alt="Banner"
         priority
         quality={80}
-        loading="eager"
-        sizes="(max-width: 768px) 100vw, 1920px" // Ajusta según el tamaño de pantalla
-        width={1920} // Ajustar a un valor numérico adecuado
-        height={1080} // Ajustar a un valor numérico adecuado
+        fetchPriority="high"
+        layout="responsive"
+        width={isMobile ? 313 : 1417} // Ajustar a un valor numérico adecuado
+        height={isMobile ? 755 : 1491} // Ajustar a un valor numérico adecuado
         style={{
           width: "100%",
           height: "auto",
@@ -89,8 +85,8 @@ export default function MainSection() {
             gap: 5,
           }}
         >
-          <Section2 className="section2" />
-          <Section3 className="section3" />
+          <Section2 className="section2" isMobile={isMobile} />
+          <Section3 className="section3" isMobile={isMobile} />
         </Box>
       </Box>
     </Box>

@@ -1,8 +1,6 @@
 import { useRouter } from "next/navigation";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-// GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 // LOCAL CUSTOM COMPONENTS
 import TopHeader from "./components/top-header";
 import MiniCartItem from "./components/cart-item";
@@ -10,12 +8,8 @@ import EmptyCartView from "./components/empty-view";
 import BottomActions from "./components/bottom-actions";
 // GLOBAL CUSTOM COMPONENT
 import Scrollbar from "components/scrollbar";
-// CUSTOM UTILS LIBRARY FUNCTION
-import { currency } from "lib";
 // CUSTOM DATA MODEL
-import { CartItem } from "contexts/CartContext";
 import { useShoppingCartStore } from "store/shoppingCart";
-import { themeColors } from "theme/theme-colors";
 
 // =========================================================
 type Props = { toggleSidenav: () => void };
@@ -32,7 +26,7 @@ export default function MiniCart({ toggleSidenav }: Props) {
   };
 
   return (
-    <Box width="100%" minWidth={380} sx={{ zIndex: 10 }}>
+    <Box width="100%" minWidth={320} sx={{ zIndex: 10 }}>
       {/* HEADING SECTION */}
       <TopHeader toggle={toggleSidenav} total={cartList.length}  />
 

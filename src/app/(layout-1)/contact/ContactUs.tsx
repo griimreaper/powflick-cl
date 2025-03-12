@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import { sendMessage } from "services/messages";
-import { ContactType } from "app/types";
+import { ContactType } from "models/types";
 import { showSuccessAlert, showErrorAlert } from "utils/alerts";
 import { useDashboardStore } from "store/dashboard";
 import { Span } from "components/Typography";
@@ -67,26 +67,41 @@ const ContactUs = () => {
 
   return (
     <>
-      <Box sx={{ py: 10 }} style={{
-        padding: 20,
-        width: "100%",
-        height: "100%",
-        backgroundImage: `url(/assets/images/contact/POWFLICK_CONTACT.png)`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "top",
-        backgroundSize: "100%",
-        top: 0,
-        left: 0,
-        borderRadius: 8,
-        zIndex: 1,
-      }}>
+      <Box
+        sx={{ py: 10 }}
+        style={{
+          padding: 20,
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url(/assets/images/contact/POWFLICK_CONTACT.png)`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "top",
+          backgroundSize: "100%",
+          top: 0,
+          left: 0,
+          borderRadius: 8,
+          zIndex: 1,
+        }}
+      >
         <Grid container spacing={4} mt={6}>
           <Grid item xs={12} md={5}></Grid>
           <Grid item xs={12} md={7}>
-            <Title variant="h2" fontSize={{xs:30, md:50}} align="left" color="white" fontFamily={"GYMER"}>
+            <Title
+              variant="h2"
+              fontSize={{ xs: 30, md: 50 }}
+              align="left"
+              color="white"
+              fontFamily={"GYMER"}
+            >
               Drop Us A Line
             </Title>
-            <Typography variant="h6" color="white" mt={1} fontWeight={400} fontStyle={'italic'}>
+            <Typography
+              variant="h6"
+              color="white"
+              mt={1}
+              fontWeight={400}
+              fontStyle={"italic"}
+            >
               Use the form below to get in touch with the sales team
             </Typography>
             <Box component="form" mt={4} onSubmit={handleSubmit(onSubmit)}>
@@ -170,28 +185,35 @@ const ContactUs = () => {
             </Box>
             <Box mb={4} mt={4}>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>
-                  Our Store: {" "}
-                </Span>
-                2163 Phillips Gap Rd, West Jefferson, North Carolina, United
-                States
+                <Span fontWeight={600}>Brand Name: </Span>
+                Powflick Operated by: Squidgy Brand Management (Foshan) Co.,
+                Ltd.
               </Typography>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>
-                  Phone: {" "}
-                </Span>
-                +1 666 8888 {" "}
-                <Span fontWeight={600}>
-                  Email: {" "}
-                </Span>
-                hi.avitex@gmail.com
+                <Span fontWeight={600}>Physical Address: </Span>
+                B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict,
+                Nanhai District, Foshan City, Guangdong Province, China
+              </Typography>
+              <Typography fontSize={15} fontWeight={200} color={"white"}>
+                <Span fontWeight={600}>Postal Code: </Span>
+                528000
+              </Typography>
+              <Typography fontSize={15} fontWeight={200} color={"white"}>
+                <Span fontWeight={600}>Tax ID Number: </Span>
+                91440605MAE5F5JC1T
+              </Typography>
+              <Typography fontSize={15} fontWeight={200} color={"white"}>
+                <Span fontWeight={600}>Primary Email: </Span>
+                powflick@gmail.com
+              </Typography>
+              <Typography fontSize={15} fontWeight={200} color={"white"}>
+                <Span fontWeight={600}>Contact Phone: </Span>
+                +86 15920110846
               </Typography>
             </Box>
             <Box mb={4} width={"70%"}>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>
-                  Open Hours: {" "}
-                </Span>
+                <Span fontWeight={600}>Open Hours: </Span>
                 Mon - Fri: 7:30am - 8:00pm PST Saturday: 8:00am - 6:00pm PST
                 Sunday: 9:00am - 5:00pm PST
               </Typography>

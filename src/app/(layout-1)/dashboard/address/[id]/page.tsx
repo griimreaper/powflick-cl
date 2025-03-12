@@ -1,8 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AddressDetailsPageView } from "pages-sections/customer-dashboard/address/page-view";
-// API FUNCTIONS
-import api from "utils/__api__/address";
 // CUSTOM DATA MODEL
 import { IdParams } from "models/Common";
 

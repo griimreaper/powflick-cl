@@ -13,24 +13,19 @@ interface Props {
 export default function BottomActions({ total, handleNavigate }: Props) {
   const { cart, setCoupon, coupon } = useShoppingCartStore();
 
+  console.log(coupon);
+
   const addDatalayer = () => {
     (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
     (window as any).dataLayer.push({
       event: "Inicio Checkout",
       ecommerce: {
         currency: "USD",
-        value: Number(
-          total * (1 - (coupon?.discount || 0) / 100),
-        ),
+        value: Number(total * (1 - (coupon?.discount || 0) / 100)),
         coupon: coupon?.title || null,
         discount: coupon?.discount || 0,
         items: cart.map(
-          ({
-            product,
-            totalCustomization,
-            totalProduct,
-            amount,
-          }) => {
+          ({ product, totalCustomization, totalProduct, amount }) => {
             const {
               id,
               price,
@@ -58,42 +53,42 @@ export default function BottomActions({ total, handleNavigate }: Props) {
         ),
       },
     });
-     beginCheckout("beginCheckout", {
-       ecommerce: {
-         currency: "USD",
-         value: Number(total * (1 - (coupon?.discount || 0) / 100)),
-         coupon: coupon?.title || null,
-         discount: coupon?.discount || 0,
-         items: cart.map(
-           ({ product, totalCustomization, totalProduct, amount }) => {
-             const {
-               id,
-               price,
-               title,
-               product_categories,
-               colors,
-               slug,
-               sport,
-             } = product;
-             return {
-               item_id: id,
-               item_name: title,
+    beginCheckout("beginCheckout", {
+      ecommerce: {
+        currency: "USD",
+        value: Number(total * (1 - (coupon?.discount || 0) / 100)),
+        coupon: coupon?.title || null,
+        discount: coupon?.discount || 0,
+        items: cart.map(
+          ({ product, totalCustomization, totalProduct, amount }) => {
+            const {
+              id,
+              price,
+              title,
+              product_categories,
+              colors,
+              slug,
+              sport,
+            } = product;
+            return {
+              item_id: id,
+              item_name: title,
               //  affiliation: "Google Merchandise Store",
-               item_brand: "Pow Flick",
-               item_category: product_categories.split("|")[0],
-               item_category2: sport,
-               item_list_name: slug,
-               item_variant: colors ? colors[0] : null,
-               price: Number(price),
-               quantity: amount,
-               total_product: Number(totalProduct),
-               total_customizations: Number(totalCustomization),
-             };
-           }
-         ),
-       },
-     });
-  }
+              item_brand: "Pow Flick",
+              item_category: product_categories.split("|")[0],
+              item_category2: sport,
+              item_list_name: slug,
+              item_variant: colors ? colors[0] : null,
+              price: Number(price),
+              quantity: amount,
+              total_product: Number(totalProduct),
+              total_customizations: Number(totalCustomization),
+            };
+          }
+        ),
+      },
+    });
+  };
 
   return (
     <Box p={2.5}>
@@ -104,9 +99,10 @@ export default function BottomActions({ total, handleNavigate }: Props) {
         variant="contained"
         sx={{ mb: "0.75rem", height: "40px" }}
         onClick={() => {
-          handleNavigate("/checkout")
+          handleNavigate("/checkout");
           addDatalayer();
-        }}>
+        }}
+      >
         Checkout Now ({total})
       </Button>
 
@@ -117,9 +113,10 @@ export default function BottomActions({ total, handleNavigate }: Props) {
         variant="outlined"
         sx={{ height: 40 }}
         onClick={() => {
-          handleNavigate("/cart")
+          handleNavigate("/cart");
           addDatalayer();
-        }}>
+        }}
+      >
         View Cart
       </Button>
     </Box>

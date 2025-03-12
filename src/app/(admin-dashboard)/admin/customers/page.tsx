@@ -1,8 +1,5 @@
 import { Metadata } from "next";
 import { CustomersPageView } from "pages-sections/vendor-dashboard/customers/page-view";
-import { getUsers } from "services/dashboardAdmin/users";
-// API FUNCTIONS
-import api from "utils/__api__/dashboard";
 
 export const metadata: Metadata = {
   title: "Customers - Pow Flick",

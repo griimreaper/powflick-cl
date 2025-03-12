@@ -3,13 +3,14 @@ const nextConfig = {
   env: { theme: "DEFAULT", currency: "USD" },
   publicRuntimeConfig: { theme: "DEFAULT", currency: "USD" },
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "ui-lib.com" }],
-    domains: [
-      "5ogdqbzzrogmotoh.public.blob.vercel-storage.com",
-      "ideasjersey.com",
-      "help.pitpay.com",
-      "emmanuela.insyst.info",
-      "sbvajd9r07chtxp5.public.blob.vercel-storage.com",
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      { protocol: "https", hostname: "ui-lib.com" },
+      { protocol: "https", hostname: "5ogdqbzzrogmotoh.public.blob.vercel-storage.com" },
+      { protocol: "https", hostname: "ideasjersey.com" },
+      { protocol: "https", hostname: "help.pitpay.com" },
+      { protocol: "https", hostname: "emmanuela.insyst.info" },
+      { protocol: "https", hostname: "sbvajd9r07chtxp5.public.blob.vercel-storage.com" },
     ],
   },
 };

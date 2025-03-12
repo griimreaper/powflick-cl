@@ -3,12 +3,13 @@ import Box from "@mui/material/Box";
 import FlexBox from "../../flex-box/flex-box";
 // CUSTOM ICON COMPONENTS
 import { PLAY_APP_STORE_DATA } from "../data";
+import Link from "next/link";
 
 export default function AppStore() {
   return (
-    <FlexBox flexWrap="wrap" m={-1}>
+    <FlexBox flexWrap="wrap" justifyContent="center" my={2}>
       {PLAY_APP_STORE_DATA.map(({ icon: Icon, subtitle, title, url }) => (
-        <a href={url} key={title} target="_blank" rel="noreferrer noopener">
+        <Link href={url} key={title} target="_blank" rel="noreferrer noopener" draggable={false}>
           <Box
             m={1}
             gap={1}
@@ -30,7 +31,7 @@ export default function AppStore() {
               </Box>
             </div>
           </Box>
-        </a>
+        </Link>
       ))}
     </FlexBox>
   );

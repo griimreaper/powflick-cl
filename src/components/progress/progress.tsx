@@ -3,7 +3,6 @@
 "use client";
 import { useEffect } from "react";
 import NProgress from "nprogress";
-import useTheme from "@mui/material/styles/useTheme";
 import GlobalStyles from "@mui/material/GlobalStyles";
 
 import "nprogress/nprogress.css";
@@ -11,8 +10,6 @@ import "nprogress/nprogress.css";
 type PushStateInput = [data: any, unused: string, url?: string | URL | null | undefined];
 
 export default function ProgressBar() {
-  const theme = useTheme();
-
   useEffect(() => {
     NProgress.configure({ showSpinner: false });
 

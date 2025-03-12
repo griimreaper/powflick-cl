@@ -8,16 +8,14 @@ import useHeader from "./hooks/use-header";
 // GLOBAL CUSTOM COMPONENTS
 import FlexBox from "components/flex-box/flex-box";
 // LOCAL CUSTOM COMPONENTS
-import MobileHeader from "./components/mobile-header";
-import DialogDrawer from "./components/dialog-drawer";
-import CategoriesMenu from "./components/categories-menu";
-import LoginCartButtons from "./components/login-cart-buttons";
-// STYLED COMPONENTS
 import { HeaderWrapper, StyledContainer } from "./styles";
 import { Session } from "next-auth";
 import { DataStructure } from "models/types";
 import { primary } from "theme/theme-colors";
 import Image from "next/image";
+import DialogDrawer from "./components/dialog-drawer";
+import LoginCartButtons from "./components/login-cart-buttons";
+import MobileHeader from "./components/mobile-header";
 
 // ==============================================================
 interface Props {
@@ -31,7 +29,7 @@ interface Props {
 // ==============================================================
 
 export default function Header({
-  isFixed,
+  // isFixed,
   className,
   landing,
   midSlot,
@@ -48,6 +46,7 @@ export default function Header({
       <FlexBox minWidth={100} alignItems="center" paddingTop={2}>
         <Link href="/">
           <Image
+            draggable={false}
             width={50}
             height={50}
             quality={80}
@@ -58,7 +57,7 @@ export default function Header({
         </Link>
 
         {/* SHOW DROP DOWN CATEGORY BUTTON WHEN HEADER FIXED */}
-        {isFixed ? <CategoriesMenu data={data} /> : null}
+        {/* {isFixed ? <CategoriesMenu data={data} /> : null} */}
       </FlexBox>
 
       {/* SEARCH FORM | NAVIGATION */}
@@ -83,7 +82,7 @@ export default function Header({
   );
 
   return (
-    <HeaderWrapper className={clsx(className)} sx={{ background: landing ? "transparent": primary.main }}>
+    <HeaderWrapper className={clsx(className)} sx={{ background: landing ? "transparent" : primary.main }}>
       <StyledContainer>
         {downMd ? <MobileHeader data={data} /> : CONTENT_FOR_LARGE_DEVICE}
       </StyledContainer>

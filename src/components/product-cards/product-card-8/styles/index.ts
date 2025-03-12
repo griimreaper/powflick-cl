@@ -46,6 +46,7 @@ export const QuickViewButton = styled(Button)({
   bottom: 12,
   opacity: 0,
   borderRadius: 4,
+  whiteSpace: 'nowrap',
   position: "absolute",
   transition: "all 0.3s"
 });

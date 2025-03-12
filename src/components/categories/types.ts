@@ -1,5 +1,5 @@
 import { SvgIconComponent } from "@mui/icons-material";
-import { ProductDB } from "app/types";
+import { ProductDB } from "models/types";
 
 export interface CategoryItemOffer {
   url: string;
