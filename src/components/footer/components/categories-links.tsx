@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Heading, StyledLink } from "../styles";
-import { CUSTOMER_CARE_LINKS } from "../data";
+import { PAGES } from "../data";
 import { Category } from "models/types";
 
 // ==============================================================

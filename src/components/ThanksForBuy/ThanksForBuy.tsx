@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useDashboardStore } from "store/dashboard";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { getOrder } from "services/ThanksForBuying";
+import { createCoupon, createCouponUser } from "services/modals/discount";
 import { ChevronLeft } from "@mui/icons-material";
 import {
   Box,
@@ -15,11 +16,16 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { purchase } from "../../../fpixel";
 
 export default function ThanksForBuy({ id }: { id: string }) {
   const [order, setOrder] = useState<any>({});
+  const [open, setOpen] = useState(false);
   const { profile } = useDashboardStore();
   const { clearCart } = useShoppingCartStore();
   const { token } = profile;
@@ -32,6 +38,10 @@ export default function ThanksForBuy({ id }: { id: string }) {
     } else {
       router.push("/");
     }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -122,6 +132,23 @@ export default function ThanksForBuy({ id }: { id: string }) {
               ),
             },
           });
+
+          // Crear cupón de descuento
+          const coupon = await createCoupon({
+            title: "10% Discount",
+            content: "10% off on your next purchase",
+            discount: 10,
+          });
+
+          // Asignar cupón al usuario
+          await createCouponUser(
+            token,
+            { couponId: coupon.id, active: true },
+            coupon.coupon.title
+          );
+
+          // Mostrar modal
+          setOpen(true);
         }
       }
     };
@@ -284,6 +311,20 @@ export default function ThanksForBuy({ id }: { id: string }) {
           Total: ${order?.total}
         </Typography>
       </Box>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Congratulations!</DialogTitle>
+        <DialogContent>
+          <Typography>
+            You have received a 10% discount coupon for your next purchase!
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
