@@ -3,7 +3,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography, Card, CardContent } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+  Card,
+  CardContent,
+} from "@mui/material";
 import { useDashboardStore } from "store/dashboard";
 import { Direction } from "models/types";
 import DirectionForm from "./direction-form";
@@ -23,7 +32,9 @@ export default function CheckoutForm() {
   const { profile } = useDashboardStore();
   const { directions } = profile.genericResponseUser;
   const { token } = profile;
-  const [selectedDirection, setSelectedDirection] = useState<Direction | null>(null);
+  const [selectedDirection, setSelectedDirection] = useState<Direction | null>(
+    null
+  );
   const [loading, setLoading] = useFlag();
   const { toggleDialog, dialogOpen } = useHeader();
 
@@ -32,9 +43,13 @@ export default function CheckoutForm() {
     if (selectedIndex === "") {
       setSelectedDirection(null);
     } else {
-      setSelectedDirection(directions.find((dir) => dir.id === selectedIndex) || null);
+      setSelectedDirection(
+        directions.find((dir) => dir.id === selectedIndex) || null
+      );
     }
   };
+
+  console.log(coupon);
 
   useEffect(() => {
     const savedData = localStorage.getItem("pendingAddress");
@@ -59,7 +74,7 @@ export default function CheckoutForm() {
         token,
         Cart,
         selectedDirection.id,
-        'USD',
+        "USD",
         1,
         coupon?.id
       );
@@ -71,13 +86,25 @@ export default function CheckoutForm() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <DialogDrawer dialogOpen={dialogOpen} toggleDialog={toggleDialog} redirectUrl="/checkout"></DialogDrawer>
+      <DialogDrawer
+        dialogOpen={dialogOpen}
+        toggleDialog={toggleDialog}
+        redirectUrl="/checkout"
+      ></DialogDrawer>
       <Card>
         <CardContent>
           {/* Selector de direcciones */}
-          <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: "column", sm: "row" } }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              flexDirection: { xs: "column", sm: "row" },
+            }}
+          >
             <FormControl fullWidth sx={{ flex: 2 }}>
-              <InputLabel id="direction-select-label">Select Direction</InputLabel>
+              <InputLabel id="direction-select-label">
+                Select Direction
+              </InputLabel>
               <Select
                 labelId="direction-select-label"
                 value={selectedDirection?.id || ""}
@@ -106,7 +133,13 @@ export default function CheckoutForm() {
           </Box>
 
           {/* Formulario para nueva dirección */}
-          {showForm && <DirectionForm address={null} toggleForm={toggleForm} toggleDialog={toggleDialog} />}
+          {showForm && (
+            <DirectionForm
+              address={null}
+              toggleForm={toggleForm}
+              toggleDialog={toggleDialog}
+            />
+          )}
         </CardContent>
       </Card>
 
@@ -133,7 +166,8 @@ export default function CheckoutForm() {
             )}
             {selectedDirection.addressReference && (
               <Typography>
-                <strong>Address Reference:</strong> {selectedDirection.addressReference}
+                <strong>Address Reference:</strong>{" "}
+                {selectedDirection.addressReference}
               </Typography>
             )}
             {selectedDirection.postalCode && (
@@ -182,13 +216,16 @@ export default function CheckoutForm() {
                   event: "Go To Stripe",
                   ecommerce: {
                     currency: "USD",
-                    value: Number(
-                      total * (1 - (coupon?.discount || 0) / 100),
-                    ),
+                    value: Number(total * (1 - (coupon?.discount || 0) / 100)),
                     coupon: coupon?.title || null,
                     discount: coupon?.discount || 0,
                     items: cart.map(
-                      ({ product, totalCustomization, totalProduct, amount }) => {
+                      ({
+                        product,
+                        totalCustomization,
+                        totalProduct,
+                        amount,
+                      }) => {
                         const {
                           id,
                           price,
