@@ -199,134 +199,148 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             keepRatio={true}
             onResize={(e) => {
               handleResize(e);
-              e.target.style.width = `${e.width}px`;
-              e.target.style.height = `${e.height}px`;
+              const minWidth = 80;  // Ancho mínimo en píxeles
+              const maxWidth = 300;  // Ancho máximo en píxeles
+              const minHeight = 30; // Alto mínimo en píxeles
+              const maxHeight = 300; // Alto máximo en píxeles
+
+              const newWidth = Math.max(minWidth, Math.min(e.width, maxWidth));
+              const newHeight = Math.max(minHeight, Math.min(e.height, maxHeight));
+
+              e.target.style.width = `${newWidth}px`;
+              e.target.style.height = `${newHeight}px`;
             }}
             onRotate={handleRotate}
             onPinchStart={(e) => console.log('Pinch start event', e)}
             onPinch={(e: OnPinch) => handlePinch(e)}
           />
-          {each.size && <Box ref={BoxRef} width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`} height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`} position={"absolute"} >
+          {each.size ?
+            (<Box ref={BoxRef} width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`} height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`} position={"absolute"} >
 
-            <ArrowLeft
-              sx={{
-                position: "absolute",
-                left: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                top: "50%",
-                transform: "translateY(-50%)",
-                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                cursor: "pointer",
-                color: "primary.main",
-              }}
-            />
-            <ArrowRight
-              sx={{
-                position: "absolute",
-                right: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                top: "50%",
-                transform: "translateY(-50%)",
-                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                cursor: "pointer",
-                color: "primary.main",
-              }}
-            />
-            <ArrowDropDown
-              sx={{
-                position: "absolute",
-                bottom: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                left: "50%",
-                transform: "translateX(-50%)",
-                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                cursor: "pointer",
-                color: "primary.main",
-              }}
-            />
-            <ArrowDropUp
-              sx={{
-                position: "absolute",
-                top: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                left: "50%",
-                transform: "translateX(-50%)",
-                fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                cursor: "pointer",
-                color: "primary.main",
-              }}
-            />
-            <RedoOutlined
-              sx={{
-                position: "absolute",
-                top: "-50px", // Ajusta según el tamaño de tu manejador
-                left: "50%",
-                color: "white",
-                transform: "translateX(-50%)",
-                cursor: "pointer",
-                width: "25px",
-                height: "25px",
-                backgroundColor: "primary.main",
-                borderRadius: "100%",
-              }}
-            />
-            <Box
-              onClick={() => {
-                duplicateElement(each.type as string, index);
-              }
-              }
-              sx={{
-                position: "absolute",
-                bottom: "-50px", // Ajusta según el tamaño de tu manejador
-                left: "50%",
-                color: "white",
-                transform: "translateX(-50%)",
-                cursor: "pointer",
-                width: "25px",
-                height: "25px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "bold",
-                backgroundColor: "primary.main",
-                borderRadius: "100%",
-              }}
-            >x2</Box>
-            <DeleteForever
-              onClick={() => {
-                deleteElement(each.type as string, index);
-              }}
-              sx={{
-                position: "absolute",
-                bottom: "-50px", // Ajusta según el tamaño de tu manejador
-                left: "0%",
-                color: "white",
-                cursor: "pointer",
-                width: "25px",
-                height: "25px",
-                backgroundColor: "primary.main",
-                borderRadius: "100%",
-              }}
-            />
-            <OpenInFull
-              sx={{
-                position: "absolute",
-                bottom: "-50px", // Ajusta según el tamaño de tu manejador
-                right: "0%",
-                color: "white",
-                cursor: "sw-resize",
-                width: "25px",
-                height: "25px",
-                backgroundColor: "primary.main",
-                borderRadius: "100%",
-              }}
-            />
-          </Box>
+              <ArrowLeft
+                sx={{
+                  position: "absolute",
+                  left: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
+                  cursor: "pointer",
+                  color: "primary.main",
+                }}
+              />
+              <ArrowRight
+                sx={{
+                  position: "absolute",
+                  right: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
+                  cursor: "pointer",
+                  color: "primary.main",
+                }}
+              />
+              <ArrowDropDown
+                sx={{
+                  position: "absolute",
+                  bottom: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
+                  cursor: "pointer",
+                  color: "primary.main",
+                }}
+              />
+              <ArrowDropUp
+                sx={{
+                  position: "absolute",
+                  top: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
+                  cursor: "pointer",
+                  color: "primary.main",
+                }}
+              />
+              <Box
+                display={"flex"}
+                position={"absolute"}
+                top={"-50px"}
+                justifyContent={"center"}
+                width={"100%"}>
+                <RedoOutlined
+                  sx={{
+                    position: "relative",
+                    color: "white",
+                    cursor: "pointer",
+                    width: "25px",
+                    height: "25px",
+                    backgroundColor: "primary.main",
+                    borderRadius: "100%",
+                  }}
+                />
+              </Box>
+              <Box
+                display={"flex"}
+                position={"absolute"}
+                bottom={"-50px"}
+                justifyContent={"space-between"}
+                width={"100%"}>
+                <Box
+                  onClick={() => {
+                    duplicateElement(each.type as string, index);
+                  }}
+                  sx={{
+                    position: "relative",
+                    color: "white",
+                    cursor: "pointer",
+                    minWidth: "25px",
+                    height: "25px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: "bold",
+                    backgroundColor: "primary.main",
+                    borderRadius: "100%",
+                  }}
+                >x2</Box>
+                <DeleteForever
+                  onClick={() => {
+                    deleteElement(each.type as string, index);
+                  }}
+                  sx={{
+                    bottom: "-50px", // Ajusta según el tamaño de tu manejador
+                    left: "0%",
+                    color: "white",
+                    cursor: "pointer",
+                    width: "25px",
+                    height: "25px",
+                    backgroundColor: "primary.main",
+                    borderRadius: "100%",
+                  }}
+                />
+                <OpenInFull
+                  sx={{
+                    right: "0%",
+                    color: "white",
+                    cursor: "sw-resize",
+                    width: "25px",
+                    height: "25px",
+                    backgroundColor: "primary.main",
+                    borderRadius: "100%",
+                  }}
+                />
+              </Box>
+            </Box>
+            ) : (<></>)
           }
         </>
       )}
-      {each.type !== "Logo" && handleChange !== undefined && (
+      {each.type !== "Logo" && handleChange !== undefined ? (
         <input
           ref={elementRef as LegacyRef<HTMLInputElement>}
           style={{
             background: "transparent",
-            border: isSelected ? "none" : "2px dashed rgba(9, 9, 9, 0.5)",
+            border: "none",
             fontFamily: each.font,
             userSelect: "none",
             outline: "none",
@@ -334,7 +348,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             cursor:
               isDragging && selection.index === index ? "grabbing" : "grab",
             fontSize: `${each.size}px`,
-            width: `${inputWidth+1}px`,
+            width: `${inputWidth + 1}px`,
             touchAction: "none",
           }}
           value={each.text}
@@ -353,7 +367,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             setSelection({ type: each.type, index })
           }}
         />
-      )}
+      ) : <></>}
       {each.type === "Logo" && each.logoUrl && (
         <div ref={elementRef} style={{ height: "auto" }}>
           <img
