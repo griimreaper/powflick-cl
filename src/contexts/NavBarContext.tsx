@@ -11,7 +11,7 @@ interface NavBarContextProps {
 }
 
 interface NavbarContextType {
-    navbarData: DataStructure['navbar'];
+    navbarData: DataStructure['navbar'] | undefined;
 }
 
 const NavbarContext = createContext<NavbarContextType | null>(null);
@@ -30,14 +30,14 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         staleTime: 86400,     // 1 día en milisegundos
         enabled: (() => {
             const storedData = localStorage.getItem('navbarData');
-            if (!storedData) return true; // Si no hay datos, habilitar la consulta
 
+            if (!storedData) return true; // Si no hay datos, habilitar la consulta
             try {
                 const parsedData = JSON.parse(storedData);
-                return parsedData.categories.length === 0 &&
-                    parsedData.collection.length === 0
+                return (parsedData.categories.length === 0 &&
+                    parsedData.collection.length === 0)
             } catch (error) {
-                return true; // Si hay un error al parsear, habilitar la consulta
+                return true
             }
         })(),
         initialData: (() => {

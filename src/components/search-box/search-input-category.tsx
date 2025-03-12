@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"; // Cambiar a next/navigation
 import { useState } from "react";
 // LOCAL CUSTOM COMPONENTS
 import SearchResult from "./components/search-result";
-import CategoryDropdown from "./components/category-dropdown";
 // LOCAL CUSTOM HOOKS
 import useSearch from "./hooks/use-search";
 // CUSTOM ICON COMPONENT

@@ -1,49 +1,46 @@
-"use client";
-import Container from "@mui/material/Container";
-// API FUNCTIONS
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Image from "next/image";
 
-export default function Section2({ className }: { className: string }) {
-  // Media query breakpoints
-  const isMobile = useMediaQuery("(max-width: 768px)"); // Detecta si es móvil
-
+export default function Section2({ className, isMobile }: { className: string, isMobile: boolean }) {
   return (
     <Container
-      className={`${className}`}
-      sx={{ height: isMobile ? "30%" : "25%" }}
+      className={className}
+      sx={{
+        height: isMobile ? "30%" : "25%", // Contenedor con una altura relativa
+        position: "relative", // Necesario si usas layout="fill"
+        overflow: "hidden", // Opcional para cortar la imagen si se sale
+      }}
     >
       {isMobile ? (
         // Renderiza dos imágenes para mobile
         <Box display={"flex"} flexDirection={"column"} gap={2}>
           <Image
+            draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
             alt="Mobile Image 1"
-            width={648} // Ajustar a un valor numérico adecuado
-            height={115} // Ajustar a un valor numérico adecuado
-            loading="lazy"
-            sizes="(max-width: 769px) 100vw, 1000px"
+            layout="responsive" // Para mantener la proporción
+            width={500} // Ajuste adecuado
+            height={300} // Ajuste adecuado
+            quality={80}
+            priority
+            sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             style={{
               borderRadius: 6,
-              width: "100%",
-              height: "auto",
               objectFit: "cover",
-              marginBottom: "8px", // Espaciado entre imágenes
             }}
           />
           <Image
+            draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
             alt="Mobile Image 2"
-            width={648} // Ajustar a un valor numérico adecuado
-            height={115} // Ajustar a un valor numérico adecuado
+            layout="responsive" // Para mantener la proporción
+            width={500} // Ajuste adecuado
+            height={300} // Ajuste adecuado
             quality={80}
-            sizes="(max-width: 769px) 100vw, 1000px"
-            loading="lazy"
+            priority
+            sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             style={{
               borderRadius: 6,
-              width: "100%",
-              height: "auto",
               objectFit: "cover",
             }}
           />
@@ -51,12 +48,14 @@ export default function Section2({ className }: { className: string }) {
       ) : (
         // Renderiza una sola imagen para desktop
         <Image
+          draggable={false}
           src="/assets/images/landing/POWFLICK_PROMESAS-DE-MARCA.png"
           alt="Desktop Image"
           quality={80}
-          loading="lazy"
-          width={1578} // Ajustar a un valor numérico adecuado
-          height={138} // Ajustar a un valor numérico adecuado
+          priority
+          layout="responsive"
+          width={1200}
+          height={600}
           sizes="(min-width: 769px) 100vw, 1000px"
           style={{
             width: "100%",

@@ -9,7 +9,6 @@ import SearchIcon from "@mui/icons-material/Search"; // Importar el icono de lup
 // CUSTOM ICON COMPONENT
 import ShoppingBagOutlined from "icons/ShoppingBagOutlined";
 // GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useShoppingCartStore } from "store/shoppingCart";
@@ -48,7 +47,7 @@ export default function LoginCartButtons({
         onClick={() => {
           session
             ? rol === "admin"
-              ? router.push("/vendor/dashboard")
+              ? router.push("/admin/dashboard")
               : router.push("/dashboard/profile")
             : toggleDialog();
         }}

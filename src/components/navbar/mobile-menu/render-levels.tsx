@@ -4,10 +4,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 // GLOBAL CUSTOM COMPONENTS
 import { H6 } from "components/Typography";
-import { NavLink } from "components/nav-link";
 import { SubCategoryList } from "../category-based-menu/styles";
 import ProductCard8 from "components/product-cards/product-card-8";
-import ProductCard12 from "components/product-cards/product-card-12";
 
 const ACCORDION_STYLES = {
   background: "#1A1A1A",
@@ -33,7 +31,7 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
     if (item.child) {
       return (
         <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
-          <AccordionSummary expandIcon={<ExpandMore color="primary"/>} sx={ACCORDION_SUMMARY_STYLES}>
+          <AccordionSummary expandIcon={<ExpandMore color="primary" />} sx={ACCORDION_SUMMARY_STYLES}>
             <H6>{item.title}</H6>
           </AccordionSummary>
 
@@ -42,27 +40,27 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
       );
     }
 
-if (item.products) {
-  return (
-    <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
-      <AccordionSummary expandIcon={<ExpandMore />} sx={ACCORDION_SUMMARY_STYLES}>
-        <H6>{item.title}</H6>
-      </AccordionSummary>
+    if (item.products) {
+      return (
+        <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
+          <AccordionSummary expandIcon={<ExpandMore color="primary" />} sx={ACCORDION_SUMMARY_STYLES}>
+            <H6>{item.title}</H6>
+          </AccordionSummary>
 
-      <Box sx={{ display: 'flex', overflowX: 'scroll', alignItems: 'center', gap: 2 }}
-        mx={2}>{renderLevels(item.products, handleClose)}</Box>
-    </Accordion>
-  );
-}
+          <Box sx={{ display: 'flex', overflowX: 'scroll', alignItems: 'center', gap: 2 }}
+            mx={2}>{renderLevels(item.products, handleClose)}</Box>
+        </Accordion>
+      );
+    }
 
-return (
-  <div key={item.title}>
-    <SubCategoryList>
-      <Box key={item.id} width={200}>
-        <ProductCard8 key={item.id} product={item}></ProductCard8>
-      </Box>
-    </SubCategoryList>
-  </div>
-);
+    return (
+      <div key={item.title}>
+        <SubCategoryList>
+          <Box key={item.id} width={200}>
+            <ProductCard8 key={item.id} product={item}></ProductCard8>
+          </Box>
+        </SubCategoryList>
+      </div>
+    );
   });
 };

@@ -153,7 +153,6 @@ export const analyticsChartOptions = (
   states: {
     active: { filter: { type: "none" } },
     hover: { filter: { type: "none" } },
-    normal: { filter: { type: "none" } },
   },
   theme: { mode: theme.palette.mode },
   xaxis: {
@@ -187,7 +186,6 @@ export const analyticsChartOptions = (
   legend: {
     position: "top",
     fontSize: "14px",
-    markers: { radius: 50 },
     onItemClick: { toggleDataSeries: false },
     itemMargin: { horizontal: 10 },
   },

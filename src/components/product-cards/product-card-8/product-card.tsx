@@ -2,23 +2,16 @@
 
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import Rating from "@mui/material/Rating";
 // MUI ICON COMPONENTS
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
 // LOCAL CUSTOM HOOK
 import useProduct from "../use-product";
 // GLOBAL CUSTOM COMPONENTS
-import LazyImage from "components/LazyImage";
-import { FlexRowCenter } from "components/flex-box";
-import { H4, Paragraph, Small } from "components/Typography";
+import { Paragraph, Small } from "components/Typography";
 import ProductViewDialog from "components/products-view/product-view-dialog";
 // CUSTOM UTILS LIBRARY FUNCTION
-import { currency } from "lib";
-// CUSTOM COMPONENTS
 import {
-  AddToCartButton,
   Card,
   CardMedia,
   FavoriteButton,
@@ -29,52 +22,32 @@ import { ProductDB } from "models/types";
 import Marquee from "react-fast-marquee";
 import ProductPrice from "components/product-cards/product-price";
 import DiscountChip from "../discount-chip";
-import { BorderBox } from '../../page-sidenav/side-navbar/styles/index';
-import { themeColors } from "theme/theme-colors";
 import Image from "next/image";
 import { track } from "react-facebook-pixel";
 import { viewItem } from "../../../../fpixel";
-
 
 // ==============================================================
 type Props = { product: ProductDB, active?: boolean };
 // ==============================================================
 
-export default function ProductCard8({ product, active=false }: Props) {
-  const { slug, id, title, price, URL, images, product_categories, discount } =
+export default function ProductCard8({ product, active = false }: Props) {
+  const { slug, id, title, price, URL, product_categories, discount } =
     product || {};
 
   const {
-    cartItem,
-    handleCartAmountChange,
     openModal,
     toggleDialog,
     isFavorite,
     toggleFavorite,
   } = useProduct(id);
 
-  // HANDLE ADD TO CART PRODUCT
-  const handleAddToCart = () => {
-    const payload = {
-      id,
-      slug,
-      price,
-      name: title,
-      imgUrl: URL,
-      qty: (cartItem?.qty || 0) + 1,
-    };
-
-    handleCartAmountChange(payload);
-  };
-
   let percentSale = Math.floor(
     100 - (product?.price / product?.regular_price) * 100
   );
-  let percentSold = Math.floor((product?.selled / 1) * 100);
 
   return (
     <Card>
-      <CardMedia style={active ? { border: "1px solid #7B7B7B",background: 'transparent', } : {}}>
+      <CardMedia style={active ? { border: "1px solid #7B7B7B", background: 'transparent', } : {}}>
         <DiscountChip discount={discount} />
         <Link
           href={`/products/${slug}`}
@@ -113,8 +86,8 @@ export default function ProductCard8({ product, active=false }: Props) {
           }}
         >
           <Image
-            width={300}
-            height={300}
+            width={325}
+            height={325}
             layout="responsive"
             alt="category"
             className="product-img"

@@ -2,7 +2,7 @@ import duotone from "icons/duotone";
 
 export const navigation = [
   { type: "label", label: "Admin" },
-  { name: "Dashboard", icon: duotone.Dashboard, path: "/vendor/dashboard" },
+  { name: "Dashboard", icon: duotone.Dashboard, path: "/admin/dashboard" },
 
   {
     name: "Products",
