@@ -27,7 +27,7 @@ export function NavbarProvider({ children }: NavBarContextProps) {
     const { data: navbarData, isLoading, error, isSuccess } = useQuery({
         queryKey: ['navbarData'],   // Clave de la consulta
         queryFn: fetchNavbar,       // Función para obtener los datos
-        staleTime: 86400,     // 1 día en milisegundos
+        staleTime: 300,     // 1 día en milisegundos
         enabled: (() => {
             const storedData = localStorage.getItem('navbarData');
             if (!storedData) return true; // Si no hay datos, habilitar la consulta
