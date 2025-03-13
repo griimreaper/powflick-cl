@@ -11,7 +11,7 @@ interface NavBarContextProps {
 }
 
 interface NavbarContextType {
-    navbarData: DataStructure['navbar'] | undefined;
+    navbarData: DataStructure['navbar'];
 }
 
 const NavbarContext = createContext<NavbarContextType | null>(null);
@@ -27,17 +27,18 @@ export function NavbarProvider({ children }: NavBarContextProps) {
     const { data: navbarData, isLoading, error, isSuccess } = useQuery({
         queryKey: ['navbarData'],   // Clave de la consulta
         queryFn: fetchNavbar,       // Función para obtener los datos
-        staleTime: 86400,     // 1 día en milisegundos
+        staleTime: 5 * 60 * 1000,     // 5 min
+        refetchInterval: 5 * 60 * 1000, // forzar peticion cada 5 min
         enabled: (() => {
             const storedData = localStorage.getItem('navbarData');
-
             if (!storedData) return true; // Si no hay datos, habilitar la consulta
+
             try {
                 const parsedData = JSON.parse(storedData);
-                return (parsedData.categories.length === 0 &&
-                    parsedData.collection.length === 0)
+                return parsedData.categories.length === 0 &&
+                    parsedData.collection.length === 0
             } catch (error) {
-                return true
+                return true; // Si hay un error al parsear, habilitar la consulta
             }
         })(),
         initialData: (() => {
