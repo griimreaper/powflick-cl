@@ -15,10 +15,11 @@ import { useEffect, useState } from "react";
 import { Coupon } from "app/types";
 import { useDashboardStore } from "store/dashboard";
 import { useShoppingCartStore } from "store/shoppingCart";
+import { FlexBox } from "components/flex-box";
 
 export default function CheckoutSummary({ data }: any) {
-    const { cart, total, setCoupon, coupon } = useShoppingCartStore();
-   const { profile, setData, removeProfile } = useDashboardStore();
+  const { cart, total, setCoupon, coupon } = useShoppingCartStore();
+  const { profile, setData, removeProfile } = useDashboardStore();
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const subtotal = data.cart.reduce(
     (acc: any, item: any) => acc + item.totalProduct,
@@ -29,43 +30,65 @@ export default function CheckoutSummary({ data }: any) {
     0
   );
 
- useEffect(() => {
-   // Recuperar el selectedCoupon de localStorage cuando se cargue el componente
-   const savedCoupon = localStorage.getItem("selectedCoupon");
-   if (savedCoupon) {
-     setSelectedCoupon(JSON.parse(savedCoupon));
-   }
- }, []);
+  useEffect(() => {
+    // Recuperar el selectedCoupon de localStorage cuando se cargue el componente
+    const savedCoupon = localStorage.getItem("selectedCoupon");
+    if (savedCoupon) {
+      setSelectedCoupon(JSON.parse(savedCoupon));
+    }
+  }, []);
 
- console.log(selectedCoupon);
+  console.log(selectedCoupon);
 
- const handleCouponChange = (event: any) => {
-   if (event.target.value === "") {
-     // Si se selecciona "Select a coupon", resetea el estado del cupón seleccionado
-     setSelectedCoupon({} as Coupon);
-     setCoupon({} as Coupon);
-     localStorage.removeItem("selectedCoupon");
-   } else {
-     const coupon = profile.genericResponseUser.couponUsers.find(
-       (coupon) => coupon.coupon.id === event.target.value
-     );
-     if (coupon) {
-       setSelectedCoupon(coupon.coupon);
-       setCoupon(coupon.coupon);
-       localStorage.setItem("selectedCoupon", JSON.stringify(coupon.coupon));
-     }
-   }
- };
+  const handleCouponChange = (event: any) => {
+    if (event.target.value === "") {
+      // Si se selecciona "Select a coupon", resetea el estado del cupón seleccionado
+      setSelectedCoupon({} as Coupon);
+      setCoupon({} as Coupon);
+      localStorage.removeItem("selectedCoupon");
+    } else {
+      const coupon = profile.genericResponseUser.couponUsers.find(
+        (coupon) => coupon.coupon.id === event.target.value
+      );
+      if (coupon) {
+        setSelectedCoupon(coupon.coupon);
+        setCoupon(coupon.coupon);
+        localStorage.setItem("selectedCoupon", JSON.stringify(coupon.coupon));
+      }
+    }
+  };
 
   const totalWithDiscount = selectedCoupon
     ? subtotal * (1 - selectedCoupon.discount / 100)
     : subtotal;
 
+  const discountValue = selectedCoupon
+    ? subtotal * (selectedCoupon.discount / 100)
+    : 0;
+
   return (
     <Card sx={{ padding: 3 }}>
       <ListItem mb={1} title="Subtotal" value={subtotal} />
       <ListItem mb={1} title="Customizations" value={totalCustomizations} />
-      <ListItem mb={1} title="Discount" value={data?.coupon?.discount || 0} />
+
+      <ListItem
+        mb={1}
+        title="Coupon"
+        value={
+          <select
+            onChange={handleCouponChange}
+            value={selectedCoupon?.id || ""}
+          >
+            <option value="">Select a coupon</option>
+            {profile.genericResponseUser.couponUsers.map((couponUser) => (
+              <option key={couponUser.coupon.id} value={couponUser.coupon.id}>
+                {couponUser.coupon.title}
+              </option>
+            ))}
+          </select>
+        }
+      />
+      <ListItem mb={1} title="Discount" value={discountValue} />
       <FlexBetween mb={2}>
         <Span color="grey.600">Total:</Span>
 
@@ -76,14 +99,45 @@ export default function CheckoutSummary({ data }: any) {
 
       <Divider sx={{ my: 2 }} />
 
-      <select onChange={handleCouponChange} value={selectedCoupon?.id || ""}>
-        <option value="">Select a coupon</option>
-        {profile.genericResponseUser.couponUsers.map((couponUser) => (
-          <option key={couponUser.coupon.id} value={couponUser.coupon.id}>
-            {couponUser.coupon.title}
-          </option>
-        ))}
-      </select>
+      <FlexBox alignItems="center" columnGap={1} mb={2}>
+        <Span fontWeight="600">Additional Comments</Span>
+
+        <Span
+          p="6px 10px"
+          fontSize={12}
+          lineHeight="1"
+          borderRadius="3px"
+          color="primary.main"
+          bgcolor="primary.light"
+        >
+          Note
+        </Span>
+      </FlexBox>
+
+      {/* COMMENTS TEXT FIELD */}
+      <TextField variant="outlined" rows={6} fullWidth multiline />
+
+      <Divider sx={{ mb: 2 }} />
+
+      {/* APPLY VOUCHER TEXT FIELD */}
+      <TextField
+        fullWidth
+        size="small"
+        label="Voucher"
+        variant="outlined"
+        placeholder="Voucher"
+      />
+
+      <Button
+        variant="outlined"
+        color="primary"
+        fullWidth
+        sx={{ mt: 2, mb: 4 }}
+      >
+        Apply Voucher
+      </Button>
+
+      <Divider sx={{ mb: 2 }} />
 
       {/* <Button
         fullWidth
