@@ -8,7 +8,7 @@ import Container from "@mui/material/Container";
 import Stepper from "./stepper";
 
 const STEPPER_LIST = [
-  { title: "Cart", disabled: false },
+
   { title: "Directions", disabled: false },
   // { title: "Payment", disabled: false },
   // { title: "Review", disabled: true }
@@ -23,9 +23,6 @@ export default function PageStepper({ children }: PropsWithChildren) {
   const handleStepChange = (step: number) => {
     switch (step) {
       case 0:
-        router.push("/cart");
-        break;
-      case 1:
         router.push("/checkout");
         break;
       case 2:

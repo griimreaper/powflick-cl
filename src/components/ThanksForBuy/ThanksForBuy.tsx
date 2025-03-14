@@ -26,10 +26,12 @@ import { purchase } from "../../../fpixel";
 export default function ThanksForBuy({ id }: { id: string }) {
   const [order, setOrder] = useState<any>({});
   const [open, setOpen] = useState(false);
-  const { profile } = useDashboardStore();
+  const state = useDashboardStore();
   const { clearCart } = useShoppingCartStore();
-  const { token } = profile;
+  const { token } = state.profile;
   const router = useRouter();
+
+  console.log(state.profile.genericResponseUser);
 
   const handleBackClick = () => {
     if (sessionStorage.getItem("from-dashboard")) {
@@ -42,6 +44,27 @@ export default function ThanksForBuy({ id }: { id: string }) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const discountNextBuy = async () => {
+    // Crear cupón de descuento
+    const coupon = await createCoupon({
+      title: "10% Discount",
+      content: "10% off on your next purchase",
+      discount: 10,
+    });
+
+    // Asignar cupón al usuario
+    if (token) {
+      await createCouponUser(
+        token,
+        { couponId: coupon.id, active: true },
+        coupon.coupon.title
+      );
+    }
+
+    // Mostrar modal
+    setOpen(true);
   };
 
   useEffect(() => {
@@ -132,28 +155,12 @@ export default function ThanksForBuy({ id }: { id: string }) {
               ),
             },
           });
-
-          // Crear cupón de descuento
-          const coupon = await createCoupon({
-            title: "10% Discount",
-            content: "10% off on your next purchase",
-            discount: 10,
-          });
-
-          // Asignar cupón al usuario
-          await createCouponUser(
-            token,
-            { couponId: coupon.id, active: true },
-            coupon.coupon.title
-          );
-
-          // Mostrar modal
-          setOpen(true);
         }
       }
     };
     fetchData();
     clearCart();
+    discountNextBuy();
   }, [token]);
 
   return (
