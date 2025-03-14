@@ -86,9 +86,8 @@ export default function ProductIntro({ product }: Props) {
   const [isFav, setIsFav] = useState<boolean>(
     profile.favorites?.some(({ product }) => product.id === id)
   );
-  const { counter, decrement, increment, setCounter, handleInputChange } = useCounter(
-    product.product.id
-  );
+  const { counter, decrement, increment, setCounter, handleInputChange } =
+    useCounter(product.product.id);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
@@ -313,6 +312,35 @@ export default function ProductIntro({ product }: Props) {
                       />
                     </FlexRowCenter>
                   ))}
+                <FlexRowCenter
+                  width={64}
+                  height={64}
+                  minWidth={64}
+                  bgcolor="white"
+                  border="1px solid"
+                  borderRadius="10px"
+                  style={{ cursor: "pointer" }}
+                  mr="10px"
+                  borderColor="grey.400"
+                  onClick={() => {
+                    const videoElement = document.getElementById(
+                      "product-video"
+                    ) as HTMLVideoElement;
+                    if (videoElement.requestFullscreen) {
+                      videoElement.requestFullscreen();
+                    }
+                    videoElement.controls = false;
+                    videoElement.play();
+                  }}
+                >
+                  <video id="product-video" width="64" height="64">
+                    <source
+                      src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                </FlexRowCenter>
               </FlexBox>
             </Box>
           )}
@@ -326,7 +354,9 @@ export default function ProductIntro({ product }: Props) {
           {/* PRODUCT BRAND */}
           <FlexBox alignItems="center" mb={1} gap={1}>
             <div>Categories: </div>
-            <Link href={`/products?category=${product.product.product_categories.split("|")[0]}`} >
+            <Link
+              href={`/products?category=${product.product.product_categories.split("|")[0]}`}
+            >
               <H6> {product.product.product_categories.split("|")[0]}</H6>
             </Link>
           </FlexBox>
@@ -369,11 +399,15 @@ export default function ProductIntro({ product }: Props) {
 
                     if (newValue === "") {
                       // Si el campo está vacío, no hacer nada
-                      handleInputChange(0) // Deja el estado vacío
+                      handleInputChange(0); // Deja el estado vacío
                     } else {
                       const parsedValue = parseInt(newValue, 10);
 
-                      if (!isNaN(parsedValue) && parsedValue >= 1 && parsedValue <= 99) {
+                      if (
+                        !isNaN(parsedValue) &&
+                        parsedValue >= 1 &&
+                        parsedValue <= 99
+                      ) {
                         handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
                         setCounter(parsedValue); // Actualiza el estado con el nuevo valor
                       }
@@ -421,14 +455,17 @@ export default function ProductIntro({ product }: Props) {
                         currency: "USD",
                         value: Number(total),
                         total_product_price: Number(totalProductsPrice),
-                        total_customization_price: Number(totalCustomizationPrice),
+                        total_customization_price: Number(
+                          totalCustomizationPrice
+                        ),
                         items: [
                           {
                             item_id: result.productToBag.id,
                             item_name: result.productToBag.title,
                             affiliation: "Google Merchandise Store",
                             item_brand: "Pow Flick",
-                            item_category: product.product.product_categories.split("|")[0],
+                            item_category:
+                              product.product.product_categories.split("|")[0],
                             item_category2: product.product.sport,
                             item_variant: result.productToBag.colors,
                             price: Number(result.productToBag.price),
@@ -437,7 +474,7 @@ export default function ProductIntro({ product }: Props) {
                         ],
                       },
                     });
-                    
+
                     addToCart("Add To Cart", {
                       ecommerce: {
                         items: [
@@ -470,7 +507,11 @@ export default function ProductIntro({ product }: Props) {
                     flex: 1,
                   }}
                 >
-                  {isFav ? <FavoriteOutlined color="primary" /> : <FavoriteBorderOutlined color={"inherit"} />}
+                  {isFav ? (
+                    <FavoriteOutlined color="primary" />
+                  ) : (
+                    <FavoriteBorderOutlined color={"inherit"} />
+                  )}
                 </Button>
 
                 <Button
@@ -487,7 +528,6 @@ export default function ProductIntro({ product }: Props) {
                   Customize
                 </Button>
               </FlexBox>
-
             </Box>
           </Box>
 
