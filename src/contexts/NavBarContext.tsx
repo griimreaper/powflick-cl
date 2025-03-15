@@ -38,7 +38,7 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         })(),
         initialData: (() => {
             const storedData = localStorage.getItem('navbarData');
-            if (!storedData) return { categories: [], collection: [] }; // Si no hay datos, no se usa initialData
+            if (!storedData) return; // Si no hay datos, no se usa initialData
             else {
                 return JSON.parse(storedData);
             }
