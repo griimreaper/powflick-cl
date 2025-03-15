@@ -32,22 +32,15 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         enabled: (() => {
             const storedData = localStorage.getItem('navbarData');
             if (!storedData) return true; // Si no hay datos, habilitar la consulta
-
-            try {
-                const parsedData = JSON.parse(storedData);
-                return parsedData.categories.length === 0 &&
-                    parsedData.collection.length === 0
-            } catch (error) {
-                return true; // Si hay un error al parsear, habilitar la consulta
-            }
+            const parsedData = JSON.parse(storedData);
+            return parsedData.categories.length === 0 &&
+                parsedData.collection.length === 0
         })(),
         initialData: (() => {
             const storedData = localStorage.getItem('navbarData');
-            if (!storedData) return undefined; // Si no hay datos, no se usa initialData
-            try {
+            if (!storedData) return { categories: [], collection: [] }; // Si no hay datos, no se usa initialData
+            else {
                 return JSON.parse(storedData);
-            } catch (error) {
-                return undefined;
             }
         })(),
         // Aquí se usa un hook separado para manejar la respuesta después de la carga
