@@ -191,6 +191,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             resizable
             rotatable
             pinchable
+            renderDirections={["sw", "nw", "ne", "se"]}
             origin={false}
             checkInput={true}
             viewContainer={parentRef.current}
@@ -199,16 +200,8 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             keepRatio={true}
             onResize={(e) => {
               handleResize(e);
-              const minWidth = 80;  // Ancho mínimo en píxeles
-              const maxWidth = 300;  // Ancho máximo en píxeles
-              const minHeight = 30; // Alto mínimo en píxeles
-              const maxHeight = 300; // Alto máximo en píxeles
-
-              const newWidth = Math.max(minWidth, Math.min(e.width, maxWidth));
-              const newHeight = Math.max(minHeight, Math.min(e.height, maxHeight));
-
-              e.target.style.width = `${newWidth}px`;
-              e.target.style.height = `${newHeight}px`;
+              e.target.style.width = `${e.width}px`;
+              e.target.style.height = `${e.height}px`;
             }}
             onRotate={handleRotate}
             onPinchStart={(e) => console.log('Pinch start event', e)}
@@ -216,73 +209,10 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           />
           {each.size ?
             (<Box ref={BoxRef} width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`} height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`} position={"absolute"} >
-
-              <ArrowLeft
-                sx={{
-                  position: "absolute",
-                  left: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                  cursor: "pointer",
-                  color: "primary.main",
-                }}
-              />
-              <ArrowRight
-                sx={{
-                  position: "absolute",
-                  right: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                  cursor: "pointer",
-                  color: "primary.main",
-                }}
-              />
-              <ArrowDropDown
-                sx={{
-                  position: "absolute",
-                  bottom: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                  cursor: "pointer",
-                  color: "primary.main",
-                }}
-              />
-              <ArrowDropUp
-                sx={{
-                  position: "absolute",
-                  top: each.type === "Logo" ? `-${each.size * 0.24}px` : `-${each.size * 0.7}px`, // Ajusta según el tamaño de tu manejador
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  fontSize: each.type === "Logo" ? `${each.size / 2.5}px` : `${each.size * 1.2}px`,
-                  cursor: "pointer",
-                  color: "primary.main",
-                }}
-              />
               <Box
                 display={"flex"}
                 position={"absolute"}
                 top={"-50px"}
-                justifyContent={"center"}
-                width={"100%"}>
-                <RedoOutlined
-                  sx={{
-                    position: "relative",
-                    color: "white",
-                    cursor: "pointer",
-                    width: "25px",
-                    height: "25px",
-                    backgroundColor: "primary.main",
-                    borderRadius: "100%",
-                  }}
-                />
-              </Box>
-              <Box
-                display={"flex"}
-                position={"absolute"}
-                bottom={"-50px"}
                 justifyContent={"space-between"}
                 width={"100%"}>
                 <Box
@@ -303,6 +233,17 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
                     borderRadius: "100%",
                   }}
                 >x2</Box>
+                <RedoOutlined
+                  sx={{
+                    position: "relative",
+                    color: "white",
+                    cursor: "pointer",
+                    width: "25px",
+                    height: "25px",
+                    backgroundColor: "primary.main",
+                    borderRadius: "100%",
+                  }}
+                />
                 <DeleteForever
                   onClick={() => {
                     deleteElement(each.type as string, index);
@@ -312,17 +253,6 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
                     left: "0%",
                     color: "white",
                     cursor: "pointer",
-                    width: "25px",
-                    height: "25px",
-                    backgroundColor: "primary.main",
-                    borderRadius: "100%",
-                  }}
-                />
-                <OpenInFull
-                  sx={{
-                    right: "0%",
-                    color: "white",
-                    cursor: "sw-resize",
                     width: "25px",
                     height: "25px",
                     backgroundColor: "primary.main",
