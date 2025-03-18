@@ -48,6 +48,7 @@ export default function LoginCartButtons({
   return (
     <div>
       <IconButton
+        sx={{ borderRadius: "8px" }}
         onClick={() => {
           session
             ? rol === "admin"
@@ -84,7 +85,7 @@ export default function LoginCartButtons({
           <PersonOutline sx={ICON_COLOR} />
         )}
       </IconButton>
-      <IconButton onClick={toggleSearchBar}>
+      <IconButton sx={{ borderRadius: "8px" }} onClick={toggleSearchBar}>
         <SearchIcon sx={ICON_COLOR} /> {/* Agregar el icono de lupa */}
       </IconButton>
 
@@ -98,7 +99,7 @@ export default function LoginCartButtons({
           },
         }}
       >
-        <IconButton onClick={toggleSidenav}>
+        <IconButton sx={{ borderRadius: "8px" }} onClick={toggleSidenav}>
           <ShoppingBagOutlined sx={ICON_COLOR} />
         </IconButton>
       </Badge>
