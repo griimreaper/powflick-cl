@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import Fashion2 from "pages-sections/fashion-2/fashion-2";
 import { cache } from "react";
 import { getLanding } from "services/Landing";
-import Script from "next/script";
 
 export const revalidate = 3600;
 export const fetchCache = "force-cache"; // Forzar caché para evitar fetch adicionales

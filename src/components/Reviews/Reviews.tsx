@@ -124,7 +124,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
   ];
 
   return (
-    review.length > 0 &&
+    review?.length > 0 &&
     <Box
       component="section"
       mb={isMobile ? "clamp(2vw, 4rem, 40vw)" : "clamp(1vw, 4rem, 30vw)"}
