@@ -52,6 +52,7 @@ type SelectVariants = {
 };
 
 export default function ProductIntro({ product }: Props) {
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const {
     id,
     price,
@@ -162,8 +163,16 @@ export default function ProductIntro({ product }: Props) {
     };
   }, []);
 
-  // HANDLE SELECT IMAGE
-  const handleImageClick = (ind: number) => () => setSelectedImage(ind);
+  // HANDLE SELECT IMAGE OR VIDEO
+  const handleImageClick = (ind: number) => () => {
+    setSelectedImage(ind);
+    setSelectedVideo(null); // Reset video selection
+  };
+
+  const handleVideoClick = (url: string) => () => {
+    setSelectedVideo(url);
+    setSelectedImage(-1); // Reset image selection
+  };
 
   const handleAddToFav = async () => {
     if (!token || token === undefined) {
@@ -273,13 +282,26 @@ export default function ProductIntro({ product }: Props) {
                 justifyContent="center"
                 mb={6}
               >
-                <Image
-                  alt={title}
-                  width={500}
-                  height={500}
-                  loading="eager"
-                  src={product.product.images[selectedImage] || ""}
-                />
+                {selectedVideo ? (
+                  <video
+                    id="product-video"
+                    width="500"
+                    height="500"
+                    controls
+                    autoPlay
+                  >
+                    <source src={selectedVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <Image
+                    alt={title}
+                    width={500}
+                    height={500}
+                    loading="eager"
+                    src={product.product.images[selectedImage] || ""}
+                  />
+                )}
               </FlexBox>
 
               <FlexBox
@@ -322,18 +344,11 @@ export default function ProductIntro({ product }: Props) {
                   style={{ cursor: "pointer" }}
                   mr="10px"
                   borderColor="grey.400"
-                  onClick={() => {
-                    const videoElement = document.getElementById(
-                      "product-video"
-                    ) as HTMLVideoElement;
-                    if (videoElement.requestFullscreen) {
-                      videoElement.requestFullscreen();
-                    }
-                    videoElement.controls = false;
-                    videoElement.play();
-                  }}
+                  onClick={handleVideoClick(
+                    "https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
+                  )}
                 >
-                  <video id="product-video" width="64" height="64">
+                  <video id="product-video-thumbnail" width="64" height="64">
                     <source
                       src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
                       type="video/mp4"
