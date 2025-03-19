@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { Fab } from "@mui/material";
+import { Fab, useMediaQuery } from "@mui/material";
 
 const FloatingWhatsApp = () => {
+  const isMobile = useMediaQuery(("(max-width: 768px)"));
   const phoneNumber = "8613925961232";
 
   return (
@@ -12,8 +14,8 @@ const FloatingWhatsApp = () => {
       rel="noopener noreferrer"
       style={{
         position: "fixed",
-        bottom: "20px",
-        right: "20px",
+        bottom: isMobile ? "80px" : "20px",
+        right: isMobile ? "10px" : "20px",
         textDecoration: "none",
         zIndex: 10000,
       }}

@@ -101,9 +101,9 @@ export default function ProductCard16({ product }: Props) {
       </Link>
 
       <FlexBetween alignItems="flex-end">
-        <div>
+        <div style={{ textAlign: "center", width: "100%" }}>
           <Link href={`/products/${slug}`}>
-            <H6 fontWeight={700} mb={1}>
+            <H6 fontWeight={700} mb={1} textAlign={"center"}>
               {title}
             </H6>
           </Link>

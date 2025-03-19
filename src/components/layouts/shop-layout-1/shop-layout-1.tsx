@@ -4,7 +4,7 @@ import {
   Fragment,
   PropsWithChildren,
   useEffect,
-  useState,
+  useMemo,
 } from "react";
 // GLOBAL CUSTOM COMPONENTS
 import { Navbar } from "components/navbar";
@@ -16,10 +16,13 @@ import { useDashboardStore } from "store/dashboard";
 import { useQueryClient } from "@tanstack/react-query";
 import { Box } from "@mui/material";
 import dynamic from "next/dynamic";
+import { MobileNavigationBar } from "components/mobile-navigation";
+import { LazyLoadSection } from "pages-sections/fashion-2/LazyLoadSection";
 
 // Carga dinámica de componentes
-const Footer1 = dynamic(() => import("components/footer").then((mod) => mod.Footer1));
-const MobileNavigationBar = dynamic(() => import("components/mobile-navigation").then((mod) => mod.MobileNavigationBar));
+const Footer1 = dynamic(() => import("components/footer/footer-1"), {
+  ssr: false
+});
 
 /**
  *  USED IN:
@@ -36,8 +39,6 @@ export default function ShopLayout1({
   children,
   landing = false
 }: ShopLayout1Props) {
-  const [isFixed, setIsFixed] = useState(false);
-
   const queryClient = useQueryClient();
 
   const data = queryClient.getQueryData<DataStructure['navbar']>(["navbarData"]) || { categories: [], collection: [], recent: [] };
@@ -45,24 +46,21 @@ export default function ShopLayout1({
   const { data: session } = useSession();
   const { profile, setData, removeProfile, setProfileUser } =
     useDashboardStore();
-  let token = session?.user?.name?.split("|")[0];
-  let tokenExpiration = session?.user?.name?.split("|")[1];
+
+  const token = useMemo(() => session?.user?.name?.split("|")[0], [session]);
+  const tokenExpiration = useMemo(() => session?.user?.name?.split("|")[1], [session]);
   let rol = session?.user?.email;
   let image = session?.user?.image;
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (token && token !== undefined && !profile.token) {
-        localStorage.setItem("termsAccepted", "true");
-        const response = await getProfile(token);
-
+    if (token && !profile.token) {
+      localStorage.setItem("termsAccepted", "true");
+      getProfile(token).then((response) => {
         setData({ ...response, token, rol });
-        if (image) setProfileUser({ image: image });
-      }
-    };
-
-    fetchData();
-  }, [token]);
+        if (image) setProfileUser({ image });
+      });
+    }
+  }, [token, profile.token, setData, setProfileUser, image]);
 
   useEffect(() => {
     let logoutTimer: NodeJS.Timeout;
@@ -99,7 +97,6 @@ export default function ShopLayout1({
         {/* <Sticky fixedOn={0} onSticky={setIsFixed} scrollDistance={300}> */}
         <Header
           landing={landing}
-          isFixed={isFixed}
           session={session}
           data={data}
           midSlot={<Navbar elevation={0} border={1} data={data} />}
@@ -117,7 +114,9 @@ export default function ShopLayout1({
       <MobileNavigationBar data={data} />
 
       {/* FOOTER */}
-      <Footer1 data={data} />
+      <LazyLoadSection id="footer">
+        <Footer1 data={data} />
+      </LazyLoadSection>
     </Fragment>
   );
 }

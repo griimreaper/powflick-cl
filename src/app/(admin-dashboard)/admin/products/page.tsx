@@ -1,7 +1,5 @@
 import { Metadata } from "next";
 import { ProductsPageView } from "pages-sections/vendor-dashboard/products/page-view";
-// API FUNCTIONS
-import api from "utils/__api__/dashboard";
 
 export const metadata: Metadata = {
   title: "Products - Pow Flick",

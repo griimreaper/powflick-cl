@@ -3,7 +3,6 @@ import MenuItem from "@mui/material/MenuItem";
 // STYLED COMPONENT
 import { SearchResultCard } from "../styles";
 import { Typography } from "@mui/material";
-import { themeColors } from "theme/theme-colors";
 
 // ==============================================================
 

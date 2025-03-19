@@ -11,8 +11,7 @@ Disallow: /api/*
 Disallow: /api
 
 # Host
-Host: https://front-six-smoky.vercel.app/
+Host: https://www.powflick.com/
 
 # Sitemaps
-Sitemap: https://front-six-smoky.vercel.app/sitemap.xml
-Sitemap: https://front-six-smoky.vercel.app/sitemap-1.xml
+Sitemap: https://www.powflick.com/sitemap.xml

@@ -12,7 +12,6 @@ import { Wrapper } from "pages-sections/sessions/styles";
 import LogoWithTitle from "pages-sections/sessions/components/logo-title";
 import LoginBottom from "pages-sections/sessions/components/login-bottom";
 import SocialButtons from "pages-sections/sessions/components/social-buttons";
-import { redirect } from "next/dist/server/api-utils";
 
 // ==============================================================
 interface Props {

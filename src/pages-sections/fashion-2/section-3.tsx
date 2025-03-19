@@ -4,9 +4,10 @@ import Container from "@mui/material/Container";
 import { Paragraph } from "components/Typography";
 import CategoryCard1 from "components/category-cards/category-card-1";
 // API FUNCTIONS
-import { Box, Typography, useMediaQuery } from "@mui/material";
-import { Carousel } from "components/carousel";
+import { Box, Typography } from "@mui/material";
 import Link from "next/link";
+import { Carousel } from "components/carousel";
+import { LazyLoadSection } from "./LazyLoadSection";
 
 const sportsCategories = [
   {
@@ -47,9 +48,7 @@ const sportsCategories = [
   },
 ];
 
-export default function Section3({ className }: { className: string }) {
-  const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
-
+export default function Section3({ className, isMobile }: { className: string, isMobile: boolean }) {
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
     { breakpoint: 768, settings: { slidesToShow: 3 } },
@@ -83,7 +82,7 @@ export default function Section3({ className }: { className: string }) {
             component="h1"
             sx={{
               // fontWeight: "bold",
-              color:'white',
+              color: 'white',
               // fontStyle: "italic",
               fontFamily: "GYMER", // Añadir la fuente GYMER
               lineHeight: 1,

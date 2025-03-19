@@ -11,35 +11,33 @@ import "./global.css";
 import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
-import { GlobalStyles } from "@mui/material";
-import { primary } from "theme/theme-colors";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Precargar la fuente GYMER */}
+        <link
+          rel="preload"
+          href="/fonts/GYMER/GYMER.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/GYMER/GYMER.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={openSans.className}>
         <React.StrictMode>
-          <GlobalStyles
-            styles={{
-              "*::-webkit-scrollbar": {
-                width: "8px",
-                height: "8px",
-              },
-              "*::-webkit-scrollbar-thumb": {
-                backgroundColor: primary.main,
-              },
-              "*::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: primary.main,
-              },
-              "*::-webkit-scrollbar-track": {
-                backgroundColor: "#1A1A1A",
-              },
-            }}
-          />
           <GlobalProvider>
             <FloatingWhatsApp />
             {children}

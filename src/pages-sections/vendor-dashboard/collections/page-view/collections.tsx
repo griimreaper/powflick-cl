@@ -7,11 +7,8 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 // GLOBAL CUSTOM COMPONENTS
 import Scrollbar from "components/scrollbar";
-import { TableHeader, TablePagination } from "components/data-table";
+import { TableHeader } from "components/data-table";
 // GLOBAL CUSTOM HOOK
-import useMuiTable from "hooks/useMuiTable";
-// LOCAL CUSTOM COMPONENT
-import BrandRow from "../collection-row";
 import SearchArea from "../../search-box";
 import PageWrapper from "../../page-wrapper";
 // TABLE HEAD COLUMN DATA

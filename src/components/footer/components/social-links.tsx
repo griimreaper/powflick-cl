@@ -33,7 +33,7 @@ export default function SocialLinks({ variant = "light" }: Props) {
   return (
     <FlexBox className="flex" mx={-0.625}>
       {SOCIAL_ICON_LINKS.map(({ Icon, url }, ind) => (
-        <Link href={url} target="_blank" rel="noreferrer noopenner" key={ind} title={ind.toString()}>
+        <Link href={url} target="_blank" rel="noreferrer noopenner" key={ind} title={ind.toString()} draggable={false}>
           <StyledIconButton variant={variant}>
             <Icon fontSize="inherit" className="icon" />
           </StyledIconButton>

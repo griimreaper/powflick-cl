@@ -1,26 +1,27 @@
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
-import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import DialogContent from "@mui/material/DialogContent";
 // MUI ICON COMPONENTS
-import Add from "@mui/icons-material/Add";
 import Close from "@mui/icons-material/Close";
-import Remove from "@mui/icons-material/Remove";
-// GLOBAL CUSTOM COMPONENTS
-import { Carousel } from "components/carousel";
 import SportZoneImage from "components/SportZoneImage";
 import FlexBox from "components/flex-box/flex-box";
-import { H1, H2, H3, H6, Paragraph } from "components/Typography";
+import { H2, H6, Paragraph } from "components/Typography";
 // LOCAL CUSTOM HOOKS
-import useCart from "hooks/useCart";
 // CUSTOM UTILS LIBRARY FUNCTION
-import { currency } from "lib";
 import { ProductDB } from "models/types";
-import { useShoppingCartStore } from "store/shoppingCart";
+import dynamic from "next/dynamic";
 
+const Carousel = dynamic(() => import("components/carousel").then(m => m.Carousel), {
+  ssr: false,
+  loading: () => <p>Loading...</p> // Placeholder mientras carga
+});
+const Dialog = dynamic(() => import("@mui/material/Dialog"), {
+  ssr: false,
+  loading: () => <p>Loading...</p> // Placeholder mientras carga
+});
 // =====================================================
 interface Props {
   product: ProductDB;
@@ -32,22 +33,6 @@ interface Props {
 export default function ProductViewDialog(props: Props) {
   const { product, openDialog, handleCloseDialog } = props;
   // const { handleCounterChange } = useCounter(product, false, true);
-
-  const { cart } = useShoppingCartStore();
-
-  const cartItem = cart.find((item) => item.product.id === product.id);
-
-  const handleCartAmountChange = (amount: number) => () => {
-    // dispatch({
-    //   type: "CHANGE_CART_AMOUNT",
-    //   payload: {
-    //     ...product,
-    //     qty: amount,
-    //     name: product.title,
-    //     // imgUrl: product.imgGroup[0],
-    //   },
-    // });
-  };
 
   return (
     <Dialog
@@ -91,7 +76,7 @@ export default function ProductViewDialog(props: Props) {
                 CATEGORY: {product?.product_categories?.split("|").join(",")}
               </Paragraph>
 
-              <H1 color="primary.main">{currency(product.price)}</H1>
+              <H2 color="primary.main">{product.price}</H2>
 
               <FlexBox alignItems="center" gap={1} mt={1}>
                 <Rating color="warn" value={4} readOnly />

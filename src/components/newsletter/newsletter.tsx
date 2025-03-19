@@ -177,7 +177,7 @@ export default function Newsletter({
           </Grid>
 
           <IconButton onClick={handleClose} className="clear-btn">
-            <Clear color="inherit" />
+            <Clear color="primary" />
           </IconButton>
         </Wrapper>
       </Modal>

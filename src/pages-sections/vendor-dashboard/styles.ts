@@ -58,7 +58,7 @@ type StatusType = {
 
 const StatusWrapper = styled(Box, {
   shouldForwardProp: (prop) => prop !== "status",
-})<StatusType>(({ theme, status }) => {
+})<any>(({ theme, status }) => {
   let color = theme.palette.secondary.main;
   let backgroundColor = theme.palette.secondary['light'];
 

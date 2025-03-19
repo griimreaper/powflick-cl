@@ -1,8 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TicketDetailsPageView } from "pages-sections/customer-dashboard/support-tickets/page-view";
-// API FUNCTIONS
-import api from "utils/__api__/ticket";
 // CUSTOM DATA MODEL
 import { SlugParams } from "models/Common";
 import { getOneMessage } from "services/dashboardAdmin/messages";

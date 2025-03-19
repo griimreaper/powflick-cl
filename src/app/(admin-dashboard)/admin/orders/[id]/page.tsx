@@ -1,8 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { OrderDetailsPageView } from "pages-sections/vendor-dashboard/orders/page-view";
-// API FUNCTIONS
-import api from "utils/__api__/dashboard";
 // CUSTOM DATA MODEL
 import { IdParams } from "models/Common";
 import { getOrder } from "services/dashboardAdmin/orders";
