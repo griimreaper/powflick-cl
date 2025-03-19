@@ -29,6 +29,7 @@ export interface Filters {
     page: number,
     limit: number,
     order: 'ASC' | 'DESC'
+    orderBy: 'collection' | 'tag' | 'createdAt'
 }
 
 export interface FiltersReview {

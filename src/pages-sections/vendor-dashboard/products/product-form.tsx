@@ -400,7 +400,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
                   label="Score"
                   onChange={(e) => {
                     const value = Number(e.target.value);
-                    if (value >= 0 || e.target.value === "") {
+                    if (value >= 1 || e.target.value === "") {
                       handleChange(e);
                     }
                   }}

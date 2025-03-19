@@ -19,6 +19,7 @@ import { getProductsAdmin } from "services/dashboardAdmin/products";
 import { Filters, ProductData } from ".";
 import Pagination from "./Pagination";
 import useHearingEvent from "hooks/hearingEvent";
+import { Box, Button } from "@mui/material";
 
 export default function ProductsPageView() {
   const [productList, setProductList] = useState<ProductData>();
@@ -28,6 +29,7 @@ export default function ProductsPageView() {
     page: 1,
     limit: 6,
     order: 'DESC',
+    orderBy: 'collection',
   });
 
   const { profile } = useDashboardStore();
@@ -68,15 +70,22 @@ export default function ProductsPageView() {
   const tableHeading = [
     { id: "name", label: "Name", align: "left", content: null },
     { id: "category", label: "Category", align: "left", content: (Object.keys(productList?.count?.categories || {})) },
-    { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})) },
+    [
+      { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})) },
+      { id: "tag", label: "Tag", align: "left", content: (Object.keys(productList?.count?.tag || {})) },
+      { id: "date", label: "Date", align: "left", content: ['ASC', 'DESC'] },
+      { id: "score", label: "Score", align: "left", content: ['ASC', 'DESC'] },
+    ],
     { id: "order", label: "Price", align: "left", content: ['ASC', 'DESC'] },
     { id: "status", label: "Published", align: "left", content: ['publish', 'draft'] },
-    { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 8, 10, 12, 24, 50, 100] }
+    { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 12, 24, 50, 100] }
   ];
 
   const handleSearch = (value: string) => {
     setFilters({ ...filters, search: value });
   };
+
+  console.log(filters);
 
   return (
     <PageWrapper title="Product List">
@@ -86,7 +95,20 @@ export default function ProductsPageView() {
         url="/admin/products/create"
         searchPlaceholder="Search Product..."
       />
-
+      <Box position='relative' width={'100%'} display={'flex'} justifyContent={'flex-end'}>
+        <Button variant="contained" color="primary" sx={{ position: 'absolute', top: '-55px' }}
+          onClick={() => {
+            setFilters({
+              search: '',
+              page: 1,
+              limit: filters.limit,
+              order: 'DESC',
+              orderBy: filters.orderBy,
+            })
+          }}>
+          Reset Filters
+        </Button>
+      </Box>
       <Card>
         <Scrollbar autoHide={false}>
           <TableContainer sx={{ minWidth: 900 }}>
@@ -94,6 +116,7 @@ export default function ProductsPageView() {
               <TableHeader
                 order={filters.order.toLowerCase() as 'asc' | 'desc'}
                 hideSelectBtn
+                changeOrder={true}
                 orderBy={'ASC'}
                 heading={tableHeading}
                 rowCount={Number(productList?.total)}
@@ -104,7 +127,7 @@ export default function ProductsPageView() {
               <TableBody>
 
                 {filteredProducts?.map((product) => (
-                  <ProductRow key={product.id} product={product} setActualize={setActualize} />
+                  <ProductRow key={product.id} product={product} setActualize={setActualize} orderBy={filters.orderBy} />
                 ))}
               </TableBody>
 
@@ -122,6 +145,6 @@ export default function ProductsPageView() {
           />
         </Stack>
       </Card>
-    </PageWrapper>
+    </PageWrapper >
   );
 }

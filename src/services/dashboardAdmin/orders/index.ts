@@ -6,8 +6,14 @@ export const getAllOrders = async (token: string, filters: any) => {
 
         if (filters) {
             query += `limit=${filters.limit}&page=${filters.page}&`
+            if (filters.orderBy) {
+                query += `orderBy=${filters.orderBy}&`
+            }
             if (filters.order) {
                 query += `order=${filters.order}&`
+            }
+            if (filters.purchaseDate) {
+                query += `purchaseDate=${filters.purchaseDate}&`
             }
             if (filters.status) {
                 query += `status=${filters.status}&`

@@ -27,7 +27,7 @@ const tableHeading = [
   { id: "comment", label: "Comment", align: "left" },
   { id: "published", label: "Published", align: "left" },
   { id: "show", label: "Show", align: "left" },
-  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 8, 10, 12] }
+  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 12, 24, 50, 100] }
 ];
 
 // =============================================================================

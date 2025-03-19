@@ -37,11 +37,11 @@ interface Product {
   published: boolean;
 }
 
-type Props = { product: ProductDB | any, setActualize: Function };
+type Props = { product: ProductDB | any, setActualize: Function, orderBy: string };
 // ========================================================================
 
-export default function ProductRow({ product, setActualize }: Props) {
-  const { title, price, URL, product_categories, id, status, slug, sport, collections } =
+export default function ProductRow({ product, setActualize, orderBy }: Props) {
+  const { title, price, URL, product_categories, id, status, slug, sport, collections, tags, createdAt, score } =
     product || {};
   const { profile } = useDashboardStore();
   const router = useRouter();
@@ -88,10 +88,37 @@ export default function ProductRow({ product, setActualize }: Props) {
         <CategoryWrapper whiteSpace={'nowrap'}>{product_categories.split('|')[0]}</CategoryWrapper>
       </StyledTableCell>
 
-      <StyledTableCell align="left">
-        <CategoryWrapper whiteSpace={'nowrap'}>{collections[0]?.title || 'None'}</CategoryWrapper>
-      </StyledTableCell>
-
+      {orderBy === 'collection' ?
+        <StyledTableCell align="left" sx={{ maxWidth: 240, overflowX: 'auto' }}>
+          <Box display={'flex'} gap={1}>
+            {collections.length > 0 ?
+              collections.map((c: any, i: number) => (
+                <CategoryWrapper key={c.title + i} whiteSpace={'nowrap'}>{c?.title || 'None'}</CategoryWrapper>
+              )) :
+              <CategoryWrapper whiteSpace={'nowrap'}>{'None'}</CategoryWrapper>
+            }
+          </Box>
+        </StyledTableCell>
+        : orderBy === 'tag' ?
+          <StyledTableCell align="left" sx={{ maxWidth: 240, overflowX: 'auto' }}>
+            <Box display={'flex'} gap={1}>
+              {tags.length > 0 ?
+                tags.map((t: any, i: number) => (
+                  <CategoryWrapper key={t.name + i} whiteSpace={'nowrap'}>{t?.name || 'None'}</CategoryWrapper>
+                )) :
+                <CategoryWrapper whiteSpace={'nowrap'}>{'None'}</CategoryWrapper>
+              }
+            </Box>
+          </StyledTableCell>
+          : orderBy === 'date' ?
+            <StyledTableCell align="left">
+              <CategoryWrapper whiteSpace={'nowrap'}>{new Date(createdAt).toLocaleDateString() || 'None'}</CategoryWrapper>
+            </StyledTableCell>
+            :
+            <StyledTableCell align="left">
+              <CategoryWrapper whiteSpace={'nowrap'}>{score || 'None'}</CategoryWrapper>
+            </StyledTableCell>
+      }
       <StyledTableCell align="left">{currency(price)}</StyledTableCell>
 
       <StyledTableCell align="left">
