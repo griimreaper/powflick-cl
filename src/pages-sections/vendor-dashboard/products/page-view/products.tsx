@@ -71,7 +71,7 @@ export default function ProductsPageView() {
     { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})) },
     { id: "order", label: "Price", align: "left", content: ['ASC', 'DESC'] },
     { id: "status", label: "Published", align: "left", content: ['publish', 'draft'] },
-    { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 8, 10, 12] }
+    { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 8, 10, 12, 24, 50, 100] }
   ];
 
   const handleSearch = (value: string) => {

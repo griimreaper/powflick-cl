@@ -9,6 +9,8 @@ import ProductCard16 from "components/product-cards/product-card-16";
 import Product from "models/Product.model";
 import { ProductDB } from "models/types";
 import { themeColors } from "theme/theme-colors";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ProductFilterKeys, ProductFilterValues } from "pages-sections/product-details/types";
 
 // ========================================================
 type Props = { data: any, handlePage: (number: number) => void };
@@ -16,12 +18,29 @@ type Props = { data: any, handlePage: (number: number) => void };
 
 export default function ProductsGridView({ data, handlePage }: Props) {
   const itemsPerPage = 9;
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     handlePage(value)
+    updateURL("page", value);
     window.scrollTo({
       top: 0, // Ir al inicio de la página
       behavior: "smooth", // Animación de desplazamiento suave
     });
+  };
+
+  const updateURL = (key: ProductFilterKeys, value: ProductFilterValues) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (Array.isArray(value) && value.length > 0) {
+      params.set(key, value.join(",")); // Convierte array a string separada por comas
+    } else if (typeof value === "string" || typeof value === "number") {
+      params.set(key, String(value));
+    } else {
+      params.delete(key); // Elimina el parámetro si está vacío o es undefined
+    }
+
+    router.push(`?${params.toString()}`, { scroll: false }); // Actualiza la URL sin recargar la página
   };
 
   return (

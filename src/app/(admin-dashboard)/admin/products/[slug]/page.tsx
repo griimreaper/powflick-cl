@@ -16,7 +16,7 @@ export default async function ProductEdit({ params }: any) {
 
   let token = session?.user?.name?.split("|")[0];
 
-  const { product, collectionsList, categoriesList } = await getOneProduct(params.slug, token as string);
+  const { product, collectionsList, categoriesList, tagList } = await getOneProduct(params.slug, token as string);
 
-  return <EditProductPageView product={product} collectionsList={collectionsList} categoriesList={categoriesList} />;
+  return <EditProductPageView product={product} collectionsList={collectionsList} categoriesList={categoriesList} tagList={tagList}/>;
 }

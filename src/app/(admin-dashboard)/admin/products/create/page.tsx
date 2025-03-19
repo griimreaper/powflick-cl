@@ -15,7 +15,7 @@ export default async function ProductCreate() {
 
   let token = session?.user?.name?.split("|")[0];
 
-  const { collectionsList, categoriesList } = await getOneProduct('create', token as string);
+  const { collectionsList, categoriesList, tagList } = await getOneProduct('create', token as string);
 
-  return <ProductCreatePageView collectionsList={collectionsList} categoriesList={categoriesList}/>;
+  return <ProductCreatePageView collectionsList={collectionsList} categoriesList={categoriesList} tagList={tagList}/>;
 }
