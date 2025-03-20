@@ -72,11 +72,12 @@ const ContactUs = () => {
         style={{
           padding: 20,
           width: "100%",
-          height: "100%",
+          height: "100vh",
           backgroundImage: `url(/assets/images/contact/POWFLICK_CONTACT.png)`,
           backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
           backgroundPosition: "top",
-          backgroundSize: "100%",
+      
           top: 0,
           left: 0,
           borderRadius: 8,
