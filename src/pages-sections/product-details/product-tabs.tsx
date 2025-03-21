@@ -10,7 +10,8 @@ import { Review } from "models/types";
 import { H4 } from "components/Typography";
 import { FaCcVisa, FaCcMastercard, FaCcAmex, FaApplePay, FaGooglePay } from "react-icons/fa";
 import ProductComment from "./product-comment";
-import Reviews from "components/Reviews/Reviews";
+import { Reviews } from "components/Reviews/Reviews";
+
 
 // STYLED COMPONENT
 const StyledTabs = styled(Tabs)(({ theme }) => ({

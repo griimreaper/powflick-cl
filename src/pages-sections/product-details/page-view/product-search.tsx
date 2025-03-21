@@ -236,20 +236,21 @@ export default function ProductSearchPageView() {
         </Box>
 
         {/* FILTER ACTION AREA */}
-        <FlexBetween flexWrap="wrap" gap={2} mb={2}>
-          <div>
+        <FlexBetween width={'100%'} gap={2} justifyContent={{ xs: 'flex-start', md: 'space-between' }} flexDirection={{ xs: 'column', sm: 'row' }} mb={2}>
+          <Box width={'100%'}>
             {filters.search && (
               <H5 lineHeight={1} mb={1} color={themeColors.text.secondary}>
                 Searching for “ {filters?.search} ”
               </H5>
             )}
-            <Span style={{ color: themeColors.text.secondary }}>
+            <Span style={{ color: themeColors.text.secondary }} whiteSpace={'nowrap'}>
               {data?.count?.total} results found
             </Span>
-          </div>
+          </Box>
 
-          <FlexBox alignItems="center" columnGap={4} flexWrap="wrap">
-            <FlexBox alignItems="center" gap={1} flex="1 1 0">
+          <FlexBox alignItems="center" gap={1} display={'flex'} flexDirection={'row'} flexWrap={{xs:'wrap', sm:'nowrap'}} justifyContent={{ xs: 'space-between', sm: 'flex-end' }} width={{xs: '100%', md:'40%'}}>
+            <Box display={'flex'} width={'100%'} alignItems={'center'} justifyContent={'flex-start'} gap={1}>
+
               <Paragraph whiteSpace="pre">Sort by:</Paragraph>
 
               <TextField
@@ -261,7 +262,7 @@ export default function ProductSearchPageView() {
                 placeholder="Sort by"
                 color="primary"
                 onChange={(e) => handleChangeSortBy(e.target.value)}
-                sx={{ flex: "1 1 0", minWidth: "150px" }}
+                sx={{ maxWidth: "180px", minWidth: '120px' }}
               >
                 {SORT_OPTIONS.map((item) => (
                   <MenuItem
@@ -274,10 +275,9 @@ export default function ProductSearchPageView() {
                   </MenuItem>
                 ))}
               </TextField>
-            </FlexBox>
-
-            <FlexBox alignItems="center" my="0.25rem">
-              <Paragraph color="#FFFFFF" mr={1}>
+            </Box>
+            <FlexBox alignItems="center" my="0.25rem" justifyContent={'flex-end'} width={'100%'}>
+              <Paragraph mr={1}>
                 View:
               </Paragraph>
 
@@ -317,7 +317,9 @@ export default function ProductSearchPageView() {
                 </Sidenav>
               )}
             </FlexBox>
+
           </FlexBox>
+
         </FlexBetween>
 
         <Grid container spacing={4}>
@@ -335,7 +337,7 @@ export default function ProductSearchPageView() {
               topCategories={data?.filt}
               colors={data?.colors || []}
               tags={data?.tags || []}
-              />
+            />
           </Grid>
 
           {/* PRODUCT VIEW AREA */}

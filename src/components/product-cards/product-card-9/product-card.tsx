@@ -14,6 +14,7 @@ import ProductTags from "./components/tags";
 import AddToCartButton from "./components/add-to-cart";
 import FavoriteButton from "./components/favorite-button";
 import { viewItem } from "../../../../fpixel";
+import { fontSize } from "theme/typography";
 
 // STYLED COMPONENT
 const Wrapper = styled(Card)({
@@ -45,10 +46,11 @@ const ContentWrapper = styled("div")(({ theme }) => ({
   },
 
   [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-    "& .img-wrapper": { width: "100%" },
-    "& .content": { width: "100%" }
+    "& .img-wrapper": {
+      width: 80,
+      position: "relative",
+      backgroundColor: theme.palette.grey[200]
+    },
   }
 }));
 

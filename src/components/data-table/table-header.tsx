@@ -118,7 +118,6 @@ export default function TableHeader(props: Props) {
                       setSelectedHeaders((prev) => ({ ...prev, [index]: e.target.value }));
                     }}
                     size="small"
-                    autoFocus
                   >
                     {headCell.map((option) => (
                       <MenuItem key={option.id} value={option.id}

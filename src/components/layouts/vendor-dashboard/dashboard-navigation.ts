@@ -58,11 +58,9 @@ export const navigation = [
     ]
   },
 
-  { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
-
   {
     name: "Messages",
-    icon: duotone.Review,
+    icon: duotone.DataTable,
     children: [
       { name: "Complaint or Claim", path: "/admin/complaint-or-claim" },
       { name: "Help with an Order", path: "/admin/help-with-a-order" },
@@ -71,6 +69,7 @@ export const navigation = [
     ]
   },
 
+  { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
   // {
   //   name: "Refunds",
   //   icon: duotone.Refund,
