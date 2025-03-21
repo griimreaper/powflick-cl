@@ -3,7 +3,7 @@ import { PaymentMethodsPageView } from "pages-sections/customer-dashboard/paymen
 
 export const metadata: Metadata = {
   title: "Payment Methods - Pow Flick",
-  description: "Pow Flick es una tienda en línea especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizables, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñada para deportistas y equipos que buscan rendimiento y estilo.",
+  description: "Pow Flick is an online store specializing in high-quality sportswear. Find customizable t-shirts, sports uniforms, and accessories for soccer, basketball, baseball, hockey, running, and more. Designed for athletes and teams looking for performance and style.",
   authors: [{ name: "devcodelab" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
