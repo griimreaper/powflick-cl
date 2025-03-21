@@ -10,7 +10,6 @@ export const navigation = [
     children: [
       { name: "Product List", path: "/admin/products" },
       { name: "Create Product", path: "/admin/products/create" },
-      { name: "Product Reviews", path: "/admin/products/reviews" }
     ]
   },
 
@@ -46,6 +45,16 @@ export const navigation = [
     icon: duotone.Order,
     children: [
       { name: "Order List", path: "/admin/orders" },
+    ]
+  },
+
+  {
+    name: "Reviews",
+    icon: duotone.Review,
+    children: [
+      { name: "Product Reviews", path: "/admin/reviews/product" },
+      { name: "Order Reviews", path: "/admin/reviews/order" },
+      { name: "Create Review", path: "/admin/reviews/create" },
     ]
   },
 

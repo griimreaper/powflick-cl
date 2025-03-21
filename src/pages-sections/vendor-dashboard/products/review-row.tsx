@@ -14,13 +14,15 @@ import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { Dialog, FormControl, Icon, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { ClosedCaption, CloseFullscreen } from "@mui/icons-material";
+import Link from "next/link";
 
 // ========================================================================
-type Props = { rev: Review, setActualize: Function };
+type Props = { rev: Review, setActualize: Function, orderBy: string };
 // ========================================================================
 
-export default function ReviewRow({ rev, setActualize }: Props) {
-  const { review, isActive, image, user, id, rating, show } = rev || {};
+export default function ReviewRow({ rev, setActualize, orderBy }: Props) {
+  const { review, isActive, image, user, id, rating, show, product, productId } = rev || {};
+
   const { profile } = useDashboardStore();
   const { token } = profile;
 
@@ -66,18 +68,22 @@ export default function ReviewRow({ rev, setActualize }: Props) {
     }
   };
 
-
   return (
     <>
       <StyledTableRow tabIndex={-1} role="checkbox">
         <StyledTableCell align="left">
-          <FlexBox alignItems="center" gap={1.5}>
+          <FlexBox alignItems="center" gap={1.5} maxWidth={'20em'} overflow={'hidden'}>
             <Avatar
               alt="product"
-              src={image}
+              src={orderBy === 'image' ? image : product?.images[0]}
               sx={{ borderRadius: 2, cursor: "pointer" }}
               onClick={() => setIsPreviewOpen(true)} // Abrir diálogo
             />
+            {orderBy === 'product' &&
+              <Link href={'/products/' + productId}>
+                <Paragraph whiteSpace={'nowrap'} fontWeight={'100px'} textOverflow={'ellipsis'}>{product?.title}</Paragraph>
+              </Link>
+            }
           </FlexBox>
         </StyledTableCell>
 
@@ -140,7 +146,7 @@ export default function ReviewRow({ rev, setActualize }: Props) {
 
         {/* Imagen ampliada */}
         <img
-          src={image}
+          src={orderBy === "image" ? image : product?.images[0]}
           alt="Preview"
           style={{ width: "100%", height: "auto", display: "block" }}
         />

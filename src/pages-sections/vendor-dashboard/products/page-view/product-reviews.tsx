@@ -20,8 +20,13 @@ import { useDashboardStore } from "store/dashboard";
 import Pagination from "./Pagination";
 
 // TABLE HEADING DATA LIST
-const tableHeading = [
-  { id: "image", label: "Image", align: "left" },
+const tableHeading = (type: 'ORDER' | 'PRODUCT' | null) => [
+  type === 'ORDER' ?
+    { id: "image", label: "Image", align: "left" } :
+    [
+      { id: "product", label: "Product", align: "left" },
+      { id: "image", label: "Image", align: "left" }
+    ],
   { id: "customer", label: "Customer", align: "left" },
   { id: "rating", label: "Rating", align: "left" },
   { id: "comment", label: "Comment", align: "left" },
@@ -33,13 +38,14 @@ const tableHeading = [
 // =============================================================================
 // =============================================================================
 
-export default function ProductReviewsPageView() {
+export default function ProductReviewsPageView({ type }: { type: 'ORDER' | 'PRODUCT' | null }) {
   const [reviewList, setReviewList] = useState<ReviewsData>();
   const { actualize, setActualize } = useHearingEvent();
   const [filters, setFilters] = useState<FiltersReview>({
     isActive: "",
     rating: "",
-    type: null,
+    type,
+    orderBy: type === 'ORDER' ? 'image' : 'product',
     search: "",
     page: 1,
     limit: 6,
@@ -75,7 +81,7 @@ export default function ProductReviewsPageView() {
                 order={'asc'}
                 hideSelectBtn
                 orderBy={''}
-                heading={tableHeading}
+                heading={tableHeading(type)}
                 rowCount={Number(reviewList?.total)}
                 numSelected={Number(reviewList?.totalPages)}
                 onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
@@ -84,7 +90,7 @@ export default function ProductReviewsPageView() {
 
               <TableBody>
                 {reviewList?.reviews.map((review) => (
-                  <ReviewRow rev={review} key={review.id} setActualize={setActualize}/>
+                  <ReviewRow rev={review} key={review.id} setActualize={setActualize} orderBy={filters.orderBy} />
                 ))}
               </TableBody>
             </Table>
