@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { ProductDetailsPageView } from "pages-sections/product-details/page-view";
 import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 import { cache } from "react";
+import ProductSeo from "./ProductSeo";
 
 const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>(); 
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos en milisegundos
@@ -48,6 +49,27 @@ export async function generateMetadata({
 
     const { product } = detail;
 
+    const structuredData = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": product.title,
+      "description": product.short_description || "Default Description",
+      "image": product.images.map((img: string) => img), // Array de imágenes
+      "brand": {
+        "@type": "Brand",
+        "name": "Pow Flick"
+      },
+      "sku": product.slug || "",
+      "offers": {
+        "@type": "Offer",
+        "url": `https://www.powflick.com/products/${params.slug}`,
+        "priceCurrency": "USD",
+        "price": product.price,
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    };
+
     return {
       metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
       title: `${product.title} - Pow Flick`,
@@ -86,6 +108,9 @@ export async function generateMetadata({
         index: true,
         follow: true,
       },
+      other: {
+        "structured-data": JSON.stringify(structuredData),
+      },
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
@@ -119,7 +144,12 @@ export default async function ProductDetails({
       );
     }
 
-    return <ProductDetailsPageView detail={detail} />;
+    return (
+      <>
+        <ProductSeo product={detail.product} />
+        <ProductDetailsPageView detail={detail} />;
+      </>
+    )
   } catch (error) {
     console.error("Error rendering product details:", error);
     notFound();
