@@ -19,7 +19,7 @@ export default function ImageUploader({
 }) {
   const [images, setImages] = useState<(string | null)[]>([
     ...(defaultImages || []), // Utiliza defaultImages si existe
-    ...new Array(4 - (defaultImages?.length || 0)).fill(null), // Rellena con null hasta tener 4 elementos
+    ...new Array(Math.max(0, 4 - (defaultImages?.length || 0))).fill(null),  // Rellena con null hasta tener 4 elementos
   ]);
   const [files, setFiles] = useState<(File | null)[]>(new Array(4).fill(null));
 
