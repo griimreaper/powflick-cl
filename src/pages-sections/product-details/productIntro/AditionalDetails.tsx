@@ -37,8 +37,8 @@ interface detailProps {
 
 interface SocksItem {
   name: string;
-  image: string;
-  price?: number;
+  image?: string;
+  hex?: number;
 }
 
 interface AditionalDetailsProps {
@@ -185,7 +185,9 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
             onClick={() => handleItemChange(type, item.name)}
             style={{
               textTransform: "none",
-              display: "block",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
               width: "100%",
               padding: compact ? "0.2rem" : "0.5rem",
               background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
@@ -212,13 +214,19 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 </Zoom>
               </div>
             ) : (
-              <Image
+              <>
+              {item.image ?
+                <Image
                 src={item.image}
                 alt={item.name}
                 width={imageSize}
                 height={imageSize}
                 style={{ borderRadius: "10px" }}
-              />
+                />
+                : 
+                <Box bgcolor={item.hex} width={25} height={25} borderRadius={'100%'}></Box>
+              }
+              </>
             )}
             <Typography variant="body2" align="center">
               {type === "socks" ? killParenthesisIn(item.name) : item.name}
