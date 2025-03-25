@@ -68,23 +68,27 @@ const ContactUs = () => {
   return (
     <>
       <Box
-        sx={{ py: 10 }}
+        sx={{
+          py: { xs: 2, md: 10 },
+          overflow: "auto",
+          height: { xs: "auto" },
+        }}
         style={{
           padding: 20,
           width: "100%",
-          height: "100vh",
+          minHeight: "100vh", // cambiado de height a minHeight
           backgroundImage: `url(/assets/images/contact/POWFLICK_CONTACT.png)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "top",
-      
+
           top: 0,
           left: 0,
           borderRadius: 8,
           zIndex: 1,
         }}
       >
-        <Grid container spacing={4} mt={6}>
+        <Grid container spacing={4} mt={{ xs: 2, md: 6 }}>
           <Grid item xs={12} md={5}></Grid>
           <Grid item xs={12} md={7}>
             <Title
