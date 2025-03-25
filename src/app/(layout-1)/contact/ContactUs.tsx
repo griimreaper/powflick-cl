@@ -187,25 +187,23 @@ const ContactUs = () => {
             <Box mb={4} mt={4}>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
                 <Span fontWeight={600}>Brand Name: </Span>
-                Powflick Operated by: Squidgy Brand Management (Foshan) Co.,
-                Ltd.
+                BLUE STAR TRADING LIMITED
               </Typography>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
                 <Span fontWeight={600}>Physical Address: </Span>
-                B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict,
-                Nanhai District, Foshan City, Guangdong Province, China
+                RM C，6/F，WORLD TRUST TOWER 50 STANLEY STREET CENTRAL HK
               </Typography>
-              <Typography fontSize={15} fontWeight={200} color={"white"}>
+              {/* <Typography fontSize={15} fontWeight={200} color={"white"}>
                 <Span fontWeight={600}>Postal Code: </Span>
                 528000
               </Typography>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
                 <Span fontWeight={600}>Tax ID Number: </Span>
                 91440605MAE5F5JC1T
-              </Typography>
+              </Typography> */}
               <Typography fontSize={15} fontWeight={200} color={"white"}>
                 <Span fontWeight={600}>Primary Email: </Span>
-                powflick@gmail.com
+                support@powflick.com
               </Typography>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
                 <Span fontWeight={600}>Contact Phone: </Span>
