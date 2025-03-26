@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import InfoIcon from "@mui/icons-material/Info";
 import {
   Box,
   FormControl,
@@ -13,7 +12,6 @@ import {
   Typography,
   Card,
   CardContent,
-  Tooltip,
 } from "@mui/material";
 import { useDashboardStore } from "store/dashboard";
 import { Direction } from "models/types";
@@ -25,7 +23,6 @@ import Image from "next/image";
 import DialogDrawer from "components/header/components/dialog-drawer";
 import useHeader from "components/header/hooks/use-header";
 import { goToStripe } from "../../../../fpixel";
-import CartItem from "pages-sections/cart/cart-item";
 
 export default function CheckoutForm() {
   const router = useRouter();
@@ -94,7 +91,6 @@ export default function CheckoutForm() {
         toggleDialog={toggleDialog}
         redirectUrl="/checkout"
       ></DialogDrawer>
-
       <Card>
         <CardContent>
           {/* Selector de direcciones */}
@@ -193,16 +189,10 @@ export default function CheckoutForm() {
         </Card>
       )}
 
-      <Grid item md={12} xs={12}>
-        {cart.map((item) => (
-          <CartItem key={item.product.id} item={item} />
-        ))}
-      </Grid>
-
       {/* Botones de navegación */}
       <Box sx={{ mt: 3 }}>
         <Grid container spacing={6}>
-          {/* <Grid item sm={6} xs={12}>
+          <Grid item sm={6} xs={12}>
             <Button
               LinkComponent={Link}
               variant="outlined"
@@ -210,11 +200,11 @@ export default function CheckoutForm() {
               href="/cart"
               fullWidth
             >
-              Back to Cartasd
+              Back to Cart
             </Button>
-          </Grid> */}
+          </Grid>
 
-          <Grid item sm={12} xs={12}>
+          <Grid item sm={6} xs={12}>
             <Button
               id="continuePayment-button-event-click"
               variant="contained"
@@ -306,12 +296,6 @@ export default function CheckoutForm() {
               }}
               fullWidth
               disabled={!selectedDirection || cart.length === 0}
-              sx={{
-                "&.Mui-disabled": {
-                  backgroundColor: "gray", // Cambia este color al que prefieras
-                  color: "white", // Cambia este color al que prefieras
-                },
-              }}
             >
               {loading ? (
                 // Contenido cuando está cargando
@@ -322,18 +306,7 @@ export default function CheckoutForm() {
                   height={20}
                 />
               ) : (
-                <>
-                  Proceed to Payment
-                  {!selectedDirection && (
-                    <Tooltip
-                      title="
-To continue you must enter an address"
-                      arrow
-                    >
-                      <InfoIcon sx={{ ml: 1 }} />
-                    </Tooltip>
-                  )}
-                </>
+                "Proceed to Payment"
               )}
             </Button>
           </Grid>
