@@ -22,14 +22,22 @@ import {
   DialogActions,
 } from "@mui/material";
 import { purchase } from "../../../fpixel";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { getProfile } from "services/DashboardUser";
+import { useSession } from "next-auth/react";
 
 export default function ThanksForBuy({ id }: { id: string }) {
+  const { profile, setData, removeProfile, setProfileUser } =
+    useDashboardStore();
   const [order, setOrder] = useState<any>({});
   const [open, setOpen] = useState(false);
   const state = useDashboardStore();
   const { clearCart } = useShoppingCartStore();
-  const { token } = state.profile;
   const router = useRouter();
+  const { data: session } = useSession();
+
+  const { token } = state.profile;
+  let rol = session?.user?.email;
 
   console.log(state.profile.genericResponseUser);
 
@@ -47,24 +55,55 @@ export default function ThanksForBuy({ id }: { id: string }) {
   };
 
   const discountNextBuy = async () => {
-    // Crear cupón de descuento
-    const coupon = await createCoupon({
-      title: "10% Discount",
-      content: "10% off on your next purchase",
-      discount: 10,
-    });
+    try {
+      // Crear cupón de descuento
+      const coupon = await createCoupon({
+        title: "10% Discount",
+        content: "10% off on your next purchase",
+        discount: 10,
+      });
 
-    // Asignar cupón al usuario
-    if (token) {
-      await createCouponUser(
-        token,
-        { couponId: coupon.id, active: true },
-        coupon.coupon.title
-      );
+      // Asignar cupón al usuario
+      if (token) {
+        const responseCouponUser = await createCouponUser(
+          token,
+          { couponId: coupon.id, active: true },
+          coupon.coupon.title
+        );
+
+        // Validar respuesta y mostrar alertas
+        if (responseCouponUser.status === 201) {
+          showSuccessAlert(
+            "Success!",
+            "The discount has been successfully applied to your account"
+          );
+        } else {
+          showErrorAlert("Alert!", responseCouponUser.data.message);
+        }
+      }
+
+      // Mostrar modal
+      // setOpen(true);
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        showErrorAlert("Alert!", error.response.data.message);
+      } else {
+        showErrorAlert("Alert!", "An unexpected error occurred.");
+      }
     }
+  };
 
-    // Mostrar modal
-    setOpen(true);
+  const refetch = async () => {
+    try {
+      const response = await getProfile(token!);
+      setData({ ...response, token, rol });
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        showErrorAlert("Error!", error.response.data.message);
+      } else {
+        showErrorAlert("Error!", "An unexpected error occurred while fetching the profile.");
+      }
+    }
   };
 
   useEffect(() => {
@@ -161,6 +200,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
     fetchData();
     clearCart();
     discountNextBuy();
+    refetch();
   }, [token]);
 
   return (

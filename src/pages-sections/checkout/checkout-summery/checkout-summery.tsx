@@ -65,6 +65,9 @@ export default function CheckoutSummary({ data }: any) {
   const discountValue = selectedCoupon
     ? subtotal * (selectedCoupon.discount / 100)
     : 0;
+  
+  console.log(profile.genericResponseUser.couponUsers);
+  
 
   return (
     <Card sx={{ padding: 3 }}>
@@ -80,11 +83,13 @@ export default function CheckoutSummary({ data }: any) {
             value={selectedCoupon?.id || ""}
           >
             <option value="">Select a coupon</option>
-            {profile.genericResponseUser.couponUsers.map((couponUser) => (
-              <option key={couponUser.coupon.id} value={couponUser.coupon.id}>
-                {couponUser.coupon.title}
-              </option>
-            ))}
+            {profile.genericResponseUser.couponUsers
+              .filter((couponUser) => couponUser.active)
+              .map((couponUser) => (
+                <option key={couponUser.coupon.id} value={couponUser.coupon.id}>
+                  {couponUser.coupon.title}
+                </option>
+              ))}
           </select>
         }
       />

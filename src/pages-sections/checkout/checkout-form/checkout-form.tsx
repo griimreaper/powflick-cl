@@ -49,7 +49,7 @@ export default function CheckoutForm() {
     }
   };
 
-  console.log(coupon);
+  console.log(cart);
 
   useEffect(() => {
     const savedData = localStorage.getItem("pendingAddress");
