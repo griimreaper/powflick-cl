@@ -11,6 +11,7 @@ import "./global.css";
 import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
+import IntercomChat from "./IntercomChat";
 
 export default function RootLayout({
   children,
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className={openSans.className}>
         <React.StrictMode>
           <GlobalProvider>
+            <IntercomChat />
             <FloatingWhatsApp />
             {children}
           </GlobalProvider>
