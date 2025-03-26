@@ -6,19 +6,24 @@ import { notFound } from "next/navigation";
 import { ProductDetailsPageView } from "pages-sections/product-details/page-view";
 import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 import { cache } from "react";
+import ProductSeo from "./ProductSeo";
 
-const cacheMap = new Map<string, detailProps | null>(); // Capa de caché local
+const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>(); 
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos en milisegundos
 
 const getProductsBySlugCached = cache(async (slug: string): Promise<detailProps | null> => {
-  if (cacheMap.has(slug)) {
-    return cacheMap.get(slug)!; // Devuelve desde la caché si existe
+  const cached = cacheMap.get(slug);
+  const now = Date.now();
+
+  if (cached && cached.expiry > now) {
+    return cached.data; // Devuelve desde caché si no ha expirado
   }
 
   const result = await getProductsBySlug(slug);
-  cacheMap.set(slug, result); // Almacena en caché
+  cacheMap.set(slug, { data: result, expiry: now + CACHE_DURATION }); // Guarda en caché con tiempo de expiración
+
   return result;
 });
-
 
 
 // Helper: Maneja el caché de manera centralizada
@@ -43,6 +48,27 @@ export async function generateMetadata({
     if (!detail || detail.product.status === "draft" || !detail.product.images) return;
 
     const { product } = detail;
+
+    const structuredData = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": product.title,
+      "description": product.short_description || "Default Description",
+      "image": product.images.map((img: string) => img), // Array de imágenes
+      "brand": {
+        "@type": "Brand",
+        "name": "Pow Flick"
+      },
+      "sku": product.slug || "",
+      "offers": {
+        "@type": "Offer",
+        "url": `https://www.powflick.com/products/${params.slug}`,
+        "priceCurrency": "USD",
+        "price": product.price,
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    };
 
     return {
       metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
@@ -82,6 +108,9 @@ export async function generateMetadata({
         index: true,
         follow: true,
       },
+      other: {
+        "structured-data": JSON.stringify(structuredData),
+      },
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
@@ -115,7 +144,12 @@ export default async function ProductDetails({
       );
     }
 
-    return <ProductDetailsPageView detail={detail} />;
+    return (
+      <>
+        <ProductSeo product={detail.product} />
+        <ProductDetailsPageView detail={detail} />;
+      </>
+    )
   } catch (error) {
     console.error("Error rendering product details:", error);
     notFound();

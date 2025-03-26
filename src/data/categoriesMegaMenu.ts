@@ -1,5 +1,3 @@
-import Icons from "icons/duotone";
-
 const categoriesMegaMenu = [
   {
     title: "Custom Soccer Jersey",

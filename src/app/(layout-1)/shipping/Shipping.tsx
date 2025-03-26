@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react"; 
+import { useSession } from "next-auth/react";
 import { getOrder } from "services/ThanksForBuying";
 
 const steps = [
@@ -42,8 +42,6 @@ const steps = [
 ];
 
 const Shipping = () => {
-
-
   return (
     <Box sx={{ backgroundColor: "white" }}>
       {/* Banner */}
@@ -146,61 +144,27 @@ const Shipping = () => {
           </Typography>
         </Container>
         <Box
-          sx={{ width: { xs: "20%", md: "10%" } }}
-          component="img"
-          src="/shipping/forms/TIME_SHIPPING_FORMAS-6.png"
-          alt="Banner Icon"
-          style={{
+          sx={{
+            width: { xs: "20%", md: "15%" },
             position: "absolute",
-            top: "50%",
+            top: { xs: "55%", md: "15%" },
             left: 0,
             zIndex: -1,
           }}
+          component="img"
+          src="/shipping/forms/TIME_SHIPPING_FORMAS-6.png"
+          alt="Banner Icon"
         />
 
         {/* Stepper con imágenes encima */}
-        <Container sx={{ mt: 5 }}>
-          <Stepper
-          
-            alternativeLabel
-            sx={{
-              display: "flex",
-              flexWrap: "wrap", // Permite que los steps se ajusten
-              justifyContent: "center", // Centra los steps
-              gap: 2, // Espacio entre los elementos
-            }}
-            connector={
-              <StepConnector
-                sx={{ "& .MuiStepConnector-line": { borderWidth: 4 } }}
-              />
-            }
-          >
-            {steps.map((step, index) => (
-              <Step key={index}>
-                <StepLabel>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                     
-                      borderRadius: 1, // Añadir borde redondeado
-                      transition: "background-color 0.3s ease", // Añadir transición para suavizar el cambio de color
-                    }}
-                  >
-                    {/* Imagen arriba del Step */}
-                    <Image
-                      src={step.img}
-                      alt={step.label}
-                      width={60}
-                      height={80}
-                    />
-                  </Box>
-                </StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Container>
+        <Image
+          src={"/shipping/TIME_SHIPPING_STEPS.png"}
+          alt="Banner Background"
+          layout="responsive"
+          width={200}
+          height={200}
+          style={{ width: "100%", height: "auto" }}
+        />
       </Box>
 
       {/*times */}
@@ -347,7 +311,7 @@ const Shipping = () => {
             will contact you if needed.
           </Typography>
         </Box>
-   
+
         <Box
           sx={{ width: { xs: "20%", md: "10%" } }}
           component="img"

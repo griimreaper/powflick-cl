@@ -4,16 +4,13 @@ import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 // MUI ICON COMPONENTS
-import Add from "@mui/icons-material/Add";
 import Close from "@mui/icons-material/Close";
-import Remove from "@mui/icons-material/Remove";
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 import { H6, Tiny } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
 // CUSTOM DATA MODEL
-import { CartItem } from "contexts/CartContext";
 import { ShoppingCartStoreType } from "store/interfaces/interface";
 import { useShoppingCartStore } from "store/shoppingCart";
 

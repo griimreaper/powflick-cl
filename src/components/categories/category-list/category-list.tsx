@@ -3,21 +3,13 @@ import MegaMenu1 from "../mega-menu/mega-menu-1";
 import MegaMenu2 from "../mega-menu/mega-menu-2";
 import CategoryListItem from "../category-list-item";
 // NAVIGATION DATA
-import { categoryMenus } from "data/navigations";
-// STYLED COMPONENT
 import { StyledRoot } from "./styles";
 // PROPS TYPE
 import { Props } from "./types";
-import { ContactMail, Help, Info, Public, Store } from "@mui/icons-material";
+import { ContactMail, Help, Info, Store } from "@mui/icons-material";
 import { CategoryItem } from "../types";
-import { useQueryClient } from "@tanstack/react-query";
-import { DataStructure } from "app/types";
 
 export default function CategoryList({ open, position = "absolute", data }: Props) {
-  const queryClient = useQueryClient();
-
-  // const data = queryClient.getQueryData<DataStructure["navbar"]>(["navbarData"]);
-
   const categoryMenus: CategoryItem[] = [
     {
       icon: Store,

@@ -12,7 +12,7 @@ import { Paragraph, Span } from "components/Typography";
 import { currency } from "lib";
 import FlexBetween from "components/flex-box/flex-between";
 import { useEffect, useState } from "react";
-import { Coupon } from "app/types";
+import { Coupon } from "models/types";
 import { useDashboardStore } from "store/dashboard";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { FlexBox } from "components/flex-box";

@@ -85,232 +85,239 @@ export default function CheckoutForm() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <Box
+      sx={{
+      display: "flex",
+      flexDirection: "column",
+      gap: 2,
+      height: "50vh" ,
+      }}
+    >
       <DialogDrawer
-        dialogOpen={dialogOpen}
-        toggleDialog={toggleDialog}
-        redirectUrl="/checkout"
+      dialogOpen={dialogOpen}
+      toggleDialog={toggleDialog}
+      redirectUrl="/checkout"
       ></DialogDrawer>
       <Card>
-        <CardContent>
-          {/* Selector de direcciones */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              flexDirection: { xs: "column", sm: "row" },
-            }}
+      <CardContent>
+        {/* Selector de direcciones */}
+        <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          flexDirection: { xs: "column", sm: "row" },
+        }}
+        >
+        <FormControl fullWidth sx={{ flex: 2 }}>
+          <InputLabel id="direction-select-label">
+          Select Direction
+          </InputLabel>
+          <Select
+          labelId="direction-select-label"
+          value={selectedDirection?.id || ""}
+          onChange={handleDirectionChange}
+          fullWidth
           >
-            <FormControl fullWidth sx={{ flex: 2 }}>
-              <InputLabel id="direction-select-label">
-                Select Direction
-              </InputLabel>
-              <Select
-                labelId="direction-select-label"
-                value={selectedDirection?.id || ""}
-                onChange={handleDirectionChange}
-                fullWidth
-              >
-                <MenuItem value="">
-                  <em>Select Direction</em>
-                </MenuItem>
-                {directions.map(({ id, country, city, district }) => (
-                  <MenuItem key={id} value={id}>
-                    {`${country}, ${city}, ${district}`}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <MenuItem value="">
+            <em>Select Direction</em>
+          </MenuItem>
+          {directions.map(({ id, country, city, district }) => (
+            <MenuItem key={id} value={id}>
+            {`${country}, ${city}, ${district}`}
+            </MenuItem>
+          ))}
+          </Select>
+        </FormControl>
 
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={toggleForm}
-              sx={{ textTransform: "uppercase", minWidth: "150px" }}
-            >
-              Insert a New Direction
-            </Button>
-          </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={toggleForm}
+          sx={{ textTransform: "uppercase", minWidth: "150px" }}
+        >
+          Insert a New Direction
+        </Button>
+        </Box>
 
-          {/* Formulario para nueva dirección */}
-          {showForm && (
-            <DirectionForm
-              address={null}
-              toggleForm={toggleForm}
-              toggleDialog={toggleDialog}
-            />
-          )}
-        </CardContent>
+        {/* Formulario para nueva dirección */}
+        {showForm && (
+        <DirectionForm
+          address={null}
+          toggleForm={toggleForm}
+          toggleDialog={toggleDialog}
+        />
+        )}
+      </CardContent>
       </Card>
 
       {/* Información de la dirección seleccionada */}
       {selectedDirection && !showForm && (
-        <Card>
-          <CardContent>
-            <Typography variant="h6" fontWeight="bold" gutterBottom>
-              Selected Direction:
-            </Typography>
-            <Typography>
-              <strong>Country:</strong> {selectedDirection.country}
-            </Typography>
-            <Typography>
-              <strong>City:</strong> {selectedDirection.city}
-            </Typography>
-            <Typography>
-              <strong>Location:</strong> {selectedDirection.district}
-            </Typography>
-            {selectedDirection.address && (
-              <Typography>
-                <strong>Address:</strong> {selectedDirection.address}
-              </Typography>
-            )}
-            {selectedDirection.addressReference && (
-              <Typography>
-                <strong>Address Reference:</strong>{" "}
-                {selectedDirection.addressReference}
-              </Typography>
-            )}
-            {selectedDirection.postalCode && (
-              <Typography>
-                <strong>Postal Code:</strong> {selectedDirection.postalCode}
-              </Typography>
-            )}
-            {selectedDirection.neighborhood && (
-              <Typography>
-                <strong>Neighborhood:</strong> {selectedDirection.neighborhood}
-              </Typography>
-            )}
-            {selectedDirection.phone && (
-              <Typography>
-                <strong>Phone:</strong> {selectedDirection.phone}
-              </Typography>
-            )}
-          </CardContent>
-        </Card>
+      <Card>
+        <CardContent>
+        <Typography variant="h6" fontWeight="bold" gutterBottom>
+          Selected Direction:
+        </Typography>
+        <Typography>
+          <strong>Country:</strong> {selectedDirection.country}
+        </Typography>
+        <Typography>
+          <strong>City:</strong> {selectedDirection.city}
+        </Typography>
+        <Typography>
+          <strong>Location:</strong> {selectedDirection.district}
+        </Typography>
+        {selectedDirection.address && (
+          <Typography>
+          <strong>Address:</strong> {selectedDirection.address}
+          </Typography>
+        )}
+        {selectedDirection.addressReference && (
+          <Typography>
+          <strong>Address Reference:</strong>{" "}
+          {selectedDirection.addressReference}
+          </Typography>
+        )}
+        {selectedDirection.postalCode && (
+          <Typography>
+          <strong>Postal Code:</strong> {selectedDirection.postalCode}
+          </Typography>
+        )}
+        {selectedDirection.neighborhood && (
+          <Typography>
+          <strong>Neighborhood:</strong> {selectedDirection.neighborhood}
+          </Typography>
+        )}
+        {selectedDirection.phone && (
+          <Typography>
+          <strong>Phone:</strong> {selectedDirection.phone}
+          </Typography>
+        )}
+        </CardContent>
+      </Card>
       )}
 
       {/* Botones de navegación */}
       <Box sx={{ mt: 3 }}>
-        <Grid container spacing={6}>
-          <Grid item sm={6} xs={12}>
-            <Button
-              LinkComponent={Link}
-              variant="outlined"
-              color="primary"
-              href="/cart"
-              fullWidth
-            >
-              Back to Cart
-            </Button>
-          </Grid>
-
-          <Grid item sm={6} xs={12}>
-            <Button
-              id="continuePayment-button-event-click"
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                handleProceedToPayment();
-                (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
-                (window as any).dataLayer.push({
-                  event: "Go To Stripe",
-                  ecommerce: {
-                    currency: "USD",
-                    value: Number(total * (1 - (coupon?.discount || 0) / 100)),
-                    coupon: coupon?.title || null,
-                    discount: coupon?.discount || 0,
-                    items: cart.map(
-                      ({
-                        product,
-                        totalCustomization,
-                        totalProduct,
-                        amount,
-                      }) => {
-                        const {
-                          id,
-                          price,
-                          title,
-                          product_categories,
-                          colors,
-                          slug,
-                          sport,
-                        } = product;
-                        return {
-                          item_id: id,
-                          item_name: title,
-                          affiliation: "Google Merchandise Store",
-                          item_brand: "Pow Flick",
-                          item_category: product_categories.split("|")[0],
-                          item_category2: sport,
-                          item_list_name: slug,
-                          item_variant: colors ? colors[0] : null,
-                          price: Number(price),
-                          quantity: amount,
-                          total_product: Number(totalProduct),
-                          total_customizations: Number(totalCustomization),
-                        };
-                      }
-                    ),
-                  },
-                });
-                goToStripe("goToStripe", {
-                  ecommerce: {
-                    currency: "USD",
-                    value: Number(total * (1 - (coupon?.discount || 0) / 100)),
-                    coupon: coupon?.title || null,
-                    discount: coupon?.discount || 0,
-                    items: cart.map(
-                      ({
-                        product,
-                        totalCustomization,
-                        totalProduct,
-                        amount,
-                      }) => {
-                        const {
-                          id,
-                          price,
-                          title,
-                          product_categories,
-                          colors,
-                          slug,
-                          sport,
-                        } = product;
-                        return {
-                          item_id: id,
-                          item_name: title,
-                          // affiliation: "Google Merchandise Store",
-                          item_brand: "Pow Flick",
-                          item_category: product_categories.split("|")[0],
-                          item_category2: sport,
-                          item_list_name: slug,
-                          item_variant: colors ? colors[0] : null,
-                          price: Number(price),
-                          quantity: amount,
-                          total_product: Number(totalProduct),
-                          total_customizations: Number(totalCustomization),
-                        };
-                      }
-                    ),
-                  },
-                });
-              }}
-              fullWidth
-              disabled={!selectedDirection || cart.length === 0}
-            >
-              {loading ? (
-                // Contenido cuando está cargando
-                <Image
-                  src="/assets/images/Double Ring-1s-200px.png"
-                  alt="Loader GIF"
-                  width={20}
-                  height={20}
-                />
-              ) : (
-                "Proceed to Payment"
-              )}
-            </Button>
-          </Grid>
+      <Grid container spacing={6}>
+        <Grid item sm={6} xs={12}>
+        <Button
+          LinkComponent={Link}
+          variant="outlined"
+          color="primary"
+          href="/cart"
+          fullWidth
+        >
+          Back to Cart
+        </Button>
         </Grid>
+
+        <Grid item sm={6} xs={12}>
+        <Button
+          id="continuePayment-button-event-click"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+          handleProceedToPayment();
+          (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+          (window as any).dataLayer.push({
+            event: "Go To Stripe",
+            ecommerce: {
+            currency: "USD",
+            value: Number(total * (1 - (coupon?.discount || 0) / 100)),
+            coupon: coupon?.title || null,
+            discount: coupon?.discount || 0,
+            items: cart.map(
+              ({
+              product,
+              totalCustomization,
+              totalProduct,
+              amount,
+              }) => {
+              const {
+                id,
+                price,
+                title,
+                product_categories,
+                colors,
+                slug,
+                sport,
+              } = product;
+              return {
+                item_id: id,
+                item_name: title,
+                affiliation: "Google Merchandise Store",
+                item_brand: "Pow Flick",
+                item_category: product_categories.split("|")[0],
+                item_category2: sport,
+                item_list_name: slug,
+                item_variant: colors ? colors[0] : null,
+                price: Number(price),
+                quantity: amount,
+                total_product: Number(totalProduct),
+                total_customizations: Number(totalCustomization),
+              };
+              }
+            ),
+            },
+          });
+          goToStripe("goToStripe", {
+            ecommerce: {
+            currency: "USD",
+            value: Number(total * (1 - (coupon?.discount || 0) / 100)),
+            coupon: coupon?.title || null,
+            discount: coupon?.discount || 0,
+            items: cart.map(
+              ({
+              product,
+              totalCustomization,
+              totalProduct,
+              amount,
+              }) => {
+              const {
+                id,
+                price,
+                title,
+                product_categories,
+                colors,
+                slug,
+                sport,
+              } = product;
+              return {
+                item_id: id,
+                item_name: title,
+                // affiliation: "Google Merchandise Store",
+                item_brand: "Pow Flick",
+                item_category: product_categories.split("|")[0],
+                item_category2: sport,
+                item_list_name: slug,
+                item_variant: colors ? colors[0] : null,
+                price: Number(price),
+                quantity: amount,
+                total_product: Number(totalProduct),
+                total_customizations: Number(totalCustomization),
+              };
+              }
+            ),
+            },
+          });
+          }}
+          fullWidth
+          disabled={!selectedDirection || cart.length === 0}
+        >
+          {loading ? (
+          // Contenido cuando está cargando
+          <Image
+            src="/assets/images/Double Ring-1s-200px.png"
+            alt="Loader GIF"
+            width={20}
+            height={20}
+          />
+          ) : (
+          "Proceed to Payment"
+          )}
+        </Button>
+        </Grid>
+      </Grid>
       </Box>
     </Box>
   );

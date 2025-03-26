@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -37,8 +37,8 @@ interface detailProps {
 
 interface SocksItem {
   name: string;
-  image: string;
-  price?: number;
+  image?: string;
+  hex?: number;
 }
 
 interface AditionalDetailsProps {
@@ -61,6 +61,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   const { customization } = useCustomizationStore();
   const { list, setCustomizationsInList } = useCustomizationsStore();
   const isLocked = counter < 20;
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   const handleSetForAll = (name: keyof Customization, value: string) => {
     const foundItem = list.find(({ productId }) => productId === id);
@@ -184,7 +185,9 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
             onClick={() => handleItemChange(type, item.name)}
             style={{
               textTransform: "none",
-              display: "block",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
               width: "100%",
               padding: compact ? "0.2rem" : "0.5rem",
               background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
@@ -211,13 +214,19 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 </Zoom>
               </div>
             ) : (
-              <Image
+              <>
+              {item.image ?
+                <Image
                 src={item.image}
                 alt={item.name}
                 width={imageSize}
                 height={imageSize}
                 style={{ borderRadius: "10px" }}
-              />
+                />
+                : 
+                <Box bgcolor={item.hex} width={25} height={25} borderRadius={'100%'}></Box>
+              }
+              </>
             )}
             <Typography variant="body2" align="center">
               {type === "socks" ? killParenthesisIn(item.name) : item.name}
@@ -269,6 +278,59 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 </div>
               </div>
             ))}
+            {detail.SizeGuide && (
+              <>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                  mt: 2,
+                  width: "100%",
+               
+                  }}
+                  onClick={(e) => {
+                  e.stopPropagation();
+                  setShowSizeGuide(!showSizeGuide);
+                  }}
+                >
+                  Size Guide
+                </Typography>
+                {showSizeGuide && (
+                    <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: 2,
+                      m: { xs: 1, md: 2 },
+                    }}
+                    >
+                    {detail.SizeGuide.image1 && (
+                      <Zoom>
+                        <img
+                          src={detail.SizeGuide.image1}
+                          alt="Size Guide 1"
+                          width={200}
+                          height={100}
+                        />
+                      </Zoom>
+                    )}
+                    {detail.SizeGuide.image2 && (
+                      <Zoom>
+                        <img
+                          src={detail.SizeGuide.image2}
+                          alt="Size Guide 2"
+                          width={200}
+                          height={100}
+                        />
+                      </Zoom>
+                    )}
+                  </Box>
+                )}
+              </>
+            )}
           </div>,
           "size"
         )}
@@ -334,39 +396,6 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           <Typography>{detail.ShippingTypes}</Typography>,
           "shipping-types"
         )} */}
-      {detail.SizeGuide &&
-        renderSection(
-          `Size Guide`,
-          <div style={{ textAlign: "center" }}>
-            {detail.SizeGuide.image1 && (
-              <div>
-                <ZoomInOutlined sx={{ position: "absolute", left: "65%" }} />
-                <Zoom>
-                  <img
-                    src={detail.SizeGuide.image1}
-                    alt="Size Guide 1"
-                    width={200}
-                    height={100}
-                  />
-                </Zoom>
-              </div>
-            )}
-            {detail.SizeGuide.image2 && (
-              <div>
-                <ZoomInOutlined sx={{ position: "absolute", left: "65%" }} />
-                <Zoom>
-                  <img
-                    src={detail.SizeGuide.image2}
-                    alt="Size Guide 2"
-                    width={200}
-                    height={100}
-                  />
-                </Zoom>
-              </div>
-            )}
-          </div>,
-          "size-guide"
-        )}
     </div>
   );
 };

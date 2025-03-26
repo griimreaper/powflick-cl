@@ -9,11 +9,11 @@ import SearchIcon from "@mui/icons-material/Search"; // Importar el icono de lup
 // CUSTOM ICON COMPONENT
 import ShoppingBagOutlined from "icons/ShoppingBagOutlined";
 // GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { SearchInputWithCategory } from "components/search-box";
+import { useDashboardStore } from "store/dashboard";
 
 // ==============================================================
 interface Props {
@@ -29,6 +29,7 @@ export default function LoginCartButtons({
 }: Props) {
   // const { state } = useCart();
   const { cart } = useShoppingCartStore();
+  const state = useDashboardStore();
   const [searchBarOpen, setSearchBarOpen] = useState(false);
 
   const router = useRouter();
@@ -36,33 +37,69 @@ export default function LoginCartButtons({
 
   const { data: session } = useSession();
   const rol = session?.user?.email;
+  const firstName = state.profile?.genericResponseUser?.firstName;
+  const lastName = state.profile?.genericResponseUser?.lastName;
+  const image = state.profile?.genericResponseUser?.image;
 
   const toggleSearchBar = () => setSearchBarOpen(!searchBarOpen);
 
+  console.log("session", state);
+
   return (
     <div>
-      <IconButton onClick={toggleSearchBar}>
-        <SearchIcon sx={ICON_COLOR} /> {/* Agregar el icono de lupa */}
-      </IconButton>
       <IconButton
+        sx={{ borderRadius: "8px" }}
         onClick={() => {
           session
             ? rol === "admin"
-              ? router.push("/vendor/dashboard")
+              ? router.push("/admin/dashboard")
               : router.push("/dashboard/profile")
             : toggleDialog();
         }}
       >
-        <PersonOutline sx={ICON_COLOR} />
+        {session ? (
+          <span
+            style={{
+              color: "#FEFCFC",
+              fontSize: "14px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {/* {image && (
+              <img
+                src={image}
+                alt={`${firstName} ${lastName}`}
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  borderRadius: "50%",
+                  marginRight: "8px",
+                }}
+              />
+            )} */}
+            <PersonOutline sx={ICON_COLOR} />
+            {`Welcome ${firstName} ${lastName}`}
+          </span>
+        ) : (
+          <PersonOutline sx={ICON_COLOR} />
+        )}
+      </IconButton>
+      <IconButton sx={{ borderRadius: "8px" }} onClick={toggleSearchBar}>
+        <SearchIcon sx={ICON_COLOR} /> {/* Agregar el icono de lupa */}
       </IconButton>
 
-      <Badge badgeContent={cart?.length} color="primary" sx={{
-        "& .MuiBadge-badge": {
-          backgroundColor: "#FEFCFC", // Cambia el color de fondo
-          color: "primary.main", // Cambia el color del número
-        }
-      }}>
-        <IconButton onClick={toggleSidenav}>
+      <Badge
+        badgeContent={cart?.length}
+        color="primary"
+        sx={{
+          "& .MuiBadge-badge": {
+            backgroundColor: "#FEFCFC", // Cambia el color de fondo
+            color: "primary.main", // Cambia el color del número
+          },
+        }}
+      >
+        <IconButton sx={{ borderRadius: "8px" }} onClick={toggleSidenav}>
           <ShoppingBagOutlined sx={ICON_COLOR} />
         </IconButton>
       </Badge>
@@ -83,10 +120,10 @@ export default function LoginCartButtons({
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
-            borderRadius: "16px"
+            borderRadius: "16px",
           }}
         >
-          <SearchInputWithCategory onClose={toggleSearchBar}/>
+          <SearchInputWithCategory onClose={toggleSearchBar} />
         </Box>
       </Modal>
     </div>

@@ -2,7 +2,6 @@
 
 import Button from "@mui/material/Button";
 import {
-  useMediaQuery,
   Box,
   styled,
 } from "@mui/material";
@@ -23,9 +22,7 @@ export const RootStyle = styled("div")({
   backgroundColor: "grey.500",
 });
 
-export default function Section7() {
-  const isMobile = useMediaQuery("(max-width: 768px)"); // Detecta pantallas menores a 600px (breakpoint "sm")
-
+export default function Section7({ isMobile }: { isMobile: boolean }) {
   // Determina la imagen según el tamaño de la pantalla
   const backgroundImage = !isMobile
     ? `/assets/images/landing/POWFLICK-19.png`

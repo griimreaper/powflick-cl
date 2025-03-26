@@ -1,18 +1,16 @@
 "use client";
 
-import { memo } from "react";
-import { Box } from "@mui/material";
+import { memo, useEffect, useMemo } from "react";
 import { DataStructure } from "models/types";
-import { signOut, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect } from "react";
-import { getProfile } from "services/DashboardUser";
-import { useDashboardStore } from "store/dashboard";
+import { useMediaQuery } from "@mui/material";
 import MainSection from "./MainSection";
+import { LazyLoadSection } from "./LazyLoadSection";
 import * as fbq from '../../../fpixel';
+
 // GLOBAL CUSTOM COMPONENTS
-const Newsletter = dynamic(() => import("components/newsletter"));
+const Newsletter = dynamic(() => import("components/newsletter"), { ssr: false });
 const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
 
 // LOCAL CUSTOM COMPONENTS
@@ -20,118 +18,69 @@ const Section4 = dynamic(() => import("./section-4"));
 const Section6 = dynamic(() => import("./section-6"));
 const Section7 = dynamic(() => import("./section-7"));
 const Section8 = dynamic(() => import("./section-8"));
+const Box = dynamic(() => import("@mui/material/Box"));
 
 const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
-  const {
-    profile,
-    setData: setProfileData,
-    removeProfile,
-    setProfileUser,
-  } = useDashboardStore();
-
-  const { data: session } = useSession();
-  let token = session?.user?.name?.split("|")[0];
-  let tokenExpiration = session?.user?.name?.split("|")[1];
-  let rol = session?.user?.email;
-  let image = session?.user?.image;
+  const memoizedData = useMemo(() => data?.landing || {}, [data]);
+  const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (token && token !== undefined && !profile.token) {
-        localStorage.setItem("termsAccepted", "true");
-        const response = await getProfile(token);
-
-        setProfileData({ ...response, token, rol });
-        if (image) setProfileUser({ image: image });
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
- useEffect(() => {
-   fbq.init();
- }, []);
-
-
-  useEffect(() => {
-    let logoutTimer: NodeJS.Timeout;
-
-    if (tokenExpiration) {
-      const now = new Date();
-      const tokenExpDate = new Date(String(tokenExpiration));
-      const timeUntilExpiration = tokenExpDate.getTime() - now.getTime();
-
-      if (timeUntilExpiration > 0) {
-        logoutTimer = setTimeout(() => {
-          console.log("El token ha caducado. Deslogueando al usuario...");
-          signOut();
-          removeProfile();
-        }, timeUntilExpiration);
-      } else {
-        signOut();
-        removeProfile();
-      }
-    }
-
-    return () => {
-      clearTimeout(logoutTimer);
-    };
-  }, [tokenExpiration]);
+    fbq.init();
+  }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <MainSection />
+    <div style={{ width: "100%" }}>
+      <MainSection isMobile={isMobile} />
+
       {/* Most Sold Products Section */}
-      <Section4 products={data?.landing?.collections?.mostSoldProducts || []} />
+      <LazyLoadSection id="section4">
+        <Section4 products={memoizedData?.collections?.mostSoldProducts || []} isMobile={isMobile} />
+      </LazyLoadSection>
 
       {/* Banner */}
-      <Box style={{ position: "relative" }}>
-        {/* <img
-          src="/assets/images/landing/POWFLICK_ELEMENTO-1.png"
-          alt="Overlay"
-          style={{
-            position: "absolute",
-            right: 0,
-            top: window.innerWidth <= 768 ? "-200px" : "-300px",
-            zIndex: 2,
-            width: window.innerWidth <= 768 ? "125px" : "250px",
-            height: "auto",
-          }}
-        /> */}
-        <Section7 />
-      </Box>
+      <LazyLoadSection id="section7">
+        <Section7 isMobile={isMobile} />
+      </LazyLoadSection>
 
       {/* Discount Products Section */}
-      <Section6 products={data?.landing?.collections?.discountProducts || []} />
+      <LazyLoadSection id="section6">
+        <Section6 products={memoizedData?.collections?.discountProducts || []} isMobile={isMobile} />
+      </LazyLoadSection>
 
       {/* Customer Reviews Section */}
-      {data && <Reviews review={data?.landing?.reviews} />}
+      <LazyLoadSection id="reviews">
+        {data && <Reviews review={memoizedData?.reviews} isMobile={isMobile} />}
+      </LazyLoadSection>
 
-      <Box style={{ position: "relative" }}>
-        <Image
-          src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
-          alt="Overlay"
-          width={250} // Tamaño en escritorio
-          height={0} // Se ajusta automáticamente con style={{ height: "auto" }}
-          loading="lazy"
-          style={{
-            position: "absolute",
-            left: 0,
-            top: typeof window !== "undefined" && window.innerWidth <= 768 ? "-50px" : "-200px",
-            zIndex: 2,
-            width: typeof window !== "undefined" && window.innerWidth <= 768 ? "125px" : "250px",
-            height: "auto",
-          }}
-        />
-        <Section8 />
-      </Box>
+      {/* Imagen y Sección 8 */}
+      <LazyLoadSection id="section8">
+        <Box style={{ position: "relative" }}>
+          <Image
+            src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
+            alt="Overlay"
+            width={250}
+            height={200}
+            priority
+            draggable={false}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: isMobile ? "-50px" : "-200px",
+              zIndex: 2,
+              width: isMobile ? "125px" : "250px",
+              height: "auto",
+            }}
+          />
+          <Section8 isMobile={isMobile} />
+        </Box>
+      </LazyLoadSection>
 
       {/* Newsletter Subscription Section */}
-      <Newsletter />
-
-    </Box>
+      <LazyLoadSection id="newsletter">
+        <Newsletter />
+      </LazyLoadSection>
+    </div>
   );
-}
+};
 
 export default memo(FashionTwoPageView);
