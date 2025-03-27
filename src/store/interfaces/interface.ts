@@ -67,9 +67,11 @@ export type ShoppingCartStoreType = {
     totalCustomization: number;
   }[];
   coupon: Coupon | null;
+  note: string;
   total: number;
   showCart: boolean;
   setCoupon: (coupon: Coupon) => void;
+  setNote: (note: string) => void;
   setProductInCart: (
     product: ProductToBagType,
     customization: Customization[],

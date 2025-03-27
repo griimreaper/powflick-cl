@@ -47,7 +47,9 @@ export default function CustomerDashboardLayout({
       style={{
         backgroundImage:
           "url(/assets/images/landing/dashboard/DASHBOARD_BACKGROUND.png)",
-        backgroundSize: "contain",
+        backgroundSize: "cover",
+
+        minHeight: "100vh",
       }}
     >
       <Container>

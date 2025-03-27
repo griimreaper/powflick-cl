@@ -23,7 +23,10 @@ function ListItem({ title, value }: { title: string; value: string }) {
   );
 }
 
+
+
 export default function OrderSummery({ order }: Props) {
+  console.log("order", order);
   return (
     <Grid container spacing={3}>
       {/* SHIPMENT ADDRESS SECTION */}
@@ -38,7 +41,17 @@ export default function OrderSummery({ order }: Props) {
           </Paragraph>
         </Card>
 
-        <Card sx={{ p: 3, mt:2 }}>
+        <Card sx={{ p: 3, mt: 2 }}>
+          <H5 mt={0} mb={2}>
+            Comments
+          </H5>
+
+          <Paragraph fontSize={14} my={0}>
+            {order?.note || "No additional notes provided."}
+          </Paragraph>
+        </Card>
+
+        <Card sx={{ p: 3, mt: 2 }}>
           <H5 mt={0} mb={2}>
             Payment Method
           </H5>

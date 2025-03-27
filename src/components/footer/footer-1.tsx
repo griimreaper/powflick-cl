@@ -69,11 +69,11 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
             <Heading style={{ color: "#A30E0E" }}>Contact Us</Heading>
 
             <Paragraph py={0.6} color="grey.500">
-              B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China.
+              RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK
             </Paragraph>
 
             <Paragraph py={0.6} color="grey.500">
-              Email: info@powflick.com
+              Email: support@powflick.com
             </Paragraph>
 
             <Paragraph py={0.6} mb={2} color="grey.500">
