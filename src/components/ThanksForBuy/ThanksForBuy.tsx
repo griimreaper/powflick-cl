@@ -55,149 +55,152 @@ export default function ThanksForBuy({ id }: { id: string }) {
   };
 
   const discountNextBuy = async () => {
-    try {
-      // Crear cupón de descuento
-      const coupon = await createCoupon({
-        title: "10% Discount",
-        content: "10% off on your next purchase",
-        discount: 10,
-      });
+    if (token && token !== undefined) {
+      try {
+        // Crear cupón de descuento
+        const coupon = await createCoupon({
+          title: "10% Discount",
+          content: "10% off on your next purchase",
+          discount: 10,
+        });
 
-      // Asignar cupón al usuario
-      if (token) {
-        const responseCouponUser = await createCouponUser(
-          token,
-          { couponId: coupon.id, active: true },
-          coupon.coupon.title
-        );
-
-        // Validar respuesta y mostrar alertas
-        if (responseCouponUser.status === 201) {
-          showSuccessAlert(
-            "Success!",
-            "The discount has been successfully applied to your account"
+        // Asignar cupón al usuario
+        if (token) {
+          const responseCouponUser = await createCouponUser(
+            token,
+            { couponId: coupon.id, active: true },
+            coupon.coupon.title
           );
+
+          // Validar respuesta y mostrar alertas
+          if (responseCouponUser.status === 201) {
+            showSuccessAlert(
+              "Success!",
+              "The discount has been successfully applied to your account"
+            );
+          } else {
+            console.log("Alert!", responseCouponUser.data.message);
+          }
+        }
+
+        // Mostrar modal
+        // setOpen(true);
+      } catch (error: any) {
+        if (error.response && error.response.data && error.response.data.message) {
+          console.log("Alert!", error.response.data.message);
         } else {
-          console.log("Alert!", responseCouponUser.data.message);
+          console.log("Alert!", "An unexpected error occurred.");
         }
       }
-
-      // Mostrar modal
-      // setOpen(true);
-    } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.message) {
-        console.log("Alert!", error.response.data.message);
-      } else {
-        console.log("Alert!", "An unexpected error occurred.");
-      }
     }
-  };
+  }
 
   const refetch = async () => {
-    try {
-      const response = await getProfile(token!);
-      setData({ ...response, token, rol });
-    } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.message) {
-        showErrorAlert("Error!", error.response.data.message);
-      } else {
-        showErrorAlert("Error!", "An unexpected error occurred while fetching the profile.");
+    if (token && token !== undefined) {
+      try {
+        const response = await getProfile(token);
+        setData({ ...response, token, rol });
+      } catch (error: any) {
+        if (error.response && error.response.data && error.response.data.message) {
+          showErrorAlert("Error!", error.response.data.message);
+        } else {
+          showErrorAlert("Error!", "An unexpected error occurred while fetching the profile.");
+        }
       }
-    }
-  };
+    };
+  }
 
   console.log("order", order);
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
       if (token && token !== undefined) {
         const orderr = await getOrder(id, token);
         setOrder(orderr.data);
-        if (!sessionStorage.getItem("from-dashboard")) {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({
-            event: "Purchase",
-            ecommerce: {
-              transaction_id: order.id,
-              value: order.total,
-              currency: "USD",
-              coupon: order.coupon?.title || null,
-              discount: order.coupon
-                ? ((order.total * order.coupon.discount) / 100).toFixed(2)
-                : 0,
-              shippingAddress: {
-                address: order?.data?.direction?.address,
-                postalCode: order?.data?.direction?.postalCode,
-                district: order?.data?.direction?.district,
-                city: order?.data?.direction?.city,
-                country: order?.data?.direction?.country,
-              },
-              items: order?.products?.map(
-                ({
-                  title,
-                  id,
-                  product_categories,
-                  sports,
-                  colors,
-                  slug,
-                  OrderProduct,
-                }: any) => ({
-                  item_id: id,
-                  item_name: title,
-                  affiliation: "Google Merchandise Store",
-                  item_brand: "Pow Flick",
-                  item_category: product_categories,
-                  item_category2: sports,
-                  item_list_name: slug,
-                  item_variant: colors[0],
-                  price: OrderProduct.price,
-                  quantity: OrderProduct.amount,
-                })
-              ),
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: "Purchase",
+          ecommerce: {
+            transaction_id: order.id,
+            value: order.total,
+            currency: "USD",
+            coupon: order.coupon?.title || null,
+            discount: order.coupon
+              ? ((order.total * order.coupon.discount) / 100).toFixed(2)
+              : 0,
+            shippingAddress: {
+              address: order?.data?.direction?.address,
+              postalCode: order?.data?.direction?.postalCode,
+              district: order?.data?.direction?.district,
+              city: order?.data?.direction?.city,
+              country: order?.data?.direction?.country,
             },
-          });
-          purchase("purchase", {
-            ecommerce: {
-              transaction_id: order.id,
-              value: order.total,
-              currency: "USD",
-              coupon: order.coupon?.title || null,
-              discount: order.coupon
-                ? ((order.total * order.coupon.discount) / 100).toFixed(2)
-                : 0,
-              shippingAddress: {
-                address: order?.data?.direction?.address,
-                postalCode: order?.data?.direction?.postalCode,
-                district: order?.data?.direction?.district,
-                city: order?.data?.direction?.city,
-                country: order?.data?.direction?.country,
-              },
-              items: order?.products?.map(
-                ({
-                  title,
-                  id,
-                  product_categories,
-                  sports,
-                  colors,
-                  slug,
-                  OrderProduct,
-                }: any) => ({
-                  item_id: id,
-                  item_name: title,
-                  // affiliation: "Google Merchandise Store",
-                  item_brand: "Pow Flick",
-                  item_category: product_categories,
-                  item_category2: sports,
-                  item_list_name: slug,
-                  item_variant: colors[0],
-                  price: OrderProduct.price,
-                  quantity: OrderProduct.amount,
-                })
-              ),
+            items: order?.products?.map(
+              ({
+                title,
+                id,
+                product_categories,
+                sports,
+                colors,
+                slug,
+                OrderProduct,
+              }: any) => ({
+                item_id: id,
+                item_name: title,
+                affiliation: "Google Merchandise Store",
+                item_brand: "Pow Flick",
+                item_category: product_categories,
+                item_category2: sports,
+                item_list_name: slug,
+                item_variant: colors[0],
+                price: OrderProduct.price,
+                quantity: OrderProduct.amount,
+              })
+            ),
+          },
+        });
+        purchase("purchase", {
+          ecommerce: {
+            transaction_id: order.id,
+            value: order.total,
+            currency: "USD",
+            coupon: order.coupon?.title || null,
+            discount: order.coupon
+              ? ((order.total * order.coupon.discount) / 100).toFixed(2)
+              : 0,
+            shippingAddress: {
+              address: order?.data?.direction?.address,
+              postalCode: order?.data?.direction?.postalCode,
+              district: order?.data?.direction?.district,
+              city: order?.data?.direction?.city,
+              country: order?.data?.direction?.country,
             },
-          });
-        }
+            items: order?.products?.map(
+              ({
+                title,
+                id,
+                product_categories,
+                sports,
+                colors,
+                slug,
+                OrderProduct,
+              }: any) => ({
+                item_id: id,
+                item_name: title,
+                // affiliation: "Google Merchandise Store",
+                item_brand: "Pow Flick",
+                item_category: product_categories,
+                item_category2: sports,
+                item_list_name: slug,
+                item_variant: colors[0],
+                price: OrderProduct.price,
+                quantity: OrderProduct.amount,
+              })
+            ),
+          },
+        });
+
       }
     };
     fetchData();
