@@ -106,6 +106,9 @@ export default function ThanksForBuy({ id }: { id: string }) {
     }
   };
 
+  console.log("order", order);
+  
+
   useEffect(() => {
     const fetchData = async () => {
       if (token && token !== undefined) {
@@ -234,8 +237,8 @@ export default function ThanksForBuy({ id }: { id: string }) {
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
           Tracking number
         </Typography>
-        <Typography color="primary" gutterBottom>
-          51547878755545848512
+        <Typography color="" gutterBottom>
+          {order?.tracking_number || "Not available yet"}
         </Typography>
 
         <Divider sx={{ my: 4 }} />
