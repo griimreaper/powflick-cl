@@ -78,7 +78,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
             "The discount has been successfully applied to your account"
           );
         } else {
-          showErrorAlert("Alert!", responseCouponUser.data.message);
+          console.log("Alert!", responseCouponUser.data.message);
         }
       }
 
@@ -86,9 +86,9 @@ export default function ThanksForBuy({ id }: { id: string }) {
       // setOpen(true);
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.message) {
-        showErrorAlert("Alert!", error.response.data.message);
+        console.log("Alert!", error.response.data.message);
       } else {
-        showErrorAlert("Alert!", "An unexpected error occurred.");
+        console.log("Alert!", "An unexpected error occurred.");
       }
     }
   };
