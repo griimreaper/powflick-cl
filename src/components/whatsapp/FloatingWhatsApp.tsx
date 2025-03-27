@@ -14,8 +14,9 @@ const FloatingWhatsApp = () => {
       rel="noopener noreferrer"
       style={{
         position: "fixed",
-        bottom: isMobile ? "80px" : "20px",
-        right: isMobile ? "10px" : "20px",
+        bottom: isMobile ? "80px" : "140px",
+        right: isMobile ? '' : 19,
+        left: isMobile ? 19: '',
         textDecoration: "none",
         zIndex: 10000,
       }}
@@ -23,7 +24,12 @@ const FloatingWhatsApp = () => {
       <Fab
         color="success"
         aria-label="whatsapp"
-        sx={{ bgcolor: "#25D366", "&:hover": { bgcolor: "#1ebe57" } }}
+        sx={{
+          bgcolor: "#25D366", width: 48, height: 48, transition: "transform 0.2s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.1)", // Aumenta el tamaño en un 20%
+          },
+        }}
       >
         <WhatsAppIcon sx={{ fontSize: 32, color: "white" }} />
       </Fab>
