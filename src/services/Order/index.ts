@@ -6,7 +6,8 @@ export const createOrder = async (
   directionId: string,
   Currency: string,
   CurrencyValue: number,
-  couponId?: string
+  couponId?: string,
+  note?: string // Añadir el campo note
 ) => {
   try {
     const addProductsToShoppingCart = await mainApi.post(
@@ -21,8 +22,7 @@ export const createOrder = async (
     if (addProductsToShoppingCart.data.statusCode === 200) {
       const creatingOrder = await mainApi.post(
         "/orders",
-        { directionId, couponId },
-
+        { directionId, couponId, note },
         {
           headers: {
             Authorization: `Bearer ${token}`,
