@@ -371,7 +371,7 @@ const Shipping = () => {
           </Typography>
           <Typography variant="body1" mt={1} sx={{ marginBottom: 3 }}>
             If you have any questions about your order or delivery times, feel
-            free to reach out to us at powflick@gmail.com.
+            free to reach out to us at support@powflick.com.
           </Typography>
         </Box>
       </Box>
