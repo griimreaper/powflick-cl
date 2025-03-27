@@ -9,7 +9,7 @@ import { cache } from "react";
 import ProductSeo from "./ProductSeo";
 
 const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>(); 
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos en milisegundos
+const CACHE_DURATION = 5 * 60 * 1000; // 300000ms (5 minutos)
 
 const getProductsBySlugCached = cache(async (slug: string): Promise<detailProps | null> => {
   const cached = cacheMap.get(slug);

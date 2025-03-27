@@ -375,6 +375,32 @@ export default function ProductIntro({ product }: Props) {
               <H6> {product.product.product_categories.split("|")[0]}</H6>
             </Link>
           </FlexBox>
+          {product.product.collections.length > 0 && (
+            <FlexBox alignItems="center" mb={1} gap={1}>
+              <div>Collections: </div>
+              <Link href={`/products?collection=${product.product.collections[0]}`}>
+                <H6> {product.product.collections.join(', ')}</H6>
+              </Link>
+            </FlexBox>
+          )}
+
+          {product.product.tags.length > 0 && (
+            <FlexBox alignItems="center" mb={1} gap={1}>
+              <div>Tags: </div>
+              {product.product.tags.map(t => (
+                <Link key={t} href={`/products?tag=${product.product.tags[0]}`}>
+                  <H6 bgcolor={"#f0f0f0"} sx={{
+                    transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
+                    '&:hover': {
+                      bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
+                    },
+                  }} borderRadius={20} paddingX={1.5}>
+                    {'#' + t}
+                  </H6>
+                </Link>
+              ))}
+            </FlexBox>
+          )}
 
           {/* PRODUCT RATING */}
           <FlexBox alignItems="center" gap={1} mb={2}>

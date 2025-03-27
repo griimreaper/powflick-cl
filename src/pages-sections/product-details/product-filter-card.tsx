@@ -38,6 +38,7 @@ interface Props {
   changeFilters?: (key: ProductFilterKeys, values: ProductFilterValues) => void;
   topCategories?: any[];
   colors: string[];
+  tags: string[];
   products?: ProductDB[];
 }
 
@@ -57,6 +58,7 @@ export default function ProductFilterCard({
   changeFilters,
   topCategories,
   colors,
+  tags,
 }: Props) {
   const [collapsed, setCollapsed] = useState<string | null>(null);
   const router = useRouter();
@@ -81,6 +83,7 @@ export default function ProductFilterCard({
     changeFilters && changeFilters("price", values);
   };
   const handleChangeColor = (value: string) => updateURL("color", [[value.split('')[0].toUpperCase() + value.slice(1)].join("")]);
+  const handleChangeTag = (value: string) => updateURL("tag", [[value.split('')[0].toUpperCase() + value.slice(1)].join("")]);
   const handleChangeCategory = (value: string) => updateURL("category", [value]);
   const handleChangeSubCategory = (value: string) => updateURL("collection", [value]);
 
@@ -285,6 +288,23 @@ export default function ProductFilterCard({
               outlineColor: item,
             }}
           />
+        ))}
+      </FlexBox>
+      <H6 mb={2} color={themeColors.text.primary}>Tags</H6>
+      <FlexBox mb={2} flexWrap="wrap" gap={1.5}>
+        {tags?.map((item: string) => (
+          <Box
+            key={item}
+            borderRadius="15%"
+            border={1}
+            paddingX={1}
+            color={filters.tag?.includes(item) ? 'white' : 'black'}
+            bgcolor={filters.tag?.includes(item) ? '#CA0B0B' : '#f0f0f0'}
+            onClick={() => handleChangeTag(item)}
+            sx={{
+              cursor: "pointer",
+            }}
+          >{item}</Box>
         ))}
       </FlexBox>
       <Box component={Divider} my={3} />

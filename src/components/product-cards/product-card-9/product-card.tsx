@@ -139,7 +139,7 @@ export default function ProductCard9(props: Props) {
             <DiscountChip discount={off!} />
 
             {/* PRODUCT IMAGE / THUMBNAIL */}
-            <LazyImage src={imgUrl} alt={title} width={500} height={500} />
+            <LazyImage src={imgUrl || ''} alt={title} width={500} height={500} />
           </div>
 
           <div className="content">

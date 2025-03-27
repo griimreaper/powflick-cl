@@ -33,6 +33,15 @@ export const navigation = [
   },
 
   {
+    name: "Tags",
+    icon: duotone.Invoice,
+    children: [
+      { name: "Tags List", path: "/admin/tags" },
+      { name: "Create Tag", path: "/admin/tags/create" }
+    ]
+  },
+
+  {
     name: "Orders",
     icon: duotone.Order,
     children: [

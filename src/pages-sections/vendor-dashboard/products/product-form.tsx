@@ -27,6 +27,11 @@ const VALIDATION_SCHEMA = yup.object().shape({
     .array()
     .min(0, 'No collections selected')  // Permite que no se seleccione ninguna colección
     .optional(),  // Permite que el campo sea opcional
+  tags: yup
+    .array()
+    .min(0, 'No tags selected')  // Permite que no se seleccione ninguna colección
+    .optional(),  // Permite que el campo sea opcional
+  score: yup.number().optional(),
   content: yup.string().required("Description is required!"),
   sports: yup.string().required("Sport is required!"),
   status: yup.string().required("Status is required!"),
@@ -57,6 +62,7 @@ interface Props {
   product?: any; // Producto es opcional para casos de creación
   collectionsList: string[]
   categoriesList: string[]
+  tagList: string[]
 }
 type ProductFormData = {
   [key: string]: any;
@@ -67,6 +73,8 @@ type ProductFormData = {
   sports: any;
   regular_price: any;
   discount: any;
+  tags: any;
+  score: any;
   product_categories: any;
   featured: any;
   mostSold: any;
@@ -74,7 +82,7 @@ type ProductFormData = {
 
 // ================================================================
 
-export default function ProductForm({ product, collectionsList, categoriesList }: Props) {
+export default function ProductForm({ product, collectionsList, categoriesList, tagList }: Props) {
   const { profile } = useDashboardStore();
   const router = useRouter();
 
@@ -92,6 +100,8 @@ export default function ProductForm({ product, collectionsList, categoriesList }
     images,
     sports,
     collections,
+    tags,
+    score,
   } = product || {};
 
   const INITIAL_VALUES: ProductFormData = {
@@ -102,7 +112,9 @@ export default function ProductForm({ product, collectionsList, categoriesList }
     sports: sports || '',
     regular_price: regular_price || 0,
     discount: discount || 0,
+    score: score || 0,
     product_categories: product_categories ? product_categories.split('|') : [],
+    tags: tags ? tags.map(({ name }: { name: string }) => name) : [],
     featured: featured || false,
     mostSold: mostSold || false,
     slug: slug || "",
@@ -334,6 +346,33 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                   fullWidth
                   color="primary"
                   size="medium"
+                  name="tags"
+                  onBlur={handleBlur}
+                  placeholder="Tags"
+                  onChange={handleChange}
+                  value={values.tags}
+                  label="Select Tags"
+                  SelectProps={{
+                    multiple: true,  // Permite la selección múltiple
+                    renderValue: (selected) => {
+                      return (selected as string[]).join(', '); // Muestra las opciones seleccionadas
+                    }
+                  }}
+                  helperText={touched.tags && errors.tags as string}
+                  error={Boolean(touched.tags && errors.tags)}
+                >
+                  {tagList.map((tag) => (
+                    <MenuItem key={tag} value={tag}>{tag}</MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item sm={6} xs={12}>
+                <TextField
+                  select
+                  fullWidth
+                  color="primary"
+                  size="medium"
                   name="sports"
                   onBlur={handleBlur}
                   placeholder="Sport"
@@ -347,6 +386,28 @@ export default function ProductForm({ product, collectionsList, categoriesList }
                     <MenuItem key={sport} value={sport}>{sport}</MenuItem>
                   ))}
                 </TextField>
+              </Grid>
+
+              <Grid item sm={6} xs={12}>
+                <TextField
+                  fullWidth
+                  name="score"
+                  color="primary"
+                  size="medium"
+                  type="number"
+                  onBlur={handleBlur}
+                  value={values.score}
+                  label="Score"
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    if (value >= 0 || e.target.value === "") {
+                      handleChange(e);
+                    }
+                  }}
+                  placeholder="Score"
+                  helperText={touched.score && errors.score as string}
+                  error={Boolean(touched.score && errors.score)}
+                />
               </Grid>
 
               <Grid item sm={6} xs={12}>

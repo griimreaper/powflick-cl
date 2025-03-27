@@ -54,6 +54,7 @@ const initialFilters = {
   price: [0, 300],
   category: [],
   collection: [],
+  tag: [],
   search: "",
   featured: undefined,
   discount: undefined,
@@ -69,6 +70,7 @@ export const useProducts = (params: ProductFilters) => {
         "",
         params.category[0],
         params.collection[0],
+        params.tag[0],
         "",
         params.color[0],
         params.featured,
@@ -81,6 +83,7 @@ export const useProducts = (params: ProductFilters) => {
         9
       ),
     staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 60 * 5,
     placeholderData: (previousData, previousQuery) => previousData,
   });
 };
@@ -116,10 +119,14 @@ export default function ProductSearchPageView() {
     if (searchParams) {
       if (searchParams.get("query"))
         newFilters.search = searchParams.get("query") || "";
+      if (searchParams.get("page"))
+        newFilters.page = searchParams.get("page") || "";
       if (searchParams.get("category"))
         newFilters.category = [searchParams.get("category")];
       if (searchParams.get("collection"))
         newFilters.collection = [searchParams.get("collection")];
+      if (searchParams.get("tag"))
+        newFilters.tag = [searchParams.get("tag")];
       if (searchParams.get("color"))
         newFilters.color = [searchParams.get("color")];
       if (searchParams.get("minPrice"))
@@ -166,6 +173,14 @@ export default function ProductSearchPageView() {
         {
           label: `${filters.color[0]}`,
           href: `/products?color=${filters.color[0]}`,
+        },
+      ]
+      : []),
+    ...(filters.tag[0]
+      ? [
+        {
+          label: `#${filters.tag[0]}`,
+          href: `/products?tag=${filters.tag[0]}`,
         },
       ]
       : []),
@@ -296,6 +311,7 @@ export default function ProductSearchPageView() {
                       changeFilters={handleChangeFilters}
                       topCategories={data?.filt}
                       colors={data?.colors || []}
+                      tags={data?.tags || []}
                     />
                   </Box>
                 </Sidenav>
@@ -318,7 +334,8 @@ export default function ProductSearchPageView() {
               changeFilters={handleChangeFilters}
               topCategories={data?.filt}
               colors={data?.colors || []}
-            />
+              tags={data?.tags || []}
+              />
           </Grid>
 
           {/* PRODUCT VIEW AREA */}
