@@ -154,7 +154,10 @@ const page: FC<pageProps> = ({}) => {
               <ListItemText primary="• Replacement: If modification is not possible, we will send you a replacement product at no additional cost." />
             </ListItem>
             <ListItem>
-              <ListItemText primary="• Full or Partial Refund: If it is not possible to modify, reship, or replace the product, you will be refunded the total or partial amount of your investment, as appropriate to the specific case. The refund will be processed through the original payment method within a maximum period of 5 business days after we have received and verified the returned product at our facilities." />
+              <ListItemText
+                primary="• Full or Partial Refund: If it is not possible to modify, reship, or replace the product, you will be refunded the total or partial amount of your investment, as appropriate to the specific case. The refund will be processed through the original payment method within a maximum period of 5 business days after we have received and verified the returned product at our facilities.
+              Refunds will be credited to your bank account via the original payment method within 7-15 days after approval."
+              />
             </ListItem>
           </List>
         </List>

@@ -174,6 +174,7 @@ export const useShoppingCartStore = create(
       coupon: {} as Coupon,
       total: 0,
       showCart: false,
+      note: "", // Añadir el estado note
       setProductInCart: (
         product: ProductToBagType,
         customizations: Customization[] | null,
@@ -195,6 +196,12 @@ export const useShoppingCartStore = create(
           coupon,
         }));
       },
+      setNote: (note: string) => {
+        set((state) => ({
+          ...state,
+          note,
+        }));
+      },
       removeCustomizationFromProduct: (
         productId: string,
         customizationId: string
@@ -208,7 +215,7 @@ export const useShoppingCartStore = create(
         updateCartTotal(set);
       },
       clearCart: () => {
-        set({ cart: [], coupon: null, total: 0 });
+        set({ cart: [], coupon: null, total: 0, note: "" });
       },
       handleShowCart: () => {
         set((state) => ({
