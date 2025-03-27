@@ -23,6 +23,7 @@ import Image from "next/image";
 import DialogDrawer from "components/header/components/dialog-drawer";
 import useHeader from "components/header/hooks/use-header";
 import { goToStripe } from "../../../../fpixel";
+import { showErrorAlert } from "utils/alerts";
 
 export default function CheckoutForm() {
   const router = useRouter();
@@ -69,20 +70,32 @@ export default function CheckoutForm() {
       productId: item.product.id.toString(),
     }));
 
-    if (token && selectedDirection) {
-      const response = await createOrder(
-        token,
-        Cart,
-        selectedDirection.id,
-        "USD",
-        1,
-        coupon?.id,
-        note // Usar el estado note del store
-      );
+    try {
+      if (token && selectedDirection) {
+        const response = await createOrder(
+          token,
+          Cart,
+          selectedDirection.id,
+          "USD",
+          1,
+          coupon?.id,
+          note // Usar el estado note del store
+        );
 
-      typeof response === "string" ? router.push(response) : null;
+        if (typeof response === "string") {
+          router.push(response);
+        }
+      }
+    } catch (error: any) {
+      console.error("Error creating order:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        showErrorAlert("Error!", error.response.data.message);
+      } else {
+        showErrorAlert("Error!", "An unexpected error occurred while creating the order.");
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

@@ -65,23 +65,22 @@ export default function ThanksForBuy({ id }: { id: string }) {
         });
 
         // Asignar cupón al usuario
-        if (token) {
-          const responseCouponUser = await createCouponUser(
-            token,
-            { couponId: coupon.id, active: true },
-            coupon.coupon.title
-          );
+        const responseCouponUser = await createCouponUser(
+          token,
+          { couponId: coupon.id, active: true },
+          coupon.coupon.title
+        );
 
-          // Validar respuesta y mostrar alertas
-          if (responseCouponUser.status === 201) {
-            showSuccessAlert(
-              "Success!",
-              "The discount has been successfully applied to your account"
-            );
-          } else {
-            console.log("Alert!", responseCouponUser.data.message);
-          }
+        // Validar respuesta y mostrar alertas
+        if (responseCouponUser.status === 201) {
+          showSuccessAlert(
+            "Success!",
+            "The discount has been successfully applied to your account"
+          );
+        } else {
+          console.log("Alert!", responseCouponUser.data.message);
         }
+
 
         // Mostrar modal
         // setOpen(true);
@@ -205,9 +204,18 @@ export default function ThanksForBuy({ id }: { id: string }) {
     };
     fetchData();
     clearCart();
-    discountNextBuy();
-    refetch();
   }, [token]);
+
+  useEffect(() => {
+    // Aquí solo aplicamos el cupón y refrescamos
+    const applyDiscount = async () => {
+      if (token) {
+        await discountNextBuy();
+        await refetch();
+      }
+    };
+    applyDiscount();
+  }, []);
 
   return (
     <Box
