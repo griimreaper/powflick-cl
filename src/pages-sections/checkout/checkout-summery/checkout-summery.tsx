@@ -18,7 +18,7 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { FlexBox } from "components/flex-box";
 
 export default function CheckoutSummary({ data }: any) {
-  const { cart, total, setCoupon, coupon } = useShoppingCartStore();
+  const { cart, total, setCoupon, coupon, note, setNote } = useShoppingCartStore();
   const { profile, setData, removeProfile } = useDashboardStore();
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const subtotal = data.cart.reduce(
@@ -31,18 +31,14 @@ export default function CheckoutSummary({ data }: any) {
   );
 
   useEffect(() => {
-    // Recuperar el selectedCoupon de localStorage cuando se cargue el componente
     const savedCoupon = localStorage.getItem("selectedCoupon");
     if (savedCoupon) {
       setSelectedCoupon(JSON.parse(savedCoupon));
     }
   }, []);
 
-  console.log(selectedCoupon);
-
   const handleCouponChange = (event: any) => {
     if (event.target.value === "") {
-      // Si se selecciona "Select a coupon", resetea el estado del cupón seleccionado
       setSelectedCoupon({} as Coupon);
       setCoupon({} as Coupon);
       localStorage.removeItem("selectedCoupon");
@@ -65,9 +61,6 @@ export default function CheckoutSummary({ data }: any) {
   const discountValue = selectedCoupon
     ? subtotal * (selectedCoupon.discount / 100)
     : 0;
-  
-  console.log(profile.genericResponseUser.couponUsers);
-  
 
   return (
     <Card sx={{ padding: 3 }}>
@@ -120,7 +113,14 @@ export default function CheckoutSummary({ data }: any) {
       </FlexBox>
 
       {/* COMMENTS TEXT FIELD */}
-      <TextField variant="outlined" rows={6} fullWidth multiline />
+      <TextField
+        variant="outlined"
+        rows={6}
+        fullWidth
+        multiline
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+      />
 
       <Divider sx={{ mb: 2 }} />
 
@@ -143,32 +143,6 @@ export default function CheckoutSummary({ data }: any) {
       </Button>
 
       <Divider sx={{ mb: 2 }} />
-
-      {/* <Button
-        fullWidth
-        color="primary"
-        href="/checkout"
-        variant="contained"
-        LinkComponent={Link}
-      >
-        Checkout Now
-      </Button> */}
-
-      {/* <Paragraph fontSize={25} fontWeight={600} lineHeight={1}>
-        {currency(2610)}
-      </Paragraph> */}
-
-      {/* <Stack spacing={2} mt={3}>
-        <TextField
-          placeholder="Voucher"
-          variant="outlined"
-          size="small"
-          fullWidth
-        />
-        <Button variant="outlined" color="primary" fullWidth>
-          Apply Voucher
-        </Button>
-      </Stack> */}
     </Card>
   );
 }

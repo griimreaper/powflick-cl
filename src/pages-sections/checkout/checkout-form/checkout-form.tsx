@@ -26,7 +26,7 @@ import { goToStripe } from "../../../../fpixel";
 
 export default function CheckoutForm() {
   const router = useRouter();
-  const { cart, total, coupon } = useShoppingCartStore();
+  const { cart, total, coupon, note } = useShoppingCartStore();
   const [sameAsShipping, setSameAsShipping] = useState(false);
   const [showForm, setShowForm] = useState<boolean>(false);
   const { profile } = useDashboardStore();
@@ -76,7 +76,8 @@ export default function CheckoutForm() {
         selectedDirection.id,
         "USD",
         1,
-        coupon?.id
+        coupon?.id,
+        note // Usar el estado note del store
       );
 
       typeof response === "string" ? router.push(response) : null;
