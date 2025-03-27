@@ -10,7 +10,6 @@ export const navigation = [
     children: [
       { name: "Product List", path: "/admin/products" },
       { name: "Create Product", path: "/admin/products/create" },
-      { name: "Product Reviews", path: "/admin/products/reviews" }
     ]
   },
 
@@ -49,11 +48,19 @@ export const navigation = [
     ]
   },
 
-  { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
+  {
+    name: "Reviews",
+    icon: duotone.Review,
+    children: [
+      { name: "Product Reviews", path: "/admin/reviews/product" },
+      { name: "Order Reviews", path: "/admin/reviews/order" },
+      { name: "Create Review", path: "/admin/reviews/create" },
+    ]
+  },
 
   {
     name: "Messages",
-    icon: duotone.Review,
+    icon: duotone.DataTable,
     children: [
       { name: "Complaint or Claim", path: "/admin/complaint-or-claim" },
       { name: "Help with an Order", path: "/admin/help-with-a-order" },
@@ -62,6 +69,7 @@ export const navigation = [
     ]
   },
 
+  { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
   // {
   //   name: "Refunds",
   //   icon: duotone.Refund,

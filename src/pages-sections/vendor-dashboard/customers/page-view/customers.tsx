@@ -37,7 +37,7 @@ const tableHeading = [
     align: "left",
     content: ["all", "yes", "no"],
   },
-  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 8, 10, 12] },
+  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 12, 24, 50, 100] },
 ];
 
 export default function CustomersPageView() {

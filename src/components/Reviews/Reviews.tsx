@@ -8,13 +8,12 @@ import {
   Rating,
   Container,
   Fade,
-  useMediaQuery,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { Paragraph } from "components/Typography";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { Carousel } from "components/carousel";
+import { Review } from "models/types";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -47,12 +46,12 @@ const StyledRating = styled(Rating)(({ theme }) => ({
   },
 }));
 
-const ReviewCard = ({ review }: any) => {
+export const ReviewCard = ({ review }: { review: Review | any }) => {
   return (
     <Fade in timeout={1000}>
       <StyledCard>
         <Box display="flex" alignItems="center" mb={1} justifyContent={'start'}>
-          <StyledAvatar src={review.avatar} alt={review.name} />
+          <StyledAvatar src={review.user.image} alt={review.user.email} />
           <Box ml={1}>
             <Typography
               component="div"
@@ -77,21 +76,22 @@ const ReviewCard = ({ review }: any) => {
           precision={0.5}
           sx={{ mb: 1, fontSize: "clamp(1vw, 1.5vw, 100%)" }}
         />
-        <Image
-          src={review.image}
-          alt="Product"
-          width={500}
-          height={0}
-          layout="responsive"
-          loading="lazy"
-          style={{
-            width: "min(500px,100%)",
-            aspectRatio: "1 / 1",
-            objectFit: "cover",
-            borderRadius: "8px",
-            marginBottom: "16px",
-          }} />
-
+        {review.image && review.image.split('//').shift()?.includes('http') &&
+          <Image
+            src={review.image || ''}
+            alt="Product"
+            width={500}
+            height={0}
+            layout="responsive"
+            loading="lazy"
+            style={{
+              width: "min(500px,100%)",
+              aspectRatio: "1 / 1",
+              objectFit: "cover",
+              borderRadius: "8px",
+              marginBottom: "16px",
+            }} />
+        }
         <Typography
           variant="body1"
           sx={{
@@ -112,11 +112,11 @@ const ReviewCard = ({ review }: any) => {
 };
 
 interface ReviewsProps {
-  review: any[];
+  review: Review[];
   isMobile?: boolean;
 }
 
-const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
+export const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
     { breakpoint: 768, settings: { slidesToShow: 3 } },
@@ -188,7 +188,7 @@ const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
           >
             {review.slice(0, 3).map((review) => (
               <Box key={review.id} padding={0.2}>
-                <ReviewCard key={review.id} review={review} />
+                <ReviewCard review={review} />
               </Box>
             ))}
           </Carousel>
@@ -201,7 +201,9 @@ const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
             useCSS
           >
             {[...review, ...review].filter(r => r.type === "ORDER").map((review, id) => (
-              <ReviewCard review={review} key={id} />
+              <Box key={id}>
+                <ReviewCard review={review} />
+              </Box>
             ))}
           </Carousel>
         )}
@@ -210,5 +212,3 @@ const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
 
   );
 };
-
-export default Reviews;

@@ -8,6 +8,9 @@ export const getProductsAdmin = async (filters: any, token: string) => {
     if (filters.search) queryString += `&search=${filters.search}`;
     if (filters.collection) queryString += `&collection=${filters.collection}`;
     if (filters.category) queryString += `&category=${filters.category}`;
+    if (filters.tag) queryString += `&tag=${filters.tag}`;
+    if (filters.date) queryString += `&date=${filters.date}`;
+    if (filters.score) queryString += `&score=${filters.score}`;
     if (filters.featured) queryString += `&featured=${filters.featured}`;
     if (filters.mostSold) queryString += `&mostSold=${filters.mostSold}`;
     if (filters.order) queryString += `&order=${filters.order}`;
