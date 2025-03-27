@@ -15,6 +15,7 @@ export interface DataOrders {
 export interface Filters {
     order: 'ASC' | 'DESC',
     status: string,
+    orderBy: string,
     filterBy: 'USER' | 'PRODUCT',
     search: string,
     page: number,

@@ -5,7 +5,7 @@ import { getOneProduct } from "services/dashboardAdmin/products";
 
 export const metadata: Metadata = {
   title: "Product - Pow Flick",
-  description: "Pow Flick es una tienda en línea especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizables, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñada para deportistas y equipos que buscan rendimiento y estilo.",
+  description: "Pow Flick is an online store specializing in high-quality sportswear. Find customizable t-shirts, sports uniforms, and accessories for soccer, basketball, baseball, hockey, running, and more. Designed for athletes and teams looking for performance and style.",
   authors: [{ name: "devcodelab" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
 };
@@ -16,7 +16,7 @@ export default async function ProductEdit({ params }: any) {
 
   let token = session?.user?.name?.split("|")[0];
 
-  const { product, collectionsList, categoriesList } = await getOneProduct(params.slug, token as string);
+  const { product, collectionsList, categoriesList, tagList } = await getOneProduct(params.slug, token as string);
 
-  return <EditProductPageView product={product} collectionsList={collectionsList} categoriesList={categoriesList} />;
+  return <EditProductPageView product={product} collectionsList={collectionsList} categoriesList={categoriesList} tagList={tagList}/>;
 }

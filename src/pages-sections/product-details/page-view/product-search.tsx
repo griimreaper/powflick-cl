@@ -54,6 +54,7 @@ const initialFilters = {
   price: [0, 300],
   category: [],
   collection: [],
+  tag: [],
   search: "",
   featured: undefined,
   discount: undefined,
@@ -69,6 +70,7 @@ export const useProducts = (params: ProductFilters) => {
         "",
         params.category[0],
         params.collection[0],
+        params.tag[0],
         "",
         params.color[0],
         params.featured,
@@ -81,6 +83,7 @@ export const useProducts = (params: ProductFilters) => {
         9
       ),
     staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 60 * 5,
     placeholderData: (previousData, previousQuery) => previousData,
   });
 };
@@ -116,10 +119,14 @@ export default function ProductSearchPageView() {
     if (searchParams) {
       if (searchParams.get("query"))
         newFilters.search = searchParams.get("query") || "";
+      if (searchParams.get("page"))
+        newFilters.page = searchParams.get("page") || "";
       if (searchParams.get("category"))
         newFilters.category = [searchParams.get("category")];
       if (searchParams.get("collection"))
         newFilters.collection = [searchParams.get("collection")];
+      if (searchParams.get("tag"))
+        newFilters.tag = [searchParams.get("tag")];
       if (searchParams.get("color"))
         newFilters.color = [searchParams.get("color")];
       if (searchParams.get("minPrice"))
@@ -166,6 +173,14 @@ export default function ProductSearchPageView() {
         {
           label: `${filters.color[0]}`,
           href: `/products?color=${filters.color[0]}`,
+        },
+      ]
+      : []),
+    ...(filters.tag[0]
+      ? [
+        {
+          label: `#${filters.tag[0]}`,
+          href: `/products?tag=${filters.tag[0]}`,
         },
       ]
       : []),
@@ -221,20 +236,21 @@ export default function ProductSearchPageView() {
         </Box>
 
         {/* FILTER ACTION AREA */}
-        <FlexBetween flexWrap="wrap" gap={2} mb={2}>
-          <div>
+        <FlexBetween width={'100%'} gap={2} justifyContent={{ xs: 'flex-start', md: 'space-between' }} flexDirection={{ xs: 'column', sm: 'row' }} mb={2}>
+          <Box width={'100%'}>
             {filters.search && (
               <H5 lineHeight={1} mb={1} color={themeColors.text.secondary}>
                 Searching for “ {filters?.search} ”
               </H5>
             )}
-            <Span style={{ color: themeColors.text.secondary }}>
+            <Span style={{ color: themeColors.text.secondary }} whiteSpace={'nowrap'}>
               {data?.count?.total} results found
             </Span>
-          </div>
+          </Box>
 
-          <FlexBox alignItems="center" columnGap={4} flexWrap="wrap">
-            <FlexBox alignItems="center" gap={1} flex="1 1 0">
+          <FlexBox alignItems="center" gap={1} display={'flex'} flexDirection={'row'} flexWrap={{xs:'wrap', sm:'nowrap'}} justifyContent={{ xs: 'space-between', sm: 'flex-end' }} width={{xs: '100%', md:'40%'}}>
+            <Box display={'flex'} width={'100%'} alignItems={'center'} justifyContent={'flex-start'} gap={1}>
+
               <Paragraph whiteSpace="pre">Sort by:</Paragraph>
 
               <TextField
@@ -246,7 +262,7 @@ export default function ProductSearchPageView() {
                 placeholder="Sort by"
                 color="primary"
                 onChange={(e) => handleChangeSortBy(e.target.value)}
-                sx={{ flex: "1 1 0", minWidth: "150px" }}
+                sx={{ maxWidth: "180px", minWidth: '120px' }}
               >
                 {SORT_OPTIONS.map((item) => (
                   <MenuItem
@@ -259,10 +275,9 @@ export default function ProductSearchPageView() {
                   </MenuItem>
                 ))}
               </TextField>
-            </FlexBox>
-
-            <FlexBox alignItems="center" my="0.25rem">
-              <Paragraph color="#FFFFFF" mr={1}>
+            </Box>
+            <FlexBox alignItems="center" my="0.25rem" justifyContent={'flex-end'} width={'100%'}>
+              <Paragraph mr={1}>
                 View:
               </Paragraph>
 
@@ -296,12 +311,15 @@ export default function ProductSearchPageView() {
                       changeFilters={handleChangeFilters}
                       topCategories={data?.filt}
                       colors={data?.colors || []}
+                      tags={data?.tags || []}
                     />
                   </Box>
                 </Sidenav>
               )}
             </FlexBox>
+
           </FlexBox>
+
         </FlexBetween>
 
         <Grid container spacing={4}>
@@ -318,6 +336,7 @@ export default function ProductSearchPageView() {
               changeFilters={handleChangeFilters}
               topCategories={data?.filt}
               colors={data?.colors || []}
+              tags={data?.tags || []}
             />
           </Grid>
 

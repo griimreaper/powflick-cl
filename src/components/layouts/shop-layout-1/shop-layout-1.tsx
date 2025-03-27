@@ -52,6 +52,7 @@ export default function ShopLayout1({
   let rol = session?.user?.email;
   let image = session?.user?.image;
 
+  console.log("get profile", profile);
   useEffect(() => {
     if (token && !profile.token) {
       localStorage.setItem("termsAccepted", "true");
@@ -59,6 +60,7 @@ export default function ShopLayout1({
         setData({ ...response, token, rol });
         if (image) setProfileUser({ image });
       });
+      
     }
   }, [token, profile.token, setData, setProfileUser, image]);
 

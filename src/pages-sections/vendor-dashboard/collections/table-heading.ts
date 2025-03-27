@@ -4,5 +4,5 @@ export const tableHeading = [
   { id: "title", label: "Title", align: "left" },
   { id: "order", label: "Order", align: "center" },
   { id: "type", label: "Type", align: "right" },
-  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 8, 10, 12] },
+  { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 12, 24, 50, 100] },
 ];

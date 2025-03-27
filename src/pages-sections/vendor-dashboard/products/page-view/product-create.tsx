@@ -9,11 +9,13 @@ import { Button, Modal, Box } from "@mui/material";
 interface Props {
   collectionsList: string[];
   categoriesList: string[];
+  tagList: string[];
 }
 
 export default function ProductCreatePageView({
   collectionsList,
   categoriesList,
+  tagList,
 }: Props) {
   const [openPanel, setOpenPanel] = useFlag();
   return (
@@ -52,6 +54,7 @@ export default function ProductCreatePageView({
       <ProductForm
         collectionsList={collectionsList}
         categoriesList={categoriesList}
+        tagList={tagList}
       />
     </PageWrapper>
   );

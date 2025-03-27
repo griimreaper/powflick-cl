@@ -29,12 +29,14 @@ export interface Filters {
     page: number,
     limit: number,
     order: 'ASC' | 'DESC'
+    orderBy: 'collection' | 'tag' | 'createdAt'
 }
 
 export interface FiltersReview {
     limit: number;
     page: number;
     search: '',
+    orderBy: string,
     isActive?: 'true' | 'false' | ''
     type?: 'ORDER' | 'PRODUCT' | null
     rating?: '1' | '2' | '3' | '4' | '5' | ''

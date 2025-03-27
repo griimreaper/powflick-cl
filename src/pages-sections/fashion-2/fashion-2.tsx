@@ -11,7 +11,7 @@ import * as fbq from '../../../fpixel';
 
 // GLOBAL CUSTOM COMPONENTS
 const Newsletter = dynamic(() => import("components/newsletter"), { ssr: false });
-const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
+const Reviews = dynamic(() => import("components/Reviews/Reviews").then(r => r.Reviews), { ssr: false });
 
 // LOCAL CUSTOM COMPONENTS
 const Section4 = dynamic(() => import("./section-4"));
