@@ -37,21 +37,50 @@ interface Product {
   published: boolean;
 }
 
-type Props = { product: ProductDB | any, setActualize: Function, orderBy: string };
+type Props = { product: ProductDB | any, setActualize: Function, orderBy: string, section2: string };
 // ========================================================================
 
-export default function ProductRow({ product, setActualize, orderBy }: Props) {
-  const { title, price, URL, product_categories, id, status, slug, sport, collections, tags, createdAt, score } =
+export default function ProductRow({ product, setActualize, orderBy, section2 }: Props) {
+  const { title, price, URL, product_categories, id, status, slug, sport, mostSold, featured, collections, tags, createdAt, score } =
     product || {};
+
   const { profile } = useDashboardStore();
   const router = useRouter();
   const [productPublish, setProductPublish] = useState<boolean>(status === 'publish' ? true : false);
+  const [productFeatured, setProductFeatured] = useState<boolean>(featured);
+  const [productMostSold, setProductMostSold] = useState<boolean>(mostSold);
 
   const handlePublish = async (boolean: boolean) => {
     try {
       setProductPublish(boolean)
       if (profile.token) {
         await updateProduct(id, { status: boolean ? 'publish' : 'draft' }, profile.token);
+        showSuccessAlert('Success', 'The product has been actualized.')
+      }
+    } catch (error) {
+      showErrorAlert('Error', 'Has an error to update product')
+      setProductPublish(!boolean)
+    }
+  }
+
+  const handleMostSold = async (boolean: boolean) => {
+    try {
+      setProductMostSold(boolean)
+      if (profile.token) {
+        await updateProduct(id, { mostSold: boolean }, profile.token);
+        showSuccessAlert('Success', 'The product has been actualized.')
+      }
+    } catch (error) {
+      showErrorAlert('Error', 'Has an error to update product')
+      setProductPublish(!boolean)
+    }
+  }
+
+  const handleFeatured = async (boolean: boolean) => {
+    try {
+      setProductFeatured(boolean)
+      if (profile.token) {
+        await updateProduct(id, { featured: boolean }, profile.token);
         showSuccessAlert('Success', 'The product has been actualized.')
       }
     } catch (error) {
@@ -121,12 +150,27 @@ export default function ProductRow({ product, setActualize, orderBy }: Props) {
       }
       <StyledTableCell align="left">{currency(price)}</StyledTableCell>
 
-      <StyledTableCell align="left">
-        <SportZoneSwitch
-          checked={productPublish}
-          onChange={() => handlePublish(!productPublish)}
-        />
-      </StyledTableCell>
+      {section2 === 'status' ?
+        <StyledTableCell align="left">
+          <SportZoneSwitch
+            checked={productPublish}
+            onChange={() => handlePublish(!productPublish)}
+          />
+        </StyledTableCell> :
+        section2 === 'mostSold' ?
+          <StyledTableCell align="left">
+            <SportZoneSwitch
+              checked={productMostSold}
+              onChange={() => handleMostSold(!productMostSold)}
+            />
+          </StyledTableCell> :
+          <StyledTableCell align="left">
+            <SportZoneSwitch
+              checked={productFeatured}
+              onChange={() => handleFeatured(!productFeatured)}
+            />
+          </StyledTableCell>
+      }
 
       <StyledTableCell align="center" sx={{
         whiteSpace: "nowrap", // Evita el wrapping

@@ -26,7 +26,7 @@ const sportsCategories = [
     id: 3,
     title: "Running",
     image: "/assets/images/landing/categories/POWFLICK_CATEGORIA-RUNNING.png",
-    link: "/products?category=Running%20Clothes"
+    link: "/products?category=Running%20clothes"
   },
   {
     id: 4,

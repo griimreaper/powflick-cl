@@ -24,8 +24,8 @@ const tableHeading = (type: 'ORDER' | 'PRODUCT' | null) => [
   type === 'ORDER' ?
     { id: "image", label: "Image", align: "left" } :
     [
-      { id: "product", label: "Product", align: "left" },
-      { id: "image", label: "Image", align: "left" }
+      { id: "product", label: "Product", align: "left", section: 1 },
+      { id: "image", label: "Image", align: "left", section: 1 }
     ],
   { id: "customer", label: "Customer", align: "left" },
   { id: "rating", label: "Rating", align: "left" },

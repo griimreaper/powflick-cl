@@ -17,6 +17,7 @@ import {
 } from "services/dashboardAdmin/products";
 import LoadingComponent from "components/Loaders/LoadingComponent";
 import useLoading from "hooks/useLoading";
+import { serverCacheReset } from "services/cache";
 
 const ExcelColumns = [
   "ID: unique identifier of the product.",
@@ -61,6 +62,7 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
   const [goodFolders, setGoodFolders] = useState<string[]>([]);
   const [loadButton, startLoadButton, stopLoadButton] = useLoading();
   const [loadExport, startLoadExport, stopLoadExport] = useLoading();
+  const [loadUpload, startLoadUpload, stopLoadUpload] = useLoading();
   const [inputExcel, setInputExcel] = useState<string>("");
   const { profile } = useDashboardStore();
   const { token } = profile;
@@ -102,6 +104,7 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
     console.log("Archivos organizados por carpeta:", filesByFolder);
 
     try {
+      startLoadUpload();
       const response = await getProductTitles();
 
       const productNames: string[] = response;
@@ -148,10 +151,10 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
         });
 
         console.log("Subiendo archivos de la carpeta:", folderName);
-          const uploadResponse = await uploadFolder(
-            filesByFolder[folderName],
-            folderName
-          );
+        const uploadResponse = await uploadFolder(
+          filesByFolder[folderName],
+          folderName
+        );
         uploadedImagesCount += filesByFolder[folderName].length;
 
         // Calcular y establecer el progreso
@@ -164,6 +167,9 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
       if (uploadedImagesCount === totalImages) {
         setProgress(100);
       }
+
+      await serverCacheReset();
+      stopLoadUpload();
     } catch (error) {
       console.error("Error al cargar la carpeta", error);
     }
@@ -274,8 +280,8 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
           {loadButton ? <CircularProgress size={24} /> : "Load"}
         </Button>
         <input type="file" webkitdirectory="true" directory="true" onChange={handleImageFolderSelection} />
-        <Button variant="contained" color="primary" onClick={uploadImages}>
-          Upload Images
+        <Button variant="contained" color="primary" onClick={uploadImages} disabled={loadUpload}>
+          {loadUpload ? 'loading...' : 'Upload Images'}
         </Button>
         {progress === 100 && (
           <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>

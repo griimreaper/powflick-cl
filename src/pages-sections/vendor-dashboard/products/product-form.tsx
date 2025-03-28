@@ -18,6 +18,8 @@ import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { useRouter } from "next/navigation";
 import ImageUploader from "components/DropZone";
 import { Info } from "@mui/icons-material";
+import useLoading from "hooks/useLoading";
+import { serverCacheDetailReset } from "services/cache";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -85,7 +87,7 @@ type ProductFormData = {
 export default function ProductForm({ product, collectionsList, categoriesList, tagList }: Props) {
   const { profile } = useDashboardStore();
   const router = useRouter();
-
+  const [loading, startLoading, stopLoading] = useLoading();
   const {
     title,
     content,
@@ -120,6 +122,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     slug: slug || "",
   };
   const [files, setFiles] = useState<File[]>([]);
+  console.log(files);
 
   useEffect(() => {
     if (!images || images.length === 0) return;
@@ -135,6 +138,8 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
             const blob = await response.blob();
             // Extraer el nombre del archivo desde la URL
             const fileNameFromUrl = image.split("/").pop() || "";
+
+            console.log(fileNameFromUrl);
 
             // Definir nombres clave
             let fileName = `ADDITIONAL_${additionalCount}.jpg`;
@@ -208,9 +213,11 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
   }
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
+    startLoading();
     if (files.filter(f => f).length < 4 && files.filter(f => f).length !== 0) {
       // Mostrar el toast si no hay 4 archivos o ninguno
       showErrorAlert('Error', 'You must upload exactly 4 files or none.');
+      stopLoading();
       return; // Evitar el envío del formulario si no se cumple la validación
     }
 
@@ -219,9 +226,11 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
       window.location.reload();
     } else {
       await update(values)
+      await serverCacheDetailReset(product.slug)
       window.location.reload();
     }
 
+    stopLoading();
   };
 
   return (
@@ -542,8 +551,11 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
               </Grid>
 
               <Grid item sm={6} xs={12}>
-                <Button variant="contained" color="primary" type="submit">
-                  {!product ? 'Create product' : 'Save product'}
+                <Button variant="contained" color="primary" type="submit" disabled={loading}>
+                  {loading ?
+                      'Loading...'
+                    :
+                    !product ? 'Create product' : 'Save product'}
                 </Button>
               </Grid>
             </Grid>

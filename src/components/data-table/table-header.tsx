@@ -122,9 +122,13 @@ export default function TableHeader(props: Props) {
                     {headCell.map((option) => (
                       <MenuItem key={option.id} value={option.id}
                         onClick={() => {
-                          onFilterChange('orderBy', option.id)
-                          if (changeOrder) {
-                            onFilterChange('order', option.id)
+                          if (option.section === 1) {
+                            onFilterChange('orderBy', option.id)
+                            if (changeOrder) {
+                              onFilterChange('order', option.id)
+                            }
+                          } else if (option.section === 2) {
+                            onFilterChange('section2', option.id)
                           }
                         }}>
                         {option.label}
