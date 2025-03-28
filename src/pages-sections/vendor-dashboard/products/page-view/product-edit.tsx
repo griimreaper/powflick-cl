@@ -7,12 +7,13 @@ interface Props {
   product: ProductDB,
   collectionsList: string[],
   categoriesList: string[]
+  tagList: string[]
 }
 
-export default function EditProductPageView({ product, collectionsList, categoriesList }: Props) {
+export default function EditProductPageView({ product, collectionsList, categoriesList, tagList }: Props) {
   return (
     <PageWrapper title="Edit Product">
-      <ProductForm product={product} collectionsList={collectionsList} categoriesList={categoriesList} />
+      <ProductForm product={product} collectionsList={collectionsList} categoriesList={categoriesList} tagList={tagList} />
     </PageWrapper>
   );
 }

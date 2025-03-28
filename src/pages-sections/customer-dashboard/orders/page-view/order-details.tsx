@@ -23,9 +23,9 @@ export default function OrderDetailsPageView({ order }: Props) {
 
       {/* TRACKING CODE AREA */}
       <TrackingCode
-        trackingCode={order.trackingCode}
-        orderId={order.id}
-        state={order.state}
+        trackingCode={order?.trackingCode}
+        orderId={order?.id}
+        state={order?.state}
       />
 
       {/* ORDER PROGRESS AREA */}

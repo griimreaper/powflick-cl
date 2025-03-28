@@ -1,7 +1,7 @@
 import { Customization } from "models/types";
 
 export function Capitalize(string: string) {
-    return string.split('').map((l,i) => i === 0 ? l.toUpperCase() : l ).join('')
+    return string?.split('').map((l,i) => i === 0 ? l.toUpperCase() : l ).join('')
 }
 
 export function extractPriceFromString(text: string): number {

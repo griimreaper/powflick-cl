@@ -11,7 +11,7 @@ import * as fbq from '../../../fpixel';
 
 // GLOBAL CUSTOM COMPONENTS
 const Newsletter = dynamic(() => import("components/newsletter"), { ssr: false });
-const Reviews = dynamic(() => import("components/Reviews/Reviews"), { ssr: false });
+const Reviews = dynamic(() => import("components/Reviews/Reviews").then(r => r.Reviews), { ssr: false });
 
 // LOCAL CUSTOM COMPONENTS
 const Section4 = dynamic(() => import("./section-4"));
@@ -66,7 +66,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
               position: "absolute",
               left: 0,
               top: isMobile ? "-50px" : "-200px",
-              zIndex: 2,
+              zIndex: 1,
               width: isMobile ? "125px" : "250px",
               height: "auto",
             }}

@@ -43,8 +43,6 @@ export default function LoginCartButtons({
 
   const toggleSearchBar = () => setSearchBarOpen(!searchBarOpen);
 
-  console.log("session", state);
-
   return (
     <div>
       <IconButton

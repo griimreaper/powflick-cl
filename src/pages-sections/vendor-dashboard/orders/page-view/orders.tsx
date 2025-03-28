@@ -36,6 +36,7 @@ export default function OrdersPageView() {
   const [filters, setFilters] = useState<Filters>({
     filterBy: "USER",
     order: "DESC",
+    orderBy: 'order',
     status: "",
     search: "",
     page: 1,
@@ -86,7 +87,7 @@ export default function OrdersPageView() {
 
               <TableBody>
                 {orders?.orders?.map((order) => (
-                  <OrderRow order={order} key={order.id} />
+                  <OrderRow order={order} key={order.id} orderBy={filters.orderBy} />
                 ))}
               </TableBody>
             </Table>

@@ -256,6 +256,8 @@ export default function ProductIntro({ product }: Props) {
     };
   };
 
+  console.log(images);
+
   return (
     <Box width="100%">
       <Grid container spacing={3} justifyContent="space-around">
@@ -288,7 +290,6 @@ export default function ProductIntro({ product }: Props) {
                     width="500"
                     height="500"
                     controls
-                    autoPlay
                   >
                     <source src={selectedVideo} type="video/mp4" />
                     Your browser does not support the video tag.
@@ -299,7 +300,7 @@ export default function ProductIntro({ product }: Props) {
                     width={500}
                     height={500}
                     loading="eager"
-                    src={product.product.images[selectedImage] || ""}
+                    src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
                   />
                 )}
               </FlexBox>
@@ -309,7 +310,7 @@ export default function ProductIntro({ product }: Props) {
                 sx={{ width: "full", justifyContent: "center" }}
               >
                 {images
-                  ?.filter((i: string) => i.includes("customization"))
+                  ?.filter((i: string) => !i.includes("customization"))
                   .map((url: string, ind: number) => (
                     <FlexRowCenter
                       key={ind}
@@ -375,6 +376,32 @@ export default function ProductIntro({ product }: Props) {
               <H6> {product.product.product_categories.split("|")[0]}</H6>
             </Link>
           </FlexBox>
+          {product.product.collections?.length > 0 && (
+            <FlexBox alignItems="center" mb={1} gap={1}>
+              <div>Collections: </div>
+              <Link href={`/products?collection=${product.product.collections[0]}`}>
+                <H6> {product.product.collections.join(', ')}</H6>
+              </Link>
+            </FlexBox>
+          )}
+
+          {product.product.tags?.length > 0 && (
+            <FlexBox alignItems="center" mb={1} gap={1}>
+              <div>Tags: </div>
+              {product.product.tags.map(t => (
+                <Link key={t} href={`/products?tag=${product.product.tags[0]}`}>
+                  <H6 bgcolor={"#f0f0f0"} sx={{
+                    transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
+                    '&:hover': {
+                      bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
+                    },
+                  }} borderRadius={20} paddingX={1.5}>
+                    {'#' + t}
+                  </H6>
+                </Link>
+              ))}
+            </FlexBox>
+          )}
 
           {/* PRODUCT RATING */}
           <FlexBox alignItems="center" gap={1} mb={2}>

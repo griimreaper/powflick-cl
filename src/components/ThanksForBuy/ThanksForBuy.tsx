@@ -22,14 +22,24 @@ import {
   DialogActions,
 } from "@mui/material";
 import { purchase } from "../../../fpixel";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { getProfile } from "services/DashboardUser";
+import { useSession } from "next-auth/react";
 
 export default function ThanksForBuy({ id }: { id: string }) {
+  const { profile, setData, removeProfile, setProfileUser } =
+    useDashboardStore();
   const [order, setOrder] = useState<any>({});
   const [open, setOpen] = useState(false);
-  const { profile } = useDashboardStore();
+  const state = useDashboardStore();
   const { clearCart } = useShoppingCartStore();
-  const { token } = profile;
   const router = useRouter();
+  const { data: session } = useSession();
+
+  const { token } = state.profile;
+  let rol = session?.user?.email;
+
+  console.log(state.profile.genericResponseUser);
 
   const handleBackClick = () => {
     if (sessionStorage.getItem("from-dashboard")) {
@@ -44,117 +54,168 @@ export default function ThanksForBuy({ id }: { id: string }) {
     setOpen(false);
   };
 
+  const discountNextBuy = async () => {
+    if (token && token !== undefined) {
+      try {
+        // Crear cupón de descuento
+        const coupon = await createCoupon({
+          title: "10% Discount",
+          content: "10% off on your next purchase",
+          discount: 10,
+        });
+
+        // Asignar cupón al usuario
+        const responseCouponUser = await createCouponUser(
+          token,
+          { couponId: coupon.id, active: true },
+          coupon.coupon.title
+        );
+
+        // Validar respuesta y mostrar alertas
+        if (responseCouponUser.status === 201) {
+          showSuccessAlert(
+            "Success!",
+            "The discount has been successfully applied to your account"
+          );
+        } else {
+          console.log("Alert!", responseCouponUser.data.message);
+        }
+
+
+        // Mostrar modal
+        // setOpen(true);
+      } catch (error: any) {
+        if (error.response && error.response.data && error.response.data.message) {
+          console.log("Alert!", error.response.data.message);
+        } else {
+          console.log("Alert!", "An unexpected error occurred.");
+        }
+      }
+    }
+  }
+
+  const refetch = async () => {
+    if (token && token !== undefined) {
+      try {
+        const response = await getProfile(token);
+        setData({ ...response, token, rol });
+      } catch (error: any) {
+        if (error.response && error.response.data && error.response.data.message) {
+          showErrorAlert("Error!", error.response.data.message);
+        } else {
+          showErrorAlert("Error!", "An unexpected error occurred while fetching the profile.");
+        }
+      }
+    };
+  }
+
+  console.log("order", order);
+
+
   useEffect(() => {
     const fetchData = async () => {
       if (token && token !== undefined) {
         const orderr = await getOrder(id, token);
         setOrder(orderr.data);
-        if (!sessionStorage.getItem("from-dashboard")) {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          (window as any).dataLayer.push({
-            event: "Purchase",
-            ecommerce: {
-              transaction_id: order.id,
-              value: order.total,
-              currency: "USD",
-              coupon: order.coupon?.title || null,
-              discount: order.coupon
-                ? ((order.total * order.coupon.discount) / 100).toFixed(2)
-                : 0,
-              shippingAddress: {
-                address: order?.data?.direction?.address,
-                postalCode: order?.data?.direction?.postalCode,
-                district: order?.data?.direction?.district,
-                city: order?.data?.direction?.city,
-                country: order?.data?.direction?.country,
-              },
-              items: order?.products?.map(
-                ({
-                  title,
-                  id,
-                  product_categories,
-                  sports,
-                  colors,
-                  slug,
-                  OrderProduct,
-                }: any) => ({
-                  item_id: id,
-                  item_name: title,
-                  affiliation: "Google Merchandise Store",
-                  item_brand: "Pow Flick",
-                  item_category: product_categories,
-                  item_category2: sports,
-                  item_list_name: slug,
-                  item_variant: colors[0],
-                  price: OrderProduct.price,
-                  quantity: OrderProduct.amount,
-                })
-              ),
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: "Purchase",
+          ecommerce: {
+            transaction_id: order.id,
+            value: order.total,
+            currency: "USD",
+            coupon: order.coupon?.title || null,
+            discount: order.coupon
+              ? ((order.total * order.coupon.discount) / 100).toFixed(2)
+              : 0,
+            shippingAddress: {
+              address: order?.data?.direction?.address,
+              postalCode: order?.data?.direction?.postalCode,
+              district: order?.data?.direction?.district,
+              city: order?.data?.direction?.city,
+              country: order?.data?.direction?.country,
             },
-          });
-          purchase("purchase", {
-            ecommerce: {
-              transaction_id: order.id,
-              value: order.total,
-              currency: "USD",
-              coupon: order.coupon?.title || null,
-              discount: order.coupon
-                ? ((order.total * order.coupon.discount) / 100).toFixed(2)
-                : 0,
-              shippingAddress: {
-                address: order?.data?.direction?.address,
-                postalCode: order?.data?.direction?.postalCode,
-                district: order?.data?.direction?.district,
-                city: order?.data?.direction?.city,
-                country: order?.data?.direction?.country,
-              },
-              items: order?.products?.map(
-                ({
-                  title,
-                  id,
-                  product_categories,
-                  sports,
-                  colors,
-                  slug,
-                  OrderProduct,
-                }: any) => ({
-                  item_id: id,
-                  item_name: title,
-                  // affiliation: "Google Merchandise Store",
-                  item_brand: "Pow Flick",
-                  item_category: product_categories,
-                  item_category2: sports,
-                  item_list_name: slug,
-                  item_variant: colors[0],
-                  price: OrderProduct.price,
-                  quantity: OrderProduct.amount,
-                })
-              ),
+            items: order?.products?.map(
+              ({
+                title,
+                id,
+                product_categories,
+                sports,
+                colors,
+                slug,
+                OrderProduct,
+              }: any) => ({
+                item_id: id,
+                item_name: title,
+                affiliation: "Google Merchandise Store",
+                item_brand: "Pow Flick",
+                item_category: product_categories,
+                item_category2: sports,
+                item_list_name: slug,
+                item_variant: colors[0],
+                price: OrderProduct.price,
+                quantity: OrderProduct.amount,
+              })
+            ),
+          },
+        });
+        purchase("purchase", {
+          ecommerce: {
+            transaction_id: order.id,
+            value: order.total,
+            currency: "USD",
+            coupon: order.coupon?.title || null,
+            discount: order.coupon
+              ? ((order.total * order.coupon.discount) / 100).toFixed(2)
+              : 0,
+            shippingAddress: {
+              address: order?.data?.direction?.address,
+              postalCode: order?.data?.direction?.postalCode,
+              district: order?.data?.direction?.district,
+              city: order?.data?.direction?.city,
+              country: order?.data?.direction?.country,
             },
-          });
+            items: order?.products?.map(
+              ({
+                title,
+                id,
+                product_categories,
+                sports,
+                colors,
+                slug,
+                OrderProduct,
+              }: any) => ({
+                item_id: id,
+                item_name: title,
+                // affiliation: "Google Merchandise Store",
+                item_brand: "Pow Flick",
+                item_category: product_categories,
+                item_category2: sports,
+                item_list_name: slug,
+                item_variant: colors[0],
+                price: OrderProduct.price,
+                quantity: OrderProduct.amount,
+              })
+            ),
+          },
+        });
 
-          // Crear cupón de descuento
-          const coupon = await createCoupon({
-            title: "10% Discount",
-            content: "10% off on your next purchase",
-            discount: 10,
-          });
-
-          // Asignar cupón al usuario
-          await createCouponUser(
-            token,
-            { couponId: coupon.id, active: true },
-            coupon.coupon.title
-          );
-
-          // Mostrar modal
-          setOpen(true);
-        }
       }
     };
     fetchData();
     clearCart();
   }, [token]);
+
+  useEffect(() => {
+    // Aquí solo aplicamos el cupón y refrescamos
+    const applyDiscount = async () => {
+      if (token) {
+        await discountNextBuy();
+        await refetch();
+      }
+    };
+    applyDiscount();
+  }, []);
 
   return (
     <Box
@@ -187,8 +248,8 @@ export default function ThanksForBuy({ id }: { id: string }) {
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
           Tracking number
         </Typography>
-        <Typography color="primary" gutterBottom>
-          51547878755545848512
+        <Typography color="" gutterBottom>
+          {order?.tracking_number || "Not available yet"}
         </Typography>
 
         <Divider sx={{ my: 4 }} />

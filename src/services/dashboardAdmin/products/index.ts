@@ -8,10 +8,19 @@ export const getProductsAdmin = async (filters: any, token: string) => {
     if (filters.search) queryString += `&search=${filters.search}`;
     if (filters.collection) queryString += `&collection=${filters.collection}`;
     if (filters.category) queryString += `&category=${filters.category}`;
-    if (filters.featured) queryString += `&featured=${filters.featured}`;
-    if (filters.mostSold) queryString += `&mostSold=${filters.mostSold}`;
+    if (filters.tag) queryString += `&tag=${filters.tag}`;
+    if (filters.date) queryString += `&date=${filters.date}`;
+    if (filters.score) queryString += `&score=${filters.score}`;
+
+    if (filters.section2 === "status") {
+      if (filters.status) queryString += `&status=${filters.status}`;
+    } else if (filters.section2 === "mostSold") {
+      if (filters.mostSold) queryString += `&mostSold=${filters.mostSold}`;
+    } else if (filters.section2 === "featured") {
+      if (filters.featured) queryString += `&featured=${filters.featured}`;
+    }
+
     if (filters.order) queryString += `&order=${filters.order}`;
-    if (filters.status) queryString += `&status=${filters.status}`;
 
     const response = await mainApi.get(queryString, {
       headers: { Authorization: `Bearer ${token}` },
@@ -28,6 +37,7 @@ export const getOneProduct = async (id: string, token: string) => {
     const response = await mainApi.get(`/products/admin/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log(response.data);
 
     return response.data;
   } catch (error) {

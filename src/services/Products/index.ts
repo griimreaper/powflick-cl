@@ -86,6 +86,7 @@ export const getProducts = async (
     sports?: string,
     categories?: string,
     collection?: string,
+    tag?: string,
     gender?: string,
     colors?: string,
     featured?: boolean,
@@ -104,6 +105,7 @@ export const getProducts = async (
         if (sports) queryString += `&sport=${sports}`;
         if (categories) queryString += `&category=${categories}`;
         if (collection) queryString += `&collection=${collection}`;
+        if (tag) queryString += `&tag=${tag}`;
         if (gender) queryString += `&gender=${gender}`;
         if (colors) queryString += `&color=${colors}`;
         if (featured) queryString += `&featured=${featured}`;

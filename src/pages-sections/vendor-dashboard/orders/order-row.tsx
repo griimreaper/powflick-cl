@@ -8,19 +8,24 @@ import { currency } from "lib";
 // STYLED COMPONENTS
 import { StatusWrapper, StyledIconButton, StyledTableCell, StyledTableRow } from "../styles";
 import { Order } from "models/types";
+import { orderBy } from "lodash";
 
 // ========================================================================
-type Props = { order: Order };
+type Props = { order: Order, orderBy: string };
 // ========================================================================
 
-export default function OrderRow({ order }: Props) {
-  const { id, total, createdAt, state, customizations, direction } = order || {};
+export default function OrderRow({ order, orderBy }: Props) {
+  const { id, total, createdAt, state, customizations, direction, user } = order || {};
 
   const router = useRouter();
 
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
-      <StyledTableCell align="left">#{id}</StyledTableCell>
+      {orderBy === 'order' ?
+        <StyledTableCell align="left">#{id}</StyledTableCell>
+        :
+        <StyledTableCell align="left">{user.email}</StyledTableCell>
+      }
       <StyledTableCell align="left">{customizations.length}</StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>

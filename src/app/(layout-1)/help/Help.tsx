@@ -256,7 +256,7 @@ export default function FAQSection() {
               <strong>How can I get in touch with Pow Flick?</strong><br />
             </Typography>
             <Typography variant="h5" color={'white'} mb={3}>
-              You can email us at powflick@gmail.com or call us at +86 15920110846.
+              You can email us at support@powflick.com or call us at +86 15920110846.
             </Typography>
             <Typography variant="h6" sx={{ color: 'primary.main', mb: 1 }}>
               <strong> Where are you located?</strong>

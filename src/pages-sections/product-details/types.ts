@@ -8,6 +8,7 @@ export interface ProductFilters {
   rating: number;
   category: string[];
   collection: string[];
+  tag: string[];
   featured: true | false | undefined
   discount: true | false | undefined
   mostSold: true | false | undefined

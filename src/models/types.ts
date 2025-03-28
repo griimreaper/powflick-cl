@@ -26,6 +26,12 @@ export interface Collection {
   products: ProductDB[];
 }
 
+export interface Tags {
+  id: string;
+  name: string;
+  products: ProductDB[];
+}
+
 export interface ProductDB {
   id: string; // Identificador único del producto
   title: string; // Título del producto
@@ -52,7 +58,8 @@ export interface ProductDB {
   quantityPurchase: number;
   font: string;
   font_color: string;
-  collections?: any[];
+  collections: any[];
+  tags: any[];
 }
 
 export interface RecentProduct extends ProductDB {}
