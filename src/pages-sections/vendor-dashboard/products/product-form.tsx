@@ -240,7 +240,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
         initialValues={INITIAL_VALUES}
         validationSchema={VALIDATION_SCHEMA}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, resetForm }) => (
           <form onSubmit={handleSubmit}>
             <H3 mb={4}>Product Detail</H3>
             <Grid container spacing={3}>
@@ -550,12 +550,24 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
                 <ImageUploader defaultImages={images} onChange={(newImages: any) => setFiles(newImages)} />
               </Grid>
 
-              <Grid item sm={6} xs={12}>
-                <Button variant="contained" color="primary" type="submit" disabled={loading}>
-                  {loading ?
-                      'Loading...'
-                    :
-                    !product ? 'Create product' : 'Save product'}
+              <Grid item sm={6} xs={12} sx={{ display: 'flex', gap: 2 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={loading}
+                  sx={{ flex: 1 }}
+                >
+                  {loading ? "Loading..." : !product ? "Create product" : "Save product"}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  onClick={() => resetForm()}
+                  sx={{ flex: 1 }}
+                >
+                  Reset
                 </Button>
               </Grid>
             </Grid>
