@@ -30,6 +30,7 @@ export interface Filters {
     limit: number,
     order: 'ASC' | 'DESC'
     orderBy: 'collection' | 'tag' | 'createdAt'
+    section2: 'status' | 'mostSold' | 'featured'
 }
 
 export interface FiltersReview {

@@ -66,7 +66,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
               position: "absolute",
               left: 0,
               top: isMobile ? "-50px" : "-200px",
-              zIndex: 2,
+              zIndex: 1,
               width: isMobile ? "125px" : "250px",
               height: "auto",
             }}

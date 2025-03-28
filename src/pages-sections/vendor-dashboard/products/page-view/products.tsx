@@ -20,16 +20,23 @@ import { Filters, ProductData } from ".";
 import Pagination from "./Pagination";
 import useHearingEvent from "hooks/hearingEvent";
 import { Box, Button } from "@mui/material";
+import { serverCacheReset } from "services/cache";
+import useLoading from "hooks/useLoading";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ProductsPageView() {
   const [productList, setProductList] = useState<ProductData>();
   const { actualize, setActualize } = useHearingEvent();
+  const [loadCache, startLoadCache, stopLoadCache] = useLoading();
+  const queryClient = useQueryClient();
   const [filters, setFilters] = useState<Filters>({
     search: '',
     page: 1,
-    limit: 6,
+    limit: 12,
     order: 'DESC',
     orderBy: 'collection',
+    section2: 'status',
   });
 
   const { profile } = useDashboardStore();
@@ -71,18 +78,35 @@ export default function ProductsPageView() {
     { id: "name", label: "Name", align: "left", content: null },
     { id: "category", label: "Category", align: "left", content: (Object.keys(productList?.count?.categories || {})) },
     [
-      { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})) },
-      { id: "tag", label: "Tag", align: "left", content: (Object.keys(productList?.count?.tag || {})) },
-      { id: "date", label: "Date", align: "left", content: ['ASC', 'DESC'] },
-      { id: "score", label: "Score", align: "left", content: ['ASC', 'DESC'] },
+      { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})), section: 1 },
+      { id: "tag", label: "Tag", align: "left", content: (Object.keys(productList?.count?.tag || {})), section: 1 },
+      { id: "date", label: "Date", align: "left", content: ['ASC', 'DESC'], section: 1 },
+      { id: "score", label: "Score", align: "left", content: ['ASC', 'DESC'], section: 1 },
     ],
     { id: "order", label: "Price", align: "left", content: ['ASC', 'DESC'] },
-    { id: "status", label: "Published", align: "left", content: ['publish', 'draft'] },
+    [
+      { id: "status", label: "Published", align: "left", content: ['publish', 'draft'], section: 2 },
+      { id: "mostSold", label: "Most Sold", align: "left", content: ['true', 'false'], section: 2 },
+      { id: "featured", label: "Featured", align: "left", content: ['true', 'false'], section: 2 }
+    ],
     { id: "limit", label: "Limit", align: "center", content: [1, 3, 6, 12, 24, 50, 100] }
   ];
 
   const handleSearch = (value: string) => {
     setFilters({ ...filters, search: value });
+  };
+
+  const resetCache = async () => {
+    try {
+      startLoadCache();
+      const response = await serverCacheReset();
+      queryClient.removeQueries();
+      showSuccessAlert('Great!', response);
+      stopLoadCache();
+    } catch (error: any) {
+      stopLoadCache();
+      showErrorAlert('Great!', error.menssage);
+    }
   };
 
   console.log(filters);
@@ -96,6 +120,10 @@ export default function ProductsPageView() {
         searchPlaceholder="Search Product..."
       />
       <Box position='relative' width={'100%'} display={'flex'} justifyContent={'flex-end'}>
+        <Button variant="contained" color="primary" sx={{ position: 'absolute', top: '-55px', right: '130px' }} disabled={loadCache}
+          onClick={() => resetCache()}>
+          {loadCache ? "loading..." : "Reset Cache"}
+        </Button>
         <Button variant="contained" color="primary" sx={{ position: 'absolute', top: '-55px' }}
           onClick={() => {
             setFilters({
@@ -104,6 +132,7 @@ export default function ProductsPageView() {
               limit: filters.limit,
               order: 'DESC',
               orderBy: filters.orderBy,
+              section2: filters.section2,
             })
           }}>
           Reset Filters
@@ -127,7 +156,7 @@ export default function ProductsPageView() {
               <TableBody>
 
                 {filteredProducts?.map((product) => (
-                  <ProductRow key={product.id} product={product} setActualize={setActualize} orderBy={filters.orderBy} />
+                  <ProductRow key={product.id} product={product} setActualize={setActualize} orderBy={filters.orderBy} section2={filters.section2}/>
                 ))}
               </TableBody>
 
