@@ -77,12 +77,10 @@ export const ReviewCard = ({ review }: { review: Review | any }) => {
           sx={{ mb: 1, fontSize: "clamp(1vw, 1.5vw, 100%)" }}
         />
         {review.image && review.image.split('//').shift()?.includes('http') &&
-          <Image
+          <img
             src={review.image || ''}
             alt="Product"
             width={500}
-            height={0}
-            layout="responsive"
             loading="lazy"
             style={{
               width: "min(500px,100%)",
@@ -200,7 +198,7 @@ export const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
             arrowStyles={{ backgroundColor: "white", top: "50%" }}
             useCSS
           >
-            {[...review, ...review].filter(r => r.type === "ORDER").map((review, id) => (
+            {[...review].filter(r => r.type === "ORDER").map((review, id) => (
               <Box key={id}>
                 <ReviewCard review={review} />
               </Box>
