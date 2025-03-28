@@ -105,7 +105,7 @@ export default function ProductsPageView() {
       stopLoadCache();
     } catch (error: any) {
       stopLoadCache();
-      showErrorAlert('Great!', error.menssage);
+      showErrorAlert('Error!', error.message);
     }
   };
 

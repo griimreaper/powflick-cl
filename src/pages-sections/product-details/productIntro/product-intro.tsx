@@ -256,8 +256,6 @@ export default function ProductIntro({ product }: Props) {
     };
   };
 
-  console.log(images);
-
   return (
     <Box width="100%">
       <Grid container spacing={3} justifyContent="space-around">
