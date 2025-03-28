@@ -14,7 +14,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   borderRadius: "8px",
   color: theme.palette.grey[600],
   backgroundColor: theme.palette.background.paper,
-  [theme.breakpoints.down("sm")]: { maxWidth: "100%" },
+  [theme.breakpoints.down("md")]: { maxWidth: "100%" },
   "::placeholder": { color: theme.palette.text.disabled }
 }));
 
