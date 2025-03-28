@@ -119,12 +119,12 @@ export default function ProductsPageView() {
         url="/admin/products/create"
         searchPlaceholder="Search Product..."
       />
-      <Box position='relative' width={'100%'} display={'flex'} justifyContent={'flex-end'}>
-        <Button variant="contained" color="primary" sx={{ position: 'absolute', top: '-55px', right: '130px' }} disabled={loadCache}
+      <Box position='relative' width={'100%'} display={'flex'} paddingBottom={{ xs: 2, md: 0 }} justifyContent={{ md: 'flex-end', xs: "space-between" }}>
+        <Button variant="contained" color="primary" sx={{ position: { md: 'absolute' }, top: { md: '-55px' }, right: { md: '130px' } }} disabled={loadCache}
           onClick={() => resetCache()}>
           {loadCache ? "loading..." : "Reset Cache"}
         </Button>
-        <Button variant="contained" color="primary" sx={{ position: 'absolute', top: '-55px' }}
+        <Button variant="contained" color="primary" sx={{ position: { md: 'absolute' }, top: { md: '-55px' } }}
           onClick={() => {
             setFilters({
               search: '',
@@ -156,7 +156,7 @@ export default function ProductsPageView() {
               <TableBody>
 
                 {filteredProducts?.map((product) => (
-                  <ProductRow key={product.id} product={product} setActualize={setActualize} orderBy={filters.orderBy} section2={filters.section2}/>
+                  <ProductRow key={product.id} product={product} setActualize={setActualize} orderBy={filters.orderBy} section2={filters.section2} />
                 ))}
               </TableBody>
 
