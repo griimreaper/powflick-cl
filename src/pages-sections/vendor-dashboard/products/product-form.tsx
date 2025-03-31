@@ -169,7 +169,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     fetchImages();
   }, [images]);
 
-  const uploadImages = async () => {
+  const uploadImages = async (title: string) => {
     try {
       const main = files.filter(f => f && !f?.name.includes('customization'))
       const custom = files.filter(f => f && f?.name.includes('customization'))
@@ -193,9 +193,9 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
   const update = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await updateProduct(id, values, profile.token as string);
-      await uploadImages();
+      await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
-
+      router.push('/admin/products/' + response.createdProduct.id)
     } catch (error) {
       showErrorAlert('Failed', 'The product could not be updated')
     }
@@ -204,7 +204,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
   const create = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await createProduct(values, profile.token as string);
-      await uploadImages();
+      await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
       router.push('/admin/products/' + response.createdProduct.id)
     } catch (error: any) {
@@ -223,7 +223,6 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
 
     if (!product) {
       await create(values)
-      window.location.reload();
     } else {
       await update(values)
       await serverCacheDetailReset(product.slug)

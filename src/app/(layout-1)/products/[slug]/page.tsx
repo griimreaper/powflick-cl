@@ -8,8 +8,11 @@ import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 import { cache } from "react";
 import ProductSeo from "./ProductSeo";
 
+export const revalidate = 360;
+export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente
+
 const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>(); 
-const CACHE_DURATION = 5 * 60 * 1000; // 300000ms (5 minutos)
+const CACHE_DURATION = 5 * 60; // 300000ms (5 minutos)
 
 const getProductsBySlugCached = cache(async (slug: string): Promise<detailProps | null> => {
   const cached = cacheMap.get(slug);
