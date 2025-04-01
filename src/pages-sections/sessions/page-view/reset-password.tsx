@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,22 +11,34 @@ import BoxLink from "../components/box-link";
 // GLOBAL CUSTOM COMPONENTS
 import { H3 } from "components/Typography";
 import { FlexRowCenter } from "components/flex-box";
+import { recoverPassword } from "services/Login";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { CircularProgress } from "@mui/material";
 
 const ResetPassword = () => {
+  const [loading, setLoading] = useState(false);
+
   // FORM FIELD INITIAL VALUE
   const initialValues = { email: "" };
 
   // FORM FIELD VALIDATION SCHEMA
   const validationSchema = yup.object().shape({
-    email: yup.string().email("invalid email").required("Email is required")
+    email: yup.string().email("Invalid email").required("Email is required"),
   });
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    }
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        await recoverPassword(values.email);
+        showSuccessAlert("Email Sent!", "Check your inbox for recovery instructions.");
+      } catch (error: any) {
+        showErrorAlert("Error!", error.message || "Something went wrong");
+      }
+      setLoading(false);
+    },
   });
 
   return (
@@ -49,8 +61,8 @@ const ResetPassword = () => {
           error={Boolean(touched.email && errors.email)}
         />
 
-        <Button fullWidth type="submit" color="primary" variant="contained">
-          Reset
+        <Button fullWidth type="submit" color="primary" variant="contained" disabled={loading}>
+          {loading ? <CircularProgress /> : "Reset"}
         </Button>
       </Box>
 
