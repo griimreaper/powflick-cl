@@ -39,8 +39,6 @@ export default function ThanksForBuy({ id }: { id: string }) {
   const { token } = state.profile;
   let rol = session?.user?.email;
 
-  console.log(state.profile.genericResponseUser);
-
   const handleBackClick = () => {
     if (sessionStorage.getItem("from-dashboard")) {
       sessionStorage.removeItem("from-dashboard");
@@ -109,24 +107,23 @@ export default function ThanksForBuy({ id }: { id: string }) {
     };
   }
 
-  console.log("order", order);
-
-
   useEffect(() => {
     const fetchData = async () => {
       if (token && token !== undefined) {
         const orderr = await getOrder(id, token);
+        console.log("orderr", orderr);
+        
         setOrder(orderr.data);
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).dataLayer.push({
           event: "Purchase",
           ecommerce: {
-            transaction_id: orderr.id,
-            value: orderr.total,
+            transaction_id: orderr.data.id,
+            value: orderr.data.total,
             currency: "USD",
-            coupon: orderr.coupon?.title || null,
-            discount: orderr.coupon
-              ? ((orderr.total * orderr.coupon.discount) / 100).toFixed(2)
+            coupon: orderr.data.coupon?.title || null,
+            discount: orderr.data.coupon
+              ? ((orderr.data.total * orderr.data.coupon.discount) / 100).toFixed(2)
               : 0,
             shippingAddress: {
               address: orderr?.data?.direction?.address,
@@ -135,7 +132,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
               city: orderr?.data?.direction?.city,
               country: orderr?.data?.direction?.country,
             },
-            items: orderr?.products?.map(
+            items: orderr?.data.products?.map(
               ({
                 title,
                 id,
@@ -161,12 +158,12 @@ export default function ThanksForBuy({ id }: { id: string }) {
         });
         purchase("purchase", {
           ecommerce: {
-            transaction_id: orderr.id,
-            value: orderr.total,
+            transaction_id: orderr.data.id,
+            value: orderr.data.total,
             currency: "USD",
-            coupon: orderr.coupon?.title || null,
-            discount: orderr.coupon
-              ? ((orderr.total * orderr.coupon.discount) / 100).toFixed(2)
+            coupon: orderr.data.coupon?.title || null,
+            discount: orderr.data.coupon
+              ? ((orderr.data.total * orderr.data.coupon.discount) / 100).toFixed(2)
               : 0,
             shippingAddress: {
               address: orderr?.data?.direction?.address,
@@ -175,7 +172,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
               city: orderr?.data?.direction?.city,
               country: orderr?.data?.direction?.country,
             },
-            items: orderr?.products?.map(
+            items: orderr?.data.products?.map(
               ({
                 title,
                 id,
