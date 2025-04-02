@@ -36,7 +36,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const token =  session?.user?.name?.split("|")[0];
+  const { token } = state.profile;
   let rol = session?.user?.email;
 
   console.log(state.profile.genericResponseUser);
@@ -115,6 +115,8 @@ export default function ThanksForBuy({ id }: { id: string }) {
   useEffect(() => {
     const fetchData = async () => {
       if (token && token !== undefined) {
+        console.log("token", token);
+        
         try {
           console.log("token", token);
           const orderr = await getOrder(id, token);
