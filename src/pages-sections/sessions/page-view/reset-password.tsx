@@ -14,10 +14,11 @@ import { FlexRowCenter } from "components/flex-box";
 import { recoverPassword } from "services/Login";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { CircularProgress } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   // FORM FIELD INITIAL VALUE
   const initialValues = { email: "" };
 
@@ -34,6 +35,9 @@ const ResetPassword = () => {
       try {
         await recoverPassword(values.email);
         showSuccessAlert("Email Sent!", "Check your inbox for recovery instructions.");
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
       } catch (error: any) {
         showErrorAlert("Error!", error.message || "Something went wrong");
       }
