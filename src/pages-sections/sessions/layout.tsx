@@ -33,7 +33,7 @@ export default function AuthLayout({ children }: PropsWithChildren) {
   }
 
   // APPLIED FOR ONLY RESET PASSWORD PAGE
-  if (pathname === "/reset-password") {
+  if (pathname === "/reset-password" || pathname === "/recoverPassword" ) {
     return (
       <FlexRowCenter flexDirection="column" minHeight="100vh" px={2}>
         <Wrapper elevation={3}>{children}</Wrapper>
