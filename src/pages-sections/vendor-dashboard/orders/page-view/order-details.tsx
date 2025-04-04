@@ -83,6 +83,7 @@ export default function OrderDetailsPageView({ data }: Props) {
                 customizations={order.customizations.filter(
                   (c) => c.productId === item.id
                 )}
+                orderId={order.id}
                 key={index}
               />
             ))}
