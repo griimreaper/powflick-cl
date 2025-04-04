@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import { H6, Small } from "components/Typography";
 import { useDashboardStore } from "store/dashboard";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 // STYLED COMPONENT
 const Divider = styled("div")(({ theme }) => ({
@@ -20,10 +21,12 @@ const Divider = styled("div")(({ theme }) => ({
 export default function AccountPopover() {
   const [anchorEl, setAnchorEl] = useState<any>();
   const open = Boolean(anchorEl);
+  const router = useRouter();
   const { profile, removeProfile } = useDashboardStore();
   const handleClose = () => setAnchorEl(null);
-  const handleLogout = () => {
-    signOut();
+  const handleLogout = async () => {
+    router.push('/')
+    signOut({redirect:false});
     removeProfile();
   }
   return (

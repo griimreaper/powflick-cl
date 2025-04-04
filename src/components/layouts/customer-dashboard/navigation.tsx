@@ -80,10 +80,10 @@ export default function Navigation({ profile }: { profile: Profile }) {
           </Paragraph>
 
           {item.list.map(({ Icon, count, href, title }) => (
-            <StyledNavLink href={href === '/login' ? '' : href} key={title} isCurrentPath={pathname.includes(href)}
+            <StyledNavLink href={href === '/login' ? '/' : href} key={title} isCurrentPath={pathname.includes(href)}
               onClick={() => {
                 if (href === '/login') {
-                  signOut(),
+                  signOut({redirect: false}),
                   removeProfile()
                 }
               }}

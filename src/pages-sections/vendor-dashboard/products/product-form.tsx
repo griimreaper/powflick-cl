@@ -122,14 +122,13 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     slug: slug || "",
   };
   const [files, setFiles] = useState<File[]>([]);
-  console.log(files);
+  console.log(files, 'init files');
 
   useEffect(() => {
     if (!images || images.length === 0) return;
 
     const fetchImages = async () => {
       try {
-        const nameFile: { [key: number]: string } = {};
         let additionalCount = 3;
 
         const imageFiles = await Promise.all(
@@ -169,7 +168,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     fetchImages();
   }, [images]);
 
-  const uploadImages = async () => {
+  const uploadImages = async (title: string) => {
     try {
       const main = files.filter(f => f && !f?.name.includes('customization'))
       const custom = files.filter(f => f && f?.name.includes('customization'))
@@ -193,10 +192,12 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
   const update = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await updateProduct(id, values, profile.token as string);
-      await uploadImages();
+      await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
-
+      router.push('/admin/products/' + response.updateProduct.id)
+      window.location.reload();
     } catch (error) {
+      console.log(error);
       showErrorAlert('Failed', 'The product could not be updated')
     }
   }
@@ -204,8 +205,11 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
   const create = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await createProduct(values, profile.token as string);
-      await uploadImages();
+      await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
+      if (values.status === 'publish') {
+        await updateProduct(response.createdProduct.id, {status: 'publish'}, profile.token as string);
+      }
       router.push('/admin/products/' + response.createdProduct.id)
     } catch (error: any) {
       showErrorAlert('Failed', error.response.data.message)
@@ -223,11 +227,9 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
 
     if (!product) {
       await create(values)
-      window.location.reload();
     } else {
       await update(values)
       await serverCacheDetailReset(product.slug)
-      window.location.reload();
     }
 
     stopLoading();
@@ -547,7 +549,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
                     </IconButton>
                   </Tooltip>
                 </Box>
-                <ImageUploader defaultImages={images} onChange={(newImages: any) => setFiles(newImages)} />
+                <ImageUploader defaultImages={images} defaultFiles={files} onChange={(newImages: any) => setFiles(newImages)} />
               </Grid>
 
               <Grid item sm={6} xs={12} sx={{ display: 'flex', gap: 2 }}>

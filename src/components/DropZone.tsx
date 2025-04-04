@@ -12,16 +12,21 @@ const dropZoneTitles: { [key: number]: string } = {
 
 export default function ImageUploader({
   defaultImages,
+  defaultFiles,
   onChange, // Prop `onChange` para manejar el cambio de imágenes en el componente principal
 }: {
   defaultImages: string[];
+  defaultFiles: File[] | null;
   onChange: (updatedImages: (File | string | null)[]) => void; // Espera una función para manejar el cambio
 }) {
   const [images, setImages] = useState<(string | null)[]>([
     ...(defaultImages || []), // Utiliza defaultImages si existe
     ...new Array(Math.max(0, 4 - (defaultImages?.length || 0))).fill(null),  // Rellena con null hasta tener 4 elementos
   ]);
-  const [files, setFiles] = useState<(File | null)[]>(new Array(4).fill(null));
+  const [files, setFiles] = useState<(File | null)[]>(defaultFiles || []);
+
+  useEffect(() => {setFiles(defaultFiles || [])}, [defaultFiles])
+
 
   // Manejador para agregar la imagen cargada
   const handleDropZone = (index: number, file: File | null) => {
