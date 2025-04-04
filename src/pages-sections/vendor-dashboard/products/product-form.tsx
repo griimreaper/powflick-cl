@@ -208,7 +208,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
       await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
       if (values.status === 'publish') {
-        await updateProduct(response.createdProduct.id, {status: 'publish'}, profile.token as string);
+        await updateProduct(response.createdProduct.id, { status: 'publish' }, profile.token as string);
       }
       router.push('/admin/products/' + response.createdProduct.id)
     } catch (error: any) {
@@ -217,22 +217,20 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
   }
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
-    startLoading();
-    if (files.filter(f => f).length < 4 && files.filter(f => f).length !== 0) {
-      // Mostrar el toast si no hay 4 archivos o ninguno
-      showErrorAlert('Error', 'You must upload exactly 4 files or none.');
+    try {
+      startLoading();
+      if (!product) {
+        await create(values)
+      } else {
+        await update(values)
+        await serverCacheDetailReset(product.slug)
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      showErrorAlert('Failed', 'The product could not be saved')
+    } finally {
       stopLoading();
-      return; // Evitar el envío del formulario si no se cumple la validación
     }
-
-    if (!product) {
-      await create(values)
-    } else {
-      await update(values)
-      await serverCacheDetailReset(product.slug)
-    }
-
-    stopLoading();
   };
 
   return (
