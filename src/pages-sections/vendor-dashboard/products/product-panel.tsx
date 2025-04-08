@@ -187,7 +187,7 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
 
     try {
       startLoadButton(); // Deshabilita el botón antes de empezar
-      showLoader("This may take a few seconds", true); // Muestra el loader
+      // showLoader("This may take a few seconds", true); // Muestra el loader
 
       await loadExcelProducts(excel, token);
 
@@ -198,7 +198,7 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
       setExcelError(error.message);
     } finally {
       stopLoadButton(); // Habilita el botón de nuevo
-      showLoader("", false); // Oculta el loader al terminar
+      // showLoader("", false); // Oculta el loader al terminar
     }
   };
 
