@@ -1,28 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { Formik } from "formik";
 import * as yup from "yup";
 // GLOBAL CUSTOM COMPONENTS
-import DropZone from "components/DropZone";
-import { FlexBox } from "components/flex-box";
 // STYLED COMPONENTS
-import { UploadImageBox, StyledClear } from "../styles";
 import { Category } from "models/types";
 import { useDashboardStore } from "store/dashboard";
 import { useRouter } from "next/navigation";
 import { Autocomplete } from "@mui/material";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { createCategory, updateCategory } from "services/Categories";
-import { createProduct } from "services/dashboardAdmin/products";
 
 // FORM FIELDS VALIDATION
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -100,6 +91,7 @@ export default function CategoryForm({ category, availableProducts }: Props) {
                   onChange={handleChange}
                   helperText={touched.name && errors.name}
                   error={Boolean(touched.name && errors.name)}
+                  inputProps={{ style: { textTransform: 'capitalize' } }}
                 />
               </Grid>
 

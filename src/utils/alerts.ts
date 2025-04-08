@@ -24,7 +24,9 @@ export const showErrorAlert = (title: string, text: string, timer = 3000) => {
   });
 };
 
-export const showLoader = (message: string) => {
+export const showLoader = (message: string, load: boolean) => {
+  if (!load) return; // Si load es falso, no hace nada
+
   Swal.fire({
     title: "Loading...",
     html: `<div class="spinner-border" role="status"><span class="visually-hidden">${message}</span></div>`,
@@ -32,6 +34,13 @@ export const showLoader = (message: string) => {
     allowEscapeKey: false,
     allowEnterKey: false,
     showConfirmButton: false,
+    didOpen: () => {
+      // Asegurar que el contenedor tenga un z-index alto
+      const swalContainer = document.querySelector('.swal2-container');
+      if (swalContainer) {
+        swalContainer.setAttribute("style", "z-index: 9999 !important;");
+      }
+    }
   });
 };
 

@@ -77,7 +77,7 @@ export default function LoginCartButtons({
               />
             )} */}
             <PersonOutline sx={ICON_COLOR} />
-            {`Welcome ${firstName} ${lastName}`}
+            {state.profile?.genericResponseUser?.firstName && `Welcome ${firstName} ${lastName}`}
           </span>
         ) : (
           <PersonOutline sx={ICON_COLOR} />
