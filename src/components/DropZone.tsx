@@ -14,19 +14,26 @@ export default function ImageUploader({
   defaultImages,
   defaultFiles,
   onChange, // Prop `onChange` para manejar el cambio de imágenes en el componente principal
+  updating,
 }: {
   defaultImages: string[];
   defaultFiles: File[] | null;
   onChange: (updatedImages: (File | string | null)[]) => void; // Espera una función para manejar el cambio
+  updating: boolean,
 }) {
+  // Estado para manejar las imágenes y archivos
+  // Se inicializa con las imágenes por defecto y se asegura de que haya 4 elementos
   const [images, setImages] = useState<(string | null)[]>([
     ...(defaultImages || []), // Utiliza defaultImages si existe
     ...new Array(Math.max(0, 4 - (defaultImages?.length || 0))).fill(null),  // Rellena con null hasta tener 4 elementos
   ]);
   const [files, setFiles] = useState<(File | null)[]>(defaultFiles || []);
 
-  useEffect(() => {setFiles(defaultFiles || [])}, [defaultFiles])
+  // Se asegura de que el estado de files tenga al menos 4 elementos
+  useEffect(() => { setFiles(defaultFiles || []) }, [defaultFiles])
 
+  // Se posicionan las imagenes en la casilla q corresponde
+  useEffect(() => { if (updating) setImages(defaultImages) }, [defaultImages])
 
   // Manejador para agregar la imagen cargada
   const handleDropZone = (index: number, file: File | null) => {
@@ -38,7 +45,7 @@ export default function ImageUploader({
     }
 
     if (file) {
-      const renamedFile = new File([file], `${index > 3 ? 'ADDITIONAL_' + (index + 1) : nameFile[index]}${file.name.slice(file.name.lastIndexOf("."))}`, {
+      const renamedFile = new File([file], `${index > 3 ? 'G-ADDITIONAL_' + (index + 1) : nameFile[index]}${file.name.slice(file.name.lastIndexOf("."))}`, {
         type: file.type,
       });
 
@@ -63,6 +70,7 @@ export default function ImageUploader({
       onChange(newFiles);
     }
   };
+
   // Manejador para eliminar la imagen y restaurar la predeterminada
   const handleDeleteImage = (index: number) => {
     const newFiles = [...files];
@@ -75,6 +83,7 @@ export default function ImageUploader({
 
     onChange(newFiles);
   };
+
   // Manejador para eliminar un DropZone completo (incluyendo imagen)
   const handleDeleteDropZone = (index: number) => {
     const newFiles = files.filter((_, i) => i !== index);
@@ -86,7 +95,6 @@ export default function ImageUploader({
     onChange(newFiles);
   };
 
-
   // Agregar un nuevo DropZone
   const handleAddDropZone = () => {
     const newFiles = [...files, null];
@@ -97,6 +105,7 @@ export default function ImageUploader({
 
     onChange(newFiles);
   };
+
   return (
     <Box display={'flex'} gap={2} flexDirection="column" mb={6}>
       {/* Contenedor con scroll horizontal */}
