@@ -122,45 +122,64 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     slug: slug || "",
   };
   const [files, setFiles] = useState<File[]>([]);
-  console.log(files);
+  const [sortedImage, setSortedImage] = useState<string[]>(images || [null, null, null, null]);
 
+  // Si se esta actualizando un producto, se cargan y
+  // ordenan las imágenes por defecto
   useEffect(() => {
     if (!images || images.length === 0) return;
 
     const fetchImages = async () => {
       try {
-        const nameFile: { [key: number]: string } = {};
         let additionalCount = 3;
+        const fixedFiles: (File | null)[] = Array(4).fill(null); // Índices 0 a 3 reservados
+        const fixedImageUrls: (string | null)[] = Array(4).fill(null);
 
-        const imageFiles = await Promise.all(
-          images.map(async (image: string, index: number) => {
+        const additionalPairs: { file: File; url: string; count: number }[] = [];
+
+        await Promise.all(
+          images.map(async (image: string) => {
             const response = await fetch(image);
             const blob = await response.blob();
-            // Extraer el nombre del archivo desde la URL
             const fileNameFromUrl = image.split("/").pop() || "";
 
-            console.log(fileNameFromUrl);
-
-            // Definir nombres clave
-            let fileName = `ADDITIONAL_${additionalCount}.jpg`;
+            let file: File | null = null;
 
             if (fileNameFromUrl.includes("Front_1")) {
-              fileName = "Front_1.png";
+              file = new File([blob], "Front_1.png", { type: blob.type });
+              fixedFiles[0] = file;
+              fixedImageUrls[0] = image;
             } else if (fileNameFromUrl.includes("Back_2")) {
-              fileName = "Back_2.png";
+              file = new File([blob], "Back_2.png", { type: blob.type });
+              fixedFiles[1] = file;
+              fixedImageUrls[1] = image;
             } else if (fileNameFromUrl.includes("customization_1")) {
-              fileName = "Front-customization_1.png";
+              file = new File([blob], "Front-customization_1.png", { type: blob.type });
+              fixedFiles[2] = file;
+              fixedImageUrls[2] = image;
             } else if (fileNameFromUrl.includes("customization_2")) {
-              fileName = "Back_customization_2.png";
+              file = new File([blob], "Back_customization_2.png", { type: blob.type });
+              fixedFiles[3] = file;
+              fixedImageUrls[3] = image;
             } else {
-              additionalCount++; // Aumentar el contador para archivos adicionales
+              const count = ++additionalCount;
+              const fileName = `G-ADDITIONAL_${count}.jpg`;
+              file = new File([blob], fileName, { type: blob.type });
+              additionalPairs.push({ file, url: image, count });
             }
-
-            return new File([blob], fileName, { type: blob.type });
           })
         );
 
-        setFiles(imageFiles);
+        // Ordenar por el contador (menor a mayor)
+        additionalPairs.sort((a, b) => a.count - b.count);
+
+        const finalFiles = fixedFiles.filter(Boolean) as File[];
+        const finalSortedImages = fixedImageUrls.filter(Boolean) as string[];
+        const additionalFiles = additionalPairs.map(p => p.file);
+        const additionalImageUrls = additionalPairs.map(p => p.url);
+
+        setFiles([...finalFiles, ...additionalFiles]);
+        setSortedImage([...finalSortedImages, ...additionalImageUrls]);
       } catch (error) {
         console.error("Error fetching images:", error);
       }
@@ -169,7 +188,8 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     fetchImages();
   }, [images]);
 
-  const uploadImages = async () => {
+  // Subir las imágenes a la carpeta correspondiente
+  const uploadImages = async (title: string) => {
     try {
       const main = files.filter(f => f && !f?.name.includes('customization'))
       const custom = files.filter(f => f && f?.name.includes('customization'))
@@ -190,47 +210,58 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     }
   }
 
+  // Actualizar un producto existente
+  // y subir las imágenes a la carpeta correspondiente
+  // en el servidor utilizando el nombre del producto
   const update = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await updateProduct(id, values, profile.token as string);
-      await uploadImages();
+      await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
-
+      router.push('/admin/products/' + response.updateProduct.id)
+      window.location.reload();
     } catch (error) {
+      console.log(error);
       showErrorAlert('Failed', 'The product could not be updated')
     }
   }
 
+  // Crear un nuevo producto
+  // y subir las imágenes a la carpeta correspondiente
+  // en el servidor utilizando el nombre del producto
   const create = async (values: typeof INITIAL_VALUES) => {
     try {
       const response = await createProduct(values, profile.token as string);
-      await uploadImages();
+      await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
+      if (values.status === 'publish') {
+        await updateProduct(response.createdProduct.id, { status: 'publish' }, profile.token as string);
+      }
       router.push('/admin/products/' + response.createdProduct.id)
     } catch (error: any) {
       showErrorAlert('Failed', error.response.data.message)
     }
   }
 
+  // Si el producto no existe, se crea uno nuevo
+  // Si el producto existe, se actualiza el existente
+  // y se reinicia la caché del detalle del producto
+  // para que se reflejen los cambios en la vista de detalle
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
-    startLoading();
-    if (files.filter(f => f).length < 4 && files.filter(f => f).length !== 0) {
-      // Mostrar el toast si no hay 4 archivos o ninguno
-      showErrorAlert('Error', 'You must upload exactly 4 files or none.');
+    try {
+      startLoading();
+      if (!product) {
+        await create(values)
+      } else {
+        await update(values)
+        await serverCacheDetailReset(product.slug)
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      showErrorAlert('Failed', 'The product could not be saved')
+    } finally {
       stopLoading();
-      return; // Evitar el envío del formulario si no se cumple la validación
     }
-
-    if (!product) {
-      await create(values)
-      window.location.reload();
-    } else {
-      await update(values)
-      await serverCacheDetailReset(product.slug)
-      window.location.reload();
-    }
-
-    stopLoading();
   };
 
   return (
@@ -537,7 +568,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
                   <H3 sx={{ marginBottom: 0 }}>Product Images</H3>
                   <Tooltip
-                    title="The image file only supports 'png' format for better resolution."
+                    title="The image file only supports 'png' format for better resolution. You can drag and drop the images to the desired position."
                     arrow
                     enterTouchDelay={0} // Permite que se pueda ver en mobile con toque
                     leaveTouchDelay={3000} // Mantiene el tooltip visible un poco más en mobile
@@ -547,7 +578,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
                     </IconButton>
                   </Tooltip>
                 </Box>
-                <ImageUploader defaultImages={images} onChange={(newImages: any) => setFiles(newImages)} />
+                <ImageUploader defaultImages={sortedImage} defaultFiles={files} onChange={(newImages: any) => setFiles(newImages)} updating={product} />
               </Grid>
 
               <Grid item sm={6} xs={12} sx={{ display: 'flex', gap: 2 }}>

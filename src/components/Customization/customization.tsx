@@ -93,8 +93,6 @@ export default function Customizations(props: CustomizationProps) {
     setShowFrontPanel(!showFrontPanel);
   };
 
-  useEffect(() => {}, [list]);
-
   const ViewCustomization = async (
     customization: Customization,
     productId: string
@@ -519,8 +517,8 @@ export default function Customizations(props: CustomizationProps) {
               image={frontImage}
               sideName="frontSide"
               id={productId}
-              font={product?.font}
-              fontColor={product?.font_color}
+              font={product.font}
+              fontColor={product.font_color}
             />
           )}
         </Box>

@@ -1,12 +1,7 @@
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Avatar from "@mui/material/Avatar";
 // MUI ICON COMPONENTS
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
-import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
-// GLOBAL CUSTOM COMPONENT
-import SportZoneSwitch from "components/SportZoneSwitch";
 // STYLED COMPONENTS
 import {
   StyledTableRow,
@@ -22,13 +17,14 @@ import { deleteCategory } from "services/Categories";
 interface Category {
   id: string;
   name: string;
+  products?: [];
 }
 
 type Props = { category: Category; selected?: string[], setActualize: Function };
 // ========================================================================
 
 export default function CategoryRow({ category, setActualize }: Props) {
-  const { name, id } = category || {};
+  const { name, id, products } = category || {};
   const { profile } = useDashboardStore();
   const router = useRouter();
 
@@ -53,6 +49,8 @@ export default function CategoryRow({ category, setActualize }: Props) {
       <StyledTableCell align="left">
         <CategoryWrapper>{name}</CategoryWrapper>
       </StyledTableCell>
+
+      <StyledTableCell align="left">{products?.length}</StyledTableCell>
       {/*
       <StyledTableCell align="left">
         <Avatar alt={name} src={image} sx={{ borderRadius: 2 }} />

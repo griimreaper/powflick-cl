@@ -72,7 +72,7 @@ export default function ProductReviewsPageView({ type }: { type: 'ORDER' | 'PROD
   };
 
   return (
-    <PageWrapper title="Product Reviews">
+    <PageWrapper title={type === 'PRODUCT' ? "Product Reviews" : "Order Reviews"}>
       <Card>
         <Scrollbar>
           <TableContainer sx={{ minWidth: 1000 }}>

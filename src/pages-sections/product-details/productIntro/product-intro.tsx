@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
@@ -14,23 +14,18 @@ import Remove from "@mui/icons-material/Remove";
 // GLOBAL CUSTOM HOOK
 import useCart from "hooks/useCart";
 // GLOBAL CUSTOM COMPONENTS
-import LazyImage from "components/LazyImage";
-import { H1, H2, H3, H6 } from "components/Typography";
+import { H1, H2, H6 } from "components/Typography";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
 // DUMMY DATA
-import productVariants from "data/product-variants";
 // CUSTOM DATA MODEL
-import Product from "models/Product.model";
-import { Customization, detailProps, ProductDB } from "models/types";
+import { Customization, detailProps } from "models/types";
 import Image from "next/image";
-import Heart from "icons/Heart";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { favProduct } from "services/Products";
 import {
-  FavoriteBorder,
   FavoriteBorderOutlined,
   FavoriteOutlined,
 } from "@mui/icons-material";
@@ -92,11 +87,6 @@ export default function ProductIntro({ product }: Props) {
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
-  const customizations =
-    list[list.findIndex((i) => i.productId === id)]?.customizations ?? [];
-
-  // CHECK PRODUCT EXIST OR NOT IN THE CART1
-  const cartItem = state.cart.find((item) => item.id === id);
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(

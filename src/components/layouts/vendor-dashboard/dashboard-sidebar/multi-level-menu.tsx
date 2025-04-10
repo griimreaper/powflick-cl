@@ -31,9 +31,10 @@ export default function MultiLevelMenu() {
   const activeRoute = (path: string) => (pathname === path ? 1 : 0);
 
   // HANDLE NAVIGATE TO ANOTHER ROUTE & CLOSE SIDEBAR DRAWER IN MOBILE DEVICE
-  const handleNavigation = (path: string) => {
+  const handleNavigation = async (path: string) => {
     if (path === '/logout') {
-      signOut()
+      router.push('/')
+      signOut({redirect: false})
       removeProfile()
     } else {
       router.push(path);

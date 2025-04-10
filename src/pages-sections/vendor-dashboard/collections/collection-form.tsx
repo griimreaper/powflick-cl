@@ -1,20 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { Formik } from "formik";
 import * as yup from "yup";
 // GLOBAL CUSTOM COMPONENTS
-import DropZone from "components/DropZone";
-import { FlexBox } from "components/flex-box";
-// STYLED COMPONENTS
-import { UploadImageBox, StyledClear } from "../styles";
 import { Collection, CollectionType } from "models/types";
 import { useDashboardStore } from "store/dashboard";
 import { useRouter } from "next/navigation";
@@ -112,6 +104,7 @@ export default function CollectionForm({ collection, availableProducts }: Props)
                   onChange={handleChange}
                   helperText={touched.title && errors.title}
                   error={Boolean(touched.title && errors.title)}
+                  inputProps={{ style: { textTransform: 'capitalize' } }}
                 />
               </Grid>
 
