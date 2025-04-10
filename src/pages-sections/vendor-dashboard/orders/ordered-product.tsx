@@ -17,10 +17,10 @@ import { useRef, useState } from "react";
 import { CustomButton } from "components/layouts/vendor-dashboard/dashboard-navbar/styles";
 
 // ==============================================================
-type Props = { product: ProductDB, customizations: { productId: string, customization: Customization }[] };
+type Props = { product: ProductDB, customizations: { productId: string, customization: Customization }[], orderId: number | null };
 // ==============================================================
 
-export default function OrderedProduct({ product, customizations }: Props) {
+export default function OrderedProduct({ product, customizations, orderId }: Props) {
   const { title, price, slug, images, id } = product || {};
 
   const [selectedCustomization, setSelectedCustomization] = useState<
@@ -90,7 +90,7 @@ export default function OrderedProduct({ product, customizations }: Props) {
           productSlug={selectedCustomization[2]}
           onClose={() => setSelectedCustomization(null)}
           position={modalPosition}
-          orderId={null}
+          orderId={orderId}
           currencyOrder={null}
         />
       )}

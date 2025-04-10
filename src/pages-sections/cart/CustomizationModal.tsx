@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { eliminarCaracteresNoNumericos } from "utils/tools";
-import { Customization } from "models/types";
+import { Customization, CustomizationSides } from "models/types";
 import { useCustomizationStore } from "store/customizationStore";
 import { useCustomizationsStore } from "store/customizationsStore";
 import { useShoppingCartStore } from "store/shoppingCart";
@@ -40,6 +40,7 @@ export function CustomizationModal({
   currencyOrder,
   style,
 }: CustomizationModalProps) {
+  const [openLogosModal, setOpenLogosModal] = useState(false);
   const [loadingState, setLoadingState] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -128,6 +129,16 @@ export function CustomizationModal({
     showSuccessAlert("Success!", "Product removed from cart");
   };
 
+  const downloadImage = async (url: string, filename: string) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   return (
     <Dialog
       open={Boolean(customization)}
@@ -146,7 +157,7 @@ export function CustomizationModal({
         <IconButton
           aria-label="close"
           onClick={onClose}
-          style={{ position: "absolute", right: 8, top: 8 }}
+          style={{ position: "absolute", right: 0, top: 0 }}
         >
           <Close />
         </IconButton>
@@ -197,13 +208,13 @@ export function CustomizationModal({
             Materials:{" "}
             {customization.materials.split(" ")[1]
               ? customization.materials.split(" ")[0] +
-                " ($" +
-                Number(
-                  eliminarCaracteresNoNumericos(
-                    String(customization.materials.split(" ").pop())
-                  )
-                ) +
-                ")"
+              " ($" +
+              Number(
+                eliminarCaracteresNoNumericos(
+                  String(customization.materials.split(" ").pop())
+                )
+              ) +
+              ")"
               : customization.materials}
           </Typography>
         )}
@@ -255,8 +266,62 @@ export function CustomizationModal({
               Remove
             </Button>
           )}
+
+          {orderId !== null &&
+            (customization?.frontSide?.logos?.some(l => l.logoUrl) ||
+              customization?.backSide?.logos?.some(l => l.logoUrl)) && (
+              <Button
+                onClick={() => { setOpenLogosModal(true) }}
+                variant="outlined"
+                color="primary"
+                style={{ marginTop: 16 }}
+              >
+                Logos
+              </Button>
+            )}
         </Box>
       </DialogContent>
+      <Dialog open={openLogosModal} onClose={() => setOpenLogosModal(false)}>
+        <DialogTitle>
+          Logos
+          <IconButton
+            aria-label="close"
+            onClick={() => setOpenLogosModal(false)}
+            style={{ position: "absolute", right: 8, top: 8 }}
+          >
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          {["frontSide", "backSide"].map((side: string) =>
+            customization?.[side as 'frontSide' | 'backSide']?.logos?.map((logo, index) =>
+              logo.logoUrl ? (
+                <Box
+                  key={`${side}-${index}`}
+                  display="flex"
+                  alignItems="center"
+                  gap={2}
+                  justifyContent="space-between"
+                  mb={1}
+                >
+                  <img
+                    src={logo.logoUrl}
+                    alt={`${side} logo ${index + 1}`}
+                    style={{ width: 80, height: 80, objectFit: "contain" }}
+                  />
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => downloadImage(logo.logoUrl, `logo-${index + 1}.png`)}
+                  >
+                    Download
+                  </Button>
+                </Box>
+              ) : null
+            )
+          )}
+        </DialogContent>
+      </Dialog>
     </Dialog>
   );
 }
