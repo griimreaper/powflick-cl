@@ -12,6 +12,7 @@ const nextConfig = {
       { protocol: "https", hostname: "emmanuela.insyst.info" },
       { protocol: "https", hostname: "sbvajd9r07chtxp5.public.blob.vercel-storage.com" },
       { protocol: "https", hostname: "www.powflick.com" },
+      { protocol: "https", hostname: "a4dogv6ty8aeyf4s.public.blob.vercel-storage.com" },
     ],
   },
 };
