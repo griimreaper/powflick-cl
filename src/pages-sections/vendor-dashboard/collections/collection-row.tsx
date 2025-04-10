@@ -19,7 +19,7 @@ type Props = { collection: Collection; selected?: string[], setActualize: Functi
 // ========================================================================
 
 export default function CollectionRow({ collection, setActualize }: Props) {
-  const { order, title, type, id } = collection || {};
+  const { order, title, type, id, products } = collection || {};
   const { profile } = useDashboardStore();
   const router = useRouter();
 
@@ -42,8 +42,9 @@ export default function CollectionRow({ collection, setActualize }: Props) {
       <StyledTableCell align="left">#{id.split("-")[0]}</StyledTableCell>
 
       <StyledTableCell align="left">{title}</StyledTableCell>
-      <StyledTableCell align="center">{order}</StyledTableCell>
-      <StyledTableCell align="right">{type}</StyledTableCell>
+      <StyledTableCell align="left">{order}</StyledTableCell>
+      <StyledTableCell align="left">{products?.length}</StyledTableCell>
+      <StyledTableCell align="left">{type}</StyledTableCell>
 
       {/* <StyledTableCell align="center">
         <Avatar

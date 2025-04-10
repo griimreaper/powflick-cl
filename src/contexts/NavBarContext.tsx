@@ -29,13 +29,7 @@ export function NavbarProvider({ children }: NavBarContextProps) {
         queryFn: fetchNavbar,       // Función para obtener los datos
         staleTime: 5 * 60 * 1000,     // 5 min
         refetchInterval: 5 * 60 * 1000, // forzar peticion cada 5 min
-        enabled: (() => {
-            const storedData = localStorage.getItem('navbarData');
-            if (!storedData) return true; // Si no hay datos, habilitar la consulta
-            const parsedData = JSON.parse(storedData);
-            return parsedData.categories.length === 0 &&
-                parsedData.collection.length === 0
-        })(),
+        enabled: true,
         initialData: (() => {
             const storedData = localStorage.getItem('navbarData');
             if (!storedData) return; // Si no hay datos, no se usa initialData
