@@ -55,7 +55,17 @@ export default function PanelSides({
   font,
   fontColor,
 }: PanelSidesProps) {
-  const [logos, setLogos] = useState<Logo[]>([
+  const { list, setCustomizationInList } =
+    useCustomizationsStore();
+
+  const customizations = list.find(
+    ({ productId }) => productId === id
+  )?.customizations;
+
+  const { customization, updateCustomizationAttribute } =
+  useCustomizationStore();
+
+  const [logos, setLogos] = useState<Logo[]>(customization[sideName].logos || [
     {
       type: "Logo",
       logoUrl: "",
@@ -65,10 +75,10 @@ export default function PanelSides({
       rotate: 0,
     },
   ]);
-  const [texts, setTexts] = useState<Text[]>([
+  const [texts, setTexts] = useState<Text[]>(customization[sideName].texts || [
     {
       type: "Text",
-      text: "Insert Text",
+      text: "",
       font: typeof font === "string" && fonts[font] ? font : "",
       textColor: (typeof fontColor === "string" && fontColor) || "black",
       textSize: 24,
@@ -77,10 +87,10 @@ export default function PanelSides({
       rotate: 0,
     },
   ]);
-  const [numbers, setNumbers] = useState<Numb[]>([
+  const [numbers, setNumbers] = useState<Numb[]>(customization[sideName].numbers ||[
     {
       type: 'Number',
-      number: "0",
+      number: "",
       font: typeof font === "string" && fonts[font] ? font : "",
       numberColor: (typeof fontColor === "string" && fontColor) || "black",
       numberPosition: { x: 80, y: 100 },
@@ -95,13 +105,6 @@ export default function PanelSides({
   });
   const [showInputsEdit, setShowInputsEdit] = useState<string>("");
   const { actualize, setActualize } = useHearingEvent();
-  const { customization, updateCustomizationAttribute } =
-    useCustomizationStore();
-  const { list, setCustomizationsInList, setCustomizationInList } =
-    useCustomizationsStore();
-  const customizations = list.find(
-    ({ productId }) => productId === id
-  )?.customizations;
 
   const saveDataToLocal = () => {
     let side: CustomizationSides = {
@@ -122,9 +125,9 @@ export default function PanelSides({
     selection.type === name ? setSelection({ index: 0, type: '' }) : setSelection({ index: 0, type: name });
     const generateText = selection.type && name === '' ? false : true;
     if (name === 'Text' && !texts.some(t => t.text) && generateText) {
-      setTexts(texts.map((t, i) => i === 0 ? t = { ...t, text: 'Insert Text' } : t))
+      setTexts(texts.map((t, i) => i === 0 ? t = { ...t, text: 'Insert Text', font: font, textColor: fontColor } : t))
     } else if (name === 'Number' && !numbers.some(t => t.number) && generateText) {
-      setNumbers(numbers.map((n, i) => i === 0 ? n = { ...n, number: '0' } : n))
+      setNumbers(numbers.map((n, i) => i === 0 ? n = { ...n, number: '0', font: font, numberColor: fontColor } : n))
     }
   };
 
@@ -173,11 +176,12 @@ export default function PanelSides({
             i === index ? { ...n, number: integerValue.toString() } : n
           )
         );
-        saveDataToLocal();
       }
     }
+    saveDataToLocal();
     setActualize();
   };
+
 
   const handleUpdateAttribute = () => {
     // Obtener los atributos desde el localStorage
@@ -217,7 +221,6 @@ export default function PanelSides({
 
   useEffect(() => {
     return () => {
-      sessionStorage.removeItem("customization-store");
       localStorage.removeItem("frontSide");
       localStorage.removeItem("backSide");
     };
