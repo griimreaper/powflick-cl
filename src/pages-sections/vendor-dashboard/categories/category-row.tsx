@@ -17,7 +17,7 @@ import { deleteCategory } from "services/Categories";
 interface Category {
   id: string;
   name: string;
-  products: [];
+  products?: [];
 }
 
 type Props = { category: Category; selected?: string[], setActualize: Function };
