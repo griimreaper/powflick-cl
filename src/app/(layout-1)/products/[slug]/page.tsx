@@ -74,7 +74,7 @@ export async function generateMetadata({
     };
 
     return {
-      metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
+      metadataBase: new URL(process.env.NEXTAUTH_URL as string),
       title: `${product.title} - Pow Flick`,
       authors: [{ name: "devcodelab" }],
       alternates: {
@@ -91,7 +91,7 @@ export async function generateMetadata({
       openGraph: {
         title: product.title,
         description: product.short_description || "Default Description",
-        url: `${process.env.NEXT_PUBLIC_API_URL}/${product.id}`,
+        url: `${process.env.NEXTAUTH_URL}/${product.slug}`,
         images: [
           {
             url: product.URL,
