@@ -18,7 +18,7 @@ const getLandingCached = cache(async (): Promise<DataStructure> => {
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
+  metadataBase: new URL(process.env.NEXTAUTH_URL as string),
   title: "Pow Flick",
   alternates: {
     canonical: "https://www.powflick.com/", // 🔹 URL CANÓNICA PRINCIPAL
