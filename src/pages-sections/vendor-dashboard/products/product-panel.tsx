@@ -177,24 +177,31 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
 
   const handleLoad = async (excel: string) => {
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (token && excel) {
-      if (!urlRegex.test(excel)) {
-        showErrorAlert("Error!", "Enter a valid URL for the Excel file");
-        return;
-      }
-      showLoader("This may take a few seconds");
-      startLoadButton();
-      try {
-        await loadExcelProducts(excel, token);
-        showSuccessAlert("Success!", "Excel load successfully");
-        setExcelError("");
-      } catch (error: any) {
-        console.log(error);
-        setExcelError(error.message);
-      }
-      stopLoadButton();
+
+    if (!token || !excel) return; // Si no hay token o URL, no hacer nada
+
+    if (!urlRegex.test(excel)) {
+      showErrorAlert("Error!", "Enter a valid URL for the Excel file");
+      return;
+    }
+
+    try {
+      startLoadButton(); // Deshabilita el botón antes de empezar
+      // showLoader("This may take a few seconds", true); // Muestra el loader
+
+      await loadExcelProducts(excel, token);
+
+      showSuccessAlert("Success!", "Excel load successfully");
+      setExcelError("");
+    } catch (error: any) {
+      console.log(error);
+      setExcelError(error.message);
+    } finally {
+      stopLoadButton(); // Habilita el botón de nuevo
+      // showLoader("", false); // Oculta el loader al terminar
     }
   };
+
 
   const handleExport = async () => {
     if (token) {

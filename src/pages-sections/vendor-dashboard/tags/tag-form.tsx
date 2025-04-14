@@ -93,6 +93,7 @@ export default function TagsForm({ tag, availableProducts }: Props) {
                   onChange={handleChange}
                   helperText={touched.name && errors.name}
                   error={Boolean(touched.name && errors.name)}
+                  inputProps={{ style: { textTransform: 'capitalize' } }}
                 />
               </Grid>
 

@@ -8,8 +8,11 @@ import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 import { cache } from "react";
 import ProductSeo from "./ProductSeo";
 
+export const revalidate = 360;
+export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente
+
 const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>(); 
-const CACHE_DURATION = 5 * 60 * 1000; // 300000ms (5 minutos)
+const CACHE_DURATION = 5 * 60; // 300000ms (5 minutos)
 
 const getProductsBySlugCached = cache(async (slug: string): Promise<detailProps | null> => {
   const cached = cacheMap.get(slug);
@@ -71,7 +74,7 @@ export async function generateMetadata({
     };
 
     return {
-      metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL as string),
+      metadataBase: new URL(process.env.NEXTAUTH_URL as string),
       title: `${product.title} - Pow Flick`,
       authors: [{ name: "devcodelab" }],
       alternates: {
@@ -88,7 +91,7 @@ export async function generateMetadata({
       openGraph: {
         title: product.title,
         description: product.short_description || "Default Description",
-        url: `${process.env.NEXT_PUBLIC_API_URL}/${product.id}`,
+        url: `${process.env.NEXTAUTH_URL}/${product.slug}`,
         images: [
           {
             url: product.URL,

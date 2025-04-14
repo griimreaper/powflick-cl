@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode, useEffect, useState } from "react";
 import useTheme from "@mui/material/styles/useTheme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import clsx from "clsx";
@@ -16,6 +16,11 @@ import Image from "next/image";
 import DialogDrawer from "./components/dialog-drawer";
 import LoginCartButtons from "./components/login-cart-buttons";
 import MobileHeader from "./components/mobile-header";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ResetPasswordForm } from "pages-sections/sessions/page-view/ResetPassword";
+import LoadingPageComponent from "components/Loaders/LoaderPageComponent";
+import { showErrorAlert } from "utils/alerts";
+import { validateToken } from "services/Login";
 
 // ==============================================================
 interface Props {
@@ -28,6 +33,10 @@ interface Props {
 }
 // ==============================================================
 
+function ResetPasswordContent() {
+
+}
+
 export default function Header({
   // isFixed,
   className,
@@ -36,6 +45,47 @@ export default function Header({
   session,
   data,
 }: Props) {
+  const [isClient, setIsClient] = useState(false);
+  const [openReset, setIsOpenReset] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Verifica si estamos en el cliente
+    if (typeof window !== 'undefined') {
+      setIsClient(true);
+      setToken(searchParams.get('token'));
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!isClient || !token) {
+      setLoading(false);
+      return;
+    }
+
+    const asyncFetch = async () => {
+      const { isValid } = await validateToken(String(token));
+      if (isValid) {
+        // Save the token in sessionStorage
+        sessionStorage.setItem('resetPasswordToken', String(token));
+        // Remove the token from the URL without reloading the page
+        const urlWithoutToken = window.location.href.split('?')[0];
+        window.history.replaceState({}, document.title, urlWithoutToken);
+        toggleDialog();
+        setIsOpenReset(true)
+        setLoading(false);
+      } else {
+        showErrorAlert("Error!", 'Change password time expired');
+        setLoading(false);
+      }
+    };
+
+    asyncFetch();
+  }, [isClient, token, router]);
+
   const theme = useTheme();
   const downMd = useMediaQuery(theme.breakpoints.down(1150));
   const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
@@ -78,6 +128,13 @@ export default function Header({
         toggleSidenav={toggleSidenav}
         session={!!session}
       />
+
+      {openReset && (
+        <ResetPasswordForm
+          rendering={openReset}
+          setIsRendering={setIsOpenReset}
+        />
+      )}
     </Fragment>
   );
 

@@ -4,7 +4,6 @@ import Avatar from "@mui/material/Avatar";
 // MUI ICON COMPONENTS
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
-import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 import SportZoneSwitch from "components/SportZoneSwitch";
@@ -24,6 +23,7 @@ import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import Link from "next/link";
 import { Box } from "@mui/material";
+import { serverCacheDetailReset } from "services/cache";
 
 // ========================================================================
 interface Product {
@@ -55,6 +55,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
       setProductPublish(boolean)
       if (profile.token) {
         await updateProduct(id, { status: boolean ? 'publish' : 'draft' }, profile.token);
+        await serverCacheDetailReset(slug)
         showSuccessAlert('Success', 'The product has been actualized.')
       }
     } catch (error) {
@@ -68,6 +69,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
       setProductMostSold(boolean)
       if (profile.token) {
         await updateProduct(id, { mostSold: boolean }, profile.token);
+        await serverCacheDetailReset(slug)
         showSuccessAlert('Success', 'The product has been actualized.')
       }
     } catch (error) {
@@ -81,6 +83,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
       setProductFeatured(boolean)
       if (profile.token) {
         await updateProduct(id, { featured: boolean }, profile.token);
+        await serverCacheDetailReset(slug)
         showSuccessAlert('Success', 'The product has been actualized.')
       }
     } catch (error) {
@@ -92,6 +95,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
   const deleteProd = async (id: string) => {
     try {
       const response = await deleteProduct(id, profile.token as string);
+      await serverCacheDetailReset(slug)
       showSuccessAlert('Success', response.message)
       setActualize();
     } catch (error) {
