@@ -3,12 +3,18 @@ import BoxLink from "./box-link";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
 import useFlag from "hooks/useFlag";
 import { RegisterPageView } from "../page-view";
+import ResetPassword from "../page-view/reset-password";
 
 export default function LoginBottom() {
-  const [isRendering, setIsRendering] = useFlag(false);
+  const [isRenderingRegister, setIsRenderingRegister] = useFlag(false);
+  const [isRenderingResetPassword, setIsRenderingResetPassword] = useFlag(false);
 
   const toggleRendering = () => {
-    setIsRendering(!isRendering);
+    setIsRenderingRegister(!isRenderingRegister);
+  };
+
+  const toggleResetPassword = () => {
+    setIsRenderingResetPassword(!isRenderingResetPassword);
   };
 
   return (
@@ -19,13 +25,13 @@ export default function LoginBottom() {
         <BoxLink
           title="Register"
           onClick={() => {
-            setIsRendering(true);
+            setIsRenderingRegister(true);
           }}
         />
       </FlexRowCenter>
-      {isRendering && (
+      {isRenderingRegister && (
         <RegisterPageView
-          rendering={isRendering}
+          rendering={isRenderingRegister}
           setIsRendering={toggleRendering}
         />
       )}
@@ -39,8 +45,17 @@ export default function LoginBottom() {
         bgcolor="grey.200"
       >
         Forgot your password?
-        <BoxLink title="Reset It" href="/reset-password" />
+        <BoxLink title="Reset It" onClick={() => {
+          setIsRenderingResetPassword(true);
+        }}/>
       </FlexBox>
+
+      {isRenderingResetPassword && (
+        <ResetPassword
+          rendering={isRenderingResetPassword}
+          setIsRendering={toggleResetPassword}
+        />
+      )}
     </Fragment>
   );
 }
