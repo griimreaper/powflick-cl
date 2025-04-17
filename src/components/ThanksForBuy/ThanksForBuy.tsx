@@ -112,7 +112,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
       if (token && token !== undefined) {
         const orderr = await getOrder(id, token);
         console.log("orderr", orderr);
-        
+
         setOrder(orderr.data);
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).dataLayer.push({
@@ -149,7 +149,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
                 item_category: product_categories,
                 item_category2: sports,
                 item_list_name: slug,
-                item_variant: colors[0],
+                item_variant: colors?.[0],
                 price: OrderProduct.price,
                 quantity: OrderProduct.amount,
               })
@@ -189,7 +189,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
                 item_category: product_categories,
                 item_category2: sports,
                 item_list_name: slug,
-                item_variant: colors[0],
+                item_variant: colors?.[0],
                 price: OrderProduct.price,
                 quantity: OrderProduct.amount,
               })
