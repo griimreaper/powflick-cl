@@ -58,6 +58,34 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Fest";
+  src: url("/fonts/FEST/Fest235 fs.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BLACK BASS DEMO";
+  src: url("/fonts/BLACK BASS DEMO/Black Bass Demo.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DIRGA HAYU";
+  src: url("/fonts/DIRGA HAYU/dDirgahayu.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RESTAURANT MENU BOOK";
+  src: url("/fonts/RESTAURANT MENU BOOK/RestaurantMenuBook.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .anton {
   font-family: "Anton", sans-serif;
 }
@@ -76,4 +104,20 @@
 
 .gymer {
   font-family: "GYMER", sans-serif;
+}
+
+.fest {
+  font-family: "Fest", sans-serif;
+}
+
+.blackbass {
+  font-family: "Black Bass Demo", sans-serif;
+}
+
+.restaurantmenubook {
+  font-family: "Restaurant Menu Book", sans-serif;
+}
+
+.dirgahayu {
+  font-family: "Dirga Hayu", sans-serif;
 }

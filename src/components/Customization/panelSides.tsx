@@ -34,6 +34,10 @@ const fonts: { [key: string]: string } = {
   Verdana: "Verdana",
   Georgia: "Georgia",
   Tahoma: "Tahoma",
+  "Fest": "Fest",
+  "Black Bass Demo": "Black Bass Demo",
+  "Dirga Hayu": "Dirga Hayu",
+  "Restaurant Menu Book": "Restaurant Menu Book",
 };
 
 export default function PanelSides({
