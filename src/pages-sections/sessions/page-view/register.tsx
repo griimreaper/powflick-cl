@@ -16,7 +16,6 @@ import { FlexBox } from "components/flex-box";
 import SportZoneTextField from "components/SportZoneTextField";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { registerUser } from "services/Register";
-import { useRouter } from "next/navigation";
 import { Dialog, useMediaQuery } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import LogoWithTitle from "pages-sections/sessions/components/logo-title";
@@ -32,7 +31,6 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
   setIsRendering,
 }) => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
-  const router = useRouter();
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("xs")
   );
@@ -82,7 +80,7 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
         const response = await registerUser({ ...values }, "none");
         if (response.statusCode === 201) {
           showSuccessAlert("Success!", "User registered successfully!");
-          router.push("/login");
+          rendering && setIsRendering ? setIsRendering(false) : null
         } else {
           showErrorAlert("Error!", response.message as string);
         }
