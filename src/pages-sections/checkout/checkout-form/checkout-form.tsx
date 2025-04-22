@@ -74,7 +74,7 @@ export default function CheckoutForm() {
       if (token && selectedDirection) {
         const response = await createOrder(
           token,
-          Cart,
+          { cartProducts: cart },
           selectedDirection.id,
           "USD",
           1,
@@ -88,10 +88,17 @@ export default function CheckoutForm() {
       }
     } catch (error: any) {
       console.error("Error creating order:", error);
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         showErrorAlert("Error!", error.response.data.message);
       } else {
-        showErrorAlert("Error!", "An unexpected error occurred while creating the order.");
+        showErrorAlert(
+          "Error!",
+          "An unexpected error occurred while creating the order."
+        );
       }
     } finally {
       setLoading(false);
