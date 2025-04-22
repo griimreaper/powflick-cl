@@ -42,7 +42,7 @@ export default function NavigationList({
     <FlexBox gap={4} height={'100%'} alignItems="center" >
       {fullScreenMenu && renderNestedNav([fullScreenMenu], true)}
       {/* <StyledNavLink href="/blog">Blog</StyledNavLink> */}
-      <StyledNavLink href="/your-design">Super Design</StyledNavLink>
+      <StyledNavLink href="/your-design">Get a Free Design</StyledNavLink>
       <StyledNavLink href="/contact">Contact</StyledNavLink>
       <StyledNavLink href="/about-us">About Us</StyledNavLink>
       <StyledNavLink href="/help">Help</StyledNavLink>
