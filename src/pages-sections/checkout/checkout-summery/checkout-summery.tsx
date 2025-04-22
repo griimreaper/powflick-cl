@@ -67,7 +67,7 @@ export default function CheckoutSummary({ data }: any) {
       <ListItem mb={1} title="Subtotal" value={subtotal} />
       <ListItem mb={1} title="Customizations" value={totalCustomizations} />
 
-      <ListItem
+      {/* <ListItem
         mb={1}
         title="Coupon"
         value={
@@ -85,7 +85,7 @@ export default function CheckoutSummary({ data }: any) {
               ))}
           </select>
         }
-      />
+      /> */}
       <ListItem mb={1} title="Discount" value={discountValue} />
       <FlexBetween mb={2}>
         <Span color="grey.600">Total:</Span>
@@ -108,7 +108,7 @@ export default function CheckoutSummary({ data }: any) {
           color="primary.main"
           bgcolor="primary.light"
         >
-          Note
+          Remark (Optional)
         </Span>
       </FlexBox>
 
@@ -128,9 +128,9 @@ export default function CheckoutSummary({ data }: any) {
       <TextField
         fullWidth
         size="small"
-        label="Voucher"
+        label="Coupon Code"
         variant="outlined"
-        placeholder="Voucher"
+        placeholder="Coupon Code"
       />
 
       <Button
@@ -139,7 +139,7 @@ export default function CheckoutSummary({ data }: any) {
         fullWidth
         sx={{ mt: 2, mb: 4 }}
       >
-        Apply Voucher
+        Apply Coupon
       </Button>
 
       <Divider sx={{ mb: 2 }} />

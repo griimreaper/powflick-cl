@@ -51,6 +51,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
 
 export default function CartItem({ item }: Props) {
   // const { counter, handleCounterChange } = useCounter(item.product, true);
+  const { removeProductById } = useShoppingCartStore();
   const [selectedCustomization, setSelectedCustomization] = useState<
     [string, string] | null
   >(null);
@@ -86,6 +87,9 @@ export default function CartItem({ item }: Props) {
       <IconButton
         size="small"
         sx={{ position: "absolute", right: 15, top: 15 }}
+        onClick={() => {
+          removeProductById(item.product.id);
+        }}
       >
         <Close fontSize="small" />
       </IconButton>
