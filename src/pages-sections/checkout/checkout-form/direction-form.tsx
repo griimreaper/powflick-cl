@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Grid, TextField, Button, CircularProgress, Box } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import { Grid, TextField, Button, CircularProgress, Box, Autocomplete } from "@mui/material";
 import { Direction } from "models/types";
 import { useDashboardStore } from "store/dashboard";
 import { createDirection, deleteDirection, updateDirection } from "services/Directions";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import useLoading from "hooks/useLoading";
-import useHeader from "components/header/hooks/use-header";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
+import { Country, City } from "country-state-city";
 
 export default function DirectionForm({
     toggleForm,
@@ -22,15 +24,24 @@ export default function DirectionForm({
         handleSubmit,
         formState: { errors },
         reset,
+        control,
+        watch,
+        setValue,
     } = useForm();
     const [loading, startLoading, stopLoading] = useLoading();
     const { profile, addOrUpdateUserDirection, setProfileUser } = useDashboardStore();
     const { token } = profile;
 
+    // Simplificado: solo se usa el valor seleccionado
+    const selectedCountry = watch("country");
+    const countryInput = watch("countryInput") || "";
+    const cityInput = watch("cityInput") || "";
+
+    // Restaurar datos guardados o cargar dirección existente
     useEffect(() => {
         const savedData = localStorage.getItem("pendingAddress");
         if (savedData && !address) {
-            reset(JSON.parse(savedData)); // Restaurar datos guardados en localStorage
+            reset(JSON.parse(savedData));
         } else if (address) {
             reset(address);
         }
@@ -79,8 +90,8 @@ export default function DirectionForm({
                 stopLoading();
             }
         } else {
-            localStorage.setItem("pendingAddress", JSON.stringify(data)); // Guardar formulario antes de redirigir
-            toggleDialog!();
+            localStorage.setItem("pendingAddress", JSON.stringify(data));
+            toggleDialog && toggleDialog();
         }
     };
 
@@ -92,134 +103,213 @@ export default function DirectionForm({
         }
     });
 
+    // Opciones de países y ciudades filtradas en cada render
+    const allCountries = Country.getAllCountries();
+    const filteredCountries = countryInput.length > 0
+        ? allCountries.filter(c => c.name.toLowerCase().includes(countryInput.toLowerCase()))
+        : allCountries;
+    const allCities = selectedCountry ? City.getCitiesOfCountry(selectedCountry) || [] : [];
+    const filteredCities = cityInput.length > 1
+        ? allCities.filter(city => city.name.toLowerCase().includes(cityInput.toLowerCase()))
+        : [];
+
     return (
         <Box sx={{ mt: 1, width: "100%" }}>
-                <form onSubmit={onSubmit}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Country/Region"
-                                fullWidth
-                                variant="outlined"
-                                {...register("country", {
-                                    required: "Country is required",
-                                })}
-                                error={!!errors.country}
-                                helperText={errors.country?.message?.toString()}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="City"
-                                fullWidth
-                                variant="outlined"
-                                {...register("city", {
-                                    required: "City is required",
-                                })}
-                                error={!!errors.city}
-                                helperText={errors.city?.message?.toString()}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Location"
-                                fullWidth
-                                variant="outlined"
-                                {...register("district", {
-                                    required: "Location is required",
-                                })}
-                                error={!!errors.district}
-                                helperText={errors.district?.message?.toString()}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Postal Code"
-                                fullWidth
-                                variant="outlined"
-                                {...register("postalCode", {
-                                    required: "Postal code is required",
-                                })}
-                                error={!!errors.postalCode}
-                                helperText={errors.postalCode?.message?.toString()}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Address"
-                                fullWidth
-                                variant="outlined"
-                                {...register("address", {
-                                    required: "Address is required",
-                                })}
-                                error={!!errors.address}
-                                helperText={errors.address?.message?.toString()}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Apartment, Suite, etc"
-                                fullWidth
-                                variant="outlined"
-                                {...register("addressReference")}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Neighborhood"
-                                fullWidth
-                                variant="outlined"
-                                {...register("neighborhood", {
-                                    required: "Neighborhood is required",
-                                })}
-                                error={!!errors.neighborhood}
-                                helperText={errors.neighborhood?.message?.toString()}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Phone"
-                                fullWidth
-                                variant="outlined"
-                                {...register("phone", {
-                                    required: "Phone is required",
-                                    pattern: {
-                                        value: /^\+[1-9]{1}[0-9]{3,14}$/,
-                                        message:
-                                            "Phone number must start with a '+' and include the country code",
-                                    },
-                                })}
-                                error={!!errors.phone}
-                                helperText={errors.phone?.message?.toString()}
-                            />
-                        </Grid>
+            <form onSubmit={onSubmit}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6}>
+                        <Controller
+                            name="country"
+                            control={control}
+                            rules={{ required: "Country is required" }}
+                            render={({ field }) => (
+                                <Autocomplete
+                                    options={filteredCountries}
+                                    getOptionLabel={(option) => option.name}
+                                    inputValue={countryInput}
+                                    onInputChange={(_, value) => setValue("countryInput", value)}
+                                    value={filteredCountries.find(opt => opt.isoCode === field.value) || null}
+                                    onChange={(_, value) => {
+                                        field.onChange(value ? value.isoCode : "");
+                                        setValue("city", "");
+                                        setValue("cityInput", "");
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Country/Region"
+                                            error={!!errors.country}
+                                            helperText={errors.country?.message?.toString()}
+                                        />
+                                    )}
+                                />
+                            )}
+                        />
                     </Grid>
-                    <Grid container spacing={3} justifyContent="space-around" sx={{ mt: 0.1 }}>
-                        <Grid item>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                            >
-                                {loading ? <CircularProgress size={24} /> : address ? "Update" : "Submit"}
-                            </Button>
-                        </Grid>
-                        {address && (
-                            <Grid item>
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    fullWidth
-                                    onClick={() => fetchDeleteDirection(token!)}
-                                    disabled={loading}
-                                >
-                                    {loading ? <CircularProgress size={24} /> : "Delete"}
-                                </Button>
-                            </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Controller
+                            name="city"
+                            control={control}
+                            rules={{ required: "City is required" }}
+                            render={({ field }) => (
+                                <Autocomplete
+                                    options={filteredCities}
+                                    getOptionLabel={(option) => option.name}
+                                    inputValue={cityInput}
+                                    onInputChange={(_, value, reason) => {
+                                        setValue("cityInput", value);
+                                        // Si el usuario está escribiendo, limpia el valor seleccionado
+                                        if (reason === "input") {
+                                            setValue("city", "");
+                                        }
+                                    }}
+                                    value={filteredCities.find(opt => opt.name === field.value) || null}
+                                    onChange={(_, value) => field.onChange(value ? value.name : "")}
+                                    disabled={!selectedCountry}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="City"
+                                            error={!!errors.city}
+                                            helperText={errors.city?.message?.toString()}
+                                        />
+                                    )}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Location"
+                            fullWidth
+                            variant="outlined"
+                            {...register("district", {
+                                required: "Location is required",
+                                minLength: { value: 2, message: "Min 2 characters" },
+                                maxLength: { value: 50, message: "Max 50 characters" },
+                            })}
+                            error={!!errors.district}
+                            helperText={errors.district?.message?.toString()}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Postal Code"
+                            fullWidth
+                            variant="outlined"
+                            {...register("postalCode", {
+                                required: "Postal code is required",
+                                pattern: {
+                                    value: /^[A-Za-z0-9\- ]{3,10}$/,
+                                    message: "Invalid postal code",
+                                },
+                            })}
+                            error={!!errors.postalCode}
+                            helperText={errors.postalCode?.message?.toString()}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Address"
+                            fullWidth
+                            variant="outlined"
+                            {...register("address", {
+                                required: "Address is required",
+                                minLength: { value: 5, message: "Min 5 characters" },
+                                maxLength: { value: 100, message: "Max 100 characters" },
+                            })}
+                            error={!!errors.address}
+                            helperText={errors.address?.message?.toString()}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Apartment, Suite, etc"
+                            fullWidth
+                            variant="outlined"
+                            {...register("addressReference", {
+                                required: "Apartment/Suite is required",
+                                minLength: { value: 2, message: "Min 2 characters" },
+                                maxLength: { value: 50, message: "Max 50 characters" },
+                            })}
+                            error={!!errors.addressReference}
+                            helperText={errors.addressReference?.message?.toString()}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Neighborhood"
+                            fullWidth
+                            variant="outlined"
+                            {...register("neighborhood", {
+                                required: "Neighborhood is required",
+                                minLength: { value: 2, message: "Min 2 characters" },
+                                maxLength: { value: 50, message: "Max 50 characters" },
+                            })}
+                            error={!!errors.neighborhood}
+                            helperText={errors.neighborhood?.message?.toString()}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Controller
+                            name="phone"
+                            control={control}
+                            rules={{
+                                required: "Phone is required",
+                                minLength: { value: 10, message: "Min 10 digits" },
+                                maxLength: { value: 15, message: "Max 15 digits" },
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: "Only numbers allowed",
+                                },
+                            }}
+                            render={({ field }) => (
+                                <PhoneInput
+                                    country={"mx"}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    inputProps={{
+                                        name: "phone",
+                                        required: true,
+                                        autoFocus: false,
+                                    }}
+                                    inputStyle={{ width: "100%", height: 26 }}
+                                />
+                            )}
+                        />
+                        {errors.phone && (
+                            <span style={{ color: "#d32f2f", fontSize: 12 }}>
+                                {errors.phone.message?.toString()}
+                            </span>
                         )}
                     </Grid>
-                </form>
+                </Grid>
+                <Grid container spacing={3} justifyContent="space-around" sx={{ mt: 0.1 }}>
+                    <Grid item>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                        >
+                            {loading ? <CircularProgress size={24} /> : address ? "Update" : "Submit"}
+                        </Button>
+                    </Grid>
+                    {address && (
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                fullWidth
+                                onClick={() => fetchDeleteDirection(token!)}
+                                disabled={loading}
+                            >
+                                {loading ? <CircularProgress size={24} /> : "Delete"}
+                            </Button>
+                        </Grid>
+                    )}
+                </Grid>
+            </form>
         </Box>
     );
 }
