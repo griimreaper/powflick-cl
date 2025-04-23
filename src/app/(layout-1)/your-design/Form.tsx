@@ -27,7 +27,31 @@ import { Paragraph } from "components/Typography";
 import { CloudUpload, Delete } from "@mui/icons-material";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { showSuccessAlert } from "utils/alerts";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { createFreeDesign } from "services/FreeDesign";
+import { uploadFolderPath } from "services/dashboardAdmin/products";
+
+interface ContactInfo {
+  fullName: string;
+  email: string;
+  organization: string;
+  phone: string;
+}
+
+interface FormData {
+  teamName: string;
+  sport: string;
+  color: string;
+  description: string;
+  date: Date | null;
+  primaryColors: string[];
+  secondaryColors: string[];
+  addNames: boolean;
+  addNumbers: boolean;
+  logos: any[];         // Cambiar 'any' por un tipo más específico si lo sabés
+  otherImages: any[];   // Igual que arriba
+  contactInfo: ContactInfo;
+}
 
 const sports = [
   "Soccer",
@@ -139,11 +163,7 @@ const LogoUpload = ({ onChange }: { onChange: any }) => {
           type="file"
           hidden
           multiple
-          onChange={(e) => {
-            if (e.target.files) {
-              setLogos([...logos, ...Array.from(e.target.files)]);
-            }
-          }}
+          onChange={handleLogoUpload}
         />
 
       </Button>
@@ -353,9 +373,8 @@ const ContactInfoForm = ({ values, onChange }: any) => {
 };
 
 export default function RequestForm() {
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<FormData>({
     teamName: '',
-    quantity: '',
     sport: '',
     color: '',
     description: '',
@@ -434,10 +453,24 @@ export default function RequestForm() {
 
   console.log(formData);
 
-  const onSubmit = (data: any) => {
-    console.log(formData);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const logosUrl = await uploadFolderPath(data.logos, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
+      const otherImagesUrl = await uploadFolderPath(data.otherImages, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
 
-    showSuccessAlert("Your request has been submitted successfully!", data.contactInfo.email);
+      console.log(logosUrl);
+      console.log(otherImagesUrl);
+
+
+      const response = await createFreeDesign({ ...data, otherImages: otherImagesUrl, logos: logosUrl, ...data.contactInfo });
+      console.log(response.freeDesign);
+
+      showSuccessAlert(response.message, data.contactInfo.email);
+    } catch (error) {
+      console.error("Error creating design:", error);
+      // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
+      showErrorAlert("Error creating design", "Please try again later.");
+    }
   };
 
   return (
@@ -552,30 +585,61 @@ export default function RequestForm() {
             input={<OutlinedInput label="Primary Colors" />}
             renderValue={(selected) => (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => (
-                  <Chip key={value} label={value} />
-                ))}
+                {selected.map((value: any) => {
+                  const colorHex = colors.find(c => c.name === value)?.hex || "#000";
+                  return (
+                    <Box
+                      key={value}
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        backgroundColor: colorHex,
+                        borderRadius: 1,
+                        border: '1px solid #ccc',
+                      }}
+                    />
+                  );
+                })}
               </Box>
             )}
-            MenuProps={MenuProps}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  padding: 1,
+                  '& .MuiList-root': {
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(6, 1fr)',
+                    gap: 1,
+                  }
+                },
+              },
+            }}
           >
-            {colors.map((color: { name: string, hex: string }) => (
-              <MenuItem key={color.hex} value={color.name}>
-                <Checkbox checked={formData.primaryColors.includes(color.name)} />
+            {colors.map((color) => (
+              <MenuItem
+                key={color.hex}
+                value={color.name}
+                sx={{
+                  justifyContent: 'center',
+                  minHeight: 40,
+                  '&.Mui-selected': {
+                    outline: '2px solid black',
+                  },
+                }}
+              >
                 <Box
                   sx={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: '50%',
+                    width: 40,
+                    height: 40,
                     backgroundColor: color.hex,
+                    borderRadius: 1,
                     border: '1px solid #ccc',
-                    marginRight: 1,
                   }}
                 />
-                <ListItemText primary={color.name} />
               </MenuItem>
             ))}
           </Select>
+
           <FormHelperText>
             (Select up to 3 primary colors. At least 1 is required.)
           </FormHelperText>
@@ -595,30 +659,61 @@ export default function RequestForm() {
             input={<OutlinedInput label="Secondary Colors" />}
             renderValue={(selected) => (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => (
-                  <Chip key={value} label={value} />
-                ))}
+                {selected.map((value: any) => {
+                  const colorHex = colors.find(c => c.name === value)?.hex || "#000";
+                  return (
+                    <Box
+                      key={value}
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        backgroundColor: colorHex,
+                        borderRadius: 1,
+                        border: '1px solid #ccc',
+                      }}
+                    />
+                  );
+                })}
               </Box>
             )}
-            MenuProps={MenuProps}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  padding: 1,
+                  '& .MuiList-root': {
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(6, 1fr)', // Ajusta la cantidad de columnas
+                    gap: 1,
+                  },
+                },
+              },
+            }}
           >
             {colors.map((color) => (
-              <MenuItem key={color.hex} value={color.name}>
-                <Checkbox checked={formData.secondaryColors.includes(color.name)} />
+              <MenuItem
+                key={color.hex}
+                value={color.name}
+                sx={{
+                  justifyContent: 'center',
+                  minHeight: 60, // Ajustar altura del item para cuadrado más grande
+                  '&.Mui-selected': {
+                    outline: '2px solid black', // Borde para mostrar selección
+                  },
+                }}
+              >
                 <Box
                   sx={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: '50%',
+                    width: 40,  // Tamaño del cuadrado más grande
+                    height: 40, // Tamaño del cuadrado más grande
                     backgroundColor: color.hex,
+                    borderRadius: 1,
                     border: '1px solid #ccc',
-                    marginRight: 1,
                   }}
                 />
-                <ListItemText primary={color.name} />
               </MenuItem>
             ))}
           </Select>
+
           <FormHelperText>
             (Optional) Select up to 3 secondary colors
           </FormHelperText>
@@ -669,7 +764,6 @@ export default function RequestForm() {
 
         <LogoUpload onChange={handleLogoChange} />
         <OtherImagesUpload onChange={handleOtherImagesChange} />
-
 
         <Box sx={{ mb: 4 }}>
 
