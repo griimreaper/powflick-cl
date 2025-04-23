@@ -436,7 +436,7 @@ export default function ProductIntro({ product }: Props) {
                       if (
                         !isNaN(parsedValue) &&
                         parsedValue >= 1 &&
-                        parsedValue <= 99
+                        parsedValue <= 999
                       ) {
                         handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
                         setCounter(parsedValue); // Actualiza el estado con el nuevo valor

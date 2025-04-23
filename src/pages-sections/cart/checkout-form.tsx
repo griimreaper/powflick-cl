@@ -54,7 +54,7 @@ export default function CheckoutForm({ data }: any) {
           color="primary.main"
           bgcolor="primary.light"
         >
-          Remark (Optional)
+          Optional
         </Span>
       </FlexBox>
 

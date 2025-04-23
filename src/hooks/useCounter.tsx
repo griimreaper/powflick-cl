@@ -10,7 +10,7 @@ export const useCounter = (productId: string, initialValue = 1) => {
       // Si el valor es 0, elimina todas las customizaciones
       trimCustomizations(productId, 1);
       setCounter(newValue); // Establece el contador en 0
-    } else if (newValue > 0 && newValue <= 99) { // Verifica si el valor está dentro del rango permitido
+    } else if (newValue > 0 && newValue <= 999) { // Verifica si el valor está dentro del rango permitido
       const previousValue = counter;
 
       // Si el valor es mayor que el contador actual, agrega las customizaciones

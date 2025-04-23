@@ -108,7 +108,7 @@ export default function CheckoutSummary({ data }: any) {
           color="primary.main"
           bgcolor="primary.light"
         >
-          Remark (Optional)
+          Optional
         </Span>
       </FlexBox>
 
