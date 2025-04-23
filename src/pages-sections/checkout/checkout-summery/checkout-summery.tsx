@@ -91,7 +91,7 @@ export default function CheckoutSummary({ data }: any) {
         <Span color="grey.600">Total:</Span>
 
         <Span fontSize={18} fontWeight={600} lineHeight="1">
-          {currency(totalWithDiscount || data.total)}
+          {currency(data.total)}
         </Span>
       </FlexBetween>
 

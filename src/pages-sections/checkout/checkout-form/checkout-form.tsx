@@ -12,9 +12,7 @@ import {
   Typography,
   Card,
   CardContent,
-  Tooltip,
 } from "@mui/material";
-import WarningIcon from "@mui/icons-material/Warning";
 import { useDashboardStore } from "store/dashboard";
 import { Direction } from "models/types";
 import DirectionForm from "./direction-form";
@@ -67,21 +65,19 @@ export default function CheckoutForm() {
 
   const handleProceedToPayment = async () => {
     setLoading(true);
-    const Cart = cart.map((item) => ({
-      customizations: item.customizations,
-      productId: item.product.id.toString(),
-    }));
 
     try {
       if (token && selectedDirection) {
         const response = await createOrder(
           token,
-          { cartProducts: cart },
+          {
+            cartProducts: cart, // Enviar el carrito completo
+          },
           selectedDirection.id,
           "USD",
           1,
           coupon?.id,
-          note // Usar el estado note del store
+          note
         );
 
         if (typeof response === "string") {
@@ -90,17 +86,10 @@ export default function CheckoutForm() {
       }
     } catch (error: any) {
       console.error("Error creating order:", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response && error.response.data && error.response.data.message) {
         showErrorAlert("Error!", error.response.data.message);
       } else {
-        showErrorAlert(
-          "Error!",
-          "An unexpected error occurred while creating the order."
-        );
+        showErrorAlert("Error!", "An unexpected error occurred while creating the order.");
       }
     } finally {
       setLoading(false);
@@ -133,7 +122,7 @@ export default function CheckoutForm() {
           >
             <FormControl fullWidth sx={{ flex: 2 }}>
               <InputLabel id="direction-select-label">
-                Select Address
+                Select Direction
               </InputLabel>
               <Select
                 labelId="direction-select-label"
@@ -142,7 +131,7 @@ export default function CheckoutForm() {
                 fullWidth
               >
                 <MenuItem value="">
-                  <em>Select Address</em>
+                  <em>Select Direction</em>
                 </MenuItem>
                 {directions.map(({ id, country, city, district }) => (
                   <MenuItem key={id} value={id}>
@@ -158,7 +147,7 @@ export default function CheckoutForm() {
               onClick={toggleForm}
               sx={{ textTransform: "uppercase", minWidth: "150px" }}
             >
-              Insert a New Address
+              Insert a New Direction
             </Button>
           </Box>
 
@@ -178,7 +167,7 @@ export default function CheckoutForm() {
         <Card>
           <CardContent>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
-              Selected Address:
+              Selected Direction:
             </Typography>
             <Typography>
               <strong>Country:</strong> {selectedDirection.country}
@@ -235,135 +224,110 @@ export default function CheckoutForm() {
           </Grid>
 
           <Grid item sm={6} xs={12}>
-            <Tooltip
-              title={
-                !selectedDirection
-                  ? "Please select an address to proceed."
-                  : cart.length === 0
-                    ? "Your cart is empty."
-                    : ""
-              }
-              arrow
-              disableHoverListener={!!(selectedDirection && cart.length > 0)} // Asegura que sea booleano
+            <Button
+              id="continuePayment-button-event-click"
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handleProceedToPayment();
+                (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+                (window as any).dataLayer.push({
+                  event: "Go To Stripe",
+                  ecommerce: {
+                    currency: "USD",
+                    value: Number(total * (1 - (coupon?.discount || 0) / 100)),
+                    coupon: coupon?.title || null,
+                    discount: coupon?.discount || 0,
+                    items: cart.map(
+                      ({
+                        product,
+                        totalCustomization,
+                        totalProduct,
+                        amount,
+                      }) => {
+                        const {
+                          id,
+                          price,
+                          title,
+                          product_categories,
+                          colors,
+                          slug,
+                          sport,
+                        } = product;
+                        return {
+                          item_id: id,
+                          item_name: title,
+                          affiliation: "Google Merchandise Store",
+                          item_brand: "Pow Flick",
+                          item_category: product_categories.split("|")[0],
+                          item_category2: sport,
+                          item_list_name: slug,
+                          item_variant: colors ? colors[0] : null,
+                          price: Number(price),
+                          quantity: amount,
+                          total_product: Number(totalProduct),
+                          total_customizations: Number(totalCustomization),
+                        };
+                      }
+                    ),
+                  },
+                });
+                goToStripe("goToStripe", {
+                  ecommerce: {
+                    currency: "USD",
+                    value: Number(total * (1 - (coupon?.discount || 0) / 100)),
+                    coupon: coupon?.title || null,
+                    discount: coupon?.discount || 0,
+                    items: cart.map(
+                      ({
+                        product,
+                        totalCustomization,
+                        totalProduct,
+                        amount,
+                      }) => {
+                        const {
+                          id,
+                          price,
+                          title,
+                          product_categories,
+                          colors,
+                          slug,
+                          sport,
+                        } = product;
+                        return {
+                          item_id: id,
+                          item_name: title,
+                          // affiliation: "Google Merchandise Store",
+                          item_brand: "Pow Flick",
+                          item_category: product_categories.split("|")[0],
+                          item_category2: sport,
+                          item_list_name: slug,
+                          item_variant: colors ? colors[0] : null,
+                          price: Number(price),
+                          quantity: amount,
+                          total_product: Number(totalProduct),
+                          total_customizations: Number(totalCustomization),
+                        };
+                      }
+                    ),
+                  },
+                });
+              }}
+              fullWidth
+              disabled={!selectedDirection || cart.length === 0}
             >
-              <span>
-                <Button
-                  id="continuePayment-button-event-click"
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    handleProceedToPayment();
-                    (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
-                    (window as any).dataLayer.push({
-                      event: "Go To Stripe",
-                      ecommerce: {
-                        currency: "USD",
-                        value: Number(total * (1 - (coupon?.discount || 0) / 100)),
-                        coupon: coupon?.title || null,
-                        discount: coupon?.discount || 0,
-                        items: cart.map(
-                          ({
-                            product,
-                            totalCustomization,
-                            totalProduct,
-                            amount,
-                          }) => {
-                            const {
-                              id,
-                              price,
-                              title,
-                              product_categories,
-                              colors,
-                              slug,
-                              sport,
-                            } = product;
-                            return {
-                              item_id: id,
-                              item_name: title,
-                              affiliation: "Google Merchandise Store",
-                              item_brand: "Pow Flick",
-                              item_category: product_categories.split("|")[0],
-                              item_category2: sport,
-                              item_list_name: slug,
-                              item_variant: colors ? colors[0] : null,
-                              price: Number(price),
-                              quantity: amount,
-                              total_product: Number(totalProduct),
-                              total_customizations: Number(totalCustomization),
-                            };
-                          }
-                        ),
-                      },
-                    });
-                    goToStripe("goToStripe", {
-                      ecommerce: {
-                        currency: "USD",
-                        value: Number(total * (1 - (coupon?.discount || 0) / 100)),
-                        coupon: coupon?.title || null,
-                        discount: coupon?.discount || 0,
-                        items: cart.map(
-                          ({
-                            product,
-                            totalCustomization,
-                            totalProduct,
-                            amount,
-                          }) => {
-                            const {
-                              id,
-                              price,
-                              title,
-                              product_categories,
-                              colors,
-                              slug,
-                              sport,
-                            } = product;
-                            return {
-                              item_id: id,
-                              item_name: title,
-                              // affiliation: "Google Merchandise Store",
-                              item_brand: "Pow Flick",
-                              item_category: product_categories.split("|")[0],
-                              item_category2: sport,
-                              item_list_name: slug,
-                              item_variant: colors ? colors[0] : null,
-                              price: Number(price),
-                              quantity: amount,
-                              total_product: Number(totalProduct),
-                              total_customizations: Number(totalCustomization),
-                            };
-                          }
-                        ),
-                      },
-                    });
-                  }}
-                  fullWidth
-                  disabled={!selectedDirection || cart.length === 0}
-                  sx={{
-                    "&.Mui-disabled": {
-                      backgroundColor: "#BDBDBD", // Color gris para el botón deshabilitado
-                      color: "#FFFFFF", // Color del texto en el botón deshabilitado
-                    },
-                  }}
-                  startIcon={
-                    !selectedDirection || cart.length === 0 ? (
-                      <WarningIcon sx={{ color: "#FF9800" }} />
-                    ) : null
-                  }
-                >
-                  {loading ? (
-                    // Contenido cuando está cargando
-                    <Image
-                      src="/assets/images/Double Ring-1s-200px.png"
-                      alt="Loader GIF"
-                      width={20}
-                      height={20}
-                    />
-                  ) : (
-                    "Checkout"
-                  )}
-                </Button>
-              </span>
-            </Tooltip>
+              {loading ? (
+                // Contenido cuando está cargando
+                <Image
+                  src="/assets/images/Double Ring-1s-200px.png"
+                  alt="Loader GIF"
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                "Proceed to Payment"
+              )}
+            </Button>
           </Grid>
         </Grid>
       </Box>

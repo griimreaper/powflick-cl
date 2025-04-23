@@ -87,6 +87,7 @@ export default function ProductIntro({ product }: Props) {
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
+  const [selectedCustomization, setSelectedCustomization] = useState<number | null>(null);
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -182,7 +183,11 @@ export default function ProductIntro({ product }: Props) {
     }
   };
 
-  const handleCustomizationClick = () => {
+  const handleCustomizationClick = (
+    index: number,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setSelectedCustomization(index);
     setShowCustomization(!showCustomization); // Al hacer clic en "Custom", mostrar la personalización
     const section = document.getElementById("customization-section");
     if (section && !showCustomization) {
@@ -547,7 +552,7 @@ export default function ProductIntro({ product }: Props) {
                 <Button
                   color="primary"
                   variant="contained"
-                  onClick={handleCustomizationClick}
+                  onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
                   sx={{
                     width: "clamp(120px, 30vw, 300px)",
                     px: "clamp(1rem, 5vw, 1.75rem)",

@@ -67,9 +67,9 @@ export default function CheckoutForm({ data }: any) {
       <TextField
         fullWidth
         size="small"
-        label="Voucher"
+        label="Coupon Code"
         variant="outlined"
-        placeholder="Voucher"
+        placeholder="Coupon Code"
       />
 
       <Button
@@ -78,7 +78,7 @@ export default function CheckoutForm({ data }: any) {
         fullWidth
         sx={{ mt: 2, mb: 4 }}
       >
-        Apply Voucher
+        Apply Coupon
       </Button>
 
       <Divider sx={{ mb: 2 }} />
