@@ -68,6 +68,10 @@ export default function Home() {
         >
           <Button
             variant="contained"
+            onClick={() => {
+              const section = document.getElementById("design-section");
+              section?.scrollIntoView({ behavior: "smooth" });
+            }}
             color="primary"
             sx={{
               fontSize: {
@@ -77,10 +81,11 @@ export default function Home() {
                 lg: "1.5rem",
                 xl: "2rem",
               },
+              fontStyle: "italic",
               padding: { xs: "8px 16px", sm: "8px 16px", md: "8px 16px" },
             }}
           >
-            Customize Now
+            Start Your Design
           </Button>
         </Box>
       </Box>
@@ -122,31 +127,7 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: "7%", // Ajusta la posición vertical del botón
-            left: "50%",
-            transform: "translateX(-50%)", // Centra el botón horizontalmente
-          }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              fontSize: {
-                xs: "0.5rem",
-                sm: "1.0rem",
-                md: "1.0rem",
-                lg: "1.5rem",
-                xl: "2rem",
-              },
-              padding: { xs: "8px 16px", sm: "8px 16px", md: "8px 16px" },
-            }}
-          >
-            Customize Now
-          </Button>
-        </Box>
+
       </Box>
 
       {/* Form Section */}

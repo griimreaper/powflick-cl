@@ -175,8 +175,8 @@ const LogoUpload = ({ onChange }: { onChange: any }) => {
                 src={URL.createObjectURL(file)}
                 alt={`logo-${index}`}
                 width={100}
-                height={100}
-                style={{ objectFit: "cover", borderRadius: 8 }}
+                height={"auto"}
+                style={{ objectFit: "contain", borderRadius: 8 }}
               />
               <IconButton
                 onClick={() => removeLogo(index)}
@@ -286,7 +286,7 @@ const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
                 alt={`other-${index}`}
                 width={100}
                 height={100}
-                style={{ objectFit: "cover", borderRadius: 8 }}
+                style={{ objectFit: "contain", borderRadius: 8 }}
               />
               <IconButton
                 onClick={() => removeImage(index)}
@@ -474,7 +474,7 @@ export default function RequestForm() {
   };
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(), onSubmit(formData) }}>
+    <form id="design-section" onSubmit={(e) => { e.preventDefault(), onSubmit(formData) }}>
       <Container maxWidth="md" sx={{ py: 10 }}>
         <FormControl fullWidth margin="normal" required>
           <Typography
