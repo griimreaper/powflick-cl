@@ -16,10 +16,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from "@mui/material";
 import { purchase } from "../../../fpixel";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
@@ -27,10 +23,7 @@ import { getProfile } from "services/DashboardUser";
 import { useSession } from "next-auth/react";
 
 export default function ThanksForBuy({ id }: { id: string }) {
-  const { profile, setData, removeProfile, setProfileUser } =
-    useDashboardStore();
   const [order, setOrder] = useState<any>({});
-  const [open, setOpen] = useState(false);
   const state = useDashboardStore();
   const { clearCart } = useShoppingCartStore();
   const router = useRouter();
@@ -47,65 +40,6 @@ export default function ThanksForBuy({ id }: { id: string }) {
       router.push("/");
     }
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const discountNextBuy = async () => {
-    if (token && token !== undefined) {
-      try {
-        // Crear cupón de descuento
-        const coupon = await createCoupon({
-          title: "10% Discount",
-          content: "10% off on your next purchase",
-          discount: 10,
-        });
-
-        // Asignar cupón al usuario
-        const responseCouponUser = await createCouponUser(
-          token,
-          { couponId: coupon.id, active: true },
-          coupon.coupon.title
-        );
-
-        // Validar respuesta y mostrar alertas
-        if (responseCouponUser.status === 201) {
-          showSuccessAlert(
-            "Success!",
-            "The discount has been successfully applied to your account"
-          );
-        } else {
-          console.log("Alert!", responseCouponUser.data.message);
-        }
-
-
-        // Mostrar modal
-        // setOpen(true);
-      } catch (error: any) {
-        if (error.response && error.response.data && error.response.data.message) {
-          console.log("Alert!", error.response.data.message);
-        } else {
-          console.log("Alert!", "An unexpected error occurred.");
-        }
-      }
-    }
-  }
-
-  const refetch = async () => {
-    if (token && token !== undefined) {
-      try {
-        const response = await getProfile(token);
-        setData({ ...response, token, rol });
-      } catch (error: any) {
-        if (error.response && error.response.data && error.response.data.message) {
-          showErrorAlert("Error!", error.response.data.message);
-        } else {
-          showErrorAlert("Error!", "An unexpected error occurred while fetching the profile.");
-        }
-      }
-    };
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -203,21 +137,20 @@ export default function ThanksForBuy({ id }: { id: string }) {
     clearCart();
   }, [token]);
 
-  useEffect(() => {
-    // Aquí solo aplicamos el cupón y refrescamos
-    const applyDiscount = async () => {
-      if (token) {
-        await discountNextBuy();
-        await refetch();
-      }
-    };
-    applyDiscount();
-  }, []);
+  console.log("order", order);
+
+
+
 
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "background.paper", px: 4, pb: 6, pt: 4 }}
+      sx={{
+        bgcolor: "background.paper",
+        px: 4,
+        py: 4,
+        minHeight: "100vh",
+      }}
     >
       <Box sx={{ maxWidth: 800, mx: "auto" }}>
         <Button
@@ -320,7 +253,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
           </Grid>
         </Grid>
 
-        <Divider sx={{ my: 4 }} />
+        {/* <Divider sx={{ my: 4 }} />
 
         <Typography variant="h5" gutterBottom>
           Payment Details
@@ -355,34 +288,25 @@ export default function ThanksForBuy({ id }: { id: string }) {
               </Typography>
             </Paper>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <Divider sx={{ my: 4 }} />
 
         <Typography variant="h5" gutterBottom>
           Summary
         </Typography>
-        <Typography variant="body2">
-          Coupon: {order?.coupon ? order.coupon.title : "None"}
-        </Typography>
+        {/* Solo mostrar el cupón si existe */}
+        {order?.coupon && (
+          <Typography variant="body2">
+            Coupon: {order.coupon.title}
+          </Typography>
+        )}
         <Typography variant="body2" fontWeight="bold">
           Total: ${order?.total}
         </Typography>
       </Box>
 
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Congratulations!</DialogTitle>
-        <DialogContent>
-          <Typography>
-            You have received a 10% discount coupon for your next purchase!
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+
     </Box>
   );
 }
