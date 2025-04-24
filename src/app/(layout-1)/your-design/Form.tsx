@@ -30,6 +30,7 @@ import 'react-phone-input-2/lib/style.css';
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { createFreeDesign } from "services/FreeDesign";
 import { uploadFolderPath } from "services/dashboardAdmin/products";
+import { fonts } from "components/Customization/panelSides";
 
 interface ContactInfo {
   fullName: string;
@@ -46,6 +47,7 @@ interface FormData {
   date: Date | null;
   primaryColors: string[];
   secondaryColors: string[];
+  font: string;
   addNames: boolean;
   addNumbers: boolean;
   logos: any[];         // Cambiar 'any' por un tipo más específico si lo sabés
@@ -383,6 +385,7 @@ export default function RequestForm() {
     secondaryColors: [],
     addNames: false,
     addNumbers: false,
+    font: 'Arial',
     logos: [],
     otherImages: [],
     contactInfo: {
@@ -458,12 +461,7 @@ export default function RequestForm() {
       const logosUrl = await uploadFolderPath(data.logos, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
       const otherImagesUrl = await uploadFolderPath(data.otherImages, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
 
-      console.log(logosUrl);
-      console.log(otherImagesUrl);
-
-
       const response = await createFreeDesign({ ...data, otherImages: otherImagesUrl, logos: logosUrl, ...data.contactInfo });
-      console.log(response.freeDesign);
 
       showSuccessAlert(response.message, data.contactInfo.email);
     } catch (error) {
@@ -508,6 +506,7 @@ export default function RequestForm() {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               value={formData.date}
+              minDate={new Date()}
               onChange={handleDateChange}
               sx={{ mb: 2, width: "100%", borderRadius: 2 }}
             />
@@ -608,7 +607,7 @@ export default function RequestForm() {
                   padding: 1,
                   '& .MuiList-root': {
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(6, 1fr)',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', // ← Ajuste automático
                     gap: 1,
                   }
                 },
@@ -621,7 +620,7 @@ export default function RequestForm() {
                 value={color.name}
                 sx={{
                   justifyContent: 'center',
-                  minHeight: 40,
+                  minHeight: 60,
                   '&.Mui-selected': {
                     outline: '2px solid black',
                   },
@@ -629,8 +628,8 @@ export default function RequestForm() {
               >
                 <Box
                   sx={{
-                    width: 40,
-                    height: 40,
+                    width: 36,
+                    height: 36,
                     backgroundColor: color.hex,
                     borderRadius: 1,
                     border: '1px solid #ccc',
@@ -682,7 +681,7 @@ export default function RequestForm() {
                   padding: 1,
                   '& .MuiList-root': {
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(6, 1fr)', // Ajusta la cantidad de columnas
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', // ← Ajuste automático
                     gap: 1,
                   },
                 },
@@ -703,8 +702,8 @@ export default function RequestForm() {
               >
                 <Box
                   sx={{
-                    width: 40,  // Tamaño del cuadrado más grande
-                    height: 40, // Tamaño del cuadrado más grande
+                    width: 36,  // Tamaño del cuadrado más grande
+                    height: 36, // Tamaño del cuadrado más grande
                     backgroundColor: color.hex,
                     borderRadius: 1,
                     border: '1px solid #ccc',
@@ -720,7 +719,7 @@ export default function RequestForm() {
         </FormControl>
 
         <FormControl fullWidth margin="normal" sx={
-          { display: "flex", alignItems: "left", p: 4, border: "0.5px solid gray", borderRadius: 2, my: 4 }
+          { display: "flex", alignItems: "left", p: { xs: 2, md: 4 }, border: "0.5px solid gray", borderRadius: 2, my: 4 }
         }>
           <Typography
             gutterBottom
@@ -731,14 +730,14 @@ export default function RequestForm() {
               gap: 1,
               fontStyle: "italic",
               fontWeight: "800",
-              fontSize: "0.9rem",
-              textAlign: { xs: "center", md: "left" },
+              fontSize: { md: "0.9rem" },
+              textAlign: { xs: "left", md: "left" },
             }}
           >
             Would you like to add personalized names and numbers to your design?
             <Paragraph>(optional)</Paragraph>
           </Typography>
-          <FormGroup>
+          <FormGroup sx={{ mb: 2 }}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -760,6 +759,54 @@ export default function RequestForm() {
               label="Include Numbers"
             />
           </FormGroup>
+
+          <Typography
+            gutterBottom
+            align="left"
+            mb={2}
+            sx={{
+              display: "flex",
+              gap: 1,
+              fontStyle: "italic",
+              fontWeight: "800",
+              fontSize: { md: "0.9rem" },
+            }}
+          >
+            Names/Numbers Font Style
+            <Paragraph>(optional)</Paragraph>
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              overflowX: "auto",
+              pb: 1,
+            }}
+          >
+            {Object.entries(fonts).map(([name, font]) => (
+              <Box
+                key={name}
+                onClick={() => setFormData((prev) => ({ ...prev, font: font }))}
+                sx={{
+                  minWidth: 150,
+                  flex: "0 0 auto",
+                  border: formData.font === font ? "2px solid #ca0b0b" : "1px solid #ccc",
+                  borderRadius: 2,
+                  padding: 2,
+                  textAlign: "center",
+                  cursor: "pointer",
+                  fontFamily: font,
+                  transition: "0.2s",
+                  "&:hover": {
+                    borderColor: "#ca0b0b",
+                  },
+                }}
+              >
+                <Typography variant="h6" sx={{ fontFamily: font }}>{name}</Typography>
+                <Typography variant="h6" sx={{ fontFamily: font }}>1234567890</Typography>
+              </Box>
+            ))}
+          </Box>
         </FormControl>
 
         <LogoUpload onChange={handleLogoChange} />
@@ -819,6 +866,6 @@ export default function RequestForm() {
           </Button>
         </Box>
       </Container >
-    </form>
+    </form >
   );
 }

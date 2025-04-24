@@ -16,8 +16,8 @@ import Form from "./Form";
 import { primary } from "theme/theme-colors";
 
 export default function Home() {
-  const beforeImage = { imageUrl: "/DESIGN_MAN_1.png" }; // Ruta de la imagen antes
-  const afterImage = { imageUrl: "/DESIGN_MAN_2.png" }; // Ruta de la imagen después
+  const beforeImage = { imageUrl: "/assets/images/free-design/DESIGN_MAN_1.png" }; // Ruta de la imagen antes
+  const afterImage = { imageUrl: "/assets/images/free-design/DESIGN_MAN_2.png" }; // Ruta de la imagen después
 
   return (
     <Box style={{ backgroundColor: "white" }}>
@@ -32,8 +32,8 @@ export default function Home() {
             md: "56.25%", // 1920x1080 aspect ratio (1080/1920 = 0.5625)
           },
           backgroundImage: {
-            xs: "url('/DESIGN_BACKGROUND_MOBILE.png')", // Imagen para dispositivos móviles
-            md: "url('/DESIGN_BACKGROUND.png')", // Imagen para dispositivos no móviles
+            xs: "url('/assets/images/free-design/DESIGN_BACKGROUND_MOBILE.png')", // Imagen para dispositivos móviles
+            md: "url('/assets/images/free-design/DESIGN_BACKGROUND.png')", // Imagen para dispositivos no móviles
           },
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -59,10 +59,13 @@ export default function Home() {
             display: { xs: "", md: "block" },
             position: "absolute",
             top: {
-              xs: "35%",
+              xs: "38%",
               md: "70%",
             },
-            left: "7%",
+            left: {
+              xs: '11%',
+              md: "7%"
+            },
             transform: "translateY(-50%)",
           }}
         >
@@ -101,8 +104,8 @@ export default function Home() {
             md: "33.8%", // 1920x1080 aspect ratio (1080/1920 = 0.5625)
           },
           backgroundImage: {
-            xs: "url('/DESIGN_INFERIOR_MOBILE.png')",
-            md: "url('/DESIGN_INFERIOR.png')",
+            xs: "url('/assets/images/free-design/DESIGN_INFERIOR_MOBILE.png')",
+            md: "url('/assets/images/free-design/DESIGN_INFERIOR.png')",
           },
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -120,8 +123,8 @@ export default function Home() {
             md: "51.77%", // 1920x994 aspect ratio (994/1920 = 0.5177)
           },
           backgroundImage: {
-            xs: "url('/DESIGN_WORK_MOBILE.png')",
-            md: "url('/DESIGN_WORK.png')",
+            xs: "url('/assets/images/free-design/DESIGN_WORK_MOBILE.png')",
+            md: "url('/assets/images/free-design/DESIGN_WORK.png')",
           },
           backgroundSize: "cover",
           backgroundPosition: "center",
