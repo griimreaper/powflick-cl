@@ -70,7 +70,7 @@ export default function ProductsPageView() {
     price: item.price,
     image: item.URL,
     status: item.status,
-    category: item.categories[0].name
+    category: item.categories[0]?.name
   }));
 
   // TABLE HEADING DATA LIST

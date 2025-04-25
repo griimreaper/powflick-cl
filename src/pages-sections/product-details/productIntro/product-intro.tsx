@@ -359,31 +359,35 @@ export default function ProductIntro({ product }: Props) {
           {/* PRODUCT BRAND */}
           <FlexBox alignItems="center" mb={1}>
             <div style={{ marginRight: '0.5rem' }}>Categories:</div>
-            <div>
+            <Box display={"flex"} >
               {product.product.categories.map((cat: string, index: number) => (
                 <React.Fragment key={cat}>
                   <Link href={`/products?category=${encodeURIComponent(cat)}`}>
-                    <H6>{cat}</H6>
+                    {index < product.product.categories.length - 1 ?
+                      <H6>{cat},</H6> :
+                      <H6 ml={0.5}>{cat}</H6>
+                    }
                   </Link>
-                  {index < product.product.categories.length - 1 && ', '}
                 </React.Fragment>
               ))}
-            </div>
+            </Box>
           </FlexBox>
 
           {product.product.collections?.length > 0 && (
             <FlexBox alignItems="center" mb={1}>
               <div style={{ marginRight: '0.5rem' }}>Collections:</div>
-              <div>
+              <Box display={"flex"} >
                 {product.product.collections.map((col: string, index: number) => (
                   <React.Fragment key={col}>
                     <Link href={`/products?collection=${encodeURIComponent(col)}`}>
-                      <H6>{col}</H6>
+                      {index < product.product.collections.length - 1 ?
+                        <H6>{col},</H6> :
+                        <H6 ml={0.5}>{col}</H6>
+                      }
                     </Link>
-                    {index < product.product.collections.length - 1 && ', '}
                   </React.Fragment>
                 ))}
-              </div>
+              </Box>
             </FlexBox>
           )}
 

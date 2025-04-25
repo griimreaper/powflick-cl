@@ -118,7 +118,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
       </StyledTableCell>
 
       <StyledTableCell align="left">
-        <CategoryWrapper whiteSpace={'nowrap'}>{categories[0].name}</CategoryWrapper>
+        <CategoryWrapper whiteSpace={'nowrap'}>{categories[0]?.name}</CategoryWrapper>
       </StyledTableCell>
 
       {orderBy === 'collection' ?
