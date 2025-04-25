@@ -64,7 +64,7 @@ const sports = [
   "Gaming",
 ];
 
-const colors = [
+export const colors = [
   { hex: "#000000", name: "Black" },
   { hex: "#FF0000", name: "Red" },
   { hex: "#FFFF00", name: "Yellow" },
@@ -111,16 +111,27 @@ const LogoUpload = ({ onChange }: { onChange: any }) => {
       const newFiles = Array.from(e.target.files);
       const newPreviews = newFiles.map(file => URL.createObjectURL(file));
 
-      setLogos(prev => [...prev, ...newFiles]);
-      setLogoPreviews(prev => [...prev, ...newPreviews]);
-      onChange(newFiles);
+      const updatedFiles = [...logos, ...newFiles];
+      const updatedPreviews = [...logoPreviews, ...newPreviews];
+
+      setLogos(updatedFiles);
+      setLogoPreviews(updatedPreviews);
+
+      onChange(updatedFiles); // ✅ actualizamos al padre con todos los logos
     }
   };
 
   const removeLogo = (index: number) => {
+    // liberar memoria
     URL.revokeObjectURL(logoPreviews[index]);
-    setLogos(prev => prev.filter((_, i) => i !== index));
-    setLogoPreviews(prev => prev.filter((_, i) => i !== index));
+
+    const updatedFiles = logos.filter((_, i) => i !== index);
+    const updatedPreviews = logoPreviews.filter((_, i) => i !== index);
+
+    setLogos(updatedFiles);
+    setLogoPreviews(updatedPreviews);
+
+    onChange(updatedFiles); // ✅ actualizamos al padre tras eliminar
   };
 
   return (
@@ -210,9 +221,12 @@ const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
       const newFiles = Array.from(e.target.files);
       const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
 
-      setFiles((prev) => [...prev, ...newFiles]);
-      setPreviews((prev) => [...prev, ...newPreviews]);
-      onChange(newFiles);
+      const updatedFiles = [...files, ...newFiles];
+      const updatedPreviews = [...previews, ...newPreviews];
+
+      setFiles(updatedFiles);
+      setPreviews(updatedPreviews);
+      onChange(updatedFiles); // ✅ ahora se envían todos los archivos
     }
   };
 
@@ -220,7 +234,7 @@ const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
     const updatedFiles = [...files];
     const updatedPreviews = [...previews];
 
-    // liberar memoria
+    // liberar memoria del preview
     URL.revokeObjectURL(previews[index]);
 
     updatedFiles.splice(index, 1);
@@ -228,6 +242,8 @@ const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
 
     setFiles(updatedFiles);
     setPreviews(updatedPreviews);
+
+    onChange(updatedFiles); // ✅ avisamos al padre del nuevo array
   };
 
   return (

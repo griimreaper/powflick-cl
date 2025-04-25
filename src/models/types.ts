@@ -303,11 +303,11 @@ export interface FreeDesign {
   id: string;
     teamName: string;
     sport: string;
-    color: string;
     description?: string;
     date?: string;
     primaryColors: string[];
     secondaryColors: string[];
+    font: string;
     addNames: boolean;
     addNumbers: boolean;
     logos: string[];
