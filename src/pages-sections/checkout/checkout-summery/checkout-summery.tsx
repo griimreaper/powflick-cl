@@ -30,30 +30,6 @@ export default function CheckoutSummary({ data }: any) {
     0
   );
 
-  useEffect(() => {
-    const savedCoupon = localStorage.getItem("selectedCoupon");
-    if (savedCoupon) {
-      setSelectedCoupon(JSON.parse(savedCoupon));
-    }
-  }, []);
-
-  const handleCouponChange = (event: any) => {
-    if (event.target.value === "") {
-      setSelectedCoupon({} as Coupon);
-      setCoupon({} as Coupon);
-      localStorage.removeItem("selectedCoupon");
-    } else {
-      const coupon = profile.genericResponseUser.couponUsers.find(
-        (coupon) => coupon.coupon.id === event.target.value
-      );
-      if (coupon) {
-        setSelectedCoupon(coupon.coupon);
-        setCoupon(coupon.coupon);
-        localStorage.setItem("selectedCoupon", JSON.stringify(coupon.coupon));
-      }
-    }
-  };
-
   const totalWithDiscount = selectedCoupon
     ? subtotal * (1 - selectedCoupon.discount / 100)
     : subtotal;
