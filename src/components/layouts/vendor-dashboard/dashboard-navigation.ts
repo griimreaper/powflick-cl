@@ -43,10 +43,7 @@ export const navigation = [
   {
     name: "Coupons",
     icon: duotone.Invoice,
-    children: [
-      { name: "Coupon List", path: "/admin/coupons" },
-      { name: "Create Coupon", path: "/admin/coupons/create" },
-    ],
+    children: [{ name: "Coupon List", path: "/admin/coupons" }],
   },
 
   {
