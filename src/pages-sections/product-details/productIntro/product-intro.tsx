@@ -34,7 +34,7 @@ import { useCustomizationsStore } from "store/customizationsStore";
 import AditionalDetails from "./AditionalDetails";
 import Customizations from "components/Customization/customization";
 import { useShoppingCartStore } from "store/shoppingCart";
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { categories } from "components/search-box/categories";
@@ -357,43 +357,57 @@ export default function ProductIntro({ product }: Props) {
           <H1 mb={1}>{title}</H1>
 
           {/* PRODUCT BRAND */}
-          <FlexBox alignItems="center" mb={1}>
-            <div style={{ marginRight: '0.5rem' }}>Categories:</div>
-            <Box display={"flex"} >
-              {product.product.categories.map((cat: string, index: number) => (
-                <React.Fragment key={cat}>
-                  <Link href={`/products?category=${encodeURIComponent(cat)}`}>
-                    {index < product.product.categories.length - 1 ?
-                      <H6>{cat},</H6> :
-                      <H6 ml={0.5}>{cat}</H6>
-                    }
-                  </Link>
-                </React.Fragment>
-              ))}
-            </Box>
-          </FlexBox>
+          {product.product.categories?.length > 0 && (
+            <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
+              <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                Categories:
+              </Typography>
 
-          {product.product.collections?.length > 0 && (
-            <FlexBox alignItems="center" mb={1}>
-              <div style={{ marginRight: '0.5rem' }}>Collections:</div>
-              <Box display={"flex"} >
-                {product.product.collections.map((col: string, index: number) => (
-                  <React.Fragment key={col}>
-                    <Link href={`/products?collection=${encodeURIComponent(col)}`}>
-                      {index < product.product.collections.length - 1 ?
-                        <H6>{col},</H6> :
-                        <H6 ml={0.5}>{col}</H6>
-                      }
-                    </Link>
-                  </React.Fragment>
-                ))}
-              </Box>
+              {product.product.categories.map((cat: string, index: number) => (
+                <Box key={cat} display="inline-flex" alignItems="center">
+                  <Link href={`/products?category=${encodeURIComponent(cat)}`}>
+                    {product.product.categories.length === 1 ? (
+                      <H6>{cat}.</H6>
+                    ) : index === 0 && product.product.categories.length > 1 ? (
+                      <H6>{cat},</H6>
+                    ) :
+                      index === product.product.categories.length - 1 ? (
+                        <H6 ml={0.5}>{cat}.</H6>
+                      ) : (
+                        <H6 ml={0.5}>{cat},</H6>
+                      )}
+                  </Link>
+                </Box>
+              ))}
             </FlexBox>
           )}
 
+          {product.product.collections?.length > 0 && (
+            <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
+              <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                Collections:
+              </Typography>
+
+              {product.product.collections.map((col: string, index: number) => (
+                <Box key={col} display="inline-flex" alignItems="center">
+                  <Link href={`/products?collection=${encodeURIComponent(col)}`}>
+                    {product.product.collections.length === 1 ? (
+                      <H6>{col}.</H6>
+                    ) : index === 0 && product.product.collections.length > 1 ? (
+                      <H6>{col},</H6>
+                    ) : index === product.product.collections.length - 1 ? (
+                      <H6 ml={0.5}>{col}.</H6>
+                    ) : (
+                      <H6 ml={0.5}>{col},</H6>
+                    )}
+                  </Link>
+                </Box>
+              ))}
+            </FlexBox>
+          )}
 
           {product.product.tags?.length > 0 && (
-            <FlexBox alignItems="center" mb={1} gap={1}>
+            <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
               <div>Tags: </div>
               {product.product.tags.map(t => (
                 <Link key={t} href={`/products?tag=${product.product.tags[0]}`}>
