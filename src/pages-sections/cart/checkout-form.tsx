@@ -19,6 +19,10 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import ListItem from "pages-sections/checkout/list-item";
 
 export default function CheckoutForm({ data }: any) {
+  const { cart, total, coupon, note } = useShoppingCartStore();
+
+  console.log("cart", coupon);
+
   const subtotal = data.cart.reduce(
     (acc: any, item: any) => acc + item.totalProduct,
     0
@@ -28,16 +32,27 @@ export default function CheckoutForm({ data }: any) {
     0
   );
 
+  // Calcular descuento según tipo de cupón
+  let discountValue = 0;
+  if (coupon) {
+    discountValue =
+      coupon.type === "amount"
+        ? coupon.discount
+        : subtotal * (coupon.discount / 100);
+  }
+
+  let totalWithDiscount = subtotal + totalCustomizations - discountValue;
+  if (totalWithDiscount < 0.10) totalWithDiscount = 0.10;
+
   return (
     <Card sx={{ padding: 3 }}>
       <ListItem mb={1} title="Subtotal" value={subtotal} />
       <ListItem mb={1} title="Customizations" value={totalCustomizations} />
-      <ListItem mb={1} title="Discount" value={data?.coupon?.discount || 0} />
+      <ListItem mb={1} title={`Coupon${coupon ? ` (${coupon.title})` : ""}`} value={discountValue} />
       <FlexBetween mb={2}>
         <Span color="grey.600">Total:</Span>
-
         <Span fontSize={18} fontWeight={600} lineHeight="1">
-          {currency(data.total)}
+          {currency(totalWithDiscount)}
         </Span>
       </FlexBetween>
 

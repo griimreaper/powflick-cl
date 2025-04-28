@@ -113,6 +113,7 @@ export interface Coupon {
   content: string;
   discount: number;
   code: string;
+  type: "percent" | "amount";
   createdAt: string;
   updatedAt: string;
 }

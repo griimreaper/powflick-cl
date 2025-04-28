@@ -5,6 +5,18 @@ export const getCoupons = async () => {
   return data;
 };
 
+export const getCouponByCode = async (code: string, token: string) => {
+  try {
+    const response = await mainApi.get(`/coupon/code/${code}`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+    return response.data;
+  } catch (error: any) {
+    // Devuelve el mensaje de error del backend si existe, si no uno genérico
+    throw error?.response?.data?.message || "Error fetching coupon";
+  }
+};
+
 export const getCouponById = async (id: string) => {
   try {
     const { data } = await mainApi.get(`/coupon/${id}`);
