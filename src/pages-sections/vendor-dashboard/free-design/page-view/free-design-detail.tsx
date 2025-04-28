@@ -112,7 +112,7 @@ export default function FreeDesignDetail({ id, freeDesign }: Props) {
                             <Detail label="Secondary Colors" value={RenderColor(secondaryColors)} />
                             <Detail label="Add Names" value={addNames ? "Yes" : "No"} />
                             <Detail label="Add Numbers" value={addNumbers ? "Yes" : "No"} />
-                            <Detail label="Font" value={<Typography variant="h6" sx={{ fontFamily: font }}>{font}</Typography>} />
+                            {/* <Detail label="Font" value={<Typography variant="h6" sx={{ fontFamily: font }}>{font}</Typography>} /> */}
                             <Detail label="Date" value={date || "N/A"} />
                             <Detail
                                 label="Created At"

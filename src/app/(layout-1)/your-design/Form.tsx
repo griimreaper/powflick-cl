@@ -776,7 +776,7 @@ export default function RequestForm() {
             />
           </FormGroup>
 
-          <Typography
+          {/* <Typography
             gutterBottom
             align="left"
             mb={2}
@@ -822,7 +822,7 @@ export default function RequestForm() {
                 <Typography variant="h6" sx={{ fontFamily: font }}>1234567890</Typography>
               </Box>
             ))}
-          </Box>
+          </Box> */}
         </FormControl>
 
         <LogoUpload onChange={handleLogoChange} />
