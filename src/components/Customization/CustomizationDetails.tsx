@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { Customization } from "models/types";
 
 type Props = {
-    customization: Customization;
+    customization: Customization | undefined;
 };
 
 export default function CustomizationDetails({ customization }: Props) {
