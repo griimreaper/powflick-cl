@@ -23,7 +23,7 @@ interface Selection {
   index: number;
 }
 
-const fonts: { [key: string]: string } = {
+export const fonts: { [key: string]: string } = {
   Arial: "Arial",
   Anton: "Anton",
   Rasioline: "Rasioline",
@@ -34,6 +34,10 @@ const fonts: { [key: string]: string } = {
   Verdana: "Verdana",
   Georgia: "Georgia",
   Tahoma: "Tahoma",
+  "Fest": "Fest",
+  "Black Bass Demo": "Black Bass Demo",
+  "Dirga Hayu": "Dirga Hayu",
+  "Restaurant Menu Book": "Restaurant Menu Book",
 };
 
 export default function PanelSides({

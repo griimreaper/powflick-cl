@@ -70,6 +70,18 @@ export const updateProduct = async (id: string, data: any, token: string) => {
   }
 };
 
+export const updateBooleans = async (id: string, data: any, token: string) => {
+  try {
+    const response = await mainApi.patch(`/products/updateBooleans/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw error;
+  }
+};
+
 export const deleteProduct = async (id: string, token: string) => {
   try {
     const response = await mainApi.delete(`/products/admin/${id}`, {
@@ -120,6 +132,32 @@ export const uploadFolder = async (
 
     const response = await mainApi.post(
       `/files/uploadFolder?folderName=${folderName}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading folder:", error);
+  }
+};
+
+export const uploadFolderPath = async (
+  files: File[],
+  folderName: string
+): Promise<any> => {
+  try {
+    const formData = new FormData();
+    Array.from(files).forEach((file) => {
+      formData.append("files", file);
+    });
+
+    const response = await mainApi.post(
+      `/files/uploadFolderPath?folderName=${folderName}`,
       formData,
       {
         headers: {

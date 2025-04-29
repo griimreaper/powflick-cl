@@ -21,6 +21,6 @@
     // },
     "baseUrl": "./src",
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/(layout-1)/your-design/page.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/(layout-1)/your-design/page.tsx", "next-sitemap.config.js"],
   "exclude": ["node_modules"],
 }

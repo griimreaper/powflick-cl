@@ -18,7 +18,7 @@ import {
   StyledIconButton,
 } from "../styles";
 import { ProductDB } from "models/types";
-import { deleteProduct, updateProduct } from "services/dashboardAdmin/products";
+import { deleteProduct, updateBooleans} from "services/dashboardAdmin/products";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import Link from "next/link";
@@ -41,8 +41,8 @@ type Props = { product: ProductDB | any, setActualize: Function, orderBy: string
 // ========================================================================
 
 export default function ProductRow({ product, setActualize, orderBy, section2 }: Props) {
-  const { title, price, URL, product_categories, id, status, slug, sport, mostSold, featured, collections, tags, createdAt, score } =
-    product || {};
+  const { title, price, URL, categories, id, status, slug, mostSold, featured, collections, tags, createdAt, score } =
+    product;
 
   const { profile } = useDashboardStore();
   const router = useRouter();
@@ -54,7 +54,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
     try {
       setProductPublish(boolean)
       if (profile.token) {
-        await updateProduct(id, { status: boolean ? 'publish' : 'draft' }, profile.token);
+        await updateBooleans(id, { status: boolean ? 'publish' : 'draft' }, profile.token);
         await serverCacheDetailReset(slug)
         showSuccessAlert('Success', 'The product has been actualized.')
       }
@@ -68,7 +68,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
     try {
       setProductMostSold(boolean)
       if (profile.token) {
-        await updateProduct(id, { mostSold: boolean }, profile.token);
+        await updateBooleans(id, { mostSold: boolean }, profile.token);
         await serverCacheDetailReset(slug)
         showSuccessAlert('Success', 'The product has been actualized.')
       }
@@ -82,7 +82,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
     try {
       setProductFeatured(boolean)
       if (profile.token) {
-        await updateProduct(id, { featured: boolean }, profile.token);
+        await updateBooleans(id, { featured: boolean }, profile.token);
         await serverCacheDetailReset(slug)
         showSuccessAlert('Success', 'The product has been actualized.')
       }
@@ -118,7 +118,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
       </StyledTableCell>
 
       <StyledTableCell align="left">
-        <CategoryWrapper whiteSpace={'nowrap'}>{product_categories.split('|')[0]}</CategoryWrapper>
+        <CategoryWrapper whiteSpace={'nowrap'}>{categories[0]?.name}</CategoryWrapper>
       </StyledTableCell>
 
       {orderBy === 'collection' ?
@@ -149,7 +149,7 @@ export default function ProductRow({ product, setActualize, orderBy, section2 }:
             </StyledTableCell>
             :
             <StyledTableCell align="left">
-              <CategoryWrapper whiteSpace={'nowrap'}>{score || 'None'}</CategoryWrapper>
+              <CategoryWrapper whiteSpace={'nowrap'}>{score}</CategoryWrapper>
             </StyledTableCell>
       }
       <StyledTableCell align="left">{currency(price)}</StyledTableCell>

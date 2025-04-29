@@ -190,7 +190,7 @@ export const useShoppingCartStore = create(
           totalProduct,
           amount
         ),
-      setCoupon: (coupon: Coupon) => {
+      setCoupon: (coupon: Coupon | null) => {
         set((state) => ({
           ...state,
           coupon,

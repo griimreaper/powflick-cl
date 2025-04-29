@@ -10,11 +10,13 @@ import { currency } from "lib";
 // ==============================================================
 interface Props {
   total: number;
-  discount?: number;
+  coupon?: any;
 }
 // ==============================================================
 
-export default function TotalSummery({ total, discount }: Props) {
+export default function TotalSummery({ total, coupon }: Props) {
+  console.log("coupon", coupon);
+
   return (
     <Card sx={{ px: 3, py: 4 }}>
       <H5 mt={0} mb={2}>
@@ -36,10 +38,23 @@ export default function TotalSummery({ total, discount }: Props) {
       </FlexBetween>
 
       <FlexBetween mb={1.5}>
-        <Paragraph color="grey.600">Discount(%):</Paragraph>
+        <Paragraph color="grey.600">
+          {coupon
+            ? `Coupon (${coupon.title} - ${coupon.type === "amount"
+              ? `$${coupon.discount}`
+              : `${coupon.discount}%`
+            })`
+            : "Coupon"}
+        </Paragraph>
 
         <FlexBox alignItems="center" gap={1} maxWidth={100}>
-          <Paragraph>${discount || 0}</Paragraph>
+          <Paragraph>
+            {coupon
+              ? coupon.type === "amount"
+                ? `$${coupon.discount}`
+                : `${coupon.discount}%`
+              : "$0"}
+          </Paragraph>
           {/* <TextField color="info" defaultValue={discount} type="number" fullWidth /> */}
         </FlexBox>
       </FlexBetween>

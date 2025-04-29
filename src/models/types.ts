@@ -58,6 +58,7 @@ export interface ProductDB {
   quantityPurchase: number;
   font: string;
   font_color: string;
+  categories: any[];
   collections: any[];
   tags: any[];
 }
@@ -113,6 +114,7 @@ export interface Coupon {
   content: string;
   discount: number;
   code: string;
+  type: "percent" | "amount";
   createdAt: string;
   updatedAt: string;
 }
@@ -297,6 +299,26 @@ export interface Message {
   consultedAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
   responseAt: string; // Puede ser tipo Date si prefieres convertirlo a tipo Date
   conversation: Conversation[];
+}
+
+export interface FreeDesign {
+  id: string;
+    teamName: string;
+    sport: string;
+    description?: string;
+    date?: string;
+    primaryColors: string[];
+    secondaryColors: string[];
+    font: string;
+    addNames: boolean;
+    addNumbers: boolean;
+    logos: string[];
+    otherImages: string[];
+    fullName: string;
+    email: string;
+    organization?: string;
+    createdAt: string;
+    phone?: string;
 }
 
 interface Conversation {
