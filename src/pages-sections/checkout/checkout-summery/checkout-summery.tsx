@@ -35,7 +35,7 @@ export default function CheckoutSummary({ data }: any) {
   if (coupon) {
     discountValue = coupon.type === "amount"
       ? coupon.discount
-      : subtotal * (coupon.discount / 100);
+      : (subtotal + totalCustomizations) * (coupon.discount / 100);
   }
 
   let totalWithDiscount = subtotal + totalCustomizations - discountValue;
@@ -61,11 +61,28 @@ export default function CheckoutSummary({ data }: any) {
     }
   };
 
+  const handleRemoveCoupon = () => {
+    setCoupon(null);
+    setCouponCode("");
+    setError("");
+  };
+
   return (
     <Card sx={{ padding: 3 }}>
       <ListItem mb={1} title="Subtotal" value={subtotal} />
       <ListItem mb={1} title="Customizations" value={totalCustomizations} />
-      <ListItem mb={1} title={`Coupon${coupon ? ` (${coupon.title})` : ""}`} value={discountValue} />
+      <ListItem
+        mb={1}
+        title={
+          coupon
+            ? `Coupon (${coupon.title} - ${coupon.type === "amount"
+              ? `$${coupon.discount}`
+              : `${coupon.discount}%`
+            })`
+            : "Coupon"
+        }
+        value={discountValue}
+      />
       <FlexBetween mb={2}>
         <Span color="grey.600">Total:</Span>
         <Span fontSize={18} fontWeight={600} lineHeight="1">
@@ -94,10 +111,29 @@ export default function CheckoutSummary({ data }: any) {
         onChange={(e) => setCouponCode(e.target.value)}
         error={!!error}
         helperText={error}
+        disabled={!!coupon}
       />
-      <Button variant="outlined" color="primary" fullWidth sx={{ mt: 2, mb: 4 }} onClick={handleApplyCoupon}>
+      <Button
+        variant="outlined"
+        color="primary"
+        fullWidth
+        sx={{ mt: 2, mb: 1 }}
+        onClick={handleApplyCoupon}
+        disabled={!!coupon}
+      >
         Apply Coupon
       </Button>
+      {coupon && (
+        <Button
+          variant="text"
+          color="secondary"
+          fullWidth
+          sx={{ mb: 3 }}
+          onClick={handleRemoveCoupon}
+        >
+          Remove Coupon
+        </Button>
+      )}
       <Divider sx={{ mb: 2 }} />
     </Card>
   );

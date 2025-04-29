@@ -298,7 +298,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
         {/* Solo mostrar el cupón si existe */}
         {order?.coupon && (
           <Typography variant="body2">
-            Coupon: {order.coupon.title}
+            Coupon: {order.coupon.title + " - " + (order.coupon.type === "amount" ? "$" + order.coupon.discount : order.coupon.discount + "%")}
           </Typography>
         )}
         <Typography variant="body2" fontWeight="bold">

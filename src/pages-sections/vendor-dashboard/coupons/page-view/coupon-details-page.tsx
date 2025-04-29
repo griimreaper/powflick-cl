@@ -21,17 +21,6 @@ const couponUserTableHeading = [
 export default function CouponDetailsPageView({ coupon }: any) {
     const [couponUsers, setCouponUsers] = useState<any[]>(coupon.couponUsers || []);
 
-
-
-
-
-
-
-
-
-
-
-
     return (
         <PageWrapper title={`Coupon: ${coupon.title}`}>
             <Card sx={{ mb: 3, p: 3 }}>

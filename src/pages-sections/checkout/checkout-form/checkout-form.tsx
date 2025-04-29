@@ -102,9 +102,9 @@ export default function CheckoutForm() {
 
   // Mensaje para el tooltip del botón deshabilitado
   const disabledReason = !selectedDirection
-    ? "Selecciona una dirección de envío"
+    ? "Select a shipping address"
     : cart.length === 0
-      ? "Agrega productos al carrito"
+      ? "Add products to cart"
       : "";
 
   return (

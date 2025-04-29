@@ -136,7 +136,7 @@ export default function CouponsPageView() {
                                 heading={[
                                     { id: "title", label: "Title", align: "left" },
                                     { id: "content", label: "Content", align: "left" },
-                                    { id: "discount", label: "Discount (%)", align: "center" },
+                                    { id: "discount", label: "Discount", align: "center" }, // quitado el (%)
                                     { id: "actions", label: "Actions", align: "center" },
                                 ]}
                                 orderBy="title"
@@ -147,10 +147,15 @@ export default function CouponsPageView() {
                                 hideSelectBtn
                             />
                             <TableBody>
-                                {couponsList?.map((coupon: { id: any; }) => (
+                                {couponsList?.map((coupon: { id: any; discount: number; type: string; }) => (
                                     <CouponRow
                                         key={coupon.id}
-                                        coupon={coupon}
+                                        coupon={{
+                                            ...coupon,
+                                            discountDisplay: coupon.type === "amount"
+                                                ? `$${coupon.discount}`
+                                                : `${coupon.discount}%`
+                                        }}
                                         setActualize={setActualize}
                                         onClick={() => setSelectedCoupon(coupon)}
                                     />

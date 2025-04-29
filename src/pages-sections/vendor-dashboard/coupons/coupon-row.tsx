@@ -10,7 +10,7 @@ type Props = { coupon: any; setActualize: Function };
 // ========================================================================
 
 export default function CouponRow({ coupon, setActualize, onClick }: any) {
-    const { id, title, content, discount } = coupon || {};
+    const { id, title, content, discountDisplay } = coupon || {};
     const { profile } = useDashboardStore();
 
     const router = useRouter();
@@ -30,7 +30,7 @@ export default function CouponRow({ coupon, setActualize, onClick }: any) {
         <StyledTableRow tabIndex={-1} role="checkbox" onClick={onClick} style={{ cursor: "pointer" }}>
             <StyledTableCell align="left">{title}</StyledTableCell>
             <StyledTableCell align="left">{content}</StyledTableCell>
-            <StyledTableCell align="center">{discount}%</StyledTableCell>
+            <StyledTableCell align="center">{discountDisplay}</StyledTableCell>
             <StyledTableCell align="center">
                 <StyledIconButton onClick={handleNavigate}>
                     <Edit />
