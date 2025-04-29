@@ -23,7 +23,7 @@ interface Selection {
   index: number;
 }
 
-const fonts: { [key: string]: string } = {
+export const fonts: { [key: string]: string } = {
   Arial: "Arial",
   Anton: "Anton",
   Rasioline: "Rasioline",

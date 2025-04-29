@@ -146,6 +146,32 @@ export const uploadFolder = async (
   }
 };
 
+export const uploadFolderPath = async (
+  files: File[],
+  folderName: string
+): Promise<any> => {
+  try {
+    const formData = new FormData();
+    Array.from(files).forEach((file) => {
+      formData.append("files", file);
+    });
+
+    const response = await mainApi.post(
+      `/files/uploadFolderPath?folderName=${folderName}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading folder:", error);
+  }
+};
+
 export const getProductTitles = async (): Promise<any> => {
   try {
     const { data } = await mainApi.get(`/products/all/productsName`);

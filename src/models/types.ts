@@ -301,6 +301,26 @@ export interface Message {
   conversation: Conversation[];
 }
 
+export interface FreeDesign {
+  id: string;
+    teamName: string;
+    sport: string;
+    description?: string;
+    date?: string;
+    primaryColors: string[];
+    secondaryColors: string[];
+    font: string;
+    addNames: boolean;
+    addNumbers: boolean;
+    logos: string[];
+    otherImages: string[];
+    fullName: string;
+    email: string;
+    organization?: string;
+    createdAt: string;
+    phone?: string;
+}
+
 interface Conversation {
   text: string;
   imgUrl: string;

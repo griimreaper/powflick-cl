@@ -76,6 +76,14 @@ export const navigation = [
     ],
   },
 
+  {
+    name: "Free Design",
+    icon: duotone.Shirt,
+    children: [
+      { name: "Free Design List", path: "/admin/free-design" },
+    ]
+  },
+
   { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
   // {
   //   name: "Refunds",
