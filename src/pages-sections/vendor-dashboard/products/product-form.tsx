@@ -12,7 +12,7 @@ import * as yup from "yup";
 // STYLED COMPONENTS
 import { H3, Paragraph } from "components/Typography";
 import { FormControlLabel, IconButton, Switch, Tooltip } from "@mui/material";
-import { createProduct, updateProduct, uploadFolder } from "services/dashboardAdmin/products";
+import { createProduct, updateBooleans, updateProduct, uploadFolder } from "services/dashboardAdmin/products";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { useRouter } from "next/navigation";
@@ -94,7 +94,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     status,
     featured,
     mostSold,
-    product_categories,
+    categories,
     regular_price,
     id,
     discount,
@@ -115,7 +115,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     regular_price: regular_price || 0,
     discount: discount || 0,
     score: score || 0,
-    product_categories: product_categories ? product_categories.split('|') : [],
+    product_categories: categories ? categories.map(({ name }: { name: string }) => name) : [],
     tags: tags ? tags.map(({ name }: { name: string }) => name) : [],
     featured: featured || false,
     mostSold: mostSold || false,
@@ -218,6 +218,9 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
       const response = await updateProduct(id, values, profile.token as string);
       await uploadImages(values.title);
       showSuccessAlert('Success', response.message)
+      if (values.status === 'publish') {
+        await updateBooleans(response.updateProduct.id, { status: 'publish' }, profile.token as string);
+      }
       router.push('/admin/products/' + response.updateProduct.id)
       window.location.reload();
     } catch (error) {
@@ -233,10 +236,10 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     try {
       const response = await createProduct(values, profile.token as string);
       await uploadImages(values.title);
-      showSuccessAlert('Success', response.message)
       if (values.status === 'publish') {
-        await updateProduct(response.createdProduct.id, { status: 'publish' }, profile.token as string);
+        await updateBooleans(response.createdProduct.id, { status: 'publish' }, profile.token as string);
       }
+      showSuccessAlert('Success', response.message)
       router.push('/admin/products/' + response.createdProduct.id)
     } catch (error: any) {
       showErrorAlert('Failed', error.response.data.message)
@@ -440,7 +443,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
                   label="Score"
                   onChange={(e) => {
                     const value = Number(e.target.value);
-                    if (value >= 1 || e.target.value === "") {
+                    if (value >= 0 || e.target.value === "") {
                       handleChange(e);
                     }
                   }}

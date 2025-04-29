@@ -30,6 +30,9 @@ const ExcelColumns = [
   "Stock Status: product stock status.",
   "Stock: quantity of available stock of the product.",
   "Product categories: categories to which the product belongs.",
+  "Product collections: collections to which the product belongs.",
+  "Tags: tags to which the product belongs.",
+  "Score: product position in store.",
   '(multiple categories can be sent in this format "New Arrival | Gamer Shirt")',
   "Genders: product gender.",
   "Sports: sport to which the product belongs.",
@@ -190,6 +193,7 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
       // showLoader("This may take a few seconds", true); // Muestra el loader
 
       await loadExcelProducts(excel, token);
+      await serverCacheReset();
 
       showSuccessAlert("Success!", "Excel load successfully");
       setExcelError("");

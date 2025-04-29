@@ -70,6 +70,18 @@ export const updateProduct = async (id: string, data: any, token: string) => {
   }
 };
 
+export const updateBooleans = async (id: string, data: any, token: string) => {
+  try {
+    const response = await mainApi.patch(`/products/updateBooleans/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating product:", error);
+    throw error;
+  }
+};
+
 export const deleteProduct = async (id: string, token: string) => {
   try {
     const response = await mainApi.delete(`/products/admin/${id}`, {
