@@ -5,10 +5,10 @@ import Grid from "@mui/material/Grid";
 import useCart from "hooks/useCart";
 // LOCAL CUSTOM COMPONENTS
 import CartItem from "../cart-item";
-import CheckoutForm from "../checkout-form";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import CheckoutSummary from "pages-sections/checkout/checkout-summery/checkout-summery";
 
 export default function CartPageView() {
   const { cart, coupon, total } = useShoppingCartStore();
@@ -24,7 +24,7 @@ export default function CartPageView() {
 
       {/* CHECKOUT FORM */}
       <Grid item md={4} xs={12}>
-        <CheckoutForm data={{ cart, coupon, total }} />
+        <CheckoutSummary data={{ cart, coupon, total }} />
       </Grid>
       {/* <Button href={'/checkout'} variant="contained" color="primary" type="submit" 
         disabled={cart.length === 0}>

@@ -1,3 +1,4 @@
+import { Coupon } from "models/types";
 import duotone from "icons/duotone";
 
 export const navigation = [
@@ -10,7 +11,7 @@ export const navigation = [
     children: [
       { name: "Product List", path: "/admin/products" },
       { name: "Create Product", path: "/admin/products/create" },
-    ]
+    ],
   },
 
   {
@@ -18,8 +19,8 @@ export const navigation = [
     icon: duotone.Accounts,
     children: [
       { name: "Category List", path: "/admin/categories" },
-      { name: "Create Category", path: "/admin/categories/create" }
-    ]
+      { name: "Create Category", path: "/admin/categories/create" },
+    ],
   },
 
   {
@@ -27,8 +28,8 @@ export const navigation = [
     icon: duotone.Apps,
     children: [
       { name: "Collections List", path: "/admin/collections" },
-      { name: "Create Collection", path: "/admin/collections/create" }
-    ]
+      { name: "Create Collection", path: "/admin/collections/create" },
+    ],
   },
 
   {
@@ -36,16 +37,19 @@ export const navigation = [
     icon: duotone.Invoice,
     children: [
       { name: "Tags List", path: "/admin/tags" },
-      { name: "Create Tag", path: "/admin/tags/create" }
-    ]
+      { name: "Create Tag", path: "/admin/tags/create" },
+    ],
+  },
+  {
+    name: "Coupons",
+    icon: duotone.Invoice,
+    children: [{ name: "Coupon List", path: "/admin/coupons" }],
   },
 
   {
     name: "Orders",
     icon: duotone.Order,
-    children: [
-      { name: "Order List", path: "/admin/orders" },
-    ]
+    children: [{ name: "Order List", path: "/admin/orders" }],
   },
 
   {
@@ -55,7 +59,7 @@ export const navigation = [
       { name: "Product Reviews", path: "/admin/reviews/product" },
       { name: "Order Reviews", path: "/admin/reviews/order" },
       { name: "Create Review", path: "/admin/reviews/create" },
-    ]
+    ],
   },
 
   {
@@ -64,9 +68,12 @@ export const navigation = [
     children: [
       { name: "Complaint or Claim", path: "/admin/complaint-or-claim" },
       { name: "Help with an Order", path: "/admin/help-with-a-order" },
-      { name: "Help with Page Functionality", path: "/admin/help-with-page-functionality" },
+      {
+        name: "Help with Page Functionality",
+        path: "/admin/help-with-page-functionality",
+      },
       { name: "General Help", path: "/admin/general-help" },
-    ]
+    ],
   },
 
   { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
@@ -133,6 +140,6 @@ export const navigation = [
   {
     name: "Logout",
     icon: duotone.Session,
-    path: "/logout"
-  }
+    path: "/logout",
+  },
 ];

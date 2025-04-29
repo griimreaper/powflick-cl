@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import CustomizationDetails from "components/Customization/CustomizationDetails";
 
 interface CustomizationModalProps {
   customization: Customization | undefined; // Aquí deberías especificar el tipo de datos de las customizaciones
@@ -163,75 +164,7 @@ export function CustomizationModal({
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        {customization?.size && (
-          <Typography>Size: {customization.size}</Typography>
-        )}
-
-        {customization?.frontSide?.logos?.map((each, index) =>
-          each.logoUrl ? (
-            <Typography key={index} component="div">
-              Front Logo {index + 1}:{" "}
-              <img
-                src={each.logoUrl}
-                alt="Front Logo"
-                style={{ width: 24, height: 24, marginLeft: 8 }}
-              />{" "}
-              (+ $4.99)
-            </Typography>
-          ) : null
-        )}
-
-        {customization?.frontSide?.texts?.map((each, index) =>
-          each.text ? (
-            <Typography key={index}>
-              Front Text {index + 1}: {each.text} (+ ${3.99})
-            </Typography>
-          ) : null
-        )}
-
-        {customization?.backSide?.logos?.map((each, index) =>
-          each.logoUrl ? (
-            <Typography key={index} component="div">
-              Back Logo {index + 1}:{" "}
-              <img
-                src={each.logoUrl}
-                alt="Back Logo"
-                style={{ width: 24, height: 24, marginLeft: 8 }}
-              />{" "}
-              (+ $4.99)
-            </Typography>
-          ) : null
-        )}
-
-        {customization?.materials !== "None" && customization && (
-          <Typography>
-            Materials:{" "}
-            {customization.materials.split(" ")[1]
-              ? customization.materials.split(" ")[0] +
-              " ($" +
-              Number(
-                eliminarCaracteresNoNumericos(
-                  String(customization.materials.split(" ").pop())
-                )
-              ) +
-              ")"
-              : customization.materials}
-          </Typography>
-        )}
-
-        {customization?.neck && (
-          <Typography>Neck: {customization.neck}</Typography>
-        )}
-        {customization?.socks && (
-          <Typography>Socks: {customization.socks}</Typography>
-        )}
-        {customization?.pants && (
-          <Typography>Pants: {customization.pants}</Typography>
-        )}
-        {customization?.shorts && (
-          <Typography>Shorts: {customization.shorts}</Typography>
-        )}
-
+        <CustomizationDetails customization={customization} />
         <Box display="flex" justifyContent="center" gap={1}>
           <Button
             onClick={() => ViewCustomization(customization!, productId)}

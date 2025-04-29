@@ -2,6 +2,7 @@ import { mainApi } from "../../apis";
 
 export const createCoupon = async (body: any) => {
   try {
+    // body debe incluir el campo type: 'amount' | 'percent'
     const response = await mainApi.post("/coupon", body);
 
     return response.data;
@@ -14,7 +15,8 @@ export const createCoupon = async (body: any) => {
 export const createCouponUser = async (
   token: string,
   body: any,
-  title: string
+  title: string,
+  userId?: string
 ) => {
   try {
     const response = await mainApi.post("/coupon/coupon-users", body, {
@@ -23,6 +25,7 @@ export const createCouponUser = async (
       },
       params: {
         title,
+        userId,
       },
     });
 

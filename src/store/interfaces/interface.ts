@@ -1,4 +1,12 @@
-import { Coupon, Customization, Direction, Favorite, Message, ProductDB, Profile } from "models/types";
+import {
+  Coupon,
+  Customization,
+  Direction,
+  Favorite,
+  Message,
+  ProductDB,
+  Profile,
+} from "models/types";
 
 export type DashboardState = {
   profile: Profile;
@@ -70,7 +78,7 @@ export type ShoppingCartStoreType = {
   note: string;
   total: number;
   showCart: boolean;
-  setCoupon: (coupon: Coupon) => void;
+  setCoupon: (coupon: Coupon | null) => void;
   setNote: (note: string) => void;
   setProductInCart: (
     product: ProductToBagType,

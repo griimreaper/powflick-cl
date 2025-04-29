@@ -20,6 +20,7 @@ import {
   Popover,
   Typography,
 } from "@mui/material";
+import CustomizationDetails from "./CustomizationDetails";
 // import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 interface CustomizationProps {
@@ -172,9 +173,9 @@ export default function Customizations(props: CustomizationProps) {
 
     newCustomList?.length !== 0
       ? setCustomization(
-          list[list.findIndex((i) => i.productId === productId)]
-            ?.customizations[0]
-        )
+        list[list.findIndex((i) => i.productId === productId)]
+          ?.customizations[0]
+      )
       : clearCustomization();
     showSuccessAlert("Success!", "Customization removed successfully!");
   };
@@ -348,7 +349,7 @@ export default function Customizations(props: CustomizationProps) {
                   customizations?.findIndex(
                     (e) => e.id === customization.id
                   ) ===
-                  Number(customizations?.length) - 1
+                    Number(customizations?.length) - 1
                     ? "not-allowed"
                     : "pointer",
                 "&:hover": {
@@ -356,14 +357,14 @@ export default function Customizations(props: CustomizationProps) {
                     customizations?.findIndex(
                       (e) => e.id === customization.id
                     ) ===
-                    Number(customizations?.length) - 1
+                      Number(customizations?.length) - 1
                       ? "transparent"
                       : "gray.300",
                   color:
                     customizations?.findIndex(
                       (e) => e.id === customization.id
                     ) ===
-                    Number(customizations?.length) - 1
+                      Number(customizations?.length) - 1
                       ? "gray.500"
                       : "gray.700",
                 },
@@ -567,217 +568,7 @@ export default function Customizations(props: CustomizationProps) {
                   <Close fontSize="small" />
                 </IconButton>
               </div>
-              {customizations[selectedCustomization].size && (
-                <p> Size: {customizations[selectedCustomization].size}</p>
-              )}
-              {customizations[selectedCustomization].frontSide &&
-                customizations[selectedCustomization].frontSide.logos.some(
-                  (e) => e.logoUrl
-                ) &&
-                customizations[selectedCustomization].frontSide.logos.map(
-                  (each, index) =>
-                    each.logoUrl && (
-                      <Box
-                        key={index}
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                      >
-                        <Typography variant="body1" fontWeight="medium">
-                          Front Logo {index + 1}:{" "}
-                        </Typography>
-                        <img
-                          src={each.logoUrl}
-                          alt={`Logo ${index + 1}`}
-                          style={{ width: 24, height: 24, marginLeft: 8 }}
-                        />
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          (+{4.99})
-                        </Typography>
-                      </Box>
-                    )
-                )}
-              {customizations[selectedCustomization].frontSide &&
-                customizations[selectedCustomization].frontSide.texts.some(
-                  (e) => e.text
-                ) &&
-                customizations[selectedCustomization].frontSide.texts.map(
-                  (each, index) =>
-                    each.text && (
-                      <Box
-                        key={index}
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                      >
-                        <Typography variant="body1" fontWeight="medium">
-                          Front Text {index + 1}:{" "}
-                        </Typography>
-                        <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                          {each.text}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          (+{3.99})
-                        </Typography>
-                      </Box>
-                    )
-                )}
-              {customizations[selectedCustomization].frontSide &&
-                customizations[selectedCustomization].frontSide.numbers.some(
-                  (e) => e.number
-                ) &&
-                customizations[selectedCustomization].frontSide.numbers.map(
-                  (each, index) =>
-                    each.number && (
-                      <Box
-                        key={index}
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                      >
-                        <Typography variant="body1" fontWeight="medium">
-                          Front Number {index + 1}:{" "}
-                        </Typography>
-                        <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                          {each.number}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          (+{3.99})
-                        </Typography>
-                      </Box>
-                    )
-                )}
-              {customizations[selectedCustomization].backSide &&
-                customizations[selectedCustomization].backSide.logos.some(
-                  (e) => e.logoUrl
-                ) &&
-                customizations[selectedCustomization].backSide.logos.map(
-                  (each, index) =>
-                    each.logoUrl && (
-                      <Box
-                        key={index}
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                      >
-                        <Typography variant="body1" fontWeight="medium">
-                          Back Logo {index + 1}:{" "}
-                        </Typography>
-                        <img
-                          src={each.logoUrl}
-                          alt={`Back Logo ${index + 1}`}
-                          style={{ width: 24, height: 24, marginLeft: 8 }}
-                        />
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          (+{4.99})
-                        </Typography>
-                      </Box>
-                    )
-                )}
-              {customizations[selectedCustomization].backSide &&
-                customizations[selectedCustomization].backSide.texts.some(
-                  (e) => e.text
-                ) &&
-                customizations[selectedCustomization].backSide.texts.map(
-                  (each, index) =>
-                    each.text && (
-                      <Box
-                        key={index}
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                      >
-                        <Typography variant="body1" fontWeight="medium">
-                          Back Text {index + 1}:{" "}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          fontWeight="medium"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          {each.text}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          (+ ${3.99})
-                        </Typography>
-                      </Box>
-                    )
-                )}
-              {customizations[selectedCustomization].backSide &&
-                customizations[selectedCustomization].backSide.numbers.some(
-                  (e) => e.number
-                ) &&
-                customizations[selectedCustomization].backSide.numbers.map(
-                  (each, index) =>
-                    each.number && (
-                      <Box
-                        key={index}
-                        display="flex"
-                        flexDirection="row"
-                        alignItems="center"
-                      >
-                        <Typography variant="body1" fontWeight="medium">
-                          Back Number {index + 1}:{" "}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          fontWeight="medium"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          {each.number}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          sx={{ marginLeft: 1 }}
-                        >
-                          (+ ${3.99})
-                        </Typography>
-                      </Box>
-                    )
-                )}
-              {customizations[selectedCustomization].materials !== "None" && (
-                <p>
-                  Materials: {customizations[selectedCustomization].materials}
-                </p>
-              )}
-              {customizations[selectedCustomization].neck !== "Default" && (
-                <p>Neck: {customizations[selectedCustomization].neck}</p>
-              )}
-              {customizations[selectedCustomization].pants !==
-                "None (+$0.00)" && (
-                <p>Pants: {customizations[selectedCustomization].pants}</p>
-              )}
-              {customizations[selectedCustomization].shorts !==
-                "No Shorts (+$0.00)" && (
-                <p>Shorts: {customizations[selectedCustomization].shorts}</p>
-              )}
-              {customizations[selectedCustomization].socks !==
-                "No Socks (+$0.00)" && (
-                <p>Socks: {customizations[selectedCustomization].socks}</p>
-              )}
-              {/* Contenido del modal con los detalles de la customización */}
-
+              <CustomizationDetails customization={customizations[selectedCustomization]} />
               <Button
                 onClick={() =>
                   ViewCustomization(

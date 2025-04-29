@@ -51,6 +51,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
 
 export default function CartItem({ item }: Props) {
   // const { counter, handleCounterChange } = useCounter(item.product, true);
+  const { removeProductById } = useShoppingCartStore();
   const [selectedCustomization, setSelectedCustomization] = useState<
     [string, string] | null
   >(null);
@@ -86,6 +87,9 @@ export default function CartItem({ item }: Props) {
       <IconButton
         size="small"
         sx={{ position: "absolute", right: 15, top: 15 }}
+        onClick={() => {
+          removeProductById(item.product.id);
+        }}
       >
         <Close fontSize="small" />
       </IconButton>
@@ -110,7 +114,7 @@ export default function CartItem({ item }: Props) {
 
         {/* PRODUCT QUANTITY INC/DEC BUTTONS */}
         <FlexBox alignItems="start" display={'flex'} gap={2} flexDirection={'column-reverse'} >
-          <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'} maxWidth={'99%'} sx={{ overflowX: "auto", py: 1 }}>
+          <Box display={'flex'} gap={1} alignItems={'center'} flexDirection={'row'} maxWidth={'80%'} sx={{ overflowX: "auto", py: 1, pr: 5 }}>
             {item.customizations.map((_, index) => (
               <CustomButton
                 key={index}

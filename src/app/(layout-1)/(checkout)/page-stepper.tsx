@@ -9,7 +9,7 @@ import Stepper from "./stepper";
 
 const STEPPER_LIST = [
   { title: "Cart", disabled: false },
-  { title: "Directions", disabled: false },
+  { title: "Shipping", disabled: false },
   { title: "Checkout", disabled: false },
   // { title: "Review", disabled: true }
 ];
