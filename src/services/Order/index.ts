@@ -10,30 +10,25 @@ export const createOrder = async (
   note?: string // Añadir el campo note
 ) => {
   try {
-    const addProductsToShoppingCart = await mainApi.post(
-      "/shopping-cart/bulk",
-      body,
+    const creatingOrder = await mainApi.post(
+      "/orders",
+      {
+        directionId,
+        couponId,
+        note,
+        cartProducts: body.cartProducts,
+        total: body.total,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          Currency,
+          CurrencyValue,
         },
       }
     );
-    if (addProductsToShoppingCart.data.statusCode === 200) {
-      const creatingOrder = await mainApi.post(
-        "/orders",
-        { directionId, couponId, note },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Currency,
-            CurrencyValue,
-          },
-        }
-      );
 
-      return creatingOrder.data.urlBuy;
-    }
+    return creatingOrder.data.urlBuy;
   } catch (error) {
     console.error("Error generating order:", error);
     throw error;
