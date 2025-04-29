@@ -58,6 +58,7 @@ export interface ProductDB {
   quantityPurchase: number;
   font: string;
   font_color: string;
+  categories: any[];
   collections: any[];
   tags: any[];
 }
