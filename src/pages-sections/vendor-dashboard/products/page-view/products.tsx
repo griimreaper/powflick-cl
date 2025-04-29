@@ -70,7 +70,7 @@ export default function ProductsPageView() {
     price: item.price,
     image: item.URL,
     status: item.status,
-    category: item.product_categories.split('|')[0]
+    category: item.categories[0]?.name
   }));
 
   // TABLE HEADING DATA LIST
@@ -109,7 +109,7 @@ export default function ProductsPageView() {
     }
   };
 
-  console.log(filters);
+  console.log(filteredProducts);
 
   return (
     <PageWrapper title="Product List">

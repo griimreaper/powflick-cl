@@ -75,10 +75,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
         </Box>
       </LazyLoadSection>
 
-      {/* Newsletter Subscription Section */}
-      <LazyLoadSection id="newsletter">
-        <Newsletter />
-      </LazyLoadSection>
+
     </div>
   );
 };

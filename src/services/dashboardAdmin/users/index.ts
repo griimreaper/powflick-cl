@@ -1,30 +1,30 @@
 import { mainApi } from "../../apis";
 
 export const getUsers = async (filters: any, token: string) => {
-  let query = '/users?'
+  let query = "/users?";
 
   if (filters) {
-    query += `limit=${filters.limit}&page=${filters.page}&`
+    query += `limit=${filters.limit}&page=${filters.page}&`;
     if (filters.order) {
-      query += `order=${filters.order}&`
+      query += `order=${filters.order}&`;
     }
     if (filters.isActive) {
-      query += `isActive=${filters.isActive}&`
+      query += `isActive=${filters.isActive}&`;
     }
     if (filters.rol) {
-      query += `role=${filters.rol}&`
+      query += `role=${filters.rol}&`;
     }
     if (filters.filter) {
-      query += `filter=${filters.filter}&`
+      query += `filter=${filters.filter}&`;
     }
     if (filters.search) {
-      query += `search=${filters.search}`
+      query += `search=${filters.search}`;
     }
   }
 
   try {
     const response = await mainApi.get(query, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {
@@ -36,7 +36,7 @@ export const getUsers = async (filters: any, token: string) => {
 export const updateUser = async (id: string, data: any, token: string) => {
   try {
     const response = await mainApi.patch(`/users/${id}`, data, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {

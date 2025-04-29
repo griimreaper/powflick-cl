@@ -31,7 +31,7 @@ type Props = { product: ProductDB, active?: boolean };
 // ==============================================================
 
 export default function ProductCard8({ product, active = false }: Props) {
-  const { slug, id, title, price, URL, product_categories, discount } =
+  const { slug, id, title, price, URL, categories, discount } =
     product || {};
 
   const {
@@ -62,7 +62,7 @@ export default function ProductCard8({ product, active = false }: Props) {
                     item_name: `${product.title}`,
                     item_list_name: `${product.slug}`,
                     discount: `${product.discount}`,
-                    item_category: `${product.product_categories.split("|")[0]}`,
+                    item_category: `${product.categories[0]?.name}`,
                     price: `${Number(product.price)}`,
                   },
                 ],
@@ -77,7 +77,7 @@ export default function ProductCard8({ product, active = false }: Props) {
                       item_name: `${product.title}`,
                       item_list_name: `${product.slug}`,
                       discount: `${product.discount}`,
-                      item_category: `${product.product_categories.split("|")[0]}`,
+                      item_category: `${product.categories[0]?.name}`,
                       price: `${Number(product.price)}`,
                     },
                   ],
@@ -208,8 +208,8 @@ export default function ProductCard8({ product, active = false }: Props) {
 
       <Box p={1} textAlign="center">
         {/* PRODUCT CATEGORY */}
-        {product_categories?.split("|").length > 0 ? (
-          <Small color="grey.500">{product_categories.split("|")[0]}</Small>
+        {categories ? (
+          <Small color="grey.500">{categories[0].name}</Small>
         ) : null}
 
         {/* PRODUCT TITLE / NAME */}
