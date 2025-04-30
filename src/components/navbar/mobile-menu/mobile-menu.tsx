@@ -31,7 +31,7 @@ export default function MobileMenu({ data }: { data: DataStructure["navbar"] }) 
 
       {openDrawer && (
         <Drawer anchor="left" open={openDrawer} onClose={handleClose} sx={{ zIndex: 15001 }}>
-          <Box width="100vw" height="100%" position="relative" sx={{ backgroundColor: "#1A1A1A" }}>
+          <Box width="100vw" position="relative" sx={{ backgroundColor: "#1A1A1A" }}>
             <Box
               px={5}
               py={8}

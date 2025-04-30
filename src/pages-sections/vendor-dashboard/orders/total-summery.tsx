@@ -66,7 +66,7 @@ export default function TotalSummery({ total, coupon }: Props) {
         <H6>{currency(total)}</H6>
       </FlexBetween>
 
-      <Paragraph>Paid by Credit/Debit Card</Paragraph>
+      {/* <Paragraph>Paid by Credit/Debit Card</Paragraph> */}
     </Card>
   );
 }

@@ -51,7 +51,7 @@ export default function OrderSummery({ order }: Props) {
           </Paragraph>
         </Card>
 
-        <Card sx={{ p: 3, mt: 2 }}>
+        {/* <Card sx={{ p: 3, mt: 2 }}>
           <H5 mt={0} mb={2}>
             Payment Method
           </H5>
@@ -65,7 +65,7 @@ export default function OrderSummery({ order }: Props) {
             <Paragraph>Ending in: </Paragraph>
             <H6>{order?.paymentData?.card?.last4}</H6>
           </FlexBetween>
-        </Card>
+        </Card> */}
       </Grid>
 
       {/* TOTAL SUMMERY SECTION */}
@@ -75,7 +75,7 @@ export default function OrderSummery({ order }: Props) {
             Total Summary
           </H5>
 
-          <ListItem title="Subtotal:" value={currency(order?.total)} />
+          <ListItem title="Subtotal:" value={currency(order?.total + (order?.coupon?.discount || 0))} />
           <ListItem title="Shipping fee:" value={currency(0)} />
           <ListItem title="Discount:" value={currency(order?.coupon?.discount)} />
 

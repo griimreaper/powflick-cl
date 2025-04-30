@@ -125,7 +125,7 @@ export default function OrderDetailsPageView({ data }: Props) {
 
         {/* CHANGE BUTTON */}
         <Grid item xs={12}>
-          <Button variant="contained" color="info" onClick={handleSaveChanges}>
+          <Button variant="contained" color="primary" onClick={handleSaveChanges}>
             Save Changes
           </Button>
         </Grid>

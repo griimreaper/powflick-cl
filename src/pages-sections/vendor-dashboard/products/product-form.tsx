@@ -132,46 +132,39 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     const fetchImages = async () => {
       try {
         let additionalCount = 3;
-        const fixedFiles: (File | null)[] = Array(4).fill(null); // Índices 0 a 3 reservados
+        const fixedFiles: (File | null)[] = Array(4).fill(null);
         const fixedImageUrls: (string | null)[] = Array(4).fill(null);
-
         const additionalPairs: { file: File; url: string; count: number }[] = [];
 
-        await Promise.all(
-          images.map(async (image: string) => {
-            const response = await fetch(image);
-            const blob = await response.blob();
-            const fileNameFromUrl = image.split("/").pop() || "";
+        for (const image of images) {
+          const response = await fetch(image);
+          const blob = await response.blob();
+          const fileNameFromUrl = image.split("/").pop() || "";
+          let file: File | null = null;
 
-            let file: File | null = null;
-
-            if (fileNameFromUrl.includes("Front_1")) {
-              file = new File([blob], "Front_1.png", { type: blob.type });
-              fixedFiles[0] = file;
-              fixedImageUrls[0] = image;
-            } else if (fileNameFromUrl.includes("Back_2")) {
-              file = new File([blob], "Back_2.png", { type: blob.type });
-              fixedFiles[1] = file;
-              fixedImageUrls[1] = image;
-            } else if (fileNameFromUrl.includes("customization_1")) {
-              file = new File([blob], "Front-customization_1.png", { type: blob.type });
-              fixedFiles[2] = file;
-              fixedImageUrls[2] = image;
-            } else if (fileNameFromUrl.includes("customization_2")) {
-              file = new File([blob], "Back_customization_2.png", { type: blob.type });
-              fixedFiles[3] = file;
-              fixedImageUrls[3] = image;
-            } else {
-              const count = ++additionalCount;
-              const fileName = `G-ADDITIONAL_${count}.jpg`;
-              file = new File([blob], fileName, { type: blob.type });
-              additionalPairs.push({ file, url: image, count });
-            }
-          })
-        );
-
-        // Ordenar por el contador (menor a mayor)
-        additionalPairs.sort((a, b) => a.count - b.count);
+          if (fileNameFromUrl.includes("Front_1")) {
+            file = new File([blob], "Front_1.png", { type: blob.type });
+            fixedFiles[0] = file;
+            fixedImageUrls[0] = image;
+          } else if (fileNameFromUrl.includes("Back_2")) {
+            file = new File([blob], "Back_2.png", { type: blob.type });
+            fixedFiles[1] = file;
+            fixedImageUrls[1] = image;
+          } else if (fileNameFromUrl.includes("customization_1")) {
+            file = new File([blob], "Front-customization_1.png", { type: blob.type });
+            fixedFiles[2] = file;
+            fixedImageUrls[2] = image;
+          } else if (fileNameFromUrl.includes("customization_2")) {
+            file = new File([blob], "Back_customization_2.png", { type: blob.type });
+            fixedFiles[3] = file;
+            fixedImageUrls[3] = image;
+          } else {
+            const count = ++additionalCount;
+            const fileName = `G-ADDITIONAL_${count}.png`;
+            file = new File([blob], fileName, { type: blob.type });
+            additionalPairs.push({ file, url: image, count });
+          }
+        }
 
         const finalFiles = fixedFiles.filter(Boolean) as File[];
         const finalSortedImages = fixedImageUrls.filter(Boolean) as string[];

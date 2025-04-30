@@ -98,7 +98,7 @@ return (
       rows={5}
       multiline
       fullWidth
-      color="info"
+      color="primary"
       variant="outlined"
       label="Customer’s Note"
       onChange={handleNoteChange}

@@ -9,11 +9,21 @@ import DashboardHeader from "../../dashboard-header";
 import CustomerService from "icons/CustomerService";
 import { useDashboardStore } from "store/dashboard";
 import { Message } from "models/types";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAllMessagesByUser } from "services/dashboardAdmin/messages";
 
 export default function TicketDetailsPageView({ id, message }: { id: string, message?: Message }) {
   const { profile } = useDashboardStore();
-  const { messages } = profile;
   const token = profile.token;
+
+  const queryClient = useQueryClient();
+
+  const { data: messages } = useQuery<Message[]>({
+    queryKey: ["messages"],
+    queryFn: () => getAllMessagesByUser(token!),
+    enabled: !!token,
+    initialData: () => queryClient.getQueryData(["messages"]),
+  });
 
   const [mess, setMess] = useState(message || messages?.find((m) => m.id === id) || null);
   const from = message ? 'admin' : 'user';
@@ -48,7 +58,8 @@ export default function TicketDetailsPageView({ id, message }: { id: string, mes
           overflowY: "auto",  // Habilita el scroll vertical
           padding: "1rem",   // Opcional: espacio interno
           borderRadius: "8px", // Opcional: esquinas redondeadas
-          marginBottom: "6px"
+          marginBottom: "6px",
+          backgroundColor: "white",
         }}
       >
         <ConversationCard message={{

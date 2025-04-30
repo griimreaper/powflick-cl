@@ -1,46 +1,53 @@
 "use client";
 
 import { Fragment, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import ShoppingBag from "@mui/icons-material/ShoppingBag";
-// Local CUSTOM COMPONENTS
 import OrderRow from "../order-row";
 import Pagination from "../../pagination";
 import DashboardHeader from "../../dashboard-header";
-// CUSTOM DATA MODEL
+import { getUserOrders } from "services/DashboardUser/profile";
 import { useDashboardStore } from "store/dashboard";
+import { Order } from "models/types";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
-// ====================================================
-const ORDERS_PER_PAGE = 8; // Número de órdenes por página
-// ====================================================
+const ORDERS_PER_PAGE = 8;
 
 export default function OrdersPageView() {
-  const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
+  const [currentPage, setCurrentPage] = useState(1);
   const { profile } = useDashboardStore();
-  const { genericResponseUser } = profile;
-  const { orders } = genericResponseUser;
+  const token = profile?.token || "";
 
-  // Calcular las órdenes a mostrar en la página actual
+  const { data: orders = [], isLoading, isError } = useQuery<Order[]>({
+    queryKey: ["user-orders"],
+    queryFn: () => getUserOrders(token),
+    enabled: !!token,
+  });
+
   const startIndex = (currentPage - 1) * ORDERS_PER_PAGE;
   const currentOrders = orders
     .slice()
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // Ordenar por fecha
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(startIndex, startIndex + ORDERS_PER_PAGE);
 
   return (
     <Fragment>
-      {/* TITLE HEADER AREA */}
       <DashboardHeader Icon={ShoppingBag} title="My Orders" />
-
-      {/* ORDER LIST AREA */}
-      {currentOrders.map((order) => (
-        <OrderRow order={order} key={order.id} />
-      ))}
-
-      {/* ORDERS PAGINATION */}
+      {isLoading ?
+        <Box display={"flex"} justifyContent="center" alignItems="center">
+          <CircularProgress sx={{ width: '100%' }} />
+        </Box>
+        :
+        isError ? <Typography variant="h5" color={'white'} textAlign="center">
+          Failed to load orders
+        </Typography>
+        : currentOrders.map((order) => (
+          <OrderRow order={order} key={order.id} />
+        ))}
       <Pagination
-        count={Math.ceil(orders.length / ORDERS_PER_PAGE)} // Número total de páginas
-        page={currentPage} // Página actual
-        onChange={(event, page) => setCurrentPage(page)} // Cambiar página 
+        count={Math.ceil(orders.length / ORDERS_PER_PAGE)}
+        page={currentPage}
+        onChange={(event, page) => setCurrentPage(page)}
       />
     </Fragment>
   );
