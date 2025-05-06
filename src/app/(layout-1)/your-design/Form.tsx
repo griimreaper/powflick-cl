@@ -390,6 +390,8 @@ const ContactInfoForm = ({ values, onChange }: any) => {
 export default function RequestForm() {
   const [showColorPickerPrimary, setShowColorPickerPrimary] = useState(false);
   const [showColorPickerSecondary, setShowColorPickerSecondary] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const colorPickerRef = useRef<HTMLDivElement>(null);
 
   const [formData, setFormData] = useState<FormData>({
     teamName: '',
@@ -469,6 +471,11 @@ export default function RequestForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
+      if (!formData.primaryColors || formData.primaryColors.length === 0) {
+        colorPickerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
       const logosUrl = await uploadFolderPath(data.logos, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
       const otherImagesUrl = await uploadFolderPath(data.otherImages, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
 
@@ -606,7 +613,7 @@ export default function RequestForm() {
           </Select>
         </FormControl>
 
-        <FormControl fullWidth margin="normal" required error={!formData.primaryColors || formData.primaryColors.length === 0}>
+        <FormControl fullWidth margin="normal" required error={submitted && (!formData.primaryColors || formData.primaryColors.length === 0)} ref={colorPickerRef}>
           {/* Botón para abrir el Color Wheel Picker */}
           <Button onClick={() => setShowColorPickerPrimary(!showColorPickerPrimary)} variant="outlined" fullWidth>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, width: "100%" }}>
@@ -645,7 +652,7 @@ export default function RequestForm() {
           )}
 
           <FormHelperText>
-            {!formData.primaryColors || formData.primaryColors.length === 0
+            {submitted && (!formData.primaryColors || formData.primaryColors.length === 0)
               ? "Please select at least one primary color."
               : "(Select up to 3 primary colors. At least 1 is required.)"}
           </FormHelperText>
@@ -829,6 +836,7 @@ export default function RequestForm() {
           <Button
             variant="contained"
             color="primary"
+            onClick={() => setSubmitted(true)}
             sx={{
               fontSize: {
                 xs: "0.5rem",

@@ -18,10 +18,6 @@ const ColorWheelPicker = ({
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
     useEffect(() => {
-        editingIndexRef.current = editingIndex;
-    }, [editingIndex]);
-
-    useEffect(() => {
         if (!colorPickerRef.current || colorPickerInstance.current) return;
 
         const ColorPicker = (iro as any).ColorPicker;
@@ -32,10 +28,16 @@ const ColorWheelPicker = ({
             colors: selectedColors,
             layout: [{ component: (iro as any).ui.Wheel }],
         });
+    }, []);
 
-        colorPickerInstance.current.on("input:end", () => {
-            const picker = colorPickerInstance.current;
-            const currentColor = picker?.color?.hexString;
+    // Registra el listener una vez
+    useEffect(() => {
+        if (!colorPickerInstance.current) return;
+
+        const picker = colorPickerInstance.current;
+
+        const handleColorChange = () => {
+            const currentColor = colorPickerInstance.current.color.hexString;
             const index = editingIndexRef.current;
 
             setSelectedColors((prevColors) => {
@@ -43,32 +45,57 @@ const ColorWheelPicker = ({
 
                 if (index !== null && index < prevColors.length) {
                     updatedColors[index] = currentColor;
-                } else if (
-                    prevColors.length < 3 &&
-                    !prevColors.includes(currentColor)
-                ) {
+                } else if (prevColors.length < 3 && !prevColors.includes(currentColor)) {
                     updatedColors.push(currentColor);
                 }
 
-                if (updatedColors.length === 0) updatedColors.push("#ffffff");
+                picker.setColors(updatedColors);
+                onColorChange(updatedColors);
 
-                colorPickerInstance.current.setColors(updatedColors);
-                if (onColorChange) onColorChange(updatedColors);
+                editingIndexRef.current = null; // Resetea el índice después de aplicar el color
 
                 return updatedColors;
             });
+        };
 
-            setEditingIndex(null);
-        });
+        picker.on("input:end", handleColorChange);
+
+        return () => {
+            picker.off("input:end", handleColorChange); // limpia al desmontar
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!colorPickerInstance.current) return;
+
+        const picker = colorPickerInstance.current;
+
+        const handleActiveColorChange = (color: any) => {
+            const index = colorPickerInstance.current.color.index;
+
+            if (index !== -1) {
+                editingIndexRef.current = index;
+            }
+        };
+
+        picker.on("color:setActive", handleActiveColorChange);
+
+        return () => {
+            picker.off("color:setActive", handleActiveColorChange);
+        };
     }, [selectedColors]);
 
+
     const handleRemoveColor = (index: number) => {
-        let updated = selectedColors.filter((_, i) => i !== index);
+        let updated: any = selectedColors.filter((_, i) => i !== index);
+
         if (updated.length === 0) {
-            updated = ['#ffffff']
+            updated = null;
             onColorChange([])
-            return;
+            setSelectedColors([]);
+            return
         };
+
         setSelectedColors(updated);
         setEditingIndex(null);
 
@@ -85,7 +112,7 @@ const ColorWheelPicker = ({
         <div>
             <div ref={colorPickerRef} />
             <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                {selectedColors.map((color, index) => ( colors.length !== 0 &&
+                {selectedColors.map((color, index) => (
                     <div
                         key={index}
                         style={{
@@ -96,7 +123,7 @@ const ColorWheelPicker = ({
                             border: "2px solid #ccc",
                             position: "relative",
                             cursor: "pointer",
-                            boxShadow: editingIndex === index ? "0 0 0 2px black" : undefined,
+                            boxShadow: editingIndexRef.current === index ? "0 0 0 2px black" : undefined,
                         }}
                         title="Click to edit"
                         onClick={() => handleEditColor(index)}
