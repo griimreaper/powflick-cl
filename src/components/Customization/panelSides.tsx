@@ -38,6 +38,16 @@ export const fonts: { [key: string]: string } = {
   "Black Bass Demo": "Black Bass Demo",
   "Dirga Hayu": "Dirga Hayu",
   "Restaurant Menu Book": "Restaurant Menu Book",
+  "Hatten": "Hatten",
+  "NCAA Oregon Ducks Autzen": "NCAA Oregon Ducks Autzen",
+  "Qatar Personal Use": "Qatar Personal Use",
+  "Real Madrid": "Real Madrid",
+  "Quantum Rangers Personal": "Quantum Rangers Personal",
+  "Boston Caps": "Boston Caps",
+  "Chinese Rocks": "Chinese Rocks",
+  "Madura United FC": "Madura United FC",
+  "Overgrid": "Overgrid",
+  "Slovakia": "Slovakia",
 };
 
 export default function PanelSides({

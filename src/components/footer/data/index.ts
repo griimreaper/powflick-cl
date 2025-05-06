@@ -22,7 +22,7 @@ export const PAGES = [
   ["Super Design", "your-design"],
   ["Contact", "contact"],
   ["About Us", "about-us"],
-  ["Help", "help"],
+  ["FAQ", "help"],
 ];
 
 export const SOCIAL_ICON_LINKS = [

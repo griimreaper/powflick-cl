@@ -27,7 +27,7 @@ export default function LogoSection() {
         ut sollicitudin elit at amet.
       </Paragraph> */}
 
-      <AppStore />
+      {/* <AppStore /> */}
     </Box>
   );
 }

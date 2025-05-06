@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Grid, TextField, Button, CircularProgress, Box, Autocomplete } from "@mui/material";
 import { Direction } from "models/types";
@@ -104,7 +104,7 @@ export default function DirectionForm({
     });
 
     // Opciones de países y ciudades filtradas en cada render
-    const allCountries = Country.getAllCountries();
+    const allCountries = useMemo(() => Country.getAllCountries(), []);
     const filteredCountries = countryInput.length > 0
         ? allCountries.filter(c => c.name.toLowerCase().includes(countryInput.toLowerCase()))
         : allCountries;
@@ -112,6 +112,10 @@ export default function DirectionForm({
     const filteredCities = cityInput.length > 1
         ? allCities.filter(city => city.name.toLowerCase().includes(cityInput.toLowerCase()))
         : [];
+
+
+    const city = City.getCitiesOfCountry(address?.country || '')?.find(c => c.name === address?.city);
+    console.log("allCitiess", city);
 
     return (
         <Box sx={{ mt: 1, width: "100%" }}>
@@ -163,7 +167,9 @@ export default function DirectionForm({
                                             setValue("city", "");
                                         }
                                     }}
-                                    value={filteredCities.find(opt => opt.name === field.value) || null}
+                                    value={address ?
+                                        city
+                                        : filteredCities.find(opt => opt.name === field.value) || null}
                                     onChange={(_, value) => field.onChange(value ? value.name : "")}
                                     disabled={!selectedCountry}
                                     renderInput={(params) => (

@@ -57,7 +57,7 @@ export default function MobileMenu({ data }: { data: DataStructure["navbar"] }) 
                 <StyledNavLink href="/your-design">Get a Free Design</StyledNavLink>
                 <StyledNavLink href="/contact">Contact</StyledNavLink>
                 <StyledNavLink href="/about-us">About Us</StyledNavLink>
-                <StyledNavLink href="/help">Help</StyledNavLink>
+                <StyledNavLink href="/help">FAQ</StyledNavLink>
               </Box>
             </Box>
           </Box>
