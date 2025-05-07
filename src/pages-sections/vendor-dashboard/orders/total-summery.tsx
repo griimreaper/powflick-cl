@@ -41,12 +41,12 @@ export default function TotalSummery({ order }: Props) {
     <Card sx={{ p: 3 }}>
       <H5 mt={0} mb={2}>Total Summary</H5>
 
-      <ListItem title="Subtotal:" value={currency(subtotal)} />
-      <ListItem title="Customizations:" value={currency(customizationTotal)} />
+      <ListItem title="Subtotal" value={currency(subtotal)} />
+      <ListItem title="Customizations" value={currency(customizationTotal)} />
 
       {order?.coupon && (
         <ListItem
-          title={`Coupon (${order.coupon.title}):`}
+          title={`Coupon (${order.coupon.title})`}
           value={`- ${currency(discount)} ${isPercent ? `(${order.coupon.discount}%)` : ""}`}
         />
       )}
