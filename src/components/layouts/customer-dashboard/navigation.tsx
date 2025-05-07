@@ -24,12 +24,16 @@ import Order from "models/Order.model";
 
 export default function Navigation({ profile }: { profile: Profile }) {
   const pathname = usePathname() || "";
-  const router = useRouter();
   const { removeProfile } = useDashboardStore()
 
   const queryClient = useQueryClient();
   const orders: Order[] = queryClient.getQueryData(["user-orders"]) || [];
   const ordersCount = orders?.length;
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    removeProfile();
+  }
 
   const MENUS = [
     {
@@ -90,10 +94,10 @@ export default function Navigation({ profile }: { profile: Profile }) {
             <StyledNavLink href={href === '/login' ? '/' : href} key={title} isCurrentPath={pathname.includes(href)}
               onClick={() => {
                 if (href === '/login') {
-                  signOut({ redirect: false }),
-                    removeProfile()
+                  handleLogout();
                 }
               }}
+
             >
               <FlexBox alignItems="center" gap={1}>
                 <Icon color="inherit" fontSize="small" className="nav-icon" />

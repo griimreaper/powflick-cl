@@ -118,8 +118,7 @@ export default function OrderDetailsPageView({ data }: Props) {
         {/* TOTAL SUMMERY OF ORDER */}
         <Grid item md={6} xs={12}>
           <TotalSummery
-            total={order?.total}
-            coupon={order?.coupon}
+            order={order}
           />
         </Grid>
 
