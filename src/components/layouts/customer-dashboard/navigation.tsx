@@ -19,11 +19,18 @@ import { LockRounded } from "@mui/icons-material";
 import { Profile } from "models/types";
 import { signOut } from "next-auth/react";
 import { useDashboardStore } from "store/dashboard";
+import { useQueryClient } from "@tanstack/react-query";
+import Order from "models/Order.model";
 
 export default function Navigation({ profile }: { profile: Profile }) {
   const pathname = usePathname() || "";
   const router = useRouter();
   const { removeProfile } = useDashboardStore()
+
+  const queryClient = useQueryClient();
+  const orders: Order[] = queryClient.getQueryData(["user-orders"]) || [];
+  const ordersCount = orders?.length;
+
   const MENUS = [
     {
       title: "DASHBOARD",
@@ -32,7 +39,7 @@ export default function Navigation({ profile }: { profile: Profile }) {
           href: "/dashboard/orders",
           title: "Orders",
           Icon: ShoppingBagOutlined,
-          count: profile?.genericResponseUser?.orders?.length,
+          count: ordersCount,
         },
         {
           href: "/dashboard/wish-list",
@@ -83,8 +90,8 @@ export default function Navigation({ profile }: { profile: Profile }) {
             <StyledNavLink href={href === '/login' ? '/' : href} key={title} isCurrentPath={pathname.includes(href)}
               onClick={() => {
                 if (href === '/login') {
-                  signOut({redirect: false}),
-                  removeProfile()
+                  signOut({ redirect: false }),
+                    removeProfile()
                 }
               }}
             >
@@ -93,7 +100,7 @@ export default function Navigation({ profile }: { profile: Profile }) {
                 <Span>{title}</Span>
               </FlexBox>
 
-              <Span>{count}</Span>
+              <Span>{count !== 0 ? count : null}</Span>
             </StyledNavLink>
           ))}
         </Fragment>
