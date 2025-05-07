@@ -84,7 +84,7 @@ export default function OrderSummery({ order }: Props) {
 
           <ListItem title="Subtotal:" value={currency(subtotal)} />
           <ListItem title="Shipping fee:" value={currency(0)} />
-          <ListItem title="Discount:" value={currency(discount)} />
+          <ListItem title={"Coupon:"} value={currency(discount)} />
 
           <Divider sx={{ mb: 1 }} />
 

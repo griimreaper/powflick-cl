@@ -33,7 +33,6 @@ interface Props {
 export default function ProductViewDialog(props: Props) {
   const { product, openDialog, handleCloseDialog } = props;
   // const { handleCounterChange } = useCounter(product, false, true);
-console.log(product);
 
   return (
     <Dialog

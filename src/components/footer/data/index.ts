@@ -28,7 +28,7 @@ export const PAGES = [
 
 export const SOCIAL_ICON_LINKS = [
   { Icon: Facebook, url: "https://www.facebook.com/profile.php?id=61572571284039" },
-  { Icon: Twitter, url: "https://twitter.com/" },
+  // { Icon: Twitter, url: "https://twitter.com/" },
   // { Icon: Youtube, url: "https://www.youtube.com/" },
   // { Icon: Google, url: "https://www.google.com/" },
   { Icon: Instagram, url: "https://www.instagram.com/powflick/" },
