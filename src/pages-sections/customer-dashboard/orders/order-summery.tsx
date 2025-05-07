@@ -27,6 +27,13 @@ function ListItem({ title, value }: { title: string; value: string }) {
 
 export default function OrderSummery({ order }: Props) {
   console.log("order", order);
+
+  const isPercent = order?.coupon?.type === "percent";
+  const discount = isPercent
+    ? ((order?.total * order?.coupon?.discount) / (100 - order?.coupon?.discount))
+    : order?.coupon?.discount || 0;
+  const subtotal = order?.total + discount;
+
   return (
     <Grid container spacing={3}>
       {/* SHIPMENT ADDRESS SECTION */}
@@ -75,9 +82,9 @@ export default function OrderSummery({ order }: Props) {
             Total Summary
           </H5>
 
-          <ListItem title="Subtotal:" value={currency(order?.total + (order?.coupon?.discount || 0))} />
+          <ListItem title="Subtotal:" value={currency(subtotal)} />
           <ListItem title="Shipping fee:" value={currency(0)} />
-          <ListItem title="Discount:" value={currency(order?.coupon?.discount)} />
+          <ListItem title="Discount:" value={currency(discount)} />
 
           <Divider sx={{ mb: 1 }} />
 
