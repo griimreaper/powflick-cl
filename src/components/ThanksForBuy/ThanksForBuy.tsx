@@ -21,6 +21,7 @@ import { purchase } from "../../../fpixel";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { getProfile } from "services/DashboardUser";
 import { useSession } from "next-auth/react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ThanksForBuy({ id }: { id: string }) {
   const [order, setOrder] = useState<any>({});
@@ -31,6 +32,9 @@ export default function ThanksForBuy({ id }: { id: string }) {
 
   const { token } = state.profile;
   let rol = session?.user?.email;
+
+  const queryClient = useQueryClient();
+  queryClient.removeQueries({ queryKey: ['user-orders'] });
 
   const handleBackClick = () => {
     if (sessionStorage.getItem("from-dashboard")) {

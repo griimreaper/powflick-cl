@@ -7,19 +7,18 @@ import TextField from "@mui/material/TextField";
 // LOCAL CUSTOM COMPONENT
 import ListItem from "../list-item";
 // GLOBAL CUSTOM COMPONENTS
-import { Paragraph, Span } from "components/Typography";
+import { Span } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
 import FlexBetween from "components/flex-box/flex-between";
 import { useEffect, useState } from "react";
-import { Coupon } from "models/types";
-import { useDashboardStore } from "store/dashboard";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { FlexBox } from "components/flex-box";
 import { getCouponByCode } from "services/dashboardAdmin/coupons";
 import { useSession } from "next-auth/react";
+import { showErrorAlert } from "utils/alerts";
 
-export default function CheckoutSummary({ data }: any) {
+export default function CheckoutSummary({ data, toggleDialog }: any) {
   const { cart, total, setCoupon, coupon, note, setNote } = useShoppingCartStore();
   const [couponCode, setCouponCode] = useState("");
   const [error, setError] = useState("");
@@ -45,7 +44,8 @@ export default function CheckoutSummary({ data }: any) {
     setError("");
     try {
       if (!token) {
-        setError("User token is missing");
+        toggleDialog();
+        showErrorAlert("You must be logged","");
         return;
       }
       const couponData = await getCouponByCode(couponCode, token);

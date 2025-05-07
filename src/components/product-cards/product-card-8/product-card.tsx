@@ -209,7 +209,7 @@ export default function ProductCard8({ product, active = false }: Props) {
       <Box p={1} textAlign="center">
         {/* PRODUCT CATEGORY */}
         {categories ? (
-          <Small color="grey.500">{categories[0].name}</Small>
+          <Small color="grey.500">{categories[0]?.name}</Small>
         ) : null}
 
         {/* PRODUCT TITLE / NAME */}

@@ -58,13 +58,16 @@ export default function OrderProgress({ status }: { status: string }) {
     "TAILORING",
     "SHIPPING & TRACKING",
     "ONTHEWAY",
+  ];
+
+  const PAYMENT_STATUS = [
     "APPROVED",
     "PAID",
     "REJECTED",
     "DELIVERED",
     "CANCELLED",
     "PENDING",
-  ];
+  ]
 
   const statusIndex = ORDER_STATUS_LIST.indexOf(ORDER_STATUS);
 
@@ -78,10 +81,11 @@ export default function OrderProgress({ status }: { status: string }) {
                 <Avatar
                   alt="shipping"
                   sx={{
-                    width: 64,
-                    height: 64,
+                    width: 80,
+                    height: 80,
                     color: ind <= statusIndex ? "white" : "primary.main",
-                    bgcolor: ind <= statusIndex ? "primary.main" : "grey.300",
+                    border: "2px solid",
+                    borderColor: ind <= statusIndex ? "primary.main" : "grey.300",
                     padding: "0.5rem",
                   }}
                 >
@@ -96,21 +100,12 @@ export default function OrderProgress({ status }: { status: string }) {
                   />
                 </Avatar>
                 {ind <= statusIndex && (
-                  <StyledAvatar alt="done">
-                    <Done color="inherit" sx={{ fontSize: 16 }} />
+                  <StyledAvatar alt="done" sx={{ width: 26, height: 26, border: "2px solid #ca0b0b" }}>
+                    <Done color="inherit" sx={{ fontSize: 20 }} />
                   </StyledAvatar>
                 )}
               </Box>
-              <Paragraph
-                sx={{
-                  fontSize: "0.75rem",
-                  maxWidth: 80,
-                  textAlign: "center",
-                  marginTop: "0.5rem",
-                }}
-              >
-                {ORDER_STATUS_LIST[ind]}
-              </Paragraph>
+
             </Box>
 
             {ind < STEP_ICONS.length - 1 && (
@@ -125,4 +120,3 @@ export default function OrderProgress({ status }: { status: string }) {
     </Card>
   );
 }
- 

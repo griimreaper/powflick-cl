@@ -58,12 +58,12 @@ export interface ProductDB {
   quantityPurchase: number;
   font: string;
   font_color: string;
-  categories: any[];
-  collections: any[];
-  tags: any[];
+  categories: { name: string }[];
+  collections: { title: string }[];
+  tags: { name: string }[];
 }
 
-export interface RecentProduct extends ProductDB {}
+export interface RecentProduct extends ProductDB { }
 
 export interface Navbar {
   categories: Category[];
@@ -303,22 +303,22 @@ export interface Message {
 
 export interface FreeDesign {
   id: string;
-    teamName: string;
-    sport: string;
-    description?: string;
-    date?: string;
-    primaryColors: string[];
-    secondaryColors: string[];
-    font: string;
-    addNames: boolean;
-    addNumbers: boolean;
-    logos: string[];
-    otherImages: string[];
-    fullName: string;
-    email: string;
-    organization?: string;
-    createdAt: string;
-    phone?: string;
+  teamName: string;
+  sport: string;
+  description?: string;
+  date?: string;
+  primaryColors: string[];
+  secondaryColors: string[];
+  font: string;
+  addNames: boolean;
+  addNumbers: boolean;
+  logos: string[];
+  otherImages: string[];
+  fullName: string;
+  email: string;
+  organization?: string;
+  createdAt: string;
+  phone?: string;
 }
 
 interface Conversation {

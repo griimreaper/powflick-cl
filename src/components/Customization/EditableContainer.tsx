@@ -501,6 +501,7 @@ function EditableContainer({
                                     value={texts[selection.index]?.font || ""}
                                     onChange={(e) => handleFontChange(e, selection.index, "Text")}
                                     defaultValue={font}
+                                    style={{ fontFamily: fonts[font] }}
                                 >
                                     {Object.entries(fonts).map(([fontName, fontFamily]) => (
                                         <MenuItem
@@ -654,6 +655,7 @@ function EditableContainer({
                                     value={numbers[selection.index]?.font || ""}
                                     onChange={(e) => handleFontChange(e, selection.index, "Number")}
                                     defaultValue={font}
+                                    style={{ fontFamily: fonts[font] }}
                                 >
                                     {Object.entries(fonts).map(([fontName, fontFamily]) => (
                                         <MenuItem

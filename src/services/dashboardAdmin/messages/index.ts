@@ -68,3 +68,15 @@ export const answerMessage = async (id: string, answer: string, token: string) =
         throw error;
     }
 }
+
+export const getAllMessagesByUser = async (token: string) => {
+    try {
+        const response = await mainApi.get(`/messages/by/user`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error getting messages:", error);
+        throw error;
+    }
+}

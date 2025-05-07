@@ -368,7 +368,7 @@ export default function ProductIntro({ product }: Props) {
                 Categories:
               </Typography>
 
-              {product.product.categories.map((cat: string, index: number) => (
+              {product.product.categories.map((cat: any, index: number) => (
                 <Box key={cat} display="inline-flex" alignItems="center">
                   <Link href={`/products?category=${encodeURIComponent(cat)}`}>
                     {product.product.categories.length === 1 ? (
@@ -393,7 +393,7 @@ export default function ProductIntro({ product }: Props) {
                 Collections:
               </Typography>
 
-              {product.product.collections.map((col: string, index: number) => (
+              {product.product.collections.map((col: any, index: number) => (
                 <Box key={col} display="inline-flex" alignItems="center">
                   <Link href={`/products?collection=${encodeURIComponent(col)}`}>
                     {product.product.collections.length === 1 ? (
@@ -414,7 +414,7 @@ export default function ProductIntro({ product }: Props) {
           {product.product.tags?.length > 0 && (
             <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
               <div>Tags: </div>
-              {product.product.tags.map(t => (
+              {product.product.tags.map((t: any) => (
                 <Link key={t} href={`/products?tag=${product.product.tags[0]}`}>
                   <H6 bgcolor={"#f0f0f0"} sx={{
                     transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
