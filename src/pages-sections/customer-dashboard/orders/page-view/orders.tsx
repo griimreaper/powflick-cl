@@ -22,6 +22,8 @@ export default function OrdersPageView() {
     queryKey: ["user-orders"],
     queryFn: () => getUserOrders(token),
     enabled: !!token,
+    refetchOnMount: true,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
   const startIndex = (currentPage - 1) * ORDERS_PER_PAGE;
@@ -29,6 +31,10 @@ export default function OrdersPageView() {
     .slice()
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(startIndex, startIndex + ORDERS_PER_PAGE);
+
+  console.log(orders);
+
+  console.log(isError);
 
   return (
     <Fragment>
@@ -41,9 +47,13 @@ export default function OrdersPageView() {
         isError ? <Typography variant="h5" color={'white'} textAlign="center">
           Failed to load orders
         </Typography>
-        : currentOrders.map((order) => (
-          <OrderRow order={order} key={order.id} />
-        ))}
+          : orders.length === 0 ?
+            <Typography variant="h5" color={'white'} textAlign="center">
+              No orders
+            </Typography>
+            : currentOrders.map((order) => (
+              <OrderRow order={order} key={order.id} />
+            ))}
       <Pagination
         count={Math.ceil(orders.length / ORDERS_PER_PAGE)}
         page={currentPage}
