@@ -18,6 +18,28 @@ const ColorWheelPicker = ({
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
     useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const pickerEl = colorPickerRef.current;
+            const target = event.target as Node;
+
+            // Si el click no ocurrió dentro del color picker ni sobre una burbuja de color
+            if (
+                pickerEl &&
+                !pickerEl.contains(target) &&
+                !(target instanceof HTMLElement && target.closest(".color-bubble"))
+            ) {
+                setEditingIndex(null);
+                editingIndexRef.current = null;
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
         if (!colorPickerRef.current || colorPickerInstance.current) return;
 
         const ColorPicker = (iro as any).ColorPicker;
@@ -52,7 +74,7 @@ const ColorWheelPicker = ({
                 picker.setColors(updatedColors);
                 onColorChange(updatedColors);
 
-                editingIndexRef.current = null; // Resetea el índice después de aplicar el color
+                editingIndexRef.current = index; // Resetea el índice después de aplicar el color
 
                 return updatedColors;
             });
@@ -71,11 +93,10 @@ const ColorWheelPicker = ({
         const picker = colorPickerInstance.current;
 
         const handleActiveColorChange = (color: any) => {
-            const index = colorPickerInstance.current.color.index;
+            const index = color?.index;
 
-            if (index !== -1) {
-                editingIndexRef.current = index;
-            }
+            setEditingIndex(index);
+            editingIndexRef.current = index;
         };
 
         picker.on("color:setActive", handleActiveColorChange);
@@ -83,7 +104,7 @@ const ColorWheelPicker = ({
         return () => {
             picker.off("color:setActive", handleActiveColorChange);
         };
-    }, [selectedColors]);
+    }, []);
 
 
     const handleRemoveColor = (index: number) => {
@@ -97,7 +118,6 @@ const ColorWheelPicker = ({
         };
 
         setSelectedColors(updated);
-        setEditingIndex(null);
 
         colorPickerInstance.current?.setColors(updated);
         onColorChange(updated);
@@ -115,6 +135,7 @@ const ColorWheelPicker = ({
                 {selectedColors.map((color, index) => (
                     <div
                         key={index}
+                        className="color-bubble"
                         style={{
                             width: 32,
                             height: 32,
