@@ -415,7 +415,7 @@ export default function ProductIntro({ product }: Props) {
             <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
               <div>Tags: </div>
               {product.product.tags.map((t: any) => (
-                <Link key={t} href={`/products?tag=${product.product.tags[0]}`}>
+                <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
                   <H6 bgcolor={"#f0f0f0"} sx={{
                     transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
                     '&:hover': {

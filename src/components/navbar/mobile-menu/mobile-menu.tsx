@@ -31,33 +31,35 @@ export default function MobileMenu({ data }: { data: DataStructure["navbar"] }) 
 
       {openDrawer && (
         <Drawer anchor="left" open={openDrawer} onClose={handleClose} sx={{ zIndex: 15001 }}>
-          <Box width="100vw" position="relative" sx={{ backgroundColor: "#1A1A1A" }}>
-            <Box
-              px={5}
-              py={8}
-              maxWidth={500}
-              margin="auto"
-              position="relative"
-              height="100%"
-            >
-              {/* CLOSE BUTTON */}
-              <IconButton
-                onClick={handleClose}
-                sx={{ position: "absolute", right: 30, top: 15, color: themeColors.text.secondary }}
+          <Box width="100vw" height={'100%'}  sx={{ backgroundColor: "#1A1A1A" }}>
+            <Box width="100vw" position="relative" sx={{ backgroundColor: "#1A1A1A" }}>
+              <Box
+                px={5}
+                py={8}
+                maxWidth={500}
+                margin="auto"
+                position="relative"
+                height="100%"
               >
-                <Clear fontSize="small" color="primary" />
-              </IconButton>
+                {/* CLOSE BUTTON */}
+                <IconButton
+                  onClick={handleClose}
+                  sx={{ position: "absolute", right: 30, top: 15, color: themeColors.text.secondary }}
+                >
+                  <Clear fontSize="small" color="primary" />
+                </IconButton>
 
-              {/* MULTI LEVEL MENU RENDER */}
-              {storeMenu && renderLevels([storeMenu], handleClose)}
+                {/* MULTI LEVEL MENU RENDER */}
+                {storeMenu && renderLevels([storeMenu], handleClose)}
 
-              {/* OTHER LINKS */}
-              <Box display="flex" flexDirection="column" gap={2}>
-                <StyledNavLink href="/products">Store</StyledNavLink>
-                <StyledNavLink href="/your-design">Get a Free Design</StyledNavLink>
-                <StyledNavLink href="/contact">Contact</StyledNavLink>
-                <StyledNavLink href="/about-us">About Us</StyledNavLink>
-                <StyledNavLink href="/help">FAQ</StyledNavLink>
+                {/* OTHER LINKS */}
+                <Box display="flex" flexDirection="column" gap={2}>
+                  <StyledNavLink href="/products">Store</StyledNavLink>
+                  <StyledNavLink href="/your-design">Get a Free Design</StyledNavLink>
+                  <StyledNavLink href="/contact">Contact</StyledNavLink>
+                  <StyledNavLink href="/about-us">About Us</StyledNavLink>
+                  <StyledNavLink href="/help">FAQ</StyledNavLink>
+                </Box>
               </Box>
             </Box>
           </Box>

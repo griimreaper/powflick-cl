@@ -8,8 +8,8 @@ import Link from "next/link";
 // ==============================================================
 interface Props {
   categories: any[];
-  openList: string;
-  handleOpen: (item: string) => void;
+  openList: number;
+  handleOpen: (item: number) => void;
 }
 // ==============================================================
 
@@ -18,12 +18,12 @@ export default function Categories({ categories, openList, handleOpen }: Props) 
 
   return (
     <CategoryList>
-      {categories.map((item) => (
+      {categories.map((item, index) => (
         <Link key={item} href={'/products?category=' + item}>
           <CategoryListItem
             key={item}
-            active={openList === item ? 1 : 0}
-            onMouseEnter={() => handleOpen(item)}>
+            active={openList === index ? 1 : 0}
+            onMouseEnter={() => handleOpen(index)}>
             {item}
 
             <ChevronRight

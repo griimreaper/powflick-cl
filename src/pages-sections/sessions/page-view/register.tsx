@@ -162,26 +162,18 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
               Phone
             </label>
             <PhoneInput
+              containerClass="custom-phone-container"
+              inputClass="custom-phone-input"
               inputProps={{
                 name: "phone",
                 onBlur: handleBlur,
                 class: 'custom-phone-input',
-                style: {
-                  width: "100%",
-                  height: 40,
-                  fontSize: 14,
-                  paddingLeft: 48,
-                  borderRadius: 4,
-                }
               }}
               country={"us"}
               specialLabel=""
               value={values.phone}
               onChange={(value) => {
                 handleChange({ target: { name: "phone", value } });
-              }}
-              containerStyle={{
-                width: "100%",
               }}
             />
             {touched.phone && errors.phone && (
