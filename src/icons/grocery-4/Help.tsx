@@ -7,5 +7,5 @@ export default createSvgIcon(
       fill="currentColor"
     />
   </svg>,
-  "Help"
+  "FAQ"
 );

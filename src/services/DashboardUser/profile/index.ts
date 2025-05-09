@@ -25,3 +25,17 @@ export const updatePassword = async (token: string, data: any) => {
     throw error.response.data.message;
   }
 };
+
+export const getUserOrders = async (token: string) => {
+  try {
+    const { data } = await mainApi.get("/orders/by/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data.data;
+  } catch (error) {
+    console.error("Error getting orders:", error);
+    throw error;
+  }
+}

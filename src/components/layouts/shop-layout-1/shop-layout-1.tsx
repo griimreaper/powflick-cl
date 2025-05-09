@@ -18,6 +18,7 @@ import { Box } from "@mui/material";
 import dynamic from "next/dynamic";
 import { MobileNavigationBar } from "components/mobile-navigation";
 import { LazyLoadSection } from "pages-sections/fashion-2/LazyLoadSection";
+import TopBarSlider from "./TopBarSlider";
 
 // Carga dinámica de componentes
 const Footer1 = dynamic(() => import("components/footer/footer-1"), {
@@ -47,12 +48,13 @@ export default function ShopLayout1({
   const { profile, setData, removeProfile, setProfileUser } =
     useDashboardStore();
 
-  const token = useMemo(() => session?.user?.name?.split("|")[0], [session]);
+  const token = session?.user?.name?.split("|")[0];
   const tokenExpiration = useMemo(() => session?.user?.name?.split("|")[1], [session]);
   let rol = session?.user?.email;
   let image = session?.user?.image;
 
   console.log("get profile", profile);
+
   useEffect(() => {
     if (token && !profile.token) {
       localStorage.setItem("termsAccepted", "true");
@@ -60,7 +62,6 @@ export default function ShopLayout1({
         setData({ ...response, token, rol });
         if (image) setProfileUser({ image });
       });
-      
     }
   }, [token, profile.token, setData, setProfileUser, image]);
 
@@ -93,6 +94,7 @@ export default function ShopLayout1({
     <Fragment>
       {/* TOP BAR SECTION */}
       <Box position={landing ? 'absolute' : 'relative'} width={'100%'} top={0}>
+        <TopBarSlider />
         {/* <Topbar /> */}
 
         {/* HEADER */}

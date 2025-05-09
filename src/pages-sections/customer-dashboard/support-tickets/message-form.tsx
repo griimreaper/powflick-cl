@@ -47,7 +47,10 @@ export default function MessageForm({ token, messageId, setMess, from }: { token
         helperText={touched.message && errors.message}
         error={Boolean(touched.message && errors.message)}
         sx={{
-          mb: 2, '& .MuiInputBase-input': { color: 'white' }, // Color del texto
+          mb: 2,
+          backgroundColor: 'white',
+          borderRadius: '8px',
+           '& .MuiInputBase-input': { color: 'black' }, // Color del texto
           '& .MuiInputBase-input::placeholder': { color: 'gray' } // Color del placeholder 
         }}
       />

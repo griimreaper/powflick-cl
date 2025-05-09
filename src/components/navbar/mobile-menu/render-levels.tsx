@@ -6,6 +6,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { H6 } from "components/Typography";
 import { SubCategoryList } from "../category-based-menu/styles";
 import ProductCard8 from "components/product-cards/product-card-8";
+import Link from "next/link";
 
 const ACCORDION_STYLES = {
   background: "#1A1A1A",
@@ -32,7 +33,9 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
       return (
         <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
           <AccordionSummary expandIcon={<ExpandMore color="primary" />} sx={ACCORDION_SUMMARY_STYLES}>
-            <H6>{item.title}</H6>
+            <Link href={item.title !== 'Collections' ? "/products?category=" + item.title : ''}>
+              <H6>{item.title}</H6>
+            </Link>
           </AccordionSummary>
 
           <Box mx={2} sx={{ background: '#1A1A1A' }}>{renderLevels(item.child, handleClose)}</Box>
@@ -44,7 +47,9 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
       return (
         <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
           <AccordionSummary expandIcon={<ExpandMore color="primary" />} sx={ACCORDION_SUMMARY_STYLES}>
-            <H6>{item.title}</H6>
+            <Link href={"/products?collection=" + item.title}>
+              <H6>{item.title}</H6>
+            </Link>
           </AccordionSummary>
 
           <Box sx={{ display: 'flex', overflowX: 'scroll', alignItems: 'center', gap: 2 }}

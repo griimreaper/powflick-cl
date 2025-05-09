@@ -1,0 +1,35 @@
+/* Asegura que el contenedor no se rompa */
+.custom-phone-container .react-tel-input {
+  width: 100%;
+}
+
+/* El botón de la bandera */
+.react-tel-input .flag-dropdown {
+  background: transparent;
+  border: none;
+  height: 100%;
+}
+
+/* Ajustar el input para que calce con la bandera */
+.react-tel-input .form-control {
+  padding-left: 48px !important;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Estilo en focus */
+.react-tel-input .form-control:focus {
+  border-color: #ca0b0b !important;
+  border-width: 2px !important;
+  box-shadow: none !important;
+}
+
+/* Estilo hover */
+.react-tel-input .form-control:hover {
+  border: 1px solid black;
+}

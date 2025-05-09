@@ -86,6 +86,234 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "HATTEN";
+  src: url("/fonts/HATTEN/HATTEN.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NCAA Oregon Ducks Autzen";
+  src: url("/fonts/NCAA OREGON DUCKS AUTZEN/NCAA Oregon Ducks Autzen.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Qatar Personal Use";
+  src: url("/fonts/QATAR PERSONAL USE/QatarPersonalUse.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Real Madrid";
+  src: url("/fonts/REAL MADRID/RealMadrid.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Quantum Rangers Personal";
+  src: url("/fonts/QUANTUM RANGERS PERSONAL/QuantumRangersPersonal.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.anton {
+  font-family: "Anton", sans-serif;
+}
+
+.rasioline {
+  font-family: "Rasioline", sans-serif;
+}
+
+.spotlight {
+  font-family: "Spot Light", sans-serif;
+}
+
+.uninorth {
+  font-family: "Uni North", sans-serif;
+}
+
+.gymer {
+  font-family: "GYMER", sans-serif;
+}
+
+.fest {
+  font-family: "Fest", sans-serif;
+}
+
+.blackbass {
+  font-family: "Black Bass Demo", sans-serif;
+}
+
+.restaurantmenubook {
+  font-family: "Restaurant Menu Book", sans-serif;
+}
+
+.dirgahayu {
+  font-family: "Dirga Hayu", sans-serif;
+}
+@font-face {
+  font-family: "Anton";
+  src: url("/fonts/ANTON/Anton-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Rasioline";
+  src:
+    url("/fonts/rasioline/DD rasioline.otf") format("opentype"),
+    url("/fonts/rasioline/DD rasioline.ttf") format("truetype"),
+    url("/fonts/rasioline/rasioline extrude.otf") format("opentype"),
+    url("/fonts/rasioline/rasioline extrude.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Spot Light";
+  src:
+    url("/fonts/SPOT LIGHT/Spot Light.otf") format("opentype"),
+    url("/fonts/SPOT LIGHT/Spot Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Uni North";
+  src:
+    url("/fonts/UNI NORTH/UNINorth-College.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-Italic.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-Letterpress.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-Letterpressitalic.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-Outline.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-Regular.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-Thin.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-University.otf") format("opentype"),
+    url("/fonts/UNI NORTH/UniNorth-UniversityItalic.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GYMER";
+  src:
+    url("/fonts/GYMER/GYMER.otf") format("opentype"),
+    url("/fonts/GYMER/GYMER.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "REDHAT";
+  src: url("/fonts/RedHatText-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fest";
+  src: url("/fonts/FEST/Fest235 fs.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BLACK BASS DEMO";
+  src: url("/fonts/BLACK BASS DEMO/Black Bass Demo.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DIRGA HAYU";
+  src: url("/fonts/DIRGA HAYU/dDirgahayu.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RESTAURANT MENU BOOK";
+  src: url("/fonts/RESTAURANT MENU BOOK/RestaurantMenuBook.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HATTEN";
+  src: url("/fonts/HATTEN/HATTEN.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NCAA Oregon Ducks Autzen";
+  src: url("/fonts/NCAA OREGON DUCKS AUTZEN/NCAA Oregon Ducks Autzen.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Qatar Personal Use";
+  src: url("/fonts/QATAR PERSONAL USE/QatarPersonalUse.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Real Madrid";
+  src: url("/fonts/REAL MADRID/RealMadrid.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Quantum Rangers Personal";
+  src: url("/fonts/QUANTUM RANGERS PERSONAL/QuantumRangersPersonal.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Boston Caps";
+  src: url("/fonts/BOSTON CAPS/BOSTON CAPS.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Chinese Rocks";
+  src: url("/fonts/CHINESE ROCKS/chinese rocks.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Madura United FC";
+  src: url("/fonts/MADURA UNITED FC/Madura United FC.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Overgrid";
+  src: url("/fonts/OVERGRID/OVERGRID.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Slovakia";
+  src: url("/fonts/SLOVAKIA/Slovakia.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .anton {
   font-family: "Anton", sans-serif;
 }

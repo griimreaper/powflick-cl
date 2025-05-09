@@ -29,7 +29,7 @@ import { showErrorAlert } from "utils/alerts";
 import "react-phone-input-2/lib/material.css";
 
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ toggleDialog }: any) {
   const router = useRouter();
   const { cart, total, coupon, note } = useShoppingCartStore();
   const [sameAsShipping, setSameAsShipping] = useState(false);
@@ -41,7 +41,6 @@ export default function CheckoutForm() {
     null
   );
   const [loading, setLoading] = useFlag();
-  const { toggleDialog, dialogOpen } = useHeader();
 
   const handleDirectionChange = (event: any) => {
     const selectedIndex = event.target.value;
@@ -116,11 +115,6 @@ export default function CheckoutForm() {
         height: "100vh",
       }}
     >
-      <DialogDrawer
-        dialogOpen={dialogOpen}
-        toggleDialog={toggleDialog}
-        redirectUrl="/checkout"
-      ></DialogDrawer>
       <Card>
         <CardContent>
           {/* Selector de direcciones */}

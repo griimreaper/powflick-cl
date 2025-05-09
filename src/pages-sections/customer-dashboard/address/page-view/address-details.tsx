@@ -9,6 +9,7 @@ import DashboardHeader from "../../dashboard-header";
 // CUSTOM DATA MODEL
 import { Direction } from "models/types";
 import { useDashboardStore } from "store/dashboard";
+import DirectionForm from "pages-sections/checkout/checkout-form/direction-form";
 
 // =============================================================
 type Props = { id: string };
@@ -33,7 +34,7 @@ export default function AddressDetailsPageView({ id }: Props) {
 
       {/* FORM AREA */}
       <Card sx={{ p: 3, pt: 4 }}>
-        <AddressForm direction={direction} token={token as string} />
+        <DirectionForm address={direction} toggleForm={() => {}} />
       </Card>
     </Fragment>
   );
