@@ -33,7 +33,7 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
       return (
         <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
           <AccordionSummary expandIcon={<ExpandMore color="primary" />} sx={ACCORDION_SUMMARY_STYLES}>
-            <Link href={"/products?category=" + item.title}>
+            <Link href={item.title !== 'Collections' ? "/products?category=" + item.title : ''}>
               <H6>{item.title}</H6>
             </Link>
           </AccordionSummary>
