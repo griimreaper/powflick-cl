@@ -7,7 +7,8 @@ export const createOrder = async (
   Currency: string,
   CurrencyValue: number,
   couponId?: string,
-  note?: string // Añadir el campo note
+  note?: string, // Añadir el campo note
+  gateway: string = "STRIPE" // Nuevo parámetro con valor por defecto
 ) => {
   try {
     const creatingOrder = await mainApi.post(
@@ -24,6 +25,9 @@ export const createOrder = async (
           Authorization: `Bearer ${token}`,
           Currency,
           CurrencyValue,
+        },
+        params: {
+          gateway, // Agrega la pasarela de pago a la query string
         },
       }
     );

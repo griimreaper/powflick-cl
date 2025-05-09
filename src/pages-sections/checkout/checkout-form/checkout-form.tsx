@@ -13,6 +13,8 @@ import {
   Card,
   CardContent,
   Tooltip,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { useDashboardStore } from "store/dashboard";
@@ -28,7 +30,25 @@ import { goToStripe } from "../../../../fpixel";
 import { showErrorAlert } from "utils/alerts";
 import "react-phone-input-2/lib/material.css";
 
+const gatewayOptions = [
+  // {
+  //   value: "STRIPE",
+  //   label: "Stripe",
+  //   img: "/assets/images/gateways/stripe-logo.png",
+  // },
+  {
+    value: "PAYPAL",
+    label: "PayPal",
+    img: "/assets/images/gateways/paypal-logo.png",
+  },
+  {
+    value: "LLP",
+    label: "LLP",
+    img: "/assets/images/gateways/llp-logo.png",
+  },
+];
 
+// Cambiar el valor inicial para que coincida con la primera opción disponible
 export default function CheckoutForm({ toggleDialog }: any) {
   const router = useRouter();
   const { cart, total, coupon, note } = useShoppingCartStore();
@@ -41,6 +61,7 @@ export default function CheckoutForm({ toggleDialog }: any) {
     null
   );
   const [loading, setLoading] = useFlag();
+  const [paymentGateway, setPaymentGateway] = useState<string>(gatewayOptions[0].value); // <-- aquí el cambio
 
   const handleDirectionChange = (event: any) => {
     const selectedIndex = event.target.value;
@@ -59,6 +80,7 @@ export default function CheckoutForm({ toggleDialog }: any) {
     const savedData = localStorage.getItem("pendingAddress");
     if (savedData) {
       setShowForm(true);
+      localStorage.removeItem("pendingAddress"); // <-- Elimina la bandera después de usarla
     }
   }, []);
 
@@ -80,7 +102,8 @@ export default function CheckoutForm({ toggleDialog }: any) {
           "USD",
           1,
           coupon?.id,
-          note
+          note,
+          paymentGateway // Pasar la pasarela seleccionada
         );
 
         if (typeof response === "string") {
@@ -155,6 +178,78 @@ export default function CheckoutForm({ toggleDialog }: any) {
               Insert a New Address
             </Button>
           </Box>
+
+          {/* Selector de pasarela de pago */}
+          <FormControl fullWidth sx={{ mt: 2 }}>
+            <InputLabel id="gateway-select-label">Payment Gateway</InputLabel>
+            <Select
+              labelId="gateway-select-label"
+              value={paymentGateway}
+              label="Payment Gateway"
+              onChange={(e) => setPaymentGateway(e.target.value)}
+              sx={{
+                height: 56, // altura estándar de un input MUI
+                minHeight: 56,
+                maxHeight: 56,
+                '.MuiSelect-select': {
+                  display: 'flex',
+                  alignItems: 'center',
+                  py: 0,
+                },
+              }}
+              renderValue={(selected) => {
+                const option = gatewayOptions.find(opt => opt.value === selected);
+                // Si no hay opción válida, muestra un valor por defecto
+                if (!option) {
+                  return (
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1, minHeight: 40 }}>
+                      <span style={{ fontSize: 18 }}>Select Gateway</span>
+                    </Box>
+                  );
+                }
+                return (
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, minHeight: 40 }}>
+                    <Image
+                      src={option.img}
+                      alt={option.label}
+                      width={48}
+                      height={48}
+                      style={{
+                        borderRadius: 4,
+                        background: "#fff",
+                        objectFit: "contain",
+                        width: 48,
+                        height: 48,
+                      }}
+                    />
+                    <span style={{ fontSize: 18 }}>{option.label}</span>
+                  </Box>
+                );
+              }}
+            >
+              {gatewayOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  <ListItemIcon sx={{ minWidth: 56 }}>
+                    <Image
+                      src={option.img}
+                      alt={option.label}
+                      width={48}
+                      height={48}
+                      style={{
+                        borderRadius: 4,
+                        background: "#fff",
+                        objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
+                        marginRight: 8,
+                      }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={option.label} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
           {/* Formulario para nueva dirección */}
           {showForm && (
