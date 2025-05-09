@@ -66,7 +66,7 @@ export default function TopBarSlider() {
                 justifyContent: "center",
                 overflow: "hidden",
                 position: "relative",
-                zIndex: 1500,
+                zIndex: 2,
             }}
         >
             <Slide direction={show ? "right" : "left"} in={show} timeout={300} mountOnEnter unmountOnExit>
