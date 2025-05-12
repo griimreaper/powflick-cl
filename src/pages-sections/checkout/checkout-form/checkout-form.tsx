@@ -27,6 +27,8 @@ import useHeader from "components/header/hooks/use-header";
 import { goToStripe } from "../../../../fpixel";
 import { showErrorAlert } from "utils/alerts";
 import "react-phone-input-2/lib/material.css";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getUserAddress } from "services/DashboardUser/profile";
 
 
 export default function CheckoutForm({ toggleDialog }: any) {
@@ -35,8 +37,15 @@ export default function CheckoutForm({ toggleDialog }: any) {
   const [sameAsShipping, setSameAsShipping] = useState(false);
   const [showForm, setShowForm] = useState<boolean>(false);
   const { profile } = useDashboardStore();
-  const { directions } = profile.genericResponseUser;
   const { token } = profile;
+
+  const { data: directions, isLoading, error } = useQuery<Direction[]>({
+    queryKey: ["user-address"],
+    queryFn: () => getUserAddress(token || ""),
+    refetchOnMount: true,
+    staleTime: 0,
+  });
+
   const [selectedDirection, setSelectedDirection] = useState<Direction | null>(
     null
   );
@@ -48,7 +57,7 @@ export default function CheckoutForm({ toggleDialog }: any) {
       setSelectedDirection(null);
     } else {
       setSelectedDirection(
-        directions.find((dir) => dir.id === selectedIndex) || null
+        directions?.find((dir) => dir.id === selectedIndex) || null
       );
     }
   };
@@ -138,7 +147,7 @@ export default function CheckoutForm({ toggleDialog }: any) {
                 <MenuItem value="">
                   <em>Select Address</em>
                 </MenuItem>
-                {directions.map(({ id, country, city, district }) => (
+                {directions?.map(({ id, country, city, district }) => (
                   <MenuItem key={id} value={id}>
                     {`${country}, ${city}, ${district}`}
                   </MenuItem>

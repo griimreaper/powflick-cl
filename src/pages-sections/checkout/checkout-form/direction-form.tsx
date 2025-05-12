@@ -9,15 +9,19 @@ import useLoading from "hooks/useLoading";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
 import { Country, City } from "country-state-city";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function DirectionForm({
     toggleForm,
     address,
     toggleDialog,
+    fromDashboard = false
 }: {
     toggleForm: () => void;
     toggleDialog?: () => void;
     address: Direction | null;
+    fromDashboard?: boolean;
 }) {
     const {
         register,
@@ -29,9 +33,10 @@ export default function DirectionForm({
         setValue,
     } = useForm();
     const [loading, startLoading, stopLoading] = useLoading();
-    const { profile, addOrUpdateUserDirection, setProfileUser } = useDashboardStore();
+    const { profile } = useDashboardStore();
     const { token } = profile;
-
+    const router = useRouter();
+    const queryClient = useQueryClient();
     // Simplificado: solo se usa el valor seleccionado
     const selectedCountry = watch("country");
     const countryInput = watch("countryInput") || "";
@@ -51,7 +56,6 @@ export default function DirectionForm({
         if (token && address) {
             try {
                 const response = await deleteDirection(token, address.id);
-                setProfileUser({ directions: response.directions });
                 showSuccessAlert("Success!", response.message);
             } catch (error) {
                 showErrorAlert("Error!", `Error deleting direction: ${error}`);
@@ -69,7 +73,6 @@ export default function DirectionForm({
                 showSuccessAlert("Success!", response.message);
                 toggleForm();
                 reset();
-                addOrUpdateUserDirection(response.direction);
             }
         }
     };
@@ -80,7 +83,6 @@ export default function DirectionForm({
                 startLoading();
                 const response = await createDirection(token, data);
                 showSuccessAlert("Success!", "Address created correctly");
-                addOrUpdateUserDirection(response.direction);
                 stopLoading();
                 toggleForm();
                 localStorage.removeItem("pendingAddress");
@@ -100,6 +102,10 @@ export default function DirectionForm({
             await fetchUpdateDirection(token, data);
         } else {
             await fetchCreateDirection(token, data);
+        }
+        await queryClient.invalidateQueries({ queryKey: ["user-address"] });
+        if (fromDashboard) {
+            router.push('/dashboard/address')
         }
     });
 
