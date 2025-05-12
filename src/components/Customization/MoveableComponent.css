@@ -1,0 +1,24 @@
+/* .moveable-control.moveable-direction {
+    background-color: #CA0B0B !important;
+    border-color: transparent !important;
+} */
+
+/* .moveable-control.moveable-rotation-control {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    width: 25px !important;
+    height: 25px !important;
+    left: -4.6px !important;
+    top: -3px !important;
+} */
+
+/* .moveable-line.moveable-direction {
+    border: 1px dashed #CA0B0B !important;
+    background-color: transparent !important;
+} */
+
+.moveable-line.moveable-rotation-line {
+    background-color: transparent !important;
+    top: 3px !important;
+    height: 30px !important;
+}
