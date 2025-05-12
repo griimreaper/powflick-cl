@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
 import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
-import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
+import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable"; import "./MoveableComponent.css";
 import "./MoveableComponent.css";
 import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
 import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, OpenInFull, RedoOutlined } from "@mui/icons-material";
+
 
 interface ManipulableContainerProps {
   parentRef: RefObject<HTMLDivElement>;
@@ -49,19 +50,22 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   const [rotation, setRotation] = useState(each.rotate); // Usar el valor inicial de rotación
   const [isDragging, setIsDragging] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
+  const [inputHeight, setInputHeight] = useState<number>(0);
   const [isSelected, setIsSelected] = useState(selection.index === index && selection.type === each.type); // Estado para controlar la visibilidad de Moveable
+  const [scale, setScale] = useState(0); // Estado para controlar la visibilidad de Moveable
   const containerRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLInputElement | null>(null);
   const BoxRef = useRef<HTMLDivElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
   const [imageHeight, setImageHeight] = useState(0);
+
   // Calcular el ancho del input basado en el texto
   useEffect(() => {
     if (hiddenDivRef.current) {
       hiddenDivRef.current.innerText = each.text as string;
       hiddenDivRef.current.style.fontFamily = each.font as string;
       hiddenDivRef.current.style.fontSize = `${each.size}px`;
-      setInputWidth(hiddenDivRef.current.offsetWidth);
+      setInputWidth(hiddenDivRef.current.offsetWidth + 10);
     }
   }, [each.text, each.font, each.size]);
 
@@ -105,6 +109,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
 
     return () => observer.disconnect(); // Limpiar observer al desmontar
   }, []);
+
 
   // Manejar clics fuera del componente
   useEffect(() => {
@@ -159,6 +164,8 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     console.log('Pinch event:', { newRotate, newSize });
   };
 
+
+
   return (
     <Box
       ref={containerRef}
@@ -189,14 +196,15 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             useMutationObserver
             useResizeObserver
             resizable
+            renderDirections={["sw", "nw", "ne", "se"]}
             rotatable
             pinchable
-            renderDirections={["sw", "nw", "ne", "se"]}
             origin={false}
             checkInput={true}
             viewContainer={parentRef.current}
             dragContainer={parentRef.current}
             rootContainer={parentRef.current}
+
             keepRatio={true}
             onResize={(e) => {
               handleResize(e);
@@ -208,14 +216,22 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             onPinch={(e: OnPinch) => handlePinch(e)}
           />
           {each.size ?
-            (<Box ref={BoxRef} width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`} height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`} position={"absolute"} >
+            (<Box ref={BoxRef}
+              width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`}
+              height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`}
+              position={"absolute"}
+              sx={{
+                transform: "translate(-50%, -50%)",
+              }}
+
+            >
               <Box
                 display={"flex"}
                 position={"absolute"}
                 top={"-50px"}
                 justifyContent={"space-between"}
                 width={"100%"}>
-                <Box
+                {/* <Box
                   onClick={() => {
                     duplicateElement(each.type as string, index);
                   }}
@@ -229,21 +245,25 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
                     alignItems: "center",
                     justifyContent: "center",
                     fontWeight: "bold",
-                    backgroundColor: "primary.main",
+                    border: "solid white 2px",
+                    backgroundColor: "#44aaff",
                     borderRadius: "100%",
                   }}
-                >x2</Box>
-                <RedoOutlined
+                ></Box> */}
+                <Box></Box>
+                <Box></Box>
+                {/* <RedoOutlined
                   sx={{
                     position: "relative",
                     color: "white",
                     cursor: "pointer",
                     width: "25px",
                     height: "25px",
-                    backgroundColor: "primary.main",
+                    border: "solid white 2px",
+                    backgroundColor: "#44aaff",
                     borderRadius: "100%",
                   }}
-                />
+                /> */}
                 <DeleteForever
                   onClick={() => {
                     deleteElement(each.type as string, index);
@@ -255,7 +275,8 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
                     cursor: "pointer",
                     width: "25px",
                     height: "25px",
-                    backgroundColor: "primary.main",
+                    border: "solid white 2px",
+                    backgroundColor: "#44aaff",
                     borderRadius: "100%",
                   }}
                 />
@@ -265,20 +286,23 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           }
         </>
       )}
-      {each.type !== "Logo" && handleChange !== undefined ? (
+      {each.type !== "Logo" && handleChange !== undefined && (
         <input
+          className="focus:outline-none focus:ring-2 focus:ring-transparent text-center p-0"
           ref={elementRef as LegacyRef<HTMLInputElement>}
           style={{
             background: "transparent",
-            border: "none",
+            border: 'transparent',
             fontFamily: each.font,
             userSelect: "none",
-            outline: "none",
             color: each.color,
+            padding: 2,
             cursor:
               isDragging && selection.index === index ? "grabbing" : "grab",
             fontSize: `${each.size}px`,
-            width: `${inputWidth + 1}px`,
+            width: `${inputWidth}px`,
+            height: `${inputHeight ? inputHeight + 'px' : "auto"}`,
+            textIndent: '2px', // o el valor que desees
             touchAction: "none",
           }}
           value={each.text}
@@ -297,7 +321,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             setSelection({ type: each.type, index })
           }}
         />
-      ) : <></>}
+      )}
       {each.type === "Logo" && each.logoUrl && (
         <div ref={elementRef} style={{ height: "auto" }}>
           <img

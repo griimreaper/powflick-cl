@@ -10,6 +10,7 @@ const nextConfig = {
       "help.pitpay.com",
       "emmanuela.insyst.info",
       "sbvajd9r07chtxp5.public.blob.vercel-storage.com",
+      "a4dogv6ty8aeyf4s.public.blob.vercel-storage.com",
     ],
   },
 };
