@@ -68,6 +68,13 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
             {/* CONTACT INFORMATION */}
             <Heading style={{ color: "#A30E0E" }}>Contact Us</Heading>
 
+
+            <Paragraph py={0.6} color="grey.500">
+              Registered Office (Legal Entity):
+              CL 28 #113 57 AP 603 B, Cali – Valle, Colombia
+              NIT: 1231234
+            </Paragraph>
+
             <Paragraph py={0.6} color="grey.500">
               RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK
             </Paragraph>
