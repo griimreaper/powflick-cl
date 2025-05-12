@@ -32,7 +32,7 @@ export default function ConversationCard({ message }: Props) {
       />
 
       <div>
-        <H5 fontWeight="600" mt={0} mb={0}>
+        <H5 fontWeight="600" mt={0} color="black" mb={0}>
           {name}
         </H5>
 

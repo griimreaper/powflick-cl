@@ -13,7 +13,7 @@ mainApi.interceptors.response.use(
   error => {
     if (error.response?.status === 401) {
       localStorage.removeItem("dashboard-storage");
-      signOut()
+      signOut({ redirect: true, callbackUrl: '/' })
     }
 
     return Promise.reject(error);
