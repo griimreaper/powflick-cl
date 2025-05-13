@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import { addConversation } from "services/messages/index";
 import { useDashboardStore } from "store/dashboard";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
@@ -11,6 +12,7 @@ export default function MessageForm({ token, messageId, setMess, from }: { token
   const { setMessages } = useDashboardStore();
   const initialValues = { message: "" };
   const queryClient = useQueryClient()
+  const router = useRouter();
 
   const validationSchema = yup.object().shape({
     message: yup.string().required("Message is required")
@@ -30,6 +32,7 @@ export default function MessageForm({ token, messageId, setMess, from }: { token
         resetForm();
         showSuccessAlert('Success', 'Your message has been sended succesfully');
         await queryClient.invalidateQueries({ queryKey: ["messages"] });
+        router.refresh()
       } catch (error) {
         showErrorAlert('Error', 'An error ocurred')
       }

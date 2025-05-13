@@ -125,7 +125,7 @@ const ContactUs = () => {
                       "& .MuiOutlinedInput-input": {
                       },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
+                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
@@ -149,7 +149,7 @@ const ContactUs = () => {
                       backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
+                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
@@ -172,7 +172,7 @@ const ContactUs = () => {
                       backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
+                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
@@ -201,7 +201,7 @@ const ContactUs = () => {
                         padding: "10px 14px",
                       },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
+                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
@@ -224,7 +224,7 @@ const ContactUs = () => {
                           borderRadius: 2,
                         },
                         "& .MuiFormHelperText-root": {
-                          backgroundColor: "#ffebee",
+                          backgroundColor: "white",
                           color: "#d32f2f",
                           padding: "2px 8px",
                           borderRadius: "4px",

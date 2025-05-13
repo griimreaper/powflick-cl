@@ -45,6 +45,7 @@ export default function ConversationCard({ message }: Props) {
           bgcolor="primary.main"
           p={1}
           mt={2}
+          color={'white'}
           lineHeight={1.7}
           textAlign="justify"
         >
