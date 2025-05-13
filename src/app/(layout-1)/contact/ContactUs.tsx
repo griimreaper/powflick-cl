@@ -120,12 +120,14 @@ const ContactUs = () => {
                     error={!!errors.name}
                     helperText={errors.name?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
-                      "& .MuiOutlinedInput-input": {
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "white", // solo el input, no tapa el label
                       },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
@@ -146,10 +148,14 @@ const ContactUs = () => {
                     error={!!errors.email}
                     helperText={errors.email?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "white", // solo el input, no tapa el label
+                      },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
@@ -169,10 +175,14 @@ const ContactUs = () => {
                     error={!!errors.title}
                     helperText={errors.title?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "white", // solo el input, no tapa el label
+                      },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
@@ -195,13 +205,14 @@ const ContactUs = () => {
                     error={!!errors.message}
                     helperText={errors.message?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
-                      "& .MuiOutlinedInput-input": {
-                        padding: "10px 14px",
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "white", // solo el input, no tapa el label
                       },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "white",
                         color: "#d32f2f",
                         padding: "2px 8px",
                         borderRadius: "4px",
