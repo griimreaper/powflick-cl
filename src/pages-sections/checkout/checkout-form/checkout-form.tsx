@@ -146,7 +146,7 @@ export default function CheckoutForm({ toggleDialog, selectedDirection, setSelec
               <strong>City:</strong> {selectedDirection.city}
             </Typography>
             <Typography>
-              <strong>Location:</strong> {selectedDirection.district}
+              <strong>State:</strong> {selectedDirection.district}
             </Typography>
             {selectedDirection.address && (
               <Typography>

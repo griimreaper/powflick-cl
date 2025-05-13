@@ -23,6 +23,9 @@ import { createOrder } from "services/Order";
 import { goToStripe } from "../../../../fpixel";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Tooltip from '@mui/material/Tooltip';
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const gatewayOptions = [
   {
@@ -149,44 +152,78 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
           Apply Coupon
         </Button>
         <Divider sx={{ my: 4 }} />
-        {gatewayOptions.map((option) => (
-          <Button
-            key={option.value}
-            variant={selectedGateway === option.value ? "contained" : "outlined"}
-            color={selectedGateway === option.value ? "primary" : "inherit"}
-            onClick={() => setSelectedGateway(option.value)}
-            fullWidth
-            sx={{
-              textTransform: "",
-              minWidth: 120,
-              fontWeight: 600,
-              background: selectedGateway === option.value ? 'primary' : '#fff',
-              color: selectedGateway === option.value ? 'primary' : 'primary.main',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1.5,
-            }}
-          >
-            {option.value === "PAYPAL" ? (
-              <span style={{ display: "flex", alignItems: "center", fontWeight: 700, fontSize: 18, fontStyle: "italic" }}>
-                <span style={{ color: "#003087" }}>Pay</span>
-                <span style={{ color: "#0070ba" }}>Pal</span>
-              </span>
-            ) : option.value === "LLP" ? (
-              <span style={{ display: "flex", alignItems: "center", fontWeight: 700, fontSize: 16 }}>
-                Credit Card
-                <span style={{ display: "flex", alignItems: "center", marginLeft: 8, gap: 4 }}>
-                  <Image src="/assets/images/payment-methods/visa.png" alt="Visa" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
-                  <Image src="/assets/images/payment-methods/master-card.png" alt="MasterCard" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
-                  <Image src="/assets/images/payment-methods/amex.png" alt="Amex" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
-                  <Image src="/assets/images/payment-methods/cirrus.png" alt="Discover" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
-                </span>
-              </span>
-            ) : (
-              option.label
-            )}
-          </Button>
-        ))}
+        {/* Métodos de pago como radio group */}
+        <RadioGroup
+          value={selectedGateway}
+          onChange={(_, value) => setSelectedGateway(value)}
+          sx={{
+            mb: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center", // Centra los radios horizontalmente
+            width: "100%",
+          }}
+        >
+          {gatewayOptions.map((option) => (
+            <FormControlLabel
+              key={option.value}
+              value={option.value}
+              control={<Radio color="primary" />}
+              sx={{
+                mb: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                marginLeft: "auto",
+                marginRight: "auto",
+                '.MuiFormControlLabel-label': { width: '100%' },
+                border: '1px solid #d32f2f',
+                borderRadius: 2,
+              }}
+              label={
+                option.value === "PAYPAL" ? (
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      fontWeight: 700,
+                      fontSize: 18,
+                      fontStyle: "italic",
+                      minHeight: 40,
+                    }}
+                  >
+                    <span style={{ color: "#003087" }}>Pay</span>
+                    <span style={{ color: "#0070ba" }}>Pal</span>
+                  </span>
+                ) : option.value === "LLP" ? (
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      minHeight: 40,
+                    }}
+                  >
+                    Credit Card
+                    <span style={{ display: "flex", alignItems: "center", marginLeft: 8, gap: 4 }}>
+                      <Image src="/assets/images/payment-methods/visa.png" alt="Visa" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
+                      <Image src="/assets/images/payment-methods/master-card.png" alt="MasterCard" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
+                      <Image src="/assets/images/payment-methods/amex.png" alt="Amex" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
+                      <Image src="/assets/images/payment-methods/cirrus.png" alt="Discover" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
+                    </span>
+                  </span>
+                ) : (
+                  option.label
+                )
+              }
+            />
+          ))}
+        </RadioGroup>
         <Tooltip title={
           !selectedDirection
             ? "Select a shipping address"

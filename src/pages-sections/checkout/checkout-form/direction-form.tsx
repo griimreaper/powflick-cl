@@ -8,7 +8,7 @@ import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import useLoading from "hooks/useLoading";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
-import { Country, City } from "country-state-city";
+import { Country } from "country-state-city";
 
 export default function DirectionForm({
     toggleForm,
@@ -35,7 +35,6 @@ export default function DirectionForm({
     // Simplificado: solo se usa el valor seleccionado
     const selectedCountry = watch("country");
     const countryInput = watch("countryInput") || "";
-    const cityInput = watch("cityInput") || "";
 
     // Restaurar datos guardados o cargar dirección existente
     useEffect(() => {
@@ -103,19 +102,11 @@ export default function DirectionForm({
         }
     });
 
-    // Opciones de países y ciudades filtradas en cada render
+    // Opciones de países filtradas en cada render
     const allCountries = useMemo(() => Country.getAllCountries(), []);
     const filteredCountries = countryInput.length > 0
         ? allCountries.filter(c => c.name.toLowerCase().includes(countryInput.toLowerCase()))
         : allCountries;
-    const allCities = selectedCountry ? City.getCitiesOfCountry(selectedCountry) || [] : [];
-    const filteredCities = cityInput.length > 1
-        ? allCities.filter(city => city.name.toLowerCase().includes(cityInput.toLowerCase()))
-        : [];
-
-
-    const city = City.getCitiesOfCountry(address?.country || '')?.find(c => c.name === address?.city);
-    console.log("allCitiess", city);
 
     return (
         <Box sx={{ mt: 1, width: "100%" }}>
@@ -135,8 +126,6 @@ export default function DirectionForm({
                                     value={filteredCountries.find(opt => opt.isoCode === field.value) || null}
                                     onChange={(_, value) => {
                                         field.onChange(value ? value.isoCode : "");
-                                        setValue("city", "");
-                                        setValue("cityInput", "");
                                     }}
                                     renderInput={(params) => (
                                         <TextField
@@ -151,46 +140,26 @@ export default function DirectionForm({
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Controller
-                            name="city"
-                            control={control}
-                            rules={{ required: "City is required" }}
-                            render={({ field }) => (
-                                <Autocomplete
-                                    options={filteredCities}
-                                    getOptionLabel={(option) => option.name}
-                                    inputValue={cityInput}
-                                    onInputChange={(_, value, reason) => {
-                                        setValue("cityInput", value);
-                                        // Si el usuario está escribiendo, limpia el valor seleccionado
-                                        if (reason === "input") {
-                                            setValue("city", "");
-                                        }
-                                    }}
-                                    value={address ?
-                                        city
-                                        : filteredCities.find(opt => opt.name === field.value) || null}
-                                    onChange={(_, value) => field.onChange(value ? value.name : "")}
-                                    disabled={!selectedCountry}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="City"
-                                            error={!!errors.city}
-                                            helperText={errors.city?.message?.toString()}
-                                        />
-                                    )}
-                                />
-                            )}
+                        <TextField
+                            label="City"
+                            fullWidth
+                            variant="outlined"
+                            {...register("city", {
+                                required: "City is required",
+                                minLength: { value: 2, message: "Min 2 characters" },
+                                maxLength: { value: 50, message: "Max 50 characters" },
+                            })}
+                            error={!!errors.city}
+                            helperText={errors.city?.message?.toString()}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            label="Location"
+                            label="State"
                             fullWidth
                             variant="outlined"
                             {...register("district", {
-                                required: "Location is required",
+                                required: "State is required",
                                 minLength: { value: 2, message: "Min 2 characters" },
                                 maxLength: { value: 50, message: "Max 50 characters" },
                             })}
