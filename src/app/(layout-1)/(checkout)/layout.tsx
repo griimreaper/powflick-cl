@@ -2,5 +2,8 @@ import { PropsWithChildren } from "react";
 import PageStepper from "./page-stepper";
 
 export default function Layout({ children }: PropsWithChildren) {
-  return <PageStepper>{children}</PageStepper>;
+  return <div style={{ backgroundColor: "white" }}>
+    <PageStepper>{children}</PageStepper>;
+  </div>
+
 }
