@@ -80,7 +80,7 @@ export default function CheckoutForm({ toggleDialog, selectedDirection, setSelec
       }}
     >
 
-      <Card>
+      <Card sx={{ boxShadow: '0 8px 32px 0 rgba(60,72,88,0.25)' }}>
         <CardContent>
           {/* Selector de direcciones */}
           <Box
@@ -134,7 +134,7 @@ export default function CheckoutForm({ toggleDialog, selectedDirection, setSelec
 
       {/* Información de la dirección seleccionada */}
       {selectedDirection && !showForm && (
-        <Card>
+        <Card sx={{ boxShadow: '0 8px 32px 0 rgba(60,72,88,0.25)' }}>
           <CardContent>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Selected Direction:
