@@ -126,9 +126,13 @@ const ContactUs = () => {
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "white", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "white", // solo el input, no tapa el label
+
+                        },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "#d32f2f",
+                        color: "white",
                         padding: "2px 8px",
                         borderRadius: "4px",
                         margin: 0,
@@ -154,9 +158,13 @@ const ContactUs = () => {
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "white", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "white", // solo el input, no tapa el label
+
+                        },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "#d32f2f",
+                        color: "white",
                         padding: "2px 8px",
                         borderRadius: "4px",
                         margin: 0,
@@ -181,9 +189,13 @@ const ContactUs = () => {
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "white", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "white", // solo el input, no tapa el label
+
+                        },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "#d32f2f",
+                        color: "white",
                         padding: "2px 8px",
                         borderRadius: "4px",
                         margin: 0,
@@ -211,9 +223,13 @@ const ContactUs = () => {
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "white", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "white", // solo el input, no tapa el label
+
+                        },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "#d32f2f",
+                        color: "white",
                         padding: "2px 8px",
                         borderRadius: "4px",
                         margin: 0,
