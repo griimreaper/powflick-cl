@@ -66,14 +66,16 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
           justifyContent: isMobile ? "flex-end" : "center",
           alignItems: isMobile ? "center" : "flex-start",
           textAlign: isMobile ? "end" : "right",
-          width: "100%",
+          width: { xs: "100%", md: "auto" },
           height: "100%",
           position: "absolute",
           zIndex: 2,
           mb: isMobile ? 10 : 0,
           textWrap: "nowrap",
           left: isMobile ? undefined : "5%",
+          maxWidth: "100vw",
           padding: "0 4rem",
+
         }}
       >
         <H3
@@ -91,7 +93,7 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
         <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1} sx={{ color: "primary.main", fontFamily: "GYMER", }}>
           GET IT FOR FREE!
         </H1>
-        <H1 fontSize={"clamp(8px, 2.2vw, 30px)"} lineHeight={1} mb={1} sx={{ fontFamily: "sans-serif", fontStyle: "oblique", fontWeight: 100 }}>
+        <H1 fontSize={"clamp(8px, 2.2vw, 30px)"} lineHeight={1} mb={{ xs: 1, md: 5 }} sx={{ fontFamily: "sans-serif", fontStyle: "oblique", fontWeight: 100, }}>
           See Your Uniform Come to Life!
         </H1>
 
@@ -100,7 +102,7 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
           size="large"
           href="/your-design"
           sx={{
-            width: "clamp(140px, 17vw, 500px)",
+            width: "clamp(140px, 22vw, 500px)",
             borderRadius: 1,
             whiteSpace: "nowrap",
             fontWeight: 400,
@@ -108,7 +110,7 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
             fontStyle: "italic",
             color: "white",
             background: "#5C0505",
-            // "&:hover": { background: "rgb(200,200,200)" },
+            "&:hover": { background: "#E3364E" },
           }}
         >
           Claim Your Free Design
