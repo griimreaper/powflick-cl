@@ -40,15 +40,17 @@ export default function Stepper({ selectedStep = 1, stepperList, onChange }: Pro
             label={`${ind + 1}. ${step.title}`}
             onClick={handleStepClick(step, ind)}
             sx={{
-              backgroundColor: ind <= selected ? "primary.main" : "primary.light",
-              color: ind <= selected ? "primary.contrastText" : "primary.main",
+              backgroundColor: ind <= selected ? "primary.main" : "#fff",
+              color: ind <= selected ? "primary.contrastText" : "#CA0B0B",
+              border: ind <= selected ? "none" : "1px solid #CA0B0B",
               p: "0.5rem 1rem",
               fontSize: "14px",
               fontWeight: "600",
               my: "4px",
               "&:hover:not(:disabled)": {
-                backgroundColor: "primary.main",
-                color: "primary.contrastText"
+                backgroundColor: ind <= selected ? "primary.main" : "#fff",
+                color: ind <= selected ? "primary.contrastText" : "#CA0B0B",
+                border: ind <= selected ? "none" : "2px solid #CA0B0B",
               }
             }}
           />
