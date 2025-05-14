@@ -129,10 +129,10 @@ export default function ProductIntro({ product }: Props) {
         customizations?.length === 1 &&
         customizations?.some(
           (e) =>
-            !e.backSide.texts[0].text &&
-            !e.backSide.numbers[0].number &&
-            !e.frontSide.texts[0].text &&
-            !e.frontSide.numbers[0].number
+            !e.backSide.texts[0]?.text &&
+            !e.backSide.numbers[0]?.number &&
+            !e.frontSide.texts[0]?.text &&
+            !e.frontSide.numbers[0]?.number
         )
       ) {
         setTimeout(() => {

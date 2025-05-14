@@ -3,7 +3,8 @@ import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "r
 import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable"; import "./MoveableComponent.css";
 import "./MoveableComponent.css";
 import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
-import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, OpenInFull, RedoOutlined } from "@mui/icons-material";
+import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, Height, OpenInFull, RedoOutlined } from "@mui/icons-material";
+import { flushSync } from "react-dom";
 
 
 interface ManipulableContainerProps {
@@ -47,17 +48,16 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   duplicateElement,
   sizeChange,
 }) => {
-  const [rotation, setRotation] = useState(each.rotate); // Usar el valor inicial de rotación
-  const [isDragging, setIsDragging] = useState(false);
-  const [inputWidth, setInputWidth] = useState<number>(0);
-  const [inputHeight, setInputHeight] = useState<number>(0);
-  const [isSelected, setIsSelected] = useState(selection.index === index && selection.type === each.type); // Estado para controlar la visibilidad de Moveable
-  const [scale, setScale] = useState(0); // Estado para controlar la visibilidad de Moveable
+  const rotationRef = useRef(each.rotate);
+  const isDraggingRef = useRef(false);
+  const inputWidthRef = useRef<number>(0);
+  const inputHeigthRef = useRef<number>(0);
+  const isSelectedRef = useRef(selection.index === index && selection.type === each.type);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLInputElement | null>(null);
   const BoxRef = useRef<HTMLDivElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
-  const [imageHeight, setImageHeight] = useState(0);
+  const imageHeightRef = useRef(0);
 
   // Calcular el ancho del input basado en el texto
   useEffect(() => {
@@ -65,35 +65,24 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       hiddenDivRef.current.innerText = each.text as string;
       hiddenDivRef.current.style.fontFamily = each.font as string;
       hiddenDivRef.current.style.fontSize = `${each.size}px`;
-      setInputWidth(hiddenDivRef.current.offsetWidth + 10);
+      inputWidthRef.current = hiddenDivRef.current.offsetWidth + 20;
     }
   }, [each.text, each.font, each.size]);
 
   // Sincroniza el estado de rotación con el valor de `each.rotate`
   useEffect(() => {
-    setRotation(each.rotate); // Asegurarse de mantener la rotación actualizada
+    rotationRef.current = each.rotate; // Asegurarse de mantener la rotación actualizada
   }, [each.rotate]);
 
   // Aplicar rotación en el DOM
   useEffect(() => {
     if (BoxRef.current) {
-      BoxRef.current.style.transform = `rotate(${rotation}deg)`; // Aplicar la rotación al elemento DOM
+      BoxRef.current.style.transform = `rotate(${rotationRef.current}deg)`; // Aplicar la rotación al elemento DOM
     }
     if (elementRef.current) {
-      elementRef.current.style.transform = `rotate(${rotation}deg)`; // Aplicar la rotación al elemento DOM
+      elementRef.current.style.transform = `rotate(${rotationRef.current}deg)`; // Aplicar la rotación al elemento DOM
     }
-  }, [rotation, isSelected]); // Ejecuta cuando la rotación cambia
-
-  // Necesario para que el input se seleccione y muestre el editor para editar el elemento
-  useEffect(() => {
-    setIsSelected(
-      selection.index === index &&
-      selection.type === each.type
-    )
-  }, [selection]);
-
-  useEffect(() => {
-  }, [each.text])
+  }, [rotationRef.current, isSelectedRef.current]); // Ejecuta cuando la rotación cambia
 
   useEffect(() => {
     if (!elementRef.current) return;
@@ -101,7 +90,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     // Crear ResizeObserver para detectar cambios en el tamaño de la imagen
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        setImageHeight(entry.contentRect.height); // Actualiza la altura de la imagen
+        imageHeightRef.current = entry.contentRect.height; // Actualiza la altura de la imagen
       }
     });
 
@@ -118,7 +107,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
-        setIsSelected(false);
+        isSelectedRef.current = false;
       }
     };
 
@@ -135,17 +124,17 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       sizeChange(e.width, index);
     } else {
       if (each.text?.length! > 1) {
-        const newFontSize = Math.min(e.width, e.height);
+        const newFontSize = Math.min(e.width - 10, e.height - 5);
+        e.target.style.width = `${e.width}px`;
+        e.target.style.height = `${e.height}px`;
         sizeChange(newFontSize, index);
-      } else {
-        sizeChange(e.height, index);
       }
     }
   };
 
   const handleRotate = (e: any) => {
     const newRotation = e.rotate;
-    setRotation(newRotation);
+    rotationRef.current = newRotation;
     handleRotation(each.type as string, newRotation, index);
     if (e.target) {
       e.target.style.transform = `rotate(${newRotation}deg)`;
@@ -157,7 +146,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     const newRotate = e.currentTarget.rotation
     const newSize = e.currentTarget.scale
     // Actualizamos la escala y rotación
-    setRotation(newRotate);
+    rotationRef.current = newRotate;
     handleResize(newSize)
 
     // Puedes implementar la lógica de cambio en el estado local o persistir los datos.
@@ -169,14 +158,14 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   return (
     <Box
       ref={containerRef}
-      sx={{
+      style={{
         position: "absolute",
         zIndex: 0,
         left: each.position.x,
         top: each.position.y,
         pointerEvents: "auto", // Permitir eventos de clic
       }}
-    >
+      >
       <Box
         ref={hiddenDivRef}
         sx={{
@@ -184,13 +173,15 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           position: 'absolute',
           whiteSpace: 'pre',
           fontFamily: each.font,
+          fontSize: each.size,
           pointerEvents: "none", // Deshabilita los eventos en el fondo
         }}
       />
 
-      {isSelected && (
+      {isSelectedRef.current && (
         <>
           <Moveable
+            flushSync={flushSync}
             className="custom-moveable"
             target={elementRef.current}
             useMutationObserver
@@ -208,8 +199,12 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             keepRatio={true}
             onResize={(e) => {
               handleResize(e);
-              e.target.style.width = `${e.width}px`;
-              e.target.style.height = `${e.height}px`;
+            }}
+            onResizeEnd={({ target }) => {
+              const input = target as HTMLInputElement;
+
+              inputHeigthRef.current = input.offsetHeight;
+              inputWidthRef.current = input.offsetWidth;
             }}
             onRotate={handleRotate}
             onPinchStart={(e) => console.log('Pinch start event', e)}
@@ -217,8 +212,8 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           />
           {each.size ?
             (<Box ref={BoxRef}
-              width={each.type === 'Logo' ? `${each.size}px` : `${inputWidth}px`}
-              height={each.type === 'Logo' ? `${imageHeight}px` : `${each.size}px`}
+              width={each.type === 'Logo' ? `${each.size}px` : `${inputWidthRef.current}px`}
+              height={each.type === 'Logo' ? `${imageHeightRef.current}px` : `${each.size}px`}
               position={"absolute"}
               sx={{
                 transform: "translate(-50%, -50%)",
@@ -288,36 +283,45 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       )}
       {each.type !== "Logo" && handleChange !== undefined && (
         <input
-          className="focus:outline-none focus:ring-2 focus:ring-transparent text-center p-0"
           ref={elementRef as LegacyRef<HTMLInputElement>}
+
           style={{
             background: "transparent",
             border: 'transparent',
             fontFamily: each.font,
             userSelect: "none",
             color: each.color,
+            overflow: 'visible',
+            whiteSpace: "nowrap",
             padding: 2,
             cursor:
-              isDragging && selection.index === index ? "grabbing" : "grab",
+              isDraggingRef.current && selection.index === index ? "grabbing" : "grab",
             fontSize: `${each.size}px`,
-            width: `${inputWidth}px`,
-            height: `${inputHeight ? inputHeight + 'px' : "auto"}`,
-            textIndent: '2px', // o el valor que desees
+            width: `${inputWidthRef.current}px`,
+            height: `${hiddenDivRef.current?.offsetHeight}px`,
+            paddingTop: 10,
+            textIndent: '3px', // o el valor que desees
             touchAction: "none",
           }}
           value={each.text}
           onTouchStart={(e) => {
             onTouchStart(e, index)
-            setIsSelected(true);
-            setIsDragging(true);
+            e.preventDefault();
+            isSelectedRef.current = true;
+            isDraggingRef.current = true;
             setSelection({ type: each.type, index })
           }}
-          onMouseUp={() => { setIsDragging(false), elementRef.current?.focus() }}
+          onMouseUp={() => {
+            isDraggingRef.current = false,
+              elementRef.current?.focus()
+          }}
           onChange={(e) => handleChange(e, index)}
+          draggable={false}
           onMouseDown={(e) => {
             onMouseDown(e, index);
-            setIsSelected(true);
-            setIsDragging(true);
+            e.preventDefault();
+            isSelectedRef.current = true;
+            isDraggingRef.current = true;
             setSelection({ type: each.type, index })
           }}
         />
@@ -327,24 +331,23 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           <img
             src={each.logoUrl}
             style={{
-              border: isSelected ? "" : "2px dashed rgba(9, 9, 9, 0.5)",
               width: `${each.size}px`,
               height: "auto",
               cursor:
-                isDragging && selection.index === index ? "grabbing" : "grab",
+                isDraggingRef.current && selection.index === index ? "grabbing" : "grab",
               touchAction: "none",
             }}
             onMouseDown={(e) => {
               onMouseDown(e, index);
-              setIsDragging(true);
-              setIsSelected(true);
+              isDraggingRef.current = true;
+              isSelectedRef.current = true;
               setSelection({ type: each.type, index })
             }}
-            onMouseUp={() => setIsDragging(false)}
+            onMouseUp={() => isDraggingRef.current = false}
             onTouchStart={(e) => {
               onTouchStart(e, index)
-              setIsSelected(true);
-              setIsDragging(true);
+              isSelectedRef.current = true;
+              isDraggingRef.current = true;
               setSelection({ type: each.type, index })
             }}
             draggable="false"
