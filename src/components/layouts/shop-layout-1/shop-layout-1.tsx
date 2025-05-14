@@ -18,6 +18,7 @@ import { Box } from "@mui/material";
 import dynamic from "next/dynamic";
 import { MobileNavigationBar } from "components/mobile-navigation";
 import { LazyLoadSection } from "pages-sections/fashion-2/LazyLoadSection";
+import TopBarSlider from "./TopBarSlider";
 
 // Carga dinámica de componentes
 const Footer1 = dynamic(() => import("components/footer/footer-1"), {
@@ -93,6 +94,7 @@ export default function ShopLayout1({
     <Fragment>
       {/* TOP BAR SECTION */}
       <Box position={landing ? 'absolute' : 'relative'} width={'100%'} top={0}>
+        <TopBarSlider />
         {/* <Topbar /> */}
 
         {/* HEADER */}

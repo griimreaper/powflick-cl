@@ -50,7 +50,7 @@ export default function MessageForm({ token, messageId, setMess, from }: { token
           mb: 2,
           backgroundColor: 'white',
           borderRadius: '8px',
-           '& .MuiInputBase-input': { color: 'white' }, // Color del texto
+           '& .MuiInputBase-input': { color: 'black' }, // Color del texto
           '& .MuiInputBase-input::placeholder': { color: 'gray' } // Color del placeholder 
         }}
       />

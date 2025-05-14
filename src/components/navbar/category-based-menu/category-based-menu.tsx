@@ -20,9 +20,9 @@ const Categories = dynamic(() => import("./components/categories"), { ssr: false
 const ChildCategories = dynamic(() => import("./components/child-categories"), { ssr: false });
 
 export default function CategoryBasedMenu({ title, menuList }: Props) {
-  const [openList, setOpenList] = useState(menuList[0]?.title || "");
+  const [openList, setOpenList] = useState(0);
   const categories = menuList.reduce<string[]>((prev, curr) => [...prev, curr.title], []);
-  const subCategories = menuList.find((item) => item.title === openList) || { title: "", child: [] };
+  const subCategories = menuList.find((_, index) => index === openList) || { title: "", child: [] };
 
   return (
     <Wrapper>
@@ -51,7 +51,7 @@ export default function CategoryBasedMenu({ title, menuList }: Props) {
             <Categories
               openList={openList}
               categories={categories}
-              handleOpen={(item) => setOpenList(item)}
+              handleOpen={(item: number) => setOpenList(item)}
             />
 
             {/* SUB / CHILD CATEGORIES SECTION */}

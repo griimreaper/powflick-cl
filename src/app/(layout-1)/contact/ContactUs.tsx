@@ -114,16 +114,30 @@ const ContactUs = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    variant="filled"
                     label="Your Name *"
                     {...register("name", { required: "Your Name is required" })}
                     error={!!errors.name}
                     helperText={errors.name?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      backgroundColor: "white", // solo el input, no tapa el label
+                      borderRadius: 2,
+                      "& .MuiOutlinedInput-input": {
+                      },
+                      "& .MuiFormHelperText-root": {
+                        backgroundColor: "#ffebee",
+                        color: "#d32f2f",
+                        padding: "2px 8px",
+                        borderRadius: "4px",
+                        margin: 0,
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    variant="filled"
                     label="Your Email *"
                     type="email"
                     {...register("email", {
@@ -131,33 +145,69 @@ const ContactUs = () => {
                     })}
                     error={!!errors.email}
                     helperText={errors.email?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      backgroundColor: "white", // solo el input, no tapa el label
+                      borderRadius: 2,
+                      "& .MuiFormHelperText-root": {
+                        backgroundColor: "#ffebee",
+                        color: "#d32f2f",
+                        padding: "2px 8px",
+                        borderRadius: "4px",
+                        margin: 0,
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    variant="filled"
                     label="Title *"
                     {...register("title", {
                       required: "Title is required",
                     })}
                     error={!!errors.title}
                     helperText={errors.title?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      backgroundColor: "white", // solo el input, no tapa el label
+                      borderRadius: 2,
+                      "& .MuiFormHelperText-root": {
+                        backgroundColor: "#ffebee",
+                        color: "#d32f2f",
+                        padding: "2px 8px",
+                        borderRadius: "4px",
+                        margin: 0,
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Your Message *"
+                    variant="filled"
                     multiline
+                    aria-multiline
+                    label="Your Message *"
                     rows={4}
                     {...register("message", {
                       required: "Your Message is required",
                     })}
                     error={!!errors.message}
                     helperText={errors.message?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      backgroundColor: "white", // solo el input, no tapa el label
+                      borderRadius: 2,
+                      "& .MuiOutlinedInput-input": {
+                        padding: "10px 14px",
+                      },
+                      "& .MuiFormHelperText-root": {
+                        backgroundColor: "#ffebee",
+                        color: "#d32f2f",
+                        padding: "2px 8px",
+                        borderRadius: "4px",
+                        margin: 0,
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -168,7 +218,19 @@ const ContactUs = () => {
                       label="Category"
                       defaultValue={ContactType.GeneralHelp}
                       {...register("category")}
-                      sx={{ backgroundColor: "white" }}
+                      sx={{
+                        "& .MuiOutlinedInput-input": {
+                          backgroundColor: "white", // solo el input, no tapa el label
+                          borderRadius: 2,
+                        },
+                        "& .MuiFormHelperText-root": {
+                          backgroundColor: "#ffebee",
+                          color: "#d32f2f",
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                          margin: 0,
+                        },
+                      }}
                     >
                       {Object.values(ContactType).map((type) => (
                         <MenuItem key={type as string} value={type as string}>

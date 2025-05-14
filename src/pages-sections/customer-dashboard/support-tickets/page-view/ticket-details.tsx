@@ -23,6 +23,7 @@ export default function TicketDetailsPageView({ id, message }: { id: string, mes
     queryFn: () => getAllMessagesByUser(token!),
     refetchOnMount: true,
     enabled: !!token,
+    staleTime: 1000 * 60 * 5, // 5 minutes
     initialData: () => queryClient.getQueryData(["messages"]),
   });
 

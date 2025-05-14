@@ -21,6 +21,8 @@ export default function TicketsPageView() {
   const { data: messages, isLoading, isError, refetch } = useQuery<Message[]>({
     queryKey: ["messages"],
     queryFn: () => getAllMessagesByUser(token!),
+    staleTime: 0,
+    refetchOnMount: true,
     enabled: !!token,
   });
 
