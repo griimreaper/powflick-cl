@@ -1,7 +1,4 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import {
   Box,
@@ -12,24 +9,15 @@ import {
   Typography,
   Card,
   CardContent,
-  Tooltip,
-  ListItemIcon,
-  ListItemText,
 } from "@mui/material";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { useDashboardStore } from "store/dashboard";
 import { Direction } from "models/types";
 import DirectionForm from "./direction-form";
 import { useShoppingCartStore } from "store/shoppingCart";
 import useFlag from "hooks/useFlag";
-import { createOrder } from "services/Order";
-import Image from "next/image";
-import DialogDrawer from "components/header/components/dialog-drawer";
-import useHeader from "components/header/hooks/use-header";
-import { goToStripe } from "../../../../fpixel";
-import { showErrorAlert } from "utils/alerts";
+
 import "react-phone-input-2/lib/material.css";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getUserAddress } from "services/DashboardUser/profile";
 
 // Cambiar el valor inicial para que coincida con la primera opción disponible
@@ -38,9 +26,7 @@ export default function CheckoutForm({ toggleDialog, selectedDirection, setSelec
   selectedDirection: Direction | null,
   setSelectedDirection: (dir: Direction | null) => void
 }) {
-  const router = useRouter();
-  const { cart, total, coupon, note } = useShoppingCartStore();
-  const [sameAsShipping, setSameAsShipping] = useState(false);
+  const { cart, } = useShoppingCartStore();
   const [showForm, setShowForm] = useState<boolean>(false);
   const { profile } = useDashboardStore();
   const { token } = profile;
@@ -50,8 +36,6 @@ export default function CheckoutForm({ toggleDialog, selectedDirection, setSelec
     refetchOnMount: true,
     staleTime: 0,
   });
-
-  const [loading, setLoading] = useFlag();
 
   const handleDirectionChange = (event: any) => {
     const value = event.target.value;

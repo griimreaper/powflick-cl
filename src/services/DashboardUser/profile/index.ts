@@ -1,4 +1,4 @@
-import { mainApi } from "../../apis";
+import { CustomAxiosRequestConfig, mainApi } from "../../apis";
 
 export const userUpdateProfile = async (token: string, data: any) => {
   try {
@@ -42,16 +42,17 @@ export const getUserOrders = async (token: string) => {
 
 export const getUserAddress = async (token: string) => {
   try {
-    const { data } = await mainApi.get("/directions", {
+    const config: CustomAxiosRequestConfig = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
-    console.log(data);
-    
+      skipAuthInterceptor: true,
+    };
+
+    const { data } = await mainApi.get("/directions", config);
     return data.direction;
   } catch (error) {
-    console.error("Error getting orders:", error);
+    console.error("Error getting address:", error);
     throw error;
   }
-}
+};
