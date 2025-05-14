@@ -125,17 +125,15 @@ const ContactUs = () => {
                         zIndex: 3,
                       },
                       "& .MuiInputBase-root": {
-                        backgroundColor: "white", // solo el input, no tapa el label
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
                         ":hover": {
-                          backgroundColor: "white", // solo el input, no tapa el label
-
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
                         },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "white",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
@@ -157,17 +155,15 @@ const ContactUs = () => {
                         zIndex: 3,
                       },
                       "& .MuiInputBase-root": {
-                        backgroundColor: "white", // solo el input, no tapa el label
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
                         ":hover": {
-                          backgroundColor: "white", // solo el input, no tapa el label
-
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
                         },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "white",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
@@ -188,17 +184,15 @@ const ContactUs = () => {
                         zIndex: 3,
                       },
                       "& .MuiInputBase-root": {
-                        backgroundColor: "white", // solo el input, no tapa el label
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
                         ":hover": {
-                          backgroundColor: "white", // solo el input, no tapa el label
-
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
                         },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "white",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
@@ -222,17 +216,15 @@ const ContactUs = () => {
                         zIndex: 3,
                       },
                       "& .MuiInputBase-root": {
-                        backgroundColor: "white", // solo el input, no tapa el label
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
                         ":hover": {
-                          backgroundColor: "white", // solo el input, no tapa el label
-
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
                         },
                       },
                       "& .MuiFormHelperText-root": {
-                        color: "white",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
