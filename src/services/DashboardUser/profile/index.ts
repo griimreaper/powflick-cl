@@ -39,3 +39,19 @@ export const getUserOrders = async (token: string) => {
     throw error;
   }
 }
+
+export const getUserAddress = async (token: string) => {
+  try {
+    const { data } = await mainApi.get("/directions", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(data);
+    
+    return data.direction;
+  } catch (error) {
+    console.error("Error getting orders:", error);
+    throw error;
+  }
+}

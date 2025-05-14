@@ -9,17 +9,27 @@ import DashboardHeader from "../../dashboard-header";
 import { useDashboardStore } from "store/dashboard";
 import { deleteDirection } from "services/Directions";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { useQuery } from "@tanstack/react-query";
+import { getUserAddress } from "services/DashboardUser/profile";
+import { Direction } from "models/types";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 const DRIECTIONS_PER_PAGE = 5; // Número de órdenes por página
 
 export default function AddressPageView() {
   const [currentPage, setCurrentPage] = useState(1); // Estado para la página actual
-  const { profile, setProfileUser } = useDashboardStore();
-  const { genericResponseUser } = profile;
-  const { directions } = genericResponseUser;
-  const [allAddress, setAllAddress] = useState(directions);
-  const token = profile.token;
+  const { profile } = useDashboardStore();
+  const token = profile.token || "";
   // Calcular las órdenes a mostrar en la página actual
+
+  const { data: directions = [], isLoading, isError, refetch } = useQuery<Direction[]>({
+    queryKey: ["user-address"],
+    queryFn: () => getUserAddress(token),
+    enabled: !!token,
+    refetchOnMount: true,
+    staleTime: 0, // 5 minutes
+  });
+
   const startIndex = (currentPage - 1) * DRIECTIONS_PER_PAGE;
   const currentDirections = directions?.slice(startIndex, startIndex + DRIECTIONS_PER_PAGE);
 
@@ -27,18 +37,18 @@ export default function AddressPageView() {
   const handleAddressDelete = async (id: string) => {
     if (token && id) {
       try {
-          const response = await deleteDirection(token, id);
-          setProfileUser({ directions: response.directions })
-          showSuccessAlert("Success!", response.message);
+        const response = await deleteDirection(token, id);
+        showSuccessAlert("Success!", response.message);
+        refetch();
       } catch (error) {
-          showErrorAlert(
-              "Error!",
-              `Error deleting direction: ${error}`
-          );
+        showErrorAlert(
+          "Error!",
+          `Error deleting direction: ${error}`
+        );
       }
-  } else {
+    } else {
       return
-  }
+    }
   };
 
   return (
@@ -52,9 +62,21 @@ export default function AddressPageView() {
       />
 
       {/* ALL ADDRESS LIST AREA */}
-      {currentDirections?.map((address) => (
-        <AddressListItem key={address.id} direction={address} handleDelete={handleAddressDelete} />
-      ))}
+      {isLoading ?
+        <Box display={"flex"} justifyContent="center" alignItems="center">
+          <CircularProgress sx={{ width: '100%' }} />
+        </Box>
+        :
+        isError ? <Typography variant="h5" color={'white'} textAlign="center">
+          Failed to load orders
+        </Typography>
+          : directions.length === 0 ?
+            <Typography variant="h5" color={'white'} textAlign="center">
+              No Address
+            </Typography>
+            : currentDirections?.map((address) => (
+              <AddressListItem key={address.id} direction={address} handleDelete={handleAddressDelete} />
+            ))}
 
       {/* PAGINATION AREA */}
       <Pagination
