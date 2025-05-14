@@ -37,7 +37,6 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
-        color: "white",
         textAlign: "center",
         backgroundColor: "transparent",
         objectFit: "cover",
@@ -73,7 +72,7 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
           zIndex: 2,
           mb: isMobile ? 10 : 0,
           textWrap: "nowrap",
-          fontFamily: "GYMER",
+          left: isMobile ? undefined : "5%",
           padding: "0 4rem",
         }}
       >
@@ -84,15 +83,16 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
           mb={2}
           fontFamily={"sans-serif"}
           fontStyle="oblique"
+
         >
-          Got a design? We make it real
+          GOT A DESIGN IDEA?
         </H3>
 
-        <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1}>
-          SEND IT NOW AND
+        <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1} sx={{ color: "primary.main", fontFamily: "GYMER", }}>
+          GET IT FOR FREE!
         </H1>
-        <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1}>
-          GET YOUR UNIFORM.
+        <H1 fontSize={"clamp(8px, 2.2vw, 30px)"} lineHeight={1} mb={1} sx={{ fontFamily: "sans-serif", fontStyle: "oblique", fontWeight: 100 }}>
+          See Your Uniform Come to Life!
         </H1>
 
         <Button
@@ -104,14 +104,14 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
             borderRadius: 1,
             whiteSpace: "nowrap",
             fontWeight: 400,
-            fontSize: "clamp(12px, 2vw, 120px)",
+            fontSize: "clamp(6.4px, 1.76vw, 24px)",
             fontStyle: "italic",
-            color: "primary.main",
-            background: "white",
-            "&:hover": { background: "rgb(200,200,200)" },
+            color: "white",
+            background: "#5C0505",
+            // "&:hover": { background: "rgb(200,200,200)" },
           }}
         >
-          Send Your Design
+          Claim Your Free Design
         </Button>
       </Box>
     </Box>
