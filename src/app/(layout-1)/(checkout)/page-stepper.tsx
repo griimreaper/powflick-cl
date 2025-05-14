@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 // LOCAL CUSTOM COMPONENT
 import Stepper from "./stepper";
+import { Button } from "@mui/material";
+import Link from "next/link";
 
 const STEPPER_LIST = [
   { title: "Cart", disabled: false },
@@ -56,7 +58,30 @@ export default function PageStepper({ children }: PropsWithChildren) {
   }, [pathname]);
 
   return (
-    <Container className="mt-2 mb-2">
+    <Container className="pt-2 pb-2" >
+      {/* Botón pequeño Back to Cart solo en la ruta /checkout */}
+      {pathname === "/checkout" && (
+        <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 1 }}>
+          <Button
+            LinkComponent={Link}
+            variant="outlined"
+            color="primary"
+            href="/cart"
+            size="small"
+            sx={{
+              textTransform: "uppercase",
+              minWidth: "auto",
+              px: 2,
+              py: 0.5,
+              fontSize: 13,
+              fontWeight: 500,
+              mb: 2,
+            }}
+          >
+            Back to Cart
+          </Button>
+        </Box>
+      )}
       <Box mb={3} display={{ sm: "block", xs: "none" }}>
         <Stepper
           stepperList={STEPPER_LIST}
