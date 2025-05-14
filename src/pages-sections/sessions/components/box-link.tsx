@@ -10,7 +10,7 @@ interface BoxLinkProps {
 
 export default function BoxLink({ title, href, onClick }: BoxLinkProps) {
   return (
-    <Box>
+    <Box sx={{cursor: "pointer"}}>
       <Link href={href} onClick={onClick}>
         {title}
       </Link>

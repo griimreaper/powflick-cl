@@ -114,16 +114,34 @@ const ContactUs = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    variant="filled"
                     label="Your Name *"
                     {...register("name", { required: "Your Name is required" })}
                     error={!!errors.name}
                     helperText={errors.name?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
+                      },
+                      "& .MuiFormHelperText-root": {
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    variant="filled"
                     label="Your Email *"
                     type="email"
                     {...register("email", {
@@ -131,33 +149,84 @@ const ContactUs = () => {
                     })}
                     error={!!errors.email}
                     helperText={errors.email?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
+                      },
+                      "& .MuiFormHelperText-root": {
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    variant="filled"
                     label="Title *"
                     {...register("title", {
                       required: "Title is required",
                     })}
                     error={!!errors.title}
                     helperText={errors.title?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
+                      },
+                      "& .MuiFormHelperText-root": {
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Your Message *"
+                    variant="filled"
                     multiline
+                    aria-multiline
+                    label="Your Message *"
                     rows={4}
                     {...register("message", {
                       required: "Your Message is required",
                     })}
                     error={!!errors.message}
                     helperText={errors.message?.message}
-                    sx={{ backgroundColor: "white" }}
+                    sx={{
+                      borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
+                      },
+                      "& .MuiFormHelperText-root": {
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -168,7 +237,19 @@ const ContactUs = () => {
                       label="Category"
                       defaultValue={ContactType.GeneralHelp}
                       {...register("category")}
-                      sx={{ backgroundColor: "white" }}
+                      sx={{
+                        "& .MuiOutlinedInput-input": {
+                          backgroundColor: "white", // solo el input, no tapa el label
+                          borderRadius: 2,
+                        },
+                        "& .MuiFormHelperText-root": {
+                          backgroundColor: "white",
+                          color: "#d32f2f",
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                          margin: 0,
+                        },
+                      }}
                     >
                       {Object.values(ContactType).map((type) => (
                         <MenuItem key={type as string} value={type as string}>

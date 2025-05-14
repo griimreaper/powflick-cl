@@ -16,10 +16,13 @@ import { FlexBox } from "components/flex-box";
 import SportZoneTextField from "components/SportZoneTextField";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { registerUser } from "services/Register";
-import { Dialog, useMediaQuery } from "@mui/material";
+import { Box, Dialog, FormControl, useMediaQuery } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import LogoWithTitle from "pages-sections/sessions/components/logo-title";
 import { Wrapper } from "pages-sections/sessions/styles";
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/material.css';
+import './index.css'
 
 interface RegisterPageViewProps {
   rendering?: boolean;
@@ -61,7 +64,8 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
     password: yup.string().required("Password is required"),
     phone: yup
       .string()
-      .matches(/^(\+\d{1,3}[- ]?)?\d{10}$/, "Phone number is not valid"), // Opcional
+      .matches(/^(\+\d{1,4}[- ]?)?(\d{1,4}[- ]?)?(\d{1,4}[- ]?)?\d{3,4}$/, "Phone number is not valid")
+      .required("Phone number is required"),
     re_password: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords must match")
@@ -144,21 +148,40 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
             helperText={(touched.email && errors.email) as string}
           />
 
-          <SportZoneTextField
-            mb={1.5}
-            fullWidth
-            name="phone"
-            size="small"
-            type="tel"
-            variant="outlined"
-            onBlur={handleBlur}
-            value={values.phone}
-            onChange={handleChange}
-            label="Phone"
-            placeholder="+54 1170244654"
-            error={!!touched.phone && !!errors.phone}
-            helperText={(touched.phone && errors.phone) as string}
-          />
+          <Box mb={1.5} width="100%">
+            <FormControl required fullWidth>
+              <label
+                htmlFor="phone"
+                style={{
+                  display: "block",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  marginBottom: 8,
+                  color: "#2B3445",
+                }}
+              >
+                Phone
+              </label>
+              <PhoneInput
+                inputProps={{
+                  name: "phone",
+                  onBlur: handleBlur,
+                }}
+                inputStyle={{ height: '45px'}}
+                country={"us"}
+                specialLabel=""
+                value={values.phone}
+                onChange={(value) => {
+                  handleChange({ target: { name: "phone", value } });
+                }}
+              />
+              {touched.phone && errors.phone && (
+                <div style={{ color: "red", fontSize: 10, marginTop: 4, marginLeft: 12 }}>
+                  {errors.phone}
+                </div>
+              )}
+            </FormControl>
+          </Box>
 
           <SportZoneTextField
             mb={1.5}

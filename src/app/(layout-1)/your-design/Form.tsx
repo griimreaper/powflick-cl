@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
 import {
   Container,
   Typography,
@@ -14,10 +13,8 @@ import {
   Checkbox,
   FormHelperText,
   OutlinedInput,
-  Chip,
   InputLabel,
   SelectChangeEvent,
-  ListItemText,
   IconButton,
   Grid,
 } from "@mui/material";
@@ -26,11 +23,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { Paragraph } from "components/Typography";
 import { CloudUpload, Delete } from "@mui/icons-material";
 import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { createFreeDesign } from "services/FreeDesign";
 import { uploadFolderPath } from "services/dashboardAdmin/products";
-import { fonts } from "components/Customization/panelSides";
+import ColorWheelPicker from "./WheelColor";
 
 interface ContactInfo {
   fullName: string;
@@ -391,6 +387,11 @@ const ContactInfoForm = ({ values, onChange }: any) => {
 };
 
 export default function RequestForm() {
+  const [showColorPickerPrimary, setShowColorPickerPrimary] = useState(false);
+  const [showColorPickerSecondary, setShowColorPickerSecondary] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const colorPickerRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState<FormData>({
     teamName: '',
     sport: '',
@@ -452,16 +453,13 @@ export default function RequestForm() {
     }));
   };
 
-  const handlePrimaryColorsChange = (event: SelectChangeEvent<typeof formData.primaryColors>) => {
-    const selected = typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value;
-    if (selected.length <= 3) setFormData((prev: any) => ({ ...prev, primaryColors: selected }));
+  const handlePrimaryColorsChange = (event: string[]) => {
+    setFormData((prev: any) => ({ ...prev, primaryColors: event }));
   };
 
-  const handleSecondaryColorsChange = (event: SelectChangeEvent<typeof formData.secondaryColors>) => {
-    const selected = typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value;
-    if (selected.length <= 3) setFormData((prev: any) => ({ ...prev, secondaryColors: selected }));
+  const handleSecondaryColorsChange = (event: string[]) => {
+    setFormData((prev: any) => ({ ...prev, secondaryColors: event }));
   };
-
   const handleCheckboxChange = (e: any) => {
     const { name, checked } = e.target;
     setFormData((prev: any) => ({
@@ -470,10 +468,13 @@ export default function RequestForm() {
     }));
   };
 
-  console.log(formData);
-
   const onSubmit = async (data: FormData) => {
     try {
+      if (!formData.primaryColors || formData.primaryColors.length === 0) {
+        colorPickerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
       const logosUrl = await uploadFolderPath(data.logos, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
       const otherImagesUrl = await uploadFolderPath(data.otherImages, 'free-design/' + data.teamName + '/' + data.contactInfo.email)
 
@@ -514,10 +515,18 @@ export default function RequestForm() {
             sx={{
               fontStyle: "italic",
               fontWeight: "800",
+              display: "flex",
+              gap: 1,
               textAlign: { xs: "center", md: "left" },
             }}
           >
             When do you need these products by?
+            <Typography
+              variant="h6"
+              fontWeight="800"
+              color={"primary.main"}
+            > *
+            </Typography>
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
@@ -538,10 +547,18 @@ export default function RequestForm() {
             sx={{
               fontStyle: "italic",
               fontWeight: "800",
+              display: "flex",
+              gap: 1,
               textAlign: { xs: "center", md: "left" },
             }}
           >
             Team Name
+            <Typography
+              variant="h6"
+              fontWeight="800"
+              color={"primary.main"}
+            > *
+            </Typography>
           </Typography>
           <TextField
             fullWidth
@@ -562,11 +579,20 @@ export default function RequestForm() {
             sx={{
               fontStyle: "italic",
               fontWeight: "800",
+              display: "flex",
+              gap: 1,
               textAlign: { xs: "center", md: "left" },
             }}
           >
             Select a sport
+            <Typography
+              variant="h6"
+              fontWeight="800"
+              color={"primary.main"}
+            > *
+            </Typography>
           </Typography>
+
           <Select
             name="sport"
             value={formData.sport}
@@ -586,148 +612,87 @@ export default function RequestForm() {
           </Select>
         </FormControl>
 
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel id="primary-colors-label">
-            <Typography variant='h6' component="span" fontWeight="bold" fontStyle={"italic"}>
-              Primary Colors
-            </Typography>
-          </InputLabel>
-          <Select
-            labelId="primary-colors-label"
-            multiple
-            value={formData.primaryColors}
-            onChange={handlePrimaryColorsChange}
-            input={<OutlinedInput label="Primary Colors" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => {
-                  const colorHex = colors.find(c => c.name === value)?.hex || "#000";
+        <FormControl fullWidth margin="normal" required error={submitted && (!formData.primaryColors || formData.primaryColors.length === 0)} ref={colorPickerRef}>
+          {/* Botón para abrir el Color Wheel Picker */}
+          <Button onClick={() => setShowColorPickerPrimary(!showColorPickerPrimary)} variant="outlined" fullWidth>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, width: "100%" }}>
+              <Typography variant="h6" component="span" fontWeight="bold" display={"flex"} gap={1} fontStyle={"italic"} width={'100%'} >
+                Primary Colors
+                <Typography variant="h6" fontWeight="800" color={"primary.main"}> *</Typography>
+              </Typography>
+              <Box display={'flex'}>
+                {formData.primaryColors?.map((color) => {
                   return (
                     <Box
-                      key={value}
+                      key={color}
                       sx={{
                         width: 24,
                         height: 24,
-                        backgroundColor: colorHex,
+                        backgroundColor: color,
                         borderRadius: 1,
                         border: '1px solid #ccc',
+                        marginLeft: 1,
                       }}
                     />
                   );
                 })}
               </Box>
-            )}
-            MenuProps={{
-              PaperProps: {
-                sx: {
-                  padding: 1,
-                  '& .MuiList-root': {
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', // ← Ajuste automático
-                    gap: 1,
-                  }
-                },
-              },
-            }}
-          >
-            {colors.map((color) => (
-              <MenuItem
-                key={color.hex}
-                value={color.name}
-                sx={{
-                  justifyContent: 'center',
-                  minHeight: 60,
-                  '&.Mui-selected': {
-                    outline: '2px solid black',
-                  },
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 36,
-                    height: 36,
-                    backgroundColor: color.hex,
-                    borderRadius: 1,
-                    border: '1px solid #ccc',
-                  }}
-                />
-              </MenuItem>
-            ))}
-          </Select>
+            </Box>
+          </Button>
+
+          {/* Si se debe mostrar el Color Picker, renderízalo */}
+          {showColorPickerPrimary && (
+            <Box sx={{ display: 'flex', my: 3, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <ColorWheelPicker
+                colors={formData.primaryColors}
+                onColorChange={handlePrimaryColorsChange}
+              />
+            </Box>
+          )}
 
           <FormHelperText>
-            (Select up to 3 primary colors. At least 1 is required.)
+            {submitted && (!formData.primaryColors || formData.primaryColors.length === 0)
+              ? "Please select at least one primary color."
+              : "(Select up to 3 primary colors. At least 1 is required.)"}
           </FormHelperText>
         </FormControl>
 
         <FormControl fullWidth margin="normal">
-          <InputLabel id="secondary-colors-label">
-            <Typography variant='h6' component="span" fontWeight="bold" fontStyle={"italic"}>
-              Secondary Colors
-            </Typography>
-          </InputLabel>
-          <Select
-            labelId="secondary-colors-label"
-            multiple
-            value={formData.secondaryColors}
-            onChange={handleSecondaryColorsChange}
-            input={<OutlinedInput label="Secondary Colors" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value: any) => {
-                  const colorHex = colors.find(c => c.name === value)?.hex || "#000";
+          {/* Botón para abrir el Color Wheel Picker */}
+          <Button onClick={() => setShowColorPickerSecondary(!showColorPickerSecondary)} variant="outlined" fullWidth>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, width: "100%" }}>
+              <Typography variant="h6" component="span" fontWeight="bold" display={"flex"} gap={1} fontStyle={"italic"} width={'100%'} >
+                Secondary Colors
+              </Typography>
+              <Box display={'flex'}>
+                {formData.secondaryColors?.map((color) => {
                   return (
                     <Box
-                      key={value}
+                      key={color}
                       sx={{
                         width: 24,
                         height: 24,
-                        backgroundColor: colorHex,
+                        backgroundColor: color,
                         borderRadius: 1,
                         border: '1px solid #ccc',
+                        marginLeft: 1,
                       }}
                     />
                   );
                 })}
               </Box>
-            )}
-            MenuProps={{
-              PaperProps: {
-                sx: {
-                  padding: 1,
-                  '& .MuiList-root': {
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', // ← Ajuste automático
-                    gap: 1,
-                  },
-                },
-              },
-            }}
-          >
-            {colors.map((color) => (
-              <MenuItem
-                key={color.hex}
-                value={color.name}
-                sx={{
-                  justifyContent: 'center',
-                  minHeight: 60, // Ajustar altura del item para cuadrado más grande
-                  '&.Mui-selected': {
-                    outline: '2px solid black', // Borde para mostrar selección
-                  },
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 36,  // Tamaño del cuadrado más grande
-                    height: 36, // Tamaño del cuadrado más grande
-                    backgroundColor: color.hex,
-                    borderRadius: 1,
-                    border: '1px solid #ccc',
-                  }}
-                />
-              </MenuItem>
-            ))}
-          </Select>
+            </Box>
+          </Button>
+
+          {/* Si se debe mostrar el Color Picker, renderízalo */}
+          {showColorPickerSecondary && (
+            <Box sx={{ display: 'flex', my: 3, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <ColorWheelPicker
+                colors={formData.secondaryColors}
+                onColorChange={handleSecondaryColorsChange}
+              />
+            </Box>
+          )}
 
           <FormHelperText>
             (Optional) Select up to 3 secondary colors
@@ -834,9 +799,17 @@ export default function RequestForm() {
             variant="h6"
             gutterBottom
             align="left"
+            display={'flex'}
+            gap={1}
             sx={{ fontStyle: "italic", fontWeight: "800" }}
           >
             Description
+            <Typography
+              variant="h6"
+              fontWeight={"800"}
+              color={"primary.main"}>
+              *
+            </Typography>
           </Typography>
           <FormHelperText>
             {"Describe in more detail what you'd like in your design."}
@@ -862,6 +835,7 @@ export default function RequestForm() {
           <Button
             variant="contained"
             color="primary"
+            onClick={() => setSubmitted(true)}
             sx={{
               fontSize: {
                 xs: "0.5rem",

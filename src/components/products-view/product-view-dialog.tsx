@@ -72,9 +72,21 @@ export default function ProductViewDialog(props: Props) {
             <Grid item md={6} xs={12} alignSelf="center">
               <H2>{product.title}</H2>
 
-              <Paragraph py={1} color="grey.500" fontWeight={600} fontSize={13}>
-                CATEGORY: {product?.product_categories?.split("|").join(",")}
-              </Paragraph>
+              {product?.categories &&
+                <Paragraph pt={1} color="grey.500" fontWeight={600} fontSize={13}>
+                  Categories: {product?.categories?.map(c => c.name).join(", ")}
+                </Paragraph>
+              }
+              {product?.collections &&
+                <Paragraph color="grey.500" fontWeight={600} fontSize={13}>
+                  Collection: {product?.collections?.map(c => c.title).join(", ")}
+                </Paragraph>
+              }
+              {product?.tags &&
+                <Paragraph pb={1} color="grey.500" fontWeight={600} fontSize={13}>
+                  Tags: {product?.tags?.map(t => t.name).join(", ")}
+                </Paragraph>
+              }
 
               <H2 color="primary.main">{product.price}</H2>
 

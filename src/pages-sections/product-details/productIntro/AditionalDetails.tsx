@@ -215,17 +215,17 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               </div>
             ) : (
               <>
-              {item.image ?
-                <Image
-                src={item.image}
-                alt={item.name}
-                width={imageSize}
-                height={imageSize}
-                style={{ borderRadius: "10px" }}
-                />
-                : 
-                <Box bgcolor={item.hex} width={25} height={25} borderRadius={'100%'}></Box>
-              }
+                {item.image ?
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={imageSize}
+                    height={imageSize}
+                    style={{ borderRadius: "10px" }}
+                  />
+                  :
+                  <Box bgcolor={item.hex} width={25} height={25} borderRadius={'100%'}></Box>
+                }
               </>
             )}
             <Typography variant="body2" align="center">
@@ -269,9 +269,19 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                         style={{
                           margin: "0.5rem",
                           borderRadius: "20px",
+                          minWidth: "64px", // Valor por defecto de MUI
+                          paddingLeft: "16px",
+                          paddingRight: "16px",
+                          whiteSpace: "nowrap", // Evita que el texto se corte
+
+
                         }}
                       >
-                        {name.split("-")[0]}
+                        {
+                          name.includes("-KIDS")
+                            ? name.split("-").slice(0, 2).join("-")
+                            : name.split("-")[0]
+                        }
                       </Button>
                     )
                   )}
@@ -283,21 +293,21 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 <Typography
                   variant="subtitle2"
                   sx={{
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                  mt: 2,
-                  width: "100%",
-               
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                    mt: 2,
+                    width: "100%",
+
                   }}
                   onClick={(e) => {
-                  e.stopPropagation();
-                  setShowSizeGuide(!showSizeGuide);
+                    e.stopPropagation();
+                    setShowSizeGuide(!showSizeGuide);
                   }}
                 >
                   Size Guide
                 </Typography>
                 {showSizeGuide && (
-                    <Box
+                  <Box
                     sx={{
                       display: "flex",
                       flexWrap: "wrap",
@@ -306,7 +316,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                       gap: 2,
                       m: { xs: 1, md: 2 },
                     }}
-                    >
+                  >
                     {detail.SizeGuide.image1 && (
                       <Zoom>
                         <img

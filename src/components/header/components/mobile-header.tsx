@@ -37,6 +37,8 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
 
   const ICON_STYLE = { color: "#FFFFFF", fontSize: 20 };
   const { data: session } = useSession();
+  const rol = session?.user?.email;
+
   const router = useRouter();
 
   return (
@@ -67,7 +69,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
             <Icon.Search sx={ICON_STYLE} />
           </IconButton>
 
-          <IconButton onClick={() => { session ? router.push('/dashboard/profile') : toggleDialog() }}>
+          <IconButton onClick={() => { session ? router.push(rol === 'admin' ? '/admin/dashboard' :'/dashboard/profile') : toggleDialog() }}>
             <Icon.User sx={ICON_STYLE} />
           </IconButton>
 

@@ -118,14 +118,13 @@ export default function OrderDetailsPageView({ data }: Props) {
         {/* TOTAL SUMMERY OF ORDER */}
         <Grid item md={6} xs={12}>
           <TotalSummery
-            total={order?.total}
-            coupon={order?.coupon}
+            order={order}
           />
         </Grid>
 
         {/* CHANGE BUTTON */}
         <Grid item xs={12}>
-          <Button variant="contained" color="info" onClick={handleSaveChanges}>
+          <Button variant="contained" color="primary" onClick={handleSaveChanges}>
             Save Changes
           </Button>
         </Grid>

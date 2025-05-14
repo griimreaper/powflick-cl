@@ -14,7 +14,7 @@ export default function CartPageView() {
   const { cart, coupon, total } = useShoppingCartStore();
 
   return (
-    <Grid container spacing={3} justifyContent="center">
+    <Grid container spacing={3} justifyContent="center" >
       {/* CART PRODUCT LIST */}
       <Grid item md={8} xs={12}>
         {cart.map((item) => (

@@ -6,6 +6,7 @@ import Facebook from "icons/Facebook";
 import Instagram from "icons/Instagram";
 import PlayStore from "icons/PlayStore";
 import AppleStore from "icons/AppleStore";
+import { Pinterest } from "@mui/icons-material";
 
 export const ABOUT_LINKS = [
   // {title: "Careers", link: "/"},
@@ -22,18 +23,16 @@ export const PAGES = [
   ["Super Design", "your-design"],
   ["Contact", "contact"],
   ["About Us", "about-us"],
-  ["Help", "help"],
+  ["FAQ", "help"],
 ];
 
 export const SOCIAL_ICON_LINKS = [
-  { Icon: Facebook, url: "https://www.facebook.com/" },
-  { Icon: Twitter, url: "https://twitter.com/" },
-  {
-    Icon: Youtube,
-    url: "https://www.youtube.com/",
-  },
-  { Icon: Google, url: "https://www.google.com/" },
-  { Icon: Instagram, url: "https://www.instagram.com/" },
+  { Icon: Facebook, url: "https://www.facebook.com/profile.php?id=61572571284039" },
+  // { Icon: Twitter, url: "https://twitter.com/" },
+  // { Icon: Youtube, url: "https://www.youtube.com/" },
+  // { Icon: Google, url: "https://www.google.com/" },
+  { Icon: Instagram, url: "https://www.instagram.com/powflick/" },
+  { Icon: Pinterest, url: "https://www.pinterest.com/powflick/" },
 ];
 
 export const PLAY_APP_STORE_DATA = [

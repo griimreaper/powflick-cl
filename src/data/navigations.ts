@@ -290,7 +290,7 @@ export const categoryMenus: CategoryItem[] = [
   // { icon: Public, title: "Blog", href: "/blog" },
   { icon: ContactMail, title: "Contact", href: "/contact" },
   { icon: Info, title: "About Us", href: "/about-us" },
-  { icon: Help, title: "Help", href: "/help" },
+  { icon: Help, title: "FaQ", href: "/help" },
   // { icon: Food, title: "Groceries", href: "/products/search/groceries" },
   // { icon: Car, title: "Automotive", href: "/products/search/automotive" }
 ];

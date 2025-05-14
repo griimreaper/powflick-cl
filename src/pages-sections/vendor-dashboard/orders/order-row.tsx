@@ -26,7 +26,7 @@ export default function OrderRow({ order, orderBy }: Props) {
         :
         <StyledTableCell align="left">{user.email}</StyledTableCell>
       }
-      <StyledTableCell align="left">{customizations.length}</StyledTableCell>
+      <StyledTableCell align="left">{customizations?.length || 0}</StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
         {format(new Date(createdAt), "dd MMM yyyy")}
