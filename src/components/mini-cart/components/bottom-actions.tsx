@@ -103,7 +103,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
           addDatalayer();
         }}
       >
-        Checkout Now ({total})
+        Checkout Now ({total.toFixed(2)})
       </Button>
 
       <Button

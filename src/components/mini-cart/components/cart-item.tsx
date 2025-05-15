@@ -60,6 +60,33 @@ export default function MiniCartItem({ item }: Props) {
     left: number;
   }>({ top: 0, left: 0 });
 
+  const adjustModalPosition = (position: { top: number; left: number }) => {
+    const modalWidth = 400;
+    const modalHeight = 300; // Estimación del alto del modal
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    let { top, left } = position;
+
+    // Ajuste horizontal
+    if (left + modalWidth > screenWidth) {
+      left = screenWidth - modalWidth - 20;
+    }
+    if (left < 10) {
+      left = 10;
+    }
+
+    // Ajuste vertical
+    if (top + modalHeight > screenHeight) {
+      top = screenHeight - modalHeight - 20;
+    }
+    if (top < 10) {
+      top = 10;
+    }
+
+    return { top, left };
+  };
+
   const handleCustomizationClick = (
     productId: string,
     customizationIndex: string,
@@ -70,19 +97,6 @@ export default function MiniCartItem({ item }: Props) {
     setModalPosition({ top: rect.top, left: rect.left });
   };
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  const adjustModalPosition = (position: any) => {
-    const { top, left } = position;
-    const modalWidth = 400; // Ancho estimado del modal
-    const screenWidth = window.innerWidth;
-
-    let adjustedLeft = left;
-    if (left + modalWidth > screenWidth) {
-      adjustedLeft = screenWidth - modalWidth - 20; // Ajusta 20px de margen
-    }
-
-    return { top, left: adjustedLeft };
-  };
 
   return (
     <FlexBox
@@ -150,11 +164,11 @@ export default function MiniCartItem({ item }: Props) {
         <H6 color="primary.main" mt={0.5}>
           {currency(
             item.customizations.length * item.product.price +
-              item.customizations.reduce((acc, _) => acc + _.price, 0)
+            item.customizations.reduce((acc, _) => acc + _.price, 0)
           )}
         </H6>
 
-        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "auto", py: 1}}>
+        <FlexBox alignItems="center" gap={1} sx={{ overflowX: "auto", py: 1 }}>
           {item.customizations.map((_, index) => (
             <CustomButton
               key={index}

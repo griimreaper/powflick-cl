@@ -8,7 +8,7 @@ import Image from "next/image";
 // LOCAL CUSTOM COMPONENT
 import ListItem from "../list-item";
 // GLOBAL CUSTOM COMPONENTS
-import { Span } from "components/Typography";
+import { Paragraph, Span } from "components/Typography";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
 import FlexBetween from "components/flex-box/flex-between";
@@ -175,6 +175,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                 justifyContent: "center",
                 width: "100%",
                 marginLeft: "auto",
+                overflow: 'hidden',
                 marginRight: "auto",
                 '.MuiFormControlLabel-label': { width: '100%' },
                 border: '1px solid #d32f2f',
@@ -198,14 +199,15 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                     <span style={{ color: "#0070ba" }}>Pal</span>
                   </span>
                 ) : option.value === "LLP" ? (
-                  <span
-                    style={{
+                  <Paragraph
+                    sx={{
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      whiteSpace: 'nowrap',
                       width: "100%",
                       fontWeight: 700,
-                      fontSize: 16,
+                      fontSize: { xs: 12, md: 16 },
                       minHeight: 40,
                     }}
                   >
@@ -216,7 +218,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                       <Image src="/assets/images/payment-methods/amex.png" alt="Amex" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
                       <Image src="/assets/images/payment-methods/cirrus.png" alt="Discover" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
                     </span>
-                  </span>
+                  </Paragraph>
                 ) : (
                   option.label
                 )

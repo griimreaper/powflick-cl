@@ -274,7 +274,7 @@ export default function ProductIntro({ product }: Props) {
             <Box>
               <FlexBox
                 borderRadius={3}
-                overflow="hidden"
+                overflow="visible"
                 justifyContent="center"
                 mb={6}
               >
