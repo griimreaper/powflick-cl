@@ -123,8 +123,11 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       e.target.style.height = `${e.height}px`;
       sizeChange(e.width, index);
     } else {
-      if (each.text?.length! > 1) {
-        const newFontSize = Math.min(e.width - 10, e.height - 5);
+      if (each.text?.length! >= 1) {
+        const newFontSize = Math.min(
+          e.width * 0.7,
+          e.height * 0.6
+        );
         e.target.style.width = `${e.width}px`;
         e.target.style.height = `${e.height}px`;
         sizeChange(newFontSize, index);
@@ -165,7 +168,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         top: each.position.y,
         pointerEvents: "auto", // Permitir eventos de clic
       }}
-      >
+    >
       <Box
         ref={hiddenDivRef}
         sx={{
@@ -298,7 +301,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
               isDraggingRef.current && selection.index === index ? "grabbing" : "grab",
             fontSize: `${each.size}px`,
             width: `${inputWidthRef.current}px`,
-            height: `${hiddenDivRef.current?.offsetHeight}px`,
+            height: `${(each.size || 0) * 1.5}px`,
             paddingTop: 10,
             textIndent: '3px', // o el valor que desees
             touchAction: "none",
