@@ -123,15 +123,15 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       e.target.style.height = `${e.height}px`;
       sizeChange(e.width, index);
     } else {
-      if (each.text?.length! >= 1) {
-        const newFontSize = Math.min(
-          e.width * 0.7,
-          e.height * 0.6
-        );
-        e.target.style.width = `${e.width}px`;
-        e.target.style.height = `${e.height}px`;
-        sizeChange(newFontSize, index);
+      let newFontSize = 0;
+      if (each.text?.length! > 1) {
+        newFontSize = Math.min(e.width, e.height) * 0.6;
+      } else {
+        newFontSize = Math.min(e.width, e.height) * 1.2;
       }
+      e.target.style.width = `${e.width}px`;
+      e.target.style.height = `${e.height}px`;
+      sizeChange(newFontSize, index);
     }
   };
 
