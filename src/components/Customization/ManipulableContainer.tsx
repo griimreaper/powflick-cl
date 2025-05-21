@@ -124,10 +124,10 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       sizeChange(e.width, index);
     } else {
       let newFontSize = 0;
-      if (each.text?.length! > 1) {
+      if (each.text?.length! > 2) {
         newFontSize = Math.min(e.width, e.height) * 0.6;
       } else {
-        newFontSize = Math.min(e.width, e.height) * 1.2;
+        newFontSize = Math.min(e.height) * 0.7;
       }
       e.target.style.width = `${e.width}px`;
       e.target.style.height = `${e.height}px`;
@@ -202,12 +202,6 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             keepRatio={true}
             onResize={(e) => {
               handleResize(e);
-            }}
-            onResizeEnd={({ target }) => {
-              const input = target as HTMLInputElement;
-
-              inputHeigthRef.current = input.offsetHeight;
-              inputWidthRef.current = input.offsetWidth;
             }}
             onRotate={handleRotate}
             onPinchStart={(e) => console.log('Pinch start event', e)}
@@ -284,7 +278,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           }
         </>
       )}
-      {each.type !== "Logo" && handleChange !== undefined && (
+      {each.type !== "Logo" && handleChange !== undefined && (isSelectedRef.current || each.text) && (
         <input
           ref={elementRef as LegacyRef<HTMLInputElement>}
 
@@ -302,6 +296,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             fontSize: `${each.size}px`,
             width: `${inputWidthRef.current}px`,
             height: `${(each.size || 0) * 1.5}px`,
+            minHeight: '20px',
             paddingTop: 10,
             textIndent: '3px', // o el valor que desees
             touchAction: "none",

@@ -121,6 +121,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Crawford Line";
+  src: url("/fonts/Crawford Line/Crawford line.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .anton {
   font-family: "Anton", sans-serif;
 }
@@ -348,4 +355,8 @@
 
 .dirgahayu {
   font-family: "Dirga Hayu", sans-serif;
+}
+
+.crawfordline {
+  font-family: "Crawford Line", sans-serif;
 }

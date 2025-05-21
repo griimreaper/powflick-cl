@@ -7,6 +7,7 @@ import InputTeam from './inputTeam';
 import { ChevronRightOutlined, ErrorOutline } from '@mui/icons-material';
 import { SwatchesPicker } from "react-color";
 import { Box, Button, FormControl, IconButton, Input, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from '@mui/material';
+import { each } from 'lodash';
 
 const textTooltip = [
     "You can add this customization to all products if there are several",
@@ -328,24 +329,49 @@ function EditableContainer({
                     </Box>
                     {/* Logo */}
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-                        <input
-                            type="file"
-                            accept="image/png"
-                            onChange={handleFileChange}
-                            style={{
-                                paddingTop: 1,
-                                paddingBottom: 1,
-                                fontSize: "0.875rem",
-                                outline: "none",
-                                borderColor: "primary.main",
-                            }
-                            }
-                        />
+                        <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent={'center'}
+                            flexWrap="wrap"
+                            gap={1}
+                            sx={{ width: '80%' }}
+                        >
+                            <input
+                                type="file"
+                                accept=".png, .jpg, .jpeg"
+                                onChange={handleFileChange}
+                                style={{
+                                    fontSize: "0.875rem",
+                                    outline: "none",
+                                    borderColor: "primary.main",
+                                    maxWidth: "100%",
+                                }}
+                            />
+                            <Tooltip title="Format Allowed: png, jpg, jpeg" placement="bottom">
+                                <ErrorOutline
+                                    sx={{
+                                        width: 20,
+                                        height: 20,
+                                        color: "text.secondary",
+                                        opacity: 1,
+                                    }}
+                                />
+                            </Tooltip>
+                        </Box>
+
                         <Button
                             variant="contained"
                             color='primary'
                             onClick={() => handleSubmit(selection.index)}
-                            disabled={!file}
+                            disabled={
+                                !file ||
+                                (
+                                    !file.name.toLowerCase().endsWith('.jpg') &&
+                                    !file.name.toLowerCase().endsWith('.jpeg') &&
+                                    !file.name.toLowerCase().endsWith('.png')
+                                )
+                            }
                             sx={{
                                 width: 112,
                                 backgroundColor: !file ? "grey.300" : "neutral.main",
@@ -357,6 +383,7 @@ function EditableContainer({
                         >
                             Upload
                         </Button>
+
                         <Button
                             variant="contained"
                             color="error"

@@ -48,6 +48,7 @@ export const fonts: { [key: string]: string } = {
   "Madura United FC": "Madura United FC",
   "Overgrid": "Overgrid",
   "Slovakia": "Slovakia",
+  "Crawford Line": "Crawford Line",
 };
 
 export default function PanelSides({
