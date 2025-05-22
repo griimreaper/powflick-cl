@@ -58,6 +58,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   const BoxRef = useRef<HTMLDivElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
   const imageHeightRef = useRef(0);
+  const [actualize, setActualize] = useState(true)
 
   // Calcular el ancho del input basado en el texto
   useEffect(() => {
@@ -187,7 +188,6 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             flushSync={flushSync}
             className="custom-moveable"
             target={elementRef.current}
-            useMutationObserver
             useResizeObserver
             resizable
             renderDirections={["sw", "nw", "ne", "se"]}
@@ -198,10 +198,12 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
             viewContainer={parentRef.current}
             dragContainer={parentRef.current}
             rootContainer={parentRef.current}
-
             keepRatio={true}
             onResize={(e) => {
               handleResize(e);
+            }}
+            onResizeEnd={(e) => {
+              setActualize(!actualize)
             }}
             onRotate={handleRotate}
             onPinchStart={(e) => console.log('Pinch start event', e)}
@@ -209,19 +211,15 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           />
           {each.size ?
             (<Box ref={BoxRef}
-              width={each.type === 'Logo' ? `${each.size}px` : `${inputWidthRef.current}px`}
-              height={each.type === 'Logo' ? `${imageHeightRef.current}px` : `${each.size}px`}
+              width={each.type === 'Logo' ? `${each.size}px` : `${containerRef.current?.offsetWidth}px`}
+              height={each.type === 'Logo' ? `${imageHeightRef.current}px` : `${containerRef.current?.offsetHeight}px`}
               position={"absolute"}
-              sx={{
-                transform: "translate(-50%, -50%)",
-              }}
-
             >
               <Box
                 display={"flex"}
                 position={"absolute"}
-                top={"-50px"}
-                justifyContent={"space-between"}
+                bottom={"-50px"}
+                justifyContent={"center"}
                 width={"100%"}>
                 {/* <Box
                   onClick={() => {
