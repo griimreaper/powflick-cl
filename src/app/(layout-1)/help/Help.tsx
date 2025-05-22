@@ -180,7 +180,7 @@ export default function FAQSection() {
       >
 
         <Box sx={{ width: isMobile ? '100%' : '80%', p: isMobile ? 4 : 0 }}>
-          <Typography variant="h3" component={'h1'} sx={{ fontWeight: '400', fontFamily: "GYMER", fontSize: isMobile ? '1.3rem' : '2rem', textAlign: 'center', mb: 2, color: 'white', position: 'relative', zIndex:3 }}>
+          <Typography variant="h3" component={'h1'} sx={{ fontWeight: '400', fontFamily: "GYMER", fontSize: isMobile ? '1.3rem' : '2rem', textAlign: 'center', mb: 2, color: 'white', position: 'relative' }}>
             We want your experience to be perfect!
           </Typography>
           <Typography variant="h5" component={'h2'} sx={{ textAlign: 'center', color: 'white', fontSize: isMobile ? '1rem' : '2rem' }}>
