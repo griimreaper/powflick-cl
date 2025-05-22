@@ -7,7 +7,7 @@ export default function LogoSection() {
   return (
     <Box width={'100%'} display="flex" flexDirection={"column"} justifyContent="center" alignItems="center">
       <Link href="/" draggable={false}>
-        <Box display="flex" justifyContent="center" width={'80%'}>
+        <Box display="flex" justifyContent="center" width={'100%'} height={100}>
           <Image
             width={200}
             height={200}

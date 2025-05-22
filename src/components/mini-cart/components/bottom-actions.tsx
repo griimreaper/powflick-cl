@@ -91,7 +91,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
   };
 
   return (
-    <Box p={2.5}>
+    <Box p={2.5} position={'relative'} bottom={{ xs: 60, md:0 }} bgcolor={'white'}>
       <Button
         id="continueToPayment-button-event-click"
         fullWidth
@@ -103,7 +103,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
           addDatalayer();
         }}
       >
-        Checkout Now ({total})
+        Checkout Now ({total.toFixed(2)})
       </Button>
 
       <Button

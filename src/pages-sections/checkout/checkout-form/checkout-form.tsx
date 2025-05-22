@@ -68,7 +68,6 @@ export default function CheckoutForm({ toggleDialog, selectedDirection, setSelec
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        height: "100vh",
       }}
     >
 
