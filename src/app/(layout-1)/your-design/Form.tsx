@@ -23,7 +23,6 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { Paragraph } from "components/Typography";
 import { CloudUpload, Delete } from "@mui/icons-material";
 import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { createFreeDesign } from "services/FreeDesign";
 import { uploadFolderPath } from "services/dashboardAdmin/products";

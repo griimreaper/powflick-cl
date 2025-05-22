@@ -32,7 +32,7 @@ export default function ConversationCard({ message }: Props) {
       />
 
       <div>
-        <H5 fontWeight="600" mt={0} mb={0}>
+        <H5 fontWeight="600" mt={0} color="black" mb={0}>
           {name}
         </H5>
 
@@ -45,6 +45,7 @@ export default function ConversationCard({ message }: Props) {
           bgcolor="primary.main"
           p={1}
           mt={2}
+          color={'white'}
           lineHeight={1.7}
           textAlign="justify"
         >

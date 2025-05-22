@@ -120,16 +120,20 @@ const ContactUs = () => {
                     error={!!errors.name}
                     helperText={errors.name?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
-                      "& .MuiOutlinedInput-input": {
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
                       },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
-                        color: "#d32f2f",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
@@ -146,14 +150,20 @@ const ContactUs = () => {
                     error={!!errors.email}
                     helperText={errors.email?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
+                      },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
-                        color: "#d32f2f",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
@@ -169,14 +179,20 @@ const ContactUs = () => {
                     error={!!errors.title}
                     helperText={errors.title?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
+                      },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
-                        color: "#d32f2f",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
@@ -195,17 +211,20 @@ const ContactUs = () => {
                     error={!!errors.message}
                     helperText={errors.message?.message}
                     sx={{
-                      backgroundColor: "white", // solo el input, no tapa el label
                       borderRadius: 2,
-                      "& .MuiOutlinedInput-input": {
-                        padding: "10px 14px",
+                      "& .MuiInputLabel-root": {
+                        zIndex: 3,
+                      },
+                      "& .MuiInputBase-root": {
+                        backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        ":hover": {
+                          backgroundColor: "#fff !important", // solo el input, no tapa el label
+                        },
                       },
                       "& .MuiFormHelperText-root": {
-                        backgroundColor: "#ffebee",
-                        color: "#d32f2f",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        margin: 0,
+                        color: "#fff !important", // fuerza la prioridad
+                        position: "relative",     // ayuda si hay pseudo-elementos ::before
+                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
                       },
                     }}
                   />
@@ -224,7 +243,7 @@ const ContactUs = () => {
                           borderRadius: 2,
                         },
                         "& .MuiFormHelperText-root": {
-                          backgroundColor: "#ffebee",
+                          backgroundColor: "white",
                           color: "#d32f2f",
                           padding: "2px 8px",
                           borderRadius: "4px",

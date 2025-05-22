@@ -1,7 +1,4 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import {
   Box,
@@ -12,43 +9,41 @@ import {
   Typography,
   Card,
   CardContent,
-  Tooltip,
 } from "@mui/material";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { useDashboardStore } from "store/dashboard";
 import { Direction } from "models/types";
 import DirectionForm from "./direction-form";
 import { useShoppingCartStore } from "store/shoppingCart";
 import useFlag from "hooks/useFlag";
-import { createOrder } from "services/Order";
-import Image from "next/image";
-import DialogDrawer from "components/header/components/dialog-drawer";
-import useHeader from "components/header/hooks/use-header";
-import { goToStripe } from "../../../../fpixel";
-import { showErrorAlert } from "utils/alerts";
+
 import "react-phone-input-2/lib/material.css";
+import { useQuery } from "@tanstack/react-query";
+import { getUserAddress } from "services/DashboardUser/profile";
 
-
-export default function CheckoutForm({ toggleDialog }: any) {
-  const router = useRouter();
-  const { cart, total, coupon, note } = useShoppingCartStore();
-  const [sameAsShipping, setSameAsShipping] = useState(false);
+// Cambiar el valor inicial para que coincida con la primera opción disponible
+export default function CheckoutForm({ toggleDialog, selectedDirection, setSelectedDirection }: {
+  toggleDialog: any,
+  selectedDirection: Direction | null,
+  setSelectedDirection: (dir: Direction | null) => void
+}) {
+  const { cart, } = useShoppingCartStore();
   const [showForm, setShowForm] = useState<boolean>(false);
   const { profile } = useDashboardStore();
-  const { directions } = profile.genericResponseUser;
   const { token } = profile;
-  const [selectedDirection, setSelectedDirection] = useState<Direction | null>(
-    null
-  );
-  const [loading, setLoading] = useFlag();
+  const { data: directions, isLoading, error } = useQuery<Direction[]>({
+    queryKey: ["user-address"],
+    queryFn: () => getUserAddress(token || ""),
+    refetchOnMount: true,
+    staleTime: 0,
+  });
 
   const handleDirectionChange = (event: any) => {
-    const selectedIndex = event.target.value;
-    if (selectedIndex === "") {
+    const value = event.target.value;
+    if (value === "") {
       setSelectedDirection(null);
     } else {
       setSelectedDirection(
-        directions.find((dir) => dir.id === selectedIndex) || null
+        directions?.find((dir) => dir.id === value) || null
       );
     }
   };
@@ -59,52 +54,13 @@ export default function CheckoutForm({ toggleDialog }: any) {
     const savedData = localStorage.getItem("pendingAddress");
     if (savedData) {
       setShowForm(true);
+      localStorage.removeItem("pendingAddress"); // <-- Elimina la bandera después de usarla
     }
   }, []);
 
   const toggleForm = () => {
     setShowForm(!showForm);
   };
-
-  const handleProceedToPayment = async () => {
-    setLoading(true);
-
-    try {
-      if (token && selectedDirection) {
-        const response = await createOrder(
-          token,
-          {
-            cartProducts: cart, // Enviar el carrito completo
-          },
-          selectedDirection.id,
-          "USD",
-          1,
-          coupon?.id,
-          note
-        );
-
-        if (typeof response === "string") {
-          router.push(response);
-        }
-      }
-    } catch (error: any) {
-      console.error("Error creating order:", error);
-      if (error.response && error.response.data && error.response.data.message) {
-        showErrorAlert("Error!", error.response.data.message);
-      } else {
-        showErrorAlert("Error!", "An unexpected error occurred while creating the order.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Mensaje para el tooltip del botón deshabilitado
-  const disabledReason = !selectedDirection
-    ? "Select a shipping address"
-    : cart.length === 0
-      ? "Add products to cart"
-      : "";
 
   return (
     <Box
@@ -115,7 +71,8 @@ export default function CheckoutForm({ toggleDialog }: any) {
         height: "100vh",
       }}
     >
-      <Card>
+
+      <Card sx={{ boxShadow: '0 8px 32px 0 rgba(60,72,88,0.25)' }}>
         <CardContent>
           {/* Selector de direcciones */}
           <Box
@@ -138,7 +95,7 @@ export default function CheckoutForm({ toggleDialog }: any) {
                 <MenuItem value="">
                   <em>Select Address</em>
                 </MenuItem>
-                {directions.map(({ id, country, city, district }) => (
+                {directions?.map(({ id, country, city, district }) => (
                   <MenuItem key={id} value={id}>
                     {`${country}, ${city}, ${district}`}
                   </MenuItem>
@@ -169,7 +126,7 @@ export default function CheckoutForm({ toggleDialog }: any) {
 
       {/* Información de la dirección seleccionada */}
       {selectedDirection && !showForm && (
-        <Card>
+        <Card sx={{ boxShadow: '0 8px 32px 0 rgba(60,72,88,0.25)' }}>
           <CardContent>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Selected Direction:
@@ -181,7 +138,7 @@ export default function CheckoutForm({ toggleDialog }: any) {
               <strong>City:</strong> {selectedDirection.city}
             </Typography>
             <Typography>
-              <strong>Location:</strong> {selectedDirection.district}
+              <strong>State:</strong> {selectedDirection.district}
             </Typography>
             {selectedDirection.address && (
               <Typography>
@@ -212,175 +169,6 @@ export default function CheckoutForm({ toggleDialog }: any) {
           </CardContent>
         </Card>
       )}
-
-      {/* Botones de navegación */}
-      <Box sx={{ mt: 3 }}>
-        <Grid container spacing={6}>
-          <Grid item sm={6} xs={12}>
-            <Button
-              LinkComponent={Link}
-              variant="contained"
-              color="primary"
-              href="/cart"
-              fullWidth
-              sx={{
-                textTransform: "uppercase",
-                minWidth: "150px"
-              }}
-            >
-              Back to Cart
-            </Button>
-          </Grid>
-
-          <Grid item sm={6} xs={12}>
-            {(!selectedDirection || cart.length === 0) ? (
-              <Tooltip title={disabledReason} arrow>
-                <span style={{ display: "block" }}>
-                  <Button
-                    id="continuePayment-button-event-click"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    disabled
-                    sx={{
-                      backgroundColor: "#000",
-                      color: "#fff !important",
-                      borderColor: "#fff",
-                      borderWidth: 2,
-                      borderStyle: "solid",
-                      textTransform: "uppercase",
-                      opacity: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1.5,
-                      '& .MuiSvgIcon-root': {
-                        fontSize: 22,
-                        color: "#fff",
-                      },
-                      '&:hover': {
-                        backgroundColor: "#000",
-                        color: "#fff",
-                        borderColor: "#fff",
-                      },
-                    }}
-                  >
-                    <WarningAmberIcon />
-                    Checkout Now
-                  </Button>
-                </span>
-              </Tooltip>
-            ) : (
-              <Button
-                id="continuePayment-button-event-click"
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  handleProceedToPayment();
-                  (window as any).dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
-                  (window as any).dataLayer.push({
-                    event: "Go To Stripe",
-                    ecommerce: {
-                      currency: "USD",
-                      value: Number(total * (1 - (coupon?.discount || 0) / 100)),
-                      coupon: coupon?.title || null,
-                      discount: coupon?.discount || 0,
-                      items: cart.map(
-                        ({
-                          product,
-                          totalCustomization,
-                          totalProduct,
-                          amount,
-                        }) => {
-                          const {
-                            id,
-                            price,
-                            title,
-                            product_categories,
-                            colors,
-                            slug,
-                            sport,
-                          } = product;
-                          return {
-                            item_id: id,
-                            item_name: title,
-                            affiliation: "Google Merchandise Store",
-                            item_brand: "Pow Flick",
-                            item_category: product_categories.split("|")[0],
-                            item_category2: sport,
-                            item_list_name: slug,
-                            item_variant: colors ? colors[0] : null,
-                            price: Number(price),
-                            quantity: amount,
-                            total_product: Number(totalProduct),
-                            total_customizations: Number(totalCustomization),
-                          };
-                        }
-                      ),
-                    },
-                  });
-                  goToStripe("goToStripe", {
-                    ecommerce: {
-                      currency: "USD",
-                      value: Number(total * (1 - (coupon?.discount || 0) / 100)),
-                      coupon: coupon?.title || null,
-                      discount: coupon?.discount || 0,
-                      items: cart.map(
-                        ({
-                          product,
-                          totalCustomization,
-                          totalProduct,
-                          amount,
-                        }) => {
-                          const {
-                            id,
-                            price,
-                            title,
-                            product_categories,
-                            colors,
-                            slug,
-                            sport,
-                          } = product;
-                          return {
-                            item_id: id,
-                            item_name: title,
-                            // affiliation: "Google Merchandise Store",
-                            item_brand: "Pow Flick",
-                            item_category: product_categories.split("|")[0],
-                            item_category2: sport,
-                            item_list_name: slug,
-                            item_variant: colors ? colors[0] : null,
-                            price: Number(price),
-                            quantity: amount,
-                            total_product: Number(totalProduct),
-                            total_customizations: Number(totalCustomization),
-                          };
-                        }
-                      ),
-                    },
-                  });
-                }}
-                fullWidth
-                sx={{
-                  textTransform: "uppercase",
-                  minWidth: "150px"
-                }}
-              >
-                {loading ? (
-                  // Contenido cuando está cargando
-                  <Image
-                    src="/assets/images/Double Ring-1s-200px.png"
-                    alt="Loader GIF"
-                    width={20}
-                    height={20}
-                  />
-                ) : (
-                  "Checkout Now"
-                )}
-              </Button>
-            )}
-          </Grid>
-        </Grid>
-      </Box>
     </Box>
   );
 }

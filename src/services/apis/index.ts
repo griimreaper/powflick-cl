@@ -1,19 +1,27 @@
-import axios from "axios";
+// axiosClient.ts o donde declares tu cliente
+import axios, { AxiosRequestConfig, AxiosInstance } from "axios";
 import { signOut } from "next-auth/react";
 
 const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const mainApi = axios.create({
+export interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  skipAuthInterceptor?: boolean;
+}
+
+// Crea una instancia tipada
+export const mainApi: AxiosInstance = axios.create({
   baseURL: BASE_API_URL,
 });
 
-// Interceptor para manejar 401
+// Interceptor de respuesta
 mainApi.interceptors.response.use(
   response => response,
   error => {
-    if (error.response?.status === 401) {
+    const config = error.config as CustomAxiosRequestConfig;
+
+    if (error.response?.status === 401 && !config?.skipAuthInterceptor) {
       localStorage.removeItem("dashboard-storage");
-      signOut()
+      signOut({ redirect: true, callbackUrl: "/" });
     }
 
     return Promise.reject(error);

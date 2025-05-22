@@ -16,7 +16,7 @@ import { FlexBox } from "components/flex-box";
 import SportZoneTextField from "components/SportZoneTextField";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { registerUser } from "services/Register";
-import { Box, Dialog, useMediaQuery } from "@mui/material";
+import { Box, Dialog, FormControl, useMediaQuery } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import LogoWithTitle from "pages-sections/sessions/components/logo-title";
 import { Wrapper } from "pages-sections/sessions/styles";
@@ -149,38 +149,38 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
           />
 
           <Box mb={1.5} width="100%">
-            <label
-              htmlFor="phone"
-              style={{
-                display: "block",
-                fontSize: 14,
-                fontWeight: 500,
-                marginBottom: 8,
-                color: "#2B3445",
-              }}
-            >
-              Phone
-            </label>
-            <PhoneInput
-              containerClass="custom-phone-container"
-              inputClass="custom-phone-input"
-              inputProps={{
-                name: "phone",
-                onBlur: handleBlur,
-                class: 'custom-phone-input',
-              }}
-              country={"us"}
-              specialLabel=""
-              value={values.phone}
-              onChange={(value) => {
-                handleChange({ target: { name: "phone", value } });
-              }}
-            />
-            {touched.phone && errors.phone && (
-              <div style={{ color: "red", fontSize: 10, marginTop: 4, marginLeft: 12 }}>
-                {errors.phone}
-              </div>
-            )}
+            <FormControl required fullWidth>
+              <label
+                htmlFor="phone"
+                style={{
+                  display: "block",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  marginBottom: 8,
+                  color: "#2B3445",
+                }}
+              >
+                Phone
+              </label>
+              <PhoneInput
+                inputProps={{
+                  name: "phone",
+                  onBlur: handleBlur,
+                }}
+                inputStyle={{ height: '45px'}}
+                country={"us"}
+                specialLabel=""
+                value={values.phone}
+                onChange={(value) => {
+                  handleChange({ target: { name: "phone", value } });
+                }}
+              />
+              {touched.phone && errors.phone && (
+                <div style={{ color: "red", fontSize: 10, marginTop: 4, marginLeft: 12 }}>
+                  {errors.phone}
+                </div>
+              )}
+            </FormControl>
           </Box>
 
           <SportZoneTextField
