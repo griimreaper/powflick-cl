@@ -33,7 +33,8 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
       return (
         <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
           <AccordionSummary expandIcon={<ExpandMore color="primary" />} sx={ACCORDION_SUMMARY_STYLES}>
-            <Link href={item.title !== 'Collections' ? "/products?category=" + item.title : ''}>
+            <Link href={item.title !== 'Collections' ? "/products?category=" + item.title : ''}
+              onClick={handleClose}>
               <H6>{item.title}</H6>
             </Link>
           </AccordionSummary>
@@ -47,7 +48,8 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
       return (
         <Accordion square key={index} elevation={0} disableGutters sx={ACCORDION_STYLES}>
           <AccordionSummary expandIcon={<ExpandMore color="primary" />} sx={ACCORDION_SUMMARY_STYLES}>
-            <Link href={"/products?collection=" + item.title}>
+            <Link href={"/products?collection=" + item.title}
+              onClick={handleClose}>
               <H6>{item.title}</H6>
             </Link>
           </AccordionSummary>
@@ -61,8 +63,9 @@ export const renderLevels = (data: any[], handleClose: () => void) => {
     return (
       <div key={item.title}>
         <SubCategoryList>
-          <Box key={item.id} width={200}>
-            <ProductCard8 key={item.id} product={item}></ProductCard8>
+          <Box key={item.id} width={200} onClick={handleClose}>
+            <ProductCard8 key={item.id} product={item}
+            ></ProductCard8>
           </Box>
         </SubCategoryList>
       </div>

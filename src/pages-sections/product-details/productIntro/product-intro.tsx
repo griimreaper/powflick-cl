@@ -266,7 +266,7 @@ export default function ProductIntro({ product }: Props) {
           alignItems="center"
         >
           {showCustomization ? (
-            <Box mt={{ xs: 10, sm: 16, lg: 0 }} px={{ xs: 0, sm: 0 }}>
+            <Box>
               <Customizations {...customizationProps} />
               {/* Agrega aquí los elementos de personalización */}
             </Box>
@@ -274,7 +274,7 @@ export default function ProductIntro({ product }: Props) {
             <Box>
               <FlexBox
                 borderRadius={3}
-                overflow="hidden"
+                overflow="visible"
                 justifyContent="center"
                 mb={6}
               >
