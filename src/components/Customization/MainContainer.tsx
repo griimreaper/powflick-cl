@@ -72,7 +72,7 @@ function MainContainer({
           panelRect.width -
           (texts[selection.index].textSize *
             texts[selection.index].text.length) /
-            2;
+          2;
         const maxY = panelRect.height - texts[selection.index].textSize;
         const constrainedX = Math.max(0, Math.min(maxX, offsetX));
         const constrainedY = Math.max(0, Math.min(maxY, offsetY));
@@ -94,7 +94,7 @@ function MainContainer({
           panelRect.width -
           (numbers[selection.index].numberSize *
             numbers[selection.index].number.length) /
-            2;
+          2;
         const maxY = panelRect.height - numbers[selection.index].numberSize;
         const constrainedX = Math.max(0, Math.min(maxX, offsetX));
         const constrainedY = Math.max(0, Math.min(maxY, offsetY));
@@ -125,13 +125,13 @@ function MainContainer({
         logos.map((l: Logo, i: number) =>
           i === index
             ? {
-                ...l,
-                logoDragOffset: { x: offsetX, y: offsetY },
-                logoPosition: {
-                  x: logos[index].logoPosition.x,
-                  y: logos[index].logoPosition.y,
-                },
-              }
+              ...l,
+              logoDragOffset: { x: offsetX, y: offsetY },
+              logoPosition: {
+                x: logos[index].logoPosition.x,
+                y: logos[index].logoPosition.y,
+              },
+            }
             : l
         )
       );
@@ -155,13 +155,13 @@ function MainContainer({
         logos.map((l: Logo, i: number) =>
           i === index
             ? {
-                ...l,
-                logoDragOffset: { x: offsetX, y: offsetY },
-                logoPosition: {
-                  x: logos[index].logoPosition.x,
-                  y: logos[index].logoPosition.y,
-                },
-              }
+              ...l,
+              logoDragOffset: { x: offsetX, y: offsetY },
+              logoPosition: {
+                x: logos[index].logoPosition.x,
+                y: logos[index].logoPosition.y,
+              },
+            }
             : l
         )
       );
@@ -184,13 +184,13 @@ function MainContainer({
         texts.map((t: Text, i: number) =>
           i === index
             ? {
-                ...t,
-                textDragOffset: { x: offsetX, y: offsetY },
-                textPosition: {
-                  x: texts[index].textPosition.x,
-                  y: texts[index].textPosition.y,
-                },
-              }
+              ...t,
+              textDragOffset: { x: offsetX, y: offsetY },
+              textPosition: {
+                x: texts[index].textPosition.x,
+                y: texts[index].textPosition.y,
+              },
+            }
             : t
         )
       );
@@ -214,13 +214,13 @@ function MainContainer({
         texts.map((t: Text, i: number) =>
           i === index
             ? {
-                ...t,
-                textDragOffset: { x: offsetX, y: offsetY },
-                textPosition: {
-                  x: texts[index].textPosition.x,
-                  y: texts[index].textPosition.y,
-                },
-              }
+              ...t,
+              textDragOffset: { x: offsetX, y: offsetY },
+              textPosition: {
+                x: texts[index].textPosition.x,
+                y: texts[index].textPosition.y,
+              },
+            }
             : t
         )
       );
@@ -243,13 +243,13 @@ function MainContainer({
         numbers.map((n: Number, i: number) =>
           i === index
             ? {
-                ...n,
-                numberDragOffset: { x: offsetX, y: offsetY },
-                numberPosition: {
-                  x: numbers[index].numberPosition.x,
-                  y: numbers[index].numberPosition.y,
-                },
-              }
+              ...n,
+              numberDragOffset: { x: offsetX, y: offsetY },
+              numberPosition: {
+                x: numbers[index].numberPosition.x,
+                y: numbers[index].numberPosition.y,
+              },
+            }
             : n
         )
       );
@@ -273,13 +273,13 @@ function MainContainer({
         numbers.map((n: Number, i: number) =>
           i === index
             ? {
-                ...n,
-                numberDragOffset: { x: offsetX, y: offsetY },
-                numberPosition: {
-                  x: numbers[index].numberPosition.x,
-                  y: numbers[index].numberPosition.y,
-                },
-              }
+              ...n,
+              numberDragOffset: { x: offsetX, y: offsetY },
+              numberPosition: {
+                x: numbers[index].numberPosition.x,
+                y: numbers[index].numberPosition.y,
+              },
+            }
             : n
         )
       );
@@ -317,7 +317,7 @@ function MainContainer({
           panelRect.width -
           (texts[selection.index].textSize *
             texts[selection.index].text.length) /
-            2;
+          2;
         const maxY = panelRect.height - texts[selection.index].textSize;
         const constrainedX = Math.max(0, Math.min(maxX, offsetX));
         const constrainedY = Math.max(0, Math.min(maxY, offsetY));
@@ -339,7 +339,7 @@ function MainContainer({
           panelRect.width -
           (numbers[selection.index].numberSize *
             numbers[selection.index].number.length) /
-            2;
+          2;
         const maxY = panelRect.height - numbers[selection.index].numberSize;
         const constrainedX = Math.max(0, Math.min(maxX, offsetX));
         const constrainedY = Math.max(0, Math.min(maxY, offsetY));
@@ -407,6 +407,46 @@ function MainContainer({
     setActualize();
   };
 
+  const deleteElement = (type: string, index: number) => {
+    if (type === "Logo") {
+      setLogos((prevLogos: any) => prevLogos.filter((_: any, i: number) => i !== index));
+    } else if (type === "Text") {
+      setTexts((prevTexts: any) => prevTexts.filter((_: any, i: number) => i !== index));
+    } else if (type === "Number") {
+      setNumbers((prevNumbers: any) => prevNumbers.filter((_: any, i: number) => i !== index));
+    }
+
+    setSelection({ type: "", index: 0 });
+    saveDataToLocal();
+    setActualize();
+  };
+
+  const duplicateElement = (type: string, index: number) => {
+    if (type === "Logo") {
+      setLogos((prevLogos: any) => {
+        const newLogos = [...prevLogos];
+        newLogos.splice(index + 1, 0, prevLogos[index]); // Inserta el duplicado después del original
+        return newLogos;
+      });
+    } else if (type === "Text") {
+      setTexts((prevTexts: any) => {
+        const newTexts = [...prevTexts];
+        newTexts.splice(index + 1, 0, prevTexts[index]);
+        return newTexts;
+      });
+    } else if (type === "Number") {
+      setNumbers((prevNumbers: any) => {
+        const newNumbers = [...prevNumbers];
+        newNumbers.splice(index + 1, 0, prevNumbers[index]);
+        return newNumbers;
+      });
+    }
+
+    setSelection({ type, index: index + 1 }); // Selecciona el nuevo duplicado
+    saveDataToLocal();
+    setActualize();
+  };
+
   return (
     <Box sx={{ width: "full", justifyContent: "center", display: "flex" }}>
       <Box
@@ -452,6 +492,8 @@ function MainContainer({
                   onTouchStart={(e) => handleLogoTouchStart(e, index)}
                   sizeChange={handleLogoSizeChanger}
                   handleRotation={handleRotation}
+                  deleteElement={deleteElement}
+                  duplicateElement={duplicateElement}
                   each={{
                     position: logoPosition,
                     size: logoSize,
@@ -479,6 +521,8 @@ function MainContainer({
                 onTouchStart={(e) => handleTextTouchStart(e, index)}
                 sizeChange={handleTextSizeChanger}
                 handleRotation={handleRotation}
+                deleteElement={deleteElement}
+                duplicateElement={duplicateElement}
                 each={{
                   text: text,
                   font,
@@ -515,6 +559,8 @@ function MainContainer({
                 onTouchStart={(e) => handleNumberTouchStart(e, index)}
                 sizeChange={handleNumberSizeChanger}
                 handleRotation={handleRotation}
+                deleteElement={deleteElement}
+                duplicateElement={duplicateElement}
                 each={{
                   font,
                   text: number,

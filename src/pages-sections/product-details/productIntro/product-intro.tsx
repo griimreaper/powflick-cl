@@ -115,6 +115,15 @@ export default function ProductIntro({ product }: Props) {
   }, [customization]);
 
   useEffect(() => {
+    if (customization.id !== "none") {
+      const customizations: Customization[] | null =
+        list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
+
+      setCustomization(customizations[0]);
+    }
+  }, [id]);
+
+  useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
       "customizations-store"
     );
@@ -129,10 +138,10 @@ export default function ProductIntro({ product }: Props) {
         customizations?.length === 1 &&
         customizations?.some(
           (e) =>
-            !e.backSide.texts[0].text &&
-            !e.backSide.numbers[0].number &&
-            !e.frontSide.texts[0].text &&
-            !e.frontSide.numbers[0].number
+            !e.backSide.texts[0]?.text &&
+            !e.backSide.numbers[0]?.number &&
+            !e.frontSide.texts[0]?.text &&
+            !e.frontSide.numbers[0]?.number
         )
       ) {
         setTimeout(() => {
@@ -142,12 +151,6 @@ export default function ProductIntro({ product }: Props) {
       }
     }
   }, [font, fontColor]);
-
-  useEffect(() => {
-    if (customization.id !== "none") {
-      setCustomizationInList(id, customization);
-    }
-  }, [customization]);
 
   useEffect(() => {
     return () => {

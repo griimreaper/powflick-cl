@@ -73,7 +73,7 @@ function EditableContainer({
 
     const handleSubmit = async (index: number) => {
         if (file) {
-            if (logos[index].logoUrl !== "") {
+            if (logos[index]?.logoUrl !== "") {
                 try {
                     await deleteImage(logos[index].logoUrl);
                     setLogos(
@@ -328,24 +328,49 @@ function EditableContainer({
                     </Box>
                     {/* Logo */}
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-                        <Input
-                            type="file"
-                            onChange={handleFileChange}
-                            sx={{
-                                py: 1,
-                                fontSize: "0.875rem",
-                                "&:focus": {
+                        <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent={'center'}
+                            flexWrap="wrap"
+                            gap={1}
+                            sx={{ width: '80%' }}
+                        >
+                            <input
+                                type="file"
+                                accept=".png, .jpg, .jpeg"
+                                onChange={handleFileChange}
+                                style={{
+                                    fontSize: "0.875rem",
                                     outline: "none",
                                     borderColor: "primary.main",
-                                    ring: "2px solid primary.main",
-                                },
-                            }}
-                        />
+                                    maxWidth: "100%",
+                                }}
+                            />
+                            <Tooltip title="Format Allowed: png, jpg, jpeg" placement="bottom">
+                                <ErrorOutline
+                                    sx={{
+                                        width: 20,
+                                        height: 20,
+                                        color: "text.secondary",
+                                        opacity: 1,
+                                    }}
+                                />
+                            </Tooltip>
+                        </Box>
+
                         <Button
                             variant="contained"
                             color='primary'
                             onClick={() => handleSubmit(selection.index)}
-                            disabled={!file}
+                            disabled={
+                                !file ||
+                                (
+                                    !file.name.toLowerCase().endsWith('.jpg') &&
+                                    !file.name.toLowerCase().endsWith('.jpeg') &&
+                                    !file.name.toLowerCase().endsWith('.png')
+                                )
+                            }
                             sx={{
                                 width: 112,
                                 backgroundColor: !file ? "grey.300" : "neutral.main",
@@ -357,6 +382,7 @@ function EditableContainer({
                         >
                             Upload
                         </Button>
+
                         <Button
                             variant="contained"
                             color="error"
@@ -433,7 +459,8 @@ function EditableContainer({
                                         style: { textAlign: "center" },
                                     }}
                                     sx={{
-                                        width: `${(each.text ?? "").length + 2}ch`,
+                                        overflow: "visible",
+                                        width: `${(each.text ?? "").length + 4}ch`,
                                         "&.Mui-focused": {
                                             backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         },
