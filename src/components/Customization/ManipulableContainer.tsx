@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
-import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable"; import "./MoveableComponent.css";
+import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
 import "./MoveableComponent.css";
 import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
 import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, Height, OpenInFull, RedoOutlined } from "@mui/icons-material";

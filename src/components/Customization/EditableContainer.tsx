@@ -7,7 +7,6 @@ import InputTeam from './inputTeam';
 import { ChevronRightOutlined, ErrorOutline } from '@mui/icons-material';
 import { SwatchesPicker } from "react-color";
 import { Box, Button, FormControl, IconButton, Input, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from '@mui/material';
-import { each } from 'lodash';
 
 const textTooltip = [
     "You can add this customization to all products if there are several",
