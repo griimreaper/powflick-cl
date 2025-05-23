@@ -44,3 +44,14 @@ export const updateUser = async (id: string, data: any, token: string) => {
     throw error;
   }
 };
+
+export const getExcelUsers = async (token: string) => {
+  try {
+    const response = await mainApi.get("/excel-products/users", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
