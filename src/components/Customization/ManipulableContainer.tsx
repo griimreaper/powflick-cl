@@ -212,13 +212,13 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           {each.size ?
             (<Box ref={BoxRef}
               width={each.type === 'Logo' ? `${each.size}px` : `${containerRef.current?.offsetWidth}px`}
-              height={each.type === 'Logo' ? `${imageHeightRef.current}px` : `${containerRef.current?.offsetHeight}px`}
+              height={each.type === 'Logo' ? `${imageHeightRef.current}px` : `${elementRef.current?.clientHeight}px`}
               position={"absolute"}
             >
               <Box
                 display={"flex"}
                 position={"absolute"}
-                bottom={"-50px"}
+                top={"110%"}
                 justifyContent={"center"}
                 width={"100%"}>
                 {/* <Box
