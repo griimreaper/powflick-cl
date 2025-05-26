@@ -48,6 +48,7 @@ const VALIDATION_SCHEMA = yup.object().shape({
     .optional(),  // Permite que el campo sea opcional
   featured: yup.boolean(),
   mostSold: yup.boolean(),
+  password: yup.string().optional(),
 });
 
 const sportList = [
@@ -80,6 +81,7 @@ type ProductFormData = {
   product_categories: any;
   featured: any;
   mostSold: any;
+  password: any;
 };
 
 // ================================================================
@@ -104,7 +106,10 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     collections,
     tags,
     score,
+    password,
   } = product || {};
+
+  console.log(product);
 
   const INITIAL_VALUES: ProductFormData = {
     title: title || "",
@@ -120,6 +125,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     featured: featured || false,
     mostSold: mostSold || false,
     slug: slug || "",
+    password: password || "",
   };
   const [files, setFiles] = useState<File[]>([]);
   const [sortedImage, setSortedImage] = useState<string[]>(images || [null, null, null, null]);
@@ -422,6 +428,22 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
                     <MenuItem key={sport} value={sport}>{sport}</MenuItem>
                   ))}
                 </TextField>
+              </Grid>
+
+              <Grid item sm={6} xs={12}>
+                <TextField
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  color="primary"
+                  size="medium"
+                  placeholder="Password"
+                  value={values.password}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  helperText={touched.password && errors.password as string}
+                  error={Boolean(touched.password && errors.password)}
+                />
               </Grid>
 
               <Grid item sm={6} xs={12}>
