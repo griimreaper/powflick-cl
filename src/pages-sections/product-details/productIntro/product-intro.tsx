@@ -119,7 +119,9 @@ export default function ProductIntro({ product }: Props) {
       const customizations: Customization[] | null =
         list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
 
-      setCustomization(customizations[0]);
+      if (customizations && customizations.length > 0) {
+        setCustomization(customizations[0]);
+      }
     }
   }, [id]);
 
