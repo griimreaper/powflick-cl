@@ -215,7 +215,7 @@ export default function ProductPanel({ openPanel, setOpenPanel }: PanelProps) {
 
         const arrayBufferView = new Uint8Array(response.data);
         const workbook = xlsx.read(arrayBufferView, { type: "array" });
-        xlsx.writeFile(workbook, "archivo_excel.xlsx");
+        xlsx.writeFile(workbook, "powflick_products.xlsx");
 
         stopLoadExport();
       } catch (error) {

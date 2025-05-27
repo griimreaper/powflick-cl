@@ -17,11 +17,12 @@ import PageWrapper from "../../page-wrapper";
 // TABLE HEAD COLUMN DATA
 import { useEffect, useState } from "react";
 import useLoading from "hooks/useLoading";
-import { getUsers } from "services/dashboardAdmin/users";
+import { getExcelUsers, getUsers } from "services/dashboardAdmin/users";
 import { DataUsers, Filters } from "models/types";
 import { useSession } from "next-auth/react";
 import Pagination from "pages-sections/vendor-dashboard/products/page-view/Pagination";
-
+import { Box, Button, CircularProgress } from "@mui/material";
+import * as xlsx from "xlsx";
 // =============================================================================
 
 // =============================================================================
@@ -43,7 +44,7 @@ const tableHeading = [
 export default function CustomersPageView() {
   const [loading, startLoading, stopLoading] = useLoading();
   const [users, setUsers] = useState<DataUsers>();
-
+  const [loadExport, startLoadExport, stopLoadExport] = useLoading();
   const { data: session } = useSession();
   const token = session?.user?.name?.split("|")[0];
 
@@ -103,6 +104,23 @@ export default function CustomersPageView() {
     });
   };
 
+  const handleExport = async () => {
+    if (token) {
+      try {
+        startLoadExport();
+        const response = await getExcelUsers(token);
+
+        const arrayBufferView = new Uint8Array(response.data);
+        const workbook = xlsx.read(arrayBufferView, { type: "array" });
+        xlsx.writeFile(workbook, "powflick_users.xlsx");
+      } catch (error) {
+        console.error("Error al descargar el archivo:", error);
+      } finally {
+        stopLoadExport();
+      }
+    }
+  };
+
   return (
     <PageWrapper title="Customers">
       <SearchArea
@@ -111,7 +129,11 @@ export default function CustomersPageView() {
         url="/admin/customers"
         searchPlaceholder="Search Customer..."
       />
-
+      <Box position='relative' width={'100%'} display={'flex'} paddingBottom={{ xs: 2, md: 0 }} justifyContent={{ md: 'flex-end', xs: "space-between" }}>
+        <Button variant="contained" color="primary" sx={{ position: { md: 'absolute' }, top: { md: '-55px' } }} disabled={loadExport} onClick={handleExport}>
+          {loadExport ? <CircularProgress size={24} /> : "Export"}
+        </Button>
+      </Box>
       <Card>
         <Scrollbar>
           <TableContainer sx={{ minWidth: 900 }}>
