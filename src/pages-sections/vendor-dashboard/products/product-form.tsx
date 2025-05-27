@@ -109,7 +109,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     password,
   } = product || {};
 
-  console.log(product);
+  
 
   const INITIAL_VALUES: ProductFormData = {
     title: title || "",
