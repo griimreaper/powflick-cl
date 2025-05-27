@@ -13,7 +13,7 @@ export const COLOR_HEX_MAP: Record<string, string> = {
   beige: "#F5F5DC",
   navy: "#001F3F",
   teal: "#39CCCC",
-  aja: "#FFD700",
+  gold: "#FFD700",
   silver: "#C0C0C0",
   maroon: "#800000",
   olive: "#808000",
