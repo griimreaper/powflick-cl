@@ -37,7 +37,7 @@ export const getOneProduct = async (id: string, token: string) => {
     const response = await mainApi.get(`/products/admin/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response.data);
+    
 
     return response.data;
   } catch (error) {
