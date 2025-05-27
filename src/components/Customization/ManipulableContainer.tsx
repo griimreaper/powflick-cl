@@ -1,6 +1,11 @@
 import { Box } from "@mui/material";
 import React, { useState, useRef, LegacyRef, useEffect, Ref, RefObject } from "react";
 import Moveable, { OnEvent, OnPinch, PinchableEvents, PinchableProps } from "react-moveable";
+import "./MoveableComponent.css";
+import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
+import { ArrowDropDown, ArrowDropUp, ArrowLeft, ArrowRight, DeleteForever, Height, OpenInFull, RedoOutlined } from "@mui/icons-material";
+import { flushSync } from "react-dom";
+
 
 interface ManipulableContainerProps {
   parentRef: RefObject<HTMLDivElement>;
@@ -14,6 +19,8 @@ interface ManipulableContainerProps {
   sizeChange: Function;
   handleChange?: Function;
   onTouchStart: (e: any, index: number) => void;
+  duplicateElement: (e: string, index: number) => void;
+  deleteElement: (e: string, index: number) => void;
   handleRotation: (type: string, rotate: number, index: number) => void;
   each: {
     type?: "Logo" | "Text" | "Number";
@@ -37,16 +44,20 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   each,
   handleChange,
   handleRotation,
+  deleteElement,
+  duplicateElement,
   sizeChange,
 }) => {
-  const [rotation, setRotation] = useState(each.rotate); // Usar el valor inicial de rotación
-  const [isDragging, setIsDragging] = useState(false);
-  const [inputWidth, setInputWidth] = useState<number>(0);
-  const [isSelected, setIsSelected] = useState(selection.index === index && selection.type === each.type); // Estado para controlar la visibilidad de Moveable
-  const [scale, setScale] = useState(0); // Estado para controlar la visibilidad de Moveable
+  const rotationRef = useRef(each.rotate);
+  const isDraggingRef = useRef(false);
+  const inputWidthRef = useRef<number>(0);
+  const inputHeigthRef = useRef<number>(0);
+  const isSelectedRef = useRef(selection.index === index && selection.type === each.type);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLInputElement | null>(null);
+  const BoxRef = useRef<HTMLDivElement | null>(null);
   const hiddenDivRef = useRef<HTMLDivElement | null>(null);
+  const imageHeightRef = useRef(0);
 
   // Calcular el ancho del input basado en el texto
   useEffect(() => {
@@ -54,32 +65,40 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       hiddenDivRef.current.innerText = each.text as string;
       hiddenDivRef.current.style.fontFamily = each.font as string;
       hiddenDivRef.current.style.fontSize = `${each.size}px`;
-      setInputWidth(hiddenDivRef.current.offsetWidth);
+      inputWidthRef.current = hiddenDivRef.current.offsetWidth + 20;
     }
   }, [each.text, each.font, each.size]);
 
   // Sincroniza el estado de rotación con el valor de `each.rotate`
   useEffect(() => {
-    setRotation(each.rotate); // Asegurarse de mantener la rotación actualizada
+    rotationRef.current = each.rotate; // Asegurarse de mantener la rotación actualizada
   }, [each.rotate]);
 
   // Aplicar rotación en el DOM
   useEffect(() => {
-    if (elementRef.current) {
-      elementRef.current.style.transform = `rotate(${rotation}deg)`; // Aplicar la rotación al elemento DOM
+    if (BoxRef.current) {
+      BoxRef.current.style.transform = `rotate(${rotationRef.current}deg)`; // Aplicar la rotación al elemento DOM
     }
-  }, [rotation]); // Ejecuta cuando la rotación cambia
-
-  // Necesario para que el input se seleccione y muestre el editor para editar el elemento
-  useEffect(() => {
-    setIsSelected(
-      selection.index === index &&
-      selection.type === each.type
-    )
-  }, [selection]);
+    if (elementRef.current) {
+      elementRef.current.style.transform = `rotate(${rotationRef.current}deg)`; // Aplicar la rotación al elemento DOM
+    }
+  }, [rotationRef.current, isSelectedRef.current]); // Ejecuta cuando la rotación cambia
 
   useEffect(() => {
-  }, [each.text])
+    if (!elementRef.current) return;
+
+    // Crear ResizeObserver para detectar cambios en el tamaño de la imagen
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        imageHeightRef.current = entry.contentRect.height; // Actualiza la altura de la imagen
+      }
+    });
+
+    observer.observe(elementRef.current);
+
+    return () => observer.disconnect(); // Limpiar observer al desmontar
+  }, []);
+
 
   // Manejar clics fuera del componente
   useEffect(() => {
@@ -88,7 +107,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
-        setIsSelected(false);
+        isSelectedRef.current = false;
       }
     };
 
@@ -104,18 +123,21 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
       e.target.style.height = `${e.height}px`;
       sizeChange(e.width, index);
     } else {
-      if (each.text?.length! > 1) {
-        const newFontSize = Math.min(e.width, e.height);
-        sizeChange(newFontSize, index);
+      let newFontSize = 0;
+      if (each.text?.length! > 2) {
+        newFontSize = Math.min(e.width, e.height) * 0.6;
       } else {
-        sizeChange(e.height, index);
+        newFontSize = Math.min(e.height) * 0.7;
       }
+      e.target.style.width = `${e.width}px`;
+      e.target.style.height = `${e.height}px`;
+      sizeChange(newFontSize, index);
     }
   };
 
   const handleRotate = (e: any) => {
     const newRotation = e.rotate;
-    setRotation(newRotation);
+    rotationRef.current = newRotation;
     handleRotation(each.type as string, newRotation, index);
     if (e.target) {
       e.target.style.transform = `rotate(${newRotation}deg)`;
@@ -127,11 +149,11 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     const newRotate = e.currentTarget.rotation
     const newSize = e.currentTarget.scale
     // Actualizamos la escala y rotación
-    setRotation(newRotate);
+    rotationRef.current = newRotate;
     handleResize(newSize)
 
     // Puedes implementar la lógica de cambio en el estado local o persistir los datos.
-    console.log('Pinch event:', {newRotate, newSize });
+    console.log('Pinch event:', { newRotate, newSize });
   };
 
 
@@ -139,7 +161,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
   return (
     <Box
       ref={containerRef}
-      sx={{
+      style={{
         position: "absolute",
         zIndex: 0,
         left: each.position.x,
@@ -154,91 +176,176 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
           position: 'absolute',
           whiteSpace: 'pre',
           fontFamily: each.font,
+          fontSize: each.size,
           pointerEvents: "none", // Deshabilita los eventos en el fondo
         }}
       />
 
-      {isSelected && (
-        <Moveable
-          target={elementRef.current}
-          useMutationObserver
-          useResizeObserver
-          resizable
-          renderDirections={["sw", "nw", "ne", "se"]}
-          rotatable
-          pinchable
-          origin={false}
-          checkInput={true}
-          viewContainer={parentRef.current}
-          dragContainer={parentRef.current}
-          rootContainer={parentRef.current}
+      {isSelectedRef.current && (
+        <>
+          <Moveable
+            flushSync={flushSync}
+            className="custom-moveable"
+            target={elementRef.current}
+            useMutationObserver
+            useResizeObserver
+            resizable
+            renderDirections={["sw", "nw", "ne", "se"]}
+            rotatable
+            pinchable
+            origin={false}
+            checkInput={true}
+            viewContainer={parentRef.current}
+            dragContainer={parentRef.current}
+            rootContainer={parentRef.current}
 
-          keepRatio={true}
-          onResize={(e) => {
-            handleResize(e);
-            e.target.style.width = `${e.width}px`;
-            e.target.style.height = `${e.height}px`;
-          }}
-          onRotate={handleRotate}
-          onPinchStart={(e) => console.log('Pinch start event', e)}
-          onPinch={(e: OnPinch) => handlePinch(e)}
-        />
+            keepRatio={true}
+            onResize={(e) => {
+              handleResize(e);
+            }}
+            onRotate={handleRotate}
+            onPinchStart={(e) => console.log('Pinch start event', e)}
+            onPinch={(e: OnPinch) => handlePinch(e)}
+          />
+          {each.size ?
+            (<Box ref={BoxRef}
+              width={each.type === 'Logo' ? `${each.size}px` : `${inputWidthRef.current}px`}
+              height={each.type === 'Logo' ? `${imageHeightRef.current}px` : `${each.size}px`}
+              position={"absolute"}
+              sx={{
+                transform: "translate(-50%, -50%)",
+              }}
+
+            >
+              <Box
+                display={"flex"}
+                position={"absolute"}
+                top={"-50px"}
+                justifyContent={"space-between"}
+                width={"100%"}>
+                {/* <Box
+                  onClick={() => {
+                    duplicateElement(each.type as string, index);
+                  }}
+                  sx={{
+                    position: "relative",
+                    color: "white",
+                    cursor: "pointer",
+                    minWidth: "25px",
+                    height: "25px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: "bold",
+                    border: "solid white 2px",
+                    backgroundColor: "#44aaff",
+                    borderRadius: "100%",
+                  }}
+                ></Box> */}
+                <Box></Box>
+                <Box></Box>
+                {/* <RedoOutlined
+                  sx={{
+                    position: "relative",
+                    color: "white",
+                    cursor: "pointer",
+                    width: "25px",
+                    height: "25px",
+                    border: "solid white 2px",
+                    backgroundColor: "#44aaff",
+                    borderRadius: "100%",
+                  }}
+                /> */}
+                <DeleteForever
+                  onClick={() => {
+                    deleteElement(each.type as string, index);
+                  }}
+                  sx={{
+                    bottom: "-50px", // Ajusta según el tamaño de tu manejador
+                    left: "0%",
+                    color: "white",
+                    cursor: "pointer",
+                    width: "25px",
+                    height: "25px",
+                    border: "solid white 2px",
+                    backgroundColor: "#44aaff",
+                    borderRadius: "100%",
+                  }}
+                />
+              </Box>
+            </Box>
+            ) : (<></>)
+          }
+        </>
       )}
-      {each.type !== "Logo" && handleChange !== undefined && (
+      {each.type !== "Logo" && handleChange !== undefined && (isSelectedRef.current || each.text) && (
         <input
-          className="focus:outline-none focus:ring-2 focus:ring-transparent text-center p-0"
           ref={elementRef as LegacyRef<HTMLInputElement>}
+
           style={{
             background: "transparent",
-            border: "none",
+            border: 'transparent',
             fontFamily: each.font,
             userSelect: "none",
             color: each.color,
+            overflow: 'visible',
+            whiteSpace: "nowrap",
+            padding: 2,
             cursor:
-              isDragging && selection.index === index ? "grabbing" : "grab",
+              isDraggingRef.current && selection.index === index ? "grabbing" : "grab",
             fontSize: `${each.size}px`,
-            width: `${inputWidth}px`,
+            width: `${inputWidthRef.current}px`,
+            height: `${(each.size || 0) * 1.5}px`,
+            minHeight: '20px',
+            paddingTop: 10,
+            textIndent: '3px', // o el valor que desees
             touchAction: "none",
           }}
           value={each.text}
           onTouchStart={(e) => {
             onTouchStart(e, index)
-            setIsSelected(true);
-            setIsDragging(true);
+            e.preventDefault();
+            isSelectedRef.current = true;
+            isDraggingRef.current = true;
             setSelection({ type: each.type, index })
           }}
-          onMouseUp={() => { setIsDragging(false), elementRef.current?.focus() }}
+          onMouseUp={() => {
+            isDraggingRef.current = false,
+              elementRef.current?.focus()
+          }}
           onChange={(e) => handleChange(e, index)}
+          draggable={false}
           onMouseDown={(e) => {
             onMouseDown(e, index);
-            setIsSelected(true);
-            setIsDragging(true);
+            e.preventDefault();
+            isSelectedRef.current = true;
+            isDraggingRef.current = true;
             setSelection({ type: each.type, index })
           }}
         />
       )}
       {each.type === "Logo" && each.logoUrl && (
-        <div ref={elementRef}>
+        <div ref={elementRef} style={{ height: "auto" }}>
           <img
             src={each.logoUrl}
             style={{
               width: `${each.size}px`,
               height: "auto",
               cursor:
-                isDragging && selection.index === index ? "grabbing" : "grab",
+                isDraggingRef.current && selection.index === index ? "grabbing" : "grab",
               touchAction: "none",
             }}
             onMouseDown={(e) => {
               onMouseDown(e, index);
-              setIsDragging(true);
-              setIsSelected(true);
+              isDraggingRef.current = true;
+              isSelectedRef.current = true;
               setSelection({ type: each.type, index })
             }}
-            onMouseUp={() => setIsDragging(false)}
+            onMouseUp={() => isDraggingRef.current = false}
             onTouchStart={(e) => {
               onTouchStart(e, index)
-              setIsSelected(true);
-              setIsDragging(true);
+              isSelectedRef.current = true;
+              isDraggingRef.current = true;
               setSelection({ type: each.type, index })
             }}
             draggable="false"

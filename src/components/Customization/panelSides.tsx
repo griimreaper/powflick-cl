@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CustomizationSides, Logo, Number as Numb, Text } from "models/types";
 import ContainerInfoBox from "../Modals/ContainerInfoBox";
 import { useCustomizationStore } from "store/customizationStore";
@@ -48,6 +48,7 @@ export const fonts: { [key: string]: string } = {
   "Madura United FC": "Madura United FC",
   "Overgrid": "Overgrid",
   "Slovakia": "Slovakia",
+  "Crawford Line": "Crawford Line",
 };
 
 export default function PanelSides({
@@ -77,54 +78,64 @@ export default function PanelSides({
   )?.customizations;
 
   const { customization, updateCustomizationAttribute } =
-  useCustomizationStore();
+    useCustomizationStore();
 
-  const [logos, setLogos] = useState<Logo[]>(customization[sideName].logos || [
-    {
-      type: "Logo",
-      logoUrl: "",
-      logoSize: 100,
-      logoPosition: { x: 250, y: 250 },
-      logoDragOffset: { x: 0, y: 0 },
-      rotate: 0,
-    },
-  ]);
-  const [texts, setTexts] = useState<Text[]>(customization[sideName].texts || [
-    {
-      type: "Text",
-      text: "",
-      font: typeof font === "string" && fonts[font] ? font : "",
-      textColor: (typeof fontColor === "string" && fontColor) || "black",
-      textSize: 24,
-      textPosition: { x: 150, y: 150 },
-      textDragOffset: { x: 0, y: 0 },
-      rotate: 0,
-    },
-  ]);
-  const [numbers, setNumbers] = useState<Numb[]>(customization[sideName].numbers ||[
-    {
-      type: 'Number',
-      number: "",
-      font: typeof font === "string" && fonts[font] ? font : "",
-      numberColor: (typeof fontColor === "string" && fontColor) || "black",
-      numberPosition: { x: 80, y: 100 },
-      numberDragOffset: { x: 0, y: 0 },
-      numberSize: 50,
-      rotate: 0,
-    },
-  ]);
+  const logosRef = useRef<Logo[]>(
+    customization[sideName].logos || [
+      {
+        type: "Logo",
+        logoUrl: "",
+        logoSize: 100,
+        logoPosition: { x: 250, y: 250 },
+        logoDragOffset: { x: 0, y: 0 },
+        rotate: 0,
+      },
+    ]
+  );
+
+  const textsRef = useRef<Text[]>(
+    customization[sideName].texts || [
+      {
+        type: "Text",
+        text: "",
+        font: typeof font === "string" && fonts[font] ? font : "",
+        textColor: typeof fontColor === "string" && fontColor ? fontColor : "black",
+        textSize: 24,
+        textPosition: { x: 150, y: 150 },
+        textDragOffset: { x: 0, y: 0 },
+        rotate: 0,
+      },
+    ]
+  );
+
+  const numbersRef = useRef<Numb[]>(
+    customization[sideName].numbers || [
+      {
+        type: "Number",
+        number: "",
+        font: typeof font === "string" && fonts[font] ? font : "",
+        numberColor: typeof fontColor === "string" && fontColor ? fontColor : "black",
+        numberPosition: { x: 80, y: 100 },
+        numberDragOffset: { x: 0, y: 0 },
+        numberSize: 50,
+        rotate: 0,
+      },
+    ]
+  );
+
   const [selection, setSelection] = useState<Selection>({
     type: '',
     index: 0,
   });
   const [showInputsEdit, setShowInputsEdit] = useState<string>("");
   const { actualize, setActualize } = useHearingEvent();
+  const [, forceUpdate] = useState(0);
 
   const saveDataToLocal = () => {
     let side: CustomizationSides = {
-      logos,
-      texts,
-      numbers,
+      logos: logosRef.current,
+      texts: textsRef.current,
+      numbers: numbersRef.current,
     };
 
     // Guardar[sideName] en el localStorage
@@ -133,15 +144,15 @@ export default function PanelSides({
 
   useEffect(() => {
     saveDataToLocal();
-  }, [logos, numbers, texts]);
+  }, [logosRef.current, numbersRef.current, textsRef.current]);
 
   const handleShowItem = (name: 'Text' | 'Number' | 'Logo' | '') => {
     selection.type === name ? setSelection({ index: 0, type: '' }) : setSelection({ index: 0, type: name });
     const generateText = selection.type && name === '' ? false : true;
-    if (name === 'Text' && !texts.some(t => t.text) && generateText) {
-      setTexts(texts.map((t, i) => i === 0 ? t = { ...t, text: 'Insert Text', font: font, textColor: fontColor } : t))
-    } else if (name === 'Number' && !numbers.some(t => t.number) && generateText) {
-      setNumbers(numbers.map((n, i) => i === 0 ? n = { ...n, number: '0', font: font, numberColor: fontColor } : n))
+    if (name === 'Text' && !textsRef.current.some(t => t.text) && generateText) {
+      textsRef.current = textsRef.current.map((t, i) => i === 0 ? t = { ...t, text: 'Insert Text', font: font, textColor: fontColor } : t);
+    } else if (name === 'Number' && !numbersRef.current.some(t => t.number) && generateText) {
+      numbersRef.current = numbersRef.current.map((n, i) => i === 0 ? n = { ...n, number: '0', font: font, numberColor: fontColor } : n);
     }
   };
 
@@ -151,8 +162,8 @@ export default function PanelSides({
   ) => {
     const inputValue = event.target.value;
     const filteredValue = inputValue.replace(/[^a-zA-Z\s]/g, "");
-    setTexts(
-      texts.map((t: Text, i: number) =>
+    textsRef.current =
+      textsRef.current.map((t: Text, i: number) =>
         i === index
           ? {
             ...t,
@@ -160,7 +171,7 @@ export default function PanelSides({
           }
           : t
       )
-    );
+      ;
     saveDataToLocal();
     setActualize();
   };
@@ -173,11 +184,10 @@ export default function PanelSides({
     // Verificar si el valor del input es una cadena vacía
     if (inputValue === "") {
       // Si es una cadena vacía, establecer el valor del número como null
-      setNumbers(
-        numbers.map((n: Numb, i: number) =>
+      numbersRef.current =
+        numbersRef.current.map((n: Numb, i: number) =>
           i === index ? { ...n, number: "" } : n
-        )
-      );
+        );
       saveDataToLocal();
     } else {
       // Si el valor no es una cadena vacía, intentar convertirlo a un número entero
@@ -185,17 +195,40 @@ export default function PanelSides({
       // Verificar si el valor es un número entero positivo dentro del rango deseado (1-999)
       if (!isNaN(integerValue) && integerValue >= 1 && integerValue <= 999) {
         // Establecer el número solo si está dentro del rango deseado
-        setNumbers(
-          numbers.map((n: Numb, i: number) =>
+        numbersRef.current =
+          numbersRef.current.map((n: Numb, i: number) =>
             i === index ? { ...n, number: integerValue.toString() } : n
-          )
-        );
+          );
       }
     }
     saveDataToLocal();
     setActualize();
   };
 
+  const setLogos = (updater: Logo[] | ((prev: Logo[]) => Logo[])) => {
+    const prev = logosRef.current;
+    logosRef.current =
+      typeof updater === "function" ? (updater as (prev: Logo[]) => Logo[])(prev) : updater;
+
+    // Si querés forzar un re-render después de cambiar los datos:
+    forceUpdate(n => n + 1);
+  };
+
+  const setTexts = (updater: Text[] | ((prev: Text[]) => Text[])) => {
+    const prev = textsRef.current;
+    textsRef.current =
+      typeof updater === "function" ? (updater as (prev: Text[]) => Text[])(prev) : updater;
+
+    forceUpdate(n => n + 1);
+  };
+
+  const setNumbers = (updater: Numb[] | ((prev: Numb[]) => Numb[])) => {
+    const prev = numbersRef.current;
+    numbersRef.current =
+      typeof updater === "function" ? (updater as (prev: Numb[]) => Numb[])(prev) : updater;
+
+    forceUpdate(n => n + 1);
+  };
 
   const handleUpdateAttribute = () => {
     // Obtener los atributos desde el localStorage
@@ -225,11 +258,11 @@ export default function PanelSides({
     setSelection({ type: '', index: 0 });
     if (customizations?.find((e) => e.id === customization.id)) {
       if (customization[sideName].logos)
-        setLogos(customization[sideName].logos as Logo[]);
+        logosRef.current = customization[sideName].logos as Logo[];
       if (customization[sideName].texts)
-        setTexts(customization[sideName].texts as Text[]);
+        textsRef.current = customization[sideName].texts as Text[];
       if (customization[sideName].numbers)
-        setNumbers(customization[sideName].numbers as Numb[]);
+        numbersRef.current = customization[sideName].numbers as Numb[];
     }
   }, [customization.id, sideName]);
 
@@ -260,12 +293,12 @@ export default function PanelSides({
         selection={selection}
         setSelection={setSelection}
         image={image as string}
-        logos={logos}
+        logos={logosRef.current}
         setLogos={setLogos}
-        texts={texts}
+        texts={textsRef.current}
         setTexts={setTexts}
         handleTextChange={handleTextChange}
-        numbers={numbers}
+        numbers={numbersRef.current}
         setNumbers={setNumbers}
         handleNumberChange={handleNumberChange}
         saveDataToLocal={saveDataToLocal}
@@ -438,12 +471,12 @@ export default function PanelSides({
         id={id}
         selection={selection}
         setSelection={setSelection}
-        logos={logos}
+        logos={logosRef.current}
         setLogos={setLogos}
-        texts={texts}
+        texts={textsRef.current}
         setTexts={setTexts}
         handleTextChange={handleTextChange}
-        numbers={numbers}
+        numbers={numbersRef.current}
         setNumbers={setNumbers}
         handleNumberChange={handleNumberChange}
         sideName={sideName}
