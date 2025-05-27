@@ -115,13 +115,12 @@ export default function ProductIntro({ product }: Props) {
   }, [customization]);
 
   useEffect(() => {
-    if (customization.id !== "none") {
-      const customizations: Customization[] | null =
-        list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
+    const customizations: Customization[] | null =
+      list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
 
-      if (customizations && customizations.length > 0) {
-        setCustomization(customizations[0]);
-      }
+    if (customization.id !== "none" && customizations) {
+      setCustomization(customizations[0]);
+
     }
   }, [id]);
 
