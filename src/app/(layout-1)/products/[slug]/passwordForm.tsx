@@ -25,7 +25,7 @@ export default function ProductPasswordForm({ slug, productPassword }: Props) {
     useEffect(() => {
         if (queryPassword === productPassword) {
             router.replace(`/products/${slug}?password=${queryPassword}`);
-            location.reload(); // fuerza render del layout con la contraseña válida
+            router.refresh(); // fuerza render del layout con la contraseña válida
         }
     }, [queryPassword, productPassword, router, slug]);
 
