@@ -24,10 +24,14 @@ export const PAGES = [
   ["Contact", "contact"],
   ["About Us", "about-us"],
   ["FAQ", "help"],
+  ["Customization Guide", "customization-guide"],
 ];
 
 export const SOCIAL_ICON_LINKS = [
-  { Icon: Facebook, url: "https://www.facebook.com/profile.php?id=61572571284039" },
+  {
+    Icon: Facebook,
+    url: "https://www.facebook.com/profile.php?id=61572571284039",
+  },
   // { Icon: Twitter, url: "https://twitter.com/" },
   // { Icon: Youtube, url: "https://www.youtube.com/" },
   // { Icon: Google, url: "https://www.google.com/" },
