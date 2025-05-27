@@ -120,6 +120,7 @@ export default function ProductIntro({ product }: Props) {
 
     if (customization.id !== "none" && customizations) {
       setCustomization(customizations[0]);
+
     }
   }, [id]);
 
