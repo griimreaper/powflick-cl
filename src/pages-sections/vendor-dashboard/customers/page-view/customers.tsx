@@ -113,10 +113,10 @@ export default function CustomersPageView() {
         const arrayBufferView = new Uint8Array(response.data);
         const workbook = xlsx.read(arrayBufferView, { type: "array" });
         xlsx.writeFile(workbook, "powflick_users.xlsx");
-
-        stopLoadExport();
       } catch (error) {
         console.error("Error al descargar el archivo:", error);
+      } finally {
+        stopLoadExport();
       }
     }
   };
