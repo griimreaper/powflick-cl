@@ -1,0 +1,25 @@
+export const COLOR_HEX_MAP: Record<string, string> = {
+  red: "#FF0000",
+  blue: "#0074D9",
+  green: "#2ECC40",
+  yellow: "#FFDC00",
+  black: "#111111",
+  white: "#FFFFFF",
+  orange: "#FF851B",
+  purple: "#B10DC9",
+  pink: "#FF69B4",
+  brown: "#8B4513",
+  gray: "#AAAAAA",
+  beige: "#F5F5DC",
+  navy: "#001F3F",
+  teal: "#39CCCC",
+  gold: "#FFD700",
+  silver: "#C0C0C0",
+  maroon: "#800000",
+  olive: "#808000",
+  lime: "#01FF70",
+  cyan: "#00FFFF",
+  magenta: "#FF00FF",
+};
+export const COLOR_NAMES: string[] = Object.keys(COLOR_HEX_MAP);
+export const COLOR_HEX_VALUES: string[] = Object.values(COLOR_HEX_MAP);
