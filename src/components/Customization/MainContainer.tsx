@@ -43,6 +43,18 @@ function MainContainer({
   const [isDraggingText, setIsDraggingText] = useFlag();
   const [isDraggingNumber, setIsDraggingNumber] = useFlag();
 
+  // Padding interno para evitar que el texto/número se corte
+  const PADDING = 25;
+
+  // Función para medir el ancho real del texto con la fuente y tamaño actual
+  function getTextWidth(text: string, fontSize: number, fontFamily: string = "Arial") {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    if (!context) return text.length * fontSize; // fallback
+    context.font = `${fontSize}px ${fontFamily}`;
+    return context.measureText(text).width;
+  }
+
   const handleDragMove = (event: React.MouseEvent<HTMLDivElement>) => {
     const panelRect = panelRef.current?.getBoundingClientRect();
     const { clientX, clientY } = event;
@@ -68,14 +80,15 @@ function MainContainer({
           clientX - panelRect.left - texts[selection.index].textDragOffset.x;
         const offsetY =
           clientY - panelRect.top - texts[selection.index].textDragOffset.y;
-        const maxX =
-          panelRect.width -
-          (texts[selection.index].textSize *
-            texts[selection.index].text.length) /
-          2;
-        const maxY = panelRect.height - texts[selection.index].textSize;
-        const constrainedX = Math.max(0, Math.min(maxX, offsetX));
-        const constrainedY = Math.max(0, Math.min(maxY, offsetY));
+        const textWidth = getTextWidth(
+          texts[selection.index].text,
+          texts[selection.index].textSize,
+          texts[selection.index].font
+        );
+        const maxX = panelRect.width - textWidth - PADDING;
+        const maxY = panelRect.height - texts[selection.index].textSize - PADDING;
+        const constrainedX = Math.max(PADDING, Math.min(maxX, offsetX));
+        const constrainedY = Math.max(PADDING, Math.min(maxY, offsetY));
         setTexts(
           texts.map((t: Text, i: number) =>
             i === selection.index
@@ -90,14 +103,15 @@ function MainContainer({
           numbers[selection.index].numberDragOffset.x;
         const offsetY =
           clientY - panelRect.top - numbers[selection.index].numberDragOffset.y;
-        const maxX =
-          panelRect.width -
-          (numbers[selection.index].numberSize *
-            numbers[selection.index].number.length) /
-          2;
-        const maxY = panelRect.height - numbers[selection.index].numberSize;
-        const constrainedX = Math.max(0, Math.min(maxX, offsetX));
-        const constrainedY = Math.max(0, Math.min(maxY, offsetY));
+        const numberWidth = getTextWidth(
+          numbers[selection.index].number,
+          numbers[selection.index].numberSize,
+          numbers[selection.index].font
+        );
+        const maxX = panelRect.width - numberWidth - PADDING;
+        const maxY = panelRect.height - numbers[selection.index].numberSize - PADDING;
+        const constrainedX = Math.max(PADDING, Math.min(maxX, offsetX));
+        const constrainedY = Math.max(PADDING, Math.min(maxY, offsetY));
         setNumbers(
           numbers.map((n: Number, i: number) =>
             i === selection.index
@@ -313,14 +327,15 @@ function MainContainer({
           clientX - panelRect.left - texts[selection.index].textDragOffset.x;
         const offsetY =
           clientY - panelRect.top - texts[selection.index].textDragOffset.y;
-        const maxX =
-          panelRect.width -
-          (texts[selection.index].textSize *
-            texts[selection.index].text.length) /
-          2;
-        const maxY = panelRect.height - texts[selection.index].textSize;
-        const constrainedX = Math.max(0, Math.min(maxX, offsetX));
-        const constrainedY = Math.max(0, Math.min(maxY, offsetY));
+        const textWidth = getTextWidth(
+          texts[selection.index].text,
+          texts[selection.index].textSize,
+          texts[selection.index].font
+        );
+        const maxX = panelRect.width - textWidth - PADDING;
+        const maxY = panelRect.height - texts[selection.index].textSize - PADDING;
+        const constrainedX = Math.max(PADDING, Math.min(maxX, offsetX));
+        const constrainedY = Math.max(PADDING, Math.min(maxY, offsetY));
         setTexts(
           texts.map((t: Text, i: number) =>
             i === selection.index
@@ -335,14 +350,15 @@ function MainContainer({
           numbers[selection.index].numberDragOffset.x;
         const offsetY =
           clientY - panelRect.top - numbers[selection.index].numberDragOffset.y;
-        const maxX =
-          panelRect.width -
-          (numbers[selection.index].numberSize *
-            numbers[selection.index].number.length) /
-          2;
-        const maxY = panelRect.height - numbers[selection.index].numberSize;
-        const constrainedX = Math.max(0, Math.min(maxX, offsetX));
-        const constrainedY = Math.max(0, Math.min(maxY, offsetY));
+        const numberWidth = getTextWidth(
+          numbers[selection.index].number,
+          numbers[selection.index].numberSize,
+          numbers[selection.index].font
+        );
+        const maxX = panelRect.width - numberWidth - PADDING;
+        const maxY = panelRect.height - numbers[selection.index].numberSize - PADDING;
+        const constrainedX = Math.max(PADDING, Math.min(maxX, offsetX));
+        const constrainedY = Math.max(PADDING, Math.min(maxY, offsetY));
         setNumbers(
           numbers.map((n: Number, i: number) =>
             i === selection.index
