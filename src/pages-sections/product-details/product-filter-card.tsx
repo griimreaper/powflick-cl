@@ -26,6 +26,7 @@ import { Slider } from "@mui/material";
 import { ProductDB } from "models/types";
 import { themeColors } from "theme/theme-colors";
 import { useRouter, useSearchParams } from "next/navigation";
+import { COLOR_HEX_MAP } from "./types-colors";
 
 const OTHERS = [
   { label: "On Sale", value: "discount" },
@@ -100,8 +101,9 @@ export default function ProductFilterCard({
     return s.color !== ""; // Devuelve true si el navegador reconoce el color
   };
 
-  const validColors = colors?.map(c => c.trim().toLowerCase())
-    .filter(isValidColor);
+  const validColors = colors
+    ?.map(c => c.trim().toLowerCase())
+    .filter(c => c in COLOR_HEX_MAP);
 
   // const handleChangeBrand = (value: string) => {
   //   const values = filters.brand?.includes(value)
@@ -274,10 +276,7 @@ export default function ProductFilterCard({
             width={25}
             height={25}
             flexShrink={0}
-            bgcolor={
-              item === 'orange' ? 'orangered' :
-                item
-            }
+            bgcolor={COLOR_HEX_MAP[item]}
             borderRadius="50%"
             border={1}
             onClick={() => handleChangeColor(item)}
@@ -285,7 +284,7 @@ export default function ProductFilterCard({
               outlineOffset: 1,
               cursor: "pointer",
               outline: filters.color?.includes(item) ? 1 : 0,
-              outlineColor: item,
+              outlineColor: COLOR_HEX_MAP[item],
             }}
           />
         ))}

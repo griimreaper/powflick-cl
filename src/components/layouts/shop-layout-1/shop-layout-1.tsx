@@ -115,7 +115,7 @@ export default function ShopLayout1({
       {children}
 
       {/* SMALL DEVICE BOTTOM NAVIGATION */}
-      <MobileNavigationBar data={data} />
+      <MobileNavigationBar />
 
       {/* FOOTER */}
       <LazyLoadSection id="footer">

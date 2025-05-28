@@ -115,6 +115,16 @@ export default function ProductIntro({ product }: Props) {
   }, [customization]);
 
   useEffect(() => {
+    const customizations: Customization[] | null =
+      list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
+
+    if (customization.id !== "none" && customizations) {
+      setCustomization(customizations[0]);
+
+    }
+  }, [id]);
+
+  useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
       "customizations-store"
     );
@@ -129,10 +139,10 @@ export default function ProductIntro({ product }: Props) {
         customizations?.length === 1 &&
         customizations?.some(
           (e) =>
-            !e.backSide.texts[0].text &&
-            !e.backSide.numbers[0].number &&
-            !e.frontSide.texts[0].text &&
-            !e.frontSide.numbers[0].number
+            !e.backSide.texts[0]?.text &&
+            !e.backSide.numbers[0]?.number &&
+            !e.frontSide.texts[0]?.text &&
+            !e.frontSide.numbers[0]?.number
         )
       ) {
         setTimeout(() => {
@@ -142,12 +152,6 @@ export default function ProductIntro({ product }: Props) {
       }
     }
   }, [font, fontColor]);
-
-  useEffect(() => {
-    if (customization.id !== "none") {
-      setCustomizationInList(id, customization);
-    }
-  }, [customization]);
 
   useEffect(() => {
     return () => {
@@ -266,7 +270,7 @@ export default function ProductIntro({ product }: Props) {
           alignItems="center"
         >
           {showCustomization ? (
-            <Box mt={{ xs: 10, sm: 16, lg: 0 }} px={{ xs: 0, sm: 0 }}>
+            <Box>
               <Customizations {...customizationProps} />
               {/* Agrega aquí los elementos de personalización */}
             </Box>
@@ -274,7 +278,7 @@ export default function ProductIntro({ product }: Props) {
             <Box>
               <FlexBox
                 borderRadius={3}
-                overflow="hidden"
+                overflow="visible"
                 justifyContent="center"
                 mb={6}
               >

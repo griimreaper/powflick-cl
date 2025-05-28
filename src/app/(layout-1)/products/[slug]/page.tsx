@@ -7,11 +7,12 @@ import { ProductDetailsPageView } from "pages-sections/product-details/page-view
 import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 import { cache } from "react";
 import ProductSeo from "./ProductSeo";
+import ProductPasswordForm from "./passwordForm";
 
 export const revalidate = 360;
 export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente
 
-const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>(); 
+const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>();
 const CACHE_DURATION = 5 * 60; // 300000ms (5 minutos)
 
 const getProductsBySlugCached = cache(async (slug: string): Promise<detailProps | null> => {
@@ -124,8 +125,10 @@ export async function generateMetadata({
 // Página principal de detalles del producto
 export default async function ProductDetails({
   params,
+  searchParams,
 }: {
   params: { slug: string };
+  searchParams: { password?: string };
 }) {
   try {
     const detail = await fetchProductDetails(params.slug);
@@ -147,12 +150,25 @@ export default async function ProductDetails({
       );
     }
 
+    const hasPassword = !!detail.product.password;
+
+    // 🔐 Si tiene contraseña y la query no coincide, mostrar formulario
+    if (hasPassword && searchParams.password !== detail.product.password) {
+      return (
+        <ProductPasswordForm
+          slug={params.slug}
+          productPassword={detail.product.password}
+        />
+      );
+    }
+
+    // ✅ Contraseña válida o no se requiere
     return (
       <>
         <ProductSeo product={detail.product} />
-        <ProductDetailsPageView detail={detail} />;
+        <ProductDetailsPageView detail={detail} />
       </>
-    )
+    );
   } catch (error) {
     console.error("Error rendering product details:", error);
     notFound();
