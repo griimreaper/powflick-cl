@@ -6,7 +6,7 @@ import { cache } from "react";
 import { getLanding } from "services/Landing";
 
 export const revalidate = 3600;
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 const getLandingCached = cache(async (): Promise<DataStructure> => {
   try {
@@ -19,69 +19,58 @@ const getLandingCached = cache(async (): Promise<DataStructure> => {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL as string),
-  title: "Pow Flick",
+  title: "Custom Sports Jerseys & Teamwear | Pow Flick",
   alternates: {
-    canonical: "https://www.powflick.com/", // 🔹 URL CANÓNICA PRINCIPAL
+    canonical: "https://www.powflick.com/",
   },
-  description: `Pow Flick is a modern e-commerce for selling sports equipment and accessories.`,
+  description: "Buy custom sports jerseys and team apparel for soccer, basketball, baseball, and more. Design your own uniforms with Pow Flick — fast, premium & affordable.",
   authors: [{ name: "Devcodelab", url: "https://ui-lib.com" }],
   keywords: [
-    "custom sportswear",
-    "personalized sports jerseys",
-    "custom basketball jerseys",
-    "soccer uniforms for teams",
-    "personalized running shirts",
-    "design your own jerseys",
-    "buy custom sportswear online",
-    "custom baseball uniforms",
-    "customizable team apparel",
-    "premium sportswear for teams",
-    "custom hockey jerseys",
-    "create your own sportswear",
-    "personalized activewear",
-    "custom athletic wear",
-    "sports uniforms for teams",
-    "custom soccer kits",
-    "basketball jerseys for sale",
-    "running apparel for men",
-    "women's custom sportswear",
-    "youth team uniforms",
-    "affordable custom jerseys",
-    "unique sportswear designs",
-    "premium team uniforms",
-    "sports team apparel customization",
-    "bulk custom jersey orders",
-    "personalized sports apparel",
-    "high-quality sports uniforms",
-    "team jerseys for customization",
-    "custom sports tops",
-    "quick sportswear customization",
-    "buy personalized team jerseys",
-    "best custom jerseys for sports",
-    "online sportswear shop",
-    "create custom team shirts",
-    "team uniforms with logos",
-    "custom sports shirts online",
-    "durable sports team jerseys",
-    "men's custom activewear",
-    "custom football kits",
-    "lightweight running jerseys",
-    "team hoodies customization",
-    "custom workout apparel",
-    "bulk sports jerseys orders",
-    "printed team jerseys",
-    "affordable sports uniforms",
-    "stylish custom sportswear",
-    "sportswear for all sports",
-    "custom team hoodies",
-    "custom youth sportswear",
-    "quick team apparel orders",
+    // Short-tail
+    "sportswear", "team uniforms", "custom jerseys",
+    // Mid-tail
+    "custom team jerseys", "sports apparel for teams", "design your own jersey",
+    // Long-tail
+    "personalized basketball jerseys for teams", "custom soccer kits with logo", "buy custom baseball uniforms online", 
+    "high-quality team sportswear", "affordable custom youth uniforms", 
+    "quick delivery sports jerseys", "create your own sports apparel", "bulk team jersey orders"
   ],
+  openGraph: {
+    title: "Custom Sports Jerseys & Teamwear | Pow Flick",
+    description: "Design and order personalized sports jerseys online. Perfect for soccer, basketball, baseball, and more. Fast delivery and top quality.",
+    url: "https://www.powflick.com/",
+    siteName: "Pow Flick",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/assets/images/landing/dashboard/DASHBOARD_BACKGROUND.png", // Asegúrate de tener esta imagen optimizada
+        width: 1200,
+        height: 630,
+        alt: "Custom sports jerseys from Pow Flick",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Custom Sports Jerseys & Teamwear | Pow Flick",
+    description: "Buy and customize team sports jerseys with Pow Flick. Quick delivery, premium quality.",
+    images: ["/assets/images/landing/dashboard/DASHBOARD_BACKGROUND.png"],
+  },
   other: {
     "google-site-verification": "gLeGcx6wTsSNO3gfrikN4xd4gC0uCQcNlvafGlX5DQM",
     "facebook-domain-verification": "l9qelbgya7lketq6r71amsfwdpjq0k"
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
+
 
 export default async function FashionShopTwo() {
   const [data]: [DataStructure] = await Promise.all([
