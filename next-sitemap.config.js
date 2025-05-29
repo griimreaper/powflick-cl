@@ -32,4 +32,7 @@ module.exports = {
             },
         ],
     },
+    additionalSitemaps: [
+        'https://www.powflick.com/sitemap-1.xml'
+    ],
 };
