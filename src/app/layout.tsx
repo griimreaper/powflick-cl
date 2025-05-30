@@ -12,7 +12,6 @@ import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
 import IntercomChat from "./IntercomChat";
-import FacebookPixel from "./FacebookPixel";
 
 export default function RootLayout({
   children,
@@ -43,7 +42,6 @@ export default function RootLayout({
           <GlobalProvider>
             <IntercomChat />
             <FloatingWhatsApp />
-            <FacebookPixel />
             {children}
           </GlobalProvider>
           <GoogleAnalytics />
