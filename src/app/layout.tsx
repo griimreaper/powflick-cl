@@ -19,6 +19,34 @@ export default function RootLayout({
 }: {
   children: ReactNode;
 }) {
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Pow Flick",
+  "url": "https://www.powflick.com/",
+  "description": "Buy custom sports jerseys for soccer, basketball, baseball, and more. High-quality teamwear with fast delivery and easy online customization.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pow Flick",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.powflick.com/assets/images/logo/POWFLICK_LOGO-HEADER.png"
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.powflick.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "sameAs": [
+    "https://www.instagram.com/powflick",
+    "https://www.facebook.com/powflick",
+    "https://www.twitter.com/powflick"
+  ]
+};
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -37,6 +65,10 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
+        <script
+          type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
       </head>
       <body className={openSans.className}>
         <React.StrictMode>
