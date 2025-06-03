@@ -16,7 +16,7 @@ export default function Section11({
     products: DataStructure["landing"]["collections"]["mostSoldProducts"];
     isMobile: boolean;
 }) {
-    const [selectedType, setSelectedType] = useState("all");
+    const [selectedType, setSelectedType] = useState("All");
 
     // Extraer tipos únicos (puede cambiar según la propiedad real)
     const types = ["All", "Soccer", "Basketball", "Baseball", "Hockey", "Gaming", "Running"];
