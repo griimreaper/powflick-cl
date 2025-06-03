@@ -8,6 +8,7 @@ import { useMediaQuery } from "@mui/material";
 import MainSection from "./MainSection";
 import { LazyLoadSection } from "./LazyLoadSection";
 import * as fbq from '../../../fpixel';
+import Section11 from "./section-11";
 
 // GLOBAL CUSTOM COMPONENTS
 const Newsletter = dynamic(() => import("components/newsletter"), { ssr: false });
@@ -35,6 +36,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
       {/* Most Sold Products Section */}
       <LazyLoadSection id="section4">
         <Section4 products={memoizedData?.collections?.mostSoldProducts || []} isMobile={isMobile} />
+        <Section11 products={memoizedData?.collections?.filteredProducts || []} isMobile={isMobile} />
       </LazyLoadSection>
 
       {/* Banner */}

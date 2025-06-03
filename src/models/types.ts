@@ -75,6 +75,7 @@ export interface Collections {
   mostSoldProducts: ProductDB[];
   featuredProducts: ProductDB[];
   discountProducts: ProductDB[];
+  filteredProducts: ProductDB[];
   latestProducts: ProductDB[];
   bestWeekProducts: ProductDB[];
   popularProducts: ProductDB[];
