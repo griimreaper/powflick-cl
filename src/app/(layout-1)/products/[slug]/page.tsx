@@ -12,7 +12,7 @@ import { useServerInsertedHTML } from 'next/navigation';
 import { setStructuredData } from "./StructuredData";
 
 export const revalidate = 360;
-// export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente
+export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente
 
 const cacheMap = new Map<string, { data: detailProps | null; expiry: number }>();
 const CACHE_DURATION = 5 * 60; // 300000ms (5 minutos)

@@ -6,7 +6,7 @@ import { cache } from "react";
 import { getLanding } from "services/Landing";
 
 export const revalidate = 3600;
-// export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic'
 
 const getLandingCached = cache(async (): Promise<DataStructure> => {
   try {
