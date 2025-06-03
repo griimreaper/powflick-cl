@@ -8,8 +8,7 @@ import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 import { cache } from "react";
 import ProductSeo from "./ProductSeo";
 import ProductPasswordForm from "./passwordForm";
-import { useServerInsertedHTML } from 'next/navigation';
-import { setStructuredData } from "./StructuredData";
+import { setStructuredData } from "app/StructuredData";
 
 export const revalidate = 360;
 // export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente

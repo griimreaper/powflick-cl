@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 // PAGE VIEW COMPONENT
 import ProductSearchPageView from "pages-sections/product-details/page-view/product-search";
-import { setStructuredData } from "./StructuredData";
+import { setStructuredData } from "../../StructuredData";
 
 export const metadata: Metadata = {
   title: "Product Search - Pow Flick",
@@ -68,7 +68,7 @@ export const revalidate = 86400 * 7;
 
 export default async function ProductSearch({ params }: any) {
 
-const structuredData = {
+  const structuredData = {
     "@context": "https://schema.org",
     "@type": "Store",
     "name": "Pow Flick",
@@ -81,13 +81,17 @@ const structuredData = {
       "addressLocality": "Cali",
       "addressCountry": "Colombia"
     },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.powflick.com/products?query={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
     "sameAs": [
       "https://www.instagram.com/powflick/",
       "https://www.pinterest.com/powflick/",
       "https://www.facebook.com/profile.php?id=61572571284039"
     ],
   };
-
 
   setStructuredData(structuredData);
   return <ProductSearchPageView />;
