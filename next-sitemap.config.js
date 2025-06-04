@@ -1,3 +1,4 @@
+/** @type {import('next-sitemap').IConfig} */
 module.exports = {
     siteUrl: 'https://www.powflick.com/',
     generateRobotsTxt: true,
@@ -16,9 +17,7 @@ module.exports = {
         policies: [
             {
                 userAgent: '*',
-                allow: [
-                    '/',
-                ],
+                allow: ['/'],
                 disallow: [
                     '/dashboard/*',
                     '/dashboard',
@@ -31,8 +30,8 @@ module.exports = {
                 ],
             },
         ],
+        additionalSitemaps: [
+            'https://www.powflick.com/sitemap-1.xml',
+        ],
     },
-    additionalSitemaps: [
-        'https://www.powflick.com/sitemap-1.xml'
-    ],
 };
