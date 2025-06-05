@@ -31,7 +31,7 @@ const Carousel = forwardRef<Slider, Props>((props, ref) => {
     arrows = true,
     slidesToShow = 4,
     spaceBetween = 10,
-    dotStyles = { mt: 4 },
+    dotStyles = { mt: 4, color: "primary.main" },
     autoplay = false,
     autoplaySpeed = 3000,
     infinite = true,

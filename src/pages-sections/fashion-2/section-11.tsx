@@ -55,22 +55,55 @@ export default function Section11({
                     gap: 2,
                 }}
             >
-                <Box display={'flex'} flexDirection={'column'} textAlign={isMobile ? "center" : "start"} width={"100%"}>
-                    <Typography
-                        variant="h3"
-                        component="h1"
-                        color={"primary.main"}
-                        sx={{
-                            fontFamily: "GYMER",
-                            lineHeight: 1,
-                        }}
-                    >
-                        Our products
-                    </Typography>
+                <Box display={'flex'} flexDirection={'column'} textAlign={"center"} width={"100%"}>
+                    <Box width="100%" position="relative">
+                        {/* Capa del borde rojo desplazado */}
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            position="absolute"
+                            top="5px"
+                            width={"100%"}
+                            left="5px"
+                            zIndex={-1}
+                            color="transparent"
+                            sx={{
+                                fontFamily: "GYMER",
+                                lineHeight: 1,
+                                textTransform: "uppercase",
+                                WebkitTextStroke: "2px #CA0b0b",
+                            }}
+                        >
+                            Design Your Game.
+                        </Typography>
 
+                        {/* Capa principal blanca */}
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            color="white"
+                            sx={{
+                                fontFamily: "GYMER",
+                                lineHeight: 1,
+                                textTransform: "uppercase",
+                            }}
+                        >
+                            Design Your Game.
+                        </Typography>
+                    </Box>
+                        <Typography
+                            variant="h6"
+                            component="h1"
+                            color="primary.main"
+                            fontStyle={'italic'}
+                            fontWeight={500}
+                        >
+                            Find your perfect match - modern icons, retro classics, and styles made for her.
+                        </Typography>
                     <Box sx={{
                         display: 'flex',
                         gap: 4,
+                        justifyContent: 'center',
                         paddingY: 2,
                         mb: 2,
                         overflowX: 'scroll',
@@ -96,7 +129,15 @@ export default function Section11({
                 </Box>
             </Box>
 
-            <Carousel slidesToShow={4} responsive={responsive} arrowStyles={{ top: "40%" }}>
+            <Carousel
+                slidesToShow={4}
+                responsive={responsive}
+                arrowStyles={{ top: "40%" }}
+                dots
+                slidesToScroll={4}
+                infinite={false}
+                dotColor="#CA0b0b"
+            >
                 {filteredProducts.map((product) => (
                     <ProductCard8 key={product.id} product={product} active={true} />
                 ))}
