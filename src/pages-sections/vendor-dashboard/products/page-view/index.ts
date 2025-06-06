@@ -12,6 +12,7 @@ export interface ProductData {
     totalPages: number;
     total: number;
     products: ProductDB[];
+    filt: any,
     count: any
 }
 
