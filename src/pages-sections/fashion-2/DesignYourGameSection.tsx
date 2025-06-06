@@ -1,37 +1,39 @@
 "use client";
-import { Box, Typography, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import { useState, useMemo } from "react";
 // GLOBAL CUSTOM COMPONENTS
-import { Paragraph } from "components/Typography";
 import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
-import Link from "next/link";
 
-export default function Section11({
-    products,
+export default function DesignYourGameSection({
+    collections,
     isMobile,
 }: {
-    products: DataStructure["landing"]["collections"]["mostSoldProducts"];
+    collections: DataStructure["landing"]["collections"]["designYourGameSection"];
     isMobile: boolean;
 }) {
-    const [selectedType, setSelectedType] = useState("All");
+    const [selectedType, setSelectedType] = useState("Top Picks");
 
     // Extraer tipos únicos (puede cambiar según la propiedad real)
-    const types = ["All", "Soccer", "Basketball", "Baseball", "Hockey", "Gaming", "Running"];
+    const types = collections?.collections;
 
     const filteredProducts = useMemo(() => {
-        return selectedType === "All"
-            ? products
-            : products.filter((p) => p.title.toLowerCase().includes(selectedType.toLowerCase()));
-    }, [selectedType, products]);
+        if (selectedType === "Top Picks") return collections.allProducts.filter((p) => p.featured === true);
+
+        return collections.allProducts.filter((p) =>
+            p.collections?.some((col) => col.title === selectedType)
+        );
+    }, [selectedType, collections]);
 
     const responsive = [
-        { breakpoint: 1024, settings: { slidesToShow: 4 } },
-        { breakpoint: 768, settings: { slidesToShow: 3 } },
-        { breakpoint: 600, settings: { slidesToShow: 2 } },
+        { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 4 } },
+        { breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+        { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2 } }, // Mobile
     ];
+
+    const maxSlidesToShow = Math.max(...responsive.map((r) => r.settings.slidesToShow));
 
     return (
         <Container
@@ -51,7 +53,6 @@ export default function Section11({
                     justifyContent: isMobile ? "start" : "space-between",
                     alignItems: isMobile ? "start" : "center",
                     width: "100%",
-                    mb: 4,
                     gap: 2,
                 }}
             >
@@ -66,6 +67,8 @@ export default function Section11({
                             width={"100%"}
                             left="5px"
                             zIndex={-1}
+                            whiteSpace={'nowrap'}
+                            fontSize={{ xs: '9vw', sm: '10vw', md: '8vw', lg: '6vw' }}
                             color="transparent"
                             sx={{
                                 fontFamily: "GYMER",
@@ -82,6 +85,8 @@ export default function Section11({
                             variant="h2"
                             component="h1"
                             color="white"
+                            whiteSpace={'nowrap'}
+                            fontSize={{ xs: '9vw', sm: '10vw', md: '8vw', lg: '6vw' }}
                             sx={{
                                 fontFamily: "GYMER",
                                 lineHeight: 1,
@@ -91,20 +96,22 @@ export default function Section11({
                             Design Your Game.
                         </Typography>
                     </Box>
-                        <Typography
-                            variant="h6"
-                            component="h1"
-                            color="primary.main"
-                            fontStyle={'italic'}
-                            fontWeight={500}
-                        >
-                            Find your perfect match - modern icons, retro classics, and styles made for her.
-                        </Typography>
+                    <Typography
+                        variant="h6"
+                        component="h1"
+                        color="primary.main"
+                        fontStyle={'italic'}
+                        mt={2}
+                        fontSize={{ xs: '4vw', sm: '3vw', md: '2vw' }}
+                        fontWeight={500}
+                    >
+                        Find your perfect match - modern icons, retro classics, and styles made for her.
+                    </Typography>
                     <Box sx={{
                         display: 'flex',
                         gap: 4,
-                        justifyContent: 'center',
-                        paddingY: 2,
+                        justifyContent: isMobile ? 'start' : 'center',
+                        padding: 2,
                         mb: 2,
                         overflowX: 'scroll',
                         '&::-webkit-scrollbar': { height: '2px' }, // para Chrome
@@ -113,7 +120,9 @@ export default function Section11({
                             <Typography
                                 key={type}
                                 onClick={() => setSelectedType(type)}
+                                fontSize={{ xs: '4vw', sm: '3vw', md: '2vw', lg: '1.5vw' }}
                                 sx={{
+                                    whiteSpace: 'nowrap',
                                     cursor: 'pointer',
                                     fontWeight: selectedType === type ? 700 : 500,
                                     color: selectedType === type ? 'primary.main' : 'gray',
@@ -130,18 +139,17 @@ export default function Section11({
             </Box>
 
             <Carousel
-                slidesToShow={4}
+                slidesToShow={4}         // base para escritorio
+                slidesToScroll={4}       // base para escritorio
                 responsive={responsive}
                 arrowStyles={{ top: "40%" }}
                 dots
-                slidesToScroll={4}
-                infinite={false}
                 dotColor="#CA0b0b"
             >
                 {filteredProducts.map((product) => (
                     <ProductCard8 key={product.id} product={product} active={true} />
                 ))}
             </Carousel>
-        </Container>
+        </Container >
     );
 }

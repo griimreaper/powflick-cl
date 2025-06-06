@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, forwardRef } from "react";
+import React, { PropsWithChildren, forwardRef, useState } from "react";
 import { SxProps, Theme, useTheme } from "@mui/material/styles";
 import SlickCarousel, { Settings } from "react-slick";
 import Slider from "react-slick";
@@ -40,6 +40,13 @@ const Carousel = forwardRef<Slider, Props>((props, ref) => {
 
   const theme = useTheme();
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slidesToScroll = props.slidesToScroll ?? slidesToShow; // por defecto
+
+  const totalSlides = React.Children.count(children);
+  const hidePrevArrow = !infinite && currentSlide === 0;
+  const hideNextArrow = !infinite && currentSlide + slidesToScroll >= totalSlides;
+
   const settings: Settings = {
     dots,
     arrows,
@@ -48,14 +55,16 @@ const Carousel = forwardRef<Slider, Props>((props, ref) => {
     autoplaySpeed,
     infinite,
     rtl: theme.direction === "rtl",
-    ...CarouselArrows(arrowStyles),
+    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
+    prevArrow: hidePrevArrow ? <></> : CarouselArrows(arrowStyles).prevArrow,
+    nextArrow: hideNextArrow ? <></> : CarouselArrows(arrowStyles).nextArrow,
     ...CarouselDots({ dotColor, sx: dotStyles }),
     ...others,
   };
 
   return (
     <RootStyle space={spaceBetween} >
-      <SlickCarousel ref={ref} {...settings}>
+      <SlickCarousel ref={ref} {...settings} lazyLoad="anticipated">
         {children}
       </SlickCarousel>
     </RootStyle>
