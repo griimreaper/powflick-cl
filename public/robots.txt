@@ -9,6 +9,7 @@ Disallow: /vendor
 Disallow: /vendor/*
 Disallow: /api/*
 Disallow: /api
+Disallow: /_next/static/
 
 # Host
 Host: https://www.powflick.com/
