@@ -2,7 +2,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import {
-  Container,
   Grid,
   TextField,
   Button,
@@ -81,11 +80,10 @@ const ContactUs = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "top",
-
           top: 0,
           left: 0,
           borderRadius: 8,
-          zIndex: 1,
+          zIndex: 0,
         }}
       >
         <Grid container spacing={4} mt={{ xs: 2, md: 6 }}>
@@ -122,7 +120,7 @@ const ContactUs = () => {
                     sx={{
                       borderRadius: 2,
                       "& .MuiInputLabel-root": {
-                        zIndex: 3,
+                        zIndex: 2,
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "#fff !important", // solo el input, no tapa el label
@@ -133,7 +131,7 @@ const ContactUs = () => {
                       "& .MuiFormHelperText-root": {
                         color: "#fff !important", // fuerza la prioridad
                         position: "relative",     // ayuda si hay pseudo-elementos ::before
-                        zIndex: 2,                // asegura que esté sobre cualquier fondo ::before
+                        zIndex: 2,
                       },
                     }}
                   />
@@ -152,7 +150,7 @@ const ContactUs = () => {
                     sx={{
                       borderRadius: 2,
                       "& .MuiInputLabel-root": {
-                        zIndex: 3,
+                        zIndex: 2,
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "#fff !important", // solo el input, no tapa el label
@@ -181,7 +179,7 @@ const ContactUs = () => {
                     sx={{
                       borderRadius: 2,
                       "& .MuiInputLabel-root": {
-                        zIndex: 3,
+                        zIndex: 2,
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "#fff !important", // solo el input, no tapa el label
@@ -213,7 +211,7 @@ const ContactUs = () => {
                     sx={{
                       borderRadius: 2,
                       "& .MuiInputLabel-root": {
-                        zIndex: 3,
+                        zIndex: 2,
                       },
                       "& .MuiInputBase-root": {
                         backgroundColor: "#fff !important", // solo el input, no tapa el label
