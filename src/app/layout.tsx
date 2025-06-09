@@ -39,10 +39,13 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: structuredData }}
-        />
+        {structuredData.map((ldJson, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: ldJson }}
+          />
+        ))}
       </head>
       <body className={openSans.className}>
         <React.StrictMode>

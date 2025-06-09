@@ -222,25 +222,28 @@ export default async function ProductDetails({
     const detail = await fetchProductDetails(params.slug);
 
     const product = detail?.product;
+
     const structuredData = {
       "@context": "https://schema.org/",
       "@type": "Product",
       "name": product?.title,
       "description": product?.short_description || "Default Description",
-      "image": product?.images.map((img: string) => img), // Array de imágenes
+      "image": product?.images.map((img: string) => img),
       "brand": {
         "@type": "Brand",
         "name": "Pow Flick"
       },
       "sku": product?.slug || "",
+      "productID": product?.id?.toString() || product?.slug || "",
+      "category": product?.categories[0]?.name || "Sportswear",
       "offers": {
         "@type": "Offer",
         "url": `https://www.powflick.com/products/${params.slug}`,
         "priceCurrency": "USD",
-        "price": product?.price,
+        "price": product?.price?.toString() || "0.00",
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition"
-      }
+      },
     };
 
     if (!detail || detail.product.status === "draft" || !detail.product.images) {
@@ -272,7 +275,7 @@ export default async function ProductDetails({
       );
     }
 
-    setStructuredData(structuredData);
+    setStructuredData([structuredData]);
 
     // ✅ Contraseña válida o no se requiere
     return (

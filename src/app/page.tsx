@@ -131,7 +131,7 @@ export default async function FashionShopTwo() {
     ]
   };
 
-  setStructuredData(structuredData);
+  setStructuredData([structuredData]);
 
   return (
     <ShopLayout1 landing>
