@@ -12,7 +12,6 @@ export const COLOR_HEX_MAP: Record<string, string> = {
   gray: "#AAAAAA",
   beige: "#F5F5DC",
   navy: "#001F3F",
-  teal: "#39CCCC",
   gold: "#FFD700",
   silver: "#C0C0C0",
   maroon: "#800000",
@@ -20,6 +19,10 @@ export const COLOR_HEX_MAP: Record<string, string> = {
   lime: "#01FF70",
   cyan: "#00FFFF",
   magenta: "#FF00FF",
+  fuchsia: "#ff00ff",
+  "neon green": "#39FF14",
+  "navy blue": "#000080",
+  teal: "#008080",
 };
 export const COLOR_NAMES: string[] = Object.keys(COLOR_HEX_MAP);
 export const COLOR_HEX_VALUES: string[] = Object.values(COLOR_HEX_MAP);
