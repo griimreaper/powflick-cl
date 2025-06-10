@@ -10,13 +10,15 @@ import FrequentlyBought from "../frequently-bought";
 
 // CUSTOM DATA MODEL
 import { detailProps, ProductDB } from "models/types";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
+import Section2 from "pages-sections/fashion-2/section-2";
 
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
   const { product, sugestedProducts, frequentlyBought, reviews, PaymentMethods, ShippingTypes } = detail;
+  const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
 
   return (
-    <Box p={{ xs:2, sm: 4, md:6 }} style={{ overflow: 'hidden', background: "white" }}>
+    <Box p={{ xs: 2, sm: 4, md: 6 }} style={{ overflow: 'hidden', background: "white" }}>
       {/* PRODUCT DETAILS INFO AREA */}
       <ProductIntro product={detail} />
 
@@ -30,6 +32,9 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       {/* <AvailableShops /> */}
       {/* RELATED PRODUCTS AREA */}
       <RelatedProducts products={sugestedProducts} />
+      <Box width={'100%'} position={'relative'} >
+        <Section2 className="section-2-detail" isMobile={isMobile} detail />
+      </Box>
     </Box>
   );
 }
