@@ -141,28 +141,28 @@ const PricingSection = () => {
 
             <Grid container spacing={4} mt={{ xs: 2, md: 4 }}>
                 {/* Texto izquierdo */}
-                <Grid item xs={12} md={5}>
-                    <Typography color="primary.main" fontWeight="700">
+                <Grid item xs={12} md={5} display={'flex'} flexDirection="column" justifyContent="center" gap={2} textAlign={{ xs: 'center', md: 'left' }}>
+                    <Typography color="primary.main" fontWeight="700" fontSize={{ xs: '4vw', md: '1.2rem' }}>
                         Flexible Pricing. Team-Friendly Rates.
                     </Typography>
-                    <Typography paragraph>
+                    <Typography paragraph fontSize={{ xs: '4vw', md: '1.2rem' }}>
                         At POW FLICK, we offer competitive pricing for custom sports uniforms, designed to fit
                         teams of all sizes and budgets.
                     </Typography>
 
-                    <Typography color="primary.main" fontWeight="700">
+                    <Typography color="primary.main" fontWeight="700" fontSize={{ xs: '4vw', md: '1.2rem' }}>
                         Transparent Price Range
                     </Typography>
-                    <Typography paragraph>
+                    <Typography paragraph fontSize={{ xs: '4vw', md: '1.2rem' }}>
                         Our prices vary based on the product type, customization level, and quantity ordered.
                         Whether you’re ordering for a small team or an entire club, we’ll tailor the offer to
                         match your needs.
                     </Typography>
 
-                    <Typography color="primary.main" fontWeight="700">
+                    <Typography color="primary.main" fontWeight="700" fontSize={{ xs: '4vw', md: '1.2rem' }}>
                         Bulk Order Discounts
                     </Typography>
-                    <Typography paragraph>
+                    <Typography paragraph fontSize={{ xs: '4vw', md: '1.2rem' }}>
                         The more you order, the better the rate. We offer tiered pricing, so teams placing
                         larger orders enjoy lower per-unit costs — ideal for clubs, schools, or resellers.
                     </Typography>
