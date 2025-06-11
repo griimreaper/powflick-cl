@@ -76,7 +76,7 @@ export default function ProductsPageView() {
   // TABLE HEADING DATA LIST
   const tableHeading = [
     { id: "name", label: "Name", align: "left", content: null },
-    { id: "category", label: "Category", align: "left", content: (Object.keys(productList?.count?.categories || {})) },
+    { id: "category", label: "Category", align: "left", content: productList?.filt?.map((c: any) => c.title) || null, },
     [
       { id: "collection", label: "Collection", align: "left", content: (Object.keys(productList?.count?.collection || {})), section: 1 },
       { id: "tag", label: "Tag", align: "left", content: (Object.keys(productList?.count?.tag || {})), section: 1 },
@@ -108,8 +108,6 @@ export default function ProductsPageView() {
       showErrorAlert('Error!', error.message);
     }
   };
-
-  console.log(filteredProducts);
 
   return (
     <PageWrapper title="Product List">

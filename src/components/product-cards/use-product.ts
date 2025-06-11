@@ -19,7 +19,6 @@ export default function useProduct(id: string) {
   const cartItem = state.cart.find((item) => item.id === id)!;
 
   const toggleFavorite = useCallback(() => {
-    setIsFavorite((fav) => !fav);
     handleFavoriteChange(id)
   }, []);
 
@@ -30,11 +29,11 @@ export default function useProduct(id: string) {
     if (token) {
       const fetchfavProduct = await favProduct(token, productId, isFavorite);
       setFavorites(fetchfavProduct.list);
-
       if (fetchfavProduct.error) {
         showErrorAlert("Error!", fetchfavProduct.message);
       } else {
         showSuccessAlert("Success!", fetchfavProduct.message);
+        setIsFavorite((fav) => !fav);
       }
     } else {
       showErrorAlert("Error!", "Must be logged in.");

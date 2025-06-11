@@ -76,6 +76,10 @@ export default async function ProductSearch({ params }: any) {
     "logo": "https://www.powflick.com/logo.png", // Reemplaza con tu logo real si es diferente
     "description": "Buy custom sports jerseys and teamwear for soccer, basketball, baseball, and more. Fast delivery, high-quality materials.",
     "image": "https://www.powflick.com/assets/images/landing/dashboard/DASHBOARD_BACKGROUND.png",
+    "telephone": "+86 159 2011 0846", // Reemplaza por el tuyo real
+    "email": "support@powflick.com", // Opcional si tenés contacto visible
+    "currenciesAccepted": "USD",
+    "paymentAccepted": "Credit Card, PayPal",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Cali",
@@ -93,6 +97,25 @@ export default async function ProductSearch({ params }: any) {
     ],
   };
 
-  setStructuredData(structuredData);
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Custom Soccer Jerseys",
+        "item": "https://www.powflick.com/products?category=Custom+Soccer+Jerseys"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Custom Basketball Jerseys",
+        "item": "https://www.powflick.com/products?category=Custom+Basketball+Jerseys"
+      }
+    ]
+  };
+
+  setStructuredData([structuredData, breadcrumbStructuredData]);
   return <ProductSearchPageView />;
 }

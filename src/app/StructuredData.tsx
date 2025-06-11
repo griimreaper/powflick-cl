@@ -1,9 +1,9 @@
-let script = '';
+let scripts: string[] = [];
 
-export function setStructuredData(json: object) {
-    script = JSON.stringify(json);
+export function setStructuredData(jsonArray: object[]) {
+    scripts = jsonArray.map((json) => JSON.stringify(json));
 }
 
-export function getStructuredData() {
-    return script;
+export function getStructuredData(): string[] {
+    return scripts;
 }

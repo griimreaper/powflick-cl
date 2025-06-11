@@ -5,18 +5,26 @@ import Image from "next/image";
 
 export default function LogoSection() {
   return (
-    <Box width={'100%'} display="flex" flexDirection={"column"} justifyContent="center" alignItems="center">
+    <Box
+      width={'100%'}
+      display="flex"
+      flexDirection={"column"}
+      justifyContent="center"
+      alignItems={{ xs: "center", lg: "flex-start" }}
+    >
       <Link href="/" draggable={false}>
-        <Box display="flex" justifyContent="center" width={'100%'} height={100}>
-          <Image
-            width={200}
-            height={200}
+        <Box
+          display="flex"
+          justifyContent="center"
+          width={{ xs: 150, sm: 200, md: 250, lg: 300 }}
+          height="auto"
+        >
+          <img
+            style={{ width: "100%", height: "auto" }}
             draggable={false}
             loading="lazy"
-            quality={80}
-            src="/assets/images/logo/POWFLICK_LOGO-FOOTER.png"
+            src="/assets/images/logo/logo2.png"
             alt="logo"
-            layout="responsive"
           />
         </Box>
       </Link>
