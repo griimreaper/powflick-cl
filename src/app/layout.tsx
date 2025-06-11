@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Open_Sans } from "next/font/google";
 import FloatingWhatsApp from "components/whatsapp/FloatingWhatsApp"; // Ajusta la ruta si es necesario
+import Head from "next/head";
 
 export const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -46,7 +47,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
+      <Head>
         {/* Precargar la fuente GYMER */}
         <link
           rel="preload"
@@ -78,7 +79,7 @@ export default function RootLayout({
             `,
           }}
         />
-      </head>
+      </Head>
       <body className={openSans.className}>
         <React.StrictMode>
           <GlobalProvider>
