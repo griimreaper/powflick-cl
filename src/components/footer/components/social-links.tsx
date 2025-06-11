@@ -35,7 +35,7 @@ export default function SocialLinks({ variant = "light" }: Props) {
       {SOCIAL_ICON_LINKS.map(({ Icon, url }, ind) => (
         <Link href={url} target="_blank" rel="noreferrer noopenner" key={ind} title={ind.toString()} draggable={false}>
           <StyledIconButton variant={variant}>
-            <Icon fontSize="inherit" className="icon" />
+            <Icon fontSize="medium" className="icon" />
           </StyledIconButton>
         </Link>
       ))}

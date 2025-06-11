@@ -8,6 +8,7 @@ import { getAllProductSlugs, getProductsBySlug } from "services/Products";
 import { cache } from "react";
 import ProductSeo from "./ProductSeo";
 import ProductPasswordForm from "./passwordForm";
+import { setStructuredData } from "app/StructuredData";
 
 export const revalidate = 360;
 export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente
@@ -56,23 +57,113 @@ export async function generateMetadata({
     const structuredData = {
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": product.title,
-      "description": product.short_description || "Default Description",
-      "image": product.images.map((img: string) => img), // Array de imágenes
+      "name": product?.title,
+      "description": product?.short_description || "Default Description",
+      "image": product?.images.map((img: string) => img), // Array de imágenes
       "brand": {
         "@type": "Brand",
         "name": "Pow Flick"
       },
-      "sku": product.slug || "",
+      "sku": product?.slug || "",
       "offers": {
         "@type": "Offer",
         "url": `https://www.powflick.com/products/${params.slug}`,
         "priceCurrency": "USD",
-        "price": product.price,
+        "price": product?.price,
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition"
       }
     };
+
+    const baseKeywords = [
+      "buy pow flick jerseys",
+      "custom jerseys usa store",
+      "basketball uniforms with logos",
+      "football shirts for youth teams",
+      "design custom sports shirts",
+      "fan gear personalized",
+      "pow flick sportswear shop",
+      "jerseys with team colors",
+      "jerseys for amateur sports teams",
+      "pow flick custom apparel",
+      "add your name to jersey",
+      "bulk order custom jerseys",
+      "custom soccer kits fast delivery",
+      "best quality sports jerseys online",
+      "team merchandise personalized",
+      "custom made fan jerseys",
+      "jerseys for local teams",
+      "sports jersey designer",
+      "pow flick e-commerce store",
+      "jerseys with numbers and logos",
+      "where to buy custom basketball jerseys online",
+      "cheap personalized football jerseys for team",
+      "buy custom baseball jerseys with name and number",
+      "high quality sports uniforms for amateur teams",
+      "design your own custom soccer jersey online",
+      "custom hockey jerseys with fast shipping USA",
+      "custom training gear for sports teams",
+      "order personalized sportswear for school teams",
+      "custom jersey store with fast delivery",
+      "custom sports apparel with logo printing",
+      "personalized jerseys for fans and players",
+      "buy team jerseys with custom embroidery",
+      "create your own sports uniform for tournaments",
+      "team name and number printed jerseys online",
+      "high quality jersey printing for clubs",
+      "fully customizable sports apparel shop",
+      "premium jersey material for custom orders",
+      "online jersey customization service USA",
+      "team kits with bulk discount custom logos",
+      "custom sports clothing for athletes and fans",
+      "custom basketball jersey",
+      "football jersey online",
+      "buy custom soccer kit",
+      "high quality sportswear",
+      "personalized team jersey",
+      "sports jersey shop",
+      "customized baseball jersey",
+      "basketball team uniform",
+      "custom team sportswear",
+      "buy sports jersey",
+      "custom hockey jersey",
+      "team shirts with name",
+      "soccer shirt with number",
+      "cheap custom jerseys",
+      "high performance jersey",
+      "training apparel for teams",
+      "online jersey printing",
+      "personalized fan apparel",
+      "custom made sports gear",
+      "premium sports jerseys",
+      "jersey",
+      "custom jersey",
+      "sportswear",
+      "team uniform",
+      "athletic gear",
+      "pow flick",
+      "buy jersey",
+      "custom gear",
+      "sports gear",
+      "sports jersey",
+      "jersey online",
+      "teamwear",
+      "custom apparel",
+      "sport shirt",
+      "fan jersey",
+      "game jersey",
+      "training jersey",
+      "match gear",
+      "pro jersey",
+      "player jersey",
+    ];
+
+    const dinamycKeywords: any = [
+      ...product.title.split(" "),
+      ...product.tags,
+      ...product.categories,
+      ...product.collections,
+    ]
 
     return {
       metadataBase: new URL(process.env.NEXTAUTH_URL as string),
@@ -83,11 +174,8 @@ export async function generateMetadata({
       },
       description: product.short_description || "Default Description",
       keywords: [
-        "e-commerce",
-        "e-commerce template",
-        "next.js",
-        "react",
-        ...product.title.split(" "),
+        ...baseKeywords,
+        ...dinamycKeywords,
       ],
       openGraph: {
         title: product.title,
@@ -133,6 +221,28 @@ export default async function ProductDetails({
   try {
     const detail = await fetchProductDetails(params.slug);
 
+    const product = detail?.product;
+    const structuredData = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": product?.title,
+      "description": product?.short_description || "Default Description",
+      "image": product?.images.map((img: string) => img), // Array de imágenes
+      "brand": {
+        "@type": "Brand",
+        "name": "Pow Flick"
+      },
+      "sku": product?.slug || "",
+      "offers": {
+        "@type": "Offer",
+        "url": `https://www.powflick.com/products/${params.slug}`,
+        "priceCurrency": "USD",
+        "price": product?.price,
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    };
+
     if (!detail || detail.product.status === "draft" || !detail.product.images) {
       return (
         <Box
@@ -161,6 +271,8 @@ export default async function ProductDetails({
         />
       );
     }
+
+    setStructuredData(structuredData);
 
     // ✅ Contraseña válida o no se requiere
     return (

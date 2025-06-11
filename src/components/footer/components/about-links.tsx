@@ -9,7 +9,7 @@ type Props = { isDark?: boolean };
 export default function AboutLinks({ isDark }: Props) {
   return (
     <Fragment>
-      <Heading style={{ color: "#A30E0E" }}>About Us</Heading>
+      <Heading style={{ color: "#CA0B0B", marginBottom: "24px" }}>About Us</Heading>
 
       <div>
         {ABOUT_LINKS.map((item, ind) => (
