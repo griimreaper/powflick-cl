@@ -1,15 +1,11 @@
 "use client"
-import Container from "@mui/material/Container";
-import ProductFilterCard from "../product-filter-card";
 // Local CUSTOM COMPONENTS
 import ProductTabs from "../product-tabs";
 import ProductIntro from "../productIntro/product-intro";
-import AvailableShops from "../available-shops";
 import RelatedProducts from "../related-products";
-import FrequentlyBought from "../frequently-bought";
 
 // CUSTOM DATA MODEL
-import { detailProps, ProductDB } from "models/types";
+import { detailProps } from "models/types";
 import { Box, useMediaQuery } from "@mui/material";
 import Section2 from "pages-sections/fashion-2/section-2";
 
@@ -23,7 +19,7 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       <ProductIntro product={detail} />
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
-      <ProductTabs content={product.content} reviews={reviews} paymentMethods={PaymentMethods} shippingTypes={ShippingTypes} />
+      <ProductTabs />
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
       {/* <FrequentlyBought products={frequentlyBought} /> */}

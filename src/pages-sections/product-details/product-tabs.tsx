@@ -7,11 +7,7 @@ import Tabs from "@mui/material/Tabs";
 import styled from "@mui/material/styles/styled";
 // LOCAL CUSTOM COMPONENTS
 import { Review } from "models/types";
-import { H3, H4 } from "components/Typography";
-import { FaCcVisa, FaCcMastercard, FaCcAmex, FaApplePay, FaGooglePay } from "react-icons/fa";
-import ProductComment from "./product-comment";
-import { Reviews } from "components/Reviews/Reviews";
-import { Grid, Typography, Zoom } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import PricingSection from "./pricing-section";
 
@@ -29,14 +25,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   }
 }));
 
-interface Props {
-  content: string,
-  reviews: Review[],
-  paymentMethods: { text: string },
-  shippingTypes: string
-}
-
-export default function ProductTabs({ paymentMethods, shippingTypes }: Props) {
+export default function ProductTabs() {
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
@@ -98,38 +87,83 @@ export default function ProductTabs({ paymentMethods, shippingTypes }: Props) {
                 </Typography>
               </Box>
             </Box>
-            <Box width={'50%'} display={{ xs: 'none', md: 'block' }}>
-              <Image
-                src="/assets/images/detail/description-image.png"
-                alt="description-image"
-                layout="responsive"
-                width={1000}
-                height={1000}
-              >
-              </Image>
+            <Box width={{ xs: '100%', md: '50%' }} display={'flex'}>
+              <Box width={'100%'} display={'flex'} justifyContent={'center'} alignItems={'center'} flexDirection={{ xs: 'column', md: 'row' }} gap={2}>
+                <Box width={{ xs: '100%', md: '50%' }} display={'flex'} flexDirection={'column'} justifyContent={'space-between'} alignItems={'center'} gap={2} p={2} whiteSpace={'nowrap'} >
+                  <Image
+                    src="/assets/images/detail/description-image.png"
+                    alt="description-image"
+                    layout="responsive"
+                    width={1000}
+                    height={1000}
+                  >
+                  </Image>
+                </Box>
+                <Box width={{ xs: '100%', md: '50%' }} display={'flex'} flexDirection={{ xs: 'row', md: 'column' }} justifyContent={'space-between'} alignItems={'center'} gap={2} p={2} whiteSpace={'nowrap'} >
+                  <Box width={{ xs: '45%', md: '60%' }} display={'flex'} flexDirection={'column'} gap={2} justifyContent={'center'} alignItems={'center'}>
+                    <Typography fontWeight={'600'} fontSize={{ xs: '4vw', md: '1.5vw' }}>Heat Press Technique</Typography>
+                    <Image
+                      src="/assets/images/detail/description-image-element-1.png"
+                      alt="description-image"
+                      layout="responsive"
+                      width={1000}
+                      height={1000}
+                    >
+                    </Image>
+                  </Box>
+                  <Box width={{ xs: '45%', md: '60%' }} display={'flex'} flexDirection={'column'} gap={2} justifyContent={'center'} alignItems={'center'}>
+                    <Typography fontWeight={'600'} fontSize={{ xs: '4vw', md: '1.5vw' }}>Stitch Embroidery</Typography>
+                    <Image
+                      src="/assets/images/detail/description-image-element-2.png"
+                      alt="description-image"
+                      layout="responsive"
+                      width={1000}
+                      height={1000}
+                    >
+                    </Image>
+                  </Box>
+                </Box>
+              </Box>
             </Box>
-            <Box width={'100%'} display={{ xs: 'block', md: 'none' }} mt={2}>
-              <Image
-                src="/assets/images/detail/description-image-mobile.png"
-                alt="description-image"
-                layout="responsive"
-                width={1000}
-                height={1000}
-              >
-              </Image>
-            </Box>
-          </Box>
+          </Box >
         }
-        {selectedOption === 1 &&
-          <>
-            <Box display={{ xs: 'none', md: 'flex' }} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
+        {
+          selectedOption === 1 &&
+          <Box display='flex' flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
+            <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '3.5vw', md: '3vw' }}>
+              English Size Table
+            </Typography>
+            <Box display={'flex'} width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
+              <Box width={'50%'}>
+                <Image
+                  src="/assets/images/detail/size-table-english-mobile-1.png"
+                  alt="size-image"
+                  layout="responsive"
+                  width={1000}
+                  height={1000}
+                />
+              </Box>
               <Image
                 src="/assets/images/detail/size-table-english.png"
-                alt="size-image"
+                alt="size-image-2"
                 layout="responsive"
                 width={1000}
                 height={1000}
               />
+            </Box>
+            <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '3.5vw', md: '3vw' }}>
+              Spanish Size Table
+            </Typography>
+            <Box display={'flex'} width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
+              <Box width={'50%'}>
+                <Image
+                  src="/assets/images/detail/size-table-spanish-mobile-1.png"
+                  alt="size-image"
+                  layout="responsive"
+                  width={1000}
+                  height={1000}
+                />
+              </Box>
               <Image
                 src="/assets/images/detail/size-table-spanish.png"
                 alt="size-image-2"
@@ -138,45 +172,17 @@ export default function ProductTabs({ paymentMethods, shippingTypes }: Props) {
                 height={1000}
               />
             </Box>
-            <Box display={{ md: 'none', xs: 'flex' }} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
-              <Image
-                src="/assets/images/detail/size-table-english-mobile-1.png"
-                alt="size-image"
-                layout="responsive"
-                width={1000}
-                height={1000}
-              />
-              <Image
-                src="/assets/images/detail/size-table-english-mobile-2.png"
-                alt="size-image-2"
-                layout="responsive"
-                width={1000}
-                height={1000}
-              />
-              <Image
-                src="/assets/images/detail/size-table-spanish-mobile-1.png"
-                alt="size-image"
-                layout="responsive"
-                width={1000}
-                height={1000}
-              />
-              <Image
-                src="/assets/images/detail/size-table-spanish-mobile-2.png"
-                alt="size-image-2"
-                layout="responsive"
-                width={1000}
-                height={1000}
-              />
-            </Box>
-          </>
+          </Box>
         }
-        {selectedOption === 2 &&
+        {
+          selectedOption === 2 &&
           <Grid container spacing={4} p={4}>
             {/* Columna izquierda */}
             <Grid item xs={12} md={6} textAlign={{ xs: 'center', md: 'left' }} display={'flex'} flexDirection={'column'} gap={2} >
-              <Box display={'flex'} flexDirection={'column'} textAlign={{ xs: 'center', md: 'left' }} justifyContent={'center'} height={'100%'} gap={{ xs: 5, md: 2 }}>                <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '3.5vw', md: '1.2vw' }}>
-                Worldwide Express Shipping. Reliable. On Time.
-              </Typography>
+              <Box display={'flex'} flexDirection={'column'} textAlign={{ xs: 'center', md: 'left' }} justifyContent={'center'} height={'100%'} gap={{ xs: 5, md: 2 }}>
+                <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '3.5vw', md: '1.2vw' }}>
+                  Worldwide Express Shipping. Reliable. On Time.
+                </Typography>
                 <Typography fontWeight={500} fontSize={{ xs: '3.5vw', md: '1.2vw' }}>
                   At <strong style={{ color: '#CA0B0B' }}>POW FLICK</strong>{", we deliver custom sportswear to teams across the globe. Whether you're ordering from the U.S., Latin America, Europe, or beyond — we've got you covered."}
                 </Typography>
@@ -230,7 +236,8 @@ export default function ProductTabs({ paymentMethods, shippingTypes }: Props) {
           </Grid>
 
         }
-        {selectedOption === 3 &&
+        {
+          selectedOption === 3 &&
           <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
             <PricingSection />
           </Box>
