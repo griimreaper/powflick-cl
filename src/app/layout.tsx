@@ -47,7 +47,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
+      <head>
         {/* Precargar la fuente GYMER */}
         <link
           rel="preload"
@@ -67,10 +67,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: structuredData || JSON.stringify(jsonLd) }}
         />
+
         <script src="https://cdn.brevo.com/js/sdk-loader.js" async></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Version: 2.0
               window.Brevo = window.Brevo || [];
               Brevo.push([
                 "init",
@@ -79,7 +81,8 @@ export default function RootLayout({
             `,
           }}
         />
-      </Head>
+
+      </head>
       <body className={openSans.className}>
         <React.StrictMode>
           <GlobalProvider>
