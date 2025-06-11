@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Open_Sans } from "next/font/google";
 import FloatingWhatsApp from "components/whatsapp/FloatingWhatsApp"; // Ajusta la ruta si es necesario
+import Head from "next/head";
 
 export const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
+
         {structuredData.map((ldJson, i) => (
           <script
             key={i}
@@ -47,6 +49,26 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{ __html: ldJson }}
           />
         ))}
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredData || JSON.stringify(jsonLd) }}
+        />
+
+        <script src="https://cdn.brevo.com/js/sdk-loader.js" async></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Version: 2.0
+              window.Brevo = window.Brevo || [];
+              Brevo.push([
+                "init",
+                { client_key: "a7z32zwzfapqugeahtbh5w6i" }
+              ]);
+            `,
+          }}
+        />
+
       </head>
       <body className={openSans.className}>
         <React.StrictMode>
