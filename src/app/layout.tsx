@@ -50,11 +50,6 @@ export default function RootLayout({
           />
         ))}
 
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: structuredData || JSON.stringify(jsonLd) }}
-        />
-
         <script src="https://cdn.brevo.com/js/sdk-loader.js" async></script>
         <script
           dangerouslySetInnerHTML={{
