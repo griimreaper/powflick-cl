@@ -17,8 +17,10 @@ import { DataStructure } from "models/types";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
+import { useMediaQuery } from "@mui/material";
 
 export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
+  const isMobile = useMediaQuery("(max-width:768px)");
   return (
     <Box
       component="footer"
@@ -89,7 +91,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
               >
                 <LogoSection />
                 {/* Texto debajo del logo */}
-                <Box
+                {/* <Box
                   mt={2}
                   mb={2}
                   sx={{
@@ -105,7 +107,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
                   }}
                 >
                   FOR TEAM BEHIND THE DREAM
-                </Box>
+                </Box> */}
               </Grid>
               {/* ABOUT US LINKS */}
               <Grid
@@ -171,12 +173,12 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
                   RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK
                 </Paragraph>
 
-                {/* <Paragraph py={0.6} color="grey.500">
+                <Paragraph py={0.6} color="grey.500">
                   Registered Office (Legal Entity):
-                  CL 28 #113 57 AP 603 B, Cali – Valle, Colombia
+                  CL 28 #113 57, Cali – Valle, Colombia
                   NIT: 1231234
 
-                </Paragraph> */}
+                </Paragraph>
 
                 <Paragraph py={0.6} color="grey.500">
                   <EmailIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
@@ -216,11 +218,11 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
                   mb={2}
                   width="100%"
                 >
-                  <img src="/assets/images/payment-methods/visa.png" alt="Visa" height={36} style={{ background: "#fff", borderRadius: 4 }} />
-                  <img src="/assets/images/payment-methods/paypal.png" alt="PayPal" height={36} style={{ background: "#fff", borderRadius: 4 }} />
-                  <img src="/assets/images/payment-methods/amex.png" alt="American Express" height={36} style={{ background: "#016FD0", borderRadius: 4 }} />
-                  <img src="/assets/images/payment-methods/discover.png" alt="discover" height={36} style={{ background: "#fff", borderRadius: 4 }} />
-                  <img src="/assets/images/payment-methods/master-card.png" alt="master-card" height={36} style={{ background: "#016FD0", borderRadius: 4 }} />
+                  <img src="/assets/images/payment-methods/visa.png" alt="Visa" height={isMobile ? 28 : 36} style={{ background: "#fff", borderRadius: 4 }} />
+                  <img src="/assets/images/payment-methods/paypal.png" alt="PayPal" height={isMobile ? 28 : 36} style={{ background: "#fff", borderRadius: 4 }} />
+                  <img src="/assets/images/payment-methods/amex.png" alt="American Express" height={isMobile ? 28 : 36} style={{ background: "#016FD0", borderRadius: 4 }} />
+                  <img src="/assets/images/payment-methods/discover.png" alt="discover" height={isMobile ? 28 : 36} style={{ background: "#fff", borderRadius: 4 }} />
+                  <img src="/assets/images/payment-methods/master-card.png" alt="master-card" height={isMobile ? 28 : 36} style={{ background: "#016FD0", borderRadius: 4 }} />
                 </Box>
                 {/* SOCIAL LINKS WITH ICON */}
                 <Paragraph

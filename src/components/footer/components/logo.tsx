@@ -23,7 +23,7 @@ export default function LogoSection() {
             style={{ width: "100%", height: "auto" }}
             draggable={false}
             loading="lazy"
-            src="/assets/images/logo/POWFLICK_LOGO-FOOTER.png"
+            src="/assets/images/logo/logo2.png"
             alt="logo"
           />
         </Box>
