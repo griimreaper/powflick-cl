@@ -5,7 +5,7 @@ import { Fab, useMediaQuery } from "@mui/material";
 
 const FloatingWhatsApp = () => {
   const isMobile = useMediaQuery(("(max-width: 768px)"));
-  const phoneNumber = "8613925961232";
+  const phoneNumber = "8613590635129";
 
   return (
     <a
@@ -16,7 +16,7 @@ const FloatingWhatsApp = () => {
         position: "fixed",
         bottom: isMobile ? "80px" : "140px",
         right: isMobile ? '' : 19,
-        left: isMobile ? 19: '',
+        left: isMobile ? 19 : '',
         textDecoration: "none",
         zIndex: 10000,
       }}

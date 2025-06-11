@@ -20,7 +20,7 @@ export const ABOUT_LINKS = [
 
 export const PAGES = [
   ["Store", "products"],
-  ["Super Design", "your-design"],
+  ["Get a Free Design", "your-design"],
   ["Contact", "contact"],
   ["About Us", "about-us"],
   ["FAQ", "help"],
@@ -28,15 +28,15 @@ export const PAGES = [
 ];
 
 export const SOCIAL_ICON_LINKS = [
+  { Icon: Instagram, url: "https://www.instagram.com/powflick/" },
+  { Icon: Pinterest, url: "https://www.pinterest.com/powflick/" },
   {
     Icon: Facebook,
     url: "https://www.facebook.com/profile.php?id=61572571284039",
   },
   // { Icon: Twitter, url: "https://twitter.com/" },
-  // { Icon: Youtube, url: "https://www.youtube.com/" },
+  { Icon: Youtube, url: "https://www.youtube.com/@PowFlick" },
   // { Icon: Google, url: "https://www.google.com/" },
-  { Icon: Instagram, url: "https://www.instagram.com/powflick/" },
-  { Icon: Pinterest, url: "https://www.pinterest.com/powflick/" },
 ];
 
 export const PLAY_APP_STORE_DATA = [
