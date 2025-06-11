@@ -66,6 +66,18 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: structuredData || JSON.stringify(jsonLd) }}
         />
+        <script src="https://cdn.brevo.com/js/sdk-loader.js" async></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.Brevo = window.Brevo || [];
+              Brevo.push([
+                "init",
+                { client_key: "a7z32zwzfapqugeahtbh5w6i" }
+              ]);
+            `,
+          }}
+        />
       </head>
       <body className={openSans.className}>
         <React.StrictMode>
