@@ -14,6 +14,7 @@ import GoogleTagManager from "./GoogleTagManager";
 import IntercomChat from "./IntercomChat";
 import { getStructuredData } from "./StructuredData";
 
+
 export default function RootLayout({
   children,
 }: {

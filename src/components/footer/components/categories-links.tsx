@@ -10,7 +10,7 @@ type Props = { isDark?: boolean, list?: Category[] };
 export default function CategoriesLinks({ isDark, list }: Props) {
   return (
     <Fragment>
-      <Heading style={{ color: "#A30E0E" }}>Categories</Heading>
+      <Heading style={{ color: "#CA0B0B", marginBottom: "24px" }}>Categories</Heading>
 
       {list?.map((item, ind) => (
         <StyledLink
