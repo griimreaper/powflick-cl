@@ -9,9 +9,11 @@ Disallow: /vendor
 Disallow: /vendor/*
 Disallow: /api/*
 Disallow: /api
+Disallow: /_next/static/
 
 # Host
 Host: https://www.powflick.com/
 
 # Sitemaps
 Sitemap: https://www.powflick.com/sitemap.xml
+Sitemap: https://www.powflick.com/sitemap-1.xml

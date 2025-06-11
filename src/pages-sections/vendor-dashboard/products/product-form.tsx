@@ -109,8 +109,6 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     password,
   } = product || {};
 
-  
-
   const INITIAL_VALUES: ProductFormData = {
     title: title || "",
     collections: collections ? collections.map(({ title }: { title: string }) => title) : [],
@@ -125,7 +123,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     featured: featured || false,
     mostSold: mostSold || false,
     slug: slug || "",
-    password: password || "",
+    password: password || null,
   };
   const [files, setFiles] = useState<File[]>([]);
   const [sortedImage, setSortedImage] = useState<string[]>(images || [null, null, null, null]);

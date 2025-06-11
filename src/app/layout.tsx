@@ -20,28 +20,6 @@ export default function RootLayout({
 }: {
   children: ReactNode;
 }) {
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Pow Flick",
-    "url": "https://www.powflick.com/",
-    "description": "Buy custom sports jerseys for soccer, basketball, baseball, and more. High-quality teamwear with fast delivery and easy online customization.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Pow Flick",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://www.powflick.com/assets/images/logo/POWFLICK_LOGO-HEADER.png"
-      }
-    },
-    "sameAs": [
-      "https://www.instagram.com/powflick",
-      "https://www.facebook.com/powflick",
-      "https://www.twitter.com/powflick"
-    ]
-  };
-
   const structuredData = getStructuredData();
 
   return (
@@ -62,10 +40,13 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: structuredData || JSON.stringify(jsonLd) }}
-        />
+        {structuredData.map((ldJson, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: ldJson }}
+          />
+        ))}
       </head>
       <body className={openSans.className}>
         <React.StrictMode>
