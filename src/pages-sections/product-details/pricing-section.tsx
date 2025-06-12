@@ -12,12 +12,20 @@ const PricingSection = () => {
         | '250+';
 
     // Simulación de precios por tier
-    const prices: Record<Tier, number> = {
-        '10>20': 30,
-        '21>50': 28,
-        '51>100': 26,
-        '101>250': 24,
-        '250+': 22,
+    const pricesTop: Record<Tier, number> = {
+        '10>20': 16.99,
+        '21>50': 15.99,
+        '51>100': 14.99,
+        '101>250': 13.99,
+        '250+': 10.99,
+    };
+
+    const pricesUniform: Record<Tier, number> = {
+        '10>20': 26.99,
+        '21>50': 24.99,
+        '51>100': 22.99,
+        '101>250': 20.99,
+        '250+': 18.99,
     };
 
     const tierMinQuantity: Record<Tier, number> = {
@@ -28,7 +36,7 @@ const PricingSection = () => {
         '250+': 251,
     };
 
-    const PricingCard = ({ title }: { title: string }) => {
+    const PricingCard = ({ title, prices }: { title: string; prices: Record<Tier, number> }) => {
         const [quantity, setQuantity] = useState(10);
         const [selectedTier, setSelectedTier] = useState<Tier>('10>20');
 
@@ -50,7 +58,7 @@ const PricingSection = () => {
         };
 
         return (
-            <Paper elevation={5} sx={{ p: 2 }}>
+            <Paper elevation={5} sx={{ p: 2, borderRadius: 4, }}>
                 <Typography variant="h6" color="primary.main" fontWeight="700" textAlign={{ xs: 'center', md: 'left' }} mb={2}>
                     {title}
                 </Typography>
@@ -171,9 +179,9 @@ const PricingSection = () => {
                 {/* Tarjetas de precios */}
                 <Grid item xs={12} md={7}>
                     <Box mb={3}>
-                        <PricingCard title="TOP:" />
+                        <PricingCard title="TOP:" prices={pricesTop} />
                     </Box>
-                    <PricingCard title="UNIFORM (JERSEY + PANTS):" />
+                    <PricingCard title="UNIFORM (JERSEY + PANTS):" prices={pricesUniform} />
                 </Grid>
             </Grid>
         </Box>
