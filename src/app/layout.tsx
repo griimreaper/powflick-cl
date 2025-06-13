@@ -69,7 +69,7 @@ export default function RootLayout({
                     form.addEventListener('submit', function(e) {
                       const emailInput = form.querySelector('input[name="EMAIL"]');
                       if (emailInput && emailInput.value) {
-                        fetch('/api/brevo-subscribers', {
+                        fetch(process.env.NEXT_PUBLIC_API_URL + '/brevo/subscribers', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
                           body: JSON.stringify({ email: emailInput.value })
