@@ -124,7 +124,7 @@ export default function DesignYourGameSection({
                                     whiteSpace: 'nowrap',
                                     cursor: 'pointer',
                                     fontWeight: selectedType === type ? 700 : 500,
-                                    color: selectedType === type ? 'primary.main' : 'gray',
+                                    color: selectedType === type ? 'white' : 'gray',
                                     borderBottom: selectedType === type ? '2px solid #CA0b0b' : 'none',
                                     pb: 0.5,
                                     transition: 'all 0.2s',
