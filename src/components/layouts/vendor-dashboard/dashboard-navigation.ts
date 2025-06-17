@@ -83,7 +83,6 @@ export const navigation = [
   },
 
   { name: "Customers", icon: duotone.Customers, path: "/admin/customers" },
-  { name: "News Letter", icon: duotone.Customers, path: "/admin/newsletter" },
   // {
   //   name: "Refunds",
   //   icon: duotone.Refund,
