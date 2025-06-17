@@ -60,26 +60,6 @@ export default function RootLayout({
                 "init",
                 { client_key: "a7z32zwzfapqugeahtbh5w6i" }
               ]);
-              // Espera a que el DOM esté listo y observa el formulario de Brevo
-              document.addEventListener('DOMContentLoaded', function() {
-                const observer = new MutationObserver(() => {
-                  const form = document.querySelector('form[action*="brevo"]');
-                  if (form && !form.dataset.listenerAdded) {
-                    form.dataset.listenerAdded = "true";
-                    form.addEventListener('submit', function(e) {
-                      const emailInput = form.querySelector('input[name="EMAIL"]');
-                      if (emailInput && emailInput.value) {
-                        fetch(process.env.NEXT_PUBLIC_API_URL + '/brevo/subscribers', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ email: emailInput.value })
-                        });
-                      }
-                    });
-                  }
-                });
-                observer.observe(document.body, { childList: true, subtree: true });
-              });
             `,
           }}
         />

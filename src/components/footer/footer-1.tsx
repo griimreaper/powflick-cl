@@ -241,7 +241,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
         </Box>
         {/* Newsletter Brevo Form */}
       </Box >
-      <Box
+      {/* <Box
         sx={{
           maxWidth: "auto",
           margin: "0 auto",
@@ -263,7 +263,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
             maxWidth: "100%",
           }}
         />
-      </Box>
+      </Box> */}
     </>
   );
 }
