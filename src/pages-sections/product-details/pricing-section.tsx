@@ -86,7 +86,7 @@ const PricingSection = () => {
 
                 <Box display="flex" justifyContent="space-between" flexDirection={{ xs: 'column', md: 'row' }} height={'100%'} mb={2}>
                     <Box display="flex" justifyContent="space-between" flexDirection={'column'} mb={2} width={{ xs: '100%', md: '70%' }}>
-                        <Box display="flex" justifyContent="space-around" mb={2} width={'100%'} gap={2}>
+                        <Box display="flex" justifyContent="space-around" mb={2} width={'100%'} gap={'8px'}>
                             {tiers.map((tier, idx) => (
                                 <Typography
                                     key={idx}
@@ -94,7 +94,7 @@ const PricingSection = () => {
                                         position: 'relative',
                                         cursor: 'pointer',
                                         fontWeight: tier === selectedTier ? 'bold' : 'normal',
-                                        fontSize: { xs: '4vw', sm: '2vw', md: '1vw' },
+                                        fontSize: '14px',
                                         pb: '2px', // Padding bottom para hacer espacio al borde
                                         '&::after': {
                                             content: '""',
@@ -172,7 +172,7 @@ const PricingSection = () => {
                                         sx={{
                                             input: {
                                                 textAlign: 'center',
-                                                fontSize: { xs: '4vw', sm: '2vw', md: '1vw' },
+                                                fontSize: '14px',
                                                 fontWeight: 'bold',
                                                 width: '100%',
                                                 padding: 0,
@@ -222,10 +222,10 @@ const PricingSection = () => {
                     <Divider orientation={'vertical'} sx={{ border: '2', height: { xs: '0', md: '60px' }, mx: 2, borderColor: 'black' }}></Divider>
                     <Box display="flex" width={{ xs: '100%', md: '35%' }} justifyContent="space-between" alignItems="start">
                         <Box textAlign={{ xs: 'center', md: 'left' }} width={'100%'}>
-                            <Typography variant="body2" fontWeight={'bold'} fontSize={{ xs: '4vw', sm: '2vw', md: '1vw' }}>
+                            <Typography variant="body2" fontWeight={'bold'} fontSize={'14px'}>
                                 Unit price for {quantity} pcs: <strong>${prices[selectedTier]}</strong>
                             </Typography>
-                            <Typography color="textSecondary" fontSize={{ xs: '3vw', sm: '1.8vw', md: '0.8vw' }}>
+                            <Typography color="textSecondary" fontSize={'10px'}>
                                 Price includes shipping, excludes customization
                             </Typography>
                         </Box>
@@ -236,7 +236,7 @@ const PricingSection = () => {
     };
 
     return (
-        <Box p={4}>
+        <Box>
             <Typography
                 variant="h5"
                 color="primary.main"

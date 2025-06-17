@@ -46,7 +46,7 @@ export default function ProductTabs() {
 
       <Box mb={6}>
         {selectedOption === 0 &&
-          <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} width={'100%'} height={'100%'} alignItems={'center'}>
+          <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} width={'100%'} height={'100%'} alignItems={'start'}>
             <Box width={{ xs: '100%', md: '50%' }} p={2} display={'flex'} flexDirection={'column'} alignItems={'start'} justifyContent={'space-around'} gap={2}>
 
               <Typography variant="body1" paragraph fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
@@ -130,10 +130,10 @@ export default function ProductTabs() {
         {
           selectedOption === 1 &&
           <Box display='flex' flexDirection={{ xs: 'column' }} px={{ xs: 1, md: 4 }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
-            <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '4vw', md: '2.5vw' }}>
+            <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '4vw', md: '30px' }}>
               English Size Table
             </Typography>
-            <Box display={'flex'} width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
+            <Box display={'flex'} width={'60%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
               <Box width={{ xs: '80%', md: '30%' }}>
                 <Image
                   src="/assets/images/detail/size-table-english-mobile-1.png"
@@ -153,10 +153,10 @@ export default function ProductTabs() {
                 />
               </Box>
             </Box>
-            <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '4vw', md: '2.5vw' }}>
+            <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '4vw', md: '30px' }}>
               Spanish Size Table
             </Typography>
-            <Box display={'flex'} width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
+            <Box display={'flex'} width={'60%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
               <Box width={{ xs: '100%', md: '30%' }}>
                 <Image
                   src="/assets/images/detail/size-table-spanish-mobile-1.png"
@@ -221,14 +221,14 @@ export default function ProductTabs() {
 
             {/* Columna derecha */}
             <Grid item xs={12} md={6} textAlign={{ xs: 'center', md: 'left' }} display={'flex'}>
-              <Box display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'space-between'} height={'100%'} gap={2}>
+              <Box display={'flex'} flexDirection={'column'} alignItems={'center'} height={'100%'} gap={{ xs: '50px', md: '106px' }}>
                 <Box display={'flex'} flexDirection={'column'} gap={2}>
                   <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- Tracking</Typography>
                   <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
                     {"Once your order is shipped, you'll receive a tracking number and real-time updates directly to your inbox.Need support with delivery or logistics? Contact us at support@powflick.com — our team is here to assist."}
                   </Typography>
                 </Box>
-                <Box width={'100%'} maxWidth={{ xs: '100%', md: '300px' }} height={'30%'} display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} alignItems={'center'} gap={6} px={{ xs: 0, md: 6 }}>
+                <Box width={'100%'} maxWidth={{ xs: '100%', md: '300px' }} height={'auto'} display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} alignItems={'center'} gap={6} px={{ xs: 0, sm: 6 }}>
                   <Box width={'100%'} display={'flex'} flexDirection={'row'} justifyContent={'center'} alignItems={'center'} gap={6}>
                     <Image
                       src="/assets/images/detail/worldwide_1.png"
@@ -269,7 +269,7 @@ export default function ProductTabs() {
         }
         {
           selectedOption === 3 &&
-          <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
+          <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
             <PricingSection />
           </Box>
         }
