@@ -639,7 +639,7 @@ export default function ProductIntro({ product }: Props) {
           <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={1} mt={2} border={1} borderColor={'grey.200'} p={1}>
             <Typography variant="subtitle2" fontSize={{ xs: '4vw', md: '1.5vw' }} fontWeight={700} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Lock />
-                Guaranteed Safe & Secure Checkout
+              Guaranteed Safe & Secure Checkout
             </Typography>
 
             <Box display="flex" flexWrap={'wrap'} mt={1} width={'100%'} justifyContent={'center'} alignItems={'center'}>
@@ -647,30 +647,30 @@ export default function ProductIntro({ product }: Props) {
                 <img src="/assets/images/payment-methods/paypal-1.png" alt="Pago 1" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
-              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
-              <Box width={{ xs: '18vw', md: '6vw' }}>
-                <img src="/assets/images/payment-methods/visa.png" alt="Pago 2" style={{ width: '100%', height: 'auto' }} />
+              <Box width={{ xs: 'auto', md: 'auto' }} >
+                <img src="/assets/images/payment-methods/visa.png" alt="Pago 2" style={{ width: 'auto', height: 'auto' }} />
               </Box>
-              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
                 <img src="/assets/images/payment-methods/mastercard.png" alt="Pago 2" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
-              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
-              <Box width={{ xs: '18vw', md: '6vw' }}>
-                <img src="/assets/images/payment-methods/jcb.png" alt="Pago 3" style={{ width: '100%', height: 'auto' }} />
+              <Box width={{ xs: 'auto', md: 'auto' }}>
+                <img src="/assets/images/payment-methods/jcb.png" alt="Pago 3" style={{ width: 'auto', height: 'auto' }} />
               </Box>
 
-              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
                 <img src="/assets/images/payment-methods/3dsecure.png" alt="Pago 3" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
-              <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
                 <img src="/assets/images/payment-methods/wise.png" alt="Pago 4" style={{ width: '100%', height: 'auto' }} />
