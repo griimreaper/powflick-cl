@@ -75,7 +75,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
               item_name: title,
               //  affiliation: "Google Merchandise Store",
               item_brand: "Pow Flick",
-              item_category: product_categories.split("|")[0],
+              item_category: product_categories?.split("|")[0],
               item_category2: sport,
               item_list_name: slug,
               item_variant: colors ? colors[0] : null,
@@ -91,7 +91,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
   };
 
   return (
-    <Box p={2.5} position={'relative'} bottom={{ xs: 60, md:0 }} bgcolor={'white'}>
+    <Box p={2.5} position={'relative'} bottom={{ xs: 60, md: 0 }} bgcolor={'white'}>
       <Button
         id="continueToPayment-button-event-click"
         fullWidth
