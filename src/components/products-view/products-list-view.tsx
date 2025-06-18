@@ -17,7 +17,7 @@ type Props = { data: any, handlePage: (number: number) => void };
 export default function ProductsListView({ data, handlePage }: Props) {
   const itemsPerPage = 9;
   const router = useRouter();
-  const searchParams = useSearchParams()!;
+  const searchParams = useSearchParams() || new URLSearchParams();
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     handlePage(value)
     updateURL("page", value);
