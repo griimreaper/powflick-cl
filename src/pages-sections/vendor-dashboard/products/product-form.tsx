@@ -48,7 +48,7 @@ const VALIDATION_SCHEMA = yup.object().shape({
     .optional(),  // Permite que el campo sea opcional
   featured: yup.boolean(),
   mostSold: yup.boolean(),
-  password: yup.string().optional(),
+  password: yup.string().nullable().optional(),
 });
 
 const sportList = [
@@ -123,7 +123,7 @@ export default function ProductForm({ product, collectionsList, categoriesList, 
     featured: featured || false,
     mostSold: mostSold || false,
     slug: slug || "",
-    password: password || null,
+    password: password ?? null,
   };
   const [files, setFiles] = useState<File[]>([]);
   const [sortedImage, setSortedImage] = useState<string[]>(images || [null, null, null, null]);
