@@ -49,7 +49,7 @@ export default function Header({
   const [openReset, setIsOpenReset] = useState(false);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()!;
   const router = useRouter();
 
   useEffect(() => {
