@@ -28,16 +28,18 @@ import { favProduct } from "services/Products";
 import {
   FavoriteBorderOutlined,
   FavoriteOutlined,
+  Lock,
 } from "@mui/icons-material";
 import { useCustomizationStore } from "store/customizationStore";
 import { useCustomizationsStore } from "store/customizationsStore";
 import AditionalDetails from "./AditionalDetails";
 import Customizations from "components/Customization/customization";
 import { useShoppingCartStore } from "store/shoppingCart";
-import { TextField, Typography } from "@mui/material";
+import { Divider, TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { categories } from "components/search-box/categories";
+import { FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from "react-icons/fa";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -619,6 +621,63 @@ export default function ProductIntro({ product }: Props) {
             sport={title.split(" ")[0]}
             id={id}
           />
+
+          <Box display={"flex"} width={'100%'} my={2}>
+            <Typography variant="body1" fontWeight={700} width={'100%'} display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} flexWrap={'nowrap'} whiteSpace={'nowrap'} textAlign={'center'}>
+              Not sure how to start?
+              <Typography variant="body1" >
+                {" "}Check out our{" "}
+                <a href="https://powflick.com/customization-guide"
+                  rel="noopener noreferrer"
+                  style={{ color: 'blue', textDecoration: 'underline' }}>
+                  Customization Guide
+                </a>
+              </Typography>
+            </Typography>
+          </Box>
+
+          <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={1} mt={2} border={1} borderColor={'grey.200'} p={1}>
+            <Typography variant="subtitle2" fontSize={{ xs: '4vw', md: '1.5vw' }} fontWeight={700} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Lock />
+              Guaranteed Safe & Secure Checkout
+            </Typography>
+
+            <Box display="flex" flexWrap={'wrap'} mt={1} width={'100%'} justifyContent={'center'} alignItems={'center'}>
+              <Box width={{ xs: '18vw', md: '6vw' }}>
+                <img src="/assets/images/payment-methods/paypal-1.png" alt="Pago 1" style={{ width: '100%', height: 'auto' }} />
+              </Box>
+
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
+
+              <Box width={{ xs: 'auto', md: 'auto' }} >
+                <img src="/assets/images/payment-methods/visa.png" alt="Pago 2" style={{ width: 'auto', height: 'auto' }} />
+              </Box>
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
+
+              <Box width={{ xs: '18vw', md: '6vw' }}>
+                <img src="/assets/images/payment-methods/MasterCard.png" alt="Pago 2" style={{ width: '100%', height: 'auto' }} />
+              </Box>
+
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
+
+              <Box width={{ xs: 'auto', md: 'auto' }}>
+                <img src="/assets/images/payment-methods/jcb.png" alt="Pago 3" style={{ width: 'auto', height: 'auto' }} />
+              </Box>
+
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
+
+              <Box width={{ xs: '18vw', md: '6vw' }}>
+                <img src="/assets/images/payment-methods/3dsecure.png" alt="Pago 3" style={{ width: '100%', height: 'auto' }} />
+              </Box>
+
+              <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
+
+              <Box width={{ xs: '18vw', md: '6vw' }}>
+                <img src="/assets/images/payment-methods/wise.png" alt="Pago 4" style={{ width: '100%', height: 'auto' }} />
+              </Box>
+            </Box>
+          </Box>
+
         </Grid>
       </Grid>
     </Box>

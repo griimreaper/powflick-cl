@@ -20,7 +20,7 @@ export default function RelatedProducts({ products }: Props) {
 
       <Grid container spacing={3}>
         {products.map((item, ind) => (
-          <Grid item lg={3} md={4} sm={6} xs={12} key={ind}>
+          <Grid item lg={3} md={3} xs={6} key={ind}>
             <ProductCard1
               hoverEffect
               id={item.id}

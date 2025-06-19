@@ -1,14 +1,14 @@
 import { Box, Container } from "@mui/material";
 import Image from "next/image";
 
-export default function Section2({ className, isMobile }: { className: string, isMobile: boolean }) {
+export default function Section2({ className, isMobile, detail = false }: { className: string, isMobile: boolean, detail?: boolean }) {
   return (
     <Container
       className={className}
       sx={{
         height: isMobile ? "30%" : "25%", // Contenedor con una altura relativa
         position: "relative", // Necesario si usas layout="fill"
-        overflow: "hidden", // Opcional para cortar la imagen si se sale
+        py: detail ? 1 : 0,
       }}
     >
       {isMobile ? (
@@ -25,6 +25,7 @@ export default function Section2({ className, isMobile }: { className: string, i
             priority
             sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             style={{
+              boxShadow: "0px 0px 10px 2px rgba(0, 0, 0, 0.1)",
               borderRadius: 6,
               objectFit: "cover",
             }}
@@ -40,6 +41,7 @@ export default function Section2({ className, isMobile }: { className: string, i
             priority
             sizes="(max-width: 768px) 100vw, (min-width: 769px) 1000px"
             style={{
+              boxShadow: "0px 0px 10px 2px rgba(0, 0, 0, 0.1)",
               borderRadius: 6,
               objectFit: "cover",
             }}
@@ -58,6 +60,7 @@ export default function Section2({ className, isMobile }: { className: string, i
           height={600}
           sizes="(min-width: 769px) 100vw, 1000px"
           style={{
+            boxShadow: "0px 0px 10px 2px rgba(0, 0, 0, 0.1)",
             width: "100%",
             borderRadius: 6,
             height: "auto",
