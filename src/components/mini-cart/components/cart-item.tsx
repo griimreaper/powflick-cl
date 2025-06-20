@@ -17,7 +17,7 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { useRef, useState } from "react";
 import { CustomizationModal } from "pages-sections/cart/CustomizationModal";
 import { styled } from "@mui/material";
-import { getTotalWithDiscount } from "utils/tools";
+import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 
 // ==============================================================
 interface Props {
@@ -159,7 +159,7 @@ export default function MiniCartItem({ item }: Props) {
         </Link>
 
         <Tiny color="grey.600">
-          {currency(item.product.price)} x {item.customizations.length}
+          {currency(getUnitPriceWithDiscount(item.product.price, item.amount))} x {item.customizations.length}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>

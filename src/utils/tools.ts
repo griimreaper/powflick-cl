@@ -67,6 +67,19 @@ export const getTotalWithDiscount = (basePrice: number, quantity: number): numbe
   return +(unitPrice * quantity).toFixed(2);
 };
 
+export const getUnitPriceWithDiscount = (basePrice: number, quantity: number): number => {
+  let tier: Tier;
+
+  if (quantity >= 250) tier = '250+';
+  else if (quantity >= 101) tier = '101>250';
+  else if (quantity >= 51) tier = '51>100';
+  else if (quantity >= 21) tier = '21>50';
+  else tier = '10>20';
+
+  const tieredPrices = getTieredPrices(basePrice);
+  return tieredPrices[tier];
+};
+
 
 export function formatDate(dateString: string) {
   const date = new Date(dateString);
