@@ -37,7 +37,7 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { Divider, TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
-import { getTotalWithDiscount } from "utils/tools";
+import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -458,7 +458,7 @@ export default function ProductIntro({ product }: Props) {
           {/* PRICE & STOCK */}
           <Box pt={1} mb={3}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
-              {currency(getTotalWithDiscount(price, counter) + customizationsTotal)}
+              {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -13.99 : 0), counter))}
             </H2>
             <Box color="inherit">Stock Available</Box>
           </Box>
