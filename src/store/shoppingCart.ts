@@ -5,6 +5,7 @@ import {
   ShoppingCartStoreType,
 } from "./interfaces/interface";
 import { Coupon, Customization } from "models/types";
+import { getTotalWithDiscount } from "utils/tools";
 
 // Adaptador de almacenamiento local
 const localStorageAdapter: PersistStorage<ShoppingCartStoreType> = {
@@ -36,7 +37,7 @@ function updateCartTotal(set: any) {
           .toFixed(2)
       ),
       amount: prod.customizations.length,
-      totalProduct: parseFloat((prod.product.price * prod.amount).toFixed(2)),
+      totalProduct: Number(getTotalWithDiscount(prod.product.price,prod.amount).toFixed(2)),
     })),
     total: parseFloat(
       state.cart

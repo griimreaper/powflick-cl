@@ -246,12 +246,9 @@ export default function ProductIntro({ product }: Props) {
   const handleAddToBagClick = () => {
     const customizations: Customization[] | null =
       list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
-    const totalCustomization: number =
-      typeof list[list.findIndex((i) => i.productId === id)]?.total === "number"
-        ? list[list.findIndex((i) => i.productId === id)]?.total
-        : 0;
+    const totalCustomization = customizationsTotal;
     const totalProduct: number = parseFloat(
-      (Number(product?.product.price) * counter).toFixed(2)
+      (getTotalWithDiscount(price, counter)).toFixed(2)
     );
     const productToBag = product?.product;
     const amount = counter;
