@@ -61,6 +61,10 @@ export default function MiniCartItem({ item }: Props) {
     left: number;
   }>({ top: 0, left: 0 });
 
+  const isTopSelected = !item.customizations.some(c => c.shorts === 'Default (+$0.00)')
+  console.log(isTopSelected);
+  
+
   const adjustModalPosition = (position: { top: number; left: number }) => {
     const modalWidth = 400;
     const modalHeight = 300; // Estimación del alto del modal
@@ -159,7 +163,7 @@ export default function MiniCartItem({ item }: Props) {
         </Link>
 
         <Tiny color="grey.600">
-          {currency(getUnitPriceWithDiscount(item.product.price, item.amount))} x {item.customizations.length}
+          {currency(getUnitPriceWithDiscount(item.product.price + (isTopSelected ? -13.99 : 0), item.amount))} x {item.customizations.length}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
