@@ -170,6 +170,7 @@ export type Customization = {
   pants: string;
   shorts: string;
   materials: string;
+  technique: string;
 };
 
 export enum OrderStateEnum {

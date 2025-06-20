@@ -3,7 +3,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Rating from "@mui/material/Rating";
@@ -14,7 +13,7 @@ import Remove from "@mui/icons-material/Remove";
 // GLOBAL CUSTOM HOOK
 import useCart from "hooks/useCart";
 // GLOBAL CUSTOM COMPONENTS
-import { H1, H2, H6 } from "components/Typography";
+import { H1, H2, H3, H6 } from "components/Typography";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
@@ -38,8 +37,6 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { Divider, TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
-import { categories } from "components/search-box/categories";
-import { FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from "react-icons/fa";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -76,7 +73,7 @@ export default function ProductIntro({ product }: Props) {
     setFonts,
     setFontColor,
   } = useCustomizationStore();
-  const { list, trimCustomizations, setCustomizationInList } =
+  const { list, trimCustomizations, setCustomizationInList, setFieldForAllCustomizations } =
     useCustomizationsStore();
   const { profile, setFavorites } = useDashboardStore();
   const { token } = profile;
@@ -91,6 +88,19 @@ export default function ProductIntro({ product }: Props) {
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
   const [selectedCustomization, setSelectedCustomization] = useState<number | null>(null);
+  const customizationsTotal = list.find((p) => id === p.productId)?.total || 0;
+  const [selected, setSelected] = useState<"top" | "uniform">("uniform");
+  const isSelected = (value: "top" | "uniform") => selected === value;
+
+  useEffect(() => {
+    if (selected === 'top') {
+      setFieldForAllCustomizations(id, 'shorts', 'No Shorts (-$13.99)')
+      updateCustomizationAttribute('shorts', 'No Shorts (-$13.99)')
+    } else {
+      setFieldForAllCustomizations(id, 'shorts', 'Default (+$0.00)')
+      updateCustomizationAttribute('shorts', 'Default (+$0.00)')
+    }
+  }, [selected, counter])
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -112,6 +122,11 @@ export default function ProductIntro({ product }: Props) {
 
   useEffect(() => {
     if (customization.id !== "none") {
+      if (customization.shorts === 'No Shorts (-$13.99)') {
+        setSelected("top")
+      } else {
+        setSelected('uniform')
+      }
       setCustomizationInList(id, customization);
     }
   }, [customization]);
@@ -445,7 +460,7 @@ export default function ProductIntro({ product }: Props) {
           {/* PRICE & STOCK */}
           <Box pt={1} mb={3}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
-              {currency(price)}
+              {currency((price * counter) + customizationsTotal)}
             </H2>
             <Box color="inherit">Stock Available</Box>
           </Box>
@@ -606,12 +621,52 @@ export default function ProductIntro({ product }: Props) {
           </Box>
 
           {/* SHOP NAME */}
-          <FlexBox alignItems="center" gap={1} mb={2}>
+          <FlexBox alignItems="center" gap={1} my={2}>
             <div>Sold By:</div>
             <Link href="/">
               <H6>Pow Flick</H6>
             </Link>
           </FlexBox>
+
+          {(product.product.categories.some((c: any) => c.includes('Soccer')) || product.product.categories.some((c: any) => c.includes('Basketball'))) && (
+            <FlexBox alignItems="start" gap={2} my={2}>
+              <Button
+                onClick={() => setSelected("top")}
+                variant="contained"
+                sx={{
+                  background: isSelected("top") ? "black" : "white",
+                  color: isSelected("top") ? "white" : "black",
+                  border: isSelected("top") ? "none" : "1px solid black",
+                  px: "clamp(1rem, 5vw, 1.75rem)",
+                  height: 40,
+                  width: '140px',
+                  "&:hover": {
+                    background: isSelected("top") ? "black" : "#f5f5f5"
+                  }
+                }}
+              >
+                Top
+              </Button>
+              <Button
+                onClick={() => setSelected("uniform")}
+                variant="contained"
+                sx={{
+                  background: isSelected("uniform") ? "black" : "white",
+                  color: isSelected("uniform") ? "white" : "black",
+                  border: isSelected("uniform") ? "none" : "1px solid black",
+                  px: "clamp(1rem, 5vw, 1.75rem)",
+                  height: 40,
+                  width: '140px',
+                  "&:hover": {
+                    background: isSelected("uniform") ? "black" : "#f5f5f5"
+                  }
+                }}
+              >
+                Uniform
+              </Button>
+            </FlexBox>
+          )
+          }
 
           {/* EDITS DETAIL */}
           <AditionalDetails

@@ -225,6 +225,37 @@ export const useCustomizationsStore = create(
         });
         updateTotal(set);
       },
+      setFieldForAllCustomizations: (productId: string, name: keyof Customization, value: string) => {
+        set((state) => {
+          const product = state.list.find((item) => item.productId === productId);
+
+          if (!product) return state;
+
+          const updatedCustomizations = product.customizations.map((customization) => ({
+            ...customization,
+            [name]: value,
+          }));
+
+          return {
+            ...state,
+            list: state.list.map((item) =>
+              item.productId === productId
+                ? {
+                  ...item,
+                  customizations: updatedCustomizations.map((customization) => ({
+                    ...customization,
+                    price: calculateCustomizationPrice(customization),
+                  })),
+                  amount: updatedCustomizations.length,
+                  total: 0,
+                }
+                : item
+            ),
+          };
+        });
+
+        updateTotal(set);
+      },
       clearCustomization: () => {
         set({ list: [] });
       },

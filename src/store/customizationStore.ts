@@ -62,8 +62,9 @@ export const initialCustomization = () => {
     neck: 'Default',
     socks: 'No Socks (+$0.00)',
     pants: 'None (+$0.00)',
-    shorts: 'No Shorts (+$0.00)',
+    shorts: 'Default (+$0.00)',
     materials: 'None',
+    technique: '',
     designName: '',
   };
 };

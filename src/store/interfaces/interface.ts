@@ -52,6 +52,7 @@ export type CustomizationsStoreType = {
   clearCustomization: () => void;
   trimCustomizations: (productId: string, numCustomizations: number) => void;
   addCustomizations: (productId: string, numCustomizations: number) => void;
+  setFieldForAllCustomizations: (productId: string, name: keyof Customization, value: string) => void;
 };
 
 export type ProductToBagType = {

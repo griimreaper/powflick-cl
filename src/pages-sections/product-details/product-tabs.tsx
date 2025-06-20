@@ -25,7 +25,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   }
 }));
 
-export default function ProductTabs() {
+export default function ProductTabs({ productPrice }: { productPrice: number }) {
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
@@ -270,7 +270,7 @@ export default function ProductTabs() {
         {
           selectedOption === 3 &&
           <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
-            <PricingSection />
+            <PricingSection price={productPrice} />
           </Box>
         }
       </Box >

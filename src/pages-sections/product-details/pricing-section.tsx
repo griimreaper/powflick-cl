@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, Paper, Button, Divider, TextField } from '@mui/material';
 import { useState } from 'react';
 
-const PricingSection = () => {
+const PricingSection = ({ price }: { price: number }) => {
     const tiers = ['10>20', '21>50', '51>100', '101>250', '250+'];
 
     type Tier =
@@ -11,22 +11,16 @@ const PricingSection = () => {
         | '101>250'
         | '250+';
 
-    // Simulación de precios por tier
-    const pricesTop: Record<Tier, number> = {
-        '10>20': 16.99,
-        '21>50': 15.99,
-        '51>100': 14.99,
-        '101>250': 13.99,
-        '250+': 10.99,
-    };
+    const getTieredPrices = (basePrice: number): Record<Tier, number> => ({
+        '10>20': +basePrice.toFixed(2),
+        '21>50': +(basePrice * 0.94).toFixed(2),   // 6% off
+        '51>100': +(basePrice * 0.88).toFixed(2),  // 12% off
+        '101>250': +(basePrice * 0.82).toFixed(2), // 18% off
+        '250+': +(basePrice * 0.65).toFixed(2),    // 35% off
+    });
 
-    const pricesUniform: Record<Tier, number> = {
-        '10>20': 26.99,
-        '21>50': 24.99,
-        '51>100': 22.99,
-        '101>250': 20.99,
-        '250+': 18.99,
-    };
+    const pricesUniform = getTieredPrices(price);
+    const pricesTop = getTieredPrices(price - 13.99);
 
     const tierMinQuantity: Record<Tier, number> = {
         '10>20': 10,
@@ -66,10 +60,11 @@ const PricingSection = () => {
         };
 
         const handleTierClick = (tier: Tier) => {
+            const newQty = tierMinQuantity[tier];
             setSelectedTier(tier);
-            setQuantity(tierMinQuantity[tier]);
+            setQuantity(newQty);
+            setInputValue(String(newQty));
         };
-
         return (
             <Paper elevation={5} sx={{ p: 2, borderRadius: 4, }}>
                 <Typography variant="h6" color="primary.main" fontWeight="bold" textAlign={{ xs: 'center', md: 'left' }} mb={2}>
@@ -223,7 +218,7 @@ const PricingSection = () => {
                     <Box display="flex" width={{ xs: '100%', md: '35%' }} justifyContent="space-between" alignItems="start">
                         <Box textAlign={{ xs: 'center', md: 'left' }} width={'100%'}>
                             <Typography variant="body2" fontWeight={'bold'} fontSize={'14px'}>
-                                Unit price for {quantity} pcs: <strong>${prices[selectedTier]}</strong>
+                                Unit price for {quantity} pcs: <strong>${prices[selectedTier].toFixed(2)}</strong>
                             </Typography>
                             <Typography color="textSecondary" fontSize={'10px'}>
                                 Price includes shipping, excludes customization
