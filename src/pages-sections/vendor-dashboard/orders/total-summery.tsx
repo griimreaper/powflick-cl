@@ -7,6 +7,7 @@ import { H5, H6 } from "components/Typography";
 import { currency } from "lib";
 import { Order } from "models/types";
 import ListItem from "pages-sections/checkout/list-item";
+import { getTotalWithDiscount } from "utils/tools";
 
 // ==============================================================
 interface Props {
@@ -20,7 +21,7 @@ export default function TotalSummery({ order }: Props) {
   // Subtotal = suma de productos
 
   const subtotal = order?.products?.reduce((acc: number, { OrderProduct, price }: any) => {
-    return acc + price * OrderProduct.amount;
+    return acc + getTotalWithDiscount(price, OrderProduct.amount);
   }, 0);
 
   // Suma de customizaciones

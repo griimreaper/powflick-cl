@@ -74,6 +74,7 @@ export type ShoppingCartStoreType = {
     amount: number;
     totalProduct: number;
     totalCustomization: number;
+    top: boolean;
   }[];
   coupon: Coupon | null;
   note: string;
@@ -86,7 +87,8 @@ export type ShoppingCartStoreType = {
     customization: Customization[],
     totalCustomization: number,
     totalProduct: number,
-    amount: number
+    amount: number,
+    top: boolean
   ) => void;
   removeProductById: (customizationId: string) => void;
   removeCustomizationFromProduct: (

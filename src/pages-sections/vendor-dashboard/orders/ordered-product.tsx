@@ -15,13 +15,16 @@ import { Customization, ProductDB } from "models/types";
 import { CustomizationModal } from "pages-sections/cart/CustomizationModal";
 import { useRef, useState } from "react";
 import { CustomButton } from "components/layouts/vendor-dashboard/dashboard-navbar/styles";
+import { getUnitPriceWithDiscount } from "utils/tools";
 
 // ==============================================================
 type Props = { product: ProductDB, customizations: { productId: string, customization: Customization }[], orderId: number | null };
 // ==============================================================
 
 export default function OrderedProduct({ product, customizations, orderId }: Props) {
-  const { title, price, slug, images, id } = product || {};
+  const { title, price, slug, images, id, OrderProduct } = product || {};
+
+  const isTopSelected = OrderProduct?.top || false;
 
   const [selectedCustomization, setSelectedCustomization] = useState<
     [string, string, string] | null
@@ -44,7 +47,7 @@ export default function OrderedProduct({ product, customizations, orderId }: Pro
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <Box my={2} gap={2} display="grid" gridTemplateColumns={{ md: "1fr 1fr", xs: "1fr" }}>
+    <Box my={2} gap={2}>
       <FlexBox flexShrink={0} gap={1.5} alignItems="center">
         <Avatar
           src={images[0]}
@@ -52,16 +55,16 @@ export default function OrderedProduct({ product, customizations, orderId }: Pro
           sx={{ height: 64, width: 64, borderRadius: 2 }}
         />
 
-        <Box>
+        <Box width="100%" pr={2} display={'flex'} flexDirection={'column'} >
           <H6 mb={1}>{title}</H6>
 
           <FlexBox alignItems="center" gap={1}>
             <Paragraph fontSize={14} color="grey.600">
-              {currency(price)} x {customizations.length}
+              {currency(getUnitPriceWithDiscount(price + (isTopSelected ? -13.99 : 0), customizations.length))} x {customizations.length}
             </Paragraph>
 
           </FlexBox>
-          <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+          <Box width={'95%'} sx={{ display: "flex", gap: 1, py: 1, overflowX: 'scroll' }} >
             {customizations
               ?.filter((c) => c.productId === id)
               .map((_: any, index: number) => (
@@ -77,11 +80,6 @@ export default function OrderedProduct({ product, customizations, orderId }: Pro
           </Box>
         </Box>
       </FlexBox>
-
-      <FlexBetween flexShrink={0}>
-        <Paragraph color="grey.600">Product properties: {customizations?.find((c) => c.productId === id)?.customization.size}</Paragraph>
-
-      </FlexBetween>
 
       {selectedCustomization !== null && (
         <CustomizationModal

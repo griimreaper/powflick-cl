@@ -61,9 +61,7 @@ export default function MiniCartItem({ item }: Props) {
     left: number;
   }>({ top: 0, left: 0 });
 
-  const isTopSelected = !item.customizations.some(c => c.shorts === 'Default (+$0.00)')
-  console.log(isTopSelected);
-  
+  const isTopSelected = item.top
 
   const adjustModalPosition = (position: { top: number; left: number }) => {
     const modalWidth = 400;
@@ -142,7 +140,7 @@ export default function MiniCartItem({ item }: Props) {
         </Button> */}
       </FlexBox>
 
-      <Link href={`/products/${item.product.id}`}>
+      <Link href={`/products/${item.product.slug}`}>
         <Avatar
           alt={item.product.title}
           src={(item.product?.images && item.product.images[0]) || ""}

@@ -15,6 +15,7 @@ import { CustomButton } from "components/layouts/vendor-dashboard/dashboard-navb
 import { Box, Grid } from "@mui/material";
 import { ReviewModal } from "./ReviewModal";
 import { showSuccessAlert } from "utils/alerts";
+import { getUnitPriceWithDiscount } from "utils/tools";
 // CUSTOM DATA MODEL
 
 // ==============================================================
@@ -61,7 +62,8 @@ export default function OrderedProducts({ order }: Props) {
     customizations: Customization[],
     product: ProductDB,
     totalProduct: number,
-    amount: number
+    amount: number,
+    top: boolean = false
   ) => {
     const totalCustomization: number = customizations.reduce(
       (sum, custom) => (sum += custom.price),
@@ -73,9 +75,12 @@ export default function OrderedProducts({ order }: Props) {
       customizations,
       totalCustomization,
       totalProduct,
-      amount
+      amount,
+      top,
     );
   };
+
+  console.log(order);
 
   return (
     <Card sx={{ p: 0, mb: "30px" }}>
@@ -91,15 +96,15 @@ export default function OrderedProducts({ order }: Props) {
       {products?.map((item: any | ProductDB, ind) => (
         <Grid container spacing={2} key={ind} sx={{ py: 1 }}>
           {/* Columna 1: Información del producto */}
-          <Grid item xs={12} sm={6} display={'flex'} >
-            <FlexBox alignItems="center">
+          <Grid item xs={12} sm={9} display={'flex'} width={'100%'}>
+            <FlexBox alignItems="center" width={'100%'}>
               <Avatar alt={item.title} src={item.images[0]} sx={{ height: 64, width: 64, marginX: 2 }} />
-              <Box>
+              <Box width={'100%'}>
                 <H6>{item.title}</H6>
                 <Paragraph color="grey.600">
-                  {currency(item.OrderProduct?.price)} x {item.OrderProduct?.amount}
+                  {currency(getUnitPriceWithDiscount(item.price + (item.OrderProduct?.top ? -13.99 : 0), item.OrderProduct?.amount))} x {item.OrderProduct?.amount}
                 </Paragraph>
-                <Box sx={{ display: "flex", gap: 1 }}>
+                <Box width={'95%'} sx={{ display: "flex", gap: 1, py: 1, overflowX: 'scroll' }} >
                   {customizations
                     ?.filter((c) => c.productId === item.id)
                     .map((_: any, index: number) => (
@@ -118,16 +123,16 @@ export default function OrderedProducts({ order }: Props) {
           </Grid>
 
           {/* Columna 2: Propiedades del producto */}
-          <Grid item xs={6} sm={3}>
+          {/* <Grid item xs={6} sm={3}>
             <Paragraph color="grey.600" ellipsis ml={2}>
               Product properties: {customizations?.find((c) => c.productId === item.id)?.customization.size}
             </Paragraph>
-          </Grid>
+          </Grid> */}
 
           {/* Columna 3: Botón para reseñas */}
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={12} sm={3}>
             {/* Botón para reordenar la misma orden */}
-            <Box sx={{ mb: 3, mr: 3 }} px={2} display={"flex"} width={"100%"} justifyContent={"end"} flexDirection={{ sx: "row", sm: "column" }} flexWrap={"nowrap"}>
+            <Box sx={{ mb: 3, mr: 3 }} px={2} display={"flex"} width={"100%"} justifyContent={"end"} whiteSpace={'nowrap'} flexDirection={{ sx: "row", sm: "column" }} flexWrap={"nowrap"}>
               <Button variant="text" color="primary" onClick={() => {
                 handleReorder(
                   order.customizations
@@ -141,7 +146,8 @@ export default function OrderedProducts({ order }: Props) {
                     ),
                   item,
                   item.OrderProduct.price,
-                  item.OrderProduct.amount
+                  item.OrderProduct.amount,
+                  item.OrderProduct.top,
                 );
                 showSuccessAlert(
                   "Success!",

@@ -73,7 +73,7 @@ export default function CartItem({ item }: Props) {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const { cart } = useShoppingCartStore();
-  const isTopSelected = !item.customizations.some(c => c.shorts === 'Default (+$0.00)')
+  const isTopSelected = item.top
 
   return (
     <Wrapper>

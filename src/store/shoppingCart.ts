@@ -37,7 +37,7 @@ function updateCartTotal(set: any) {
           .toFixed(2)
       ),
       amount: prod.customizations.length,
-      totalProduct: Number(getTotalWithDiscount(prod.product.price,prod.amount).toFixed(2)),
+      totalProduct: Number(getTotalWithDiscount(prod.product.price, prod.amount).toFixed(2)),
     })),
     total: parseFloat(
       state.cart
@@ -69,7 +69,8 @@ const handleSetProductInCart = (
   customizations: Customization[] | null,
   totalCustomization: number,
   totalProduct: number,
-  amount: number
+  amount: number,
+  top: boolean = false
 ) => {
   set((state: any) => {
     const productIndex = state.cart.findIndex(
@@ -79,6 +80,7 @@ const handleSetProductInCart = (
       const updatedCart = [...state.cart];
       const existingProduct = updatedCart[productIndex];
       existingProduct.amount = amount;
+      existingProduct.top = top;
 
       if (customizations === null) {
         existingProduct.customizations = [];
@@ -107,6 +109,7 @@ const handleSetProductInCart = (
 
       existingProduct.totalProduct = totalProduct;
       existingProduct.totalCustomization = totalCustomization;
+      existingProduct.top = top;
       return {
         ...state,
         cart: updatedCart,
@@ -123,6 +126,7 @@ const handleSetProductInCart = (
             totalCustomization: totalCustomization,
             totalProduct: totalProduct,
             amount,
+            top,
           },
         ],
       };
@@ -181,7 +185,8 @@ export const useShoppingCartStore = create(
         customizations: Customization[] | null,
         totalCustomization: number,
         totalProduct: number,
-        amount: number
+        amount: number,
+        top: boolean
       ) =>
         handleSetProductInCart(
           set,
@@ -189,7 +194,8 @@ export const useShoppingCartStore = create(
           customizations,
           totalCustomization,
           totalProduct,
-          amount
+          amount,
+          top,
         ),
       setCoupon: (coupon: Coupon | null) => {
         set((state) => ({

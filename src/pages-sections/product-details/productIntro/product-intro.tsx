@@ -94,14 +94,17 @@ export default function ProductIntro({ product }: Props) {
   const isSelected = (value: "top" | "uniform") => selected === value;
 
   useEffect(() => {
-    if (selected === 'top') {
-      setFieldForAllCustomizations(id, 'shorts', 'No Shorts (-$13.99)')
-      updateCustomizationAttribute('shorts', 'No Shorts (-$13.99)')
-    } else {
-      setFieldForAllCustomizations(id, 'shorts', 'Default (+$0.00)')
-      updateCustomizationAttribute('shorts', 'Default (+$0.00)')
-    }
-  }, [selected, counter])
+    const newValue = selected === 'top'
+      ? 'No Shorts (-$13.99)'
+      : 'Default (+$0.00)';
+
+    const customizations = list.find((item) => item.productId === id)?.customizations || null;
+    if (customizations?.find(c => c.shorts === newValue) || !customizations) return; // evita ciclo si ya está seteado
+
+    setFieldForAllCustomizations(id, 'shorts', newValue);
+    updateCustomizationAttribute('shorts', newValue);
+  }, [selected, counter]);
+
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -252,6 +255,7 @@ export default function ProductIntro({ product }: Props) {
     );
     const productToBag = product?.product;
     const amount = counter;
+    const top = selected === 'top';;
 
     if (counter !== 0)
       setProductInCart(
@@ -259,7 +263,8 @@ export default function ProductIntro({ product }: Props) {
         customizations,
         totalCustomization,
         totalProduct,
-        amount
+        amount,
+        top
       );
     showSuccessAlert("Success!", "Product added to bag");
     return {

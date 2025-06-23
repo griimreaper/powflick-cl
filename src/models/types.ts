@@ -59,6 +59,7 @@ export interface ProductDB {
   font: string;
   font_color: string;
   password: string;
+  OrderProduct?: { amount: number, price: number, top: string }
   categories: { name: string }[];
   collections: { title: string }[];
   tags: { name: string }[];
