@@ -99,7 +99,10 @@ export default function ProductIntro({ product }: Props) {
       : 'Default (+$0.00)';
 
     const customizations = list.find((item) => item.productId === id)?.customizations || null;
-    if (customizations?.find(c => c.shorts === newValue) || !customizations) return; // evita ciclo si ya está seteado
+
+    // Evita ciclo si ya están todos seteados con el nuevo valor
+    const allMatch = customizations?.every(c => c.shorts === newValue);
+    if (allMatch || !customizations) return;
 
     setFieldForAllCustomizations(id, 'shorts', newValue);
     updateCustomizationAttribute('shorts', newValue);
