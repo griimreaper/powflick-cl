@@ -25,6 +25,9 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
   const memoizedData = useMemo(() => data?.landing || {}, [data]);
   const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
 
+  console.log(memoizedData);
+
+
   useEffect(() => {
     fbq.init();
   }, []);

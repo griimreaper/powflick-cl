@@ -64,7 +64,7 @@ export interface ProductDB {
   tags: { name: string }[];
 }
 
-export interface RecentProduct extends ProductDB { }
+export interface RecentProduct extends ProductDB {}
 
 export interface Navbar {
   categories: Category[];
@@ -77,7 +77,7 @@ export interface Collections {
   discountProducts: ProductDB[];
   designYourGameSection: {
     collections: string[];
-    allProducts: ProductDB[]
+    allProducts: ProductDB[];
   };
   latestProducts: ProductDB[];
   bestWeekProducts: ProductDB[];
@@ -275,6 +275,7 @@ export enum ShowType {
 
 export interface Review {
   id: string;
+  slug: string;
   title: string;
   review: string;
   author: string;

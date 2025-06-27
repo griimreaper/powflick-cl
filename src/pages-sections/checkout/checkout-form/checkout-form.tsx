@@ -48,8 +48,6 @@ export default function CheckoutForm({ toggleDialog, selectedDirection, setSelec
     }
   };
 
-  console.log(cart);
-
   useEffect(() => {
     const savedData = localStorage.getItem("pendingAddress");
     if (savedData) {

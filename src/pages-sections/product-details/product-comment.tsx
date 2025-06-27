@@ -11,24 +11,27 @@ import { getDateDifference } from "lib";
 
 // ===========================================================
 interface Props {
-  name: string;
+  title: string;
   date: string;
   imgUrl: string;
   rating: number;
   comment: string;
+  imgRev?: string; // Optional prop for product image
 }
 // ===========================================================
 
 export default function ProductComment(props: Props) {
-  const { name, imgUrl, rating, date, comment } = props || {};
+  console.log("ProductComment props:", props);
+
+  const { title, imgUrl, rating, date, comment, imgRev } = props || {};
 
   return (
     <Box mb={4} maxWidth={600}>
       <FlexBox alignItems="center" mb={2} gap={2}>
-        <Avatar alt={name} src={imgUrl} sx={{ width: 48, height: 48 }} />
+        <Avatar alt={title} src={imgUrl} sx={{ width: 48, height: 48 }} />
 
         <div>
-          <H5 mb={1}>{name}</H5>
+          <H5 mb={1}>{title}</H5>
 
           <FlexBox alignItems="center" gap={1.25}>
             <Rating size="small" value={rating} color="warn" readOnly />
@@ -39,6 +42,15 @@ export default function ProductComment(props: Props) {
       </FlexBox>
 
       <Paragraph color="grey.700">{comment}</Paragraph>
+      {imgRev && (
+        <Box mt={2}>
+          <img
+            src={imgRev}
+            alt="Imagen de la reseña"
+            style={{ width: "400px", height: "400px", maxWidth: "100%", borderRadius: 8, objectFit: "cover" }}
+          />
+        </Box>
+      )}
     </Box>
   );
 }

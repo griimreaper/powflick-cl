@@ -37,6 +37,9 @@ export default function ProductTabs({ content, reviews, paymentMethods, shipping
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
+  console.log("reviews:", reviews);
+
+
   return (
     <>
       <StyledTabs
@@ -60,14 +63,15 @@ export default function ProductTabs({ content, reviews, paymentMethods, shipping
         }
         {selectedOption === 1 &&
           <Box>
-            <Reviews review={reviews} />
+            {/* <Reviews review={reviews} /> */}
             {reviews.map((item, ind) => (
               <ProductComment
-                name={item.user.firstName + " " + item.user.lastName}
+                title={item.user.firstName + " " + item.user.lastName}
                 comment={item.review}
                 date={item.createdAt}
                 rating={Number(item.rating)}
                 imgUrl={item.user.image}
+                imgRev={item.image}
                 key={ind}
               />
             ))}
