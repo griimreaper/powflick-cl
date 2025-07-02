@@ -11,9 +11,9 @@ import Link from "next/link";
 
 export default function Section6({ products, isMobile }: { products: DataStructure['landing']['collections']['discountProducts'], isMobile: boolean }) {
   const responsive = [
-    { breakpoint: 1024, settings: { slidesToShow: 4 } },
-    { breakpoint: 768, settings: { slidesToShow: 3 } },
-    { breakpoint: 600, settings: { slidesToShow: 2 } }
+    { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 4 } },
+    { breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+    { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2 } }, // Mobile
   ];
 
   return (
@@ -94,6 +94,7 @@ export default function Section6({ products, isMobile }: { products: DataStructu
 
         <Carousel
           slidesToShow={4}
+          slidesToScroll={4}
           responsive={responsive}
           arrowStyles={{ backgroundColor: "white", top: "40%" }}
         >

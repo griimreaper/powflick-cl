@@ -14,6 +14,8 @@ import { postMockReview } from "services/Reviews";
 import { useState } from "react";
 import { H2 } from "components/Typography";
 import { ReviewCard } from "components/Reviews/Reviews";
+import ProductComment from "pages-sections/product-details/product-comment";
+
 
 // FORM VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -29,6 +31,8 @@ const VALIDATION_SCHEMA = yup.object().shape({
 export default function ReviewForm() {
   const { profile } = useDashboardStore();
   const router = useRouter();
+  const [reviewType, setReviewType] = useState<"ORDER" | "PRODUCT">("ORDER");
+  const [productName, setProductName] = useState("");
 
   const INITIAL_VALUES = {
     firstName: "",
@@ -42,7 +46,13 @@ export default function ReviewForm() {
 
   const create = async (values: typeof INITIAL_VALUES) => {
     try {
-      const response = await postMockReview({ ...values, rating: String(values.rating), type: 'ORDER', typeId: '1' }, profile.token as string);
+      const payload = {
+        ...values,
+        rating: String(values.rating),
+        type: reviewType,
+        typeId: reviewType === "PRODUCT" ? productName : "1",
+      };
+      const response = await postMockReview(payload, profile.token as string);
       showSuccessAlert("Success", "Review created succesfully");
       router.push("/admin/reviews/order");
     } catch (error: any) {
@@ -169,6 +179,32 @@ export default function ReviewForm() {
               </Grid>
 
               <Grid item xs={12}>
+                <FormControl fullWidth sx={{ mb: 2 }}>
+                  <InputLabel id="review-type-label">Tipo de review</InputLabel>
+                  <Select
+                    labelId="review-type-label"
+                    id="review-type"
+                    value={reviewType}
+                    label="Tipo de review"
+                    onChange={e => setReviewType(e.target.value as "ORDER" | "PRODUCT")}
+                  >
+                    <MenuItem value="ORDER">ORDER</MenuItem>
+                    <MenuItem value="PRODUCT">PRODUCT</MenuItem>
+                  </Select>
+                </FormControl>
+                {reviewType === "PRODUCT" && (
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Nombre del producto"
+                      value={productName}
+                      onChange={e => setProductName(e.target.value)}
+                      placeholder="Escribe el nombre del producto"
+                    />
+                  </FormControl>
+                )}
+              </Grid>
+
+              <Grid item xs={12}>
                 <TextField
                   fullWidth
                   name="review"
@@ -188,22 +224,35 @@ export default function ReviewForm() {
 
               <Grid item xs={12}>
                 <H2>Preview</H2>
-                <Grid item xs={12} marginTop={5} display={'flex'} justifyContent={'center'} >
-                  <ReviewCard review={{
-                    title: values.title,
-                    review: values.review,
-                    image: values.image,
-                    rating: values.rating,
-                    createdAt: new Date(),
-                    user: {
-                      firstName: values.firstName,
-                      lastName: values.lastName,
-                      image: values.userImage,
-                    }
-                  }}>
-                  </ReviewCard>
+                <Grid item xs={12} marginTop={5} display={'flex'} justifyContent={'center'}>
+                  {reviewType === "PRODUCT" ? (
+                    <ProductComment
+                      title={values.title}
+                      comment={values.review}
+                      imgUrl={values.userImage}
+                      rating={values.rating}
+                      imgRev={values.image}
+                      date={new Date().toISOString()}
+                    />
+                  ) : (
+                    <ReviewCard review={{
+                      title: values.title,
+                      review: values.review,
+                      image: values.image,
+                      rating: values.rating,
+                      createdAt: new Date(),
+                      user: {
+                        firstName: values.firstName,
+                        lastName: values.lastName,
+                        image: values.userImage,
+                      }
+                    }}>
+                    </ReviewCard>
+                  )}
                 </Grid>
               </Grid>
+
+
 
               <Grid item xs={12}>
                 <Button variant="contained" color="primary" type="submit">

@@ -23,17 +23,17 @@ import Marquee from "react-fast-marquee";
 import ProductPrice from "components/product-cards/product-price";
 import DiscountChip from "../discount-chip";
 import Image from "next/image";
-import { track } from "react-facebook-pixel";
 import { viewItem } from "../../../../fpixel";
+import { useEffect, useState } from "react";
 
 // ==============================================================
 type Props = { product: ProductDB, active?: boolean };
 // ==============================================================
 
 export default function ProductCard8({ product, active = false }: Props) {
-  const { slug, id, title, price, URL, categories, discount } =
+  const { slug, id, title, price, images, categories, discount } =
     product || {};
-
+  const [isHovered, setIsHovered] = useState(false);
   const {
     openModal,
     toggleDialog,
@@ -45,9 +45,28 @@ export default function ProductCard8({ product, active = false }: Props) {
     100 - (product?.price / product?.regular_price) * 100
   );
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const hoverImages = images.filter((i) => !i.includes("customization"));
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isHovered && hoverImages.length > 1) {
+      interval = setInterval(() => {
+        setCurrentImageIndex((prevIndex) =>
+          prevIndex === hoverImages.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 1000); // cambia cada 1 segundo
+    } else {
+      setCurrentImageIndex(0); // reset al salir del hover
+    }
+
+    return () => clearInterval(interval);
+  }, [isHovered, hoverImages]);
+
   return (
     <Card>
-      <CardMedia style={active ? { border: "1px solid #7B7B7B", background: 'transparent', } : {}}>
+      <CardMedia style={active ? { border: "1px solid #7B7B7B", background: 'white', } : {}}>
         <DiscountChip discount={discount} />
         <Link
           href={`/products/${slug}`}
@@ -69,31 +88,47 @@ export default function ProductCard8({ product, active = false }: Props) {
               },
             });
 
-              viewItem("View item", {
-                ecommerce: {
-                  items: [
-                    {
-                      item_id: `${product.id}`,
-                      item_name: `${product.title}`,
-                      item_list_name: `${product.slug}`,
-                      discount: `${product.discount}`,
-                      item_category: `${product.categories[0]?.name}`,
-                      price: `${Number(product.price)}`,
-                    },
-                  ],
-                },
-              });
+            viewItem("View item", {
+              ecommerce: {
+                items: [
+                  {
+                    item_id: `${product.id}`,
+                    item_name: `${product.title}`,
+                    item_list_name: `${product.slug}`,
+                    discount: `${product.discount}`,
+                    item_category: `${product.categories[0]?.name}`,
+                    price: `${Number(product.price)}`,
+                  },
+                ],
+              },
+            });
           }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <Image
-            width={325}
-            height={325}
-            layout="responsive"
-            alt="category"
-            className="product-img"
-            loading="lazy"
-            src={URL}
-          />
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              paddingBottom: "100%",
+              overflow: "hidden",
+            }}
+          >
+            {hoverImages.map((img, index) => (
+              <Image
+                key={index}
+                src={img}
+                alt={`${title}-${index}`}
+                fill
+                style={{
+                  position: "absolute",
+                  objectFit: "cover",
+                  transition: "opacity 0.5s ease",
+                  opacity: index === currentImageIndex ? 1 : 0,
+                }}
+              />
+            ))}
+          </div>
         </Link>
         {discount !== 0 && (
           <>
@@ -209,11 +244,11 @@ export default function ProductCard8({ product, active = false }: Props) {
       <Box p={1} textAlign="center">
         {/* PRODUCT CATEGORY */}
         {categories ? (
-          <Small color="grey.500">{categories[0]?.name}</Small>
+          <Small color="grey.500" fontSize={{ xs: '3vw', sm: '2.2vw', md: '1.5vw', lg: '1vw' }}>{categories[0]?.name}</Small>
         ) : null}
 
         {/* PRODUCT TITLE / NAME */}
-        <Paragraph color='primary.main' fontWeight="bold">
+        <Paragraph color='primary.main' fontSize={{ xs: '3vw', sm: '2.2vw', md: '1.5vw', lg: '1vw' }} fontWeight="bold">
           {title}
         </Paragraph>
 

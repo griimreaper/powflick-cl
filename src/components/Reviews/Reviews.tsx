@@ -198,7 +198,7 @@ export const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
             arrowStyles={{ backgroundColor: "white", top: "50%" }}
             useCSS
           >
-            {[...review].filter(r => r.type === "ORDER").map((review, id) => (
+            {[...review].map((review, id) => (
               <Box key={id}>
                 <ReviewCard review={review} />
               </Box>
