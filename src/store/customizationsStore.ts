@@ -52,7 +52,7 @@ export const useCustomizationsStore = create(
   persist<CustomizationsStoreType>(
     (set) => ({
       list: [],
-      setCustomizationInList: (productId: string, customization: Customization) => {
+      setCustomizationInList: (productId: string, customization: Customization, isTopSelected: boolean) => {
         set((state) => {
           const existingProductIndex = findProductIndexById(state.list, productId);
           const price = calculateCustomizationPrice(customization);
@@ -71,6 +71,7 @@ export const useCustomizationsStore = create(
                       ...prod,
                       customizations: prod.customizations.map((c) => c.id === customization.id ? customization : c),
                       amount: prod.customizations.length,
+                      isTopSelected: prod.isTopSelected,
                       total: 0
                     };
                   }
@@ -89,6 +90,7 @@ export const useCustomizationsStore = create(
                       ...prod,
                       customizations: [...prod.customizations, customization],
                       amount: prod.customizations.length + 1,
+                      isTopSelected: prod.isTopSelected,
                       total: 0
                     };
                   }
@@ -107,6 +109,7 @@ export const useCustomizationsStore = create(
                 {
                   productId: productId,
                   customizations: [customization],
+                  isTopSelected: isTopSelected,
                   amount: 1,
                   total: 0
                 },

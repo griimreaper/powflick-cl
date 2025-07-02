@@ -13,13 +13,16 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
   const { product, sugestedProducts, frequentlyBought, reviews, PaymentMethods, ShippingTypes } = detail;
   const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
 
+  console.log(detail);
+
+
   return (
     <Box p={{ xs: 2, sm: 4, md: 6 }} style={{ overflow: 'hidden', background: "white" }}>
       {/* PRODUCT DETAILS INFO AREA */}
       <ProductIntro product={detail} />
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
-      <ProductTabs productPrice={product.price} reviews={reviews}/>
+      <ProductTabs productPrice={product.price} reviews={reviews} />
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
       {/* <FrequentlyBought products={frequentlyBought} /> */}

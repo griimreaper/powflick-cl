@@ -38,6 +38,7 @@ import { Divider, TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
+import Cart from "app/(layout-1)/(checkout)/cart/page";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -90,7 +91,10 @@ export default function ProductIntro({ product }: Props) {
   const { setProductInCart } = useShoppingCartStore();
   const [selectedCustomization, setSelectedCustomization] = useState<number | null>(null);
   const customizationsTotal = list.find((p) => id === p.productId)?.total || 0;
-  const [selected, setSelected] = useState<"top" | "uniform">("uniform");
+
+  const isTopSelected = list.find((item) => item.productId === id)?.isTopSelected ? 'top' : 'uniform';
+
+  const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
   const isSelected = (value: "top" | "uniform") => selected === value;
 
   useEffect(() => {
@@ -134,7 +138,7 @@ export default function ProductIntro({ product }: Props) {
       } else {
         setSelected('uniform')
       }
-      setCustomizationInList(id, customization);
+      setCustomizationInList(id, customization, selected === 'top');
     }
   }, [customization]);
 
@@ -530,84 +534,6 @@ export default function ProductIntro({ product }: Props) {
 
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
               <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
-                <Button
-                  id="addToBag-button-event-click"
-                  color="primary"
-                  variant="contained"
-                  sx={{
-                    width: "clamp(120px, 30vw, 300px)", // Ajusta dinámicamente el tamaño del botón
-                    px: "clamp(1rem, 5vw, 1.75rem)", // Ajusta el padding según la pantalla
-                    height: 40,
-                    whiteSpace: "nowrap",
-                    flex: 1, // Permite que los botones se distribuyan equitativamente
-                  }}
-                  onClick={() => {
-                    const result = handleAddToBagClick();
-                    (window as any).dataLayer.push({ ecommerce: null });
-                    (window as any).dataLayer.push({
-                      event: "Add To Cart",
-                      ecommerce: {
-                        currency: "USD",
-                        value: Number(total),
-                        total_product_price: Number(totalProductsPrice),
-                        total_customization_price: Number(
-                          totalCustomizationPrice
-                        ),
-                        items: [
-                          {
-                            item_id: result.productToBag.id,
-                            item_name: result.productToBag.title,
-                            affiliation: "Google Merchandise Store",
-                            item_brand: "Pow Flick",
-                            item_category:
-                              product.product.product_categories.split("|")[0],
-                            item_category2: product.product.sport,
-                            item_variant: result.productToBag.colors,
-                            price: Number(result.productToBag.price),
-                            quantity: result.amount,
-                          },
-                        ],
-                      },
-                    });
-
-                    addToCart("Add To Cart", {
-                      ecommerce: {
-                        items: [
-                          {
-                            item_id: result.productToBag.id,
-                            item_name: result.productToBag.title,
-                            affiliation: "Google Merchandise Store",
-                            item_brand: "Pow Flick",
-                            item_category:
-                              product.product.product_categories.split("|")[0],
-                            item_category2: product.product.sport,
-                            item_variant: result.productToBag.colors,
-                            price: Number(result.productToBag.price),
-                            quantity: result.amount,
-                          },
-                        ],
-                      },
-                    });
-                  }}
-                >
-                  Add to Cart
-                </Button>
-
-                <Button
-                  onClick={handleAddToFav}
-                  sx={{
-                    width: "clamp(120px, 30%, 200px)",
-                    px: "clamp(1rem, 5vw, 1.75rem)",
-                    height: 40,
-                    flex: 1,
-                  }}
-                >
-                  {isFav ? (
-                    <FavoriteOutlined color="primary" />
-                  ) : (
-                    <FavoriteBorderOutlined color={"inherit"} />
-                  )}
-                </Button>
 
                 <Button
                   color="primary"
@@ -624,6 +550,20 @@ export default function ProductIntro({ product }: Props) {
                 </Button>
               </FlexBox>
             </Box>
+          </Box>
+
+          <Box display={"flex"} width={'100%'} my={2}>
+            <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
+              <strong>
+                Not sure how to start?
+              </strong>
+              {" "}Check out our{" "}
+              <a href="https://powflick.com/customization-guide"
+                rel="noopener noreferrer"
+                style={{ color: 'blue', textDecoration: 'underline' }}>
+                Customization Guide
+              </a>
+            </Typography>
           </Box>
 
           {/* SHOP NAME */}
@@ -662,13 +602,14 @@ export default function ProductIntro({ product }: Props) {
                   border: isSelected("uniform") ? "none" : "1px solid black",
                   px: "clamp(1rem, 5vw, 1.75rem)",
                   height: 40,
-                  width: '140px',
+                  whiteSpace: 'nowrap',
+                  minWidth: 80, // para que no quede muy chico
                   "&:hover": {
                     background: isSelected("uniform") ? "black" : "#f5f5f5"
                   }
                 }}
               >
-                Uniform
+                Uniform (Jersey + Shorts)
               </Button>
             </FlexBox>
           )
@@ -683,18 +624,88 @@ export default function ProductIntro({ product }: Props) {
             id={id}
           />
 
-          <Box display={"flex"} width={'100%'} my={2}>
-            <Typography variant="body1" fontWeight={700} width={'100%'} display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} flexWrap={'nowrap'} whiteSpace={'nowrap'} textAlign={'center'}>
-              Not sure how to start?
-              <Typography variant="body1" >
-                {" "}Check out our{" "}
-                <a href="https://powflick.com/customization-guide"
-                  rel="noopener noreferrer"
-                  style={{ color: 'blue', textDecoration: 'underline' }}>
-                  Customization Guide
-                </a>
-              </Typography>
-            </Typography>
+          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="center" width={'100%'} my={2}>
+            <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
+              <Button
+                id="addToBag-button-event-click"
+                color="primary"
+                variant="contained"
+                sx={{
+                  width: "clamp(120px, 30vw, 300px)", // Ajusta dinámicamente el tamaño del botón
+                  px: "clamp(1rem, 5vw, 1.75rem)", // Ajusta el padding según la pantalla
+                  height: 40,
+                  my: 2,
+                  whiteSpace: "nowrap",
+                  flex: 1, // Permite que los botones se distribuyan equitativamente
+                }}
+                onClick={() => {
+                  const result = handleAddToBagClick();
+                  (window as any).dataLayer.push({ ecommerce: null });
+                  (window as any).dataLayer.push({
+                    event: "Add To Cart",
+                    ecommerce: {
+                      currency: "USD",
+                      value: Number(total),
+                      total_product_price: Number(totalProductsPrice),
+                      total_customization_price: Number(
+                        totalCustomizationPrice
+                      ),
+                      items: [
+                        {
+                          item_id: result.productToBag.id,
+                          item_name: result.productToBag.title,
+                          affiliation: "Google Merchandise Store",
+                          item_brand: "Pow Flick",
+                          item_category:
+                            product.product.product_categories.split("|")[0],
+                          item_category2: product.product.sport,
+                          item_variant: result.productToBag.colors,
+                          price: Number(result.productToBag.price),
+                          quantity: result.amount,
+                        },
+                      ],
+                    },
+                  });
+
+                  addToCart("Add To Cart", {
+                    ecommerce: {
+                      items: [
+                        {
+                          item_id: result.productToBag.id,
+                          item_name: result.productToBag.title,
+                          affiliation: "Google Merchandise Store",
+                          item_brand: "Pow Flick",
+                          item_category:
+                            product.product.product_categories.split("|")[0],
+                          item_category2: product.product.sport,
+                          item_variant: result.productToBag.colors,
+                          price: Number(result.productToBag.price),
+                          quantity: result.amount,
+                        },
+                      ],
+                    },
+                  });
+                }}
+              >
+                Add to Cart
+              </Button>
+
+              <Button
+                onClick={handleAddToFav}
+                sx={{
+                  width: "clamp(120px, 30%, 200px)",
+                  px: "clamp(1rem, 5vw, 1.75rem)",
+                  height: 40,
+                  flex: 1,
+                }}
+              >
+                {isFav ? (
+                  <FavoriteOutlined color="primary" />
+                ) : (
+                  <FavoriteBorderOutlined color={"inherit"} />
+                )}
+              </Button>
+            </Box>
           </Box>
 
           <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={1} mt={2} border={1} borderColor={'grey.200'} p={1}>

@@ -62,6 +62,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   const customization = useCustomizationStore(state => state.customization);
   const { setFieldForAllCustomizations } = useCustomizationsStore();
   const isLocked = counter < 20;
+  const isLockedTechnique = counter < 50;
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
@@ -84,6 +85,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     button?: boolean
   ) => {
     const isLocked = key === "socks" && counter < 20;
+    const isLockedTechnique = key === "technique" && counter < 50;
 
     return (
       <Accordion key={key} disabled={isLocked}>
@@ -149,10 +151,10 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
       {type === 'technique' && (
         <Box display={'flex'} gap={1} flexDirection={'column'}>
           <Typography fontWeight={'bold'} color={'primary.main'}>
-            Special Techniques require a minimum of 100 pieces per technique.
+            Special Techniques require a minimum of 50 pieces per technique.
           </Typography>
           <Typography fontSize={'12px'}>
-            Example: 50 with Embroidery on jersey + 50 with Embroidery on shorts = 100 pieces.
+            Example: 25 with Embroidery on jersey + 25 with Embroidery on shorts = 50 pieces.
           </Typography>
         </Box>
       )}
@@ -180,86 +182,99 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           Default Short
         </Button>
       )} */}
-        {items.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              flex: compact ? "1 0 15%" : "1 0 21%",
-              margin: compact ? "0.2rem" : "0.5rem",
-            }}
-          >
-            <Button
-              onClick={() => handleItemChange(type, item.name)}
+        {items.map((item, index) => {
+          const isLockedItem = type === "technique" && counter < 50;
+
+          return (
+            <div
+              key={index}
               style={{
-                textTransform: "none",
-                display: "flex",
-                flexDirection: "column",
-                gap: 4,
-                width: "100%",
-                padding: compact ? "0.2rem" : "0.5rem",
-                background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
-                color: customization[type] === item.name ? "white" : "black", // Texto blanco si está seleccionado
+                position: "relative",
+                flex: compact ? "1 0 15%" : "1 0 21%",
+                margin: compact ? "0.2rem" : "0.5rem",
+                opacity: isLockedItem ? 0.4 : 1,
+                pointerEvents: isLockedItem ? "none" : "auto",
+                cursor: isLockedItem ? "not-allowed" : "pointer",
               }}
             >
-              {useZoom ? (
-                <div
-                  onClick={() => handleOpenDialog(item)}
-                  style={{ cursor: "pointer", position: "relative" }}
-                >
-                  <ZoomInOutlined
-                    sx={{
-                      position: "absolute",
-                      right: 0,
-                      top: 0,
-                      color: "#000",
-                      zIndex: 1,
-                    }}
-                  />
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    width={imageSize}
-                    height={imageSize}
-                    style={{ borderRadius: "10px" }}
-                  />
-                </div>
-              ) : (
-                <>
-                  {item.image ?
-                    <Image
+              <Button
+                onClick={
+                  () => type === "technique" ?
+                    (setFieldForAllCustomizations(id, 'technique' as keyof Customization, customization['technique' as keyof Customization] as string), handleItemChange(type, item.name)) :
+                    handleItemChange(type, item.name)
+                }
+                disabled={isLockedItem}
+                style={{
+                  textTransform: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 4,
+                  width: "100%",
+                  padding: compact ? "0.2rem" : "0.5rem",
+                  background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
+                  color: customization[type] === item.name ? "white" : "black", // Texto blanco si está seleccionado
+                }}
+              >
+                {useZoom ? (
+                  <div
+                    onClick={() => handleOpenDialog(item)}
+                    style={{ cursor: "pointer", position: "relative" }}
+                  >
+                    <ZoomInOutlined
+                      sx={{
+                        position: "absolute",
+                        right: 0,
+                        top: 0,
+                        color: "#000",
+                        zIndex: 1,
+                      }}
+                    />
+                    <img
                       src={item.image}
                       alt={item.name}
                       width={imageSize}
                       height={imageSize}
                       style={{ borderRadius: "10px" }}
                     />
-                    :
-                    <Box bgcolor={item.hex} width={25} height={25} borderRadius={'100%'}></Box>
-                  }
-                </>
-              )}
-              {
-                <>
-                  <Typography fontWeight={'600'} align="center" whiteSpace={'nowrap'}>
-                    {type === "socks" ? killParenthesisIn(item.name) : item.name}
-                  </Typography>
-                  {item.description &&
-                    <Typography fontSize={'11px'} align="center"  >
-                      {item.description}
+                  </div>
+                ) : (
+                  <>
+                    {item.image ?
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={imageSize}
+                        height={imageSize}
+                        style={{ borderRadius: "10px" }}
+                      />
+                      :
+                      <Box bgcolor={item.hex} width={25} height={25} borderRadius={'100%'}></Box>
+                    }
+                  </>
+                )}
+                {
+                  <>
+                    <Typography fontWeight={'600'} align="center" whiteSpace={'nowrap'}>
+                      {type === "socks" ? killParenthesisIn(item.name) : item.name}
                     </Typography>
-                  }
-                  {item.link &&
-                    <Link href={item.link}>
-                      <Typography fontSize={'11px'} color={'blue'} align="center">
-                        Contact Us
+                    {item.description &&
+                      <Typography fontSize={'11px'} align="center"  >
+                        {item.description}
                       </Typography>
-                    </Link>
-                  }
-                </>
-              }
-            </Button>
-          </div>
-        ))}
+                    }
+                    {item.link &&
+                      <Link href={item.link}>
+                        <Typography fontSize={'11px'} color={'blue'} align="center">
+                          Contact Us
+                        </Typography>
+                      </Link>
+                    }
+                  </>
+                }
+              </Button>
+            </div>
+          )
+        })}
       </div>
     </>
   );
@@ -453,7 +468,6 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           renderItems(detail.Technique, "technique"),
           "technique",
           undefined,
-          true
         )}
 
       {/* {detail.PaymentMethods &&

@@ -11,6 +11,7 @@ import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import PricingSection from "./pricing-section";
 import ProductComment from "./product-comment";
+import DetailReviewList from "./DetailsReviewList";
 
 
 // STYLED COMPONENT
@@ -183,20 +184,7 @@ export default function ProductTabs({ productPrice, reviews }: { productPrice: n
           </Box>
         }
         {selectedOption === 1 &&
-          <Box>
-            {/* <Reviews review={reviews} /> */}
-            {reviews.map((item, ind) => (
-              <ProductComment
-                title={item.user.firstName + " " + item.user.lastName}
-                comment={item.review}
-                date={item.createdAt}
-                rating={Number(item.rating)}
-                imgUrl={item.user.image}
-                imgRev={item.image}
-                key={ind}
-              />
-            ))}
-          </Box>
+          <DetailReviewList reviews={reviews} />
         }
         {
           selectedOption === 3 &&

@@ -39,10 +39,12 @@ export type CustomizationsStoreType = {
     customizations: Customization[];
     amount: number;
     total: number;
+    isTopSelected: boolean;
   }[];
   setCustomizationInList: (
     productId: string,
-    customization: Customization
+    customization: Customization,
+    isTopSelected: boolean
   ) => void;
   setCustomizationsInList: (
     productId: string,
