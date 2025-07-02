@@ -85,7 +85,6 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     button?: boolean
   ) => {
     const isLocked = key === "socks" && counter < 20;
-    const isLockedTechnique = key === "technique" && counter < 50;
 
     return (
       <Accordion key={key} disabled={isLocked}>

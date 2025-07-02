@@ -112,6 +112,12 @@ export default function ProductIntro({ product }: Props) {
     updateCustomizationAttribute('shorts', newValue);
   }, [selected, counter]);
 
+  useEffect(() => {
+    if (counter < 50) {
+      setFieldForAllCustomizations(id, 'technique', 'Default Sublimated');
+      updateCustomizationAttribute('technique', 'Default Sublimated');
+    }
+  }, [counter]);
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
