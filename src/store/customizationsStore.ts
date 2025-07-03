@@ -52,16 +52,26 @@ export const useCustomizationsStore = create(
   persist<CustomizationsStoreType>(
     (set) => ({
       list: [],
-      setCustomizationInList: (productId: string, customization: Customization, isTopSelected: boolean) => {
+      setCustomizationInList: (
+        productId: string,
+        customization: Customization,
+        isTopSelected?: boolean // 👈 ahora es opcional
+      ) => {
         set((state) => {
           const existingProductIndex = findProductIndexById(state.list, productId);
           const price = calculateCustomizationPrice(customization);
-          const todosLosIds: string[] = state.list.flatMap(item => item.customizations.map(customizacion => customizacion.id));
+          const todosLosIds: string[] = state.list.flatMap(item =>
+            item.customizations.map(customizacion => customizacion.id)
+          );
 
           customization = { ...customization, price };
 
           if (existingProductIndex !== -1) {
-            const existingCustomizationIndex = findCustomizationIndexById(state.list[existingProductIndex].customizations, customization.id);
+            const existingCustomizationIndex = findCustomizationIndexById(
+              state.list[existingProductIndex].customizations,
+              customization.id
+            );
+
             if (existingCustomizationIndex !== -1) {
               return {
                 ...state,
@@ -69,7 +79,9 @@ export const useCustomizationsStore = create(
                   if (index === existingProductIndex) {
                     return {
                       ...prod,
-                      customizations: prod.customizations.map((c) => c.id === customization.id ? customization : c),
+                      customizations: prod.customizations.map((c) =>
+                        c.id === customization.id ? customization : c
+                      ),
                       amount: prod.customizations.length,
                       isTopSelected: prod.isTopSelected,
                       total: 0
@@ -102,6 +114,10 @@ export const useCustomizationsStore = create(
             if (todosLosIds.includes(customization.id)) {
               return state;
             }
+
+            // 👇 si no se pasa isTopSelected, tomar el del primer producto o false por defecto
+            const fallbackTopSelected = state.list[0]?.isTopSelected ?? false;
+
             return {
               ...state,
               list: [
@@ -109,7 +125,7 @@ export const useCustomizationsStore = create(
                 {
                   productId: productId,
                   customizations: [customization],
-                  isTopSelected: isTopSelected,
+                  isTopSelected: isTopSelected ?? fallbackTopSelected, // 👈 asignación por defecto
                   amount: 1,
                   total: 0
                 },
@@ -117,6 +133,7 @@ export const useCustomizationsStore = create(
             };
           }
         });
+
         updateTotal(set);
       },
       setCustomizationsInList: (productId: string, newCustomizations: Customization[] | undefined) => {

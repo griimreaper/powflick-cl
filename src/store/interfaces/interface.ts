@@ -44,7 +44,7 @@ export type CustomizationsStoreType = {
   setCustomizationInList: (
     productId: string,
     customization: Customization,
-    isTopSelected: boolean
+    isTopSelected?: boolean
   ) => void;
   setCustomizationsInList: (
     productId: string,
