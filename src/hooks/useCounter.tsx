@@ -27,7 +27,7 @@ export const useCounter = (productId: string, initialValue = 1) => {
   };
 
   const increment = () => {
-    if (counter < 30) { // Solo incrementa si el contador es menor a 30
+    if (counter < 999) { // Solo incrementa si el contador es menor a 30
       const newCounter = counter + 1;
       setCounter(newCounter); // Actualiza el contador
       addCustomizations(productId, newCounter); // Agrega la customización al incrementar

@@ -268,6 +268,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
               disabled={cart.length === 0 || !selectedDirection || loading}
               onClick={async () => {
                 setLoading(true);
+                localStorage.setItem('toPurchase', 'true');
                 try {
                   if (token && selectedDirection) {
                     const response = await createOrder(

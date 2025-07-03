@@ -59,11 +59,12 @@ export const initialCustomization = () => {
       numbers: initialNumbers(font),
     },
     sleeve: 'Default',
-    neck: 'Default',
+    neck: 'Crew Neck (+$0.00)',
     socks: 'No Socks (+$0.00)',
     pants: 'None (+$0.00)',
-    shorts: 'No Shorts (+$0.00)',
-    materials: 'None',
+    shorts: 'Default (+$0.00)',
+    materials: 'LitePlay (+$0.00)',
+    technique: 'Default Sublimated',
     designName: '',
   };
 };

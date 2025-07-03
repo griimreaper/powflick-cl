@@ -59,12 +59,13 @@ export interface ProductDB {
   font: string;
   font_color: string;
   password: string;
+  OrderProduct?: { amount: number, price: number, top: string }
   categories: { name: string }[];
   collections: { title: string }[];
   tags: { name: string }[];
 }
 
-export interface RecentProduct extends ProductDB { }
+export interface RecentProduct extends ProductDB {}
 
 export interface Navbar {
   categories: Category[];
@@ -77,7 +78,7 @@ export interface Collections {
   discountProducts: ProductDB[];
   designYourGameSection: {
     collections: string[];
-    allProducts: ProductDB[]
+    allProducts: ProductDB[];
   };
   latestProducts: ProductDB[];
   bestWeekProducts: ProductDB[];
@@ -174,6 +175,7 @@ export type Customization = {
   pants: string;
   shorts: string;
   materials: string;
+  technique: string;
 };
 
 export enum OrderStateEnum {
@@ -275,6 +277,7 @@ export enum ShowType {
 
 export interface Review {
   id: string;
+  slug: string;
   title: string;
   review: string;
   author: string;

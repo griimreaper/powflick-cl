@@ -17,6 +17,7 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { useRef, useState } from "react";
 import { CustomizationModal } from "pages-sections/cart/CustomizationModal";
 import { styled } from "@mui/material";
+import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 
 // ==============================================================
 interface Props {
@@ -59,6 +60,8 @@ export default function MiniCartItem({ item }: Props) {
     top: number;
     left: number;
   }>({ top: 0, left: 0 });
+
+  const isTopSelected = item.top
 
   const adjustModalPosition = (position: { top: number; left: number }) => {
     const modalWidth = 400;
@@ -137,7 +140,7 @@ export default function MiniCartItem({ item }: Props) {
         </Button> */}
       </FlexBox>
 
-      <Link href={`/products/${item.product.id}`}>
+      <Link href={`/products/${item.product.slug}`}>
         <Avatar
           alt={item.product.title}
           src={(item.product?.images && item.product.images[0]) || ""}
@@ -158,13 +161,12 @@ export default function MiniCartItem({ item }: Props) {
         </Link>
 
         <Tiny color="grey.600">
-          {currency(item.product.price)} x {item.customizations.length}
+          {currency(getUnitPriceWithDiscount(item.product.price + (isTopSelected ? -13.99 : 0), item.amount))} x {item.customizations.length}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>
           {currency(
-            item.customizations.length * item.product.price +
-            item.customizations.reduce((acc, _) => acc + _.price, 0)
+            item.totalProduct + item.totalCustomization
           )}
         </H6>
 

@@ -3,6 +3,8 @@ import { mainApi } from "../apis";
 export const getProductsBySlug = async (slug: string) => {
     try {
         const response = await mainApi.get(`/detail/${slug}`);
+
+        console.log("Slugs:", response.data);
         return response.data;
     } catch (error) {
         console.error("Error fetching product:", error);

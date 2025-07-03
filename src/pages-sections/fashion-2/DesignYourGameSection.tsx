@@ -20,7 +20,7 @@ export default function DesignYourGameSection({
     const types = collections?.collections;
 
     const filteredProducts = useMemo(() => {
-        if (selectedType === "Top Picks") return collections.allProducts.filter((p) => p.featured === true);
+        if (selectedType === "Top Picks") return collections?.allProducts?.filter((p) => p.featured === true);
 
         return collections.allProducts.filter((p) =>
             p.collections?.some((col) => col.title === selectedType)
@@ -115,7 +115,7 @@ export default function DesignYourGameSection({
                         overflowX: 'scroll',
                         '&::-webkit-scrollbar': { height: '2px' }, // para Chrome
                     }}>
-                        {types.map((type) => (
+                        {types?.map((type) => (
                             <Typography
                                 key={type}
                                 onClick={() => setSelectedType(type)}
@@ -145,7 +145,7 @@ export default function DesignYourGameSection({
                 dots
                 dotColor="#CA0b0b"
             >
-                {filteredProducts.map((product) => (
+                {filteredProducts?.map((product) => (
                     <ProductCard8 key={product.id} product={product} active={true} />
                 ))}
             </Carousel>

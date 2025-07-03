@@ -52,7 +52,7 @@ export const useCustomizationsStore = create(
   persist<CustomizationsStoreType>(
     (set) => ({
       list: [],
-      setCustomizationInList: (productId: string, customization: Customization) => {
+      setCustomizationInList: (productId: string, customization: Customization, isTopSelected: boolean) => {
         set((state) => {
           const existingProductIndex = findProductIndexById(state.list, productId);
           const price = calculateCustomizationPrice(customization);
@@ -71,6 +71,7 @@ export const useCustomizationsStore = create(
                       ...prod,
                       customizations: prod.customizations.map((c) => c.id === customization.id ? customization : c),
                       amount: prod.customizations.length,
+                      isTopSelected: prod.isTopSelected,
                       total: 0
                     };
                   }
@@ -89,6 +90,7 @@ export const useCustomizationsStore = create(
                       ...prod,
                       customizations: [...prod.customizations, customization],
                       amount: prod.customizations.length + 1,
+                      isTopSelected: prod.isTopSelected,
                       total: 0
                     };
                   }
@@ -107,6 +109,7 @@ export const useCustomizationsStore = create(
                 {
                   productId: productId,
                   customizations: [customization],
+                  isTopSelected: isTopSelected,
                   amount: 1,
                   total: 0
                 },
@@ -223,6 +226,37 @@ export const useCustomizationsStore = create(
 
           return newState;
         });
+        updateTotal(set);
+      },
+      setFieldForAllCustomizations: (productId: string, name: keyof Customization, value: string) => {
+        set((state) => {
+          const product = state.list.find((item) => item.productId === productId);
+
+          if (!product) return state;
+
+          const updatedCustomizations = product.customizations.map((customization) => ({
+            ...customization,
+            [name]: value,
+          }));
+
+          return {
+            ...state,
+            list: state.list.map((item) =>
+              item.productId === productId
+                ? {
+                  ...item,
+                  customizations: updatedCustomizations.map((customization) => ({
+                    ...customization,
+                    price: calculateCustomizationPrice(customization),
+                  })),
+                  amount: updatedCustomizations.length,
+                  total: 0,
+                }
+                : item
+            ),
+          };
+        });
+
         updateTotal(set);
       },
       clearCustomization: () => {
