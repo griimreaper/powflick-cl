@@ -16,7 +16,7 @@ interface Props {
 
 export default function ProductPasswordForm({ slug, productPassword }: Props) {
     const router = useRouter();
-    const searchParams = useSearchParams();
+    const searchParams = useSearchParams() || new URLSearchParams();
     const queryPassword = searchParams.get('password');
 
     const [password, setPassword] = useState(queryPassword || '');

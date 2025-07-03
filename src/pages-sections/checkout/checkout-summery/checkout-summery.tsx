@@ -300,7 +300,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                             item_name: title,
                             affiliation: 'Google Merchandise Store',
                             item_brand: 'Pow Flick',
-                            item_category: product_categories.split('|')[0],
+                            item_category: (product_categories ?? '').split('|')[0],
                             item_category2: sport,
                             item_list_name: slug,
                             item_variant: colors ? colors[0] : null,
@@ -325,7 +325,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                             item_id: id,
                             item_name: title,
                             item_brand: 'Pow Flick',
-                            item_category: product_categories.split('|')[0],
+                            item_category: (product_categories ?? '').split('|')[0],
                             item_category2: sport,
                             item_list_name: slug,
                             item_variant: colors ? colors[0] : null,
@@ -339,6 +339,8 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                     });
                   }
                 } catch (error: any) {
+                  console.log("Error creating order:", error);
+
                   showErrorAlert('Error!', error?.response?.data?.message || 'An unexpected error occurred while creating the order.');
                 } finally {
                   setLoading(false);

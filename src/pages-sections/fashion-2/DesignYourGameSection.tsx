@@ -74,7 +74,7 @@ export default function DesignYourGameSection({
                                 fontFamily: "GYMER",
                                 lineHeight: 1,
                                 textTransform: "uppercase",
-                                WebkitTextStroke: "2px #CA0b0b",
+                                WebkitTextStroke: {xs: "1px #CA0b0b", md: "2px #CA0b0b" },
                             }}
                         >
                             Design Your Game.
@@ -101,8 +101,7 @@ export default function DesignYourGameSection({
                         component="h1"
                         color="primary.main"
                         fontStyle={'italic'}
-                        mt={2}
-                        fontSize={{ xs: '4vw', sm: '3vw', md: '2vw' }}
+                        fontSize={{ xs: '4vw', sm: '3vw', md: '2vw', lg: '1.2vw' }}
                         fontWeight={500}
                     >
                         Find your perfect match - modern icons, retro classics, and styles made for her.
@@ -112,7 +111,7 @@ export default function DesignYourGameSection({
                         gap: 4,
                         justifyContent: isMobile ? 'start' : 'center',
                         padding: 2,
-                        mb: 2,
+                        my: 2,
                         overflowX: 'scroll',
                         '&::-webkit-scrollbar': { height: '2px' }, // para Chrome
                     }}>
@@ -120,12 +119,12 @@ export default function DesignYourGameSection({
                             <Typography
                                 key={type}
                                 onClick={() => setSelectedType(type)}
-                                fontSize={{ xs: '4vw', sm: '3vw', md: '2vw', lg: '1.5vw' }}
+                                fontSize={{ xs: '4vw', sm: '3vw', md: '2vw', lg: '1.2vw' }}
                                 sx={{
                                     whiteSpace: 'nowrap',
                                     cursor: 'pointer',
                                     fontWeight: selectedType === type ? 700 : 500,
-                                    color: selectedType === type ? 'primary.main' : 'gray',
+                                    color: selectedType === type ? 'white' : 'gray',
                                     borderBottom: selectedType === type ? '2px solid #CA0b0b' : 'none',
                                     pb: 0.5,
                                     transition: 'all 0.2s',

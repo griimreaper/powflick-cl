@@ -9,14 +9,13 @@ import './details.css';
 const COMMENTS_PER_PAGE = 5;
 
 export default function DetailReviewList({ reviews }: { reviews: any[] }) {
-    const repeatedReviews = Array.from({ length: 20 }).flatMap(() => reviews);
     const [page, setPage] = useState(1);
 
     const start = (page - 1) * COMMENTS_PER_PAGE;
     const end = start + COMMENTS_PER_PAGE;
-    const currentReviews = repeatedReviews.slice(start, end);
+    const currentReviews = reviews.slice(start, end);
 
-    const totalPages = Math.ceil(repeatedReviews.length / COMMENTS_PER_PAGE);
+    const totalPages = Math.ceil(reviews.length / COMMENTS_PER_PAGE);
 
     return (
         <Box p={4}>

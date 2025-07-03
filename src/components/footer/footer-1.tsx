@@ -110,87 +110,90 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
                 >
                   FOR TEAM BEHIND THE DREAM
                 </Box> */}
-                </Grid>
-                {/* ABOUT US LINKS */}
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={3}
-                  lg={2}
-                  display="flex"
-                  flexDirection="column"
-                  alignItems={{ xs: "center", lg: "flex-start" }}
-                  justifyContent="center"
-                >
-                  <AboutLinks />
-                </Grid>
-                {/* CUSTOMER CARE LINKS */}
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={3}
-                  lg={2}
-                  display="flex"
-                  flexDirection="column"
-                  alignItems={{ xs: "center", lg: "flex-start" }}
-                  justifyContent="center"
-                >
-                  <CustomerCareLinks />
-                </Grid>
-                {/* Categories LINKS */}
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={3}
-                  lg={2}
-                  display="flex"
-                  flexDirection="column"
-                  alignItems={{ xs: "center", lg: "flex-start" }}
-                  justifyContent="center"
-                >
-                  <CategoriesLinks list={data?.categories} />
-                </Grid>
-                {/* CONTACT & SOCIAL LINKS */}
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={3}
-                  lg={2}
-                  display="flex"
-                  flexDirection="column"
-                  alignItems={{ xs: "center", lg: "flex-start" }}
-                  justifyContent="center"
-                >
-                  {/* CONTACT INFORMATION */}
-                  <Heading style={{ color: "#CA0B0B", marginBottom: "24px" }}>Contact Us</Heading>
+              </Grid>
+              {/* ABOUT US LINKS */}
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                lg={2}
+                display="flex"
+                flexDirection="column"
+                alignItems={{ xs: "center", lg: "flex-start" }}
+                justifyContent="center"
+              >
+                <AboutLinks />
+              </Grid>
+              {/* CUSTOMER CARE LINKS */}
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                lg={2}
+                display="flex"
+                flexDirection="column"
+                alignItems={{ xs: "center", lg: "flex-start" }}
+                justifyContent="center"
+              >
+                <CustomerCareLinks />
+              </Grid>
+              {/* Categories LINKS */}
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                lg={2}
+                display="flex"
+                flexDirection="column"
+                alignItems={{ xs: "center", lg: "flex-start" }}
+                justifyContent="center"
+              >
+                <CategoriesLinks list={data?.categories} />
+              </Grid>
+              {/* CONTACT & SOCIAL LINKS */}
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                lg={2}
+                display="flex"
+                flexDirection="column"
+                alignItems={{ xs: "center", lg: "flex-start" }}
+                justifyContent="center"
+                sx={{
+                  gap: "0.6rem 0rem",
+                }}
+              >
+                {/* CONTACT INFORMATION */}
+                <Heading style={{ color: "#CA0B0B", marginBottom: "24px" }}>Contact Us</Heading>
 
-                  <Paragraph py={0.6} color="grey.500">
-                    <LocationOnIcon
-                      sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }}
-                    />
-                    RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK
+                <Paragraph color="grey.500">
+                  <LocationOnIcon
+                    sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }}
+                  />
+                  RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK
+                </Paragraph>
+
+                <Paragraph color="grey.500">
+                  Registered Office (Legal Entity):
+                  CL 28 #113 57, Cali – Valle, Colombia
+                  NIT: 1231234
+
                   </Paragraph>
 
-                  <Paragraph py={0.6} color="grey.500">
-                    Registered Office (Legal Entity):
-                    CL 28 #113 57, Cali – Valle, Colombia
-                    NIT: 1231234
+                <Paragraph color="grey.500">
+                  <EmailIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
+                  Email: support@powflick.com
+                </Paragraph>
 
-                  </Paragraph>
-
-                  <Paragraph py={0.6} color="grey.500">
-                    <EmailIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
-                    Email: support@powflick.com
-                  </Paragraph>
-
-                  <Paragraph py={0.6} mb={2} color="grey.500">
-                    <PhoneIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
-                    Phone: +86 13590635129
-                  </Paragraph>
+                <Paragraph mb={2} color="grey.500">
+                  <PhoneIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
+                  Phone: +86 13590635129
+                </Paragraph>
 
 
                 </Grid>

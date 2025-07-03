@@ -733,7 +733,7 @@ export default function ProductIntro({ product }: Props) {
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
-                <img src="/assets/images/payment-methods/mastercard.png" alt="Pago 2" style={{ width: '100%', height: 'auto' }} />
+                <img src="/assets/images/payment-methods/MasterCard.png" alt="Pago 2" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />

@@ -63,7 +63,7 @@ export default function ProductFilterCard({
 }: Props) {
   const [collapsed, setCollapsed] = useState<string | null>(null);
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new URLSearchParams();
 
   // Función para actualizar los filtros en la URL
   const updateURL = (key: ProductFilterKeys, value: ProductFilterValues) => {
