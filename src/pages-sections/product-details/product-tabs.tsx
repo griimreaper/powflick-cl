@@ -31,9 +31,6 @@ export default function ProductTabs({ productPrice, reviews }: { productPrice: n
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
-  console.log("reviews:", reviews);
-
-
   return (
     <>
       <StyledTabs
@@ -44,10 +41,10 @@ export default function ProductTabs({ productPrice, reviews }: { productPrice: n
         variant='scrollable'
       >
         <Tab className="inner-tab" label="Description" />
-        <Tab className="inner-tab" label="Reviews" />
+        <Tab className="inner-tab" label="Pricing Information" />
         <Tab className="inner-tab" label={`Size Table`} />
         <Tab className="inner-tab" label={`Worldwide Shipping`} />
-        <Tab className="inner-tab" label={`Pricing Information`} />
+        <Tab className="inner-tab" label={`Reviews`} />
       </StyledTabs>
 
       <Box mb={6}>
@@ -184,7 +181,9 @@ export default function ProductTabs({ productPrice, reviews }: { productPrice: n
           </Box>
         }
         {selectedOption === 1 &&
-          <DetailReviewList reviews={reviews} />
+          <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
+            <PricingSection price={productPrice} />
+          </Box>
         }
         {
           selectedOption === 3 &&
@@ -277,9 +276,7 @@ export default function ProductTabs({ productPrice, reviews }: { productPrice: n
         }
         {
           selectedOption === 4 &&
-          <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
-            <PricingSection price={productPrice} />
-          </Box>
+          <DetailReviewList reviews={reviews} />
         }
       </Box >
     </>

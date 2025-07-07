@@ -26,7 +26,7 @@ export default function ProductComment(props: Props) {
   const { title, imgUrl, rating, date, comment, imgRev } = props || {};
 
   return (
-    <Box mb={4} maxWidth={600} display={'flex'} border={'1px solid grey-800'} flexDirection="column" gap={2} p={2} borderRadius={2} boxShadow={1} width={'100%'} sx={{ boxShadow: '1px 12px 5px rgba(0,0,0,0.1)' }}>
+    <Box mb={4} maxWidth={600} display={'flex'} border={'1px solid grey-800'} flexDirection="row" gap={2} p={2} borderRadius={2} boxShadow={1} width={'100%'} sx={{ boxShadow: '1px 12px 5px rgba(0,0,0,0.1)' }}>
       <FlexBox alignItems="start" flexDirection={'row'} mb={2} gap={2} width={'90%'}>
         <Avatar alt={title} src={imgUrl} sx={{ width: 48, height: 48 }} />
 
