@@ -630,7 +630,7 @@ export default function ProductIntro({ product }: Props) {
             id={id}
           />
 
-          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="center" width={'100%'} my={2}>
+          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
             <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
               <Button
                 id="addToBag-button-event-click"

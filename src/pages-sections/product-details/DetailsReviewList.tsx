@@ -22,20 +22,26 @@ export default function DetailReviewList({ reviews }: { reviews: any[] }) {
             <div
                 key={page}
                 className="fade-transition"
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    gap: "16px",
+                    width: "100%",
+                }}
             >
-
                 {currentReviews.map((item, ind) => (
-                    <ProductComment
-                        key={`${ind}-${item.createdAt}`} // Mejor clave
-                        title={`${item.user.firstName} ${item.user.lastName}`}
-                        comment={item.review}
-                        date={item.createdAt}
-                        rating={Number(item.rating)}
-                        imgUrl={item.user.image}
-                        imgRev={item.image}
-                    />
+                    <Box key={`${ind}-${item.createdAt}`} flex="1 1 350px" minWidth="350px" maxWidth="500px" width="100%">
+                        <ProductComment
+                            title={`${item.user.firstName} ${item.user.lastName}`}
+                            comment={item.review}
+                            date={item.createdAt}
+                            rating={Number(item.rating)}
+                            imgUrl={item.user.image}
+                            imgRev={item.image}
+                        />
+                    </Box>
                 ))}
-
             </div>
             <Box display="flex" justifyContent="center" mt={2} gap={1}>
                 <Pagination
