@@ -57,7 +57,7 @@ export default function ReviewForm() {
       router.push("/admin/reviews/order");
     } catch (error: any) {
       console.log(error);
-      showErrorAlert("Failed", error.response?.data?.message);
+      showErrorAlert("Failed", error);
     }
   };
 

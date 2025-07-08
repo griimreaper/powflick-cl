@@ -573,12 +573,7 @@ export default function ProductIntro({ product }: Props) {
           </Box>
 
           {/* SHOP NAME */}
-          <FlexBox alignItems="center" gap={1} my={2}>
-            <div>Sold By:</div>
-            <Link href="/">
-              <H6>Pow Flick</H6>
-            </Link>
-          </FlexBox>
+
 
           {(product.product.categories.some((c: any) => c.includes('Soccer')) || product.product.categories.some((c: any) => c.includes('Basketball'))) && (
             <FlexBox alignItems="start" gap={2} my={2}>

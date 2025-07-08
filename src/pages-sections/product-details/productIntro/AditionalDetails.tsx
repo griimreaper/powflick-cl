@@ -107,15 +107,24 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               </Typography>
               {button && !isLocked && (
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant="outlined"
                   sx={{
+                    backgroundColor: "#fff",
+                    color: "#000",
+                    border: "1px solid #000",
                     height: "clamp(32px, 20px, 50px)", // Mantiene una altura adaptable
                     width: "clamp(30px, 30vw, 80px)", // Mantiene un ancho consistente en distintas pantallas
                     flexShrink: 0, // Evita que el botón se reduzca si el texto a la izquierda crece
                     mx: 1,
                     whiteSpace: "nowrap",
                     textAlign: "center",
+                    fontWeight: 600,
+                    transition: "background 0.15s, color 0.15s",
+                    "&:active": {
+                      backgroundColor: "#000",
+                      color: "#fff",
+                      border: "2px solid #000",
+                    },
                   }}
                   onClick={(e) => {
                     e.stopPropagation();

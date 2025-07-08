@@ -13,7 +13,6 @@ import PricingSection from "./pricing-section";
 import ProductComment from "./product-comment";
 import DetailReviewList from "./DetailsReviewList";
 
-
 // STYLED COMPONENT
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   minHeight: 0,

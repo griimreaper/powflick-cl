@@ -138,6 +138,12 @@ export default function CustomizationDetails({ customization }: Props) {
             {customization.socks !== "No Socks (+$0.00)" && (
                 <Typography>Socks: {customization.socks}</Typography>
             )}
+
+            {customization.technique && customization.technique !== "Default Sublimated" && (
+                <Typography>
+                    Technique: {customization.technique}
+                </Typography>
+            )}
         </Box>
     );
 }
