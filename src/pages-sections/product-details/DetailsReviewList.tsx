@@ -6,9 +6,12 @@ import Review from "models/Review.model";
 import Pagination from "pages-sections/customer-dashboard/pagination";
 import './details.css';
 
-const COMMENTS_PER_PAGE = 5;
+const COMMENTS_PER_PAGE = 6;
 
 export default function DetailReviewList({ reviews }: { reviews: any[] }) {
+
+    console.log(reviews);
+
     const [page, setPage] = useState(1);
 
     const start = (page - 1) * COMMENTS_PER_PAGE;
@@ -23,15 +26,18 @@ export default function DetailReviewList({ reviews }: { reviews: any[] }) {
                 key={page}
                 className="fade-transition"
                 style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gridTemplateRows: "repeat(2, auto)",
                     gap: "16px",
                     width: "100%",
                 }}
             >
                 {currentReviews.map((item, ind) => (
-                    <Box key={`${ind}-${item.createdAt}`} flex="1 1 350px" minWidth="350px" maxWidth="500px" width="100%">
+                    <Box
+                        key={`${ind}-${item.createdAt}`}
+                        width="100%"
+                    >
                         <ProductComment
                             title={`${item.user.firstName} ${item.user.lastName}`}
                             comment={item.review}

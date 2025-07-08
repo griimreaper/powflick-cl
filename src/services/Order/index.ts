@@ -41,17 +41,14 @@ export const createOrder = async (
 
 export const generatePurchaseEmail = async (orderId: string, token: string) => {
   try {
-    const creatingEmail = await mainApi.get(
-      "/payments/email/" + orderId,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const creatingEmail = await mainApi.get("/payments/email/" + orderId, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return creatingEmail.data;
   } catch (error) {
     console.error("Error generating order:", error);
     throw error;
-  };
-}
+  }
+};
