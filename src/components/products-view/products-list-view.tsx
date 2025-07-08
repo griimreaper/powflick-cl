@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 // GLOBAL CUSTOM COMPONENTS
 import { Span } from "components/Typography";
@@ -43,7 +44,7 @@ export default function ProductsListView({ data, handlePage }: Props) {
 
 
   return (
-    <div>
+    <>
       {data?.products?.map((item: ProductDB) => (
         <ProductCard9
           id={item.id}
@@ -59,10 +60,13 @@ export default function ProductsListView({ data, handlePage }: Props) {
         />
       ))}
 
-      <FlexBetween flexWrap="wrap" mt={4}>
-        <Span color={themeColors.text.secondary}>Showing {itemsPerPage * (data?.page - 1) + 1}-{Math.min(itemsPerPage * data?.page, data?.count?.total || 0)} of {data?.count?.total || 0} Products</Span>
+      <FlexBetween flexWrap="wrap" mt={4} width={'100%'} justifyContent={'space-between'}>
+        {data.page ?
+          <Span color={themeColors.text.secondary}>Showing {itemsPerPage * (data?.page - 1) + 1}-{Math.min(itemsPerPage * data?.page, data?.count?.total || 0)} of {data?.count?.total || 0} Products</Span>
+          : <Grid></Grid>
+        }
         <Pagination count={data?.totalPages} page={data?.page} onChange={handleChange} color="primary" />
       </FlexBetween>
-    </div>
+    </>
   );
 }
