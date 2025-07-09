@@ -202,10 +202,16 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 flex: compact ? "1 0 15%" : "1 0 21%",
                 margin: compact ? "0.2rem" : "0.5rem",
                 opacity: 1,
+                pointerEvents: "auto",
+                cursor: "pointer",
 
               }}
             >
-              <div
+              <Button
+                onClick={
+                  () =>
+                    handleItemChange(type, item.name)
+                }
 
                 style={{
                   textTransform: "none",
@@ -215,8 +221,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                   gap: 4,
                   width: "100%",
                   padding: compact ? "0.2rem" : "0.5rem",
-                  background: "white",
-                  color: "black",
+                  background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
+                  color: customization[type] === item.name ? "white" : "black", // Texto blanco si está seleccionado
                 }}
               >
                 {useZoom ? (
@@ -283,7 +289,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                     }
                   </>
                 }
-              </div>
+              </Button>
             </div>
           )
         })}
