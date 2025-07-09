@@ -112,12 +112,7 @@ export default function ProductIntro({ product }: Props) {
     updateCustomizationAttribute('shorts', newValue);
   }, [selected, counter]);
 
-  useEffect(() => {
-    if (counter < 50) {
-      setFieldForAllCustomizations(id, 'technique', 'Default Sublimated');
-      updateCustomizationAttribute('technique', 'Default Sublimated');
-    }
-  }, [counter]);
+
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -623,6 +618,7 @@ export default function ProductIntro({ product }: Props) {
             counter={counter}
             sport={title.split(" ")[0]}
             id={id}
+            selected={selected} // <-- Añadido
           />
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>

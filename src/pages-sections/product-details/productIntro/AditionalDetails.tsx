@@ -48,6 +48,7 @@ interface AditionalDetailsProps {
   handleItemChange: (name: keyof Customization, value: string) => void;
   id: string;
   sport: string;
+  selected?: "top" | "uniform"; // <-- Añadido
 }
 
 const defaultCustom = initialCustomization();
@@ -58,11 +59,11 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   handleItemChange,
   sport,
   id,
+  selected = "uniform", // <-- Valor por defecto
 }) => {
   const customization = useCustomizationStore(state => state.customization);
   const { setFieldForAllCustomizations } = useCustomizationsStore();
   const isLocked = counter < 20;
-  const isLockedTechnique = counter < 50;
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
@@ -191,7 +192,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         </Button>
       )} */}
         {items.map((item, index) => {
-          const isLockedItem = type === "technique" && counter < 50;
+
 
           return (
             <div
@@ -200,27 +201,22 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 position: "relative",
                 flex: compact ? "1 0 15%" : "1 0 21%",
                 margin: compact ? "0.2rem" : "0.5rem",
-                opacity: isLockedItem ? 0.4 : 1,
-                pointerEvents: isLockedItem ? "none" : "auto",
-                cursor: isLockedItem ? "not-allowed" : "pointer",
+                opacity: 1,
+
               }}
             >
-              <Button
-                onClick={
-                  () => type === "technique" ?
-                    (setFieldForAllCustomizations(id, 'technique' as keyof Customization, customization['technique' as keyof Customization] as string), handleItemChange(type, item.name)) :
-                    handleItemChange(type, item.name)
-                }
-                disabled={isLockedItem}
+              <div
+
                 style={{
                   textTransform: "none",
                   display: "flex",
                   flexDirection: "column",
+                  alignItems: "center",
                   gap: 4,
                   width: "100%",
                   padding: compact ? "0.2rem" : "0.5rem",
-                  background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
-                  color: customization[type] === item.name ? "white" : "black", // Texto blanco si está seleccionado
+                  background: "white",
+                  color: "black",
                 }}
               >
                 {useZoom ? (
@@ -271,15 +267,23 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                       </Typography>
                     }
                     {item.link &&
-                      <Link href={item.link}>
-                        <Typography fontSize={'11px'} color={'blue'} align="center">
-                          Contact Us
-                        </Typography>
+                      // Solo el texto "Contact Us" es clickeable y abre el link
+                      <Link href={item.link} passHref legacyBehavior>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <Typography fontSize={'11px'} color={'blue'} align="center">
+                            Contact Us
+                          </Typography>
+                        </a>
                       </Link>
                     }
                   </>
                 }
-              </Button>
+              </div>
             </div>
           )
         })}
@@ -319,7 +323,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           display="flex"
           flexDirection={{ xs: "column", md: "row" }}
           sx={{
-            minHeight: { xs: 400, md: 420 },
+            minHeight: { xs: "auto", md: "auto" },
             alignItems: "stretch",
             p: 0,
             bgcolor: "#fff"
@@ -664,7 +668,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           undefined,
           true
         )}
-      {detail.Shorts &&
+      {/* Renderiza Shorts solo si selected es 'uniform' */}
+      {detail.Shorts && selected === "uniform" &&
         renderSection(
           `Shorts ${customization.shorts}`,
           renderItems(detail.Shorts, "shorts", false, 75, true),
