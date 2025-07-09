@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import ProductComment from "./product-comment";
 import Review from "models/Review.model";
 import Pagination from "pages-sections/customer-dashboard/pagination";
@@ -10,9 +10,9 @@ const COMMENTS_PER_PAGE = 6;
 
 export default function DetailReviewList({ reviews }: { reviews: any[] }) {
 
-    console.log(reviews);
-
     const [page, setPage] = useState(1);
+    const isMobile = useMediaQuery("(max-width:799px)");
+    const isTablet = useMediaQuery("(max-width:1199px)");
 
     const start = (page - 1) * COMMENTS_PER_PAGE;
     const end = start + COMMENTS_PER_PAGE;
@@ -27,7 +27,11 @@ export default function DetailReviewList({ reviews }: { reviews: any[] }) {
                 className="fade-transition"
                 style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gridTemplateColumns: isMobile
+                        ? "1fr"
+                        : isTablet
+                            ? "repeat(2, 1fr)"
+                            : "repeat(3, 1fr)",
                     gridTemplateRows: "repeat(2, auto)",
                     gap: "16px",
                     width: "100%",
