@@ -39,10 +39,12 @@ export type CustomizationsStoreType = {
     customizations: Customization[];
     amount: number;
     total: number;
+    isTopSelected: boolean;
   }[];
   setCustomizationInList: (
     productId: string,
-    customization: Customization
+    customization: Customization,
+    isTopSelected?: boolean
   ) => void;
   setCustomizationsInList: (
     productId: string,
@@ -52,6 +54,7 @@ export type CustomizationsStoreType = {
   clearCustomization: () => void;
   trimCustomizations: (productId: string, numCustomizations: number) => void;
   addCustomizations: (productId: string, numCustomizations: number) => void;
+  setFieldForAllCustomizations: (productId: string, name: keyof Customization, value: string) => void;
 };
 
 export type ProductToBagType = {
@@ -73,6 +76,7 @@ export type ShoppingCartStoreType = {
     amount: number;
     totalProduct: number;
     totalCustomization: number;
+    top: boolean;
   }[];
   coupon: Coupon | null;
   note: string;
@@ -85,7 +89,8 @@ export type ShoppingCartStoreType = {
     customization: Customization[],
     totalCustomization: number,
     totalProduct: number,
-    amount: number
+    amount: number,
+    top: boolean
   ) => void;
   removeProductById: (customizationId: string) => void;
   removeCustomizationFromProduct: (

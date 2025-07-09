@@ -24,7 +24,8 @@ const InputTeam = ({ id, sideName, name, showInput, setShowInput, selection }: P
         frontSide: {},
         backSide: {}
     });
-    const customizations = list.find(({ productId }) => productId === id)?.customizations
+    const productInStorage = list.find(({ productId }) => productId === id)
+    const customizations = productInStorage?.customizations;
 
     useEffect(() => {
         if (customizations) {

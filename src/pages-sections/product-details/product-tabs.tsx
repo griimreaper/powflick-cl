@@ -10,7 +10,8 @@ import { Review } from "models/types";
 import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import PricingSection from "./pricing-section";
-
+import ProductComment from "./product-comment";
+import DetailReviewList from "./DetailsReviewList";
 
 // STYLED COMPONENT
 const StyledTabs = styled(Tabs)(({ theme }) => ({
@@ -25,7 +26,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   }
 }));
 
-export default function ProductTabs() {
+export default function ProductTabs({ productPrice, reviews }: { productPrice: number, reviews: Review[] }) {
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
@@ -39,9 +40,10 @@ export default function ProductTabs() {
         variant='scrollable'
       >
         <Tab className="inner-tab" label="Description" />
+        <Tab className="inner-tab" label="Pricing Information" />
         <Tab className="inner-tab" label={`Size Table`} />
         <Tab className="inner-tab" label={`Worldwide Shipping`} />
-        <Tab className="inner-tab" label={`Pricing Information`} />
+        <Tab className="inner-tab" label={`Reviews`} />
       </StyledTabs>
 
       <Box mb={6}>
@@ -127,8 +129,7 @@ export default function ProductTabs() {
             </Box>
           </Box >
         }
-        {
-          selectedOption === 1 &&
+        {selectedOption === 2 &&
           <Box display='flex' flexDirection={{ xs: 'column' }} px={{ xs: 1, md: 4 }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
             <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '4vw', md: '30px' }}>
               English Size Table
@@ -178,8 +179,13 @@ export default function ProductTabs() {
             </Box>
           </Box>
         }
+        {selectedOption === 1 &&
+          <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
+            <PricingSection price={productPrice} />
+          </Box>
+        }
         {
-          selectedOption === 2 &&
+          selectedOption === 3 &&
           <Grid container spacing={4} p={4}>
             {/* Columna izquierda */}
             <Grid item xs={12} md={6} textAlign={{ xs: 'center', md: 'left' }} display={'flex'} flexDirection={'column'} gap={2} >
@@ -268,10 +274,8 @@ export default function ProductTabs() {
 
         }
         {
-          selectedOption === 3 &&
-          <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
-            <PricingSection />
-          </Box>
+          selectedOption === 4 &&
+          <DetailReviewList reviews={reviews} />
         }
       </Box >
     </>

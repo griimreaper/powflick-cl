@@ -1,7 +1,7 @@
 import { Customization } from "models/types";
 
 export function Capitalize(string: string) {
-    return string?.split('').map((l,i) => i === 0 ? l.toUpperCase() : l ).join('')
+  return string?.split('').map((l, i) => i === 0 ? l.toUpperCase() : l).join('')
 }
 
 export function extractPriceFromString(text: string): number {
@@ -42,6 +42,44 @@ export function calculateCustomizationPrice(
 
   return parseFloat(totalPrice.toFixed(2));
 }
+
+type Tier = '10>20' | '21>50' | '51>100' | '101>250' | '250+';
+
+const getTieredPrices = (basePrice: number): Record<Tier, number> => ({
+  '10>20': +basePrice.toFixed(2),
+  '21>50': +(basePrice * 0.94).toFixed(2),   // 6% off
+  '51>100': +(basePrice * 0.88).toFixed(2),  // 12% off
+  '101>250': +(basePrice * 0.82).toFixed(2), // 18% off
+  '250+': +(basePrice * 0.65).toFixed(2),    // 35% off
+});
+
+export const getTotalWithDiscount = (basePrice: number, quantity: number): number => {
+  let tier: Tier;
+
+  if (quantity >= 250) tier = '250+';
+  else if (quantity >= 101) tier = '101>250';
+  else if (quantity >= 51) tier = '51>100';
+  else if (quantity >= 21) tier = '21>50';
+  else tier = '10>20';
+
+  const tieredPrices = getTieredPrices(basePrice);
+  const unitPrice = tieredPrices[tier];
+  return +(unitPrice * quantity).toFixed(2);
+};
+
+export const getUnitPriceWithDiscount = (basePrice: number, quantity: number): number => {
+  let tier: Tier;
+
+  if (quantity >= 250) tier = '250+';
+  else if (quantity >= 101) tier = '101>250';
+  else if (quantity >= 51) tier = '51>100';
+  else if (quantity >= 21) tier = '21>50';
+  else tier = '10>20';
+
+  const tieredPrices = getTieredPrices(basePrice);
+  return tieredPrices[tier];
+};
+
 
 export function formatDate(dateString: string) {
   const date = new Date(dateString);

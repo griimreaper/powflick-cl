@@ -33,7 +33,7 @@ export default function OrderDetailsPageView({ data }: Props) {
   const router = useRouter();
 
   const { data: order, directions } = data;
-
+  console.log(order,'gkgfoasdfks');
   const [updatedOrder, setUpdatedOrder] = useState<{
     orderId: string;
     state: string;

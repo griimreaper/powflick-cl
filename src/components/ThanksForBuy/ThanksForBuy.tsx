@@ -22,6 +22,7 @@ import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { getProfile } from "services/DashboardUser";
 import { useSession } from "next-auth/react";
 import { useQueryClient } from "@tanstack/react-query";
+import { generatePurchaseEmail } from "services/Order";
 
 export default function ThanksForBuy({ id }: { id: string }) {
   const [order, setOrder] = useState<any>({});
@@ -44,6 +45,20 @@ export default function ThanksForBuy({ id }: { id: string }) {
       router.push("/");
     }
   };
+
+  // Este efecto se ejecuta apenas token esté disponible
+  useEffect(() => {
+    const toPurchase = localStorage.getItem('toPurchase');
+    console.log('toPurchase?', toPurchase, 'token?', token);
+
+    if (toPurchase && token) {
+      const sendEmail = async () => {
+        await generatePurchaseEmail(id, token);
+        sessionStorage.removeItem('toPurchase');
+      };
+      sendEmail();
+    }
+  }, [token]);
 
   useEffect(() => {
     const fetchData = async () => {

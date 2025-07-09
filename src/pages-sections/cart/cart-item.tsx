@@ -20,6 +20,7 @@ import { Box, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { CustomizationModal } from "./CustomizationModal";
 import { useShoppingCartStore } from "store/shoppingCart";
+import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 
 // =========================================================
 type Props = {
@@ -72,6 +73,7 @@ export default function CartItem({ item }: Props) {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const { cart } = useShoppingCartStore();
+  const isTopSelected = item.top
 
   return (
     <Wrapper>
@@ -104,11 +106,11 @@ export default function CartItem({ item }: Props) {
         {/* PRODUCT PRICE SECTION */}
         <FlexBox gap={1} flexWrap="wrap" alignItems="center">
           <Span color="grey.600">
-            {currency(item.product.price)} x {item.customizations.length}
+            {currency(getUnitPriceWithDiscount(item.product.price + (isTopSelected ? -13.99 : 0), item.amount))} x {item.customizations.length}
           </Span>
 
           <Span fontWeight={600} color="primary.main">
-            {currency(item.product.price * item.customizations.length)}
+            {currency(getTotalWithDiscount(item.product.price, item.customizations.length) + item.totalCustomization)}
           </Span>
         </FlexBox>
 

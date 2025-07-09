@@ -28,11 +28,11 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 const gatewayOptions = [
-  {
-    value: "PAYPAL",
-    label: "PayPal",
-    img: "/assets/images/gateways/paypal-logo.png",
-  },
+  // {
+  //   value: "PAYPAL",
+  //   label: "PayPal",
+  //   img: "/assets/images/gateways/paypal-logo.png",
+  // },
   {
     value: "LLP",
     label: "LLP",
@@ -182,23 +182,24 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                 borderRadius: 2,
               }}
               label={
-                option.value === "PAYPAL" ? (
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "100%",
-                      fontWeight: 700,
-                      fontSize: 18,
-                      fontStyle: "italic",
-                      minHeight: 40,
-                    }}
-                  >
-                    <span style={{ color: "#003087" }}>Pay</span>
-                    <span style={{ color: "#0070ba" }}>Pal</span>
-                  </span>
-                ) : option.value === "LLP" ? (
+                // option.value === "PAYPAL" ? (
+                //   <span
+                //     style={{
+                //       display: "flex",
+                //       alignItems: "center",
+                //       justifyContent: "center",
+                //       width: "100%",
+                //       fontWeight: 700,
+                //       fontSize: 18,
+                //       fontStyle: "italic",
+                //       minHeight: 40,
+                //     }}
+                //   >
+                //     <span style={{ color: "#003087" }}>Pay</span>
+                //     <span style={{ color: "#0070ba" }}>Pal</span>
+                //   </span>
+                // ) :
+                option.value === "LLP" ? (
                   <Paragraph
                     sx={{
                       display: "flex",
@@ -268,6 +269,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
               disabled={cart.length === 0 || !selectedDirection || loading}
               onClick={async () => {
                 setLoading(true);
+                localStorage.setItem('toPurchase', 'true');
                 try {
                   if (token && selectedDirection) {
                     const response = await createOrder(

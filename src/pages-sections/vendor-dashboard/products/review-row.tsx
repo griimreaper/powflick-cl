@@ -22,6 +22,7 @@ type Props = { rev: Review, setActualize: Function, orderBy: string };
 
 export default function ReviewRow({ rev, setActualize, orderBy }: Props) {
   const { review, isActive, image, user, id, rating, show, product, productId } = rev || {};
+  const { slug } = product || {};
 
   const { profile } = useDashboardStore();
   const { token } = profile;
@@ -80,7 +81,7 @@ export default function ReviewRow({ rev, setActualize, orderBy }: Props) {
               onClick={() => setIsPreviewOpen(true)} // Abrir diálogo
             />
             {orderBy === 'product' &&
-              <Link href={'/products/' + productId}>
+              <Link href={'/products/' + slug}>
                 <Paragraph whiteSpace={'nowrap'} fontWeight={'100px'} textOverflow={'ellipsis'}>{product?.title}</Paragraph>
               </Link>
             }

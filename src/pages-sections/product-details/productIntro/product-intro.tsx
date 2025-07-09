@@ -3,7 +3,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Rating from "@mui/material/Rating";
@@ -14,7 +13,7 @@ import Remove from "@mui/icons-material/Remove";
 // GLOBAL CUSTOM HOOK
 import useCart from "hooks/useCart";
 // GLOBAL CUSTOM COMPONENTS
-import { H1, H2, H6 } from "components/Typography";
+import { H1, H2, H3, H6 } from "components/Typography";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
 // CUSTOM UTILS LIBRARY FUNCTION
 import { currency } from "lib";
@@ -38,8 +37,8 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { Divider, TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
-import { categories } from "components/search-box/categories";
-import { FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from "react-icons/fa";
+import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
+import Cart from "app/(layout-1)/(checkout)/cart/page";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -76,7 +75,7 @@ export default function ProductIntro({ product }: Props) {
     setFonts,
     setFontColor,
   } = useCustomizationStore();
-  const { list, trimCustomizations, setCustomizationInList } =
+  const { list, trimCustomizations, setCustomizationInList, setFieldForAllCustomizations } =
     useCustomizationsStore();
   const { profile, setFavorites } = useDashboardStore();
   const { token } = profile;
@@ -91,6 +90,29 @@ export default function ProductIntro({ product }: Props) {
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
   const [selectedCustomization, setSelectedCustomization] = useState<number | null>(null);
+  const customizationsTotal = list.find((p) => id === p.productId)?.total || 0;
+
+  const isTopSelected = list.find((item) => item.productId === id)?.isTopSelected ? 'top' : 'uniform';
+
+  const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
+  const isSelected = (value: "top" | "uniform") => selected === value;
+
+  useEffect(() => {
+    const newValue = selected === 'top'
+      ? 'No Shorts (-$13.99)'
+      : 'Default (+$0.00)';
+
+    const customizations = list.find((item) => item.productId === id)?.customizations || null;
+
+    // Evita ciclo si ya están todos seteados con el nuevo valor
+    const allMatch = customizations?.every(c => c.shorts === newValue);
+    if (allMatch || !customizations) return;
+
+    setFieldForAllCustomizations(id, 'shorts', newValue);
+    updateCustomizationAttribute('shorts', newValue);
+  }, [selected, counter]);
+
+
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -112,7 +134,12 @@ export default function ProductIntro({ product }: Props) {
 
   useEffect(() => {
     if (customization.id !== "none") {
-      setCustomizationInList(id, customization);
+      if (customization.shorts === 'No Shorts (-$13.99)') {
+        setSelected("top")
+      } else {
+        setSelected('uniform')
+      }
+      setCustomizationInList(id, customization, selected === 'top');
     }
   }, [customization]);
 
@@ -230,15 +257,13 @@ export default function ProductIntro({ product }: Props) {
   const handleAddToBagClick = () => {
     const customizations: Customization[] | null =
       list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
-    const totalCustomization: number =
-      typeof list[list.findIndex((i) => i.productId === id)]?.total === "number"
-        ? list[list.findIndex((i) => i.productId === id)]?.total
-        : 0;
+    const totalCustomization = customizationsTotal;
     const totalProduct: number = parseFloat(
-      (Number(product?.product.price) * counter).toFixed(2)
+      (getTotalWithDiscount(price, counter)).toFixed(2)
     );
     const productToBag = product?.product;
     const amount = counter;
+    const top = selected === 'top';;
 
     if (counter !== 0)
       setProductInCart(
@@ -246,7 +271,8 @@ export default function ProductIntro({ product }: Props) {
         customizations,
         totalCustomization,
         totalProduct,
-        amount
+        amount,
+        top
       );
     showSuccessAlert("Success!", "Product added to bag");
     return {
@@ -445,7 +471,7 @@ export default function ProductIntro({ product }: Props) {
           {/* PRICE & STOCK */}
           <Box pt={1} mb={3}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
-              {currency(price)}
+              {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -13.99 : 0), counter))}
             </H2>
             <Box color="inherit">Stock Available</Box>
           </Box>
@@ -509,84 +535,6 @@ export default function ProductIntro({ product }: Props) {
 
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
               <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
-                <Button
-                  id="addToBag-button-event-click"
-                  color="primary"
-                  variant="contained"
-                  sx={{
-                    width: "clamp(120px, 30vw, 300px)", // Ajusta dinámicamente el tamaño del botón
-                    px: "clamp(1rem, 5vw, 1.75rem)", // Ajusta el padding según la pantalla
-                    height: 40,
-                    whiteSpace: "nowrap",
-                    flex: 1, // Permite que los botones se distribuyan equitativamente
-                  }}
-                  onClick={() => {
-                    const result = handleAddToBagClick();
-                    (window as any).dataLayer.push({ ecommerce: null });
-                    (window as any).dataLayer.push({
-                      event: "Add To Cart",
-                      ecommerce: {
-                        currency: "USD",
-                        value: Number(total),
-                        total_product_price: Number(totalProductsPrice),
-                        total_customization_price: Number(
-                          totalCustomizationPrice
-                        ),
-                        items: [
-                          {
-                            item_id: result.productToBag.id,
-                            item_name: result.productToBag.title,
-                            affiliation: "Google Merchandise Store",
-                            item_brand: "Pow Flick",
-                            item_category:
-                              product.product.product_categories.split("|")[0],
-                            item_category2: product.product.sport,
-                            item_variant: result.productToBag.colors,
-                            price: Number(result.productToBag.price),
-                            quantity: result.amount,
-                          },
-                        ],
-                      },
-                    });
-
-                    addToCart("Add To Cart", {
-                      ecommerce: {
-                        items: [
-                          {
-                            item_id: result.productToBag.id,
-                            item_name: result.productToBag.title,
-                            affiliation: "Google Merchandise Store",
-                            item_brand: "Pow Flick",
-                            item_category:
-                              product.product.product_categories.split("|")[0],
-                            item_category2: product.product.sport,
-                            item_variant: result.productToBag.colors,
-                            price: Number(result.productToBag.price),
-                            quantity: result.amount,
-                          },
-                        ],
-                      },
-                    });
-                  }}
-                >
-                  Add to Cart
-                </Button>
-
-                <Button
-                  onClick={handleAddToFav}
-                  sx={{
-                    width: "clamp(120px, 30%, 200px)",
-                    px: "clamp(1rem, 5vw, 1.75rem)",
-                    height: 40,
-                    flex: 1,
-                  }}
-                >
-                  {isFav ? (
-                    <FavoriteOutlined color="primary" />
-                  ) : (
-                    <FavoriteBorderOutlined color={"inherit"} />
-                  )}
-                </Button>
 
                 <Button
                   color="primary"
@@ -605,13 +553,63 @@ export default function ProductIntro({ product }: Props) {
             </Box>
           </Box>
 
+          <Box display={"flex"} width={'100%'} my={2}>
+            <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
+              <strong>
+                Not sure how to start?
+              </strong>
+              {" "}Check out our{" "}
+              <a href="https://powflick.com/customization-guide"
+                rel="noopener noreferrer"
+                style={{ color: 'blue', textDecoration: 'underline' }}>
+                Customization Guide
+              </a>
+            </Typography>
+          </Box>
+
           {/* SHOP NAME */}
-          <FlexBox alignItems="center" gap={1} mb={2}>
-            <div>Sold By:</div>
-            <Link href="/">
-              <H6>Pow Flick</H6>
-            </Link>
-          </FlexBox>
+
+
+          {(product.product.categories.some((c: any) => c.includes('Soccer')) || product.product.categories.some((c: any) => c.includes('Basketball'))) && (
+            <FlexBox alignItems="start" gap={2} my={2}>
+              <Button
+                onClick={() => setSelected("top")}
+                variant="contained"
+                sx={{
+                  background: isSelected("top") ? "black" : "white",
+                  color: isSelected("top") ? "white" : "black",
+                  border: isSelected("top") ? "none" : "1px solid black",
+                  px: "clamp(1rem, 5vw, 1.75rem)",
+                  height: 40,
+                  width: '140px',
+                  "&:hover": {
+                    background: isSelected("top") ? "black" : "#f5f5f5"
+                  }
+                }}
+              >
+                Top
+              </Button>
+              <Button
+                onClick={() => setSelected("uniform")}
+                variant="contained"
+                sx={{
+                  background: isSelected("uniform") ? "black" : "white",
+                  color: isSelected("uniform") ? "white" : "black",
+                  border: isSelected("uniform") ? "none" : "1px solid black",
+                  px: "clamp(1rem, 5vw, 1.75rem)",
+                  height: 40,
+                  whiteSpace: 'nowrap',
+                  minWidth: 80, // para que no quede muy chico
+                  "&:hover": {
+                    background: isSelected("uniform") ? "black" : "#f5f5f5"
+                  }
+                }}
+              >
+                Uniform (Jersey + Shorts)
+              </Button>
+            </FlexBox>
+          )
+          }
 
           {/* EDITS DETAIL */}
           <AditionalDetails
@@ -620,20 +618,91 @@ export default function ProductIntro({ product }: Props) {
             counter={counter}
             sport={title.split(" ")[0]}
             id={id}
+            selected={selected} // <-- Añadido
           />
 
-          <Box display={"flex"} width={'100%'} my={2}>
-            <Typography variant="body1" fontWeight={700} width={'100%'} display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} flexWrap={'nowrap'} whiteSpace={'nowrap'} textAlign={'center'}>
-              Not sure how to start?
-              <Typography variant="body1" >
-                {" "}Check out our{" "}
-                <a href="https://powflick.com/customization-guide"
-                  rel="noopener noreferrer"
-                  style={{ color: 'blue', textDecoration: 'underline' }}>
-                  Customization Guide
-                </a>
-              </Typography>
-            </Typography>
+          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
+            <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
+              <Button
+                id="addToBag-button-event-click"
+                color="primary"
+                variant="contained"
+                sx={{
+                  width: "clamp(120px, 30vw, 300px)", // Ajusta dinámicamente el tamaño del botón
+                  px: "clamp(1rem, 5vw, 1.75rem)", // Ajusta el padding según la pantalla
+                  height: 40,
+                  my: 2,
+                  whiteSpace: "nowrap",
+                  flex: 1, // Permite que los botones se distribuyan equitativamente
+                }}
+                onClick={() => {
+                  const result = handleAddToBagClick();
+                  (window as any).dataLayer.push({ ecommerce: null });
+                  (window as any).dataLayer.push({
+                    event: "Add To Cart",
+                    ecommerce: {
+                      currency: "USD",
+                      value: Number(total),
+                      total_product_price: Number(totalProductsPrice),
+                      total_customization_price: Number(
+                        totalCustomizationPrice
+                      ),
+                      items: [
+                        {
+                          item_id: result.productToBag.id,
+                          item_name: result.productToBag.title,
+                          affiliation: "Google Merchandise Store",
+                          item_brand: "Pow Flick",
+                          item_category:
+                            product.product.product_categories.split("|")[0],
+                          item_category2: product.product.sport,
+                          item_variant: result.productToBag.colors,
+                          price: Number(result.productToBag.price),
+                          quantity: result.amount,
+                        },
+                      ],
+                    },
+                  });
+
+                  addToCart("Add To Cart", {
+                    ecommerce: {
+                      items: [
+                        {
+                          item_id: result.productToBag.id,
+                          item_name: result.productToBag.title,
+                          affiliation: "Google Merchandise Store",
+                          item_brand: "Pow Flick",
+                          item_category:
+                            product.product.product_categories.split("|")[0],
+                          item_category2: product.product.sport,
+                          item_variant: result.productToBag.colors,
+                          price: Number(result.productToBag.price),
+                          quantity: result.amount,
+                        },
+                      ],
+                    },
+                  });
+                }}
+              >
+                Add to Cart
+              </Button>
+
+              <Button
+                onClick={handleAddToFav}
+                sx={{
+                  width: "clamp(120px, 30%, 200px)",
+                  px: "clamp(1rem, 5vw, 1.75rem)",
+                  height: 40,
+                  flex: 1,
+                }}
+              >
+                {isFav ? (
+                  <FavoriteOutlined color="primary" />
+                ) : (
+                  <FavoriteBorderOutlined color={"inherit"} />
+                )}
+              </Button>
+            </Box>
           </Box>
 
           <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={1} mt={2} border={1} borderColor={'grey.200'} p={1}>
