@@ -65,6 +65,7 @@ export const initialCustomization = () => {
     shorts: "Default (+$0.00)",
     materials: "LitePlay (+$0.00)",
     designName: "",
+    technique: "Default Sublimated",
   };
 };
 
