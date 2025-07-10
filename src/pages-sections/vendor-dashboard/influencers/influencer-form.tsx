@@ -18,6 +18,19 @@ import { H2 } from "components/Typography";
 import InfluencerStore from "./InfluencerStore";
 
 // ======================= VALIDATION ========================
+const socialMediaSchema = yup.object({
+  label: yup.string().nullable(),
+  url: yup.string().nullable().url("Must be a valid URL"),
+}).test(
+  "label-url-required",
+  "Both label and URL must be provided or neither.",
+  (value) => {
+    const hasLabel = !!value?.label;
+    const hasUrl = !!value?.url;
+    return (hasLabel && hasUrl) || (!hasLabel && !hasUrl);
+  }
+);
+
 const VALIDATION_SCHEMA = yup.object().shape({
   name: yup.string().required("Name is required!"),
   email: yup.string().email("Invalid email").required("Email is required!"),
@@ -25,6 +38,13 @@ const VALIDATION_SCHEMA = yup.object().shape({
   title: yup.string().required("Title is required!"),
   description: yup.string().required("Description is required!"),
   products: yup.array().of(yup.string()),
+  socialMedia: yup.object({
+    instagram: socialMediaSchema,
+    twitter: socialMediaSchema,
+    facebook: socialMediaSchema,
+    tiktok: socialMediaSchema,
+    youtube: socialMediaSchema,
+  }),
 });
 
 // ========================= PROPS ===========================
@@ -33,30 +53,37 @@ interface Props {
   availableProducts: { title: string, image: string, price: string }[];
 }
 
-const initialFilters = {
-  page: 1,
-  rating: 0,
-  color: [],
-  brand: [],
-  sales: [],
-  price: [0, 300],
-  category: [],
-  collection: [],
-  tag: [],
-  search: "",
-  featured: undefined,
-  discount: undefined,
-  mostSold: undefined,
-  order: "",
+type SocialMediaKey = 'instagram' | 'twitter' | 'facebook' | 'tiktok' | 'youtube';
+
+type SocialMedia = {
+  [key in SocialMediaKey]?: {
+    label: string;
+    url: string;
+  };
 };
+
+interface InfluencerFormValues {
+  name: string;
+  email: string;
+  label: string;
+  title: string;
+  description: string;
+  logo: string;
+  banner: string;
+  profileImage: string;
+  socialMedia: SocialMedia;
+  products: string[]
+}
 
 // ========================= COMPONENT =======================
 export default function InfluencersForm({ influencer, availableProducts }: Props) {
   const { profile } = useDashboardStore();
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState(influencer?.logo || "");
   const [bannerPreview, setBannerPreview] = useState(influencer?.banner || "");
+  const [profileImagePreview, setProfileImagePreview] = useState(influencer?.profileImage || "");
   const router = useRouter();
   const {
     id,
@@ -68,7 +95,7 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
     products,
   } = influencer || {};
 
-  const INITIAL_VALUES = {
+  const INITIAL_VALUES: InfluencerFormValues = {
     name: name || "",
     email: email || "",
     label: label || "",
@@ -76,6 +103,15 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
     description: influencer?.description || "",
     logo: logo || "",
     banner: banner || "",
+    profileImage: influencer?.profileImage || "",
+    socialMedia: influencer?.socialMedia || {
+      instagram: { label: "", url: "" },
+      twitter: { label: "", url: "" },
+      facebook: { label: "", url: "" },
+      tiktok: { label: "", url: "" },
+      youtube: { label: "", url: "" },
+    },
+
     products: products?.map((p) => p.title) || [],
   };
 
@@ -93,6 +129,11 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
 
       let logoUrl: any = logoPreview;
       let bannerUrl: any = bannerPreview;
+      let profileImageUrl: any = profileImagePreview;
+
+      if (profileImageFile) {
+        profileImageUrl = await setImageBlob(profileImageFile, "influencer/" + values.label);
+      }
 
       if (logoFile) {
         logoUrl = await setImageBlob(logoFile, "influencer/" + values.label);
@@ -106,6 +147,7 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
         ...values,
         logo: logoUrl.secure_url,
         banner: bannerUrl.secure_url,
+        profileImage: profileImageUrl.secure_url,
       };
 
       console.log(influencerPayload);
@@ -126,9 +168,12 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
     }
   };
 
+  const socials = ["youtube", "instagram", "tiktok", "twitter", "facebook"] as const;
+  type SocialKey = typeof socials[number]; // "youtube" | "instagram" | "tiktok" | "twitter" | "facebook"
+
   return (
     <Card className="p-3">
-      <Formik
+      <Formik<InfluencerFormValues>
         onSubmit={handleFormSubmit}
         initialValues={INITIAL_VALUES}
         validationSchema={VALIDATION_SCHEMA}>
@@ -187,6 +232,68 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
                 />
               </Grid>
 
+              <Grid container spacing={2} item xs={12}>
+
+                {socials.map((social: SocialKey) => {
+                  const touchedSocial = touched.socialMedia?.[social] as { label?: boolean; url?: boolean } | undefined;
+                  const errorSocial = errors.socialMedia?.[social] as { label?: string; url?: string } | string | undefined;
+
+                  const errorLabel = typeof errorSocial === "object" ? errorSocial?.label : errorSocial;
+                  const errorUrl = typeof errorSocial === "object" ? errorSocial?.url : errorSocial;
+
+                  return (
+                    <Grid item xs={12} key={social}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={3}>
+                          <TextField
+                            fullWidth
+                            label={`${social.charAt(0).toUpperCase() + social.slice(1)} Label`}
+                            name={`socialMedia.${social}.label`}
+                            value={values.socialMedia?.[social]?.label || ""}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touchedSocial?.label && errorLabel)}
+                            helperText={touchedSocial?.label && errorLabel}
+                          />
+                        </Grid>
+
+                        <Grid item xs={9}>
+                          <TextField
+                            fullWidth
+                            label={`${social.charAt(0).toUpperCase() + social.slice(1)} URL`}
+                            name={`socialMedia.${social}.url`}
+                            value={values.socialMedia?.[social]?.url || ""}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touchedSocial?.url && errorUrl)}
+                            helperText={touchedSocial?.url && errorUrl}
+                          />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  );
+                })}
+
+              </Grid>
+
+              <Grid item xs={6}>
+                <Button variant="outlined" component="label" fullWidth>
+                  Upload Profile Image
+                  <input
+                    hidden
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setProfileImageFile(file);
+                        setProfileImagePreview(URL.createObjectURL(file));
+                      }
+                    }}
+                  />
+                </Button>
+              </Grid>
+
               <Grid item xs={6}>
                 <Button variant="outlined" component="label" fullWidth>
                   Upload Logo
@@ -205,7 +312,7 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
                 </Button>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <Button variant="outlined" component="label" fullWidth>
                   Upload Banner
                   <input
@@ -268,6 +375,7 @@ export default function InfluencersForm({ influencer, availableProducts }: Props
                   values={values}
                   logoPreview={logoPreview}
                   bannerPreview={bannerPreview}
+                  profileImage={profileImagePreview}
                   products={availableProducts?.filter((p: any, i) => values.products.find((selectedProducts) => selectedProducts === p.title))}
                 />
               </Grid>

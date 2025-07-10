@@ -35,17 +35,20 @@ export default async function InfluencerPage({ params }: Props) {
 
     const influencer = response.influencer
 
+    console.log(influencer);
+    
     return (
         <InfluencerStore
             values={{
                 label: influencer.label,
                 title: influencer.title,
                 description: influencer.description,
+                socialMedia: influencer.socialMedia,
             }}
             logoPreview={influencer.logo}
+            profileImage={influencer.profileImage}
             bannerPreview={influencer.banner}
             products={influencer.products}
-            influencersLabel={response.influencersLabel}
         />
     );
 }
