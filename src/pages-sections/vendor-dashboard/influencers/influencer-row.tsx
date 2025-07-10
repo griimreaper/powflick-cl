@@ -6,6 +6,7 @@ import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import { Influencer } from "models/types";
 import { Edit } from "@mui/icons-material";
 import { deleteInfluencer } from "services/Influencers";
+import { MouseEvent } from "react";
 
 // ========================================================================
 type Props = { influencer: Influencer; selected?: string[], setActualize: Function };
@@ -13,25 +14,36 @@ type Props = { influencer: Influencer; selected?: string[], setActualize: Functi
 
 export default function InfluencerRow({ influencer, setActualize }: Props) {
   const { id, label, logo, products } = influencer || {};
-
   const { profile } = useDashboardStore();
   const router = useRouter();
 
-  const handleNavigate = () => router.push(`/admin/influencers/${id}`);
+  const handleNavigate = () => router.push(`/influencers/${label}`);
 
   const deleteInfl = async (id: string) => {
     try {
       const response = await deleteInfluencer(id, profile.token as string);
-      showSuccessAlert('Success', response.message)
+      showSuccessAlert('Success', response.message);
       setActualize();
     } catch (error) {
-      showErrorAlert('Failed', 'Product cannot be deleted,')
+      showErrorAlert('Failed', 'Influencer cannot be deleted');
     }
-  }
+  };
 
+  // Evitar que el click en el botón dispare la navegación
+  const stopPropagation = (e: MouseEvent) => e.stopPropagation();
 
   return (
-    <StyledTableRow tabIndex={-1} role="checkbox" >
+    <StyledTableRow
+      tabIndex={-1}
+      role="checkbox"
+      onClick={handleNavigate}
+      sx={{
+        cursor: "pointer",
+        '&:hover': {
+          backgroundColor: "#f5f5f5",
+        },
+      }}
+    >
       <StyledTableCell align="left">{label}</StyledTableCell>
 
       <StyledTableCell align="left">
@@ -44,39 +56,21 @@ export default function InfluencerRow({ influencer, setActualize }: Props) {
 
       <StyledTableCell align="left">{products?.length}</StyledTableCell>
 
-      {/* <StyledTableCell align="center">
-        <Avatar
-          alt={name}
-          src={logo}
-          sx={{
-            width: 55,
-            height: "auto",
-            margin: "auto",
-            borderRadius: 0,
-          }}
-        />
-      </StyledTableCell> */}
-
-      {/* <StyledTableCell align="center">
-        <SportZoneSwitch
-          color="info"
-          checked={featuredC}
-          onChange={() => setFeaturedCategory((state: boolean) => !state)}
-        />
-      </StyledTableCell> */}
-
       <StyledTableCell align="right">
-        <StyledIconButton onClick={handleNavigate}>
+        <StyledIconButton onClick={(e) => {
+          e.stopPropagation();
+          router.push(`/admin/influencers/${id}`);
+        }}>
           <Edit />
         </StyledIconButton>
 
-        {/* <StyledIconButton onClick={handleNavigate}>
-          <RemoveRedEye />
-        </StyledIconButton> */}
-
-        <StyledIconButton>
-          <Delete
-            onClick={() => deleteInfl(id)} />
+        <StyledIconButton
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteInfl(id);
+          }}
+        >
+          <Delete />
         </StyledIconButton>
       </StyledTableCell>
     </StyledTableRow>

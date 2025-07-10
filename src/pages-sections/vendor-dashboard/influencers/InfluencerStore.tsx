@@ -97,7 +97,7 @@ export default function InfluencerStore({
 
 
     return (
-        <Grid item xs={12} textAlign="center" sx={{ backgroundColor: 'white' }}>
+        <Grid item xs={12} textAlign="center" pb={4} sx={{ backgroundColor: 'white' }}>
             <Box
                 sx={{
                     position: "relative",
@@ -166,17 +166,17 @@ export default function InfluencerStore({
             <Grid container spacing={3} my={3} alignItems="start">
                 <Grid item xs={12} md={4} xl={4} display="flex" flexDirection="column" alignItems="end" textAlign="left">
                     <Box width="70%">
-                        <H2 fontWeight="bold" my={2} textTransform="uppercase" fontSize="0.8rem">
+                        <H2 fontWeight="bold" my={2} textTransform="uppercase" fontSize="18px">
                             {values.title || "Title"}
                         </H2>
-                        <p>{values.description || "Description"}</p>
+                        <Paragraph fontSize="18px">{values.description || "Description"}</Paragraph>
                     </Box>
                     <Box width="70%" mt={4}>
-                        <H2 fontWeight="bold" color="primary.main" my={2} fontSize="0.8rem">Other Creators</H2>
+                        <H2 fontWeight="bold" color="primary.main" my={2} fontSize="18px">Other Creators</H2>
                         <ul>
                             {(influencersLabel && influencersLabel.length > 0 ? influencersLabel : ['influencer1', 'influencer2', 'influencer3', 'influencer4', 'influencer5']).map((item, index) => (
                                 <Link key={index} href={"/influencers/" + item}>
-                                    <Paragraph key={index} my={3} fontSize="0.8rem" fontWeight="thin">{item}</Paragraph>
+                                    <Paragraph key={index} my={3} fontSize="18px" fontWeight="thin">{item}</Paragraph>
                                 </Link>
                             ))}
                         </ul>
