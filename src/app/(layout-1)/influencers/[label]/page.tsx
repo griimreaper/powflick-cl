@@ -35,8 +35,6 @@ export default async function InfluencerPage({ params }: Props) {
 
     const influencer = response.influencer
 
-    console.log(influencer);
-    
     return (
         <InfluencerStore
             values={{
