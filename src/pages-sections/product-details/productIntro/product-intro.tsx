@@ -112,12 +112,7 @@ export default function ProductIntro({ product }: Props) {
     updateCustomizationAttribute('shorts', newValue);
   }, [selected, counter]);
 
-  useEffect(() => {
-    if (counter < 50) {
-      setFieldForAllCustomizations(id, 'technique', 'Default Sublimated');
-      updateCustomizationAttribute('technique', 'Default Sublimated');
-    }
-  }, [counter]);
+
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -573,12 +568,7 @@ export default function ProductIntro({ product }: Props) {
           </Box>
 
           {/* SHOP NAME */}
-          <FlexBox alignItems="center" gap={1} my={2}>
-            <div>Sold By:</div>
-            <Link href="/">
-              <H6>Pow Flick</H6>
-            </Link>
-          </FlexBox>
+
 
           {(product.product.categories.some((c: any) => c.includes('Soccer')) || product.product.categories.some((c: any) => c.includes('Basketball'))) && (
             <FlexBox alignItems="start" gap={2} my={2}>
@@ -628,9 +618,10 @@ export default function ProductIntro({ product }: Props) {
             counter={counter}
             sport={title.split(" ")[0]}
             id={id}
+            selected={selected} // <-- Añadido
           />
 
-          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="center" width={'100%'} my={2}>
+          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
             <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
               <Button
                 id="addToBag-button-event-click"

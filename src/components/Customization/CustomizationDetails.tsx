@@ -132,12 +132,18 @@ export default function CustomizationDetails({ customization }: Props) {
             {customization.pants !== "None (+$0.00)" && (
                 <Typography>Pants: {customization.pants}</Typography>
             )}
-            {customization.shorts !== "No Shorts (+$0.00)" && (
+            {customization.shorts !== "No Shorts (+$0.00)" && customization.shorts !== "No Shorts (-$13.99)" && (
                 <Typography>Shorts: {customization.shorts}</Typography>
             )}
             {customization.socks !== "No Socks (+$0.00)" && (
                 <Typography>Socks: {customization.socks}</Typography>
             )}
+
+            {/* {customization.technique && customization.technique !== "Default Sublimated" && (
+                <Typography>
+                    Technique: {customization.technique}
+                </Typography>
+            )} */}
         </Box>
     );
 }
