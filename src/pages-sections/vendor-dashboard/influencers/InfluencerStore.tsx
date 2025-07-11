@@ -14,6 +14,7 @@ import { Theme } from "@mui/material";
 import { useCallback, useState } from "react";
 import { ProductFilters } from "pages-sections/product-details/types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SORT_OPTIONS = [
     { label: "Relevance", value: "relevance" },
@@ -62,6 +63,7 @@ export default function InfluencerStore({
         order: "",
     });
     const [sortBy, setSortBy] = useState("relevance");
+    const router = useRouter();
 
     const toggleView = useCallback((v: string) => () => setView(v), []);
 
@@ -95,6 +97,12 @@ export default function InfluencerStore({
         setPage(newPage);
     };
 
+    // Nuevo handler para click en producto
+    const handleProductClick = (product: any) => {
+        // Si tiene slug, úsalo, si no, usa el título
+        const slug = product.slug || product.title?.replace(/\s+/g, "-").toLowerCase();
+        router.push(`/products/${slug}?fromInfluencer=${values.label}`);
+    };
 
     return (
         <Grid item xs={12} textAlign="center" sx={{ backgroundColor: 'white' }}>
@@ -231,6 +239,8 @@ export default function InfluencerStore({
                                 count: { total: products.length }
                             }}
                             handlePage={handlePage}
+                            // Nuevo: pasar handler de click
+                            onProductClick={handleProductClick}
                         />
                     ) : (
                         <ProductsListView
@@ -241,6 +251,8 @@ export default function InfluencerStore({
                                 count: { total: products.length }
                             }}
                             handlePage={handlePage}
+                            // Nuevo: pasar handler de click
+                            onProductClick={handleProductClick}
                         />
                     )}
                 </Grid>

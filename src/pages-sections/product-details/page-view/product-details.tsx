@@ -8,16 +8,27 @@ import RelatedProducts from "../related-products";
 import { detailProps } from "models/types";
 import { Box, useMediaQuery } from "@mui/material";
 import Section2 from "pages-sections/fashion-2/section-2";
+import { useSearchParams } from "next/navigation";
 
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
   const { product, sugestedProducts, frequentlyBought, reviews, PaymentMethods, ShippingTypes } = detail;
   const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
+  const searchParams = useSearchParams();
+  const fromInfluencer = searchParams?.get("fromInfluencer");
 
   console.log(detail);
 
 
   return (
-    <Box p={{ xs: 2, sm: 4, md: 6 }} style={{ overflow: 'hidden', background: "white" }}>
+    <Box
+      p={{ xs: 2, sm: 4, md: 6 }}
+      style={{
+        overflow: 'hidden',
+        background: fromInfluencer ? "white" : "white", // Cambia aquí si quieres otro fondo
+        border: fromInfluencer ? "none" : undefined, // Quita borde si viene de influencer
+        boxShadow: fromInfluencer ? "none" : undefined, // Quita sombra si viene de influencer
+      }}
+    >
       {/* PRODUCT DETAILS INFO AREA */}
       <ProductIntro product={detail} />
 
@@ -30,9 +41,9 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       {/* AVAILABLE SHOPS AREA */}
       {/* <AvailableShops /> */}
       {/* RELATED PRODUCTS AREA */}
-      <RelatedProducts products={sugestedProducts} />
+      {!fromInfluencer && <RelatedProducts products={sugestedProducts} />}
       <Box width={'100%'} position={'relative'} >
-        <Section2 className="section-2-detail" isMobile={isMobile} detail />
+        {!fromInfluencer && <Section2 className="section-2-detail" isMobile={isMobile} detail />}
       </Box>
     </Box>
   );

@@ -39,6 +39,7 @@ import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 import Cart from "app/(layout-1)/(checkout)/cart/page";
+import { useSearchParams } from "next/navigation";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -96,6 +97,9 @@ export default function ProductIntro({ product }: Props) {
 
   const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
   const isSelected = (value: "top" | "uniform") => selected === value;
+
+  const searchParams = useSearchParams();
+  const fromInfluencer = searchParams?.get("fromInfluencer");
 
   useEffect(() => {
     const newValue = selected === 'top'
@@ -286,6 +290,12 @@ export default function ProductIntro({ product }: Props) {
 
   return (
     <Box width="100%">
+      {/* Ejemplo: ocultar algo si viene de influencer */}
+      {!fromInfluencer && (
+        <Grid>
+          {/* ...banners, promos, etc... */}
+        </Grid>
+      )}
       <Grid container spacing={3} justifyContent="space-around">
         {/* IMAGE GALLERY AREA */}
 

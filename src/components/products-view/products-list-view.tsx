@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 // GLOBAL CUSTOM COMPONENTS
 import { Span } from "components/Typography";
@@ -12,10 +12,14 @@ import { useState } from "react";
 import { themeColors } from "theme/theme-colors";
 
 // ==========================================================
-type Props = { data: any, handlePage: (number: number) => void };
+interface Props {
+  data: any;
+  handlePage: (page: number) => void;
+  onProductClick?: (product: any) => void; // Nuevo
+}
 // ==========================================================
 
-export default function ProductsListView({ data, handlePage }: Props) {
+export default function ProductsListView({ data, handlePage, onProductClick }: Props) {
   const itemsPerPage = 9;
   const router = useRouter();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -45,20 +49,28 @@ export default function ProductsListView({ data, handlePage }: Props) {
 
   return (
     <>
-      {data?.products?.map((item: ProductDB) => (
-        <ProductCard9
-          id={item.id}
-          key={item.id}
-          slug={item.slug}
-          title={item.title}
-          price={item.price}
-          off={item.discount}
-          discount={item.discount}
-          product_categories={item.product_categories}
-          rating={0}
-          imgUrl={item.URL}
-        />
-      ))}
+      <Box>
+        {data.products.map((product: any, idx: number) => (
+          <Box
+            key={product.id || idx}
+            sx={{ cursor: onProductClick ? "pointer" : "default" }}
+            onClick={() => onProductClick && onProductClick(product)}
+          >
+            <ProductCard9
+              id={product.id}
+              key={product.id}
+              slug={product.slug}
+              title={product.title}
+              price={product.price}
+              off={product.discount}
+              discount={product.discount}
+              product_categories={product.product_categories}
+              rating={0}
+              imgUrl={product.URL}
+            />
+          </Box>
+        ))}
+      </Box>
 
       <FlexBetween flexWrap="wrap" mt={4} width={'100%'} justifyContent={'space-between'}>
         {data.page ?
