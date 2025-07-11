@@ -161,7 +161,7 @@ export default function MiniCartItem({ item }: Props) {
         </Link>
 
         <Tiny color="grey.600">
-          {currency(getUnitPriceWithDiscount(item.product.price + (isTopSelected ? -13.99 : 0), item.amount))} x {item.customizations.length}
+          {currency(getUnitPriceWithDiscount(item.product.price + (isTopSelected ? -10.00 : 0), item.amount, isTopSelected))} x {item.customizations.length}
         </Tiny>
 
         <H6 color="primary.main" mt={0.5}>

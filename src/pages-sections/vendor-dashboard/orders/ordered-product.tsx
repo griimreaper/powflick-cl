@@ -60,7 +60,7 @@ export default function OrderedProduct({ product, customizations, orderId }: Pro
 
           <FlexBox alignItems="center" gap={1}>
             <Paragraph fontSize={14} color="grey.600">
-              {currency(getUnitPriceWithDiscount(price + (isTopSelected ? -13.99 : 0), customizations.length))} x {customizations.length}
+              {currency(getUnitPriceWithDiscount(price + (isTopSelected ? -10.00 : 0), customizations.length, !!isTopSelected))} x {customizations.length}
             </Paragraph>
 
           </FlexBox>

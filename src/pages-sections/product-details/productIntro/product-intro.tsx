@@ -99,7 +99,7 @@ export default function ProductIntro({ product }: Props) {
 
   useEffect(() => {
     const newValue = selected === 'top'
-      ? 'No Shorts (-$13.99)'
+      ? 'No Shorts (-$10.00)'
       : 'Default (+$0.00)';
 
     const customizations = list.find((item) => item.productId === id)?.customizations || null;
@@ -134,7 +134,7 @@ export default function ProductIntro({ product }: Props) {
 
   useEffect(() => {
     if (customization.id !== "none") {
-      if (customization.shorts === 'No Shorts (-$13.99)') {
+      if (customization.shorts === 'No Shorts (-$10.00)') {
         setSelected("top")
       } else {
         setSelected('uniform')
@@ -259,7 +259,7 @@ export default function ProductIntro({ product }: Props) {
       list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
     const totalCustomization = customizationsTotal;
     const totalProduct: number = parseFloat(
-      (getTotalWithDiscount(price, counter)).toFixed(2)
+      (getTotalWithDiscount(price, counter, isTopSelected === 'top')).toFixed(2)
     );
     const productToBag = product?.product;
     const amount = counter;
@@ -471,7 +471,7 @@ export default function ProductIntro({ product }: Props) {
           {/* PRICE & STOCK */}
           <Box pt={1} mb={3}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
-              {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -13.99 : 0), counter))}
+              {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -10.00 : 0), counter, selected === 'top'))}
             </H2>
             <Box color="inherit">Stock Available</Box>
           </Box>
