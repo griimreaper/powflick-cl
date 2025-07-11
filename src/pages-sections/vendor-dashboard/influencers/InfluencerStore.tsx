@@ -1,10 +1,10 @@
 // components/influencer/InfluencerPreview.tsx
 "use client";
 
-import { Box, Grid, IconButton, MenuItem, TextField, useMediaQuery } from "@mui/material";
-import { Apps, FilterList, ViewList } from "@mui/icons-material";
+import { Avatar, Box, Grid, IconButton, MenuItem, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Apps, Facebook, FilterList, Twitter, ViewList, YouTube } from "@mui/icons-material";
 import { FlexBox } from "components/flex-box";
-import { H1, H2, Paragraph } from "components/Typography";
+import { H1, Paragraph } from "components/Typography";
 import ProductsGridView from "components/products-view/products-grid-view";
 import ProductsListView from "components/products-view/products-list-view";
 import SideNav from "components/side-nav";
@@ -12,9 +12,6 @@ import Section2 from "pages-sections/fashion-2/section-2";
 import { ProductDB } from "models/types";
 import { Theme } from "@mui/material";
 import { useCallback, useState } from "react";
-import { ProductFilters } from "pages-sections/product-details/types";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const SORT_OPTIONS = [
     { label: "Relevance", value: "relevance" },
@@ -23,45 +20,41 @@ const SORT_OPTIONS = [
     { label: "Price High to Low", value: "desc" },
 ];
 
+interface SocialMediaLink {
+    label?: string;
+    url?: string;
+}
+
 interface Props {
     values: {
         label: string;
         title: string;
         description: string;
+        socialMedia?: {
+            instagram?: SocialMediaLink;
+            twitter?: SocialMediaLink;
+            facebook?: SocialMediaLink;
+            tiktok?: SocialMediaLink;
+            youtube?: SocialMediaLink;
+        };
     };
+    profileImage?: string;
     logoPreview?: string;
     bannerPreview?: string;
     products: ProductDB[] | { title: string, image: string, price: string }[];
-    influencersLabel?: string[];
 }
 
 export default function InfluencerStore({
     values,
     logoPreview,
     bannerPreview,
+    profileImage,
     products,
-    influencersLabel,
 }: Props) {
     const [view, setView] = useState("grid");
     const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
     const [page, setPage] = useState(1);
     const itemsPerPage = 9; // o el valor que quieras
-    const [filters, setFilters] = useState<ProductFilters>({
-        page: 1,
-        rating: 0,
-        color: [],
-        brand: [],
-        sales: [],
-        price: [0, 300],
-        category: [],
-        collection: [],
-        tag: [],
-        search: "",
-        featured: undefined,
-        discount: undefined,
-        mostSold: undefined,
-        order: "",
-    });
     const [sortBy, setSortBy] = useState("relevance");
     const router = useRouter();
 
@@ -69,11 +62,6 @@ export default function InfluencerStore({
 
     const handleChangeSortBy = (value: string) => {
         setSortBy(value);
-        setFilters((prev) => ({
-            ...prev,
-            order: "",           // limpiás orden anterior
-            mostSold: undefined, // limpiás si era relevance
-        }));
     };
 
     const sortedProducts = [...products].sort((a: any, b: any) => {
@@ -97,15 +85,56 @@ export default function InfluencerStore({
         setPage(newPage);
     };
 
-    // Nuevo handler para click en producto
-    const handleProductClick = (product: any) => {
-        // Si tiene slug, úsalo, si no, usa el título
-        const slug = product.slug || product.title?.replace(/\s+/g, "-").toLowerCase();
-        router.push(`/products/${slug}?fromInfluencer=${values.label}`);
+    const renderSocialMedia = () => {
+        const social = values.socialMedia || {};
+        const icons = {
+            youtube: <YouTube sx={{ color: "#FF0000", fontSize: 80 }} />,
+            instagram: (
+                <img
+                    src="/assets/images/icons/Instagram_logo_2016.svg"
+                    alt="Instagram"
+                    style={{ width: 80, height: 80 }}
+                />
+            ),
+            twitter: <Twitter sx={{ color: "#1DA1F2", fontSize: 80 }} />,
+            facebook: <Facebook sx={{ color: "#4267B2", fontSize: 80 }} />,
+            tiktok: (
+                <img
+                    src="/assets/images/icons/logo-tiktok-svgrepo-com.svg"
+                    alt="TikTok"
+                    style={{ width: 80, height: 80 }}
+                />
+            ),
+        };
+
+        return Object.entries(social).map(([platform, obj]) => {
+            if (!obj || !obj.url) return null;
+
+            // obj = { label?: string, url: string }
+            const label = obj.label?.trim() || obj.url;
+
+            return (
+                <Stack
+                    key={platform}
+                    direction="column"
+                    spacing={1}
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    {icons[platform as keyof typeof icons]}
+                    <Typography fontWeight={500}>
+                        <a href={obj.url} target="_blank" rel="noopener noreferrer">
+                            {label}
+                        </a>
+                    </Typography>
+                </Stack>
+            );
+        });
     };
 
+
     return (
-        <Grid item xs={12} textAlign="center" sx={{ backgroundColor: 'white' }}>
+        <Grid item xs={12} textAlign="center" pb={4} sx={{ backgroundColor: 'white' }}>
             <Box
                 sx={{
                     position: "relative",
@@ -152,7 +181,7 @@ export default function InfluencerStore({
                         sx={{
                             position: "absolute",
                             bottom: -20,
-                            borderRadius: "10px",
+                            borderRadius: "8px",
                             width: "50%",
                             fontStyle: "italic",
                             backgroundColor: "white",
@@ -173,21 +202,43 @@ export default function InfluencerStore({
 
             <Grid container spacing={3} my={3} alignItems="start">
                 <Grid item xs={12} md={4} xl={4} display="flex" flexDirection="column" alignItems="end" textAlign="left">
-                    <Box width="70%">
-                        <H2 fontWeight="bold" my={2} textTransform="uppercase" fontSize="0.8rem">
-                            {values.title || "Title"}
-                        </H2>
-                        <p>{values.description || "Description"}</p>
-                    </Box>
-                    <Box width="70%" mt={4}>
-                        <H2 fontWeight="bold" color="primary.main" my={2} fontSize="0.8rem">Other Creators</H2>
-                        <ul>
-                            {(influencersLabel && influencersLabel.length > 0 ? influencersLabel : ['influencer1', 'influencer2', 'influencer3', 'influencer4', 'influencer5']).map((item, index) => (
-                                <Link key={index} href={"/influencers/" + item}>
-                                    <Paragraph key={index} my={3} fontSize="0.8rem" fontWeight="thin">{item}</Paragraph>
-                                </Link>
-                            ))}
-                        </ul>
+                    <Box mt={3} mx="auto" textAlign="center">
+                        {/* Imagen de perfil */}
+                        <Avatar
+                            src={profileImage}
+                            alt="Influencer"
+                            sx={{
+                                width: 250,
+                                height: 250,
+                                mx: "auto",
+                                mb: 3,
+                            }}
+                        />
+
+                        {/* Título destacado */}
+                        <Typography
+                            variant="h6"
+                            sx={{ fontWeight: 700, color: "#ca0b0b", mb: 2 }}
+                        >
+                            {values.title}
+                        </Typography>
+
+                        {/* Descripción */}
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            maxWidth={500}
+                            mx="auto"
+                            sx={{ mb: 4 }}
+                        >
+                            {values.description}
+                        </Typography>
+
+                        {/* Redes sociales */}
+                        <Stack direction="column" spacing={2} mt={3}>
+                            {renderSocialMedia()}
+                        </Stack>
+
                     </Box>
                 </Grid>
 

@@ -32,6 +32,11 @@ export interface Tags {
   products: ProductDB[];
 }
 
+type SocialMediaLink = {
+  label: string; // ← sin `| undefined`
+  url: string;
+};
+
 export interface Influencer {
   id: string;
   name: string;
@@ -41,6 +46,15 @@ export interface Influencer {
   label: string;
   logo: string;
   banner: string;
+  profileImage: string; // Nueva imagen de perfil
+  socialMedia: {
+    instagram?: SocialMediaLink;
+    twitter?: SocialMediaLink;
+    facebook?: SocialMediaLink;
+    tiktok?: SocialMediaLink;
+    youtube?: SocialMediaLink;
+    [key: string]: SocialMediaLink | undefined;
+  };
   products: ProductDB[];
 }
 
