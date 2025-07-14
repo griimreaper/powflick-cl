@@ -199,7 +199,7 @@ export default function InfluencerStore({
                 )}
             </Box>
 
-            <Grid container spacing={3} my={3} alignItems="start">
+            <Grid container spacing={3} my={8} alignItems="start">
                 <Grid item xs={12} md={4} xl={4} display="flex" flexDirection="column" alignItems="end" textAlign="left">
                     <Box mt={3} mx="auto" textAlign="center">
                         {/* Imagen de perfil */}
@@ -242,7 +242,7 @@ export default function InfluencerStore({
                 </Grid>
 
                 <Grid item xs={12} md={8} xl={8} px={6} display="flex" flexDirection="column" alignItems="end">
-                    <Box mb={6}>
+                    <Box mb={12}>
                         <FlexBox alignItems="center" gap={1} flexWrap={{ xs: "wrap", sm: "nowrap" }} justifyContent={{ xs: "space-between", md: "flex-end" }} width={{ xs: "100%", md: "100%" }}>
                             <Box display="flex" alignItems="center" justifyContent="flex-end" width={'100%'} gap={1}>
                                 <Paragraph whiteSpace="pre">Sort by:</Paragraph>
