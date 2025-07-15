@@ -45,7 +45,7 @@ export default function ProductsGridView({ data, handlePage }: Props) {
 
   return (
     <Fragment>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} minHeight={'800px'}>
         {data?.products?.map((item: ProductDB) => (
           <Grid item lg={4} sm={6} xs={12} key={item.id}>
             <ProductCard16 product={item} />

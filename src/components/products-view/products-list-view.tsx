@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 // GLOBAL CUSTOM COMPONENTS
 import { Span } from "components/Typography";
@@ -45,20 +45,22 @@ export default function ProductsListView({ data, handlePage }: Props) {
 
   return (
     <>
-      {data?.products?.map((item: ProductDB) => (
-        <ProductCard9
-          id={item.id}
-          key={item.id}
-          slug={item.slug}
-          title={item.title}
-          price={item.price}
-          off={item.discount}
-          discount={item.discount}
-          product_categories={item.product_categories}
-          rating={0}
-          imgUrl={item.URL}
-        />
-      ))}
+      <Box minHeight={'800px'} display="flex" flexDirection="column" width={'100%'}>
+        {data?.products?.map((item: ProductDB) => (
+          <ProductCard9
+            id={item.id}
+            key={item.id}
+            slug={item.slug}
+            title={item.title}
+            price={item.price}
+            off={item.discount}
+            discount={item.discount}
+            product_categories={item.product_categories}
+            rating={0}
+            imgUrl={item.URL}
+          />
+        ))}
+      </Box>
 
       <FlexBetween flexWrap="wrap" mt={4} width={'100%'} justifyContent={'space-between'}>
         {data.page ?
@@ -67,6 +69,6 @@ export default function ProductsListView({ data, handlePage }: Props) {
         }
         <Pagination count={data?.totalPages} page={data?.page} onChange={handleChange} color="primary" />
       </FlexBetween>
-    </>
+    </ >
   );
 }
