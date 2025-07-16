@@ -56,7 +56,6 @@ export default function InfluencerStore({
     const [page, setPage] = useState(1);
     const itemsPerPage = 9; // o el valor que quieras
     const [sortBy, setSortBy] = useState("relevance");
-    const router = useRouter();
 
     const toggleView = useCallback((v: string) => () => setView(v), []);
 
@@ -290,8 +289,6 @@ export default function InfluencerStore({
                                 count: { total: products.length }
                             }}
                             handlePage={handlePage}
-                            // Nuevo: pasar handler de click
-                            onProductClick={handleProductClick}
                         />
                     ) : (
                         <ProductsListView
@@ -302,8 +299,6 @@ export default function InfluencerStore({
                                 count: { total: products.length }
                             }}
                             handlePage={handlePage}
-                            // Nuevo: pasar handler de click
-                            onProductClick={handleProductClick}
                         />
                     )}
                 </Grid>

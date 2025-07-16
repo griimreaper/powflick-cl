@@ -58,7 +58,6 @@ export interface Influencer {
   products: ProductDB[];
 }
 
-
 export interface ProductDB {
   id: string; // Identificador único del producto
   title: string; // Título del producto
@@ -86,13 +85,14 @@ export interface ProductDB {
   font: string;
   font_color: string;
   password: string;
-  OrderProduct?: { amount: number, price: number, top: string }
+  OrderProduct?: { amount: number; price: number; top: string };
   categories: { name: string }[];
   collections: { title: string }[];
   tags: { name: string }[];
+  influencer_id?: string; // ← Añadido para soportar la propiedad
 }
 
-export interface RecentProduct extends ProductDB { }
+export interface RecentProduct extends ProductDB {}
 
 export interface Navbar {
   categories: Category[];

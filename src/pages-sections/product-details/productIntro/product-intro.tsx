@@ -40,6 +40,7 @@ import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 import Cart from "app/(layout-1)/(checkout)/cart/page";
 import { useSearchParams } from "next/navigation";
+import AditionalDetailsInfluencer from "./AditionalDetailsInfluencer";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -287,6 +288,9 @@ export default function ProductIntro({ product }: Props) {
       amount,
     };
   };
+
+  console.log(product);
+
 
   return (
     <Box width="100%">
@@ -544,39 +548,45 @@ export default function ProductIntro({ product }: Props) {
               </FlexBox>
 
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
+              {!product.product.influencer_id && (
 
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
-                  sx={{
-                    width: "clamp(120px, 30vw, 300px)",
-                    px: "clamp(1rem, 5vw, 1.75rem)",
-                    height: 40,
-                    flex: 1,
-                  }}
-                >
-                  Customize
-                </Button>
-              </FlexBox>
+                <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
+
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
+                    sx={{
+                      width: "clamp(120px, 30vw, 300px)",
+                      px: "clamp(1rem, 5vw, 1.75rem)",
+                      height: 40,
+                      flex: 1,
+                    }}
+                  >
+                    Customize
+                  </Button>
+                </FlexBox>
+
+              )}
             </Box>
           </Box>
+          {!product.product.influencer_id && (
+            <Box display={"flex"} width={'100%'} my={2}>
+              <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
+                <strong>
+                  Not sure how to start?
+                </strong>
+                {" "}Check out our{" "}
+                <a href="https://powflick.com/customization-guide"
+                  rel="noopener noreferrer"
+                  style={{ color: 'blue', textDecoration: 'underline' }}>
+                  Customization Guide
+                </a>
+              </Typography>
+            </Box>
+          )}
 
-          <Box display={"flex"} width={'100%'} my={2}>
-            <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
-              <strong>
-                Not sure how to start?
-              </strong>
-              {" "}Check out our{" "}
-              <a href="https://powflick.com/customization-guide"
-                rel="noopener noreferrer"
-                style={{ color: 'blue', textDecoration: 'underline' }}>
-                Customization Guide
-              </a>
-            </Typography>
-          </Box>
-
+          {/* PRODUCT DESCRIPTION */}
           {/* SHOP NAME */}
 
 
@@ -622,14 +632,30 @@ export default function ProductIntro({ product }: Props) {
           }
 
           {/* EDITS DETAIL */}
-          <AditionalDetails
-            detail={product}
-            handleItemChange={handleItemChange}
-            counter={counter}
-            sport={title.split(" ")[0]}
-            id={id}
-            selected={selected} // <-- Añadido
-          />
+
+          {!product.product.influencer_id ? (
+            <AditionalDetails
+              detail={product}
+              handleItemChange={handleItemChange}
+              counter={counter}
+              sport={title.split(" ")[0]}
+              id={id}
+              selected={selected} // <-- Añadido
+            />
+          )
+            : (
+              <AditionalDetailsInfluencer
+                detail={product}
+                handleItemChange={handleItemChange}
+                counter={counter}
+                sport={title.split(" ")[0]}
+                id={id}
+                selected={selected} // <-- Añadido
+              />
+            )
+          }
+
+
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
             <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
