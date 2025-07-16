@@ -17,6 +17,9 @@ import {
   RadioGroup,
   FormControlLabel,
   TextField,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -32,6 +35,7 @@ import { ZoomInOutlined } from "@mui/icons-material";
 import { killParenthesisIn } from "utils/tools";
 import { useCustomizationsStore } from "store/customizationsStore";
 import Link from "next/link";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -97,6 +101,11 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   const [customType, setCustomType] = useState<"number" | "name">("number");
   const [customValue, setCustomValue] = useState("");
 
+  // Estado: customizaciones por talla (size)
+  const [customizationsBySize, setCustomizationsBySize] = useState<{
+    [size: string]: { number?: string; name?: string }[]
+  }>({});
+
   const handleOpenDialog = (item: any) => {
     setSelectedItem({ ...item, description: item.htmlString });
     setOpenDialog(true);
@@ -107,11 +116,35 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     setSelectedItem(null);
   };
 
+  // Maneja el cambio de cantidad por talla
   const handleQuantity = (size: string, delta: number) => {
-    setQuantities(q => ({
-      ...q,
-      [size]: Math.max(0, (q[size] || 0) + delta)
-    }));
+    setQuantities(q => {
+      const prev = q[size] || 0;
+      const next = Math.max(0, prev + delta);
+      // Actualiza customizaciones por talla
+      setCustomizationsBySize(prevCustoms => {
+        const customs = prevCustoms[size] || [];
+        let newCustoms = customs;
+        if (delta > 0) {
+          // Agrega customizaciones vacías
+          newCustoms = [...customs, ...Array(delta).fill({ number: "", name: "" })];
+        } else if (delta < 0) {
+          // Elimina del final
+          newCustoms = customs.slice(0, next);
+        }
+        return { ...prevCustoms, [size]: newCustoms };
+      });
+      return { ...q, [size]: next };
+    });
+  };
+
+  // Maneja el cambio de number o name para una unidad específica de una talla
+  const handleCustomInput = (size: string, idx: number, field: "number" | "name", value: string) => {
+    setCustomizationsBySize(prev => {
+      const customs = [...(prev[size] || [])];
+      customs[idx] = { ...customs[idx], [field]: value };
+      return { ...prev, [size]: customs };
+    });
   };
 
   // Obtiene el valor de la pestaña seleccionada
@@ -131,6 +164,21 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     });
     // eslint-disable-next-line
   }, [tab]);
+
+  // Calcula el total de unidades seleccionadas sumando las cantidades por talla
+  const totalSelected = Object.values(quantities).reduce((acc, val) => acc + (val || 0), 0);
+
+  // Sincroniza el total con el contador global si es diferente
+  React.useEffect(() => {
+    if (totalSelected !== counter) {
+      // Si el padre provee un setter para el contador, deberías llamarlo aquí.
+      // Por ejemplo: setCounter(totalSelected);
+      // Si no, asegúrate de que el padre lea el valor de totalSelected.
+      // Si solo se pasa el counter como prop, puedes mostrar una advertencia o dejar comentario.
+      // Ejemplo:
+      // handleCounterChange && handleCounterChange(totalSelected);
+    }
+  }, [totalSelected]);
 
   const renderItems = (
     items: any[],
@@ -329,7 +377,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 >
                   <RemoveIcon fontSize="small" />
                 </Button>
-                <Typography minWidth={20} textAlign="center" fontWeight={500}>{quantities[size]}</Typography>
+                <Typography minWidth={20} textAlign="center" fontWeight={500}>{quantities[size] || 0}</Typography>
                 <Button
                   variant="outlined"
                   size="small"
@@ -343,6 +391,12 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               </Box>
             </Box>
           ))}
+        </Box>
+        {/* Mostrar el total seleccionado */}
+        <Box mt={2} display="flex" justifyContent="flex-end">
+          <Typography fontWeight={600} color="primary.main">
+            Total: {totalSelected}
+          </Typography>
         </Box>
       </Box>
 
@@ -383,7 +437,47 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         />
       </Box>
 
-
+      {/* Personalización por unidad */}
+      <Box mt={3}>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="customize-content"
+            id="customize-header"
+          >
+            <Typography fontWeight={600} fontSize={15}>
+              Customize List
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {Object.entries(quantities).map(([size, count]) =>
+              Array.from({ length: count }).map((_, idx) => (
+                <div key={`${size}-${idx}`}>
+                  <Box key={`${size}-${idx}`} display="flex" alignItems="center" gap={2} mb={1}>
+                    <Typography fontWeight={500} minWidth={40}>{size} #{idx + 1}</Typography>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      placeholder="# 25"
+                      value={customizationsBySize[size]?.[idx]?.number || ""}
+                      onChange={e => handleCustomInput(size, idx, "number", e.target.value)}
+                      sx={{ width: 90 }}
+                    />
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      placeholder="Name"
+                      value={customizationsBySize[size]?.[idx]?.name || ""}
+                      onChange={e => handleCustomInput(size, idx, "name", e.target.value)}
+                      sx={{ width: 120 }}
+                    />
+                  </Box>
+                </div>
+              ))
+            )}
+          </AccordionDetails>
+        </Accordion>
+      </Box>
 
       {/* Diálogo de guía de tallas */}
       <Dialog open={showSizeGuide} onClose={() => setShowSizeGuide(false)} maxWidth="md">
