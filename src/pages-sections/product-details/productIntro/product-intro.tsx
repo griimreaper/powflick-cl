@@ -645,12 +645,12 @@ export default function ProductIntro({ product }: Props) {
           )
             : (
               <AditionalDetailsInfluencer
-                detail={product}
                 handleItemChange={handleItemChange}
-                counter={counter}
                 sport={title.split(" ")[0]}
-                id={id}
+                detail={product}
                 selected={selected} // <-- Añadido
+
+
               />
             )
           }
