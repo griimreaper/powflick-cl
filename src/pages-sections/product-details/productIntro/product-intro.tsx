@@ -490,86 +490,89 @@ export default function ProductIntro({ product }: Props) {
             <Box color="inherit">Stock Available</Box>
           </Box>
 
-          <Box sx={{ display: "flex", gap: 3 }}>
-            {/* BUTTONS */}
-            <Box sx={{ display: "column", gap: 3 }}>
-              <FlexBox alignItems="center" mb={4.5}>
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    decrement();
-                  }}
-                >
-                  <Remove fontSize="small" />
-                </Button>
-
-                <TextField
-                  value={counter}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-
-                    if (newValue === "") {
-                      // Si el campo está vacío, no hacer nada
-                      handleInputChange(0); // Deja el estado vacío
-                    } else {
-                      const parsedValue = parseInt(newValue, 10);
-
-                      if (
-                        !isNaN(parsedValue) &&
-                        parsedValue >= 1 &&
-                        parsedValue <= 999
-                      ) {
-                        handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
-                        setCounter(parsedValue); // Actualiza el estado con el nuevo valor
-                      }
-                    }
-                  }}
-                  inputProps={{
-                    min: 1, // Evita valores negativos si es necesario
-                    style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
-                  }}
-                  sx={{ mx: 2.5 }}
-                />
-
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    increment();
-                  }}
-                >
-                  <Add fontSize="small" />
-                </Button>
-              </FlexBox>
-
-              {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              {!product.product.influencer_id && (
-
-                <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
-
+          {/* BUTTONS */}
+          {!product.product.influencer_id && (
+            <Box sx={{ display: "flex", gap: 3 }}>
+              <Box sx={{ display: "column", gap: 3 }}>
+                <FlexBox alignItems="center" mb={4.5}>
                   <Button
+                    size="small"
+                    sx={{ p: 1 }}
                     color="primary"
-                    variant="contained"
-                    onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
-                    sx={{
-                      width: "clamp(120px, 30vw, 300px)",
-                      px: "clamp(1rem, 5vw, 1.75rem)",
-                      height: 40,
-                      flex: 1,
+                    variant="outlined"
+                    onClick={() => {
+                      decrement();
                     }}
                   >
-                    Customize
+                    <Remove fontSize="small" />
+                  </Button>
+
+                  <TextField
+                    value={counter}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+
+                      if (newValue === "") {
+                        // Si el campo está vacío, no hacer nada
+                        handleInputChange(0); // Deja el estado vacío
+                      } else {
+                        const parsedValue = parseInt(newValue, 10);
+
+                        if (
+                          !isNaN(parsedValue) &&
+                          parsedValue >= 1 &&
+                          parsedValue <= 999
+                        ) {
+                          handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
+                          setCounter(parsedValue); // Actualiza el estado con el nuevo valor
+                        }
+                      }
+                    }}
+                    inputProps={{
+                      min: 1, // Evita valores negativos si es necesario
+                      style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
+                    }}
+                    sx={{ mx: 2.5 }}
+                  />
+
+                  <Button
+                    size="small"
+                    sx={{ p: 1 }}
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      increment();
+                    }}
+                  >
+                    <Add fontSize="small" />
                   </Button>
                 </FlexBox>
 
-              )}
+                {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
+                {!product.product.influencer_id && (
+
+                  <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
+
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
+                      sx={{
+                        width: "clamp(120px, 30vw, 300px)",
+                        px: "clamp(1rem, 5vw, 1.75rem)",
+                        height: 40,
+                        flex: 1,
+                      }}
+                    >
+                      Customize
+                    </Button>
+                  </FlexBox>
+
+                )}
+              </Box>
             </Box>
-          </Box>
+          )}
+
           {!product.product.influencer_id && (
             <Box display={"flex"} width={'100%'} my={2}>
               <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
