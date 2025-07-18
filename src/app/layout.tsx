@@ -14,6 +14,7 @@ import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleTagManager from "./GoogleTagManager";
 import IntercomChat from "./IntercomChat";
 import { getStructuredData } from "./StructuredData";
+import MicrosoftClarity from "./MicrosoftClarity";
 
 
 export default function RootLayout({
@@ -63,7 +64,7 @@ export default function RootLayout({
             `,
           }}
         />
-
+        <MicrosoftClarity />
       </head>
       <body className={openSans.className}>
         <React.StrictMode>
