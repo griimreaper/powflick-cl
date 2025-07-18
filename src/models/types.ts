@@ -32,6 +32,33 @@ export interface Tags {
   products: ProductDB[];
 }
 
+type SocialMediaLink = {
+  label: string; // ← sin `| undefined`
+  url: string;
+};
+
+export interface Influencer {
+  id: string;
+  name: string;
+  email: string;
+  title: string;
+  description: string;
+  label: string;
+  logo: string;
+  banner: string;
+  profileImage: string; // Nueva imagen de perfil
+  socialMedia: {
+    instagram?: SocialMediaLink;
+    twitter?: SocialMediaLink;
+    facebook?: SocialMediaLink;
+    tiktok?: SocialMediaLink;
+    youtube?: SocialMediaLink;
+    [key: string]: SocialMediaLink | undefined;
+  };
+  products: ProductDB[];
+}
+
+
 export interface ProductDB {
   id: string; // Identificador único del producto
   title: string; // Título del producto
@@ -65,7 +92,7 @@ export interface ProductDB {
   tags: { name: string }[];
 }
 
-export interface RecentProduct extends ProductDB {}
+export interface RecentProduct extends ProductDB { }
 
 export interface Navbar {
   categories: Category[];
