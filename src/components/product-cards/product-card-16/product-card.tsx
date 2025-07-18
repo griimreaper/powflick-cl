@@ -14,10 +14,13 @@ import { ProductDB } from "models/types";
 import { viewItem } from "../../../../fpixel";
 
 // ==============================================================
-type Props = { product: ProductDB };
+type Props = {
+  product: ProductDB,
+  onProductClick?: (product: ProductDB) => void; // Nuevo
+};
 // ==============================================================
 
-export default function ProductCard16({ product }: Props) {
+export default function ProductCard16({ product, onProductClick }: Props) {
   const { slug, title, URL, price, discount, id } = product || {};
 
   const { cartItem, handleCartAmountChange } = useProduct(slug);

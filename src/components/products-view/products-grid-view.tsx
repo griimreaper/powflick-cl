@@ -13,10 +13,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ProductFilterKeys, ProductFilterValues } from "pages-sections/product-details/types";
 
 // ========================================================
-type Props = { data: any, handlePage: (number: number) => void };
+interface Props {
+  data: any;
+  handlePage: (page: number) => void;
+  onProductClick?: (product: any) => void; // Nuevo
+}
 // ========================================================
 
-export default function ProductsGridView({ data, handlePage }: Props) {
+export default function ProductsGridView({ data, handlePage, onProductClick }: Props) {
   const itemsPerPage = 9;
   const router = useRouter();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -48,7 +52,7 @@ export default function ProductsGridView({ data, handlePage }: Props) {
       <Grid container spacing={3} minHeight={'800px'}>
         {data?.products?.map((item: ProductDB) => (
           <Grid item lg={4} sm={6} xs={12} key={item.id}>
-            <ProductCard16 product={item} />
+            <ProductCard16 product={item} onProductClick={onProductClick} />
           </Grid>
         ))}
       </Grid>

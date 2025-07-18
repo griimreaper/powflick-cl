@@ -39,6 +39,8 @@ import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 import Cart from "app/(layout-1)/(checkout)/cart/page";
+import { useSearchParams } from "next/navigation";
+import AditionalDetailsInfluencer from "./AditionalDetailsInfluencer";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -96,6 +98,9 @@ export default function ProductIntro({ product }: Props) {
 
   const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
   const isSelected = (value: "top" | "uniform") => selected === value;
+
+  const searchParams = useSearchParams();
+  const fromInfluencer = searchParams?.get("fromInfluencer");
 
   useEffect(() => {
     const newValue = selected === 'top'
@@ -284,8 +289,17 @@ export default function ProductIntro({ product }: Props) {
     };
   };
 
+  console.log(product);
+
+
   return (
     <Box width="100%">
+      {/* Ejemplo: ocultar algo si viene de influencer */}
+      {!fromInfluencer && (
+        <Grid>
+          {/* ...banners, promos, etc... */}
+        </Grid>
+      )}
       <Grid container spacing={3} justifyContent="space-around">
         {/* IMAGE GALLERY AREA */}
 
@@ -476,97 +490,106 @@ export default function ProductIntro({ product }: Props) {
             <Box color="inherit">Stock Available</Box>
           </Box>
 
-          <Box sx={{ display: "flex", gap: 3 }}>
-            {/* BUTTONS */}
-            <Box sx={{ display: "column", gap: 3 }}>
-              <FlexBox alignItems="center" mb={4.5}>
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    decrement();
-                  }}
-                >
-                  <Remove fontSize="small" />
-                </Button>
+          {/* BUTTONS */}
+          {!product.product.influencer_id && (
+            <Box sx={{ display: "flex", gap: 3 }}>
+              <Box sx={{ display: "column", gap: 3 }}>
+                <FlexBox alignItems="center" mb={4.5}>
+                  <Button
+                    size="small"
+                    sx={{ p: 1 }}
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      decrement();
+                    }}
+                  >
+                    <Remove fontSize="small" />
+                  </Button>
 
-                <TextField
-                  value={counter}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
+                  <TextField
+                    value={counter}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
 
-                    if (newValue === "") {
-                      // Si el campo está vacío, no hacer nada
-                      handleInputChange(0); // Deja el estado vacío
-                    } else {
-                      const parsedValue = parseInt(newValue, 10);
+                      if (newValue === "") {
+                        // Si el campo está vacío, no hacer nada
+                        handleInputChange(0); // Deja el estado vacío
+                      } else {
+                        const parsedValue = parseInt(newValue, 10);
 
-                      if (
-                        !isNaN(parsedValue) &&
-                        parsedValue >= 1 &&
-                        parsedValue <= 999
-                      ) {
-                        handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
-                        setCounter(parsedValue); // Actualiza el estado con el nuevo valor
+                        if (
+                          !isNaN(parsedValue) &&
+                          parsedValue >= 1 &&
+                          parsedValue <= 999
+                        ) {
+                          handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
+                          setCounter(parsedValue); // Actualiza el estado con el nuevo valor
+                        }
                       }
-                    }
-                  }}
-                  inputProps={{
-                    min: 1, // Evita valores negativos si es necesario
-                    style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
-                  }}
-                  sx={{ mx: 2.5 }}
-                />
+                    }}
+                    inputProps={{
+                      min: 1, // Evita valores negativos si es necesario
+                      style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
+                    }}
+                    sx={{ mx: 2.5 }}
+                  />
 
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    increment();
-                  }}
-                >
-                  <Add fontSize="small" />
-                </Button>
-              </FlexBox>
+                  <Button
+                    size="small"
+                    sx={{ p: 1 }}
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      increment();
+                    }}
+                  >
+                    <Add fontSize="small" />
+                  </Button>
+                </FlexBox>
 
-              {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
+                {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
+                {!product.product.influencer_id && (
 
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
-                  sx={{
-                    width: "clamp(120px, 30vw, 300px)",
-                    px: "clamp(1rem, 5vw, 1.75rem)",
-                    height: 40,
-                    flex: 1,
-                  }}
-                >
-                  Customize
-                </Button>
-              </FlexBox>
+                  <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
+
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
+                      sx={{
+                        width: "clamp(120px, 30vw, 300px)",
+                        px: "clamp(1rem, 5vw, 1.75rem)",
+                        height: 40,
+                        flex: 1,
+                      }}
+                    >
+                      Customize
+                    </Button>
+                  </FlexBox>
+
+                )}
+              </Box>
             </Box>
-          </Box>
+          )}
 
-          <Box display={"flex"} width={'100%'} my={2}>
-            <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
-              <strong>
-                Not sure how to start?
-              </strong>
-              {" "}Check out our{" "}
-              <a href="https://powflick.com/customization-guide"
-                rel="noopener noreferrer"
-                style={{ color: 'blue', textDecoration: 'underline' }}>
-                Customization Guide
-              </a>
-            </Typography>
-          </Box>
+          {!product.product.influencer_id && (
+            <Box display={"flex"} width={'100%'} my={2}>
+              <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
+                <strong>
+                  Not sure how to start?
+                </strong>
+                {" "}Check out our{" "}
+                <a href="https://powflick.com/customization-guide"
+                  rel="noopener noreferrer"
+                  style={{ color: 'blue', textDecoration: 'underline' }}>
+                  Customization Guide
+                </a>
+              </Typography>
+            </Box>
+          )}
 
+          {/* PRODUCT DESCRIPTION */}
           {/* SHOP NAME */}
 
 
@@ -612,14 +635,30 @@ export default function ProductIntro({ product }: Props) {
           }
 
           {/* EDITS DETAIL */}
-          <AditionalDetails
-            detail={product}
-            handleItemChange={handleItemChange}
-            counter={counter}
-            sport={title.split(" ")[0]}
-            id={id}
-            selected={selected} // <-- Añadido
-          />
+
+          {!product.product.influencer_id ? (
+            <AditionalDetails
+              detail={product}
+              handleItemChange={handleItemChange}
+              counter={counter}
+              sport={title.split(" ")[0]}
+              id={id}
+              selected={selected} // <-- Añadido
+            />
+          )
+            : (
+              <AditionalDetailsInfluencer
+                handleItemChange={handleItemChange}
+                sport={title.split(" ")[0]}
+                detail={product}
+                selected={selected} // <-- Añadido
+
+
+              />
+            )
+          }
+
+
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
             <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">

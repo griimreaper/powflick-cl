@@ -223,6 +223,9 @@ export default async function ProductDetails({
 
     const product = detail?.product;
 
+    console.log("product details:", product);
+
+
     const structuredData = {
       "@context": "https://schema.org/",
       "@type": "Product",

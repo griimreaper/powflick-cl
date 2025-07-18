@@ -1,4 +1,5 @@
-import { Box, Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
+
 import Pagination from "@mui/material/Pagination";
 // GLOBAL CUSTOM COMPONENTS
 import { Span } from "components/Typography";
@@ -12,10 +13,14 @@ import { useState } from "react";
 import { themeColors } from "theme/theme-colors";
 
 // ==========================================================
-type Props = { data: any, handlePage: (number: number) => void };
+interface Props {
+  data: any;
+  handlePage: (page: number) => void;
+  onProductClick?: (product: any) => void; // Nuevo
+}
 // ==========================================================
 
-export default function ProductsListView({ data, handlePage }: Props) {
+export default function ProductsListView({ data, handlePage, onProductClick }: Props) {
   const itemsPerPage = 9;
   const router = useRouter();
   const searchParams = useSearchParams() || new URLSearchParams();
