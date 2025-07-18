@@ -1,4 +1,5 @@
 import { Grid, Box } from "@mui/material";
+
 import Pagination from "@mui/material/Pagination";
 // GLOBAL CUSTOM COMPONENTS
 import { Span } from "components/Typography";
@@ -49,26 +50,20 @@ export default function ProductsListView({ data, handlePage, onProductClick }: P
 
   return (
     <>
-      <Box>
-        {data.products.map((product: any, idx: number) => (
-          <Box
-            key={product.id || idx}
-            sx={{ cursor: onProductClick ? "pointer" : "default" }}
-            onClick={() => onProductClick && onProductClick(product)}
-          >
-            <ProductCard9
-              id={product.id}
-              key={product.id}
-              slug={product.slug}
-              title={product.title}
-              price={product.price}
-              off={product.discount}
-              discount={product.discount}
-              product_categories={product.product_categories}
-              rating={0}
-              imgUrl={product.URL}
-            />
-          </Box>
+      <Box minHeight={'800px'} display="flex" flexDirection="column" width={'100%'}>
+        {data?.products?.map((item: ProductDB) => (
+          <ProductCard9
+            id={item.id}
+            key={item.id}
+            slug={item.slug}
+            title={item.title}
+            price={item.price}
+            off={item.discount}
+            discount={item.discount}
+            product_categories={item.product_categories}
+            rating={0}
+            imgUrl={item.URL}
+          />
         ))}
       </Box>
 
@@ -79,6 +74,6 @@ export default function ProductsListView({ data, handlePage, onProductClick }: P
         }
         <Pagination count={data?.totalPages} page={data?.page} onChange={handleChange} color="primary" />
       </FlexBetween>
-    </>
+    </ >
   );
 }
