@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function InfluencersCreate() {
-  const { availableProducts }: { availableProducts: string[] } = await getOneInfluencer('create');
+  const { availableProducts }: { availableProducts: { title: string; image: string; price: string; }[] } = await getOneInfluencer('create');
 
-  return <CreateInfluencerPageView availableProducts={availableProducts}/>;
+  return <CreateInfluencerPageView availableProducts={availableProducts} />;
 }
