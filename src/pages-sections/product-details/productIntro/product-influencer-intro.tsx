@@ -27,7 +27,6 @@ import {
 } from "@mui/icons-material";
 import { useCustomizationStore } from "store/customizationStore";
 import { useCustomizationsStore } from "store/customizationsStore";
-import Customizations from "components/Customization/customization";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { Divider, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
@@ -38,10 +37,6 @@ import AditionalDetailsinfluencer from "./AditionalDetailsInfluencer";
 // ================================================================
 type Props = { product: detailProps };
 // ================================================================
-
-type SelectVariants = {
-  [key: string]: string; // Permite usar cualquier string como clave
-};
 
 export default function ProductInfluencerIntro({ product }: Props) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
@@ -59,15 +54,12 @@ export default function ProductInfluencerIntro({ product }: Props) {
   }>({});
 
   const {
-    customization,
-    showCustomization,
     setShowCustomization,
     updateCustomizationAttribute,
     setFonts,
     setFontColor,
   } = useCustomizationStore();
-  const { list, setCustomizationInList, setFieldForAllCustomizations, generateCustomizationsFromSizeMap } =
-    useCustomizationsStore();
+  const { list, setFieldForAllCustomizations } = useCustomizationsStore();
   const { profile, setFavorites } = useDashboardStore();
   const { token } = profile;
   const [selectedImage, setSelectedImage] = useState(0);
@@ -90,10 +82,8 @@ export default function ProductInfluencerIntro({ product }: Props) {
     [size: string]: { number?: string; name?: string }[]
   }>({});
 
-  console.log(customizationsBySize);
-
   const productCustomizations: Customization[] = list.find((p) => id === p.productId)?.customizations || [];
-  
+
   useEffect(() => {
     // Agrupar customizaciones por size (size incluye talle-género)
     const grouped: {
@@ -261,95 +251,88 @@ export default function ProductInfluencerIntro({ product }: Props) {
           xs={12}
           alignItems="center"
         >
-          {showCustomization ? (
-            <Box>
-              <Customizations {...customizationProps} />
-              {/* Agrega aquí los elementos de personalización */}
-            </Box>
-          ) : (
-            <Box>
-              <FlexBox
-                borderRadius={3}
-                overflow="visible"
-                justifyContent="center"
-                mb={6}
-              >
-                {selectedVideo ? (
-                  <video
-                    id="product-video"
-                    width="500"
-                    height="500"
-                    controls
-                  >
-                    <source src={selectedVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  <Image
-                    alt={title}
-                    width={500}
-                    height={500}
-                    loading="eager"
-                    src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
-                  />
-                )}
-              </FlexBox>
-
-              <FlexBox
-                overflow="auto"
-                sx={{ width: "full", justifyContent: "center" }}
-              >
-                {images
-                  ?.filter((i: string) => !i.includes("customization"))
-                  .map((url: string, ind: number) => (
-                    <FlexRowCenter
-                      key={ind}
-                      width={64}
-                      height={64}
-                      minWidth={64}
-                      bgcolor="white"
-                      border="1px solid"
-                      borderRadius="10px"
-                      style={{ cursor: "pointer" }}
-                      onClick={handleImageClick(ind)}
-                      mr={ind === images.length - 1 ? "auto" : "10px"}
-                      borderColor={
-                        selectedImage === ind ? "primary.main" : "grey.400"
-                      }
-                    >
-                      <Avatar
-                        alt="product"
-                        src={url}
-                        variant="square"
-                        sx={{ height: 40 }}
-                      />
-                    </FlexRowCenter>
-                  ))}
-                <FlexRowCenter
-                  width={64}
-                  height={64}
-                  minWidth={64}
-                  bgcolor="white"
-                  border="1px solid"
-                  borderRadius="10px"
-                  style={{ cursor: "pointer" }}
-                  mr="10px"
-                  borderColor="grey.400"
-                  onClick={handleVideoClick(
-                    "https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
-                  )}
+          <Box>
+            <FlexBox
+              borderRadius={3}
+              overflow="visible"
+              justifyContent="center"
+              mb={6}
+            >
+              {selectedVideo ? (
+                <video
+                  id="product-video"
+                  width="500"
+                  height="500"
+                  controls
                 >
-                  <video id="product-video-thumbnail" width="64" height="64">
-                    <source
-                      src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
-                      type="video/mp4"
+                  <source src={selectedVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <Image
+                  alt={title}
+                  width={500}
+                  height={500}
+                  loading="eager"
+                  src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
+                />
+              )}
+            </FlexBox>
+
+            <FlexBox
+              overflow="auto"
+              sx={{ width: "full", justifyContent: "center" }}
+            >
+              {images
+                ?.filter((i: string) => !i.includes("customization"))
+                .map((url: string, ind: number) => (
+                  <FlexRowCenter
+                    key={ind}
+                    width={64}
+                    height={64}
+                    minWidth={64}
+                    bgcolor="white"
+                    border="1px solid"
+                    borderRadius="10px"
+                    style={{ cursor: "pointer" }}
+                    onClick={handleImageClick(ind)}
+                    mr={ind === images.length - 1 ? "auto" : "10px"}
+                    borderColor={
+                      selectedImage === ind ? "primary.main" : "grey.400"
+                    }
+                  >
+                    <Avatar
+                      alt="product"
+                      src={url}
+                      variant="square"
+                      sx={{ height: 40 }}
                     />
-                    Your browser does not support the video tag.
-                  </video>
-                </FlexRowCenter>
-              </FlexBox>
-            </Box>
-          )}
+                  </FlexRowCenter>
+                ))}
+              <FlexRowCenter
+                width={64}
+                height={64}
+                minWidth={64}
+                bgcolor="white"
+                border="1px solid"
+                borderRadius="10px"
+                style={{ cursor: "pointer" }}
+                mr="10px"
+                borderColor="grey.400"
+                onClick={handleVideoClick(
+                  "https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
+                )}
+              >
+                <video id="product-video-thumbnail" width="64" height="64">
+                  <source
+                    src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </FlexRowCenter>
+            </FlexBox>
+          </Box>
         </Grid>
 
         {/* PRODUCT INFO AREA */}
