@@ -55,6 +55,14 @@ export type CustomizationsStoreType = {
   trimCustomizations: (productId: string, numCustomizations: number) => void;
   addCustomizations: (productId: string, numCustomizations: number) => void;
   setFieldForAllCustomizations: (productId: string, name: keyof Customization, value: string) => void;
+  generateCustomizationsFromSizeMap: (
+    productId: string,
+    customizationsBySize: {
+      [size: string]: { number?: string; name?: string }[];
+    },
+    isTopSelected?: boolean
+  ) => void;
+
 };
 
 export type ProductToBagType = {

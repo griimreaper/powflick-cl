@@ -9,6 +9,7 @@ import { detailProps } from "models/types";
 import { Box, useMediaQuery } from "@mui/material";
 import Section2 from "pages-sections/fashion-2/section-2";
 import { useSearchParams } from "next/navigation";
+import ProductInfluencerIntro from "../productIntro/product-influencer-intro";
 
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
   const { product, sugestedProducts, frequentlyBought, reviews, PaymentMethods, ShippingTypes } = detail;
@@ -16,8 +17,8 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
   const searchParams = useSearchParams();
   const fromInfluencer = searchParams?.get("fromInfluencer");
 
+  const hasInfluencer = !!detail.product.influencer_id
   console.log(detail);
-
 
   return (
     <Box
@@ -30,7 +31,11 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       }}
     >
       {/* PRODUCT DETAILS INFO AREA */}
-      <ProductIntro product={detail} />
+      {
+        hasInfluencer ?
+          <ProductInfluencerIntro product={detail} /> :
+          <ProductIntro product={detail} />
+      }
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
       <ProductTabs productPrice={product.price} reviews={reviews} />

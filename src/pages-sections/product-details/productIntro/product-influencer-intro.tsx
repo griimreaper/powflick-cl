@@ -8,10 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 // MUI ICON COMPONENTS
-import Add from "@mui/icons-material/Add";
-import Remove from "@mui/icons-material/Remove";
-// GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H2, H6 } from "components/Typography";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
@@ -31,14 +27,13 @@ import {
 } from "@mui/icons-material";
 import { useCustomizationStore } from "store/customizationStore";
 import { useCustomizationsStore } from "store/customizationsStore";
-import AditionalDetails from "./AditionalDetails";
 import Customizations from "components/Customization/customization";
 import { useShoppingCartStore } from "store/shoppingCart";
-import { Divider, TextField, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
-import { useSearchParams } from "next/navigation";
+import AditionalDetailsinfluencer from "./AditionalDetailsInfluencer";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -48,15 +43,13 @@ type SelectVariants = {
   [key: string]: string; // Permite usar cualquier string como clave
 };
 
-export default function ProductIntro({ product }: Props) {
+export default function ProductInfluencerIntro({ product }: Props) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const {
     id,
     price,
     title,
     images,
-    slug,
-    URL,
     font: fontDefault,
     font_color,
   } = product.product;
@@ -70,12 +63,10 @@ export default function ProductIntro({ product }: Props) {
     showCustomization,
     setShowCustomization,
     updateCustomizationAttribute,
-    setCustomization,
-    clearCustomization,
     setFonts,
     setFontColor,
   } = useCustomizationStore();
-  const { list, setCustomizationInList, setFieldForAllCustomizations } =
+  const { list, setCustomizationInList, setFieldForAllCustomizations, generateCustomizationsFromSizeMap } =
     useCustomizationsStore();
   const { profile, setFavorites } = useDashboardStore();
   const { token } = profile;
@@ -83,12 +74,11 @@ export default function ProductIntro({ product }: Props) {
   const [isFav, setIsFav] = useState<boolean>(
     profile.favorites?.some(({ product }) => product.id === id)
   );
-  const { counter, decrement, increment, setCounter, handleInputChange } =
+  const { counter, setCounter } =
     useCounter(product.product.id);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
-  const [selectedCustomization, setSelectedCustomization] = useState<number | null>(null);
   const customizationsTotal = list.find((p) => id === p.productId)?.total || 0;
 
   const isTopSelected = list.find((item) => item.productId === id)?.isTopSelected ? 'top' : 'uniform';
@@ -96,7 +86,33 @@ export default function ProductIntro({ product }: Props) {
   const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
   const isSelected = (value: "top" | "uniform") => selected === value;
 
-  const searchParams = useSearchParams();
+  const [customizationsBySize, setCustomizationsBySize] = useState<{
+    [size: string]: { number?: string; name?: string }[]
+  }>({});
+
+  console.log(customizationsBySize);
+
+  const productCustomizations: Customization[] = list.find((p) => id === p.productId)?.customizations || [];
+  
+  useEffect(() => {
+    // Agrupar customizaciones por size (size incluye talle-género)
+    const grouped: {
+      [size: string]: { number?: string; name?: string }[];
+    } = {};
+
+    productCustomizations.forEach(custom => {
+      const key = custom.size; // ejemplo: "M-MEN"
+
+      if (!grouped[key]) grouped[key] = [];
+
+      grouped[key].push({
+        number: custom.backSide.numbers[0]?.number || "",
+        name: custom.backSide.texts[0]?.text || ""
+      });
+    });
+
+    setCustomizationsBySize(grouped);
+  }, []);
 
   useEffect(() => {
     const newValue = selected === 'top'
@@ -112,45 +128,6 @@ export default function ProductIntro({ product }: Props) {
     setFieldForAllCustomizations(id, 'shorts', newValue);
     updateCustomizationAttribute('shorts', newValue);
   }, [selected, counter]);
-
-  useEffect(() => {
-    const findAmountBySessionStorage: string | null = sessionStorage.getItem(
-      "customizations-store"
-    );
-    if (findAmountBySessionStorage) {
-      const jsonSS = JSON.parse(findAmountBySessionStorage);
-
-      const amount = jsonSS?.state?.list.find(
-        ({ productId }: any) => productId === id
-      )?.amount;
-      if (amount) {
-        setCounter(Number(amount));
-      } else {
-        clearCustomization();
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (customization.id !== "none") {
-      if (customization.shorts === 'No Shorts (-$13.99)') {
-        setSelected("top")
-      } else {
-        setSelected('uniform')
-      }
-      setCustomizationInList(id, customization, selected === 'top');
-    }
-  }, [customization]);
-
-  useEffect(() => {
-    const customizations: Customization[] | null =
-      list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
-
-    if (customization.id !== "none" && customizations) {
-      setCustomization(customizations[0]);
-
-    }
-  }, [id]);
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -216,18 +193,6 @@ export default function ProductIntro({ product }: Props) {
     }
   };
 
-  const handleCustomizationClick = (
-    index: number,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    setSelectedCustomization(index);
-    setShowCustomization(!showCustomization); // Al hacer clic en "Custom", mostrar la personalización
-    const section = document.getElementById("customization-section");
-    if (section && !showCustomization) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const handleItemChange = (name: keyof Customization, value: string) => {
     setSelectedValues({
       ...selectedValues,
@@ -282,8 +247,6 @@ export default function ProductIntro({ product }: Props) {
       amount,
     };
   };
-
-  console.log(product);
 
   return (
     <Box width="100%">
@@ -477,98 +440,6 @@ export default function ProductIntro({ product }: Props) {
             <Box color="inherit">Stock Available</Box>
           </Box>
 
-          {/* BUTTONS */}
-          <Box sx={{ display: "flex", gap: 3 }}>
-            <Box sx={{ display: "column", gap: 3 }}>
-              <FlexBox alignItems="center" mb={4.5}>
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    decrement();
-                  }}
-                >
-                  <Remove fontSize="small" />
-                </Button>
-
-                <TextField
-                  value={counter}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-
-                    if (newValue === "") {
-                      // Si el campo está vacío, no hacer nada
-                      handleInputChange(0); // Deja el estado vacío
-                    } else {
-                      const parsedValue = parseInt(newValue, 10);
-
-                      if (
-                        !isNaN(parsedValue) &&
-                        parsedValue >= 1 &&
-                        parsedValue <= 999
-                      ) {
-                        handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
-                        setCounter(parsedValue); // Actualiza el estado con el nuevo valor
-                      }
-                    }
-                  }}
-                  inputProps={{
-                    min: 1, // Evita valores negativos si es necesario
-                    style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
-                  }}
-                  sx={{ mx: 2.5 }}
-                />
-
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    increment();
-                  }}
-                >
-                  <Add fontSize="small" />
-                </Button>
-              </FlexBox>
-
-              {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
-
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
-                  sx={{
-                    width: "clamp(120px, 30vw, 300px)",
-                    px: "clamp(1rem, 5vw, 1.75rem)",
-                    height: 40,
-                    flex: 1,
-                  }}
-                >
-                  Customize
-                </Button>
-              </FlexBox>
-            </Box>
-          </Box>
-
-          <Box display={"flex"} width={'100%'} my={2}>
-            <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
-              <strong>
-                Not sure how to start?
-              </strong>
-              {" "}Check out our{" "}
-              <a href="https://powflick.com/customization-guide"
-                rel="noopener noreferrer"
-                style={{ color: 'blue', textDecoration: 'underline' }}>
-                Customization Guide
-              </a>
-            </Typography>
-          </Box>
-
-          {/* PRODUCT DESCRIPTION */}
           {/* SHOP NAME */}
 
 
@@ -614,14 +485,11 @@ export default function ProductIntro({ product }: Props) {
           }
 
           {/* EDITS DETAIL */}
-
-          <AditionalDetails
+          <AditionalDetailsinfluencer
             detail={product}
             handleItemChange={handleItemChange}
-            counter={counter}
-            sport={title.split(" ")[0]}
-            id={id}
-            selected={selected} // <-- Añadido
+            customizationsBySize={customizationsBySize}
+            setCustomizationsBySize={setCustomizationsBySize}
           />
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
