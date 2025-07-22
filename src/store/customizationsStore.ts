@@ -276,6 +276,83 @@ export const useCustomizationsStore = create(
 
         updateTotal(set);
       },
+      generateCustomizationsFromSizeMap: (
+        productId: string,
+        customizationsBySize: {
+          [size: string]: { number?: string; name?: string }[];
+        },
+        isTopSelected?: boolean
+      ) => {
+        const newCustomizations: Customization[] = [];
+
+        Object.entries(customizationsBySize).forEach(([size, items]) => {
+          items
+            .forEach(item => {
+              const customization = initialCustomization();
+
+              customization.size = size;
+
+              customization.backSide.numbers = item.number
+                ? [{
+                  number: item.number,
+                  font: "Arial",
+                  numberPosition: { x: 0, y: 0 },
+                  numberSize: 12,
+                  numberColor: "#000000",
+                  rotate: 0,
+                }]
+                : [];
+
+              customization.backSide.texts = item.name
+                ? [{
+                  text: item.name,
+                  font: "Arial",
+                  textPosition: { x: 0, y: 0 },
+                  textSize: 12,
+                  textColor: "#000000",
+                  rotate: 0,
+                }]
+                : [];
+
+              customization.price = calculateCustomizationPrice(customization);
+
+              newCustomizations.push(customization);
+            });
+        });
+
+        set(state => {
+          const existingIndex = state.list.findIndex(p => p.productId === productId);
+
+          if (existingIndex !== -1) {
+            const newList = [...state.list];
+            newList[existingIndex] = {
+              ...newList[existingIndex],
+              customizations: newCustomizations,
+              amount: newCustomizations.length,
+              isTopSelected: isTopSelected ?? newList[existingIndex].isTopSelected,
+              total: 0,
+            };
+            return { ...state, list: newList };
+          } else {
+            return {
+              ...state,
+              list: [
+                ...state.list,
+                {
+                  productId,
+                  customizations: newCustomizations,
+                  amount: newCustomizations.length,
+                  isTopSelected: isTopSelected ?? false,
+                  total: 0,
+                }
+              ],
+            };
+          }
+        });
+
+        updateTotal(set);
+      },
+
       clearCustomization: () => {
         set({ list: [] });
       },

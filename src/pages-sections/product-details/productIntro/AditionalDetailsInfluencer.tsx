@@ -1,22 +1,13 @@
 type Gender = 'MEN' | 'WOMEN' | 'KIDS';
 import React, { FC, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
   Typography,
   Button,
   Box,
   Dialog,
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableHead,
-  Paper,
   Tabs,
   Tab,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
   TextField,
   Accordion,
   AccordionSummary,
@@ -29,16 +20,11 @@ import "react-medium-image-zoom/dist/styles.css";
 import Image from "next/image";
 import { Customization } from "models/types";
 import {
-  initialCustomization,
   useCustomizationStore,
 } from "store/customizationStore";
-import { ZoomInOutlined } from "@mui/icons-material";
-import { killParenthesisIn } from "utils/tools";
-import { useCustomizationsStore } from "store/customizationsStore";
-import Link from "next/link";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useShoppingCartStore } from "store/shoppingCart"; // <-- Asegúrate de importar correctamente
 import { useCounter } from "hooks/useCounter";
+import { useCustomizationsStore } from "store/customizationsStore";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -62,9 +48,12 @@ interface SocksItem {
 interface AditionalDetailsProps {
   detail: detailProps | any;
   handleItemChange: (name: keyof Customization, value: string) => void;
-  sport: string;
-  selected?: "top" | "uniform"; // <-- Añadido
-
+  customizationsBySize: {
+    [size: string]: { number?: string; name?: string }[]
+  };
+  setCustomizationsBySize: React.Dispatch<React.SetStateAction<{
+    [size: string]: { number?: string; name?: string }[];
+  }>>;
 }
 
 const sizeTabs = [
@@ -81,18 +70,18 @@ const sizeOptions: Record<string, string[]> = {
 };
 
 const AditionalDetails: FC<AditionalDetailsProps> = ({
-
   detail,
   handleItemChange,
-  sport,
-
-  selected = "uniform",
-
+  customizationsBySize,
+  setCustomizationsBySize
 }) => {
-
-  const { counter, decrement, increment, setCounter, handleInputChange } =
-    useCounter(detail.product.id);
-  const customization = useCustomizationStore(state => state.customization);
+  // React Hook Form setup
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
+  const { generateCustomizationsFromSizeMap } = useCustomizationsStore();
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   // Estado de cantidades por género
   const [quantities, setQuantities] = useState<Record<Gender, Record<string, number>>>(
@@ -103,166 +92,62 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     }
   );
   const [tab, setTab] = useState(0);
-  // Estado: customizaciones por talla (size)
-  const [customizationsBySize, setCustomizationsBySize] = useState<{
-    [size: string]: { number?: string; name?: string }[]
-  }>({});
-
   // Determina las tallas actuales según el tab seleccionado
   const currentSizes = sizeOptions[sizeTabs[tab].value];
 
-  // Maneja la edición de los campos personalizados por talla
+  const updateStoreFromCustomizationsBySize = (customizationsBySize: {
+    [size: string]: { number?: string; name?: string }[];
+  }) => {
+    generateCustomizationsFromSizeMap(
+      detail.product.id,
+      customizationsBySize,
+      true
+    );
+  };
+
+  const handleQuantity = (size: string, change: number) => {
+    const gender = sizeTabs[tab].value as Gender;
+    const sizeGenderKey = `${size}-${gender}`;
+
+    setCustomizationsBySize(prevCustomizations => {
+      const currentArr = prevCustomizations[sizeGenderKey] ? [...prevCustomizations[sizeGenderKey]] : [];
+      const currentCount = currentArr.length;
+      const newCount = Math.max(0, currentCount + change);
+
+      if (newCount > currentCount) {
+        for (let i = currentCount; i < newCount; i++) {
+          currentArr.push({ number: "", name: "" }); // No vacío para que se registre en la store
+        }
+      } else if (newCount < currentCount) {
+        currentArr.splice(newCount);
+      }
+
+      const updatedCustomizationsBySize = { ...prevCustomizations, [sizeGenderKey]: currentArr };
+      updateStoreFromCustomizationsBySize(updatedCustomizationsBySize);
+
+      // También actualizamos quantities aquí o afuera, según cómo lo manejes
+      setQuantities(prev => {
+        const updatedGenderQuantities = { ...prev[gender], [size]: newCount };
+        return { ...prev, [gender]: updatedGenderQuantities };
+      });
+
+      return updatedCustomizationsBySize;
+    });
+  };
+
+
   const handleCustomInput = (size: string, idx: number, field: "number" | "name", value: string) => {
     setCustomizationsBySize(prev => {
       const arr = prev[size] ? [...prev[size]] : [];
       if (!arr[idx]) arr[idx] = {};
       arr[idx][field] = value;
+      updateStoreFromCustomizationsBySize({ ...prev, [size]: arr });
       return { ...prev, [size]: arr };
     });
+    // Actualiza el valor en RHF
+    setValue(`${size}-${idx}-${field}`, value, { shouldValidate: true });
   };
 
-  // Maneja el cambio de cantidad por talla y género
-  const handleQuantity = (size: string, change: number) => {
-    const gender = sizeTabs[tab].value as Gender;
-    setQuantities(prev => {
-      const prevGenderQuantities = prev[gender];
-      const newValue = Math.max(0, (prevGenderQuantities[size] || 0) + change);
-      const updatedGenderQuantities = { ...prevGenderQuantities, [size]: newValue };
-      const updated = { ...prev, [gender]: updatedGenderQuantities };
-      // Si se aumenta la cantidad
-      if (change > 0 && newValue > (prevGenderQuantities[size] || 0)) {
-        handleItemChange("size", `${size}|${gender}`);
-        increment();
-      }
-      // Si se reduce la cantidad
-      if (change < 0 && newValue < (prevGenderQuantities[size] || 0)) {
-        handleItemChange("size", `${size}|${gender}`);
-        decrement();
-      }
-      return updated;
-    });
-  };
-
-  const renderItems = (
-    items: any[],
-    type: keyof Customization,
-    useZoom: boolean = false,
-    imageSize: number = 100,
-    compact: boolean = false
-  ) => {
-    return (
-      <>
-        {type === 'technique' && (
-          <Box display={'flex'} gap={1} flexDirection={'column'}>
-            <Typography fontWeight={'bold'} color={'primary.main'}>
-              Special Techniques require a minimum of 50 pieces per technique.
-            </Typography>
-            <Typography fontSize={'12px'}>
-              Example: 25 with Embroidery on jersey + 25 with Embroidery on shorts = 50 pieces.
-            </Typography>
-          </Box>
-        )}
-        <div
-          style={{
-            display: "flex",
-            overflowX: "auto",
-            padding: "0.5rem",
-            gap: "0.5rem",
-            background: "#fff",
-          }}
-        >
-          {items.map((item, index) => {
-            return (
-              <div
-                key={index}
-                style={{
-                  position: "relative",
-                  flex: compact ? "1 0 15%" : "1 0 21%",
-                  margin: compact ? "0.2rem" : "0.5rem",
-                  opacity: 1,
-                  pointerEvents: "auto",
-                  cursor: "pointer",
-                }}
-              >
-                <Button
-                  onClick={() => {
-                    handleItemChange(type, item.name);
-                    increment();
-                  }}
-                  style={{
-                    textTransform: "none",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 4,
-                    width: "100%",
-                    padding: compact ? "0.2rem" : "0.5rem",
-                    background: customization[type] === item.name ? "grey" : "white",
-                    color: customization[type] === item.name ? "white" : "black",
-                  }}
-                >
-                  {useZoom ? (
-                    <div style={{ cursor: "pointer", position: "relative" }}>
-                      <ZoomInOutlined
-                        sx={{
-                          position: "absolute",
-                          right: 0,
-                          top: 0,
-                          color: "#000",
-                          zIndex: 1,
-                        }}
-                      />
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={imageSize}
-                        height={imageSize}
-                        style={{ borderRadius: "10px" }}
-                      />
-                    </div>
-                  ) : (
-                    item.image ? (
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={imageSize}
-                        height={imageSize}
-                        style={{ borderRadius: "10px" }}
-                      />
-                    ) : (
-                      <Box bgcolor={item.hex} width={25} height={25} borderRadius={'100%'}></Box>
-                    )
-                  )}
-                  <Typography fontWeight={'600'} align="center" whiteSpace={'nowrap'}>
-                    {type === "socks" ? killParenthesisIn(item.name) : item.name}
-                  </Typography>
-                  {item.description && (
-                    <Typography fontSize={'11px'} align="center">
-                      {item.description}
-                    </Typography>
-                  )}
-                  {item.link && (
-                    <Link href={item.link} passHref legacyBehavior>
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Typography fontSize={'11px'} color={'blue'} align="center">
-                          Contact Us
-                        </Typography>
-                      </a>
-                    </Link>
-                  )}
-                </Button>
-              </div>
-            );
-          })}
-        </div>
-      </>
-    );
-  };
 
   return (
     <Box
@@ -328,7 +213,9 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 >
                   <RemoveIcon fontSize="small" />
                 </Button>
-                <Typography minWidth={20} textAlign="center" fontWeight={500}>{quantities[sizeTabs[tab].value as Gender][size] || 0}</Typography>
+                <Typography minWidth={20} textAlign="center" fontWeight={500}>
+                  {customizationsBySize[`${size}-${sizeTabs[tab].value}`]?.length || 0}
+                </Typography>
                 <Button
                   variant="outlined"
                   size="small"
@@ -366,39 +253,103 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               Customize (Optional)
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
-            {Object.entries(sizeOptions).map(([gender, sizes]) =>
-              sizes.map(size => {
-                const count = quantities[gender as Gender][size] || 0;
-                if (!count) return null;
-                return Array.from({ length: count }).map((_, idx) => (
-                  <div key={`${size}-${gender}-${idx}`}>
-                    <Box display="flex" alignItems="center" gap={2} mb={1}>
-                      {/* Muestra el tipo de tab junto a la talla */}
-                      <Typography fontWeight={500} minWidth={40}>
+          <AccordionDetails id="influencer-details-form">
+            {Object.entries(customizationsBySize).map(([sizeGenderKey, items]) => {
+              return items.map((item, idx) => {
+                // sizeGenderKey = "M-MEN" por ejemplo
+                const [size, gender] = sizeGenderKey.split("-");
+                return (
+                  <div key={`${sizeGenderKey}-${idx}`}>
+                    <Box
+                      display="flex"
+                      alignItems="flex-start"
+                      gap={1.5}
+                      mb={1}
+                      flexWrap="wrap"
+                      sx={{
+                        '@media (max-width:600px)': {
+                          gap: 1,
+                          mb: 2,
+                        }
+                      }}
+                    >
+                      <Typography
+                        fontWeight={500}
+                        minWidth={{ xs: 60, md: 40 }}
+                        fontSize={{ xs: 14, md: 15 }}
+                        sx={{ mb: { xs: 1, md: 0 } }}
+                      >
                         {size} #{idx + 1} <span style={{ color: "#888", fontSize: 13, marginLeft: 6 }}>({gender})</span>
                       </Typography>
-                      <TextField
-                        variant="outlined"
-                        size="small"
-                        placeholder="# 25"
-                        value={customizationsBySize[size]?.[idx]?.number || ""}
-                        onChange={e => handleCustomInput(size, idx, "number", e.target.value)}
-                        sx={{ width: 90 }}
-                      />
-                      <TextField
-                        variant="outlined"
-                        size="small"
-                        placeholder="Name"
-                        value={customizationsBySize[size]?.[idx]?.name || ""}
-                        onChange={e => handleCustomInput(size, idx, "name", e.target.value)}
-                        sx={{ width: 120 }}
-                      />
+                      <Box sx={{ width: { xs: '100%', sm: 90 }, maxWidth: 120 }}>
+                        <Controller
+                          name={`${sizeGenderKey}-${idx}-number`}
+                          control={control}
+                          defaultValue={item.number || ""}
+                          rules={{
+                            pattern: {
+                              value: /^[0-9]{1,3}$/,
+                              message: "Numbers only (max 3 digits)"
+                            }
+                          }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              variant="outlined"
+                              size="small"
+                              placeholder="# 25"
+                              sx={{ width: '100%' }}
+                              error={!!errors[`${sizeGenderKey}-${idx}-number`]}
+                              onChange={e => {
+                                field.onChange(e);
+                                handleCustomInput(sizeGenderKey, idx, "number", e.target.value);
+                              }}
+                            />
+                          )}
+                        />
+                        {errors[`${sizeGenderKey}-${idx}-number`] && (
+                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                            {errors[`${sizeGenderKey}-${idx}-number`]?.message as string}
+                          </Typography>
+                        )}
+                      </Box>
+                      <Box sx={{ width: { xs: '100%', sm: 120 }, maxWidth: 150 }}>
+                        <Controller
+                          name={`${sizeGenderKey}-${idx}-name`}
+                          control={control}
+                          defaultValue={item.name || ""}
+                          rules={{
+                            minLength: {
+                              value: 2,
+                              message: "Minimum 2 characters"
+                            }
+                          }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              variant="outlined"
+                              size="small"
+                              placeholder="Name"
+                              sx={{ width: '100%' }}
+                              error={!!errors[`${sizeGenderKey}-${idx}-name`]}
+                              onChange={e => {
+                                field.onChange(e);
+                                handleCustomInput(sizeGenderKey, idx, "name", e.target.value);
+                              }}
+                            />
+                          )}
+                        />
+                        {errors[`${sizeGenderKey}-${idx}-name`] && (
+                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                            {errors[`${sizeGenderKey}-${idx}-name`]?.message as string}
+                          </Typography>
+                        )}
+                      </Box>
                     </Box>
                   </div>
-                ));
-              })
-            )}
+                );
+              });
+            })}
           </AccordionDetails>
         </Accordion>
       </Box>
