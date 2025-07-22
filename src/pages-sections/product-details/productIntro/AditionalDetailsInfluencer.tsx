@@ -54,6 +54,11 @@ interface AditionalDetailsProps {
   setCustomizationsBySize: React.Dispatch<React.SetStateAction<{
     [size: string]: { number?: string; name?: string }[];
   }>>;
+  config: {
+    font: string
+    fontColor: string
+    isTopSelected: boolean
+  }
 }
 
 const sizeTabs = [
@@ -73,7 +78,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   detail,
   handleItemChange,
   customizationsBySize,
-  setCustomizationsBySize
+  setCustomizationsBySize,
+  config,
 }) => {
   // React Hook Form setup
   const {
@@ -101,7 +107,9 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     generateCustomizationsFromSizeMap(
       detail.product.id,
       customizationsBySize,
-      true
+      config.font,
+      config.fontColor,
+      config.isTopSelected,
     );
   };
 
@@ -322,6 +330,10 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                             minLength: {
                               value: 2,
                               message: "Minimum 2 characters"
+                            },
+                            maxLength:{
+                              value: 14,
+                              message: "Max 14 characters"
                             }
                           }}
                           render={({ field }) => (
