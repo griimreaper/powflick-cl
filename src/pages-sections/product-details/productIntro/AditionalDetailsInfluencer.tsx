@@ -1,5 +1,6 @@
 type Gender = 'MEN' | 'WOMEN' | 'KIDS';
 import React, { FC, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
   Typography,
   Button,
@@ -74,6 +75,12 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   customizationsBySize,
   setCustomizationsBySize
 }) => {
+  // React Hook Form setup
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
   const { generateCustomizationsFromSizeMap } = useCustomizationsStore();
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   // Estado de cantidades por género
@@ -134,12 +141,11 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
       const arr = prev[size] ? [...prev[size]] : [];
       if (!arr[idx]) arr[idx] = {};
       arr[idx][field] = value;
-
-      // Actualizamos la store
       updateStoreFromCustomizationsBySize({ ...prev, [size]: arr });
-
       return { ...prev, [size]: arr };
     });
+    // Actualiza el valor en RHF
+    setValue(`${size}-${idx}-${field}`, value, { shouldValidate: true });
   };
 
 
@@ -247,34 +253,98 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               Customize (Optional)
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails id="influencer-details-form">
             {Object.entries(customizationsBySize).map(([sizeGenderKey, items]) => {
               return items.map((item, idx) => {
                 // sizeGenderKey = "M-MEN" por ejemplo
                 const [size, gender] = sizeGenderKey.split("-");
-
                 return (
                   <div key={`${sizeGenderKey}-${idx}`}>
-                    <Box display="flex" alignItems="center" gap={2} mb={1}>
-                      <Typography fontWeight={500} minWidth={40}>
+                    <Box
+                      display="flex"
+                      alignItems="flex-start"
+                      gap={1.5}
+                      mb={1}
+                      flexWrap="wrap"
+                      sx={{
+                        '@media (max-width:600px)': {
+                          gap: 1,
+                          mb: 2,
+                        }
+                      }}
+                    >
+                      <Typography
+                        fontWeight={500}
+                        minWidth={{ xs: 60, md: 40 }}
+                        fontSize={{ xs: 14, md: 15 }}
+                        sx={{ mb: { xs: 1, md: 0 } }}
+                      >
                         {size} #{idx + 1} <span style={{ color: "#888", fontSize: 13, marginLeft: 6 }}>({gender})</span>
                       </Typography>
-                      <TextField
-                        variant="outlined"
-                        size="small"
-                        placeholder="# 25"
-                        value={item.number || ""}
-                        onChange={e => handleCustomInput(sizeGenderKey, idx, "number", e.target.value)}
-                        sx={{ width: 90 }}
-                      />
-                      <TextField
-                        variant="outlined"
-                        size="small"
-                        placeholder="Name"
-                        value={item.name || ""}
-                        onChange={e => handleCustomInput(sizeGenderKey, idx, "name", e.target.value)}
-                        sx={{ width: 120 }}
-                      />
+                      <Box sx={{ width: { xs: '100%', sm: 90 }, maxWidth: 120 }}>
+                        <Controller
+                          name={`${sizeGenderKey}-${idx}-number`}
+                          control={control}
+                          defaultValue={item.number || ""}
+                          rules={{
+                            pattern: {
+                              value: /^[0-9]{1,3}$/,
+                              message: "Numbers only (max 3 digits)"
+                            }
+                          }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              variant="outlined"
+                              size="small"
+                              placeholder="# 25"
+                              sx={{ width: '100%' }}
+                              error={!!errors[`${sizeGenderKey}-${idx}-number`]}
+                              onChange={e => {
+                                field.onChange(e);
+                                handleCustomInput(sizeGenderKey, idx, "number", e.target.value);
+                              }}
+                            />
+                          )}
+                        />
+                        {errors[`${sizeGenderKey}-${idx}-number`] && (
+                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                            {errors[`${sizeGenderKey}-${idx}-number`]?.message as string}
+                          </Typography>
+                        )}
+                      </Box>
+                      <Box sx={{ width: { xs: '100%', sm: 120 }, maxWidth: 150 }}>
+                        <Controller
+                          name={`${sizeGenderKey}-${idx}-name`}
+                          control={control}
+                          defaultValue={item.name || ""}
+                          rules={{
+                            minLength: {
+                              value: 2,
+                              message: "Minimum 2 characters"
+                            }
+                          }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              variant="outlined"
+                              size="small"
+                              placeholder="Name"
+                              sx={{ width: '100%' }}
+                              error={!!errors[`${sizeGenderKey}-${idx}-name`]}
+                              onChange={e => {
+                                field.onChange(e);
+                                handleCustomInput(sizeGenderKey, idx, "name", e.target.value);
+                              }}
+                            />
+                          )}
+                        />
+                        {errors[`${sizeGenderKey}-${idx}-name`] && (
+                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                            {errors[`${sizeGenderKey}-${idx}-name`]?.message as string}
+                          </Typography>
+                        )}
+                      </Box>
                     </Box>
                   </div>
                 );

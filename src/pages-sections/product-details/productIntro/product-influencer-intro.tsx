@@ -490,6 +490,17 @@ export default function ProductInfluencerIntro({ product }: Props) {
                   flex: 1, // Permite que los botones se distribuyan equitativamente
                 }}
                 onClick={() => {
+                  // Validación de errores en personalización
+                  const influencerDetails = document.getElementById("influencer-details-form");
+                  let hasErrors = false;
+                  if (influencerDetails) {
+                    // Busca cualquier input con aria-invalid="true" dentro del formulario
+                    hasErrors = influencerDetails.querySelectorAll('input[aria-invalid="true"]').length > 0;
+                  }
+                  if (hasErrors) {
+                    showErrorAlert("Error", "Please correct the customization fields before adding to cart.");
+                    return;
+                  }
                   const result = handleAddToBagClick();
                   (window as any).dataLayer.push({ ecommerce: null });
                   (window as any).dataLayer.push({
