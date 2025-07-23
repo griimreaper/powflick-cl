@@ -199,7 +199,7 @@ export default function InfluencerStore({
                 )}
             </Box>
 
-            <Grid container spacing={3} my={8} alignItems="start">
+            <Grid container my={8} alignItems="start">
                 <Grid item xs={12} md={4} xl={4} display="flex" flexDirection="column" alignItems="end" textAlign="left">
                     <Box mt={3} mx="auto" textAlign="center">
                         {/* Imagen de perfil */}
@@ -207,8 +207,8 @@ export default function InfluencerStore({
                             src={profileImage}
                             alt="Influencer"
                             sx={{
-                                width: 250,
-                                height: 250,
+                                width: "50%",
+                                height: "auto",
                                 mx: "auto",
                                 mb: 3,
                             }}
@@ -241,10 +241,10 @@ export default function InfluencerStore({
                     </Box>
                 </Grid>
 
-                <Grid item xs={12} md={8} xl={8} px={6} display="flex" flexDirection="column" alignItems="end">
-                    <Box mb={12}>
-                        <FlexBox alignItems="center" gap={1} flexWrap={{ xs: "wrap", sm: "nowrap" }} justifyContent={{ xs: "space-between", md: "flex-end" }} width={{ xs: "100%", md: "100%" }}>
-                            <Box display="flex" alignItems="center" justifyContent="flex-end" width={'100%'} gap={1}>
+                <Grid item xs={12} md={8} xl={8} px={3} display="flex" flexDirection="column" alignItems="end">
+                    <Box mb={12} width="100%">
+                        <FlexBox alignItems="center" gap={1} justifyContent={{ xs: "center", md: "flex-end" }} width={{ xs: "100%" }} display="flex" flexDirection={{ xs: "column", sm: "row" }} >
+                            <Box display="flex" alignItems="center" justifyContent="flex-end" width={'100%'} gap={1} >
                                 <Paragraph whiteSpace="pre">Sort by:</Paragraph>
                                 <TextField
                                     select
