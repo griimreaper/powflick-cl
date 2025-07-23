@@ -241,10 +241,10 @@ export default function InfluencerStore({
                     </Box>
                 </Grid>
 
-                <Grid item xs={12} md={8} xl={8} px={3} display="flex" flexDirection="column" alignItems="end">
+                <Grid item xs={12} md={8} xl={8} px={3} mt={{ xs: 6, md: 0 }} display="flex" flexDirection="column" alignItems="end">
                     <Box mb={12} width="100%">
                         <FlexBox alignItems="center" gap={1} justifyContent={{ xs: "center", md: "flex-end" }} width={{ xs: "100%" }} display="flex" flexDirection={{ xs: "column", sm: "row" }} >
-                            <Box display="flex" alignItems="center" justifyContent="flex-end" width={'100%'} gap={1} >
+                            <Box display="flex" alignItems="center" justifyContent={{ xs: "center", md: "flex-end" }} width={'100%'} gap={1} >
                                 <Paragraph whiteSpace="pre">Sort by:</Paragraph>
                                 <TextField
                                     select
