@@ -2,10 +2,10 @@
 import PageWrapper from "../../page-wrapper";
 import InfluencersForm from "../influencer-form";
 
-export default function CreateInfluencerPageView({ availableProducts }: { availableProducts: string[] }) {
+export default function CreateInfluencerPageView({ availableProducts }: { availableProducts: { title: string, image: string, price: string }[] }) {
   return (
     <PageWrapper title="Create New Influencer">
-      <InfluencersForm availableProducts={availableProducts}/>
+      <InfluencersForm availableProducts={availableProducts} />
     </PageWrapper>
   );
 }
