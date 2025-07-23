@@ -321,6 +321,7 @@ export const useCustomizationsStore = create(
               const textX = estimateCenterX(nameText.length, textSize);
 
               customization.size = size;
+              customization.shorts = isTopSelected ? 'No Shorts (-$13.99)' : 'Default (+$0.00)';
 
               customization.backSide.numbers = item.number
                 ? [{

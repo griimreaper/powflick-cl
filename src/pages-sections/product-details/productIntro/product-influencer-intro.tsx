@@ -192,15 +192,6 @@ export default function ProductInfluencerIntro({ product }: Props) {
     updateCustomizationAttribute(name, value);
   };
 
-  const customizationProps = {
-    frontImage: product?.product.images[2],
-    backImage: product?.product.images[3],
-    product: product?.product,
-    counter,
-    productId: id,
-    setCounter,
-  };
-
   const totalCustomizationPrice =
     list[list.findIndex((i) => i.productId === id)]?.total?.toFixed(2) ?? 0;
   const totalProductsPrice = (Number(product?.product.price) * counter).toFixed(
@@ -224,7 +215,6 @@ export default function ProductInfluencerIntro({ product }: Props) {
         productToBag,
         customizations,
         totalCustomization,
-        totalProduct,
         amount,
         top
       );

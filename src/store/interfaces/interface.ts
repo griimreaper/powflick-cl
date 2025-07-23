@@ -98,7 +98,6 @@ export type ShoppingCartStoreType = {
     product: ProductToBagType,
     customization: Customization[],
     totalCustomization: number,
-    totalProduct: number,
     amount: number,
     top: boolean
   ) => void;
