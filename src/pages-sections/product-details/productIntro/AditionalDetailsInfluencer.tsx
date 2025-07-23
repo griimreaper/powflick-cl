@@ -75,6 +75,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   customizationsBySize,
   setCustomizationsBySize
 }) => {
+
+
   // React Hook Form setup
   const {
     control,
@@ -83,6 +85,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   } = useForm({ mode: "onChange" });
   const { generateCustomizationsFromSizeMap } = useCustomizationsStore();
   const [showSizeGuide, setShowSizeGuide] = useState(false);
+  // Añade estado para idioma de la guía
+  const [sizeGuideLang, setSizeGuideLang] = useState<'es' | 'en'>('en');
   // Estado de cantidades por género
   const [quantities, setQuantities] = useState<Record<Gender, Record<string, number>>>(
     {
@@ -92,6 +96,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     }
   );
   const [tab, setTab] = useState(0);
+  const [customizeExpanded, setCustomizeExpanded] = useState(true);
   // Determina las tallas actuales según el tab seleccionado
   const currentSizes = sizeOptions[sizeTabs[tab].value];
 
@@ -243,7 +248,10 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
 
       {/* Personalización por unidad */}
       <Box mt={3}>
-        <Accordion>
+        <Accordion
+          expanded={customizeExpanded}
+          onChange={() => setCustomizeExpanded(prev => !prev)}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="customize-content"
@@ -254,99 +262,116 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
             </Typography>
           </AccordionSummary>
           <AccordionDetails id="influencer-details-form">
+            {/* Encabezado de columnas */}
+            <Box
+              display="flex"
+              alignItems="center"
+              mb={1}
+              px={1}
+              sx={{
+                borderRadius: 1,
+                fontWeight: 600,
+                fontSize: 15
+              }}
+            >
+              <Box flex={2} />
+              <Box flex={1} textAlign="center">
+                Number
+              </Box>
+              <Box flex={1} textAlign="center">
+                Name
+              </Box>
+            </Box>
+            {/* Filas de personalización */}
             {Object.entries(customizationsBySize).map(([sizeGenderKey, items]) => {
               return items.map((item, idx) => {
-                // sizeGenderKey = "M-MEN" por ejemplo
                 const [size, gender] = sizeGenderKey.split("-");
                 return (
-                  <div key={`${sizeGenderKey}-${idx}`}>
-                    <Box
-                      display="flex"
-                      alignItems="flex-start"
-                      gap={1.5}
-                      mb={1}
-                      flexWrap="wrap"
-                      sx={{
-                        '@media (max-width:600px)': {
-                          gap: 1,
-                          mb: 2,
-                        }
-                      }}
-                    >
+                  <Box
+                    key={`${sizeGenderKey}-${idx}`}
+                    display="flex"
+                    alignItems="center"
+                    mb={1}
+                    px={1}
+                    sx={{
+                      borderBottom: "1px solid #f0f0f0",
+                      ":last-child": { borderBottom: "none" }
+                    }}
+                  >
+                    <Box flex={2} >
                       <Typography
                         fontWeight={500}
-                        minWidth={{ xs: 60, md: 40 }}
-                        fontSize={{ xs: 14, md: 15 }}
-                        sx={{ mb: { xs: 1, md: 0 } }}
+                        fontSize={15}
+                        sx={{ whiteSpace: "nowrap" }}
                       >
-                        {size} #{idx + 1} <span style={{ color: "#888", fontSize: 13, marginLeft: 6 }}>({gender})</span>
+                        {size} - {idx + 1} <span style={{ color: "#888", fontSize: 13, marginLeft: 6 }}>({gender})</span>
                       </Typography>
-                      <Box sx={{ width: { xs: '100%', sm: 90 }, maxWidth: 120 }}>
-                        <Controller
-                          name={`${sizeGenderKey}-${idx}-number`}
-                          control={control}
-                          defaultValue={item.number || ""}
-                          rules={{
-                            pattern: {
-                              value: /^[0-9]{1,3}$/,
-                              message: "Numbers only (max 3 digits)"
-                            }
-                          }}
-                          render={({ field }) => (
-                            <TextField
-                              {...field}
-                              variant="outlined"
-                              size="small"
-                              placeholder="# 25"
-                              sx={{ width: '100%' }}
-                              error={!!errors[`${sizeGenderKey}-${idx}-number`]}
-                              onChange={e => {
-                                field.onChange(e);
-                                handleCustomInput(sizeGenderKey, idx, "number", e.target.value);
-                              }}
-                            />
-                          )}
-                        />
-                        {errors[`${sizeGenderKey}-${idx}-number`] && (
-                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
-                            {errors[`${sizeGenderKey}-${idx}-number`]?.message as string}
-                          </Typography>
-                        )}
-                      </Box>
-                      <Box sx={{ width: { xs: '100%', sm: 120 }, maxWidth: 150 }}>
-                        <Controller
-                          name={`${sizeGenderKey}-${idx}-name`}
-                          control={control}
-                          defaultValue={item.name || ""}
-                          rules={{
-                            minLength: {
-                              value: 2,
-                              message: "Minimum 2 characters"
-                            }
-                          }}
-                          render={({ field }) => (
-                            <TextField
-                              {...field}
-                              variant="outlined"
-                              size="small"
-                              placeholder="Name"
-                              sx={{ width: '100%' }}
-                              error={!!errors[`${sizeGenderKey}-${idx}-name`]}
-                              onChange={e => {
-                                field.onChange(e);
-                                handleCustomInput(sizeGenderKey, idx, "name", e.target.value);
-                              }}
-                            />
-                          )}
-                        />
-                        {errors[`${sizeGenderKey}-${idx}-name`] && (
-                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
-                            {errors[`${sizeGenderKey}-${idx}-name`]?.message as string}
-                          </Typography>
-                        )}
-                      </Box>
                     </Box>
-                  </div>
+                    <Box flex={1} px={0.5}>
+                      <Controller
+                        name={`${sizeGenderKey}-${idx}-number`}
+                        control={control}
+                        defaultValue={item.number || ""}
+                        rules={{
+                          pattern: {
+                            value: /^[0-9]{1,3}$/,
+                            message: "Numbers only (max 3 digits)"
+                          }
+                        }}
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            variant="outlined"
+                            size="small"
+                            placeholder=""
+                            sx={{ width: '100%' }}
+                            error={!!errors[`${sizeGenderKey}-${idx}-number`]}
+                            onChange={e => {
+                              field.onChange(e);
+                              handleCustomInput(sizeGenderKey, idx, "number", e.target.value);
+                            }}
+                          />
+                        )}
+                      />
+                      {errors[`${sizeGenderKey}-${idx}-number`] && (
+                        <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                          {errors[`${sizeGenderKey}-${idx}-number`]?.message as string}
+                        </Typography>
+                      )}
+                    </Box>
+                    <Box flex={1} px={0.5}>
+                      <Controller
+                        name={`${sizeGenderKey}-${idx}-name`}
+                        control={control}
+                        defaultValue={item.name || ""}
+                        rules={{
+                          minLength: {
+                            value: 2,
+                            message: "Minimum 2 characters"
+                          }
+                        }}
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            variant="outlined"
+                            size="small"
+                            placeholder=""
+                            sx={{ width: '100%' }}
+                            error={!!errors[`${sizeGenderKey}-${idx}-name`]}
+                            onChange={e => {
+                              field.onChange(e);
+                              handleCustomInput(sizeGenderKey, idx, "name", e.target.value);
+                            }}
+                          />
+                        )}
+                      />
+                      {errors[`${sizeGenderKey}-${idx}-name`] && (
+                        <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                          {errors[`${sizeGenderKey}-${idx}-name`]?.message as string}
+                        </Typography>
+                      )}
+                    </Box>
+                  </Box>
                 );
               });
             })}
@@ -357,14 +382,45 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
       {/* Diálogo de guía de tallas */}
       <Dialog open={showSizeGuide} onClose={() => setShowSizeGuide(false)} maxWidth="md">
         <Box p={3} display="flex" flexDirection="column" alignItems="center" gap={2}>
-          {detail.SizeGuide?.image1 && (
+          {/* Botones para idioma */}
+          <Box display="flex" gap={2} mb={2}>
+            <Button
+              variant={sizeGuideLang === 'es' ? 'contained' : 'outlined'}
+              color="primary"
+              onClick={() => setSizeGuideLang('es')}
+              sx={{ minWidth: 100 }}
+            >
+              Español
+            </Button>
+            <Button
+              variant={sizeGuideLang === 'en' ? 'contained' : 'outlined'}
+              color="primary"
+              onClick={() => setSizeGuideLang('en')}
+              sx={{ minWidth: 100 }}
+            >
+              English
+            </Button>
+          </Box>
+          {/* Imagen según idioma */}
+          {sizeGuideLang === 'en' ? (
             <Zoom>
-              <Image src={detail.SizeGuide.image1} alt="Size Guide 1" width={300} height={300} />
+              <img
+                src="/assets/images/detail/size-table-english.png"
+                alt="Size Guide English"
+                width={500}
+                height={500}
+                style={{ maxWidth: "100%", height: "auto", borderRadius: 8 }}
+              />
             </Zoom>
-          )}
-          {detail.SizeGuide?.image2 && (
+          ) : (
             <Zoom>
-              <Image src={detail.SizeGuide.image2} alt="Size Guide 2" width={300} height={300} />
+              <img
+                src="/assets/images/detail/size-table-spanish.png"
+                alt="Size Guide Español"
+                width={500}
+                height={500}
+                style={{ maxWidth: "100%", height: "auto", borderRadius: 8 }}
+              />
             </Zoom>
           )}
         </Box>
@@ -374,5 +430,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     </Box>
   );
 }
+
+
 
 export default AditionalDetails;
