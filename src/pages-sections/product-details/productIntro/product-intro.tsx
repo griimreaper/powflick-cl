@@ -269,7 +269,6 @@ export default function ProductIntro({ product }: Props) {
         productToBag,
         customizations,
         totalCustomization,
-        totalProduct,
         amount,
         top
       );

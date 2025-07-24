@@ -60,6 +60,8 @@ export type CustomizationsStoreType = {
     customizationsBySize: {
       [size: string]: { number?: string; name?: string }[];
     },
+    font?: string,
+    fontColor?: string,
     isTopSelected?: boolean
   ) => void;
 
@@ -96,7 +98,6 @@ export type ShoppingCartStoreType = {
     product: ProductToBagType,
     customization: Customization[],
     totalCustomization: number,
-    totalProduct: number,
     amount: number,
     top: boolean
   ) => void;

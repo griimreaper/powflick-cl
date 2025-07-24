@@ -192,15 +192,6 @@ export default function ProductInfluencerIntro({ product }: Props) {
     updateCustomizationAttribute(name, value);
   };
 
-  const customizationProps = {
-    frontImage: product?.product.images[2],
-    backImage: product?.product.images[3],
-    product: product?.product,
-    counter,
-    productId: id,
-    setCounter,
-  };
-
   const totalCustomizationPrice =
     list[list.findIndex((i) => i.productId === id)]?.total?.toFixed(2) ?? 0;
   const totalProductsPrice = (Number(product?.product.price) * counter).toFixed(
@@ -224,7 +215,6 @@ export default function ProductInfluencerIntro({ product }: Props) {
         productToBag,
         customizations,
         totalCustomization,
-        totalProduct,
         amount,
         top
       );
@@ -473,6 +463,7 @@ export default function ProductInfluencerIntro({ product }: Props) {
             handleItemChange={handleItemChange}
             customizationsBySize={customizationsBySize}
             setCustomizationsBySize={setCustomizationsBySize}
+            config={{ font, fontColor, isTopSelected: !!isTopSelected }}
           />
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>

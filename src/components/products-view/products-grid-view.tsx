@@ -57,7 +57,7 @@ export default function ProductsGridView({ data, handlePage, onProductClick }: P
         ))}
       </Grid>
 
-      <FlexBetween flexWrap="wrap" mt={4} width={'100%'} justifyContent={'space-between'}>
+      <FlexBetween display={"flex"} flexDirection={{ xs: "column", md: "row" }} mt={4} width={'100%'} justifyContent={'space-between'}>
         {data.page ?
           <Span color={themeColors.text.secondary}>Showing {itemsPerPage * (data?.page - 1) + 1}-{Math.min(itemsPerPage * data?.page, data?.count?.total || 0)} of {data?.count?.total || 0} Products</Span>
           : <Grid></Grid>

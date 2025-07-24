@@ -46,6 +46,7 @@ export default function NavigationList({
       <StyledNavLink href="/contact">Contact</StyledNavLink>
       <StyledNavLink href="/about-us">About Us</StyledNavLink>
       <StyledNavLink href="/help">FAQ</StyledNavLink>
+      <StyledNavLink href="/influencers">Influencers</StyledNavLink>
     </FlexBox>
   );
 }
