@@ -40,7 +40,8 @@ function updateCartTotal(set: any) {
       totalProduct: Number(
         getTotalWithDiscount(
           prod.product.price,
-          prod.customizations.length
+          prod.customizations.length,
+          !prod.product.influencer_id
         ).toFixed(2)
       ),
     })),

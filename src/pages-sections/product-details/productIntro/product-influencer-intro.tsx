@@ -31,7 +31,7 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { Divider, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
-import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
+import { getTotalWithDiscount } from "utils/tools";
 import AditionalDetailsinfluencer from "./AditionalDetailsInfluencer";
 
 // ================================================================
@@ -204,7 +204,7 @@ export default function ProductInfluencerIntro({ product }: Props) {
       list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
     const totalCustomization = customizationsTotal;
     const totalProduct: number = parseFloat(
-      (getTotalWithDiscount(price, counter)).toFixed(2)
+      (getTotalWithDiscount(price, counter, !product.product.influencer_id)).toFixed(2)
     );
     const productToBag = product?.product;
     const amount = counter;
@@ -409,7 +409,7 @@ export default function ProductInfluencerIntro({ product }: Props) {
           {/* PRICE & STOCK */}
           <Box pt={1} mb={3}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
-              {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -13.99 : 0), counter))}
+              {currency(price + (selected === 'top' ? -13.99 : 0))}
             </H2>
             <Box color="inherit">Stock Available</Box>
           </Box>
