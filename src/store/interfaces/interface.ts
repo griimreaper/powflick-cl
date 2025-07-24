@@ -54,7 +54,11 @@ export type CustomizationsStoreType = {
   clearCustomization: () => void;
   trimCustomizations: (productId: string, numCustomizations: number) => void;
   addCustomizations: (productId: string, numCustomizations: number) => void;
-  setFieldForAllCustomizations: (productId: string, name: keyof Customization, value: string) => void;
+  setFieldForAllCustomizations: (
+    productId: string,
+    name: keyof Customization,
+    value: string
+  ) => void;
   generateCustomizationsFromSizeMap: (
     productId: string,
     customizationsBySize: {
@@ -64,7 +68,6 @@ export type CustomizationsStoreType = {
     fontColor?: string,
     isTopSelected?: boolean
   ) => void;
-
 };
 
 export type ProductToBagType = {
@@ -98,6 +101,7 @@ export type ShoppingCartStoreType = {
     product: ProductToBagType,
     customization: Customization[],
     totalCustomization: number,
+    totalProduct: number,
     amount: number,
     top: boolean
   ) => void;
