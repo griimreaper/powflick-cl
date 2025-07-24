@@ -601,7 +601,7 @@ export default function ProductIntro({ product }: Props) {
                   px: "clamp(1rem, 5vw, 1.75rem)",
                   height: 40,
                   whiteSpace: 'nowrap',
-                  minWidth: 80, // para que no quede muy chico
+                  minWidth: 210, // para que no quede muy chico
                   "&:hover": {
                     background: isSelected("uniform") ? "black" : "#f5f5f5"
                   }

@@ -106,11 +106,11 @@ export default function CartItem({ item }: Props) {
         {/* PRODUCT PRICE SECTION */}
         <FlexBox gap={1} flexWrap="wrap" alignItems="center">
           <Span color="grey.600">
-            {currency(getUnitPriceWithDiscount(item.product.price + (isTopSelected ? -13.99 : 0), item.amount))} x {item.customizations.length}
+            {currency(getUnitPriceWithDiscount(item.product.price + (isTopSelected ? -13.99 : 0), item.amount, !item.product.influencer_id))} x {item.customizations.length}
           </Span>
 
           <Span fontWeight={600} color="primary.main">
-            {currency(getTotalWithDiscount(item.product.price, item.customizations.length) + item.totalCustomization)}
+            {currency(getTotalWithDiscount(item.product.price, item.customizations.length, !item.product.influencer_id) + item.totalCustomization)}
           </Span>
         </FlexBox>
 

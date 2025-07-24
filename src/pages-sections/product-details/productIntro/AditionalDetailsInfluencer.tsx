@@ -74,6 +74,8 @@ const sizeOptions: Record<string, string[]> = {
   KIDS: ["XSj (5-6Y)", "Sj (7-8Y)", "Mj (9-10Y)", "Lj (11-12Y)", "XLj (13-14Y)"]
 };
 
+const genderOrder = ["MEN", "WOMEN", "KIDS"];
+
 const AditionalDetails: FC<AditionalDetailsProps> = ({
   detail,
   handleItemChange,
@@ -81,7 +83,6 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   setCustomizationsBySize,
   config,
 }) => {
-
 
   // React Hook Form setup
   const {
@@ -269,7 +270,10 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               Customize (Optional)
             </Typography>
           </AccordionSummary>
-          <AccordionDetails id="influencer-details-form">
+          <AccordionDetails id="influencer-details-form" sx={{
+            maxHeight: 500, // o el valor que quieras
+            overflowY: "auto",
+          }}>
             {/* Encabezado de columnas */}
             <Box
               display="flex"
@@ -291,102 +295,110 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               </Box>
             </Box>
             {/* Filas de personalización */}
-            {Object.entries(customizationsBySize).map(([sizeGenderKey, items]) => {
-              return items.map((item, idx) => {
-                const [size, gender] = sizeGenderKey.split("-");
-                return (
-                  <Box
-                    key={`${sizeGenderKey}-${idx}`}
-                    display="flex"
-                    alignItems="center"
-                    mb={1}
-                    px={1}
-                    sx={{
-                      borderBottom: "1px solid #f0f0f0",
-                      ":last-child": { borderBottom: "none" }
-                    }}
-                  >
-                    <Box flex={2} >
-                      <Typography
-                        fontWeight={500}
-                        fontSize={15}
-                        sx={{ whiteSpace: "nowrap" }}
-                      >
-                        {size} - {idx + 1} <span style={{ color: "#888", fontSize: 13, marginLeft: 6 }}>({gender})</span>
-                      </Typography>
-                    </Box>
-                    <Box flex={1} px={0.5}>
-                      <Controller
-                        name={`${sizeGenderKey}-${idx}-number`}
-                        control={control}
-                        defaultValue={item.number || ""}
-                        rules={{
-                          pattern: {
-                            value: /^[0-9]{1,3}$/,
-                            message: "Numbers only (max 3 digits)"
-                          }
-                        }}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            variant="outlined"
-                            size="small"
-                            placeholder=""
-                            sx={{ width: '100%' }}
-                            error={!!errors[`${sizeGenderKey}-${idx}-number`]}
-                            onChange={e => {
-                              field.onChange(e);
-                              handleCustomInput(sizeGenderKey, idx, "number", e.target.value);
-                            }}
-                          />
-                        )}
-                      />
-                      {errors[`${sizeGenderKey}-${idx}-number`] && (
-                        <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
-                          {errors[`${sizeGenderKey}-${idx}-number`]?.message as string}
+            {Object.entries(customizationsBySize)
+              .sort(([aKey], [bKey]) => {
+                const aGender = aKey.slice(aKey.lastIndexOf("-") + 1);
+                const bGender = bKey.slice(bKey.lastIndexOf("-") + 1);
+                return genderOrder.indexOf(aGender) - genderOrder.indexOf(bGender);
+              })
+              .map(([sizeGenderKey, items]) => {
+                return items.map((item, idx) => {
+                  const lastDashIndex = sizeGenderKey.lastIndexOf("-");
+                  const size = sizeGenderKey.substring(0, lastDashIndex);
+                  const gender = sizeGenderKey.substring(lastDashIndex + 1);
+                  return (
+                    <Box
+                      key={`${sizeGenderKey}-${idx}`}
+                      display="flex"
+                      alignItems="center"
+                      mb={1}
+                      px={1}
+                      sx={{
+                        borderBottom: "1px solid #f0f0f0",
+                        ":last-child": { borderBottom: "none" }
+                      }}
+                    >
+                      <Box flex={2} >
+                        <Typography
+                          fontWeight={500}
+                          fontSize={15}
+                          sx={{ whiteSpace: "nowrap" }}
+                        >
+                          {size} - {idx + 1} <span style={{ color: "#888", fontSize: 13, marginLeft: 6 }}>({gender})</span>
                         </Typography>
-                      )}
-                    </Box>
-                    <Box flex={1} px={0.5}>
-                      <Controller
-                        name={`${sizeGenderKey}-${idx}-name`}
-                        control={control}
-                        defaultValue={item.name || ""}
-                        rules={{
-                          minLength: {
-                            value: 2,
-                            message: "Minimum 2 characters"
-                          },
-                          maxLength: {
-                            value: 14,
-                            message: "Max 14 characters"
-                          }
-                        }}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            variant="outlined"
-                            size="small"
-                            placeholder=""
-                            sx={{ width: '100%' }}
-                            error={!!errors[`${sizeGenderKey}-${idx}-name`]}
-                            onChange={e => {
-                              field.onChange(e);
-                              handleCustomInput(sizeGenderKey, idx, "name", e.target.value);
-                            }}
-                          />
+                      </Box>
+                      <Box flex={1} px={0.5}>
+                        <Controller
+                          name={`${sizeGenderKey}-${idx}-number`}
+                          control={control}
+                          defaultValue={item.number || ""}
+                          rules={{
+                            pattern: {
+                              value: /^[0-9]{1,3}$/,
+                              message: "Numbers only (max 3 digits)"
+                            }
+                          }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              variant="outlined"
+                              size="small"
+                              placeholder=""
+                              sx={{ width: '100%' }}
+                              error={!!errors[`${sizeGenderKey}-${idx}-number`]}
+                              onChange={e => {
+                                field.onChange(e);
+                                handleCustomInput(sizeGenderKey, idx, "number", e.target.value);
+                              }}
+                            />
+                          )}
+                        />
+                        {errors[`${sizeGenderKey}-${idx}-number`] && (
+                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                            {errors[`${sizeGenderKey}-${idx}-number`]?.message as string}
+                          </Typography>
                         )}
-                      />
-                      {errors[`${sizeGenderKey}-${idx}-name`] && (
-                        <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
-                          {errors[`${sizeGenderKey}-${idx}-name`]?.message as string}
-                        </Typography>
-                      )}
+                      </Box>
+                      <Box flex={1} px={0.5}>
+                        <Controller
+                          name={`${sizeGenderKey}-${idx}-name`}
+                          control={control}
+                          defaultValue={item.name || ""}
+                          rules={{
+                            minLength: {
+                              value: 2,
+                              message: "Minimum 2 characters"
+                            },
+                            maxLength: {
+                              value: 14,
+                              message: "Max 14 characters"
+                            }
+                          }}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              variant="outlined"
+                              size="small"
+                              placeholder=""
+                              sx={{ width: '100%' }}
+                              error={!!errors[`${sizeGenderKey}-${idx}-name`]}
+                              onChange={e => {
+                                field.onChange(e);
+                                handleCustomInput(sizeGenderKey, idx, "name", e.target.value);
+                              }}
+                            />
+                          )}
+                        />
+                        {errors[`${sizeGenderKey}-${idx}-name`] && (
+                          <Typography color="error" fontSize={12} sx={{ mt: 0.5, whiteSpace: 'normal' }}>
+                            {errors[`${sizeGenderKey}-${idx}-name`]?.message as string}
+                          </Typography>
+                        )}
+                      </Box>
                     </Box>
-                  </Box>
-                );
-              });
-            })}
+                  );
+                });
+              })}
           </AccordionDetails>
         </Accordion>
       </Box>
