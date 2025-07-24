@@ -14,7 +14,7 @@ export default function PowFlickLanding() {
         getInfluencers().then(setInfluencers);
     }, []);
 
-    console.log("influencers", influencers);
+
 
 
     return (
@@ -23,7 +23,7 @@ export default function PowFlickLanding() {
             <Box
                 sx={{
                     width: "100%",
-                    minHeight: 480,
+                    minHeight: "680",
                     backgroundImage: 'url("/assets/images/influencers/landing/banner.jpg")',
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -35,11 +35,11 @@ export default function PowFlickLanding() {
                 }}
             >
                 <Box sx={{ textAlign: "center", color: "#fff", zIndex: 2 }}>
-                    <Typography variant="h4" fontWeight="bold" sx={{ letterSpacing: 2, fontStyle: "italic" }}>
-                        WEAR YOUR TEAM.
+                    <Typography variant="h3" fontWeight="bold" sx={{ letterSpacing: 2, fontStyle: "italic" }}>
+                        YOU&apos;RE NOT JUST A FAN
                     </Typography>
-                    <Typography variant="h2" fontWeight="bold" fontStyle="italic" sx={{ letterSpacing: 2, mt: 1, fontStyle: "italic" }}>
-                        REPRESENT YOUR IDOL.
+                    <Typography variant="h1" fontWeight="bold" fontStyle="italic" sx={{ letterSpacing: 2, mt: 1, fontStyle: "italic" }}>
+                        YOU&apos;RE ON THE TEAM!
                     </Typography>
                 </Box>
                 <Box
@@ -55,7 +55,7 @@ export default function PowFlickLanding() {
             {/* Support your favorite creator */}
             <Container sx={{ py: 6 }}>
                 <Typography
-                    variant="h4"
+                    variant="h3"
                     align="center"
                     fontWeight="bold"
                     color="primary"
@@ -83,7 +83,7 @@ export default function PowFlickLanding() {
                         <Grid item xs={12} sm={6} md={4} key={c.id}>
                             <Card elevation={0} sx={{ alignItems: "center", boxShadow: "none", }}>
                                 <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
-                                    <Image src={c.logo} alt={c.label} width={80} height={80} style={{ borderRadius: "50%" }} />
+                                    <Image src={c.logo} alt={c.label} width={120} height={120} style={{ borderRadius: "50%" }} />
                                 </Box>
                                 <CardContent sx={{ textAlign: "center", pt: 0 }}>
                                     <Typography fontWeight="bold" fontSize={15}>{c.name}</Typography>
