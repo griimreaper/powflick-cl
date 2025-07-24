@@ -463,7 +463,7 @@ export default function ProductInfluencerIntro({ product }: Props) {
             handleItemChange={handleItemChange}
             customizationsBySize={customizationsBySize}
             setCustomizationsBySize={setCustomizationsBySize}
-            config={{ font, fontColor, isTopSelected: !!isTopSelected }}
+            config={{ font, fontColor, isTopSelected: selected === 'top' }}
           />
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>

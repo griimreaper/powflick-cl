@@ -82,6 +82,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   config,
 }) => {
 
+  console.log(config.isTopSelected,'config');
+  
 
   // React Hook Form setup
   const {
