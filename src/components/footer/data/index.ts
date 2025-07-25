@@ -24,6 +24,7 @@ export const PAGES = [
   ["Contact", "contact"],
   ["About Us", "about-us"],
   ["FAQ", "help"],
+  ["Creator Kits", "influencers"],
   ["Customization Guide", "customization-guide"],
 ];
 

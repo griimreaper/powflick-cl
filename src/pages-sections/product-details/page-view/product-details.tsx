@@ -10,7 +10,6 @@ import { Box, useMediaQuery } from "@mui/material";
 import Section2 from "pages-sections/fashion-2/section-2";
 import { useSearchParams } from "next/navigation";
 import ProductInfluencerIntro from "../productIntro/product-influencer-intro";
-import ProductTabsInfluencer from "../product-tabs influencer";
 
 export default function ProductDetailsPageView({ detail }: { detail: detailProps }) {
   const { product, sugestedProducts, frequentlyBought, reviews, PaymentMethods, ShippingTypes } = detail;
@@ -38,11 +37,7 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       }
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
-      {hasInfluencer ?
-        <ProductTabsInfluencer productPrice={product.price} reviews={reviews} />
-        :
-        <ProductTabs productPrice={product.price} reviews={reviews} />
-      }
+      <ProductTabs productPrice={product.price} reviews={reviews} hasInfluencer={hasInfluencer} />
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
       {/* <FrequentlyBought products={frequentlyBought} /> */}

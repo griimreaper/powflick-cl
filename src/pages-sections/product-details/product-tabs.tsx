@@ -10,7 +10,6 @@ import { Review } from "models/types";
 import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import PricingSection from "./pricing-section";
-import ProductComment from "./product-comment";
 import DetailReviewList from "./DetailsReviewList";
 
 // STYLED COMPONENT
@@ -26,7 +25,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   }
 }));
 
-export default function ProductTabs({ productPrice, reviews }: { productPrice: number, reviews: Review[] }) {
+export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { productPrice: number, reviews: Review[], hasInfluencer?: boolean }) {
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
@@ -40,7 +39,7 @@ export default function ProductTabs({ productPrice, reviews }: { productPrice: n
         variant='scrollable'
       >
         <Tab className="inner-tab" label="Description" />
-        <Tab className="inner-tab" label="Pricing Information" />
+        {hasInfluencer ? <></> : <Tab className="inner-tab" label="Pricing Information" />}
         <Tab className="inner-tab" label={`Size Table`} />
         <Tab className="inner-tab" label={`Worldwide Shipping`} />
         <Tab className="inner-tab" label={`Reviews`} />
