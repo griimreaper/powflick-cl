@@ -68,7 +68,7 @@ const sizeTabs = [
 const sizeOptions: Record<string, string[]> = {
   MEN: ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"],
   WOMEN: ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
-  KIDS: ["XSj (5-6Y)", "Sj (7-8Y)", "Mj (9-10Y)", "Lj (11-12Y)", "XLj (13-14Y)"]
+  KIDS: ["XSJ (5-6Y)", "SJ (7-8Y)", "MJ (9-10Y)", "LJ (11-12Y)", "XLJ (13-14Y)"]
 };
 
 const genderOrder = ["MEN", "WOMEN", "KIDS"];
