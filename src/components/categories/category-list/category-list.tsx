@@ -23,6 +23,7 @@ export default function CategoryList({ open, position = "absolute", data }: Prop
     { icon: ContactMail, title: "Contact", href: "/contact" },
     { icon: Info, title: "About Us", href: "/about-us" },
     { icon: Help, title: "FAQ", href: "/help" },
+    { icon: Help, title: "Creator Kits", href: "/influencers" },
   ];
 
 return (

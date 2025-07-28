@@ -37,7 +37,13 @@ function updateCartTotal(set: any) {
           .toFixed(2)
       ),
       amount: prod.customizations.length,
-      totalProduct: Number(getTotalWithDiscount(prod.product.price, prod.amount).toFixed(2)),
+      totalProduct: Number(
+        getTotalWithDiscount(
+          prod.product.price,
+          prod.customizations.length,
+          !prod.product.influencer_id
+        ).toFixed(2)
+      ),
     })),
     total: parseFloat(
       state.cart
@@ -68,9 +74,9 @@ const handleSetProductInCart = (
   product: ProductToBagType,
   customizations: Customization[] | null,
   totalCustomization: number,
-  totalProduct: number,
   amount: number,
-  top: boolean = false
+  top: boolean = false,
+  note?: string // ← AÑADIDO
 ) => {
   set((state: any) => {
     const productIndex = state.cart.findIndex(
@@ -107,7 +113,6 @@ const handleSetProductInCart = (
         });
       }
 
-      existingProduct.totalProduct = totalProduct;
       existingProduct.totalCustomization = totalCustomization;
       existingProduct.top = top;
       return {
@@ -124,7 +129,6 @@ const handleSetProductInCart = (
             product: product,
             customizations: customizations === null ? [] : customizations,
             totalCustomization: totalCustomization,
-            totalProduct: totalProduct,
             amount,
             top,
           },
@@ -193,9 +197,8 @@ export const useShoppingCartStore = create(
           product,
           customizations,
           totalCustomization,
-          totalProduct,
           amount,
-          top,
+          top
         ),
       setCoupon: (coupon: Coupon | null) => {
         set((state) => ({

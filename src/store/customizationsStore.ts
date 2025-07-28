@@ -276,6 +276,114 @@ export const useCustomizationsStore = create(
 
         updateTotal(set);
       },
+      generateCustomizationsFromSizeMap: (
+        productId: string,
+        customizationsBySize: {
+          [size: string]: { number?: string; name?: string }[];
+        },
+        font = 'Arial',
+        fontColor = '#000000',
+        isTopSelected?: boolean
+      ) => {
+        const newCustomizations: Customization[] = [];
+
+        function estimateCenterX(charCount: number, fontSize: number): number {
+          const charWidthEstimate = fontSize * 0.5; // aproximado
+          const textWidth = charCount * charWidthEstimate;
+          return (500 - textWidth) / 2; // centrado en imagen de 640px
+        }
+
+        function getFittedFontSize(text: string, maxWidth: number, baseFontSize: number): number {
+          if (!text) return baseFontSize;
+
+          const estimatedCharWidth = baseFontSize * 0.6; // estimación promedio
+          const estimatedWidth = text.length * estimatedCharWidth;
+
+          if (estimatedWidth <= maxWidth) return baseFontSize;
+
+          // Ajustamos proporcionalmente
+          const scaleFactor = maxWidth / estimatedWidth;
+          return Math.floor(baseFontSize * scaleFactor);
+        }
+
+        Object.entries(customizationsBySize).forEach(([size, items]) => {
+          items
+            .forEach(item => {
+              const customization = initialCustomization();
+
+              const numberText = item.number ?? "";
+              const nameText = item.name ?? "";
+
+              const numberSize = getFittedFontSize(numberText, 170, 120);
+              const textSize = getFittedFontSize(nameText, 170, 50);
+
+              const numberX = estimateCenterX(numberText.length, numberSize);
+              const textX = estimateCenterX(nameText.length, textSize);
+
+              customization.size = size;
+              customization.shorts = isTopSelected ? 'No Shorts (-$13.99)' : 'Default (+$0.00)';
+
+              customization.backSide.numbers = item.number
+                ? [{
+                  number: numberText,
+                  font,
+                  numberPosition: { x: numberX, y: 120 },
+                  numberSize,
+                  numberColor: fontColor,
+                  rotate: 0,
+                }]
+                : [];
+
+              customization.backSide.texts = item.name
+                ? [{
+                  text: nameText,
+                  font,
+                  textPosition: { x: textX, y: 50 },
+                  textSize,
+                  textColor: fontColor,
+                  rotate: 0,
+                }]
+                : [];
+
+              customization.price = calculateCustomizationPrice(customization);
+
+              newCustomizations.push(customization);
+            });
+        });
+
+        set(state => {
+          const existingIndex = state.list.findIndex(p => p.productId === productId);
+
+          if (existingIndex !== -1) {
+            const newList = [...state.list];
+            newList[existingIndex] = {
+              ...newList[existingIndex],
+              customizations: newCustomizations,
+              amount: newCustomizations.length,
+              isTopSelected: isTopSelected ?? newList[existingIndex].isTopSelected,
+              total: 0,
+            };
+            return { ...state, list: newList };
+          } else {
+            return {
+              ...state,
+              list: [
+                ...state.list,
+                {
+                  productId,
+                  customizations: newCustomizations,
+                  amount: newCustomizations.length,
+                  isTopSelected: isTopSelected ?? false,
+                  total: 0,
+                }
+              ],
+            };
+          }
+        });
+
+        updateTotal(set);
+      },
+
       clearCustomization: () => {
         set({ list: [] });
       },

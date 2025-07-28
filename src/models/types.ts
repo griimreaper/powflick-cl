@@ -32,6 +32,32 @@ export interface Tags {
   products: ProductDB[];
 }
 
+type SocialMediaLink = {
+  label: string; // ← sin `| undefined`
+  url: string;
+};
+
+export interface Influencer {
+  id: string;
+  name: string;
+  email: string;
+  title: string;
+  description: string;
+  label: string;
+  logo: string;
+  banner: string;
+  profileImage: string; // Nueva imagen de perfil
+  socialMedia: {
+    instagram?: SocialMediaLink;
+    twitter?: SocialMediaLink;
+    facebook?: SocialMediaLink;
+    tiktok?: SocialMediaLink;
+    youtube?: SocialMediaLink;
+    [key: string]: SocialMediaLink | undefined;
+  };
+  products: ProductDB[];
+}
+
 export interface ProductDB {
   id: string; // Identificador único del producto
   title: string; // Título del producto
@@ -59,10 +85,11 @@ export interface ProductDB {
   font: string;
   font_color: string;
   password: string;
-  OrderProduct?: { amount: number, price: number, top: string }
+  OrderProduct?: { amount: number; price: number; top: string };
   categories: { name: string }[];
   collections: { title: string }[];
   tags: { name: string }[];
+  influencer_id?: string; // ← Añadido para soportar la propiedad
 }
 
 export interface RecentProduct extends ProductDB {}

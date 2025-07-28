@@ -13,10 +13,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ProductFilterKeys, ProductFilterValues } from "pages-sections/product-details/types";
 
 // ========================================================
-type Props = { data: any, handlePage: (number: number) => void };
+interface Props {
+  data: any;
+  handlePage: (page: number) => void;
+  onProductClick?: (product: any) => void; // Nuevo
+}
 // ========================================================
 
-export default function ProductsGridView({ data, handlePage }: Props) {
+export default function ProductsGridView({ data, handlePage, onProductClick }: Props) {
   const itemsPerPage = 9;
   const router = useRouter();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -45,16 +49,19 @@ export default function ProductsGridView({ data, handlePage }: Props) {
 
   return (
     <Fragment>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} minHeight={'800px'}>
         {data?.products?.map((item: ProductDB) => (
           <Grid item lg={4} sm={6} xs={12} key={item.id}>
-            <ProductCard16 product={item} />
+            <ProductCard16 product={item} onProductClick={onProductClick} />
           </Grid>
         ))}
       </Grid>
 
-      <FlexBetween flexWrap="wrap" mt={6} >
-        <Span color={themeColors.text.secondary}>Showing {itemsPerPage * (data?.page - 1) + 1}-{Math.min(itemsPerPage * data?.page, data?.count?.total || 0)} of {data?.count?.total || 0} Products</Span>
+      <FlexBetween display={"flex"} flexDirection={{ xs: "column", md: "row" }} mt={4} width={'100%'} justifyContent={'space-between'}>
+        {data.page ?
+          <Span color={themeColors.text.secondary}>Showing {itemsPerPage * (data?.page - 1) + 1}-{Math.min(itemsPerPage * data?.page, data?.count?.total || 0)} of {data?.count?.total || 0} Products</Span>
+          : <Grid></Grid>
+        }
         <Pagination count={data?.totalPages} page={data.page} onChange={handleChange} color="primary" />
       </FlexBetween>
     </Fragment>

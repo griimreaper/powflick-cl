@@ -46,7 +46,7 @@ export default function ProductCard8({ product, active = false }: Props) {
   );
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const hoverImages = images.filter((i) => !i.includes("customization"));
+  const hoverImages = images?.filter((i) => !i.includes("customization"));
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -114,7 +114,7 @@ export default function ProductCard8({ product, active = false }: Props) {
               overflow: "hidden",
             }}
           >
-            {hoverImages.map((img, index) => (
+            {hoverImages?.map((img, index) => (
               <Image
                 key={index}
                 src={img}

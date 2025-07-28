@@ -53,7 +53,13 @@ const getTieredPrices = (basePrice: number): Record<Tier, number> => ({
   '250+': +(basePrice * 0.65).toFixed(2),    // 35% off
 });
 
-export const getTotalWithDiscount = (basePrice: number, quantity: number): number => {
+export const getTotalWithDiscount = (
+  basePrice: number,
+  quantity: number,
+  applyDiscount: boolean = true
+): number => {
+  if (!applyDiscount) return +(basePrice * quantity).toFixed(2);
+
   let tier: Tier;
 
   if (quantity >= 250) tier = '250+';
@@ -67,7 +73,13 @@ export const getTotalWithDiscount = (basePrice: number, quantity: number): numbe
   return +(unitPrice * quantity).toFixed(2);
 };
 
-export const getUnitPriceWithDiscount = (basePrice: number, quantity: number): number => {
+export const getUnitPriceWithDiscount = (
+  basePrice: number,
+  quantity: number,
+  applyDiscount: boolean = true
+): number => {
+  if (!applyDiscount) return basePrice;
+
   let tier: Tier;
 
   if (quantity >= 250) tier = '250+';
