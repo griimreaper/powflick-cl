@@ -17,14 +17,11 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import Image from "next/image";
 import { Customization } from "models/types";
-import {
-  useCustomizationStore,
-} from "store/customizationStore";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useCounter } from "hooks/useCounter";
 import { useCustomizationsStore } from "store/customizationsStore";
+import { Close } from "@mui/icons-material";
+import { v4 as uuidv4 } from 'uuid';
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -49,10 +46,10 @@ interface AditionalDetailsProps {
   detail: detailProps | any;
   handleItemChange: (name: keyof Customization, value: string) => void;
   customizationsBySize: {
-    [size: string]: { number?: string; name?: string }[]
+    [size: string]: { id: string; number?: string; name?: string }[]
   };
   setCustomizationsBySize: React.Dispatch<React.SetStateAction<{
-    [size: string]: { number?: string; name?: string }[];
+    [size: string]: { id: string; number?: string; name?: string }[]
   }>>;
   config: {
     font: string
@@ -130,7 +127,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
 
       if (newCount > currentCount) {
         for (let i = currentCount; i < newCount; i++) {
-          currentArr.push({ number: "", name: "" }); // No vacío para que se registre en la store
+          currentArr.push({ id: uuidv4(), number: "", name: "" }); // No vacío para que se registre en la store
         }
       } else if (newCount < currentCount) {
         currentArr.splice(newCount);
@@ -153,7 +150,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   const handleCustomInput = (size: string, idx: number, field: "number" | "name", value: string) => {
     setCustomizationsBySize(prev => {
       const arr = prev[size] ? [...prev[size]] : [];
-      if (!arr[idx]) arr[idx] = {};
+      if (!arr[idx]) arr[idx] = { id: `${size}-${idx}-${Date.now()}` };
       arr[idx][field] = value;
       updateStoreFromCustomizationsBySize({ ...prev, [size]: arr });
       return { ...prev, [size]: arr };
@@ -162,6 +159,27 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
     setValue(`${size}-${idx}-${field}`, value, { shouldValidate: true });
   };
 
+  const handleDelete = (sizeGenderKey: string, idx: number) => {
+    setCustomizationsBySize(prev => {
+      const arr = prev[sizeGenderKey] ? [...prev[sizeGenderKey]] : [];
+      arr.splice(idx, 1);
+      const updated = { ...prev, [sizeGenderKey]: arr };
+      updateStoreFromCustomizationsBySize(updated);
+      return updated;
+    });
+
+    const lastDashIndex = sizeGenderKey.lastIndexOf("-");
+    const gender = sizeGenderKey.substring(lastDashIndex + 1) as Gender;
+    const size = sizeGenderKey.substring(0, lastDashIndex);
+
+    setQuantities(prev => {
+      const updatedGender = { ...prev[gender] };
+      if (updatedGender[size]) {
+        updatedGender[size] = Math.max(0, updatedGender[size] - 1);
+      }
+      return { ...prev, [gender]: updatedGender };
+    });
+  };
 
   return (
     <Box
@@ -293,6 +311,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               <Box flex={1} textAlign="center">
                 Name
               </Box>
+              <Box flex={0.3} />
             </Box>
             {/* Filas de personalización */}
             {Object.entries(customizationsBySize)
@@ -343,7 +362,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                               {...field}
                               variant="outlined"
                               size="small"
-                              placeholder=""
+                              placeholder="US$3.99"
                               sx={{ width: '100%' }}
                               error={!!errors[`${sizeGenderKey}-${idx}-number`]}
                               onChange={e => {
@@ -379,7 +398,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                               {...field}
                               variant="outlined"
                               size="small"
-                              placeholder=""
+                              placeholder="US$3.99"
                               sx={{ width: '100%' }}
                               error={!!errors[`${sizeGenderKey}-${idx}-name`]}
                               onChange={e => {
@@ -394,6 +413,18 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                             {errors[`${sizeGenderKey}-${idx}-name`]?.message as string}
                           </Typography>
                         )}
+                      </Box>
+                      <Box flex="none" pl={1}>
+                        <Button
+                          variant="text"
+                          color="error"
+                          size="small"
+                          onClick={() => handleDelete(sizeGenderKey, idx)}
+                          sx={{ minWidth: 32, p: 0 }}
+                          aria-label="Delete customization"
+                        >
+                          <Close fontSize="small" />
+                        </Button>
                       </Box>
                     </Box>
                   );

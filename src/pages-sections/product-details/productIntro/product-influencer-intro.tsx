@@ -79,15 +79,17 @@ export default function ProductInfluencerIntro({ product }: Props) {
   const isSelected = (value: "top" | "uniform") => selected === value;
 
   const [customizationsBySize, setCustomizationsBySize] = useState<{
-    [size: string]: { number?: string; name?: string }[]
+    [size: string]: { id: string; number?: string; name?: string }[]
   }>({});
 
-  const productCustomizations: Customization[] = list.find((p) => id === p.productId)?.customizations || [];
+  const productCustomizations = React.useMemo(() => {
+    return list.find((p) => id === p.productId)?.customizations || [];
+  }, [list, id]);
 
   useEffect(() => {
     // Agrupar customizaciones por size (size incluye talle-género)
     const grouped: {
-      [size: string]: { number?: string; name?: string }[];
+      [size: string]: { id: string; number?: string; name?: string }[]
     } = {};
 
     productCustomizations.forEach(custom => {
@@ -96,13 +98,14 @@ export default function ProductInfluencerIntro({ product }: Props) {
       if (!grouped[key]) grouped[key] = [];
 
       grouped[key].push({
+        id: custom.id,
         number: custom.backSide.numbers[0]?.number || "",
         name: custom.backSide.texts[0]?.text || ""
       });
     });
 
     setCustomizationsBySize(grouped);
-  }, []);
+  }, [productCustomizations]);
 
   useEffect(() => {
     const newValue = selected === 'top'
@@ -484,7 +487,7 @@ export default function ProductInfluencerIntro({ product }: Props) {
                 onClick={() => {
                   // Validación: si no hay customizaciones, mostrar alert y cortar ejecución
                   if (productCustomizations.length === 0) {
-                    showErrorAlert("No selections","Please add one size before adding to cart.");
+                    showErrorAlert("No selections", "Please add one size before adding to cart.");
                     return;
                   }
                   // Validación de errores en personalización
