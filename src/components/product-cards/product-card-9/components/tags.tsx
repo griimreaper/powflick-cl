@@ -23,7 +23,7 @@ interface Props {
 export default function ProductTags({ tags }: Props) {
   return (
     <StyledRoot>
-      {tags.map((item) => (
+      {tags?.map((item) => (
         <Link href="#" key={item}>
           <p>{item}</p>
         </Link>
