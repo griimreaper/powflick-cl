@@ -290,7 +290,7 @@ export default function ProductInfluencerIntro({ product }: Props) {
                     borderRadius="10px"
                     style={{ cursor: "pointer" }}
                     onClick={handleImageClick(ind)}
-                    mr={ind === images.length - 1 ? "auto" : "10px"}
+                    mr={ind === images.length - 1 ? "10px" : "10px"}
                     borderColor={
                       selectedImage === ind ? "primary.main" : "grey.400"
                     }

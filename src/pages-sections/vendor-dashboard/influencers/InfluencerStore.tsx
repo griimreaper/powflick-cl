@@ -201,7 +201,7 @@ export default function InfluencerStore({
 
             <Grid container my={8} alignItems="start">
                 <Grid item xs={12} md={4} xl={4} display="flex" flexDirection="column" alignItems="end" textAlign="left">
-                    <Box mt={3} mx="auto" textAlign="center">
+                    <Box mt={3} mx="auto" textAlign="center" paddingX={"24px"}>
                         {/* Imagen de perfil */}
                         <Avatar
                             src={profileImage}

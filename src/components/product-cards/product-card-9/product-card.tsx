@@ -148,7 +148,7 @@ export default function ProductCard9(props: Props) {
           <div className="content">
             <Box display={'flex'} flexDirection={'column'}>
               {/* PRODUCT TAG LIST */}
-              <ProductTags tags={product_categories.split('|')} />
+              <ProductTags tags={product_categories?.split('|')} />
 
               {/* PRODUCT TITLE / NAME */}
               <H5 fontWeight="700" mt={1} mb={2}>

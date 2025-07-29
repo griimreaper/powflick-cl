@@ -78,30 +78,32 @@ export default function PowFlickLanding() {
                     These jerseys are more than just designs. They&apos;re a way to directly support your favorite influencer.<br />
                     Get your creator&apos;s official kit and wear it with pride—on and off the pitch.
                 </Typography>
-                <Grid container spacing={3} justifyContent="center">
-                    {influencers?.map((c: any) => (
-                        <Grid item xs={12} sm={6} md={4} key={c.id}>
-                            <Card elevation={0} sx={{ alignItems: "center", boxShadow: "none", }}>
-                                <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
-                                    <Image src={c.logo} alt={c.label} width={120} height={120} style={{ borderRadius: "50%" }} />
-                                </Box>
-                                <CardContent sx={{ textAlign: "center", pt: 0 }}>
-                                    <Typography fontWeight="bold" fontSize={15}>{c.name}</Typography>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="small"
-                                        sx={{ mt: 1, fontWeight: 600, borderRadius: 2, px: 2 }}
-                                        component={Link}
-                                        href={`/influencers/${c.label}`}
-                                    >
-                                        SHOP NOW
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
+                <div style={{ maxWidth: 1000, margin: "auto" }}>
+                    <Grid container justifyContent="center">
+                        {influencers?.map((c: any) => (
+                            <Grid item xs={12} sm={6} md={4} key={c.id}>
+                                <Card elevation={0} sx={{ alignItems: "center", boxShadow: "none", }}>
+                                    <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
+                                        <Image src={c.logo} alt={c.label} width={120} height={120} />
+                                    </Box>
+                                    <CardContent sx={{ textAlign: "center", pt: 0 }}>
+                                        <Typography fontWeight="bold" fontSize={15}>{c.name}</Typography>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            size="small"
+                                            sx={{ mt: 1, fontWeight: 600, borderRadius: 2, px: 2 }}
+                                            component={Link}
+                                            href={`/influencers/${c.label}`}
+                                        >
+                                            SHOP NOW
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </div>
             </Container>
 
 
