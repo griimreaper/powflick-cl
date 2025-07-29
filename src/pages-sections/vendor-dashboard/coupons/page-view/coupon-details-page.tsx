@@ -10,6 +10,7 @@ import { Box, Typography, Chip } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
+import { isAfter } from "date-fns";
 
 
 const couponUserTableHeading = [
@@ -21,6 +22,16 @@ const couponUserTableHeading = [
 export default function CouponDetailsPageView({ coupon }: any) {
     const [couponUsers, setCouponUsers] = useState<any[]>(coupon.couponUsers || []);
 
+    const isActive = coupon.expiresAt ? isAfter(new Date(coupon.expiresAt), new Date()) : false;
+    const label = coupon.expiresAt
+        ? new Date(coupon.expiresAt).toLocaleString('es-AR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
+        : 'Sin fecha';
     return (
         <PageWrapper title={`Coupon: ${coupon.title}`}>
             <Card sx={{ mb: 3, p: 3 }}>
@@ -37,6 +48,14 @@ export default function CouponDetailsPageView({ coupon }: any) {
                     <Box>
                         <Typography variant="subtitle2" color="grey.700">Discount</Typography>
                         <Chip label={`${coupon.discount}%`} color="success" />
+                    </Box>
+                    <Box>
+                        <Typography variant="subtitle2" color="grey.700">Expire Date</Typography>
+                        <Chip
+                            label={label}
+                            color={isActive ? 'success' : 'error'}
+                            variant="outlined"
+                        />
                     </Box>
                 </Box>
 

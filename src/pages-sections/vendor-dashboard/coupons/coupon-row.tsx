@@ -10,7 +10,7 @@ type Props = { coupon: any; setActualize: Function };
 // ========================================================================
 
 export default function CouponRow({ coupon, setActualize, onClick }: any) {
-    const { id, title, content, discountDisplay } = coupon || {};
+    const { id, title, content, discountDisplay, expiresAt } = coupon || {};
     const { profile } = useDashboardStore();
 
     const router = useRouter();
@@ -31,6 +31,17 @@ export default function CouponRow({ coupon, setActualize, onClick }: any) {
             <StyledTableCell align="left">{title}</StyledTableCell>
             <StyledTableCell align="left">{content}</StyledTableCell>
             <StyledTableCell align="center">{discountDisplay}</StyledTableCell>
+            <StyledTableCell align="left">{
+                expiresAt
+                    ? new Intl.DateTimeFormat('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    }).format(new Date(expiresAt))
+                    : 'Sin fecha'}
+            </StyledTableCell>
             <StyledTableCell align="center">
                 <StyledIconButton onClick={handleNavigate}>
                     <Edit />
