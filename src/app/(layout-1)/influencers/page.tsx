@@ -84,7 +84,13 @@ export default function PowFlickLanding() {
                             <Grid item xs={12} sm={6} md={4} key={c.id}>
                                 <Card elevation={0} sx={{ alignItems: "center", boxShadow: "none", }}>
                                     <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
-                                        <Image src={c.logo} alt={c.label} width={120} height={120} />
+                                        <Image
+                                            src={c.logo}
+                                            alt={c.label}
+                                            width={120}
+                                            height={120}
+                                            style={{ objectFit: "contain" }}
+                                        />
                                     </Box>
                                     <CardContent sx={{ textAlign: "center", pt: 0 }}>
                                         <Typography fontWeight="bold" fontSize={15}>{c.name}</Typography>
