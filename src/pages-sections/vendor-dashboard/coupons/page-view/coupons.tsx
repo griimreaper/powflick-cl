@@ -9,12 +9,17 @@ import Pagination from "pages-sections/vendor-dashboard/products/page-view/Pagin
 import PageWrapper from "../../page-wrapper";
 import CouponRow from "../coupon-row";
 import { useEffect, useState } from "react";
-import { getCoupons } from "services/dashboardAdmin/coupons";
+import { getAllCouponsAdmin, getCoupons } from "services/dashboardAdmin/coupons";
 import { createCoupon } from "services/modals/discount";
 import { Box, Button, TextField, Stack, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from "@mui/material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { format } from "date-fns";
+import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { Filters } from "pages-sections/vendor-dashboard/influencers/page-view";
+import { useDashboardStore } from "store/dashboard";
+import SearchArea from "pages-sections/vendor-dashboard/search-box";
 
 const timezones = [
     { label: "New York (America/New_York)", value: "America/New_York" },
@@ -34,8 +39,22 @@ const timezones = [
 export default function CouponsPageView() {
     const [couponsList, setCouponsList] = useState<any>();
     const [actualize, setActualize] = useState(false);
-    const [page, setPage] = useState(1);
     const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
+    const { profile } = useDashboardStore();
+    const token = profile.token;
+    const [filters, setFilters] = useState<Filters>({
+        search: '',
+        page: 1,
+        limit: 12,
+    });
+
+    const handlePage = (page: number) => {
+        setFilters({ ...filters, page });
+    };
+
+    const handleSearch = (value: string) => {
+        setFilters({ ...filters, search: value });
+    };
 
     dayjs.extend(utc);
     dayjs.extend(timezone);
@@ -53,8 +72,20 @@ export default function CouponsPageView() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        getCoupons().then(setCouponsList);
-    }, [actualize, page]);
+        const fetchCoupons = async () => {
+            try {
+                if (token) {
+                    const data = await getAllCouponsAdmin(filters, token);
+                    setCouponsList(data);
+                    console.log("Coupons fetched:", data);
+                }
+            } catch (error) {
+                console.error('Error al obtener cupones:', error);
+            }
+        };
+
+        fetchCoupons();
+    }, [filters, token, actualize]);
 
     // Manejar cambios en el formulario para inputs
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +121,15 @@ export default function CouponsPageView() {
                     "YYYY-MM-DD HH:mm",
                     form.timezone
                 );
+                const nowUtc = dayjs.utc();
+
+                if (localDateTime.isBefore(nowUtc)) {
+                    showErrorAlert("Date Restriccion", "The date and time must be in the future.");
+                    setLoading(false);
+                    return;
+                }
+
+                // Convertir a UTC para guardar
                 expiresAt = localDateTime.utc().toDate();
             }
 
@@ -99,7 +139,10 @@ export default function CouponsPageView() {
                 discount: Number(form.discount),
                 type: form.type,
                 expiresAt, // Date o null
+                timezone: form.timezone || null,
             });
+
+            showSuccessAlert("Success", "Coupon created successfully");
 
             setForm({
                 title: "",
@@ -111,16 +154,23 @@ export default function CouponsPageView() {
                 timezone: "America/New_York",
             });
             setActualize((a) => !a);
-        } catch (err) {
-            alert("Error al crear cupón");
+        } catch (err: any) {
+            alert("Error al crear cupón" + err.message);
         }
         setLoading(false);
     };
 
-    console.log("couponsList", couponsList);
+    const todayUtc = new Date();
+    const minDate = format(todayUtc, 'yyyy-MM-dd');
 
     return (
         <PageWrapper title="Coupons">
+            <SearchArea
+                handleSearch={handleSearch}
+                buttonText=""
+                url=""
+                searchPlaceholder="Search Coupon..."
+            />
             {/* Formulario para crear cupón */}
             <Box
                 component="form"
@@ -133,7 +183,7 @@ export default function CouponsPageView() {
                     boxShadow: 1,
                 }}
             >
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+                <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
                     <TextField
                         name="title"
                         label="Coupon Code"
@@ -184,6 +234,7 @@ export default function CouponsPageView() {
                         onChange={handleChange}
                         size="small"
                         InputLabelProps={{ shrink: true }}
+                        inputProps={{ min: minDate }}
                         sx={{ background: "#fff" }}
                     />
 
@@ -215,7 +266,7 @@ export default function CouponsPageView() {
                         </Select>
                     </FormControl>
 
-                        <Button
+                    <Button
                         type="submit"
                         variant="contained"
                         color="primary"
@@ -234,19 +285,21 @@ export default function CouponsPageView() {
                                 heading={[
                                     { id: "title", label: "Title", align: "left" },
                                     { id: "content", label: "Content", align: "left" },
-                                    { id: "discount", label: "Discount", align: "center" }, // quitado el (%)
-                                    { id: "expireAt", label: "Expire Date", align: "center" }, // quitado el (%)
-                                    { id: "actions", label: "Actions", align: "center" },
+                                    { id: "discount", label: "Discount", align: "center" },
+                                    { id: "expireAt", label: "Expire Date", align: "center" },
+                                    { id: "utc", label: "UTC", align: "center" },
+                                    { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 12, 24, 50, 100] },
                                 ]}
                                 orderBy="title"
                                 rowCount={couponsList?.length}
                                 numSelected={0}
                                 order="asc"
-                                onRequestSort={() => { }}
+                                onFilterChange={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
+                                onRequestSort={(filter: string, option: string) => setFilters((f: any) => { return { ...f, [filter]: option } })}
                                 hideSelectBtn
                             />
                             <TableBody>
-                                {couponsList?.map((coupon: { id: any; discount: number; type: string; }) => (
+                                {couponsList?.coupons?.map((coupon: { id: any; discount: number; type: string; }) => (
                                     <CouponRow
                                         key={coupon.id}
                                         coupon={{
@@ -268,7 +321,7 @@ export default function CouponsPageView() {
                     prevPage={couponsList?.prevPage}
                     nextPage={couponsList?.nextPage}
                     totalPages={couponsList?.totalPages}
-                    handlePage={setPage}
+                    handlePage={handlePage}
                 />
             </Card>
         </PageWrapper>
