@@ -88,7 +88,6 @@ export default function TableHeader(props: Props) {
     onFilterChange('orderBy', columnId);
     handleFilterClose(); // Cerrar el menú después de la selección
   };
-  console.log(selectedHeaders);
 
   return (
     <TableHead sx={{ backgroundColor: "grey.200" }}>

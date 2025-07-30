@@ -8,10 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 // MUI ICON COMPONENTS
-import Add from "@mui/icons-material/Add";
-import Remove from "@mui/icons-material/Remove";
-// GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H2, H6 } from "components/Typography";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
@@ -31,32 +27,24 @@ import {
 } from "@mui/icons-material";
 import { useCustomizationStore } from "store/customizationStore";
 import { useCustomizationsStore } from "store/customizationsStore";
-import AditionalDetails from "./AditionalDetails";
-import Customizations from "components/Customization/customization";
 import { useShoppingCartStore } from "store/shoppingCart";
-import { Divider, TextField, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
-import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
-import { useSearchParams } from "next/navigation";
+import { getTotalWithDiscount } from "utils/tools";
+import AditionalDetailsinfluencer from "./AditionalDetailsInfluencer";
 
 // ================================================================
 type Props = { product: detailProps };
 // ================================================================
 
-type SelectVariants = {
-  [key: string]: string; // Permite usar cualquier string como clave
-};
-
-export default function ProductIntro({ product }: Props) {
+export default function ProductInfluencerIntro({ product }: Props) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const {
     id,
     price,
     title,
     images,
-    slug,
-    URL,
     font: fontDefault,
     font_color,
   } = product.product;
@@ -66,29 +54,23 @@ export default function ProductIntro({ product }: Props) {
   }>({});
 
   const {
-    customization,
-    showCustomization,
     setShowCustomization,
     updateCustomizationAttribute,
-    setCustomization,
-    clearCustomization,
     setFonts,
     setFontColor,
   } = useCustomizationStore();
-  const { list, setCustomizationInList, setFieldForAllCustomizations } =
-    useCustomizationsStore();
+  const { list, setFieldForAllCustomizations } = useCustomizationsStore();
   const { profile, setFavorites } = useDashboardStore();
   const { token } = profile;
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFav, setIsFav] = useState<boolean>(
     profile.favorites?.some(({ product }) => product.id === id)
   );
-  const { counter, decrement, increment, setCounter, handleInputChange } =
+  const { counter, setCounter } =
     useCounter(product.product.id);
   const [font, setFont] = useState<string>(fontDefault || "Arial");
   const [fontColor, setFontColr] = useState<string>(font_color || "000000");
   const { setProductInCart } = useShoppingCartStore();
-  const [selectedCustomization, setSelectedCustomization] = useState<number | null>(null);
   const customizationsTotal = list.find((p) => id === p.productId)?.total || 0;
 
   const isTopSelected = list.find((item) => item.productId === id)?.isTopSelected ? 'top' : 'uniform';
@@ -96,11 +78,38 @@ export default function ProductIntro({ product }: Props) {
   const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
   const isSelected = (value: "top" | "uniform") => selected === value;
 
-  const searchParams = useSearchParams();
+  const [customizationsBySize, setCustomizationsBySize] = useState<{
+    [size: string]: { id: string; number?: string; name?: string }[]
+  }>({});
+
+  const productCustomizations = React.useMemo(() => {
+    return list.find((p) => id === p.productId)?.customizations || [];
+  }, [list, id]);
+
+  useEffect(() => {
+    // Agrupar customizaciones por size (size incluye talle-género)
+    const grouped: {
+      [size: string]: { id: string; number?: string; name?: string }[]
+    } = {};
+
+    productCustomizations.forEach(custom => {
+      const key = custom.size; // ejemplo: "M-MEN"
+
+      if (!grouped[key]) grouped[key] = [];
+
+      grouped[key].push({
+        id: custom.id,
+        number: custom.backSide.numbers[0]?.number || "",
+        name: custom.backSide.texts[0]?.text || ""
+      });
+    });
+
+    setCustomizationsBySize(grouped);
+  }, [productCustomizations]);
 
   useEffect(() => {
     const newValue = selected === 'top'
-      ? 'No Shorts (-$10.00)'
+      ? 'No Shorts (-$13.99)'
       : 'Default (+$0.00)';
 
     const customizations = list.find((item) => item.productId === id)?.customizations || null;
@@ -112,45 +121,6 @@ export default function ProductIntro({ product }: Props) {
     setFieldForAllCustomizations(id, 'shorts', newValue);
     updateCustomizationAttribute('shorts', newValue);
   }, [selected, counter]);
-
-  useEffect(() => {
-    const findAmountBySessionStorage: string | null = sessionStorage.getItem(
-      "customizations-store"
-    );
-    if (findAmountBySessionStorage) {
-      const jsonSS = JSON.parse(findAmountBySessionStorage);
-
-      const amount = jsonSS?.state?.list.find(
-        ({ productId }: any) => productId === id
-      )?.amount;
-      if (amount) {
-        setCounter(Number(amount));
-      } else {
-        clearCustomization();
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (customization.id !== "none") {
-      if (customization.shorts === 'No Shorts (-$10.00)') {
-        setSelected("top")
-      } else {
-        setSelected('uniform')
-      }
-      setCustomizationInList(id, customization, selected === 'top');
-    }
-  }, [customization]);
-
-  useEffect(() => {
-    const customizations: Customization[] | null =
-      list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
-
-    if (customization.id !== "none" && customizations) {
-      setCustomization(customizations[0]);
-
-    }
-  }, [id]);
 
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
@@ -216,18 +186,6 @@ export default function ProductIntro({ product }: Props) {
     }
   };
 
-  const handleCustomizationClick = (
-    index: number,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    setSelectedCustomization(index);
-    setShowCustomization(!showCustomization); // Al hacer clic en "Custom", mostrar la personalización
-    const section = document.getElementById("customization-section");
-    if (section && !showCustomization) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const handleItemChange = (name: keyof Customization, value: string) => {
     setSelectedValues({
       ...selectedValues,
@@ -235,15 +193,6 @@ export default function ProductIntro({ product }: Props) {
     });
 
     updateCustomizationAttribute(name, value);
-  };
-
-  const customizationProps = {
-    frontImage: product?.product.images[2],
-    backImage: product?.product.images[3],
-    product: product?.product,
-    counter,
-    productId: id,
-    setCounter,
   };
 
   const totalCustomizationPrice =
@@ -258,7 +207,7 @@ export default function ProductIntro({ product }: Props) {
       list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
     const totalCustomization = customizationsTotal;
     const totalProduct: number = parseFloat(
-      (getTotalWithDiscount(price, counter, isTopSelected === 'top')).toFixed(2)
+      (getTotalWithDiscount(price, counter, !product.product.influencer_id)).toFixed(2)
     );
     const productToBag = product?.product;
     const amount = counter;
@@ -283,8 +232,6 @@ export default function ProductIntro({ product }: Props) {
     };
   };
 
-  console.log(product);
-
   return (
     <Box width="100%">
       <Grid container spacing={3} justifyContent="space-around">
@@ -298,95 +245,88 @@ export default function ProductIntro({ product }: Props) {
           xs={12}
           alignItems="center"
         >
-          {showCustomization ? (
-            <Box>
-              <Customizations {...customizationProps} />
-              {/* Agrega aquí los elementos de personalización */}
-            </Box>
-          ) : (
-            <Box>
-              <FlexBox
-                borderRadius={3}
-                overflow="visible"
-                justifyContent="center"
-                mb={6}
-              >
-                {selectedVideo ? (
-                  <video
-                    id="product-video"
-                    width="500"
-                    height="500"
-                    controls
-                  >
-                    <source src={selectedVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  <Image
-                    alt={title}
-                    width={500}
-                    height={500}
-                    loading="eager"
-                    src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
-                  />
-                )}
-              </FlexBox>
-
-              <FlexBox
-                overflow="auto"
-                sx={{ width: "full", justifyContent: "center" }}
-              >
-                {images
-                  ?.filter((i: string) => !i.includes("customization"))
-                  .map((url: string, ind: number) => (
-                    <FlexRowCenter
-                      key={ind}
-                      width={64}
-                      height={64}
-                      minWidth={64}
-                      bgcolor="white"
-                      border="1px solid"
-                      borderRadius="10px"
-                      style={{ cursor: "pointer" }}
-                      onClick={handleImageClick(ind)}
-                      mr={ind === images.length - 1 ? "auto" : "10px"}
-                      borderColor={
-                        selectedImage === ind ? "primary.main" : "grey.400"
-                      }
-                    >
-                      <Avatar
-                        alt="product"
-                        src={url}
-                        variant="square"
-                        sx={{ height: 40 }}
-                      />
-                    </FlexRowCenter>
-                  ))}
-                <FlexRowCenter
-                  width={64}
-                  height={64}
-                  minWidth={64}
-                  bgcolor="white"
-                  border="1px solid"
-                  borderRadius="10px"
-                  style={{ cursor: "pointer" }}
-                  mr="10px"
-                  borderColor="grey.400"
-                  onClick={handleVideoClick(
-                    "https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
-                  )}
+          <Box>
+            <FlexBox
+              borderRadius={3}
+              overflow="visible"
+              justifyContent="center"
+              mb={6}
+            >
+              {selectedVideo ? (
+                <video
+                  id="product-video"
+                  width="500"
+                  height="500"
+                  controls
                 >
-                  <video id="product-video-thumbnail" width="64" height="64">
-                    <source
-                      src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
-                      type="video/mp4"
+                  <source src={selectedVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <Image
+                  alt={title}
+                  width={500}
+                  height={500}
+                  loading="eager"
+                  src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
+                />
+              )}
+            </FlexBox>
+
+            <FlexBox
+              overflow="auto"
+              sx={{ width: "full", justifyContent: "center" }}
+            >
+              {images
+                ?.filter((i: string) => !i.includes("customization"))
+                .map((url: string, ind: number) => (
+                  <FlexRowCenter
+                    key={ind}
+                    width={64}
+                    height={64}
+                    minWidth={64}
+                    bgcolor="white"
+                    border="1px solid"
+                    borderRadius="10px"
+                    style={{ cursor: "pointer" }}
+                    onClick={handleImageClick(ind)}
+                    mr={ind === images.length - 1 ? "10px" : "10px"}
+                    borderColor={
+                      selectedImage === ind ? "primary.main" : "grey.400"
+                    }
+                  >
+                    <Avatar
+                      alt="product"
+                      src={url}
+                      variant="square"
+                      sx={{ height: 40 }}
                     />
-                    Your browser does not support the video tag.
-                  </video>
-                </FlexRowCenter>
-              </FlexBox>
-            </Box>
-          )}
+                  </FlexRowCenter>
+                ))}
+              <FlexRowCenter
+                width={64}
+                height={64}
+                minWidth={64}
+                bgcolor="white"
+                border="1px solid"
+                borderRadius="10px"
+                style={{ cursor: "pointer" }}
+                mr="10px"
+                borderColor="grey.400"
+                onClick={handleVideoClick(
+                  "https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
+                )}
+              >
+                <video id="product-video-thumbnail" width="64" height="64">
+                  <source
+                    src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </FlexRowCenter>
+            </FlexBox>
+          </Box>
         </Grid>
 
         {/* PRODUCT INFO AREA */}
@@ -472,103 +412,11 @@ export default function ProductIntro({ product }: Props) {
           {/* PRICE & STOCK */}
           <Box pt={1} mb={3}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
-              {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -10.00 : 0), counter, selected === 'top'))}
+              {currency(price + (selected === 'top' ? -13.99 : 0))}
             </H2>
             <Box color="inherit">Stock Available</Box>
           </Box>
 
-          {/* BUTTONS */}
-          <Box sx={{ display: "flex", gap: 3 }}>
-            <Box sx={{ display: "column", gap: 3 }}>
-              <FlexBox alignItems="center" mb={4.5}>
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    decrement();
-                  }}
-                >
-                  <Remove fontSize="small" />
-                </Button>
-
-                <TextField
-                  value={counter}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-
-                    if (newValue === "") {
-                      // Si el campo está vacío, no hacer nada
-                      handleInputChange(0); // Deja el estado vacío
-                    } else {
-                      const parsedValue = parseInt(newValue, 10);
-
-                      if (
-                        !isNaN(parsedValue) &&
-                        parsedValue >= 1 &&
-                        parsedValue <= 999
-                      ) {
-                        handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
-                        setCounter(parsedValue); // Actualiza el estado con el nuevo valor
-                      }
-                    }
-                  }}
-                  inputProps={{
-                    min: 1, // Evita valores negativos si es necesario
-                    style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
-                  }}
-                  sx={{ mx: 2.5 }}
-                />
-
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    increment();
-                  }}
-                >
-                  <Add fontSize="small" />
-                </Button>
-              </FlexBox>
-
-              {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
-
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
-                  sx={{
-                    width: "clamp(120px, 30vw, 300px)",
-                    px: "clamp(1rem, 5vw, 1.75rem)",
-                    height: 40,
-                    flex: 1,
-                  }}
-                >
-                  Customize
-                </Button>
-              </FlexBox>
-            </Box>
-          </Box>
-
-          <Box display={"flex"} width={'100%'} my={2}>
-            <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
-              <strong>
-                Not sure how to start?
-              </strong>
-              {" "}Check out our{" "}
-              <a href="https://powflick.com/customization-guide"
-                rel="noopener noreferrer"
-                style={{ color: 'blue', textDecoration: 'underline' }}>
-                Customization Guide
-              </a>
-            </Typography>
-          </Box>
-
-          {/* PRODUCT DESCRIPTION */}
           {/* SHOP NAME */}
 
 
@@ -614,14 +462,12 @@ export default function ProductIntro({ product }: Props) {
           }
 
           {/* EDITS DETAIL */}
-
-          <AditionalDetails
+          <AditionalDetailsinfluencer
             detail={product}
             handleItemChange={handleItemChange}
-            counter={counter}
-            sport={title.split(" ")[0]}
-            id={id}
-            selected={selected} // <-- Añadido
+            customizationsBySize={customizationsBySize}
+            setCustomizationsBySize={setCustomizationsBySize}
+            config={{ font, fontColor, isTopSelected: selected === 'top' }}
           />
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
@@ -639,6 +485,22 @@ export default function ProductIntro({ product }: Props) {
                   flex: 1, // Permite que los botones se distribuyan equitativamente
                 }}
                 onClick={() => {
+                  // Validación: si no hay customizaciones, mostrar alert y cortar ejecución
+                  if (productCustomizations.length === 0) {
+                    showErrorAlert("No selections", "Please add one size before adding to cart.");
+                    return;
+                  }
+                  // Validación de errores en personalización
+                  const influencerDetails = document.getElementById("influencer-details-form");
+                  let hasErrors = false;
+                  if (influencerDetails) {
+                    // Busca cualquier input con aria-invalid="true" dentro del formulario
+                    hasErrors = influencerDetails.querySelectorAll('input[aria-invalid="true"]').length > 0;
+                  }
+                  if (hasErrors) {
+                    showErrorAlert("Error", "Please correct the customization fields before adding to cart.");
+                    return;
+                  }
                   const result = handleAddToBagClick();
                   (window as any).dataLayer.push({ ecommerce: null });
                   (window as any).dataLayer.push({

@@ -17,7 +17,7 @@ import { useShoppingCartStore } from "store/shoppingCart";
 import { useRef, useState } from "react";
 import { CustomizationModal } from "pages-sections/cart/CustomizationModal";
 import { styled } from "@mui/material";
-import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
+import { getUnitPriceWithDiscount } from "utils/tools";
 
 // ==============================================================
 interface Props {

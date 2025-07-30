@@ -123,10 +123,10 @@ export default function CustomizationDetails({ customization }: Props) {
                 )}
 
             {/* Otros detalles */}
-            {customization.materials !== "None" && (
+            {customization.materials !== "None" &&  customization.materials !== "LitePlay (+$0.00)" && (
                 <Typography>Materials: {customization.materials}</Typography>
             )}
-            {customization.neck !== "Default" && (
+            {customization.neck !== "Crew Neck (+$0.00)" && (
                 <Typography>Neck: {customization.neck}</Typography>
             )}
             {customization.pants !== "None (+$0.00)" && (

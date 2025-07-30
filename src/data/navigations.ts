@@ -1,22 +1,22 @@
 import MegaMenu1 from "components/categories/mega-menu/mega-menu-1";
 import { CategoryItem } from "components/categories/types";
 
-import Car from "icons/Car";
-import Man from "icons/Man";
-import Gift from "icons/Gift";
-import Food from "icons/Food";
-import Pets from "icons/Pets";
-import Dress from "icons/Dress";
-import Woman from "icons/Woman";
-import Laptop from "icons/Laptop";
-import MakeUp from "icons/MakeUp";
-import BabyBoy from "icons/BabyBoy";
-import BabyGirl from "icons/BabyGirl";
-import PlantPot from "icons/PlantPot";
-import MotorBike from "icons/MotorBike";
-import TeddyBear from "icons/TeddyBear";
-import Microphone from "icons/Microphone";
-import { ContactMail, Help, Info, Public, Store } from "@mui/icons-material";
+// import Car from "icons/Car";
+// import Man from "icons/Man";
+// import Gift from "icons/Gift";
+// import Food from "icons/Food";
+// import Pets from "icons/Pets";
+// import Dress from "icons/Dress";
+// import Woman from "icons/Woman";
+// import Laptop from "icons/Laptop";
+// import MakeUp from "icons/MakeUp";
+// import BabyBoy from "icons/BabyBoy";
+// import BabyGirl from "icons/BabyGirl";
+// import PlantPot from "icons/PlantPot";
+// import MotorBike from "icons/MotorBike";
+// import TeddyBear from "icons/TeddyBear";
+// import Microphone from "icons/Microphone";
+import { ContactMail, Help, Info, Store } from "@mui/icons-material";
 
 export const categoryMenus: CategoryItem[] = [
 
@@ -291,6 +291,7 @@ export const categoryMenus: CategoryItem[] = [
   { icon: ContactMail, title: "Contact", href: "/contact" },
   { icon: Info, title: "About Us", href: "/about-us" },
   { icon: Help, title: "FaQ", href: "/help" },
+  { icon: Help, title: "Creator Kits", href: "/influencers" },
   // { icon: Food, title: "Groceries", href: "/products/search/groceries" },
   // { icon: Car, title: "Automotive", href: "/products/search/automotive" }
 ];

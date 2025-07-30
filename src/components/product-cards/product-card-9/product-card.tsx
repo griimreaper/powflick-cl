@@ -15,6 +15,7 @@ import AddToCartButton from "./components/add-to-cart";
 import FavoriteButton from "./components/favorite-button";
 import { viewItem } from "../../../../fpixel";
 import { fontSize } from "theme/typography";
+import { Box } from "@mui/material";
 
 // STYLED COMPONENT
 const Wrapper = styled(Card)({
@@ -120,20 +121,20 @@ export default function ProductCard9(props: Props) {
               ],
             },
           });
-            viewItem("View item", {
-              ecommerce: {
-                items: [
-                  {
-                    item_id: `${id}`,
-                    item_name: `${title}`,
-                    discount: `${discount}`,
-                    slug: `${slug}`,
-                    item_category: `${product_categories.split("|")[0]}`,
-                    price: `${Number(price)}`,
-                  },
-                ],
-              },
-            });
+          viewItem("View item", {
+            ecommerce: {
+              items: [
+                {
+                  item_id: `${id}`,
+                  item_name: `${title}`,
+                  discount: `${discount}`,
+                  slug: `${slug}`,
+                  item_category: `${product_categories.split("|")[0]}`,
+                  price: `${Number(price)}`,
+                },
+              ],
+            },
+          });
         }}>
         <ContentWrapper>
           <div className="img-wrapper" style={{ background: 'transparent' }}>
@@ -145,9 +146,9 @@ export default function ProductCard9(props: Props) {
           </div>
 
           <div className="content">
-            <div>
+            <Box display={'flex'} flexDirection={'column'}>
               {/* PRODUCT TAG LIST */}
-              <ProductTags tags={product_categories.split('|')} />
+              <ProductTags tags={product_categories?.split('|')} />
 
               {/* PRODUCT TITLE / NAME */}
               <H5 fontWeight="700" mt={1} mb={2}>
@@ -158,8 +159,10 @@ export default function ProductCard9(props: Props) {
               <Rating size="small" value={4} color="warn" readOnly />
 
               {/* PRODUCT PRICE */}
-              <ProductPrice price={price} discount={off!} />
-            </div>
+              <Box mt={1}>
+                <ProductPrice price={price} discount={off!} />
+              </Box>
+            </Box>
 
             {/* PRODUCT ADD TO CART BUTTON */}
             {/* <AddToCartButton

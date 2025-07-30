@@ -1,8 +1,6 @@
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 // LOCAL CUSTOM COMPONENTS - Dynamic import
-import dynamic from "next/dynamic";
-// DATA TYPES
 import { NavList } from "../types";
 import { DataStructure } from "models/types";
 import CategoryBasedMenu from "../category-based-menu";
@@ -46,6 +44,7 @@ export default function NavigationList({
       <StyledNavLink href="/contact">Contact</StyledNavLink>
       <StyledNavLink href="/about-us">About Us</StyledNavLink>
       <StyledNavLink href="/help">FAQ</StyledNavLink>
+      <StyledNavLink href="/influencers">Creator Kits</StyledNavLink>
     </FlexBox>
   );
 }

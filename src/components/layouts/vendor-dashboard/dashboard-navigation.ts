@@ -40,6 +40,16 @@ export const navigation = [
       { name: "Create Tag", path: "/admin/tags/create" },
     ],
   },
+
+  {
+    name: "Influencers",
+    icon: duotone.UserTie,
+    children: [
+      { name: "Influencer List", path: "/admin/influencers" },
+      { name: "Create Influencer", path: "/admin/influencers/create" },
+    ],
+  },
+
   {
     name: "Coupons",
     icon: duotone.Invoice,

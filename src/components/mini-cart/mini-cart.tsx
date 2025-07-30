@@ -17,7 +17,7 @@ type Props = { toggleSidenav: () => void };
 
 export default function MiniCart({ toggleSidenav }: Props) {
   const { push } = useRouter();
-  const { cart, total, setCoupon, coupon } = useShoppingCartStore();
+  const { cart } = useShoppingCartStore();
   const cartList = cart;
 
   const handleNavigate = (path: string) => {
@@ -25,10 +25,15 @@ export default function MiniCart({ toggleSidenav }: Props) {
     push(path);
   };
 
+  const totalProduct = cart.reduce((acc: any, item: any) => acc + item.totalProduct, 0);
+  const totalCustomizations = cart.reduce((acc: any, item: any) => acc + item.totalCustomization, 0);
+
+  const total = totalProduct + totalCustomizations;
+
   return (
     <Box width="100%" minWidth={320} sx={{ zIndex: 10 }}>
       {/* HEADING SECTION */}
-      <TopHeader toggle={toggleSidenav} total={cartList.length}  />
+      <TopHeader toggle={toggleSidenav} total={cartList.length} />
 
       <Divider />
 

@@ -67,6 +67,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [sizeGuideLang, setSizeGuideLang] = useState<'es' | 'en'>('en');
 
   const handleOpenDialog = (item: any) => {
     setSelectedItem({ ...item, description: item.htmlString });
@@ -91,7 +92,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
       <Accordion key={key} disabled={isLocked}>
         {!isLocked ? (
           <AccordionSummary
-            expandIcon={!isLocked ? <ExpandMoreIcon /> : null} // Oculta el icono si está bloqueado
+            expandIcon={!isLocked ? <ExpandMoreIcon /> : null}
             aria-controls={`${key}-content`}
             id={`${key}-header`}
           >
@@ -106,6 +107,106 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               <Typography>
                 {label} {extraText ? `(${extraText})` : ""}{" "}
               </Typography>
+              {/* Solo mostrar Size Guide si el acordeón es de talla */}
+              {key === "size" && (
+                <>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      ":hover": {
+                        textDecoration: "underline",
+                        color: "primary.main",
+                      },
+                      cursor: "pointer",
+
+                      width: "auto",
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowSizeGuide(!showSizeGuide);
+                    }}
+                  >
+                    Size Guide
+                  </Typography>
+                  {showSizeGuide && (
+                    <Dialog open={showSizeGuide} onClose={() => setShowSizeGuide(false)} maxWidth="md">
+                      <Box p={3} display="flex" flexDirection="column" alignItems="center" gap={2}>
+                        {/* Botones para idioma */}
+                        <Box display="flex" gap={2} mb={2}>
+                          <Button
+                            variant={sizeGuideLang === 'es' ? 'contained' : 'outlined'}
+                            color="primary"
+                            onClick={() => setSizeGuideLang('es')}
+                            sx={{ minWidth: 100 }}
+                          >
+                            Español
+                          </Button>
+                          <Button
+                            variant={sizeGuideLang === 'en' ? 'contained' : 'outlined'}
+                            color="primary"
+                            onClick={() => setSizeGuideLang('en')}
+                            sx={{ minWidth: 100 }}
+                          >
+                            English
+                          </Button>
+                        </Box>
+                        {/* Imagen según idioma */}
+                        {sizeGuideLang === 'en' ? (
+                          <Box display="flex" width="100%" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" justifyContent="center" gap={2}>
+                            <Box width={{ xs: '100%', md: '30%' }}>
+                              <Zoom>
+                                <img
+                                  src="/assets/images/detail/size-table-english-mobile-1.png"
+                                  alt="size-image"
+                                  width={1000}
+                                  height={1000}
+                                  style={{ width: '100%', height: 'auto' }}
+                                />
+                              </Zoom>
+                            </Box>
+                            <Box width={{ xs: '100%', md: '70%' }}>
+                              <Zoom>
+                                <img
+                                  src="/assets/images/detail/size-table-english.png"
+                                  alt="size-image-2"
+                                  width={1000}
+                                  height={1000}
+                                  style={{ width: '100%', height: 'auto' }}
+                                />
+                              </Zoom>
+                            </Box>
+                          </Box>
+                        ) : (
+                          <Box display="flex" width="100%" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" justifyContent="center" gap={2}>
+                            <Box width={{ xs: '100%', md: '30%' }}>
+                              <Zoom>
+                                <img
+                                  src="/assets/images/detail/size-table-spanish-mobile-1.png"
+                                  alt="size-image"
+                                  width={1000}
+                                  height={1000}
+                                  style={{ width: '100%', height: 'auto' }}
+                                />
+                              </Zoom>
+                            </Box>
+                            <Box width={{ xs: '100%', md: '70%' }}>
+                              <Zoom>
+                                <img
+                                  src="/assets/images/detail/size-table-spanish.png"
+                                  alt="size-image-2"
+                                  width={1000}
+                                  height={1000}
+                                  style={{ width: '100%', height: 'auto' }}
+                                />
+                              </Zoom>
+                            </Box>
+                          </Box>
+                        )}
+                      </Box>
+                    </Dialog >
+                  )}
+                </>
+              )}
               {button && !isLocked && (
                 <Button
                   variant="outlined"
@@ -192,8 +293,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         </Button>
       )} */}
         {items.map((item, index) => {
-
-
+          const isTechnique = type === "technique";
           return (
             <div
               key={index}
@@ -203,16 +303,16 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 margin: compact ? "0.2rem" : "0.5rem",
                 opacity: 1,
                 pointerEvents: "auto",
-                cursor: "pointer",
-
+                cursor: isTechnique ? "default" : "pointer",
               }}
             >
               <Button
                 onClick={
-                  () =>
-                    handleItemChange(type, item.name)
+                  isTechnique
+                    ? undefined
+                    : () => handleItemChange(type, item.name)
                 }
-
+                disabled={isTechnique}
                 style={{
                   textTransform: "none",
                   display: "flex",
@@ -221,14 +321,28 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                   gap: 4,
                   width: "100%",
                   padding: compact ? "0.2rem" : "0.5rem",
-                  background: customization[type] === item.name ? "grey" : "white", // Resaltar en gris si está seleccionado
-                  color: customization[type] === item.name ? "white" : "black", // Texto blanco si está seleccionado
+                  background: isTechnique
+                    ? "#fff"
+                    : customization[type] === item.name
+                      ? "grey"
+                      : "white",
+                  color: isTechnique
+                    ? "black"
+                    : customization[type] === item.name
+                      ? "white"
+                      : "black",
+                  cursor: isTechnique ? "default" : "pointer",
+                  boxShadow: isTechnique ? "none" : undefined,
+                  border: isTechnique ? "1px solid #eee" : undefined,
+                  pointerEvents: "auto",
                 }}
+                // Elimina el efecto hover para technique
+                sx={isTechnique ? { "&:hover": { background: "#fff" } } : undefined}
               >
                 {useZoom ? (
                   <div
-                    onClick={() => handleOpenDialog(item)}
-                    style={{ cursor: "pointer", position: "relative" }}
+                    onClick={isTechnique ? undefined : () => handleOpenDialog(item)}
+                    style={{ cursor: isTechnique ? "default" : "pointer", position: "relative" }}
                   >
                     <ZoomInOutlined
                       sx={{
@@ -273,7 +387,6 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                       </Typography>
                     }
                     {item.link &&
-                      // Solo el texto "Contact Us" es clickeable y abre el link
                       <Link href={item.link} passHref legacyBehavior>
                         <a
                           target="_blank"
@@ -600,59 +713,10 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 </div>
               </div>
             ))}
-            {detail.SizeGuide && (
-              <>
-                <Typography
-                  variant="subtitle2"
-                  sx={{
-                    textDecoration: "underline",
-                    cursor: "pointer",
-                    mt: 2,
-                    width: "100%",
 
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowSizeGuide(!showSizeGuide);
-                  }}
-                >
-                  Size Guide
-                </Typography>
-                {showSizeGuide && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: 2,
-                      m: { xs: 1, md: 2 },
-                    }}
-                  >
-                    {detail.SizeGuide.image1 && (
-                      <Zoom>
-                        <img
-                          src={detail.SizeGuide.image1}
-                          alt="Size Guide 1"
-                          width={200}
-                          height={100}
-                        />
-                      </Zoom>
-                    )}
-                    {detail.SizeGuide.image2 && (
-                      <Zoom>
-                        <img
-                          src={detail.SizeGuide.image2}
-                          alt="Size Guide 2"
-                          width={200}
-                          height={100}
-                        />
-                      </Zoom>
-                    )}
-                  </Box>
-                )}
-              </>
-            )}
+
+
+
           </div>,
           "size",
           '',

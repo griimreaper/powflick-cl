@@ -33,7 +33,7 @@ export default function OrderDetailsPageView({ data }: Props) {
   const router = useRouter();
 
   const { data: order, directions } = data;
-  console.log(order,'gkgfoasdfks');
+  console.log(order, 'gkgfoasdfks');
   const [updatedOrder, setUpdatedOrder] = useState<{
     orderId: string;
     state: string;
@@ -67,7 +67,7 @@ export default function OrderDetailsPageView({ data }: Props) {
           <Card sx={{ p: 3 }}>
             {/* ADD PRODUCT & CHANGE ORDER STATUS ACTION  */}
             <OrderActions
-              id={String(order.id)}
+              id={String(order?.id)}
               createdAt={order.createdAt}
               status={order.state}
               customer={order.user}
