@@ -45,7 +45,7 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       {/* AVAILABLE SHOPS AREA */}
       {/* <AvailableShops /> */}
       {/* RELATED PRODUCTS AREA */}
-      {!fromInfluencer && <RelatedProducts products={sugestedProducts} />}
+      {!hasInfluencer && <RelatedProducts products={sugestedProducts} />}
       <Box width={'100%'} position={'relative'} >
         {!fromInfluencer && <Section2 className="section-2-detail" isMobile={isMobile} detail />}
       </Box>

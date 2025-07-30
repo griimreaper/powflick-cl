@@ -21,7 +21,7 @@ export default function TotalSummery({ order }: Props) {
   // Subtotal = suma de productos
 
   const subtotal = order?.products?.reduce((acc: number, { OrderProduct, price }: any) => {
-    return acc + getTotalWithDiscount(price, OrderProduct.amount, !OrderProduct.product.influencer_id);
+    return acc + getTotalWithDiscount(price, OrderProduct.amount, !OrderProduct.product?.influencer_id);
   }, 0);
 
   // Suma de customizaciones
