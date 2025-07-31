@@ -72,7 +72,7 @@ export default function CouponRow({ coupon, setActualize, onClick }: any) {
                     <Edit />
                 </StyledIconButton>
                 <StyledIconButton>
-                    <Delete onClick={() => handleDelete(id)} />
+                    <Delete onClick={(e) => { e.stopPropagation(); handleDelete(id) }} />
                 </StyledIconButton>
             </StyledTableCell>
         </StyledTableRow>
