@@ -45,21 +45,32 @@ export function calculateCustomizationPrice(
 
 type Tier = '10>20' | '21>50' | '51>100' | '101>250' | '250+';
 
-const getTieredPrices = (basePrice: number): Record<Tier, number> => ({
-  '10>20': +basePrice.toFixed(2),
-  '21>50': +(basePrice * 0.94).toFixed(2),   // 6% off
-  '51>100': +(basePrice * 0.88).toFixed(2),  // 12% off
-  '101>250': +(basePrice * 0.82).toFixed(2), // 18% off
-  '250+': +(basePrice * 0.65).toFixed(2),    // 35% off
+const topDiscounts = {
+  '10>20': 0,
+  '21>50': 1,
+  '51>100': 2,
+  '101>250': 3,
+  '250+': 6,
+};
+
+const uniformDiscounts = {
+  '10>20': 0,
+  '21>50': 2,
+  '51>100': 4,
+  '101>250': 6,
+  '250+': 8,
+};
+
+
+const getTieredPrices = (basePrice: number, discounts: Record<Tier, number>): Record<Tier, number> => ({
+  '10>20': +(basePrice - discounts['10>20']).toFixed(2),
+  '21>50': +(basePrice - discounts['21>50']).toFixed(2),
+  '51>100': +(basePrice - discounts['51>100']).toFixed(2),
+  '101>250': +(basePrice - discounts['101>250']).toFixed(2),
+  '250+': +(basePrice - discounts['250+']).toFixed(2),
 });
 
-export const getTotalWithDiscount = (
-  basePrice: number,
-  quantity: number,
-  applyDiscount: boolean = true
-): number => {
-  if (!applyDiscount) return +(basePrice * quantity).toFixed(2);
-
+export const getTotalWithDiscount = (basePrice: number, quantity: number, top: boolean): number => {
   let tier: Tier;
 
   if (quantity >= 250) tier = '250+';
@@ -68,18 +79,12 @@ export const getTotalWithDiscount = (
   else if (quantity >= 21) tier = '21>50';
   else tier = '10>20';
 
-  const tieredPrices = getTieredPrices(basePrice);
+  const tieredPrices = getTieredPrices(basePrice, top ? topDiscounts : uniformDiscounts);
   const unitPrice = tieredPrices[tier];
   return +(unitPrice * quantity).toFixed(2);
 };
 
-export const getUnitPriceWithDiscount = (
-  basePrice: number,
-  quantity: number,
-  applyDiscount: boolean = true
-): number => {
-  if (!applyDiscount) return basePrice;
-
+export const getUnitPriceWithDiscount = (basePrice: number, quantity: number, top: boolean): number => {
   let tier: Tier;
 
   if (quantity >= 250) tier = '250+';
@@ -88,7 +93,7 @@ export const getUnitPriceWithDiscount = (
   else if (quantity >= 21) tier = '21>50';
   else tier = '10>20';
 
-  const tieredPrices = getTieredPrices(basePrice);
+  const tieredPrices = getTieredPrices(basePrice, top ? topDiscounts : uniformDiscounts);
   return tieredPrices[tier];
 };
 

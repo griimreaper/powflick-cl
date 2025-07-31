@@ -132,7 +132,7 @@ export default function CustomizationDetails({ customization }: Props) {
             {customization.pants !== "None (+$0.00)" && (
                 <Typography>Pants: {customization.pants}</Typography>
             )}
-            {customization.shorts !== "No Shorts (+$0.00)" && customization.shorts !== "No Shorts (-$13.99)" && customization.shorts !== "Default (+$0.00)" && (
+            {customization.shorts !== "No Shorts (+$0.00)" && customization.shorts !== "No Shorts (-$10.00)" && (
                 <Typography>Shorts: {customization.shorts}</Typography>
             )}
             {customization.socks !== "No Socks (+$0.00)" && (
