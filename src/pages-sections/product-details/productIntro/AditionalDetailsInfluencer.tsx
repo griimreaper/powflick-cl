@@ -22,6 +22,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useCustomizationsStore } from "store/customizationsStore";
 import { Close } from "@mui/icons-material";
 import { v4 as uuidv4 } from 'uuid';
+import Image from "next/image";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -458,31 +459,66 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
           </Box>
           {/* Imagen según idioma */}
           {sizeGuideLang === 'en' ? (
-            <Zoom>
-              <img
-                src="/assets/images/detail/size-table-english.png"
-                alt="Size Guide English"
-                width={500}
-                height={500}
-                style={{ maxWidth: "100%", height: "auto", borderRadius: 8 }}
-              />
-            </Zoom>
+
+            <Box display="flex" width="100%" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" justifyContent="center" gap={2}>
+              <Box width={{ xs: '100%', md: '30%' }}>
+                <Zoom>
+                  <img
+                    src="/assets/images/detail/size-table-english-mobile-1.png"
+                    alt="size-image"
+
+                    width={1000}
+                    height={1000}
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                </Zoom>
+              </Box>
+              <Box width={{ xs: '100%', md: '70%' }}>
+                <Zoom>
+                  <img
+                    src="/assets/images/detail/size-table-english.png"
+                    alt="size-image-2"
+
+                    width={1000}
+                    height={1000}
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                </Zoom>
+              </Box>
+            </Box>
           ) : (
-            <Zoom>
-              <img
-                src="/assets/images/detail/size-table-spanish.png"
-                alt="Size Guide Español"
-                width={500}
-                height={500}
-                style={{ maxWidth: "100%", height: "auto", borderRadius: 8 }}
-              />
-            </Zoom>
+            <Box display="flex" width="100%" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" justifyContent="center" gap={2}>
+              <Box width={{ xs: '100%', md: '30%' }}>
+                <Zoom>
+                  <img
+                    src="/assets/images/detail/size-table-spanish-mobile-1.png"
+                    alt="size-image"
+
+                    width={1000}
+                    height={1000}
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                </Zoom>
+              </Box>
+              <Box width={{ xs: '100%', md: '70%' }}>
+                <Zoom>
+                  <img
+                    src="/assets/images/detail/size-table-spanish.png"
+                    alt="size-image-2"
+
+                    width={1000}
+                    height={1000}
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                </Zoom>
+              </Box>
+            </Box>
           )}
         </Box>
-      </Dialog>
+      </Dialog >
 
 
-    </Box>
+    </Box >
   );
 }
 

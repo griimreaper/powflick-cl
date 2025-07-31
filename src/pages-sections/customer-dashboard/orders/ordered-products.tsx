@@ -102,7 +102,7 @@ export default function OrderedProducts({ order }: Props) {
               <Box width={'100%'}>
                 <H6>{item.title}</H6>
                 <Paragraph color="grey.600">
-                  {currency(getUnitPriceWithDiscount(item.price + (item.OrderProduct?.top ? -13.99 : 0), item.OrderProduct?.amount, !item.product.influencer_id))} x {item.OrderProduct?.amount}
+                  {currency(getUnitPriceWithDiscount(item.price + (item.OrderProduct?.top ? -10.00 : 0), item.OrderProduct?.amount, item.OrderProduct?.top))} x {item.OrderProduct?.amount}
                 </Paragraph>
                 <Box width={'95%'} sx={{ display: "flex", gap: 1, py: 1, overflowX: 'scroll' }} >
                   {customizations

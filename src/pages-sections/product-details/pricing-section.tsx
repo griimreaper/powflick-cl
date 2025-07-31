@@ -2,47 +2,75 @@ import { Box, Grid, Typography, Paper, Button, Divider, TextField } from '@mui/m
 import { useState } from 'react';
 
 const PricingSection = ({ price }: { price: number }) => {
-    const tiers = ['10>20', '21>50', '51>100', '101>250', '250+'];
+    const tiers = ['10-20', '21-50', '51-100', '101-250', '250+'];
 
     type Tier =
-        | '10>20'
-        | '21>50'
-        | '51>100'
-        | '101>250'
+        | '10-20'
+        | '21-50'
+        | '51-100'
+        | '101-250'
         | '250+';
 
-    const getTieredPrices = (basePrice: number): Record<Tier, number> => ({
-        '10>20': +basePrice.toFixed(2),
-        '21>50': +(basePrice * 0.94).toFixed(2),   // 6% off
-        '51>100': +(basePrice * 0.88).toFixed(2),  // 12% off
-        '101>250': +(basePrice * 0.82).toFixed(2), // 18% off
-        '250+': +(basePrice * 0.65).toFixed(2),    // 35% off
-    });
+    const getTieredPricesTop = (basePrice: number): Record<Tier, number> => {
+        const fixedDiscounts: Record<Tier, number> = {
+            '10-20': 0,
+            '21-50': 1,
+            '51-100': 2,
+            '101-250': 3,
+            '250+': 6,
+        };
 
-    const pricesUniform = getTieredPrices(price);
-    const pricesTop = getTieredPrices(price - 13.99);
+        return {
+            '10-20': +(basePrice - fixedDiscounts['10-20']).toFixed(2),
+            '21-50': +(basePrice - fixedDiscounts['21-50']).toFixed(2),
+            '51-100': +(basePrice - fixedDiscounts['51-100']).toFixed(2),
+            '101-250': +(basePrice - fixedDiscounts['101-250']).toFixed(2),
+            '250+': +(basePrice - fixedDiscounts['250+']).toFixed(2),
+        };
+    };
+
+    const getTieredPricesUniform = (basePrice: number): Record<Tier, number> => {
+        const fixedDiscounts: Record<Tier, number> = {
+            '10-20': 0,
+            '21-50': 2,
+            '51-100': 4,
+            '101-250': 6,
+            '250+': 8,
+        };
+
+        return {
+            '10-20': +(basePrice - fixedDiscounts['10-20']).toFixed(2),
+            '21-50': +(basePrice - fixedDiscounts['21-50']).toFixed(2),
+            '51-100': +(basePrice - fixedDiscounts['51-100']).toFixed(2),
+            '101-250': +(basePrice - fixedDiscounts['101-250']).toFixed(2),
+            '250+': +(basePrice - fixedDiscounts['250+']).toFixed(2),
+        };
+    };
+
+    const pricesTop = getTieredPricesTop(26.99 - 10);
+    const pricesUniform = getTieredPricesUniform(26.99);
 
     const tierMinQuantity: Record<Tier, number> = {
-        '10>20': 10,
-        '21>50': 21,
-        '51>100': 51,
-        '101>250': 101,
+        '10-20': 10,
+        '21-50': 21,
+        '51-100': 51,
+        '101-250': 101,
         '250+': 251,
     };
 
     const PricingCard = ({ title, prices }: { title: string; prices: Record<Tier, number> }) => {
         const [quantity, setQuantity] = useState(10);
-        const [selectedTier, setSelectedTier] = useState<Tier>('10>20');
+        const [selectedTier, setSelectedTier] = useState<Tier>('10-20');
         const [inputValue, setInputValue] = useState('10'); // 👈 nuevo estado string
 
         // actualiza ambos estados y el tier
         const updateQuantity = (newQty: number) => {
             setQuantity(newQty);
             setInputValue(String(newQty));
-            if (newQty <= 20) setSelectedTier('10>20');
-            else if (newQty <= 50) setSelectedTier('21>50');
-            else if (newQty <= 100) setSelectedTier('51>100');
-            else if (newQty <= 250) setSelectedTier('101>250');
+            if (newQty <= 20) setSelectedTier('10-20');
+            else if (newQty <= 50) setSelectedTier('21-50');
+            else if (newQty <= 100) setSelectedTier('51-100');
+            else if (newQty <= 250) setSelectedTier('101-250');
             else setSelectedTier('250+');
         };
 
@@ -52,10 +80,10 @@ const PricingSection = ({ price }: { price: number }) => {
             setInputValue(String(newQty)); // 👈 actualizar inputValue también
 
             // Ajustar el tier automáticamente en base a la cantidad
-            if (newQty <= 20) setSelectedTier('10>20');
-            else if (newQty <= 50) setSelectedTier('21>50');
-            else if (newQty <= 100) setSelectedTier('51>100');
-            else if (newQty <= 250) setSelectedTier('101>250');
+            if (newQty <= 20) setSelectedTier('10-20');
+            else if (newQty <= 50) setSelectedTier('21-50');
+            else if (newQty <= 100) setSelectedTier('51-100');
+            else if (newQty <= 250) setSelectedTier('101-250');
             else setSelectedTier('250+');
         };
 
@@ -154,10 +182,10 @@ const PricingSection = ({ price }: { price: number }) => {
                                             const parsed = parseInt(value, 10);
                                             if (!isNaN(parsed) && parsed > 0) {
                                                 setQuantity(parsed);
-                                                if (parsed <= 20) setSelectedTier('10>20');
-                                                else if (parsed <= 50) setSelectedTier('21>50');
-                                                else if (parsed <= 100) setSelectedTier('51>100');
-                                                else if (parsed <= 250) setSelectedTier('101>250');
+                                                if (parsed <= 20) setSelectedTier('10-20');
+                                                else if (parsed <= 50) setSelectedTier('21-50');
+                                                else if (parsed <= 100) setSelectedTier('51-100');
+                                                else if (parsed <= 250) setSelectedTier('101-250');
                                                 else setSelectedTier('250+');
                                             }
                                         }}
@@ -275,7 +303,7 @@ const PricingSection = ({ price }: { price: number }) => {
                     <Box mb={3}>
                         <PricingCard title="TOP:" prices={pricesTop} />
                     </Box>
-                    <PricingCard title="UNIFORM (JERSEY + PANTS):" prices={pricesUniform} />
+                    <PricingCard title="UNIFORM (JERSEY + SHORTS):" prices={pricesUniform} />
                 </Grid>
             </Grid>
         </Box>
