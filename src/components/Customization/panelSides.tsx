@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { CustomizationSides, Logo, Number as Numb, Text } from "models/types";
 import ContainerInfoBox from "../Modals/ContainerInfoBox";
@@ -8,6 +7,7 @@ import MainContainer from "./MainContainer";
 import EditableContainer from "./EditableContainer";
 import useHearingEvent from "hooks/hearingEvent";
 import { Box, Button, Grid } from "@mui/material";
+import { AutorenewOutlined } from "@mui/icons-material";
 
 interface PanelSidesProps {
   image?: string;
@@ -16,6 +16,7 @@ interface PanelSidesProps {
   font: string;
   steps: any;
   fontColor: string;
+  togglePanel: () => void;
 }
 
 interface Selection {
@@ -69,6 +70,7 @@ export default function PanelSides({
   id,
   font,
   fontColor,
+  togglePanel,
 }: PanelSidesProps) {
   const { list, setCustomizationInList } =
     useCustomizationsStore();
@@ -304,7 +306,7 @@ export default function PanelSides({
         saveDataToLocal={saveDataToLocal}
         setActualize={setActualize}
       />
-      {/* Buttons Logo, Text, Number */}
+      {/* Buttons sides, Logo, Text, Number */}
       <Grid
         container
         spacing={0}
@@ -313,8 +315,64 @@ export default function PanelSides({
           margin: "16px",
           paddingBottom: "16px",
           borderBottom: "1px solid",
+          flexWrap: "nowrap",
         }}
       >
+        {/* Button sides */}
+        <Box position="relative" id="toggleButton">
+          <Button
+            onClick={togglePanel}
+            variant="contained"
+            color="primary"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 1, // rounded-md
+              border: "1px solid transparent",
+              backgroundColor: "neutral.main",
+              padding: "6px 16px",
+              fontSize: "1rem", // text-base
+              fontWeight: 500,
+              color: "white",
+              "&:hover": { backgroundColor: "neutral.main", opacity: 0.8 },
+              "&:focus": {
+                outline: "none",
+                boxShadow: "0 0 0 2px rgba(logo.main, 0.8)",
+              },
+            }}
+          >
+            <AutorenewOutlined
+              sx={{ height: 24, width: "auto" }}
+              aria-hidden="true"
+            />
+          </Button>
+
+          {step4 && (
+            <Box
+              position="absolute"
+              left="50%"
+              top="100%"
+              mt={2}
+              zIndex={40}
+              sx={{ transform: "translateX(-50%)" }}
+            >
+              <ContainerInfoBox
+                stepp={4}
+                arrowPosition="top"
+                className="w-full lg:w-screen"
+                visible={{ step1, step2, step3, step4, step5 }}
+                setVisible={{
+                  setStep1,
+                  setStep2,
+                  setStep3,
+                  setStep4,
+                  setStep5,
+                }}
+              />
+            </Box>
+          )}
+        </Box>
         {/* Logo Button */}
         <Grid item xs={4} sm={4}>
           <Box sx={{ position: "relative" }}>
@@ -327,13 +385,22 @@ export default function PanelSides({
               variant="contained"
               color="primary"
               sx={{
-                width: { xs: "64px", sm: "112px" },
+                width: { xs: "64px", sm: "112px", md: "64px", lg: "112px" },
                 margin: "0 auto",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 1,
                 textTransform: "none",
+                backgroundColor: selection.type === "Logo" ? "black" : "white",
+                color: selection.type === "Logo" ? "white" : "black",
+                border: "1px solid black",
+                // Elimina el hover rojo
+                "&:hover": {
+                  backgroundColor: selection.type === "Logo" ? "black" : "white",
+                  color: selection.type === "Logo" ? "white" : "black",
+                  opacity: 0.8,
+                },
                 "&:focus": {
                   outline: "none",
                   ring: 2,
@@ -377,13 +444,22 @@ export default function PanelSides({
               variant="contained"
               color="primary"
               sx={{
-                width: { xs: "64px", sm: "112px" },
+                width: { xs: "64px", sm: "112px", md: "64px", lg: "112px" },
                 margin: "0 auto",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 1,
                 textTransform: "none",
+                backgroundColor: selection.type === "Text" ? "black" : "white",
+                color: selection.type === "Text" ? "white" : "black",
+                border: "1px solid black",
+                // Elimina el hover rojo
+                "&:hover": {
+                  backgroundColor: selection.type === "Text" ? "black" : "white",
+                  color: selection.type === "Text" ? "white" : "black",
+                  opacity: 0.8,
+                },
                 "&:focus": {
                   outline: "none",
                   ring: 2,
@@ -427,13 +503,22 @@ export default function PanelSides({
               variant="contained"
               color="primary"
               sx={{
-                width: { xs: "64px", sm: "112px" },
+                width: { xs: "64px", sm: "112px", md: "64px", lg: "112px" },
                 margin: "0 auto",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 1,
                 textTransform: "none",
+                backgroundColor: selection.type === "Number" ? "black" : "white",
+                color: selection.type === "Number" ? "white" : "black",
+                border: "1px solid black",
+                // Elimina el hover rojo
+                "&:hover": {
+                  backgroundColor: selection.type === "Number" ? "black" : "white",
+                  color: selection.type === "Number" ? "white" : "black",
+                  opacity: 0.8,
+                },
                 "&:focus": {
                   outline: "none",
                   ring: 2,

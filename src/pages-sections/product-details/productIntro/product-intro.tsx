@@ -218,7 +218,7 @@ export default function ProductIntro({ product }: Props) {
 
   const handleCustomizationClick = (
     index: number,
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLElement>
   ) => {
     setSelectedCustomization(index);
     setShowCustomization(!showCustomization); // Al hacer clic en "Custom", mostrar la personalización
@@ -283,8 +283,6 @@ export default function ProductIntro({ product }: Props) {
     };
   };
 
-  console.log(product);
-
   return (
     <Box width="100%">
       <Grid container spacing={3} justifyContent="space-around">
@@ -300,7 +298,14 @@ export default function ProductIntro({ product }: Props) {
         >
           {showCustomization ? (
             <Box>
-              <Customizations {...customizationProps} />
+              <Customizations
+                {...customizationProps}
+                increment={increment}
+                decrement={decrement}
+                handleCustomizationClick={(event: React.MouseEvent<HTMLElement>) =>
+                  handleCustomizationClick(selectedCustomization || 0, event)
+                }
+              />
               {/* Agrega aquí los elementos de personalización */}
             </Box>
           ) : (
@@ -327,6 +332,7 @@ export default function ProductIntro({ product }: Props) {
                     width={500}
                     height={500}
                     loading="eager"
+                    onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
                     src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
                   />
                 )}
@@ -389,153 +395,163 @@ export default function ProductIntro({ product }: Props) {
           )}
         </Grid>
 
+
         {/* PRODUCT INFO AREA */}
         <Grid item md={6} xs={12} alignItems="center">
           {/* PRODUCT NAME */}
           <H1 mb={1}>{title}</H1>
 
-          {/* PRODUCT BRAND */}
-          {product.product.categories?.length > 0 && (
-            <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
-              <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                Categories:
-              </Typography>
+          {!showCustomization && (
+            <>
+              {/* PRODUCT BRAND */}
+              {product.product.categories?.length > 0 && (
+                <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
+                  <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                    Categories:
+                  </Typography>
 
-              {product.product.categories.map((cat: any, index: number) => (
-                <Box key={cat} display="inline-flex" alignItems="center">
-                  <Link href={`/products?category=${encodeURIComponent(cat)}`}>
-                    {product.product.categories.length === 1 ? (
-                      <H6>{cat}.</H6>
-                    ) : index === 0 && product.product.categories.length > 1 ? (
-                      <H6>{cat},</H6>
-                    ) :
-                      index === product.product.categories.length - 1 ? (
-                        <H6 ml={0.5}>{cat}.</H6>
-                      ) : (
-                        <H6 ml={0.5}>{cat},</H6>
-                      )}
-                  </Link>
-                </Box>
-              ))}
-            </FlexBox>
+                  {product.product.categories.map((cat: any, index: number) => (
+                    <Box key={cat} display="inline-flex" alignItems="center">
+                      <Link href={`/products?category=${encodeURIComponent(cat)}`}>
+                        {product.product.categories.length === 1 ? (
+                          <H6>{cat}.</H6>
+                        ) : index === 0 && product.product.categories.length > 1 ? (
+                          <H6>{cat},</H6>
+                        ) :
+                          index === product.product.categories.length - 1 ? (
+                            <H6 ml={0.5}>{cat}.</H6>
+                          ) : (
+                            <H6 ml={0.5}>{cat},</H6>
+                          )}
+                      </Link>
+                    </Box>
+                  ))}
+                </FlexBox>
+              )}
+
+              {product.product.collections?.length > 0 && (
+                <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
+                  <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                    Collections:
+                  </Typography>
+
+                  {product.product.collections.map((col: any, index: number) => (
+                    <Box key={col} display="inline-flex" alignItems="center">
+                      <Link href={`/products?collection=${encodeURIComponent(col)}`}>
+                        {product.product.collections.length === 1 ? (
+                          <H6>{col}.</H6>
+                        ) : index === 0 && product.product.collections.length > 1 ? (
+                          <H6>{col},</H6>
+                        ) : index === product.product.collections.length - 1 ? (
+                          <H6 ml={0.5}>{col}.</H6>
+                        ) : (
+                          <H6 ml={0.5}>{col},</H6>
+                        )}
+                      </Link>
+                    </Box>
+                  ))}
+                </FlexBox>
+              )}
+
+              {product.product.tags?.length > 0 && (
+                <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
+                  <div>Tags: </div>
+                  {product.product.tags.map((t: any) => (
+                    <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
+                      <H6 bgcolor={"#f0f0f0"} sx={{
+                        transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
+                        '&:hover': {
+                          bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
+                        },
+                      }} borderRadius={20} paddingX={1.5}>
+                        {'#' + t}
+                      </H6>
+                    </Link>
+                  ))}
+                </FlexBox>
+              )}
+
+              {/* PRODUCT RATING */}
+              <FlexBox alignItems="center" gap={1} mb={2}>
+                <Box lineHeight="1">Rated:</Box>
+                <Rating color="warn" value={4} readOnly />
+                <H6 lineHeight="1">(50)</H6>
+              </FlexBox>
+            </>
           )}
 
-          {product.product.collections?.length > 0 && (
-            <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
-              <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                Collections:
-              </Typography>
-
-              {product.product.collections.map((col: any, index: number) => (
-                <Box key={col} display="inline-flex" alignItems="center">
-                  <Link href={`/products?collection=${encodeURIComponent(col)}`}>
-                    {product.product.collections.length === 1 ? (
-                      <H6>{col}.</H6>
-                    ) : index === 0 && product.product.collections.length > 1 ? (
-                      <H6>{col},</H6>
-                    ) : index === product.product.collections.length - 1 ? (
-                      <H6 ml={0.5}>{col}.</H6>
-                    ) : (
-                      <H6 ml={0.5}>{col},</H6>
-                    )}
-                  </Link>
-                </Box>
-              ))}
-            </FlexBox>
-          )}
-
-          {product.product.tags?.length > 0 && (
-            <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
-              <div>Tags: </div>
-              {product.product.tags.map((t: any) => (
-                <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
-                  <H6 bgcolor={"#f0f0f0"} sx={{
-                    transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
-                    '&:hover': {
-                      bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
-                    },
-                  }} borderRadius={20} paddingX={1.5}>
-                    {'#' + t}
-                  </H6>
-                </Link>
-              ))}
-            </FlexBox>
-          )}
-
-          {/* PRODUCT RATING */}
-          <FlexBox alignItems="center" gap={1} mb={2}>
-            <Box lineHeight="1">Rated:</Box>
-            <Rating color="warn" value={4} readOnly />
-            <H6 lineHeight="1">(50)</H6>
-          </FlexBox>
 
           {/* PRICE & STOCK */}
-          <Box pt={1} mb={3}>
+          <Box pt={1} mb={3} display={"flex"} gap={{ xs: 2, md: 4 }} justifyContent={{ xs: 'left' }
+          }>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
               {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -10.00 : 0), counter, selected === 'top'))}
             </H2>
-            <Box color="inherit">Stock Available</Box>
+
+
+            {/* button increment, decrement */}
+            <FlexBox alignItems="center" mb={4.5}>
+              <Button
+                size="small"
+                sx={{ p: 1 }}
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  decrement();
+                }}
+              >
+                <Remove fontSize="small" />
+              </Button>
+
+              <TextField
+                value={counter}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+
+                  if (newValue === "") {
+                    // Si el campo está vacío, no hacer nada
+                    handleInputChange(0); // Deja el estado vacío
+                  } else {
+                    const parsedValue = parseInt(newValue, 10);
+
+                    if (
+                      !isNaN(parsedValue) &&
+                      parsedValue >= 1 &&
+                      parsedValue <= 999
+                    ) {
+                      handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
+                      setCounter(parsedValue); // Actualiza el estado con el nuevo valor
+                    }
+                  }
+                }}
+                inputProps={{
+                  min: 1, // Evita valores negativos si es necesario
+                  style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
+                }}
+                sx={{ mx: 2.5 }}
+              />
+
+              <Button
+                size="small"
+                sx={{ p: 1 }}
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  increment();
+                }}
+              >
+                <Add fontSize="small" />
+              </Button>
+            </FlexBox>
           </Box>
 
           {/* BUTTONS */}
           <Box sx={{ display: "flex", gap: 3 }}>
             <Box sx={{ display: "column", gap: 3 }}>
-              <FlexBox alignItems="center" mb={4.5}>
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    decrement();
-                  }}
-                >
-                  <Remove fontSize="small" />
-                </Button>
 
-                <TextField
-                  value={counter}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-
-                    if (newValue === "") {
-                      // Si el campo está vacío, no hacer nada
-                      handleInputChange(0); // Deja el estado vacío
-                    } else {
-                      const parsedValue = parseInt(newValue, 10);
-
-                      if (
-                        !isNaN(parsedValue) &&
-                        parsedValue >= 1 &&
-                        parsedValue <= 999
-                      ) {
-                        handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
-                        setCounter(parsedValue); // Actualiza el estado con el nuevo valor
-                      }
-                    }
-                  }}
-                  inputProps={{
-                    min: 1, // Evita valores negativos si es necesario
-                    style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
-                  }}
-                  sx={{ mx: 2.5 }}
-                />
-
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    increment();
-                  }}
-                >
-                  <Add fontSize="small" />
-                </Button>
-              </FlexBox>
 
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
+              {/* <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
 
                 <Button
                   color="primary"
@@ -550,7 +566,7 @@ export default function ProductIntro({ product }: Props) {
                 >
                   Customize
                 </Button>
-              </FlexBox>
+              </FlexBox> */}
             </Box>
           </Box>
 

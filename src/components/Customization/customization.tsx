@@ -1,4 +1,4 @@
-import { AutorenewOutlined, Close } from "@mui/icons-material";
+import { Add, AutorenewOutlined, Close, Remove } from "@mui/icons-material";
 import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
 import ContainerInfoBox from "components/Modals/ContainerInfoBox";
 import useFlag from "hooks/useFlag";
@@ -30,6 +30,9 @@ interface CustomizationProps {
   counter: number;
   productId: string;
   setCounter: Function;
+  increment: () => void;
+  decrement: () => void;
+  handleCustomizationClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export default function Customizations(props: CustomizationProps) {
@@ -39,7 +42,7 @@ export default function Customizations(props: CustomizationProps) {
   const [step4, setStep4] = useFlag();
   const [step5, setStep5] = useFlag();
 
-  const { frontImage, backImage, product, counter, productId, setCounter } =
+  const { frontImage, backImage, product, counter, productId, setCounter, increment, decrement } =
     props;
   const [showFrontPanel, setShowFrontPanel] = useFlag();
   const [selectedCustomization, setSelectedCustomization] = useState<
@@ -215,17 +218,7 @@ export default function Customizations(props: CustomizationProps) {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography
-          variant="h4"
-          fontWeight="medium"
-          textAlign="center"
-          mb={4}
-          width="100%"
-        >
-          Product{" "}
-          {Number(customizations?.findIndex((c) => c.id === customization.id)) +
-            1}
-        </Typography>
+
         <Box
           display="flex"
           justifyContent="space-between"
@@ -236,152 +229,12 @@ export default function Customizations(props: CustomizationProps) {
             pb: 2,
           }}
         >
-          <Box display="flex">
-            <Link
-              component="button"
-              onClick={() => handleArrowEditCustomization("prev")}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                borderBottom: "2px solid transparent",
-                pt: 2,
-                fontSize: "0.875rem", // text-sm
-                fontWeight: 500,
-                color: "gray.500",
-                gap: 1,
-                cursor:
-                  customizations?.findIndex(
-                    (e) => e.id === customization.id
-                  ) === 0
-                    ? "not-allowed"
-                    : "pointer",
-                "&:hover": {
-                  borderBottomColor:
-                    customizations?.findIndex(
-                      (e) => e.id === customization.id
-                    ) === 0
-                      ? "transparent"
-                      : "gray.300",
-                  color:
-                    customizations?.findIndex(
-                      (e) => e.id === customization.id
-                    ) === 0
-                      ? "gray.500"
-                      : "gray.700",
-                },
-              }}
-            >
-              <ArrowLeftIcon
-                sx={{ ml: 0, height: 20, width: 20, color: "gray.400" }}
-                aria-hidden="true"
-              />
-              Prev
-            </Link>
-          </Box>
-          <Box position="relative" id="toggleButton">
-            <Button
-              onClick={togglePanel}
-              variant="contained"
-              color="primary"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 1, // rounded-md
-                border: "1px solid transparent",
-                backgroundColor: "neutral.main",
-                padding: 1,
-                fontSize: "1rem", // text-base
-                fontWeight: 500,
-                color: "white",
-                "&:hover": { backgroundColor: "neutral.main", opacity: 0.8 },
-                "&:focus": {
-                  outline: "none",
-                  boxShadow: "0 0 0 2px rgba(logo.main, 0.8)",
-                },
-              }}
-            >
-              <AutorenewOutlined
-                sx={{ height: 24, width: "100%" }}
-                aria-hidden="true"
-              />
-            </Button>
 
-            {step4 && (
-              <Box
-                position="absolute"
-                left="50%"
-                top="100%"
-                mt={2}
-                zIndex={40}
-                sx={{ transform: "translateX(-50%)" }}
-              >
-                <ContainerInfoBox
-                  stepp={4}
-                  arrowPosition="top"
-                  className="w-full lg:w-screen"
-                  visible={{ step1, step2, step3, step4, step5 }}
-                  setVisible={{
-                    setStep1,
-                    setStep2,
-                    setStep3,
-                    setStep4,
-                    setStep5,
-                  }}
-                />
-              </Box>
-            )}
-          </Box>
-          <Box display="flex">
-            <Link
-              component="button"
-              onClick={() => handleArrowEditCustomization("next")}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                borderBottom: "2px solid transparent",
-                paddingTop: 2, // pt-4
-                fontSize: "0.875rem", // text-sm
-                fontWeight: 500,
-                color: "gray.500",
-                gap: 1, // flex gap-2
-                cursor:
-                  customizations?.findIndex(
-                    (e) => e.id === customization.id
-                  ) ===
-                    Number(customizations?.length) - 1
-                    ? "not-allowed"
-                    : "pointer",
-                "&:hover": {
-                  borderColor:
-                    customizations?.findIndex(
-                      (e) => e.id === customization.id
-                    ) ===
-                      Number(customizations?.length) - 1
-                      ? "transparent"
-                      : "gray.300",
-                  color:
-                    customizations?.findIndex(
-                      (e) => e.id === customization.id
-                    ) ===
-                      Number(customizations?.length) - 1
-                      ? "gray.500"
-                      : "gray.700",
-                },
-              }}
-            >
-              Next
-              <ArrowRightIcon
-                sx={{
-                  height: 20, // h-5
-                  width: 20, // w-5
-                  color: "gray.400",
-                }}
-                aria-hidden="true"
-              />
-            </Link>
-          </Box>
+
+
+
         </Box>
+
         <Box
           sx={{
             maxWidth: "100%",
@@ -392,93 +245,138 @@ export default function Customizations(props: CustomizationProps) {
             p: 2,
           }}
         >
+          <Button
+            size="small"
+            sx={{ p: 1 }}
+            color="primary"
+            variant="outlined"
+            style={{
+              width: "32px",
+              height: "32px",
+              alignSelf: "center",
+            }}
+            onClick={() => {
+              decrement();
+            }}
+          >
+            <Remove fontSize="small" />
+          </Button>
           {list[
             list.findIndex((i) => i.productId === productId)
           ]?.customizations.map((item, index) => {
             const isActive = item.id === customization.id;
 
             return (
-              <Box key={item.id}>
-                {/* Botón numerado */}
-                <Button
-                  onClick={() => handleEditCustomization(item)}
-                  variant={isActive ? "contained" : "outlined"}
-                  color={isActive ? "primary" : "secondary"}
-                  sx={{
-                    width: "2rem",
-                    height: "2rem",
-                    fontSize: "0.875rem", // text-sm
-                    borderRadius: "0.375rem", // rounded-md
-                    mb: 1,
-                    textAlign: "center",
-                  }}
-                >
-                  {index + 1}
-                </Button>
 
-                {/* Botón "List" con Popover */}
-                <Box sx={{ position: "relative" }}>
+
+
+
+
+
+              <>
+
+
+
+                <Box key={item.id}>
+                  {/* Botón numerado */}
+
                   <Button
-                    ref={buttonRef}
-                    onClick={(event) => {
-                      handleCustomizationClick(index, event);
-                      handlePopoverOpen(event);
-                    }}
-                    variant="outlined"
-                    size="small"
+                    onClick={() => handleEditCustomization(item)}
+                    variant={isActive ? "contained" : "outlined"}
+                    color={isActive ? "primary" : "secondary"}
                     sx={{
-                      fontSize: "0.75rem", // text-xs
-                      padding: "0.25rem 0.3rem",
-                      bgcolor: "gray.200",
-                      borderRadius: "0.375rem",
-                      "&:hover": { bgcolor: "primary.light" },
+                      width: "2rem",
+                      height: "2rem",
+                      fontSize: "0.875rem", // text-sm
+                      borderRadius: "0.375rem", // rounded-md
+                      mb: 1,
+                      textAlign: "center",
                     }}
                   >
-                    List
+                    {index + 1}
                   </Button>
 
-                  {/* Popover para el contenido dinámico */}
-                  {index === 0 && step5 && (
-                    <Popover
-                      open={isPopoverOpen}
-                      anchorEl={buttonRef.current}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "left",
+                  {/* Botón "List" con Popover */}
+                  <Box sx={{ position: "relative" }}>
+                    <Button
+                      ref={buttonRef}
+                      onClick={(event) => {
+                        handleCustomizationClick(index, event);
+                        handlePopoverOpen(event);
                       }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "center",
-                      }}
+                      variant="outlined"
+                      size="small"
                       sx={{
-                        display: "absolute",
-                        "& .MuiPopover-paper": {
-                          backgroundColor: "transparent", // Fondo transparente
-                          boxShadow: "none", // Sin sombra
-                        },
+                        fontSize: "0.75rem", // text-xs
+                        padding: "0.25rem 0.3rem",
+                        bgcolor: "gray.200",
+                        borderRadius: "0.375rem",
+                        "&:hover": { bgcolor: "primary.light" },
                       }}
                     >
-                      <Box sx={{ p: 1 }}>
-                        <ContainerInfoBox
-                          stepp={5}
-                          arrowPosition="top"
-                          visible={{ step1, step2, step3, step4, step5 }}
-                          setVisible={{
-                            setStep1,
-                            setStep2,
-                            setStep3,
-                            setStep4,
-                            setStep5,
-                          }}
-                        />
-                      </Box>
-                    </Popover>
-                  )}
+                      List
+                    </Button>
+
+                    {/* Popover para el contenido dinámico */}
+                    {index === 0 && step5 && (
+                      <Popover
+                        open={isPopoverOpen}
+                        anchorEl={buttonRef.current}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "left",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "center",
+                        }}
+                        sx={{
+                          display: "absolute",
+                          "& .MuiPopover-paper": {
+                            backgroundColor: "transparent", // Fondo transparente
+                            boxShadow: "none", // Sin sombra
+                          },
+                        }}
+                      >
+                        <Box sx={{ p: 1 }}>
+                          <ContainerInfoBox
+                            stepp={5}
+                            arrowPosition="top"
+                            visible={{ step1, step2, step3, step4, step5 }}
+                            setVisible={{
+                              setStep1,
+                              setStep2,
+                              setStep3,
+                              setStep4,
+                              setStep5,
+                            }}
+                          />
+                        </Box>
+                      </Popover>
+                    )}
+                  </Box>
+
                 </Box>
-              </Box>
+              </>
             );
           })}
-        </Box>
+          <Button
+            size="small"
+            sx={{ p: 1 }}
+            color="primary"
+            variant="outlined"
+            style={{
+              width: "32px",
+              height: "32px",
+              alignSelf: "center",
+            }}
+            onClick={() => {
+              increment();
+            }}
+          >
+            <Add fontSize="small" />
+          </Button>
+        </Box >
         <Box sx={{ width: "100%" }}>
           {/* Mostrar el panel frontal o posterior según el estado */}
           {showFrontPanel ? (
@@ -500,6 +398,7 @@ export default function Customizations(props: CustomizationProps) {
               id={productId}
               font={product.font}
               fontColor={product.font_color}
+              togglePanel={togglePanel}
             />
           ) : (
             <PanelSides
@@ -520,11 +419,13 @@ export default function Customizations(props: CustomizationProps) {
               id={productId}
               font={product.font}
               fontColor={product.font_color}
+              togglePanel={togglePanel}
             />
           )}
         </Box>
 
-        {selectedCustomization !== null &&
+        {
+          selectedCustomization !== null &&
           customizations &&
           customizations[selectedCustomization] && (
             <Box
@@ -631,8 +532,9 @@ export default function Customizations(props: CustomizationProps) {
                 </Button>
               )}
             </Box>
-          )}
-      </Box>
+          )
+        }
+      </Box >
     </>
   );
 }
