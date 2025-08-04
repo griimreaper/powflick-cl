@@ -76,7 +76,7 @@ export default function CouponDetailsPageView({ coupon }: any) {
                         onSave={async (updatedCoupon) => {
                             await updateCoupon(coupon.id, updatedCoupon);
                             setEditing(false);
-                            router.refresh();
+                            router.push(`/admin/coupons/${coupon.id}`);
                         }}
                     />
                 ) : (
@@ -114,6 +114,14 @@ export default function CouponDetailsPageView({ coupon }: any) {
                             <Typography variant="subtitle2" color="grey.700">Expire Date (UTC)</Typography>
                             <Chip
                                 label={label}
+                                color={isActive ? 'success' : 'error'}
+                                variant="outlined"
+                            />
+                        </Box>
+                        <Box>
+                            <Typography variant="subtitle2" color="grey.700">State</Typography>
+                            <Chip
+                                label={isActive ? "Active" : "Expired"}
                                 color={isActive ? 'success' : 'error'}
                                 variant="outlined"
                             />

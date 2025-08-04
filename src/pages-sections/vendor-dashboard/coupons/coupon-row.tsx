@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { Chip } from "@mui/material";
 
 // ========================================================================
 type Props = { coupon: any; setActualize: Function };
@@ -21,6 +22,8 @@ export default function CouponRow({ coupon, setActualize, onClick }: any) {
 
     dayjs.extend(utc);
     dayjs.extend(timezone);
+
+    const isExpired = expiresAt ? dayjs.utc().isAfter(dayjs.utc(expiresAt)) : false;
 
     const handleDelete = async (id: string) => {
         try {
@@ -61,6 +64,14 @@ export default function CouponRow({ coupon, setActualize, onClick }: any) {
                         hour12: false, // ← formato 24hs
                     }).format(new Date(expiresAt))
                     : 'Sin fecha'}
+            </StyledTableCell>
+            <StyledTableCell align="center">
+                <Chip
+                    label={isExpired ? 'Expired' : 'Active'}
+                    color={!isExpired ? 'success' : 'error'}
+                    variant="outlined"
+                >
+                </Chip>
             </StyledTableCell>
 
             <StyledTableCell align="center">

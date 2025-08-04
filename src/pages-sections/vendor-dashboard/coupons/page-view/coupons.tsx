@@ -109,7 +109,7 @@ export default function CouponsPageView() {
                 (form.expirationDate && !form.expirationTime) ||
                 (!form.expirationDate && form.expirationTime)
             ) {
-                alert("Para establecer la fecha de expiración debe completar fecha y hora");
+                showErrorAlert("Error", "To set the expiration date you must complete the date and time");
                 setLoading(false);
                 return;
             }
@@ -288,6 +288,7 @@ export default function CouponsPageView() {
                                     { id: "discount", label: "Discount", align: "center" },
                                     { id: "expireAt", label: "Expire Date", align: "center" },
                                     { id: "utc", label: "UTC", align: "center" },
+                                    { id: "state", label: "State", align: "center" },
                                     { id: "limit", label: "Limit", align: "right", content: [1, 3, 6, 12, 24, 50, 100] },
                                 ]}
                                 orderBy="title"

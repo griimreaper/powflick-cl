@@ -72,7 +72,13 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
         showErrorAlert("You must be logged", "");
         return;
       }
+
+      console.log('hola');
+      
       const couponData = await getCouponByCode(couponCode, token);
+
+      console.log(couponData);
+      
       if (!couponData || !couponData.active) {
         setError("Invalid or inactive coupon");
         return;

@@ -14,6 +14,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { format } from "date-fns";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
+import { useRouter } from "next/navigation";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -51,6 +52,7 @@ type Props = {
 
 export default function CouponEditForm({ coupon, onCancel, onSave }: Props) {
     const expiresAt = coupon.expiresAt ? dayjs.utc(coupon.expiresAt).tz(coupon.timezone || 'UTC') : null;
+    const router = useRouter();
 
     const [form, setForm] = useState({
         title: coupon.title || '',
@@ -113,6 +115,8 @@ export default function CouponEditForm({ coupon, onCancel, onSave }: Props) {
         });
 
         showSuccessAlert("Success", "Coupon updated successfully");
+
+        router.refresh();
     };
 
     const todayUtc = new Date();
