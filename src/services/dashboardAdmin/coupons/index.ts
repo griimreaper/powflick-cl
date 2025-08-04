@@ -28,14 +28,10 @@ export const getAllCouponsAdmin = async (filters: any, token: string) => {
 
 export const getCouponByCode = async (code: string, token: string) => {
   try {
-    console.log('hola2');
-    
     const response = await mainApi.get(`/coupon/code/${code}`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
 
-    console.log(response.data, 'response');
-    
     return response.data;
   } catch (error: any) {
     // Devuelve el mensaje de error del backend si existe, si no uno genérico
