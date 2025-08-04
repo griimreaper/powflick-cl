@@ -78,8 +78,8 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
         return;
       }
       setCoupon(couponData);
-    } catch (error) {
-      setError(`Coupon not found or not available for your account`);
+    } catch (error: any) {
+      setError(error ?? `Coupon not found or not available for your account`);
       console.log("Error fetching coupon:", error);
 
     }
