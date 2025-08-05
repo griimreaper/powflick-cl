@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, Paper, Button, Divider, TextField } from '@mui/material';
 import { useState } from 'react';
 
-const PricingSection = ({ price }: { price: number }) => {
+const PricingSectionTab = ({ price }: { price?: number }) => {
     const tiers = ['10-20', '21-50', '51-100', '101-250', '250+'];
 
     type Tier =
@@ -259,55 +259,57 @@ const PricingSection = ({ price }: { price: number }) => {
     };
 
     return (
-        <Box>
-            <Typography
-                variant="h5"
-                color="primary.main"
-                fontWeight="700"
-                textAlign="center"
-            >
-                PRICING INFORMATION:
-            </Typography>
+        <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
+            <Box>
+                <Typography
+                    variant="h5"
+                    color="primary.main"
+                    fontWeight="700"
+                    textAlign="center"
+                >
+                    PRICING INFORMATION:
+                </Typography>
 
-            <Grid container spacing={4} mt={{ xs: 2, md: 4 }}>
-                {/* Texto izquierdo */}
-                <Grid item xs={12} md={5} display={'flex'} flexDirection="column" justifyContent="center" gap={2} textAlign={{ xs: 'center', md: 'left' }}>
-                    <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        Flexible Pricing. Team-Friendly Rates.
-                    </Typography>
-                    <Typography paragraph fontSize={'14px'}>
-                        At POW FLICK, we offer competitive pricing for custom sports uniforms, designed to fit
-                        teams of all sizes and budgets.
-                    </Typography>
+                <Grid container spacing={4} mt={{ xs: 2, md: 4 }}>
+                    {/* Texto izquierdo */}
+                    <Grid item xs={12} md={5} display={'flex'} flexDirection="column" justifyContent="center" gap={2} textAlign={{ xs: 'center', md: 'left' }}>
+                        <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
+                            Flexible Pricing. Team-Friendly Rates.
+                        </Typography>
+                        <Typography paragraph fontSize={'14px'}>
+                            At POW FLICK, we offer competitive pricing for custom sports uniforms, designed to fit
+                            teams of all sizes and budgets.
+                        </Typography>
 
-                    <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        Transparent Price Range
-                    </Typography>
-                    <Typography paragraph fontSize={'14px'}>
-                        Our prices vary based on the product type, customization level, and quantity ordered.
-                        Whether you’re ordering for a small team or an entire club, we’ll tailor the offer to
-                        match your needs.
-                    </Typography>
+                        <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
+                            Transparent Price Range
+                        </Typography>
+                        <Typography paragraph fontSize={'14px'}>
+                            Our prices vary based on the product type, customization level, and quantity ordered.
+                            Whether you’re ordering for a small team or an entire club, we’ll tailor the offer to
+                            match your needs.
+                        </Typography>
 
-                    <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        Bulk Order Discounts
-                    </Typography>
-                    <Typography paragraph fontSize={'14px'}>
-                        The more you order, the better the rate. We offer tiered pricing, so teams placing
-                        larger orders enjoy lower per-unit costs — ideal for clubs, schools, or resellers.
-                    </Typography>
+                        <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
+                            Bulk Order Discounts
+                        </Typography>
+                        <Typography paragraph fontSize={'14px'}>
+                            The more you order, the better the rate. We offer tiered pricing, so teams placing
+                            larger orders enjoy lower per-unit costs — ideal for clubs, schools, or resellers.
+                        </Typography>
+                    </Grid>
+
+                    {/* Tarjetas de precios */}
+                    <Grid item xs={12} md={7}>
+                        <Box mb={3}>
+                            <PricingCard title="TOP:" prices={pricesTop} />
+                        </Box>
+                        <PricingCard title="UNIFORM (JERSEY + SHORTS):" prices={pricesUniform} />
+                    </Grid>
                 </Grid>
-
-                {/* Tarjetas de precios */}
-                <Grid item xs={12} md={7}>
-                    <Box mb={3}>
-                        <PricingCard title="TOP:" prices={pricesTop} />
-                    </Box>
-                    <PricingCard title="UNIFORM (JERSEY + SHORTS):" prices={pricesUniform} />
-                </Grid>
-            </Grid>
-        </Box>
+            </Box>
+        </Box >
     );
 };
 
-export default PricingSection;
+export default PricingSectionTab;

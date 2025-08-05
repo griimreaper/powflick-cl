@@ -1,5 +1,4 @@
-import { Add, AutorenewOutlined, Close, Remove } from "@mui/icons-material";
-import { ArrowLeftIcon, ArrowRightIcon } from "@mui/x-date-pickers";
+import { Add, ChevronRightOutlined, Close, ErrorOutline, Remove } from "@mui/icons-material";
 import ContainerInfoBox from "components/Modals/ContainerInfoBox";
 import useFlag from "hooks/useFlag";
 import { Customization, ProductDB } from "models/types";
@@ -16,11 +15,12 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  Link,
   Popover,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import CustomizationDetails from "./CustomizationDetails";
+import TeamDialogTrigger from "./TeamDialog";
 // import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 interface CustomizationProps {
@@ -219,6 +219,7 @@ export default function Customizations(props: CustomizationProps) {
         alignItems="center"
       >
 
+        <TeamDialogTrigger customizations={customizations} showFront={showFrontPanel} setShowFrontPanel={setShowFrontPanel} productId={productId}/>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -229,10 +230,6 @@ export default function Customizations(props: CustomizationProps) {
             pb: 2,
           }}
         >
-
-
-
-
         </Box>
 
         <Box
@@ -267,16 +264,7 @@ export default function Customizations(props: CustomizationProps) {
             const isActive = item.id === customization.id;
 
             return (
-
-
-
-
-
-
               <>
-
-
-
                 <Box key={item.id}>
                   {/* Botón numerado */}
 

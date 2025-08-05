@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { calculateCustomizationPrice } from "utils/tools";
 import { deleteImage } from "services/imageStorage";
 import { PersistStorage, StorageValue, persist } from 'zustand/middleware';
-import { Customization } from "models/types";
+import { Customization, Number, Text } from "models/types";
 import { CustomizationsStoreType } from "./interfaces/interface";
 import { initialCustomization } from "./customizationStore";
 
@@ -321,7 +321,7 @@ export const useCustomizationsStore = create(
               const textX = estimateCenterX(nameText.length, textSize);
 
               customization.size = size;
-              customization.shorts = isTopSelected ? 'No Shorts (-$13.99)' : 'Default (+$0.00)';
+              customization.shorts = isTopSelected ? 'No Shorts (-$10.00)' : 'Default (+$0.00)';
 
               customization.backSide.numbers = item.number
                 ? [{
@@ -379,6 +379,71 @@ export const useCustomizationsStore = create(
               ],
             };
           }
+        });
+
+        updateTotal(set);
+      },
+      updateCustomizationField: (
+        productId: string,
+        customizationId: string,
+        side: 'frontSide' | 'backSide',
+        type: 'texts' | 'numbers',
+        index: number,
+        value: string
+      ) => {
+        set((state) => {
+          const updatedList = state.list.map((prod) => {
+            if (prod.productId !== productId) return prod;
+
+            const updatedCustomizations = prod.customizations.map((custom) => {
+              if (custom.id !== customizationId) return custom;
+
+              // Clonar sideData
+              const sideData = { ...custom[side] };
+
+              // Clonar array y elemento modificado
+              const elements = type === "texts"
+                ? [...(sideData.texts as Text[])]
+                : [...(sideData.numbers as Number[])];
+
+              // Base es el primer elemento que tiene los valores fijos
+              const base = elements[0];
+              if (!base) return custom;
+
+              // Crear el nuevo elemento basado en base con el nuevo value
+              const updatedElement = {
+                ...base,
+                ...(type === 'texts' ? { text: value } : { number: value }),
+              };
+
+              // Actualizar el elemento en la copia
+              elements[index] = updatedElement;
+
+              // Actualizar el sideData con el nuevo array (nuevo objeto)
+              if (type === "texts") {
+                sideData.texts = elements as Text[];
+              } else {
+                sideData.numbers = elements as Number[];
+              }
+
+              // Retornar nueva customización con side actualizado (nuevo objeto)
+              return {
+                ...custom,
+                [side]: sideData,
+              };
+            });
+
+            // Retornar producto actualizado con nuevo array de customizaciones
+            return {
+              ...prod,
+              customizations: updatedCustomizations,
+            };
+          });
+
+          // Retornar nuevo estado con lista actualizada
+          return {
+            list: updatedList,
+          };
         });
 
         updateTotal(set);

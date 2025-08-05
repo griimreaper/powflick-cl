@@ -490,7 +490,7 @@ function EditableContainer({
                         sx={{ display: showInputsEdit === "Text" ? "none" : "flex" }}
                     >
                         <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                            <Box display="flex" alignItems="center" gap={2}>
+                            {/* <Box display="flex" alignItems="center" gap={2}>
                                 {Number(
                                     list.find(({ productId }) => productId === id)?.customizations?.length
                                 ) > 1 && (
@@ -520,7 +520,7 @@ function EditableContainer({
                                             <ChevronRightOutlined sx={{ width: 16, height: 16 }} />
                                         </Box>
                                     )}
-                            </Box>
+                            </Box> */}
                             <FormControl fullWidth>
                                 <InputLabel id="font-select-label">Font</InputLabel>
                                 <Select
@@ -571,14 +571,14 @@ function EditableContainer({
                                 </Tooltip>
                             </Button>
                         </Box>
-                        <InputTeam
+                        {/* <InputTeam
                             sideName={sideName}
                             selection={selection}
                             name={"Text"}
                             id={id}
                             showInput={showInputsEdit === "Text"}
                             setShowInput={setShowInputsEdit}
-                        />
+                        /> */}
                     </Box>
                 </Box>
             )}
@@ -643,7 +643,7 @@ function EditableContainer({
                         sx={{ display: showInputsEdit === "Number" ? "none" : "flex" }}
                     >
                         <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                            <Box display="flex" alignItems="center" gap={2}>
+                            {/* <Box display="flex" alignItems="center" gap={2}>
                                 {Number(
                                     list.find(({ productId }) => productId === id)?.customizations.length
                                 ) > 1 && (
@@ -673,7 +673,7 @@ function EditableContainer({
                                             <ChevronRightOutlined sx={{ width: 16, height: 16 }} />
                                         </Box>
                                     )}
-                            </Box>
+                            </Box> */}
 
                             <FormControl fullWidth>
                                 <InputLabel id="font-select-label">Font</InputLabel>
@@ -728,18 +728,18 @@ function EditableContainer({
                             </Button>
                         </Box>
 
-                        <InputTeam
+                        {/* <InputTeam
                             sideName={sideName}
                             selection={selection}
                             name={"Number"}
                             id={id}
                             showInput={showInputsEdit === "Number"}
                             setShowInput={setShowInputsEdit}
-                        />
+                        /> */}
                     </Box>
                 </Box>
             )}
-            <Box sx={{ width: "100%" }}>
+            {/* <Box sx={{ width: "100%" }}>
                 {showInputsEdit === "Text" ? (
                     <InputTeam
                         sideName={sideName}
@@ -759,7 +759,7 @@ function EditableContainer({
                         setShowInput={setShowInputsEdit}
                     />
                 ) : null}
-            </Box>
+            </Box> */}
         </Box>
     )
 }

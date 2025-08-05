@@ -37,7 +37,7 @@ export default function ProductDetailsPageView({ detail }: { detail: detailProps
       }
 
       {/* PRODUCT DESCRIPTION AND REVIEW */}
-      <ProductTabs productPrice={product.price} reviews={reviews} hasInfluencer={hasInfluencer} />
+      <ProductTabs reviews={reviews} hasInfluencer={hasInfluencer} />
 
       {/* FREQUENTLY BOUGHT PRODUCTS AREA */}
       {/* <FrequentlyBought products={frequentlyBought} /> */}

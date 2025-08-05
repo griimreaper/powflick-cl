@@ -218,7 +218,7 @@ export default function ProductIntro({ product }: Props) {
 
   const handleCustomizationClick = (
     index: number,
-    event: React.MouseEvent<HTMLElement>
+    event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>
   ) => {
     setSelectedCustomization(index);
     setShowCustomization(!showCustomization); // Al hacer clic en "Custom", mostrar la personalización
@@ -332,7 +332,7 @@ export default function ProductIntro({ product }: Props) {
                     width={500}
                     height={500}
                     loading="eager"
-                    onClick={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
+                    onTouchStart={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
                     src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
                   />
                 )}
@@ -482,15 +482,13 @@ export default function ProductIntro({ product }: Props) {
 
 
           {/* PRICE & STOCK */}
-          <Box pt={1} mb={3} display={"flex"} gap={{ xs: 2, md: 4 }} justifyContent={{ xs: 'left' }
-          }>
+          <Box pt={1} display={"flex"} flexDirection={{ xs: 'row', md: 'column' }} gap={{ xs: 2, md: 4 }} justifyContent={{ xs: 'left' }} alignItems={{xs: 'center', md: 'start'}}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
               {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -10.00 : 0), counter, selected === 'top'))}
             </H2>
 
-
             {/* button increment, decrement */}
-            <FlexBox alignItems="center" mb={4.5}>
+            <FlexBox alignItems="center" mb={{ md: 4.5, xs: 0 }}>
               <Button
                 size="small"
                 sx={{ p: 1 }}
@@ -546,12 +544,11 @@ export default function ProductIntro({ product }: Props) {
           </Box>
 
           {/* BUTTONS */}
-          <Box sx={{ display: "flex", gap: 3 }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}>
             <Box sx={{ display: "column", gap: 3 }}>
 
-
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
-              {/* <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
+              <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
 
                 <Button
                   color="primary"
@@ -566,7 +563,7 @@ export default function ProductIntro({ product }: Props) {
                 >
                   Customize
                 </Button>
-              </FlexBox> */}
+              </FlexBox>
             </Box>
           </Box>
 
