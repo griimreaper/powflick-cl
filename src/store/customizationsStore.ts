@@ -328,6 +328,7 @@ export const useCustomizationsStore = create(
                   number: numberText,
                   font,
                   numberPosition: { x: numberX, y: 120 },
+                  numberDragOffset: { x: 0, y: 0 },
                   numberSize,
                   numberColor: fontColor,
                   rotate: 0,
@@ -339,6 +340,7 @@ export const useCustomizationsStore = create(
                   text: nameText,
                   font,
                   textPosition: { x: textX, y: 50 },
+                  textDragOffset: { x: 0, y: 0 },
                   textSize,
                   textColor: fontColor,
                   rotate: 0,
@@ -410,14 +412,21 @@ export const useCustomizationsStore = create(
               const base = elements[0];
               if (!base) return custom;
 
-              // Crear el nuevo elemento basado en base con el nuevo value
-              const updatedElement = {
-                ...base,
-                ...(type === 'texts' ? { text: value } : { number: value }),
-              };
+              // 🔒 Rellenar huecos intermedios sin sobrescribir existentes
+              for (let i = 0; i < index; i++) {
+                if (!elements[i]) {
+                  elements[i] = {
+                    ...base,
+                    ...(type === "texts" ? { text: "" } : { number: "" }),
+                  };
+                }
+              }
 
-              // Actualizar el elemento en la copia
-              elements[index] = updatedElement;
+              // 📝 Insertar el nuevo valor en el índice indicado
+              elements[index] = {
+                ...base,
+                ...(type === "texts" ? { text: value } : { number: value }),
+              };
 
               // Actualizar el sideData con el nuevo array (nuevo objeto)
               if (type === "texts") {

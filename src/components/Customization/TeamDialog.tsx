@@ -100,7 +100,7 @@ export default function TeamDialogTrigger({
                     <DialogTitle>
                         <Box display="flex" justifyContent="space-between" alignItems={{ xs: 'start', md: "center" }} flexDirection={{ xs: 'column', md: 'row' }} gap={2}>
                             <Typography variant="h6" whiteSpace={'nowrap'}>Edit Team</Typography>
-                            <Box display="flex" justifyContent={{xs: 'space-between', md: 'end'}} width={'100%'} gap={2}>
+                            <Box display="flex" justifyContent={{ xs: 'space-between', md: 'end' }} width={'100%'} gap={2}>
                                 {/* Lado: Front / Back */}
                                 <ToggleButtonGroup
                                     value={side}
@@ -158,6 +158,7 @@ export default function TeamDialogTrigger({
                                                         error={!!fieldState.error}
                                                         helperText={fieldState.error?.message}
                                                         value={field.value || ""}
+                                                        placeholder="US$3.99"
                                                         onChange={(e) => {
                                                             const value = e.target.value.slice(0, 3);
                                                             field.onChange(value); // Actualiza react-hook-form
@@ -191,6 +192,7 @@ export default function TeamDialogTrigger({
                                                         error={!!fieldState.error}
                                                         value={field.value || ""}
                                                         helperText={fieldState.error?.message}
+                                                        placeholder="US$3.99"
                                                         onChange={(e) => {
                                                             const value = e.target.value.slice(0, 14); // limitar a 14 caracteres
                                                             field.onChange(value);
