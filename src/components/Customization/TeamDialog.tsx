@@ -102,7 +102,7 @@ export default function TeamDialogTrigger({
                     <DialogTitle>
                         <Box display="flex" justifyContent="space-between" alignItems={{ xs: 'start', md: "center" }} flexDirection={{ xs: 'column', md: 'row' }} gap={2}>
                             <Typography variant="h6" whiteSpace={'nowrap'}>Edit Team</Typography>
-                            <Box display="flex" gap={2}>
+                            <Box display="flex" justifyContent={{xs: 'space-between', md: 'end'}} width={'100%'} gap={2}>
                                 {/* Lado: Front / Back */}
                                 <ToggleButtonGroup
                                     value={side}
@@ -177,7 +177,7 @@ export default function TeamDialogTrigger({
                                             />
                                         </Grid>
 
-                                        <Grid item xs={5.5}>
+                                        <Grid container item xs={5.5}>
                                             <Controller
                                                 name={`${fieldPrefix}-text`}
                                                 control={control}
@@ -209,7 +209,7 @@ export default function TeamDialogTrigger({
                                                 )}
                                             />
                                         </Grid>
-                                        <Grid item xs={1} alignItems={'center'} display={'flex'} justifyContent={'center'}>
+                                        <Grid container item xs={1} alignItems={'center'} display={'flex'} justifyContent={'center'}>
                                             <Icon sx={{
                                                 backgroundColor: 'primary.main',
                                                 color: 'white',

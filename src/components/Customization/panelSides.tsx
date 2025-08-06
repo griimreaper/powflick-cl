@@ -145,6 +145,53 @@ export default function PanelSides({
   };
 
   useEffect(() => {
+    if (!customizations) return;
+
+    const currentSideData = customizations?.find(c => c.id === customization.id)![sideName];
+
+    logosRef.current = currentSideData.logos || [
+      {
+        type: "Logo",
+        logoUrl: "",
+        logoSize: 100,
+        logoPosition: { x: 250, y: 250 },
+        logoDragOffset: { x: 0, y: 0 },
+        rotate: 0,
+      },
+    ];
+
+    textsRef.current = currentSideData.texts || [
+      {
+        type: "Text",
+        text: "",
+        font: typeof font === "string" && fonts[font] ? font : "",
+        textColor: typeof fontColor === "string" && fontColor ? fontColor : "black",
+        textSize: 24,
+        textPosition: { x: 150, y: 150 },
+        textDragOffset: { x: 0, y: 0 },
+        rotate: 0,
+      },
+    ];
+
+    numbersRef.current = currentSideData.numbers || [
+      {
+        type: "Number",
+        number: "",
+        font: typeof font === "string" && fonts[font] ? font : "",
+        numberColor: typeof fontColor === "string" && fontColor ? fontColor : "black",
+        numberPosition: { x: 80, y: 100 },
+        numberDragOffset: { x: 0, y: 0 },
+        numberSize: 50,
+        rotate: 0,
+      },
+    ];
+
+    // Forzar re-render si quieres que refleje cambios inmediatamente
+    forceUpdate(n => n + 1);
+  }, [customizations, customization, sideName, font, fontColor]);
+
+
+  useEffect(() => {
     saveDataToLocal();
   }, [logosRef.current, numbersRef.current, textsRef.current]);
 

@@ -2,7 +2,9 @@ import React, { useRef } from "react";
 import { Logo, Number, Text } from "models/types";
 import useFlag from "hooks/useFlag";
 import ManipulableContainer from "./ManipulableContainer";
-import { Box } from "@mui/material";
+import { Box, Icon } from "@mui/material";
+import { CloseOutlined } from "@mui/icons-material";
+import { useCustomizationStore } from "store/customizationStore";
 
 interface MainContainerProps {
   selection: {
@@ -43,6 +45,7 @@ function MainContainer({
   const [isDraggingText, setIsDraggingText] = useFlag();
   const [isDraggingNumber, setIsDraggingNumber] = useFlag();
 
+  const { setShowCustomization } = useCustomizationStore();
   // Padding interno para evitar que el texto/número se corte
   const PADDING = 25;
 
@@ -466,6 +469,35 @@ function MainContainer({
   return (
     <Box sx={{ width: "full", justifyContent: "center", display: "flex" }}>
       <Box
+        sx={{
+          width: "full",
+          justifyContent: "center",
+          display: { xs: "flex", md: "none" },
+          position: "relative",  // <- agregado para que el absolute funcione respecto a este contenedor
+        }}
+      >
+        <Icon
+          sx={{
+            cursor: "pointer",
+            backgroundColor: "#ca0b0b",
+            borderRadius: "50%",
+            color: "white",
+            position: "absolute",
+            left: '22rem',       // ajusta este valor para ubicarlo horizontalmente
+            top: 16,         // importante para posicionarlo verticalmente
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 32,
+            height: 32,
+            zIndex: 2,
+          }}
+          onClick={() => setShowCustomization(false)}
+        >
+          <CloseOutlined />
+        </Icon>
+      </Box>
+      <Box
         ref={panelRef}
         id="customization-panel"
         sx={{
@@ -491,6 +523,7 @@ function MainContainer({
             height: "auto",
           }}
         />
+
         {logos &&
           logos.map(
             (
