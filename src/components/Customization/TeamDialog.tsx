@@ -27,13 +27,11 @@ export default function TeamDialogTrigger({
     showFront,
     setShowFrontPanel,
     productId,
-    customizationId
 }: {
     customizations?: Customization[];
     showFront?: boolean;
     setShowFrontPanel?: (x: boolean) => void;
     productId: string;
-    customizationId: string;
 }) {
     const [open, setOpen] = useState(false);
     const [side, setSide] = useState<"frontSide" | "backSide">("frontSide");

@@ -10,8 +10,6 @@ import Button from "@mui/material/Button";
 // MUI ICON COMPONENTS
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
-// GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H2, H6 } from "components/Typography";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
@@ -38,7 +36,6 @@ import { Divider, TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
-import { useSearchParams } from "next/navigation";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -95,8 +92,6 @@ export default function ProductIntro({ product }: Props) {
 
   const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
   const isSelected = (value: "top" | "uniform") => selected === value;
-
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     const newValue = selected === 'top'
@@ -401,88 +396,85 @@ export default function ProductIntro({ product }: Props) {
           {/* PRODUCT NAME */}
           <H1 mb={1}>{title}</H1>
 
-          {!showCustomization && (
-            <>
-              {/* PRODUCT BRAND */}
-              {product.product.categories?.length > 0 && (
-                <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
-                  <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                    Categories:
-                  </Typography>
+          <>
+            {/* PRODUCT BRAND */}
+            {product.product.categories?.length > 0 && (
+              <FlexBox alignItems="center" flexWrap="wrap" mb={1} display={{ xs: 'none', md: 'flex' }}>
+                <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                  Categories:
+                </Typography>
 
-                  {product.product.categories.map((cat: any, index: number) => (
-                    <Box key={cat} display="inline-flex" alignItems="center">
-                      <Link href={`/products?category=${encodeURIComponent(cat)}`}>
-                        {product.product.categories.length === 1 ? (
-                          <H6>{cat}.</H6>
-                        ) : index === 0 && product.product.categories.length > 1 ? (
-                          <H6>{cat},</H6>
-                        ) :
-                          index === product.product.categories.length - 1 ? (
-                            <H6 ml={0.5}>{cat}.</H6>
-                          ) : (
-                            <H6 ml={0.5}>{cat},</H6>
-                          )}
-                      </Link>
-                    </Box>
-                  ))}
-                </FlexBox>
-              )}
-
-              {product.product.collections?.length > 0 && (
-                <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
-                  <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                    Collections:
-                  </Typography>
-
-                  {product.product.collections.map((col: any, index: number) => (
-                    <Box key={col} display="inline-flex" alignItems="center">
-                      <Link href={`/products?collection=${encodeURIComponent(col)}`}>
-                        {product.product.collections.length === 1 ? (
-                          <H6>{col}.</H6>
-                        ) : index === 0 && product.product.collections.length > 1 ? (
-                          <H6>{col},</H6>
-                        ) : index === product.product.collections.length - 1 ? (
-                          <H6 ml={0.5}>{col}.</H6>
+                {product.product.categories.map((cat: any, index: number) => (
+                  <Box key={cat} display="inline-flex" alignItems="center">
+                    <Link href={`/products?category=${encodeURIComponent(cat)}`}>
+                      {product.product.categories.length === 1 ? (
+                        <H6>{cat}.</H6>
+                      ) : index === 0 && product.product.categories.length > 1 ? (
+                        <H6>{cat},</H6>
+                      ) :
+                        index === product.product.categories.length - 1 ? (
+                          <H6 ml={0.5}>{cat}.</H6>
                         ) : (
-                          <H6 ml={0.5}>{col},</H6>
+                          <H6 ml={0.5}>{cat},</H6>
                         )}
-                      </Link>
-                    </Box>
-                  ))}
-                </FlexBox>
-              )}
-
-              {product.product.tags?.length > 0 && (
-                <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
-                  <div>Tags: </div>
-                  {product.product.tags.map((t: any) => (
-                    <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
-                      <H6 bgcolor={"#f0f0f0"} sx={{
-                        transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
-                        '&:hover': {
-                          bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
-                        },
-                      }} borderRadius={20} paddingX={1.5}>
-                        {'#' + t}
-                      </H6>
                     </Link>
-                  ))}
-                </FlexBox>
-              )}
-
-              {/* PRODUCT RATING */}
-              <FlexBox alignItems="center" gap={1} mb={2}>
-                <Box lineHeight="1">Rated:</Box>
-                <Rating color="warn" value={4} readOnly />
-                <H6 lineHeight="1">(50)</H6>
+                  </Box>
+                ))}
               </FlexBox>
-            </>
-          )}
+            )}
 
+            {product.product.collections?.length > 0 && (
+              <FlexBox alignItems="center" flexWrap="wrap" mb={1} display={{ xs: 'none', md: 'flex' }}>
+                <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                  Collections:
+                </Typography>
+
+                {product.product.collections.map((col: any, index: number) => (
+                  <Box key={col} display="inline-flex" alignItems="center">
+                    <Link href={`/products?collection=${encodeURIComponent(col)}`}>
+                      {product.product.collections.length === 1 ? (
+                        <H6>{col}.</H6>
+                      ) : index === 0 && product.product.collections.length > 1 ? (
+                        <H6>{col},</H6>
+                      ) : index === product.product.collections.length - 1 ? (
+                        <H6 ml={0.5}>{col}.</H6>
+                      ) : (
+                        <H6 ml={0.5}>{col},</H6>
+                      )}
+                    </Link>
+                  </Box>
+                ))}
+              </FlexBox>
+            )}
+
+            {product.product.tags?.length > 0 && (
+              <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"} display={{ xs: 'none', md: 'flex' }}>
+                <div>Tags: </div>
+                {product.product.tags.map((t: any) => (
+                  <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
+                    <H6 bgcolor={"#f0f0f0"} sx={{
+                      transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
+                      '&:hover': {
+                        bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
+                      },
+                    }} borderRadius={20} paddingX={1.5}>
+                      {'#' + t}
+                    </H6>
+                  </Link>
+                ))}
+              </FlexBox>
+            )}
+
+            {/* PRODUCT RATING */}
+            <FlexBox alignItems="center" gap={1} mb={2} display={{ xs: 'none', md: 'flex' }}>
+              <Box lineHeight="1">Rated:</Box>
+              <Rating color="warn" value={4} readOnly />
+              <H6 lineHeight="1">(50)</H6>
+            </FlexBox>
+          </>
 
           {/* PRICE & STOCK */}
-          <Box pt={1} display={"flex"} flexDirection={{ xs: 'row', md: 'column' }} gap={{ xs: 2, md: 4 }} justifyContent={{ xs: 'left' }} alignItems={{xs: 'center', md: 'start'}}>
+          <Box pt={1} display={"flex"} flexDirection={{ xs: 'row', md: 'column' }} gap={{ xs: 2, md: 4 }} justifyContent={{ xs: 'left' }} alignItems={{ xs: 'center', md: 'start' }}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
               {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -10.00 : 0), counter, selected === 'top'))}
             </H2>
