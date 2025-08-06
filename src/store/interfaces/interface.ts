@@ -74,7 +74,7 @@ export type CustomizationsStoreType = {
         side: 'frontSide' | 'backSide',
         type: 'texts' | 'numbers',
         index: number,
-        value: string
+        value: string | undefined
       ) => void;
 };
 

@@ -1,4 +1,4 @@
-import { Add, ChevronRightOutlined, Close, ErrorOutline, Remove } from "@mui/icons-material";
+import { Add, Close, Remove } from "@mui/icons-material";
 import ContainerInfoBox from "components/Modals/ContainerInfoBox";
 import useFlag from "hooks/useFlag";
 import { Customization, ProductDB } from "models/types";
@@ -16,11 +16,9 @@ import {
   CircularProgress,
   IconButton,
   Popover,
-  Tooltip,
-  Typography,
 } from "@mui/material";
 import CustomizationDetails from "./CustomizationDetails";
-import TeamDialogTrigger from "./TeamDialog";
+import TeamCustomDialogTrigger from "./TeamCustomizationDialog";
 // import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 interface CustomizationProps {
@@ -219,7 +217,7 @@ export default function Customizations(props: CustomizationProps) {
         alignItems="center"
       >
 
-        <TeamDialogTrigger customizations={customizations} showFront={showFrontPanel} setShowFrontPanel={setShowFrontPanel} productId={productId}/>
+        <TeamCustomDialogTrigger customizations={customizations} showFront={showFrontPanel} setShowFrontPanel={setShowFrontPanel} productId={productId}/>
         <Box
           display="flex"
           justifyContent="space-between"

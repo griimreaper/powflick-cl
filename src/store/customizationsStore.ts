@@ -391,7 +391,7 @@ export const useCustomizationsStore = create(
         side: 'frontSide' | 'backSide',
         type: 'texts' | 'numbers',
         index: number,
-        value: string
+        value: string | undefined
       ) => {
         set((state) => {
           const updatedList = state.list.map((prod) => {
@@ -400,56 +400,57 @@ export const useCustomizationsStore = create(
             const updatedCustomizations = prod.customizations.map((custom) => {
               if (custom.id !== customizationId) return custom;
 
-              // Clonar sideData
               const sideData = { ...custom[side] };
 
-              // Clonar array y elemento modificado
-              const elements = type === "texts"
+              let elements = type === "texts"
                 ? [...(sideData.texts as Text[])]
                 : [...(sideData.numbers as Number[])];
 
-              // Base es el primer elemento que tiene los valores fijos
               const base = elements[0];
               if (!base) return custom;
 
-              // 🔒 Rellenar huecos intermedios sin sobrescribir existentes
-              for (let i = 0; i < index; i++) {
-                if (!elements[i]) {
-                  elements[i] = {
-                    ...base,
-                    ...(type === "texts" ? { text: "" } : { number: "" }),
-                  };
+              // Si value es undefined, eliminar el elemento en index (pero no el base)
+              if (value === undefined) {
+                if (index === 0) {
+                  // No eliminar base, solo limpiar su valor
+                  elements[0] = type === "texts" ? { ...base, text: "" } : { ...base, number: "" };
+                } else if (index < elements.length) {
+                  elements.splice(index, 1);
                 }
+              } else {
+                // Rellenar huecos si faltan
+                for (let i = 0; i < index; i++) {
+                  if (!elements[i]) {
+                    elements[i] = type === "texts"
+                      ? { ...base, text: "" }
+                      : { ...base, number: "" };
+                  }
+                }
+                // Insertar o actualizar
+                elements[index] = type === "texts"
+                  ? { ...base, text: value }
+                  : { ...base, number: value };
               }
 
-              // 📝 Insertar el nuevo valor en el índice indicado
-              elements[index] = {
-                ...base,
-                ...(type === "texts" ? { text: value } : { number: value }),
-              };
-
-              // Actualizar el sideData con el nuevo array (nuevo objeto)
+              // Actualizar sideData con nuevo array
               if (type === "texts") {
                 sideData.texts = elements as Text[];
               } else {
                 sideData.numbers = elements as Number[];
               }
 
-              // Retornar nueva customización con side actualizado (nuevo objeto)
               return {
                 ...custom,
                 [side]: sideData,
               };
             });
 
-            // Retornar producto actualizado con nuevo array de customizaciones
             return {
               ...prod,
               customizations: updatedCustomizations,
             };
           });
 
-          // Retornar nuevo estado con lista actualizada
           return {
             list: updatedList,
           };
