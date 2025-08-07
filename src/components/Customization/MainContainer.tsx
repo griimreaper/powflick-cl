@@ -466,6 +466,9 @@ function MainContainer({
     setActualize();
   };
 
+  console.log(texts);
+  
+
   return (
     <Box sx={{ width: "full", justifyContent: "center", display: "flex" }}>
       <Box

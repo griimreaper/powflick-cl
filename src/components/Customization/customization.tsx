@@ -33,6 +33,11 @@ interface CustomizationProps {
   handleCustomizationClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
+interface Selection {
+  type: 'Text' | 'Number' | 'Logo' | '';
+  index: number;
+}
+
 export default function Customizations(props: CustomizationProps) {
   const [step1, setStep1] = useFlag();
   const [step2, setStep2] = useFlag();
@@ -61,6 +66,11 @@ export default function Customizations(props: CustomizationProps) {
   const customizations = list.find(
     (p) => productId === p.productId
   )?.customizations;
+
+  const [selection, setSelection] = useState<Selection>({
+    type: '',
+    index: 0,
+  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -217,7 +227,7 @@ export default function Customizations(props: CustomizationProps) {
         alignItems="center"
       >
 
-        <TeamCustomDialogTrigger customizations={customizations} showFront={showFrontPanel} setShowFrontPanel={setShowFrontPanel} productId={productId}/>
+        <TeamCustomDialogTrigger customizations={customizations} showFront={showFrontPanel} setShowFrontPanel={setShowFrontPanel} productId={productId} setSelection={setSelection} />
         <Box
           display="flex"
           justifyContent="space-between"
@@ -385,6 +395,8 @@ export default function Customizations(props: CustomizationProps) {
               font={product.font}
               fontColor={product.font_color}
               togglePanel={togglePanel}
+              selection={selection}
+              setSelection={setSelection}
             />
           ) : (
             <PanelSides
@@ -406,6 +418,8 @@ export default function Customizations(props: CustomizationProps) {
               font={product.font}
               fontColor={product.font_color}
               togglePanel={togglePanel}
+              selection={selection}
+              setSelection={setSelection}
             />
           )}
         </Box>

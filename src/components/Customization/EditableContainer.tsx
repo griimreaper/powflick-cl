@@ -119,6 +119,9 @@ function EditableContainer({
         };
     }, [selection]);
 
+    console.log(selection);
+    
+
     const removeLogo = async (index: number) => {
         if (logos[index].logoUrl !== "") {
             try {

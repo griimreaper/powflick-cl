@@ -406,33 +406,70 @@ export const useCustomizationsStore = create(
                 ? [...(sideData.texts as Text[])]
                 : [...(sideData.numbers as Number[])];
 
-              const base = elements[0];
+              const base: any = elements[0];
               if (!base) return custom;
 
-              // Si value es undefined, eliminar el elemento en index (pero no el base)
+              const offsetX = 10; // px de desplazamiento horizontal
+              const offsetY = 10; // px de desplazamiento vertical
+
               if (value === undefined) {
                 if (index === 0) {
-                  // No eliminar base, solo limpiar su valor
-                  elements[0] = type === "texts" ? { ...base, text: "" } : { ...base, number: "" };
+                  // Limpiar el valor pero mantener posición
+                  if (type === "texts") {
+                    elements[0] = { ...base, text: "", textPosition: base.textPosition };
+                  } else {
+                    elements[0] = { ...base, number: "", numberPosition: base.numberPosition };
+                  }
                 } else if (index < elements.length) {
                   elements.splice(index, 1);
                 }
               } else {
-                // Rellenar huecos si faltan
+                // Rellenar huecos si faltan y setear posiciones
                 for (let i = 0; i < index; i++) {
                   if (!elements[i]) {
-                    elements[i] = type === "texts"
-                      ? { ...base, text: "" }
-                      : { ...base, number: "" };
+                    if (type === "texts") {
+                      elements[i] = {
+                        ...base,
+                        text: "",
+                        textPosition: {
+                          x: Math.round(base.textPosition.x + offsetX * i),
+                          y: Math.round(base.textPosition.y + offsetY * i),
+                        }
+                      };
+                    } else {
+                      elements[i] = {
+                        ...base,
+                        number: "",
+                        numberPosition: {
+                          x: Math.round(base.numberPosition.x + offsetX * i),
+                          y: Math.round(base.numberPosition.y + offsetY * i),
+                        }
+                      };
+                    }
                   }
                 }
-                // Insertar o actualizar
-                elements[index] = type === "texts"
-                  ? { ...base, text: value }
-                  : { ...base, number: value };
+                // Insertar o actualizar en index con posición desplazada
+                if (type === "texts") {
+                  elements[index] = {
+                    ...base,
+                    text: value,
+                    textPosition: {
+                      x: Math.round(base.textPosition.x + offsetX * index),
+                      y: Math.round(base.textPosition.y + offsetY * index),
+                    }
+                  };
+                } else {
+                  elements[index] = {
+                    ...base,
+                    number: value,
+                    numberPosition: {
+                      x: Math.round(base.numberPosition.x + offsetX * index),
+                      y: Math.round(base.numberPosition.y + offsetY * index),
+                    }
+                  };
+                }
               }
 
-              // Actualizar sideData con nuevo array
               if (type === "texts") {
                 sideData.texts = elements as Text[];
               } else {
@@ -458,6 +495,7 @@ export const useCustomizationsStore = create(
 
         updateTotal(set);
       },
+
 
       clearCustomization: () => {
         set({ list: [] });

@@ -13,7 +13,7 @@ import {
     Icon,
     Button
 } from "@mui/material";
-import { ErrorOutline, ChevronRightOutlined, OpenWithOutlined } from "@mui/icons-material";
+import { ErrorOutline, ChevronRightOutlined, OpenWithOutlined, DeleteOutline } from "@mui/icons-material";
 import { Customization } from "models/types";
 import { useForm, Controller } from "react-hook-form";
 import { useCustomizationStore } from "store/customizationStore";
@@ -23,12 +23,14 @@ export default function TeamCustomDialogTrigger({
     showFront,
     setShowFrontPanel,
     productId,
-    customizations
+    customizations,
+    setSelection,
 }: {
     customizations?: Customization[];
     showFront?: boolean;
     setShowFrontPanel?: (x: boolean) => void;
     productId: string;
+    setSelection: Function;
 }) {
     const [open, setOpen] = useState(false);
     const [side, setSide] = useState<"frontSide" | "backSide">("frontSide");
@@ -223,15 +225,14 @@ export default function TeamCustomDialogTrigger({
                                 const fieldPrefix = `${selectedCustomizationId}-${side}`;
                                 return (
                                     <Grid container spacing={1} key={i} alignItems="center" mb={1}>
-                                        <Grid item xs={5.5}>
+
+                                        {/* Número + botones */}
+                                        <Grid item xs={6} display="flex" alignItems="center" gap={1}>
                                             <Controller
                                                 name={`${fieldPrefix}-number-${i}`}
                                                 control={control}
                                                 rules={{
-                                                    pattern: {
-                                                        value: /^[0-9]{1,3}$/,
-                                                        message: "Only numbers (max 3 digits)",
-                                                    },
+                                                    pattern: { value: /^[0-9]{1,3}$/, message: "Only numbers (max 3 digits)" },
                                                 }}
                                                 render={({ field, fieldState }) => (
                                                     <TextField
@@ -246,21 +247,61 @@ export default function TeamCustomDialogTrigger({
                                                         onChange={(e) => {
                                                             const value = e.target.value.slice(0, 3);
                                                             field.onChange(value);
-                                                            updateCustomizationField(
-                                                                productId,
-                                                                selectedCustomizationId,
-                                                                side,
-                                                                "numbers",
-                                                                i,
-                                                                value
-                                                            );
+                                                            updateCustomizationField(productId, selectedCustomizationId!, side, "numbers", i, value);
                                                         }}
                                                     />
                                                 )}
                                             />
+                                            <Icon
+                                                sx={{
+                                                    backgroundColor: 'primary.main',
+                                                    color: 'white',
+                                                    width: 32,
+                                                    height: 32,
+                                                    borderRadius: '5px',
+                                                    cursor: 'pointer',
+                                                    '&:hover': { backgroundColor: 'primary.dark' },
+                                                }}
+                                                onClick={() => {
+                                                    const selected = customizations?.find(c => c.id === selectedCustomizationId);
+                                                    if (selected) {
+                                                        setCustomization(selected);
+                                                        setSelection({ type: 'Number', index: i })
+                                                        handleClose();
+                                                        togglePanel();
+                                                    }
+                                                }}
+                                            >
+                                                <OpenWithOutlined />
+                                            </Icon>
+                                            <Icon
+                                                sx={{
+                                                    backgroundColor: 'gray',
+                                                    color: 'white',
+                                                    width: 32,
+                                                    height: 32,
+                                                    borderRadius: '5px',
+                                                    cursor: 'pointer',
+                                                }}
+                                                onClick={() => {
+                                                    if (!selectedCustomizationId) return;
+
+                                                    // Limpiar valor (vacío) pero no eliminar el bloque
+                                                    updateCustomizationField(productId, selectedCustomizationId, side, "numbers", i, "");
+
+                                                    const fieldPrefix = `${selectedCustomizationId}-${side}`;
+                                                    reset({
+                                                        ...getValues(),
+                                                        [`${fieldPrefix}-number-${i}`]: "",
+                                                    });
+                                                }}
+                                            >
+                                                <DeleteOutline />
+                                            </Icon>
                                         </Grid>
 
-                                        <Grid item xs={5.5}>
+                                        {/* Texto + botones */}
+                                        <Grid item xs={6} display="flex" alignItems="center" gap={1}>
                                             <Controller
                                                 name={`${fieldPrefix}-text-${i}`}
                                                 control={control}
@@ -274,27 +315,17 @@ export default function TeamCustomDialogTrigger({
                                                         fullWidth
                                                         label={`Text #${i + 1}`}
                                                         error={!!fieldState.error}
-                                                        value={field.value || ""}
-                                                        placeholder="US$3.99"
                                                         helperText={fieldState.error?.message}
+                                                        placeholder="US$3.99"
+                                                        value={field.value || ""}
                                                         onChange={(e) => {
                                                             const value = e.target.value.slice(0, 14);
                                                             field.onChange(value);
-                                                            updateCustomizationField(
-                                                                productId,
-                                                                selectedCustomizationId,
-                                                                side,
-                                                                "texts",
-                                                                i,
-                                                                value
-                                                            );
+                                                            updateCustomizationField(productId, selectedCustomizationId!, side, "texts", i, value);
                                                         }}
                                                     />
                                                 )}
                                             />
-                                        </Grid>
-
-                                        <Grid item xs={1}>
                                             <Icon
                                                 sx={{
                                                     backgroundColor: 'primary.main',
@@ -306,9 +337,10 @@ export default function TeamCustomDialogTrigger({
                                                     '&:hover': { backgroundColor: 'primary.dark' },
                                                 }}
                                                 onClick={() => {
-                                                    const selected = customizations?.find((c) => c.id === selectedCustomizationId);
+                                                    const selected = customizations?.find(c => c.id === selectedCustomizationId);
                                                     if (selected) {
                                                         setCustomization(selected);
+                                                        setSelection({ type: 'Text', index: i })
                                                         handleClose();
                                                         togglePanel();
                                                     }
@@ -316,9 +348,34 @@ export default function TeamCustomDialogTrigger({
                                             >
                                                 <OpenWithOutlined />
                                             </Icon>
+                                            <Icon
+                                                sx={{
+                                                    backgroundColor: 'gray',
+                                                    color: 'white',
+                                                    width: 32,
+                                                    height: 32,
+                                                    borderRadius: '5px',
+                                                    cursor: 'pointer',
+                                                }}
+                                                onClick={() => {
+                                                    if (!selectedCustomizationId) return;
+
+                                                    // Limpiar valor (vacío) pero no eliminar el bloque
+                                                    updateCustomizationField(productId, selectedCustomizationId, side, "texts", i, "");
+
+                                                    const fieldPrefix = `${selectedCustomizationId}-${side}`;
+                                                    reset({
+                                                        ...getValues(),
+                                                        [`${fieldPrefix}-number-${i}`]: "",
+                                                    });
+                                                }}
+                                            >
+                                                <DeleteOutline />
+                                            </Icon>
                                         </Grid>
 
                                     </Grid>
+
                                 );
                             })}
                         </Grid>

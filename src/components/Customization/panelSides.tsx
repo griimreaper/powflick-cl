@@ -17,11 +17,11 @@ interface PanelSidesProps {
   steps: any;
   fontColor: string;
   togglePanel: () => void;
-}
-
-interface Selection {
-  type: 'Text' | 'Number' | 'Logo' | '';
-  index: number;
+  selection: {
+    type: 'Text' | 'Number' | 'Logo' | '';
+    index: number;
+  };
+  setSelection: Function;
 }
 
 export const fonts: { [key: string]: string } = {
@@ -71,6 +71,8 @@ export default function PanelSides({
   font,
   fontColor,
   togglePanel,
+  selection,
+  setSelection,
 }: PanelSidesProps) {
   const { list, setCustomizationInList } =
     useCustomizationsStore();
@@ -125,10 +127,6 @@ export default function PanelSides({
     ]
   );
 
-  const [selection, setSelection] = useState<Selection>({
-    type: '',
-    index: 0,
-  });
   const [showInputsEdit, setShowInputsEdit] = useState<string>("");
   const { actualize, setActualize } = useHearingEvent();
   const [, forceUpdate] = useState(0);
@@ -147,49 +145,32 @@ export default function PanelSides({
   useEffect(() => {
     if (!customizations) return;
 
-    const currentSideData = customizations?.find(c => c.id === customization.id)![sideName];
+    const currentSideData = customizations.find(c => c.id === customization.id)?.[sideName];
+    if (!currentSideData) return;
 
-    logosRef.current = currentSideData.logos || [
-      {
-        type: "Logo",
-        logoUrl: "",
-        logoSize: 100,
-        logoPosition: { x: 250, y: 250 },
-        logoDragOffset: { x: 0, y: 0 },
-        rotate: 0,
-      },
-    ];
+    // Sobrescribir textsRef.current con objetos válidos
+    textsRef.current = currentSideData.texts.map((newText, i) => {
+      const base = textsRef.current[i] || newText;
+      return {
+        ...base,
+        text: newText?.text ?? "",
+      };
+    });
 
-    textsRef.current = currentSideData.texts || [
-      {
-        type: "Text",
-        text: "",
-        font: typeof font === "string" && fonts[font] ? font : "",
-        textColor: typeof fontColor === "string" && fontColor ? fontColor : "black",
-        textSize: 24,
-        textPosition: { x: 150, y: 150 },
-        textDragOffset: { x: 0, y: 0 },
-        rotate: 0,
-      },
-    ];
+    // Sobrescribir numbersRef.current con objetos válidos
+    numbersRef.current = currentSideData.numbers.map((newNumber, i) => {
+      const base = numbersRef.current[i] || newNumber;
+      return {
+        ...base,
+        number: newNumber?.number ?? "",
+      };
+    });
 
-    numbersRef.current = currentSideData.numbers || [
-      {
-        type: "Number",
-        number: "",
-        font: typeof font === "string" && fonts[font] ? font : "",
-        numberColor: typeof fontColor === "string" && fontColor ? fontColor : "black",
-        numberPosition: { x: 80, y: 100 },
-        numberDragOffset: { x: 0, y: 0 },
-        numberSize: 50,
-        rotate: 0,
-      },
-    ];
+    // Reemplazo directo de logos
+    logosRef.current = currentSideData.logos || [];
 
-    // Forzar re-render si quieres que refleje cambios inmediatamente
     forceUpdate(n => n + 1);
   }, [customizations, customization, sideName, font, fontColor]);
-
 
   useEffect(() => {
     saveDataToLocal();
@@ -304,7 +285,7 @@ export default function PanelSides({
 
   // Almacenar la posición del logo en el estado local cuando cambia
   useEffect(() => {
-    setSelection({ type: '', index: 0 });
+    setSelection({ type: selection.type, index: 0 });
     if (customizations?.find((e) => e.id === customization.id)) {
       if (customization[sideName].logos)
         logosRef.current = customization[sideName].logos as Logo[];
