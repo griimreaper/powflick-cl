@@ -1,0 +1,14 @@
+{
+  "Home": {
+    "title": "Custom Sports Jerseys & Teamwear | Pow Flick",
+    "description": "Buy custom sports jerseys and team apparel for soccer, basketball, baseball, and more. Design your own uniforms with Pow Flick — fast, premium & affordable.",
+    "overlayAlt": "Decorative overlay",
+    "testTranslation": "This is a test translation"
+  },
+  "Common": {
+    "cta": {
+      "contact": "Contact",
+      "shop": "Shop now"
+    }
+  }
+}

@@ -1,7 +1,8 @@
 "use client";
 
 import Script from "next/script";
-import * as gtag from "../../gtag.js";
+// gtag.js está en la raíz del proyecto (front/gtag.js)
+import * as gtag from "../../../gtag.js";
 
 const GoogleAnalytics = () => {
   return (

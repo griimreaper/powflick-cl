@@ -1,13 +1,15 @@
 import { ReactNode } from "react";
-import { Open_Sans } from "next/font/google";
+import { openSans } from "theme/fonts";
 import FloatingWhatsApp from "components/whatsapp/FloatingWhatsApp"; // Ajusta la ruta si es necesario
 import Head from "next/head";
 
-export const openSans = Open_Sans({ subsets: ["latin"] });
+// Fuente global importada desde theme/fonts
 
-// IMPORT i18n SUPPORT FILE
-import "i18n";
+// IMPORT i18n SUPPORT FILE (client initializer)
+import "i18n/index";
 import React from "react";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import "./global.css";
 import { GlobalProvider } from "./providers";
 import GoogleAnalytics from "./GoogleAnalytics";
@@ -17,15 +19,19 @@ import { getStructuredData } from "./StructuredData";
 import MicrosoftClarity from "./MicrosoftClarity";
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: {
   children: ReactNode;
+  params: { locale: string };
 }) {
+  setRequestLocale(params.locale);
+  const messages = await getMessages({ locale: params.locale });
   const structuredData = getStructuredData();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={params.locale} suppressHydrationWarning>
       <head>
         {/* Precargar la fuente GYMER */}
         <link
@@ -68,13 +74,15 @@ export default function RootLayout({
       </head>
       <body className={openSans.className}>
         <React.StrictMode>
-          <GlobalProvider>
-            <IntercomChat />
-            <FloatingWhatsApp />
-            {children}
-          </GlobalProvider>
-          <GoogleAnalytics />
-          <GoogleTagManager />
+          <NextIntlClientProvider locale={params.locale} messages={messages}>
+            <GlobalProvider>
+              <IntercomChat />
+              <FloatingWhatsApp />
+              {children}
+            </GlobalProvider>
+            <GoogleAnalytics />
+            <GoogleTagManager />
+          </NextIntlClientProvider>
         </React.StrictMode>
       </body>
     </html>

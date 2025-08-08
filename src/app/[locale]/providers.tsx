@@ -17,7 +17,7 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             <NavbarProvider>
                 <CartProvider>
                     <ThemeProvider>
-                        <SessionProvider>
+                        <SessionProvider refetchOnWindowFocus={false} refetchInterval={0}>
                             <ProgressBar />
                             <GlobalStyles
                                 styles={{

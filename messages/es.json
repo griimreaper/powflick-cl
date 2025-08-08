@@ -1,0 +1,14 @@
+{
+  "Home": {
+    "title": "Camisetas deportivas personalizadas | Pow Flick",
+    "description": "Compra camisetas deportivas personalizadas y equipación para equipos de fútbol, baloncesto, béisbol y más. Diseña tus uniformes con Pow Flick — rápido, premium y asequible.",
+    "overlayAlt": "Elemento decorativo",
+    "testTranslation": "Esta es una traducción de prueba"
+  },
+  "Common": {
+    "cta": {
+      "contact": "Contacto",
+      "shop": "Comprar ahora"
+    }
+  }
+}
