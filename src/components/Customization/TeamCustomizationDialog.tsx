@@ -253,6 +253,13 @@ export default function TeamCustomDialogTrigger({
                                                             field.onChange(value);
                                                             updateCustomizationField(productId, selectedCustomizationId!, side, "numbers", i, value);
                                                         }}
+                                                        sx={{
+                                                            '& .MuiOutlinedInput-root': {
+                                                                '&.Mui-focused fieldset': {
+                                                                    borderColor: 'black',
+                                                                },
+                                                            },
+                                                        }}
                                                     />
                                                 )}
                                             />
@@ -265,12 +272,13 @@ export default function TeamCustomDialogTrigger({
                                                     border: "1px solid black",
                                                     backgroundColor: 'white',
                                                     color: 'black',
+                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
                                                     '&:active': {
                                                         backgroundColor: 'black',
                                                         color: 'white',
                                                         '&:hover': { backgroundColor: 'black' }
                                                     },
-                                                    '&:hover': { backgroundColor: '#f5f5f5' }
+                                                    '&:hover': { backgroundColor: '#d9d9d9' }
                                                 }}
                                                 onClick={() => {
                                                     const selected = customizations?.find(c => c.id === selectedCustomizationId);
@@ -293,12 +301,13 @@ export default function TeamCustomDialogTrigger({
                                                     border: "1px solid black",
                                                     backgroundColor: 'white',
                                                     color: 'black',
+                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
                                                     '&:active': {
                                                         backgroundColor: 'black',
                                                         color: 'white',
                                                         '&:hover': { backgroundColor: 'black' }
                                                     },
-                                                    '&:hover': { backgroundColor: '#f5f5f5' }
+                                                    '&:hover': { backgroundColor: '#d9d9d9' }
                                                 }}
                                                 onClick={() => {
                                                     if (!selectedCustomizationId) return;
@@ -340,6 +349,13 @@ export default function TeamCustomDialogTrigger({
                                                             field.onChange(value);
                                                             updateCustomizationField(productId, selectedCustomizationId!, side, "texts", i, value);
                                                         }}
+                                                        sx={{
+                                                            '& .MuiOutlinedInput-root': {
+                                                                '&.Mui-focused fieldset': {
+                                                                    borderColor: 'black',
+                                                                },
+                                                            },
+                                                        }}
                                                     />
                                                 )}
                                             />
@@ -352,12 +368,13 @@ export default function TeamCustomDialogTrigger({
                                                     border: "1px solid black",
                                                     backgroundColor: 'white',
                                                     color: 'black',
+                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
                                                     '&:active': {
                                                         backgroundColor: 'black',
                                                         color: 'white',
                                                         '&:hover': { backgroundColor: 'black' }
                                                     },
-                                                    '&:hover': { backgroundColor: '#f5f5f5' }
+                                                    '&:hover': { backgroundColor: '#d9d9d9' }
                                                 }}
                                                 onClick={() => {
                                                     const selected = customizations?.find(c => c.id === selectedCustomizationId);
@@ -380,12 +397,13 @@ export default function TeamCustomDialogTrigger({
                                                     border: "1px solid black",
                                                     backgroundColor: 'white',
                                                     color: 'black',
+                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
                                                     '&:active': {
                                                         backgroundColor: 'black',
                                                         color: 'white',
                                                         '&:hover': { backgroundColor: 'black' }
                                                     },
-                                                    '&:hover': { backgroundColor: '#f5f5f5' }
+                                                    '&:hover': { backgroundColor: '#d9d9d9' }
                                                 }}
                                                 onClick={() => {
                                                     if (!selectedCustomizationId) return;
