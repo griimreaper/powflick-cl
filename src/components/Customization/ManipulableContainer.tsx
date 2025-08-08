@@ -183,7 +183,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         }}
       />
 
-      {isSelectedRef.current && each?.text && (
+      {isSelectedRef.current && (each?.text || each.logoUrl) && (
         <>
           <Moveable
             flushSync={flushSync}

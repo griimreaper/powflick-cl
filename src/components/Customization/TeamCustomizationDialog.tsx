@@ -13,7 +13,7 @@ import {
     Icon,
     Button
 } from "@mui/material";
-import { ErrorOutline, ChevronRightOutlined, OpenWithOutlined, DeleteOutline } from "@mui/icons-material";
+import { ErrorOutline, ChevronRightOutlined, OpenWithOutlined, DeleteOutline, Visibility, Delete } from "@mui/icons-material";
 import { Customization } from "models/types";
 import { useForm, Controller } from "react-hook-form";
 import { useCustomizationStore } from "store/customizationStore";
@@ -201,15 +201,19 @@ export default function TeamCustomDialogTrigger({
                                         key={c.id}
                                         onClick={() => setSelectedCustomizationId(c.id)}
                                         variant={isActive ? "contained" : "outlined"}
-                                        color={isActive ? "primary" : "inherit"}
                                         sx={{
                                             width: "2rem",
+                                            backgroundColor: isActive ? "black" : "white",
+                                            color: !isActive ? "black" : "white",
                                             height: "2rem",
                                             fontSize: "0.875rem", // text-sm
                                             borderRadius: "0.375rem", // rounded-md
                                             minWidth: 0, // evita que el botón se expanda por el texto
                                             padding: 0,
-                                            flexShrink: 0
+                                            flexShrink: 0,
+                                            ':hover': {
+                                                backgroundColor: isActive ? "black" : "dark.light",
+                                            }
                                         }}
                                     >
                                         {index + 1}
@@ -254,13 +258,19 @@ export default function TeamCustomDialogTrigger({
                                             />
                                             <Icon
                                                 sx={{
-                                                    backgroundColor: 'primary.main',
-                                                    color: 'white',
                                                     width: 32,
                                                     height: 32,
                                                     borderRadius: '5px',
                                                     cursor: 'pointer',
-                                                    '&:hover': { backgroundColor: 'primary.dark' },
+                                                    border: "1px solid black",
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    '&:active': {
+                                                        backgroundColor: 'black',
+                                                        color: 'white',
+                                                        '&:hover': { backgroundColor: 'black' }
+                                                    },
+                                                    '&:hover': { backgroundColor: '#f5f5f5' }
                                                 }}
                                                 onClick={() => {
                                                     const selected = customizations?.find(c => c.id === selectedCustomizationId);
@@ -272,16 +282,23 @@ export default function TeamCustomDialogTrigger({
                                                     }
                                                 }}
                                             >
-                                                <OpenWithOutlined />
+                                                <Visibility />
                                             </Icon>
                                             <Icon
                                                 sx={{
-                                                    backgroundColor: 'gray',
-                                                    color: 'white',
                                                     width: 32,
                                                     height: 32,
                                                     borderRadius: '5px',
                                                     cursor: 'pointer',
+                                                    border: "1px solid black",
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    '&:active': {
+                                                        backgroundColor: 'black',
+                                                        color: 'white',
+                                                        '&:hover': { backgroundColor: 'black' }
+                                                    },
+                                                    '&:hover': { backgroundColor: '#f5f5f5' }
                                                 }}
                                                 onClick={() => {
                                                     if (!selectedCustomizationId) return;
@@ -296,7 +313,7 @@ export default function TeamCustomDialogTrigger({
                                                     });
                                                 }}
                                             >
-                                                <DeleteOutline />
+                                                <Delete />
                                             </Icon>
                                         </Grid>
 
@@ -328,13 +345,19 @@ export default function TeamCustomDialogTrigger({
                                             />
                                             <Icon
                                                 sx={{
-                                                    backgroundColor: 'primary.main',
-                                                    color: 'white',
                                                     width: 32,
                                                     height: 32,
                                                     borderRadius: '5px',
                                                     cursor: 'pointer',
-                                                    '&:hover': { backgroundColor: 'primary.dark' },
+                                                    border: "1px solid black",
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    '&:active': {
+                                                        backgroundColor: 'black',
+                                                        color: 'white',
+                                                        '&:hover': { backgroundColor: 'black' }
+                                                    },
+                                                    '&:hover': { backgroundColor: '#f5f5f5' }
                                                 }}
                                                 onClick={() => {
                                                     const selected = customizations?.find(c => c.id === selectedCustomizationId);
@@ -346,16 +369,23 @@ export default function TeamCustomDialogTrigger({
                                                     }
                                                 }}
                                             >
-                                                <OpenWithOutlined />
+                                                <Visibility />
                                             </Icon>
                                             <Icon
                                                 sx={{
-                                                    backgroundColor: 'gray',
-                                                    color: 'white',
                                                     width: 32,
                                                     height: 32,
                                                     borderRadius: '5px',
                                                     cursor: 'pointer',
+                                                    border: "1px solid black",
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    '&:active': {
+                                                        backgroundColor: 'black',
+                                                        color: 'white',
+                                                        '&:hover': { backgroundColor: 'black' }
+                                                    },
+                                                    '&:hover': { backgroundColor: '#f5f5f5' }
                                                 }}
                                                 onClick={() => {
                                                     if (!selectedCustomizationId) return;
@@ -370,7 +400,7 @@ export default function TeamCustomDialogTrigger({
                                                     });
                                                 }}
                                             >
-                                                <DeleteOutline />
+                                                <Delete />
                                             </Icon>
                                         </Grid>
 

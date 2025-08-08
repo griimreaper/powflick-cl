@@ -279,14 +279,18 @@ export default function Customizations(props: CustomizationProps) {
                   <Button
                     onClick={() => handleEditCustomization(item)}
                     variant={isActive ? "contained" : "outlined"}
-                    color={isActive ? "primary" : "secondary"}
                     sx={{
                       width: "2rem",
+                      backgroundColor: isActive ? "black" : "white",
+                      color: !isActive ? "black" : "white",
                       height: "2rem",
                       fontSize: "0.875rem", // text-sm
                       borderRadius: "0.375rem", // rounded-md
                       mb: 1,
                       textAlign: "center",
+                      ':hover': {
+                         backgroundColor: isActive ? "black" : "dark.light",
+                      }
                     }}
                   >
                     {index + 1}
@@ -307,7 +311,7 @@ export default function Customizations(props: CustomizationProps) {
                         padding: "0.25rem 0.3rem",
                         bgcolor: "gray.200",
                         borderRadius: "0.375rem",
-                        "&:hover": { bgcolor: "primary.light" },
+                        "&:hover": { bgcolor: "dark.light" },
                       }}
                     >
                       List

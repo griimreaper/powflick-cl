@@ -167,7 +167,13 @@ export default function PanelSides({
     });
 
     // Reemplazo directo de logos
-    logosRef.current = currentSideData.logos || [];
+    logosRef.current = currentSideData.logos.map((newLogo, i) => {
+      const base = logosRef.current[i] || newLogo;
+      return {
+        ...base,
+        logoUrl: newLogo?.logoUrl ?? base.logoUrl ?? "",
+      };
+    });
 
     forceUpdate(n => n + 1);
   }, [customizations, customization, sideName, font, fontColor]);
