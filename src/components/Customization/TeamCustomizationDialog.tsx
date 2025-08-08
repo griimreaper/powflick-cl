@@ -11,9 +11,10 @@ import {
     ToggleButtonGroup,
     ToggleButton,
     Icon,
-    Button
+    Button,
+    IconButton
 } from "@mui/material";
-import { ErrorOutline, ChevronRightOutlined, OpenWithOutlined, DeleteOutline, Visibility, Delete } from "@mui/icons-material";
+import { ErrorOutline, ChevronRightOutlined, Visibility, Delete, Close } from "@mui/icons-material";
 import { Customization } from "models/types";
 import { useForm, Controller } from "react-hook-form";
 import { useCustomizationStore } from "store/customizationStore";
@@ -144,8 +145,6 @@ export default function TeamCustomDialogTrigger({
         });
     };
 
-    const currentCustomization = customizations?.find(c => c.id === selectedCustomizationId);
-
     return (
         <>
             <Box display="flex" alignItems="center" sx={{ cursor: "pointer" }} onClick={handleOpen}>
@@ -169,7 +168,17 @@ export default function TeamCustomDialogTrigger({
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogTitle>
                         <Box display="flex" justifyContent="space-between" alignItems={{ xs: 'start', md: "center" }} flexDirection={{ xs: 'column', md: 'row' }} gap={2}>
-                            <Typography variant="h6" whiteSpace={'nowrap'}>Edit Team</Typography>
+                            <Box display={"flex"} width={'100%'} justifyContent={'space-between'}>
+                                <Typography variant="h6" whiteSpace={'nowrap'}>Edit Team</Typography>
+                                <IconButton
+                                    onClick={handleClose}
+                                    size="small"
+                                    aria-label="close dialog"
+                                    sx={{ display: { xs: "flex", md: 'none' } }}
+                                >
+                                    <Close />
+                                </IconButton>
+                            </Box>
                             <Box display="flex" justifyContent={{ xs: 'space-between', md: 'end' }} width={'100%'} gap={2}>
                                 {/* Lado: Front / Back */}
                                 <ToggleButtonGroup
@@ -182,7 +191,14 @@ export default function TeamCustomDialogTrigger({
                                     <ToggleButton value="frontSide">Front</ToggleButton>
                                     <ToggleButton value="backSide">Back</ToggleButton>
                                 </ToggleButtonGroup>
-
+                                <IconButton
+                                    onClick={handleClose}
+                                    size="small"
+                                    aria-label="close dialog"
+                                    sx={{ display: { md: "flex", xs: 'none' } }}
+                                >
+                                    <Close />
+                                </IconButton>
                             </Box>
 
                         </Box>
