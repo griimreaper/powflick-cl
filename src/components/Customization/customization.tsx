@@ -258,6 +258,7 @@ export default function Customizations(props: CustomizationProps) {
             style={{
               width: "32px",
               height: "32px",
+              minWidth: '4ch',
               alignSelf: "center",
             }}
             onClick={() => {
@@ -367,6 +368,7 @@ export default function Customizations(props: CustomizationProps) {
             variant="outlined"
             style={{
               width: "32px",
+              minWidth: '4ch',
               height: "32px",
               alignSelf: "center",
             }}

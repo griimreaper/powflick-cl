@@ -12,7 +12,8 @@ import {
     ToggleButton,
     Icon,
     Button,
-    IconButton
+    IconButton,
+    useMediaQuery
 } from "@mui/material";
 import { ErrorOutline, ChevronRightOutlined, Visibility, Delete, Close } from "@mui/icons-material";
 import { Customization } from "models/types";
@@ -35,6 +36,7 @@ export default function TeamCustomDialogTrigger({
 }) {
     const [open, setOpen] = useState(false);
     const [side, setSide] = useState<"frontSide" | "backSide">("frontSide");
+    const [mode, setMode] = useState<"numbers" | "texts">("texts"); // solo mobile
 
     const { setCustomization } = useCustomizationStore();
     const { updateCustomizationField } = useCustomizationsStore();
@@ -46,6 +48,8 @@ export default function TeamCustomDialogTrigger({
     const [blocksCount, setBlocksCount] = useState(0);
 
     const { control, handleSubmit, reset, getValues } = useForm();
+
+    const isMobile = useMediaQuery('(max-width: 500px)');
 
     const handleOpen = () => {
         setSide(!showFront ? "frontSide" : "backSide");
@@ -179,7 +183,7 @@ export default function TeamCustomDialogTrigger({
                                     <Close />
                                 </IconButton>
                             </Box>
-                            <Box display="flex" justifyContent={{ xs: 'space-between', md: 'end' }} width={'100%'} gap={2}>
+                            <Box display="flex" justifyContent={{ xs: 'space-between', md: 'end' }} flexWrap={'wrap'} width={'100%'} gap={3}>
                                 {/* Lado: Front / Back */}
                                 <ToggleButtonGroup
                                     value={side}
@@ -191,6 +195,19 @@ export default function TeamCustomDialogTrigger({
                                     <ToggleButton value="frontSide">Front</ToggleButton>
                                     <ToggleButton value="backSide">Back</ToggleButton>
                                 </ToggleButtonGroup>
+                                {/* Mobile: selector global de modo */}
+                                {isMobile && (
+                                    <ToggleButtonGroup
+                                        value={mode}
+                                        exclusive
+                                        onChange={(_, v) => v && setMode(v)}
+                                        size="small"
+                                        color="primary"
+                                    >
+                                        <ToggleButton value="texts">Texts</ToggleButton>
+                                        <ToggleButton value="numbers">Numbers</ToggleButton>
+                                    </ToggleButtonGroup>
+                                )}
                                 <IconButton
                                     onClick={handleClose}
                                     size="small"
@@ -204,266 +221,464 @@ export default function TeamCustomDialogTrigger({
                         </Box>
                         <Box
                             maxWidth="100%"
-                            display="flex"
-                            justifyContent="flex-start"
-                            py={2}
-                            sx={{ overflowX: 'auto', gap: 2 }}
+                            overflow="auto"
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-start',
+                                pt: 3,
+                                pb: 2,
+                            }}
                         >
-                            {customizations?.map((c, index) => {
-                                const isActive = selectedCustomizationId === c.id;
-
-                                return (
-                                    <Button
-                                        key={c.id}
-                                        onClick={() => setSelectedCustomizationId(c.id)}
-                                        variant={isActive ? "contained" : "outlined"}
-                                        sx={{
-                                            width: "2rem",
-                                            backgroundColor: isActive ? "black" : "white",
-                                            color: !isActive ? "black" : "white",
-                                            height: "2rem",
-                                            fontSize: "0.875rem", // text-sm
-                                            borderRadius: "0.375rem", // rounded-md
-                                            minWidth: 0, // evita que el botón se expanda por el texto
-                                            padding: 0,
-                                            flexShrink: 0,
-                                            ':hover': {
-                                                backgroundColor: isActive ? "black" : "dark.light",
-                                            }
-                                        }}
-                                    >
-                                        {index + 1}
-                                    </Button>
-                                );
-                            })}
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    gap: 2,
+                                    mx: 'auto', // centra si cabe, se alinea izq si no
+                                    minWidth: 'fit-content', // evita que se rompa en múltiples líneas
+                                }}
+                            >
+                                {customizations?.map((c, index) => {
+                                    const isActive = selectedCustomizationId === c.id;
+                                    return (
+                                        <Button
+                                            key={c.id}
+                                            onClick={() => setSelectedCustomizationId(c.id)}
+                                            variant={isActive ? "contained" : "outlined"}
+                                            sx={{
+                                                width: "2rem",
+                                                backgroundColor: isActive ? "black" : "white",
+                                                color: !isActive ? "black" : "white",
+                                                height: "2rem",
+                                                fontSize: "0.875rem",
+                                                borderRadius: "0.375rem",
+                                                minWidth: 0,
+                                                padding: 0,
+                                                flexShrink: 0,
+                                                ':hover': {
+                                                    backgroundColor: isActive ? "black" : "dark.light",
+                                                }
+                                            }}
+                                        >
+                                            {index + 1}
+                                        </Button>
+                                    );
+                                })}
+                            </Box>
                         </Box>
+
                     </DialogTitle>
 
                     <DialogContent>
-                        <Grid container spacing={2} sx={{ mt: 1 }}>
+                        <Grid spacing={2} sx={{ mt: 1 }}>
                             {selectedCustomizationId && Array.from({ length: blocksCount }).map((_, i) => {
                                 const fieldPrefix = `${selectedCustomizationId}-${side}`;
                                 return (
                                     <Grid container spacing={1} key={i} alignItems="center" mb={1}>
 
-                                        {/* Número + botones */}
-                                        <Grid item xs={6} display="flex" alignItems="center" gap={1}>
-                                            <Controller
-                                                name={`${fieldPrefix}-number-${i}`}
-                                                control={control}
-                                                rules={{
-                                                    pattern: { value: /^[0-9]{1,3}$/, message: "Only numbers (max 3 digits)" },
-                                                }}
-                                                render={({ field, fieldState }) => (
-                                                    <TextField
-                                                        {...field}
-                                                        type="number"
-                                                        fullWidth
-                                                        label={`Number #${i + 1}`}
-                                                        error={!!fieldState.error}
-                                                        helperText={fieldState.error?.message}
-                                                        placeholder="US$3.99"
-                                                        value={field.value || ""}
-                                                        onChange={(e) => {
-                                                            const value = e.target.value.slice(0, 3);
-                                                            field.onChange(value);
-                                                            updateCustomizationField(productId, selectedCustomizationId!, side, "numbers", i, value);
+                                        {/* Desktop: dos campos */}
+                                        {!isMobile && (
+                                            <>
+                                                {/* Texto + botones */}
+                                                <Grid item xs={6} display="flex" alignItems="center" gap={1}>
+                                                    <Controller
+                                                        name={`${fieldPrefix}-text-${i}`}
+                                                        control={control}
+                                                        rules={{
+                                                            minLength: { value: 2, message: "Min 2 characters" },
+                                                            maxLength: { value: 14, message: "Max 14 characters" },
                                                         }}
-                                                        sx={{
-                                                            '& .MuiOutlinedInput-root': {
-                                                                '&.Mui-focused fieldset': {
-                                                                    borderColor: 'black',
-                                                                },
-                                                            },
-                                                        }}
+                                                        render={({ field, fieldState }) => (
+                                                            <TextField
+                                                                {...field}
+                                                                fullWidth
+                                                                label={`Text #${i + 1}`}
+                                                                error={!!fieldState.error}
+                                                                helperText={fieldState.error?.message}
+                                                                placeholder="US$3.99"
+                                                                value={field.value || ""}
+                                                                onChange={(e) => {
+                                                                    const value = e.target.value.slice(0, 14);
+                                                                    field.onChange(value);
+                                                                    updateCustomizationField(productId, selectedCustomizationId!, side, "texts", i, value);
+                                                                }}
+                                                                sx={{
+                                                                    '& .MuiOutlinedInput-root': {
+                                                                        '&.Mui-focused fieldset': {
+                                                                            borderColor: 'black',
+                                                                        },
+                                                                    },
+                                                                }}
+                                                            />
+                                                        )}
                                                     />
-                                                )}
-                                            />
-                                            <Icon
-                                                sx={{
-                                                    width: 32,
-                                                    height: 32,
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                    border: "1px solid black",
-                                                    backgroundColor: 'white',
-                                                    color: 'black',
-                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
-                                                    '&:active': {
-                                                        backgroundColor: 'black',
-                                                        color: 'white',
-                                                        '&:hover': { backgroundColor: 'black' }
-                                                    },
-                                                    '&:hover': { backgroundColor: '#d9d9d9' }
-                                                }}
-                                                onClick={() => {
-                                                    const selected = customizations?.find(c => c.id === selectedCustomizationId);
-                                                    if (selected) {
-                                                        setCustomization(selected);
-                                                        setSelection({ type: 'Number', index: i })
-                                                        handleClose();
-                                                        togglePanel();
-                                                    }
-                                                }}
-                                            >
-                                                <Visibility />
-                                            </Icon>
-                                            <Icon
-                                                sx={{
-                                                    width: 32,
-                                                    height: 32,
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                    border: "1px solid black",
-                                                    backgroundColor: 'white',
-                                                    color: 'black',
-                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
-                                                    '&:active': {
-                                                        backgroundColor: 'black',
-                                                        color: 'white',
-                                                        '&:hover': { backgroundColor: 'black' }
-                                                    },
-                                                    '&:hover': { backgroundColor: '#d9d9d9' }
-                                                }}
-                                                onClick={() => {
-                                                    if (!selectedCustomizationId) return;
-
-                                                    // Limpiar valor (vacío) pero no eliminar el bloque
-                                                    updateCustomizationField(productId, selectedCustomizationId, side, "numbers", i, "");
-
-                                                    const fieldPrefix = `${selectedCustomizationId}-${side}`;
-                                                    reset({
-                                                        ...getValues(),
-                                                        [`${fieldPrefix}-number-${i}`]: "",
-                                                    });
-                                                }}
-                                            >
-                                                <Delete />
-                                            </Icon>
-                                        </Grid>
-
-                                        {/* Texto + botones */}
-                                        <Grid item xs={6} display="flex" alignItems="center" gap={1}>
-                                            <Controller
-                                                name={`${fieldPrefix}-text-${i}`}
-                                                control={control}
-                                                rules={{
-                                                    minLength: { value: 2, message: "Min 2 characters" },
-                                                    maxLength: { value: 14, message: "Max 14 characters" },
-                                                }}
-                                                render={({ field, fieldState }) => (
-                                                    <TextField
-                                                        {...field}
-                                                        fullWidth
-                                                        label={`Text #${i + 1}`}
-                                                        error={!!fieldState.error}
-                                                        helperText={fieldState.error?.message}
-                                                        placeholder="US$3.99"
-                                                        value={field.value || ""}
-                                                        onChange={(e) => {
-                                                            const value = e.target.value.slice(0, 14);
-                                                            field.onChange(value);
-                                                            updateCustomizationField(productId, selectedCustomizationId!, side, "texts", i, value);
-                                                        }}
+                                                    <Icon
                                                         sx={{
-                                                            '& .MuiOutlinedInput-root': {
-                                                                '&.Mui-focused fieldset': {
-                                                                    borderColor: 'black',
-                                                                },
+                                                            width: 32,
+                                                            height: 32,
+                                                            borderRadius: '5px',
+                                                            cursor: 'pointer',
+                                                            border: "1px solid black",
+                                                            backgroundColor: 'white',
+                                                            color: 'black',
+                                                            transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                            '&:active': {
+                                                                backgroundColor: 'black',
+                                                                color: 'white',
+                                                                '&:hover': { backgroundColor: 'black' }
                                                             },
+                                                            '&:hover': { backgroundColor: '#d9d9d9' }
                                                         }}
+                                                        onClick={() => {
+                                                            const selected = customizations?.find(c => c.id === selectedCustomizationId);
+                                                            if (selected) {
+                                                                setCustomization(selected);
+                                                                setSelection({ type: 'Text', index: i })
+                                                                handleClose();
+                                                                togglePanel();
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Visibility />
+                                                    </Icon>
+                                                    <Icon
+                                                        sx={{
+                                                            width: 32,
+                                                            height: 32,
+                                                            borderRadius: '5px',
+                                                            cursor: 'pointer',
+                                                            border: "1px solid black",
+                                                            backgroundColor: 'white',
+                                                            color: 'black',
+                                                            transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                            '&:active': {
+                                                                backgroundColor: 'black',
+                                                                color: 'white',
+                                                                '&:hover': { backgroundColor: 'black' }
+                                                            },
+                                                            '&:hover': { backgroundColor: '#d9d9d9' }
+                                                        }}
+                                                        onClick={() => {
+                                                            if (!selectedCustomizationId) return;
+
+                                                            // Limpiar valor (vacío) pero no eliminar el bloque
+                                                            updateCustomizationField(productId, selectedCustomizationId, side, "texts", i, "");
+
+                                                            const fieldPrefix = `${selectedCustomizationId}-${side}`;
+                                                            reset({
+                                                                ...getValues(),
+                                                                [`${fieldPrefix}-number-${i}`]: "",
+                                                            });
+                                                        }}
+                                                    >
+                                                        <Delete />
+                                                    </Icon>
+                                                </Grid>
+                                                {/* Número + botones */}
+                                                <Grid item xs={6} display="flex" alignItems="center" gap={1}>
+                                                    <Controller
+                                                        name={`${fieldPrefix}-number-${i}`}
+                                                        control={control}
+                                                        rules={{
+                                                            pattern: { value: /^[0-9]{1,3}$/, message: "Only numbers (max 3 digits)" },
+                                                        }}
+                                                        render={({ field, fieldState }) => (
+                                                            <TextField
+                                                                {...field}
+                                                                type="number"
+                                                                fullWidth
+                                                                label={`Number #${i + 1}`}
+                                                                error={!!fieldState.error}
+                                                                helperText={fieldState.error?.message}
+                                                                placeholder="US$3.99"
+                                                                value={field.value || ""}
+                                                                onChange={(e) => {
+                                                                    const value = e.target.value.slice(0, 3);
+                                                                    field.onChange(value);
+                                                                    updateCustomizationField(productId, selectedCustomizationId!, side, "numbers", i, value);
+                                                                }}
+                                                                sx={{
+                                                                    '& .MuiOutlinedInput-root': {
+                                                                        '&.Mui-focused fieldset': {
+                                                                            borderColor: 'black',
+                                                                        },
+                                                                    },
+                                                                }}
+                                                            />
+                                                        )}
                                                     />
-                                                )}
-                                            />
-                                            <Icon
-                                                sx={{
-                                                    width: 32,
-                                                    height: 32,
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                    border: "1px solid black",
-                                                    backgroundColor: 'white',
-                                                    color: 'black',
-                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
-                                                    '&:active': {
-                                                        backgroundColor: 'black',
-                                                        color: 'white',
-                                                        '&:hover': { backgroundColor: 'black' }
-                                                    },
-                                                    '&:hover': { backgroundColor: '#d9d9d9' }
-                                                }}
-                                                onClick={() => {
-                                                    const selected = customizations?.find(c => c.id === selectedCustomizationId);
-                                                    if (selected) {
-                                                        setCustomization(selected);
-                                                        setSelection({ type: 'Text', index: i })
-                                                        handleClose();
-                                                        togglePanel();
-                                                    }
-                                                }}
-                                            >
-                                                <Visibility />
-                                            </Icon>
-                                            <Icon
-                                                sx={{
-                                                    width: 32,
-                                                    height: 32,
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                    border: "1px solid black",
-                                                    backgroundColor: 'white',
-                                                    color: 'black',
-                                                    transition: 'background-color 0.3s ease, color 0.3s ease',
-                                                    '&:active': {
-                                                        backgroundColor: 'black',
-                                                        color: 'white',
-                                                        '&:hover': { backgroundColor: 'black' }
-                                                    },
-                                                    '&:hover': { backgroundColor: '#d9d9d9' }
-                                                }}
-                                                onClick={() => {
-                                                    if (!selectedCustomizationId) return;
+                                                    <Icon
+                                                        sx={{
+                                                            width: 32,
+                                                            height: 32,
+                                                            borderRadius: '5px',
+                                                            cursor: 'pointer',
+                                                            border: "1px solid black",
+                                                            backgroundColor: 'white',
+                                                            color: 'black',
+                                                            transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                            '&:active': {
+                                                                backgroundColor: 'black',
+                                                                color: 'white',
+                                                                '&:hover': { backgroundColor: 'black' }
+                                                            },
+                                                            '&:hover': { backgroundColor: '#d9d9d9' }
+                                                        }}
+                                                        onClick={() => {
+                                                            const selected = customizations?.find(c => c.id === selectedCustomizationId);
+                                                            if (selected) {
+                                                                setCustomization(selected);
+                                                                setSelection({ type: 'Number', index: i })
+                                                                handleClose();
+                                                                togglePanel();
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Visibility />
+                                                    </Icon>
+                                                    <Icon
+                                                        sx={{
+                                                            width: 32,
+                                                            height: 32,
+                                                            borderRadius: '5px',
+                                                            cursor: 'pointer',
+                                                            border: "1px solid black",
+                                                            backgroundColor: 'white',
+                                                            color: 'black',
+                                                            transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                            '&:active': {
+                                                                backgroundColor: 'black',
+                                                                color: 'white',
+                                                                '&:hover': { backgroundColor: 'black' }
+                                                            },
+                                                            '&:hover': { backgroundColor: '#d9d9d9' }
+                                                        }}
+                                                        onClick={() => {
+                                                            if (!selectedCustomizationId) return;
 
-                                                    // Limpiar valor (vacío) pero no eliminar el bloque
-                                                    updateCustomizationField(productId, selectedCustomizationId, side, "texts", i, "");
+                                                            // Limpiar valor (vacío) pero no eliminar el bloque
+                                                            updateCustomizationField(productId, selectedCustomizationId, side, "numbers", i, "");
 
-                                                    const fieldPrefix = `${selectedCustomizationId}-${side}`;
-                                                    reset({
-                                                        ...getValues(),
-                                                        [`${fieldPrefix}-number-${i}`]: "",
-                                                    });
-                                                }}
-                                            >
-                                                <Delete />
-                                            </Icon>
-                                        </Grid>
+                                                            const fieldPrefix = `${selectedCustomizationId}-${side}`;
+                                                            reset({
+                                                                ...getValues(),
+                                                                [`${fieldPrefix}-number-${i}`]: "",
+                                                            });
+                                                        }}
+                                                    >
+                                                        <Delete />
+                                                    </Icon>
+                                                </Grid>
 
+                                            </>
+                                        )}
+                                        {/* Mobile: solo el campo según modo */}
+
+                                        {isMobile && mode === "texts" && (
+                                            <Grid xs={12} mb={1} display="flex" alignItems="center" ml={1} justifyContent={'flex-start'} width={'100%'} gap={1}>
+                                                <Controller
+                                                    name={`${fieldPrefix}-text-${i}`}
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <TextField
+                                                            {...field}
+                                                            label={`Text #${i + 1}`}
+                                                            value={field.value || ""}
+                                                            sx={{ width: '100%' }}
+                                                            onChange={(e) => {
+                                                                const val = e.target.value.slice(0, 14);
+                                                                field.onChange(val);
+                                                                updateCustomizationField(
+                                                                    productId,
+                                                                    selectedCustomizationId!,
+                                                                    side,
+                                                                    "texts",
+                                                                    i,
+                                                                    val
+                                                                );
+                                                            }}
+                                                        />
+                                                    )}
+                                                />
+                                                <Icon
+                                                    sx={{
+                                                        width: 32,
+                                                        height: 32,
+                                                        borderRadius: '5px',
+                                                        cursor: 'pointer',
+                                                        border: "1px solid black",
+                                                        backgroundColor: 'white',
+                                                        color: 'black',
+                                                        transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                        '&:active': {
+                                                            backgroundColor: 'black',
+                                                            color: 'white',
+                                                            '&:hover': { backgroundColor: 'black' }
+                                                        },
+                                                        '&:hover': { backgroundColor: '#d9d9d9' }
+                                                    }}
+                                                    onClick={() => {
+                                                        const selected = customizations?.find(c => c.id === selectedCustomizationId);
+                                                        if (selected) {
+                                                            setCustomization(selected);
+                                                            setSelection({ type: 'Text', index: i })
+                                                            handleClose();
+                                                            togglePanel();
+                                                        }
+                                                    }}
+                                                >
+                                                    <Visibility />
+                                                </Icon>
+                                                <Icon
+                                                    sx={{
+                                                        width: 32,
+                                                        height: 32,
+                                                        borderRadius: '5px',
+                                                        cursor: 'pointer',
+                                                        border: "1px solid black",
+                                                        backgroundColor: 'white',
+                                                        color: 'black',
+                                                        transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                        '&:active': {
+                                                            backgroundColor: 'black',
+                                                            color: 'white',
+                                                            '&:hover': { backgroundColor: 'black' }
+                                                        },
+                                                        '&:hover': { backgroundColor: '#d9d9d9' }
+                                                    }}
+                                                    onClick={() => {
+                                                        if (!selectedCustomizationId) return;
+
+                                                        // Limpiar valor (vacío) pero no eliminar el bloque
+                                                        updateCustomizationField(productId, selectedCustomizationId, side, "texts", i, "");
+
+                                                        const fieldPrefix = `${selectedCustomizationId}-${side}`;
+                                                        reset({
+                                                            ...getValues(),
+                                                            [`${fieldPrefix}-number-${i}`]: "",
+                                                        });
+                                                    }}
+                                                >
+                                                    <Delete />
+                                                </Icon>
+                                            </Grid>
+                                        )}
+                                        {isMobile && mode === "numbers" && (
+                                            <Grid xs={12} mb={1} display="flex" alignItems="center" ml={1} justifyContent={'flex-start'} width={'100%'} gap={1}>
+                                                <Controller
+                                                    name={`${fieldPrefix}-numbers-${i}`}
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <TextField
+                                                            {...field}
+                                                            type="number"
+                                                            sx={{ width: '100%' }}
+                                                            label={`Number #${i + 1}`}
+                                                            value={field.value || ""}
+                                                            onChange={(e) => {
+                                                                const val = e.target.value.slice(0, 3);
+                                                                field.onChange(val);
+                                                                updateCustomizationField(
+                                                                    productId,
+                                                                    selectedCustomizationId!,
+                                                                    side,
+                                                                    "numbers",
+                                                                    i,
+                                                                    val
+                                                                );
+                                                            }}
+                                                        />
+                                                    )}
+                                                />
+                                                <Icon
+                                                    sx={{
+                                                        width: 32,
+                                                        height: 32,
+                                                        borderRadius: '5px',
+                                                        cursor: 'pointer',
+                                                        border: "1px solid black",
+                                                        backgroundColor: 'white',
+                                                        color: 'black',
+                                                        transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                        '&:active': {
+                                                            backgroundColor: 'black',
+                                                            color: 'white',
+                                                            '&:hover': { backgroundColor: 'black' }
+                                                        },
+                                                        '&:hover': { backgroundColor: '#d9d9d9' }
+                                                    }}
+                                                    onClick={() => {
+                                                        const selected = customizations?.find(c => c.id === selectedCustomizationId);
+                                                        if (selected) {
+                                                            setCustomization(selected);
+                                                            setSelection({ type: 'Number', index: i })
+                                                            handleClose();
+                                                            togglePanel();
+                                                        }
+                                                    }}
+                                                >
+                                                    <Visibility />
+                                                </Icon>
+                                                <Icon
+                                                    sx={{
+                                                        width: 32,
+                                                        height: 32,
+                                                        borderRadius: '5px',
+                                                        cursor: 'pointer',
+                                                        border: "1px solid black",
+                                                        backgroundColor: 'white',
+                                                        color: 'black',
+                                                        transition: 'background-color 0.3s ease, color 0.3s ease',
+                                                        '&:active': {
+                                                            backgroundColor: 'black',
+                                                            color: 'white',
+                                                            '&:hover': { backgroundColor: 'black' }
+                                                        },
+                                                        '&:hover': { backgroundColor: '#d9d9d9' }
+                                                    }}
+                                                    onClick={() => {
+                                                        if (!selectedCustomizationId) return;
+
+                                                        // Limpiar valor (vacío) pero no eliminar el bloque
+                                                        updateCustomizationField(productId, selectedCustomizationId, side, "numbers", i, "");
+
+                                                        const fieldPrefix = `${selectedCustomizationId}-${side}`;
+                                                        reset({
+                                                            ...getValues(),
+                                                            [`${fieldPrefix}-number-${i}`]: "",
+                                                        });
+                                                    }}
+                                                >
+                                                    <Delete />
+                                                </Icon>
+                                            </Grid>
+                                        )}
                                     </Grid>
-
                                 );
                             })}
                         </Grid>
 
-                        <Button
-                            variant="outlined"
-                            onClick={handleAddBlock}
-                            size="small"
-                            sx={{ mt: 2 }}
-                        >
-                            + Add Block
-                        </Button>
-
-                        {blocksCount > 1 && (
+                        <Box display={'flex'} justifyContent={'flex-start'} gap={1}>
                             <Button
                                 variant="outlined"
-                                color="error"
-                                onClick={handleRemoveBlock}
+                                onClick={handleAddBlock}
                                 size="small"
-                                sx={{ mt: 2, ml: 1 }}
+                                sx={{ mt: 2, width: '50%', whiteSpace: 'nowrap', minWidth: '12ch' }}
                             >
-                                - Remove Block
+                                + Add Block
                             </Button>
-                        )}
+
+                            {blocksCount > 1 && (
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    onClick={handleRemoveBlock}
+                                    size="small"
+                                    sx={{ mt: 2, width: '50%', whiteSpace: 'nowrap', minWidth: '16ch' }}
+                                >
+                                    - Remove Block
+                                </Button>
+                            )}
+                        </Box>
 
                     </DialogContent>
                 </form>
