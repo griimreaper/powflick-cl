@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   authors: [{ name: "devcodelab" }],
   keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
   robots: {
-    index: true,
-    follow: true
+    index: false,
+    follow: false
   }
 };
 

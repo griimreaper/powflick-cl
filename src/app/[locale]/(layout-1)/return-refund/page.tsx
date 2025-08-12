@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { Metadata } from "next";
 import {
   Container,
   Typography,
@@ -8,9 +9,21 @@ import {
   ListItemText,
 } from "@mui/material";
 
-interface pageProps {}
+interface pageProps { }
 
-const page: FC<pageProps> = ({}) => {
+export const metadata: Metadata = {
+  title: "Return & Refund - Pow Flick",
+  alternates: {
+    canonical: "https://www.powflick.com/en/return-refund",
+    languages: {
+      en: "https://www.powflick.com/en/return-refund",
+      es: "https://www.powflick.com/es/return-refund",
+      "x-default": "https://www.powflick.com/en/return-refund",
+    },
+  },
+};
+
+const page: FC<pageProps> = ({ }) => {
   return (
     <Container maxWidth="xl" style={{ color: "white" }}>
       <Box my={4}>

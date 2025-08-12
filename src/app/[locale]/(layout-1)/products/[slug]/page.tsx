@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: { slug: string; locale: string };
 }): Promise<Metadata | undefined> {
   try {
     const detail = await fetchProductDetails(params.slug);
@@ -165,12 +165,19 @@ export async function generateMetadata({
       ...product.collections,
     ]
 
+    const isPrivate = !!product.password;
+
     return {
       metadataBase: new URL(process.env.NEXTAUTH_URL as string),
       title: `${product.title} - Pow Flick`,
       authors: [{ name: "devcodelab" }],
       alternates: {
-        canonical: "https://www.powflick.com/products/" + params.slug, // 🔹 URL CANÓNICA DETAIL
+        canonical: `https://www.powflick.com/${params.locale || 'en'}/products/${params.slug}`,
+        languages: {
+          en: `https://www.powflick.com/en/products/${params.slug}`,
+          es: `https://www.powflick.com/es/products/${params.slug}`,
+          "x-default": `https://www.powflick.com/en/products/${params.slug}`,
+        },
       },
       description: product.short_description || "Default Description",
       keywords: [
@@ -180,7 +187,7 @@ export async function generateMetadata({
       openGraph: {
         title: product.title,
         description: product.short_description || "Default Description",
-        url: `${process.env.NEXTAUTH_URL}/${product.slug}`,
+        url: `https://www.powflick.com/${params.locale || 'en'}/products/${params.slug}`,
         images: [
           {
             url: product.URL,
@@ -196,10 +203,9 @@ export async function generateMetadata({
         description: product.short_description,
         images: product.URL,
       },
-      robots: {
-        index: true,
-        follow: true,
-      },
+      robots: isPrivate
+        ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+        : { index: true, follow: true },
       other: {
         "structured-data": JSON.stringify(structuredData),
       },
@@ -215,7 +221,7 @@ export default async function ProductDetails({
   params,
   searchParams,
 }: {
-  params: { slug: string };
+  params: { slug: string; locale: string };
   searchParams: { password?: string };
 }) {
   try {
@@ -250,20 +256,9 @@ export default async function ProductDetails({
     };
 
     if (!detail || detail.product.status === "draft" || !detail.product.images) {
-      return (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100%"
-          py={5}
-          textAlign="center"
-        >
-          <Typography variant="h5" color="textSecondary">
-            Sorry, this product is not available.
-          </Typography>
-        </Box>
-      );
+      // Evita soft-404 devolviendo un 404 real
+      notFound();
+      return null;
     }
 
     const hasPassword = !!detail.product.password;

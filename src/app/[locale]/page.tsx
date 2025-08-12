@@ -32,7 +32,13 @@ export async function generateMetadata({
     metadataBase: new URL(process.env.NEXTAUTH_URL as string),
     title: t("title"),
     alternates: {
-      canonical: "https://www.powflick.com/",
+      // Canonical por locale para evitar "Página alternativa con etiqueta canónica adecuada"
+      canonical: `https://www.powflick.com/${params.locale}`,
+      languages: {
+        en: "https://www.powflick.com/en",
+        es: "https://www.powflick.com/es",
+        "x-default": "https://www.powflick.com/en",
+      },
     },
     description: t("description"),
     authors: [{ name: "Devcodelab", url: "https://ui-lib.com" }],
@@ -81,7 +87,7 @@ export async function generateMetadata({
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: "https://www.powflick.com/",
+      url: `https://www.powflick.com/${params.locale}`,
       siteName: "Pow Flick",
       type: "website",
       locale: "en_US",

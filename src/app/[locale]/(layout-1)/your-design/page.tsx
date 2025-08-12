@@ -14,6 +14,19 @@ import BeforeAfterSlider from "react-before-after-slider-component";
 import "react-before-after-slider-component/dist/build.css";
 import Form from "./Form";
 import { primary } from "theme/theme-colors";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Your Design - Pow Flick",
+  alternates: {
+    canonical: "https://www.powflick.com/en/your-design",
+    languages: {
+      en: "https://www.powflick.com/en/your-design",
+      es: "https://www.powflick.com/es/your-design",
+      "x-default": "https://www.powflick.com/en/your-design",
+    },
+  },
+};
 
 export default function Home() {
   const beforeImage = { imageUrl: "/assets/images/free-design/DESIGN_MAN_1.png" }; // Ruta de la imagen antes
