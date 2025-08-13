@@ -1,102 +1,105 @@
 'use client';
 import { useState } from "react";
+import { useTranslations } from 'next-intl';
 import { Grid, Card, CardActionArea, Typography, Collapse, Box, Accordion, AccordionSummary, AccordionDetails, useMediaQuery } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Link from "next/link";
 
-const sectionsData = {
+const sectionsDataBuilder = (t: (k: string) => string) => ({
   orders: {
-    title: "Orders & Customization",
+    title: t('sections.orders.title'),
     image: "/assets/images/faqs/FAQS_ICONOS-7.png",
     sections: [
       {
         id: "1",
-        title: "How can I customize my uniform?",
-        content: "Select the type of uniform, choose sizes and genders, and add your logos, texts, or numbers. Upload logos in vector format (SVG, AI, EPS, PDF) or high resolution (minimum 300 dpi).",
+        title: t('sections.orders.q1Title'),
+        content: t('sections.orders.q1Content'),
       },
       {
         id: "2",
-        title: "What file types can I upload for logos?",
-        content: "We recommend vector files (SVG, AI, EPS, PDF). If you don't have these formats, send the highest resolution image possible. We can’t guarantee optimal print quality if the file doesn’t meet our requirements.",
+        title: t('sections.orders.q2Title'),
+        content: t('sections.orders.q2Content'),
       },
       {
         id: "3",
-        title: "Can I see a preview before confirming my order?",
-        content: "Yes, once you complete your customization, you can generate a PDF file with a preview of your design.",
+        title: t('sections.orders.q3Title'),
+        content: t('sections.orders.q3Content'),
       },
       {
         id: "4",
-        title: "Can I modify or cancel my order after purchasing?",
-        content: "You have up to 2 hours after placing your order to cancel it free of charge. After that, if the order is already in production, no changes can be made, and a 10% fee will apply for cancellations.",
+        title: t('sections.orders.q4Title'),
+        content: t('sections.orders.q4Content'),
       },
     ],
   },
   payments: {
-    title: "Prices & Payments",
+    title: t('sections.payments.title'),
     image: "/assets/images/faqs/FAQS_ICONOS-8.png",
     sections: [
       {
         id: "5",
-        title: "What payment methods do you accept?",
-        content: "We accept credit cards (Visa, Mastercard, Maestro, American Express) and payments via Stripe.",
+        title: t('sections.payments.q5Title'),
+        content: t('sections.payments.q5Content'),
       },
       {
         id: "6",
-        title: "Do prices include taxes?",
-        content: "No, taxes are calculated at checkout based on the shipping location.",
+        title: t('sections.payments.q6Title'),
+        content: t('sections.payments.q6Content'),
       },
       {
         id: "7",
-        title: "Do you offer discounts or promotions?",
-        content: "Yes, we occasionally offer promotional codes and discounts. Stay tuned to our social media and newsletters!",
+        title: t('sections.payments.q7Title'),
+        content: t('sections.payments.q7Content'),
       },
     ],
   },
   shipping: {
-    title: "Shipping & Delivery",
+    title: t('sections.shipping.title'),
     image: "/assets/images/faqs/FAQS_ICONOS-9.png",
     sections: [
       {
         id: "8",
-        title: "How long will it take to receive my order?",
-        content: "Production takes about 30 days. Shipping times vary depending on the destination:\nUSA, European Union, and Mexico: 10–20 business days.\nOther destinations: Shipping times may vary depending on the country.",
+        title: t('sections.shipping.q8Title'),
+        content: t('sections.shipping.q8Content'),
       },
       {
         id: "9",
-        title: "Do you offer express shipping?",
-        content: "Yes, for an additional $20 USD, you can select express shipping at checkout. This service reduces delivery time to approximately 15 days.",
+        title: t('sections.shipping.q9Title'),
+        content: t('sections.shipping.q9Content'),
       },
       {
         id: "10",
-        title: "Do I have to pay customs duties or taxes?",
-        content: "Yes, customs duties and taxes are the customer's responsibility and vary by country.",
+        title: t('sections.shipping.q10Title'),
+        content: t('sections.shipping.q10Content'),
       },
     ],
   },
   returns: {
-    title: "Returns & Claims",
+    title: t('sections.returns.title'),
     image: "/assets/images/faqs/FAQS_ICONOS-10.png",
     sections: [
       {
         id: "11",
-        title: "Can I return a customized product?",
-        content: "Since our products are made to order, we don’t accept returns unless there’s a manufacturing defect or an obvious error.",
+        title: t('sections.returns.q11Title'),
+        content: t('sections.returns.q11Content'),
       },
       {
         id: "12",
-        title: "What should I do if I receive a defective or incorrect product?",
-        content: "Contact us within 7 business days of receiving your product by emailing support@powflick.com with a detailed description and photos of the issue.",
+        title: t('sections.returns.q12Title'),
+        content: t('sections.returns.q12Content'),
       },
       {
         id: "13",
-        title: "Who covers the shipping costs for returns?",
-        content: "If we accept the return due to a defect or error, Pow Flick will cover the return shipping costs and the cost of shipping a replacement.",
+        title: t('sections.returns.q13Title'),
+        content: t('sections.returns.q13Content'),
       },
     ],
   },
-};
+});
 
 export default function FAQSection() {
+  const t = useTranslations('Faq');
+  const sectionsData = sectionsDataBuilder(t);
   const isMobile = useMediaQuery("(max-width: 765px)"); // Detecta si es móvil
   const [activeTab, setActiveTab] = useState<string | null>('orders');
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
@@ -181,10 +184,10 @@ export default function FAQSection() {
 
         <Box sx={{ width: isMobile ? '100%' : '80%', p: isMobile ? 4 : 0 }}>
           <Typography variant="h3" component={'h1'} sx={{ fontWeight: '400', fontFamily: "GYMER", fontSize: isMobile ? '1.3rem' : '2rem', textAlign: 'center', mb: 2, color: 'white', position: 'relative' }}>
-            We want your experience to be perfect!
+            {t('heroTitle')}
           </Typography>
           <Typography variant="h5" component={'h2'} sx={{ textAlign: 'center', color: 'white', fontSize: isMobile ? '1rem' : '2rem' }}>
-            {"Here you'll find answers to the most common questions about orders, payments, and shipping. If anything’s unclear, just reach out we’re here to help!"}
+            {t('heroSubtitle')}
           </Typography>
         </Box>
       </Box>
@@ -248,21 +251,21 @@ export default function FAQSection() {
         <Box display={'flex'} flexDirection={isMobile ? 'column' : 'row'} justifyContent={'center'} alignItems={'center'} bgcolor={'#5f0404'} width={isMobile ? '100%' : '80%'} p={4}>
           <Link href={'/contact'}>
             <Box display={'flex'} justifyContent={'center'} alignItems={'center'} width={'100%'}>
-              <img src="/assets/images/faqs/FAQS_CONTACT.png" alt="Contact" width={isMobile ? "50%" : '80%'} />
+              <img src="/assets/images/faqs/FAQS_CONTACT.png" alt={t('sections.contact.contactImageAlt')} width={isMobile ? "50%" : '80%'} />
             </Box>
           </Link>
           <Box sx={{ width: isMobile ? '100%' : '80%' }} textAlign={isMobile ? 'center' : 'left'} ml={isMobile ? 0 : 6}>
             <Typography variant="h6" sx={{ color: 'primary.main', mb: 1 }}>
-              <strong>How can I get in touch with Pow Flick?</strong><br />
+              <strong>{t('sections.contact.contactQuestion1')}</strong><br />
             </Typography>
             <Typography variant="h5" color={'white'} mb={3}>
-              You can email us at support@powflick.com or call us at +86 15920110846.
+              {t('sections.contact.contactAnswer1')}
             </Typography>
             <Typography variant="h6" sx={{ color: 'primary.main', mb: 1 }}>
-              <strong> Where are you located?</strong>
+              <strong>{t('sections.contact.contactQuestion2')}</strong>
             </Typography>
             <Typography variant="h5" color={'white'}>
-              Our headquarters are at B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China.
+              {t('sections.contact.contactAnswer2')}
             </Typography>
           </Box>
         </Box>

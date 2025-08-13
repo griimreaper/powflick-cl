@@ -4,10 +4,12 @@ import Button from "@mui/material/Button";
 import { useMediaQuery, useTheme, Box, Typography } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
+import { useTranslations } from "next-intl";
 // LOCAL CUSTOM COMPONENT
 import { RootStyle } from "./section-7";
 
 export default function Section9() {
+  const t = useTranslations("Home");
   const isMobile = useMediaQuery(("(max-width: 768px)")); // Detecta pantallas menores a 600px (breakpoint "sm")
 
   // Determina la imagen según el tamaño de la pantalla
@@ -18,7 +20,7 @@ export default function Section9() {
       {/* Imagen de fondo */}
       <img
         src={backgroundImage}
-        alt="Promo Sports Banner"
+        alt={t("promoSportsBannerAlt")}
         style={{
           width: "100%",
           height: "fit-content",
@@ -49,14 +51,14 @@ export default function Section9() {
         <H3 fontSize={
           "clamp(8px, 1.8vw, 30px)"
         } lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontWeight={100} fontStyle="italic">
-          Innovation with Artificial intelligence
+          {t("innovationAI")}
         </H3>
 
         <H1 fontSize="clamp(10px, 10vw, 120px)" lineHeight={1} mb={1}>
-          POWERED
+          {t("powered")}
         </H1>
         <H1 fontSize="clamp(10px, 10vw, 120px)" lineHeight={1} mb={1}>
-          CUSTOMIZATION
+          {t("customization")}
         </H1>
 
         <Button variant="contained" size="large" color="primary" href="/products" sx={{
@@ -77,7 +79,7 @@ export default function Section9() {
               fontStyle: "italic",
             }}
           >
-            Customize Now
+            {t("customizeNow")}
           </Typography>
         </Button>
       </Box>

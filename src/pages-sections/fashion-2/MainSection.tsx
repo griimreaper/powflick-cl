@@ -1,9 +1,11 @@
 import { Box, Button } from "@mui/material";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Section2 from "./section-2";
 import Section3 from "./section-3";
 
 export default function MainSection({ isMobile }: { isMobile: boolean }) {
+  const t = useTranslations("Home");
   const backgroundImage = isMobile
     ? "/assets/images/landing/mobile/POWFLICK-_BANNER-SUPERIOR.png"
     : "/assets/images/landing/POWFLICK_BANNER_SUPERIOR.png";
@@ -70,7 +72,7 @@ export default function MainSection({ isMobile }: { isMobile: boolean }) {
             fontStyle: "italic",
           }}
         >
-          Shop Now
+          {t("shopNow")}
         </Button>
 
         <Box

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from 'next-intl';
 import {
   Container,
   Typography,
@@ -99,6 +100,7 @@ const MenuProps = {
 };
 
 const LogoUpload = ({ onChange }: { onChange: any }) => {
+  const t = useTranslations('YourDesignForm');
   const [logos, setLogos] = useState<File[]>([]);
   const [logoPreviews, setLogoPreviews] = useState<string[]>([]);
 
@@ -144,13 +146,13 @@ const LogoUpload = ({ onChange }: { onChange: any }) => {
             textAlign: { xs: "center", md: "left" },
           }}
         >
-          Upload your logos
+          {t('uploadLogosTitle')}
           <Paragraph>
-            (Optional)
+            {t('uploadLogosOptional')}
           </Paragraph>
         </Typography>
         <FormHelperText>
-          Supported file types: .pdf, .png, .ai, .eps, .otf, .jpeg
+          {t('uploadLogosHelper')}
         </FormHelperText>
       </Box>
       <Button
@@ -167,7 +169,7 @@ const LogoUpload = ({ onChange }: { onChange: any }) => {
           height: "150px", // Ajusta la altura del botón
         }}
       >
-        Upload Logos
+        {t('uploadLogosButton')}
         <input
           type="file"
           hidden
@@ -209,6 +211,7 @@ const LogoUpload = ({ onChange }: { onChange: any }) => {
 };
 
 const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
+  const t = useTranslations('YourDesignForm');
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
@@ -256,11 +259,11 @@ const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
             textAlign: { xs: "center", md: "left" },
           }}
         >
-          Other Images
-          <Typography component="span" fontStyle="normal" fontWeight="400">(Optional)</Typography>
+          {t('otherImagesTitle')}
+          <Typography component="span" fontStyle="normal" fontWeight="400">{t('uploadLogosOptional')}</Typography>
         </Typography>
         <FormHelperText>
-          These could be past uniforms or elements you’d like included in your new design.
+          {t('otherImagesHelper')}
         </FormHelperText>
       </Box>
 
@@ -281,7 +284,7 @@ const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
           textAlign: "center",
         }}
       >
-        Upload Images
+        {t('otherImagesButton')}
         <input
           type="file"
           hidden
@@ -324,6 +327,7 @@ const OtherImagesUpload = ({ onChange }: { onChange: any }) => {
 };
 
 const ContactInfoForm = ({ values, onChange }: any) => {
+  const t = useTranslations('YourDesignForm');
   return (
     <Box sx={{ mb: 4 }}>
       <Typography
@@ -331,7 +335,7 @@ const ContactInfoForm = ({ values, onChange }: any) => {
         gutterBottom
         sx={{ fontStyle: "italic", fontWeight: "800" }}
       >
-        Contact Info
+        {t('contactInfo')}
       </Typography>
 
       <Grid container spacing={2}>
@@ -340,7 +344,7 @@ const ContactInfoForm = ({ values, onChange }: any) => {
             required
             fullWidth
             name="fullName"
-            label="Your Full Name"
+            label={t('fullName')}
             value={values.fullName}
             onChange={e => onChange(e)}
           />
@@ -350,7 +354,7 @@ const ContactInfoForm = ({ values, onChange }: any) => {
             required
             fullWidth
             name="email"
-            label="Your Email"
+            label={t('email')}
             type="email"
             value={values.email}
             onChange={e => onChange(e)}
@@ -361,7 +365,7 @@ const ContactInfoForm = ({ values, onChange }: any) => {
             required
             fullWidth
             name="organization"
-            label="Organization Name"
+            label={t('organization')}
             value={values.organization}
             onChange={e => onChange(e)}
           />
@@ -387,6 +391,7 @@ const ContactInfoForm = ({ values, onChange }: any) => {
 };
 
 export default function RequestForm() {
+  const t = useTranslations('YourDesignForm');
   const [showColorPickerPrimary, setShowColorPickerPrimary] = useState(false);
   const [showColorPickerSecondary, setShowColorPickerSecondary] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -504,7 +509,7 @@ export default function RequestForm() {
               color: "primary.main",
             }}
           >
-            Fill out the request form
+            {t('title')}
           </Typography>
 
           <Typography
@@ -520,7 +525,7 @@ export default function RequestForm() {
               textAlign: { xs: "center", md: "left" },
             }}
           >
-            When do you need these products by?
+            {t('needBy')}
             <Typography
               variant="h6"
               fontWeight="800"
@@ -552,7 +557,7 @@ export default function RequestForm() {
               textAlign: { xs: "center", md: "left" },
             }}
           >
-            Team Name
+            {t('teamName')}
             <Typography
               variant="h6"
               fontWeight="800"
@@ -584,7 +589,7 @@ export default function RequestForm() {
               textAlign: { xs: "center", md: "left" },
             }}
           >
-            Select a sport
+            {t('selectSport')}
             <Typography
               variant="h6"
               fontWeight="800"
@@ -602,11 +607,11 @@ export default function RequestForm() {
             displayEmpty
           >
             <MenuItem value="" disabled>
-              Please select
+              {t('selectPlaceholder')}
             </MenuItem>
             {sports.map((sport) => (
               <MenuItem key={sport} value={sport}>
-                {sport}
+                {t(`sports.${sport}` as any)}
               </MenuItem>
             ))}
           </Select>
@@ -617,7 +622,7 @@ export default function RequestForm() {
           <Button onClick={() => setShowColorPickerPrimary(!showColorPickerPrimary)} variant="outlined" fullWidth>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, width: "100%" }}>
               <Typography variant="h6" component="span" fontWeight="bold" display={"flex"} gap={1} fontStyle={"italic"} width={'100%'} >
-                Primary Colors
+                {t('primaryColors')}
                 <Typography variant="h6" fontWeight="800" color={"primary.main"}> *</Typography>
               </Typography>
               <Box display={'flex'}>
@@ -652,8 +657,8 @@ export default function RequestForm() {
 
           <FormHelperText>
             {submitted && (!formData.primaryColors || formData.primaryColors.length === 0)
-              ? "Please select at least one primary color."
-              : "(Select up to 3 primary colors. At least 1 is required.)"}
+              ? t('primaryColorsError')
+              : t('primaryColorsHelper')}
           </FormHelperText>
         </FormControl>
 
@@ -662,7 +667,7 @@ export default function RequestForm() {
           <Button onClick={() => setShowColorPickerSecondary(!showColorPickerSecondary)} variant="outlined" fullWidth>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1, width: "100%" }}>
               <Typography variant="h6" component="span" fontWeight="bold" display={"flex"} gap={1} fontStyle={"italic"} width={'100%'} >
-                Secondary Colors
+                {t('secondaryColors')}
               </Typography>
               <Box display={'flex'}>
                 {formData.secondaryColors?.map((color) => {
@@ -695,7 +700,7 @@ export default function RequestForm() {
           )}
 
           <FormHelperText>
-            (Optional) Select up to 3 secondary colors
+            {t('secondaryColorsHelper')}
           </FormHelperText>
         </FormControl>
 
@@ -715,8 +720,8 @@ export default function RequestForm() {
               textAlign: { xs: "left", md: "left" },
             }}
           >
-            Would you like to add personalized names and numbers to your design?
-            <Paragraph>(optional)</Paragraph>
+            {t('namesNumbersQuestion')}
+            <Paragraph>{t('optional')}</Paragraph>
           </Typography>
           <FormGroup sx={{ mb: 2 }}>
             <FormControlLabel
@@ -727,7 +732,7 @@ export default function RequestForm() {
                   onChange={handleCheckboxChange}
                 />
               }
-              label="Include Names"
+              label={t('includeNames')}
             />
             <FormControlLabel
               control={
@@ -737,7 +742,7 @@ export default function RequestForm() {
                   onChange={handleCheckboxChange}
                 />
               }
-              label="Include Numbers"
+              label={t('includeNumbers')}
             />
           </FormGroup>
 
@@ -803,7 +808,7 @@ export default function RequestForm() {
             gap={1}
             sx={{ fontStyle: "italic", fontWeight: "800" }}
           >
-            Description
+            {t('description')}
             <Typography
               variant="h6"
               fontWeight={"800"}
@@ -812,15 +817,14 @@ export default function RequestForm() {
             </Typography>
           </Typography>
           <FormHelperText>
-            {"Describe in more detail what you'd like in your design."}
+            {t('descriptionHelper')}
           </FormHelperText>
 
           <TextField
             fullWidth
             multiline
             rows={10}
-            placeholder="We’re going for a patriotic vibe with green and white accents. Keep it simple and subtle—nothing too bold. No
-          past designs to follow, so feel free to start fresh."
+            placeholder={t('descriptionPlaceholder')}
             name="description"
             margin="normal"
             value={formData.description}
@@ -852,7 +856,7 @@ export default function RequestForm() {
             }}
             type="submit"
           >
-            GET YOUR FREE DESIGN
+            {t('submit')}
           </Button>
         </Box>
       </Container >

@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import {  styled } from "@mui/system";
+import { styled } from "@mui/system";
 import { Box, useMediaQuery } from "@mui/material";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { LazyLoadSection } from "pages-sections/fashion-2/LazyLoadSection";
 
@@ -48,6 +49,7 @@ const TextOverlay = styled("div")<TextOverlayProps>(({ isMobile, top }) => ({
 
 const AboutUs: React.FC = () => {
   const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
+  const t = useTranslations("About");
   const backgroundImage = isMobile
     ? "/assets/images/landing/about/mobile/ABOUT-US-08.png"
     : "/assets/images/landing/about/ABOUT-US-PARTES_BANNER-SUPERIOR.png"
@@ -71,7 +73,7 @@ const AboutUs: React.FC = () => {
 
         <Image
           src={backgroundImage}
-          alt="Banner"
+          alt={t("bannerAlt")}
           priority
           quality={80}
           fetchPriority="high"
@@ -94,10 +96,10 @@ const AboutUs: React.FC = () => {
         />
         <TextOverlay isMobile={isMobile} top={isMobile ? "60%" : "75%"}>
           {isMobile && (
-            <div style={{ fontSize: isMobile ? "3vw" : "2vw", marginTop: isMobile ? "40vw": 0}}>
-              <h2>Unlock Your Potential with</h2>
-              <h1 style={{ fontFamily: "GYMER" }}>CUSTOM GEAR</h1>
-              <p style={{ marginBottom: "3rem" }}>About Us</p>
+            <div style={{ fontSize: isMobile ? "3vw" : "2vw", marginTop: isMobile ? "40vw" : 0 }}>
+              <h2>{t("unlockYourPotential")}</h2>
+              <h1 style={{ fontFamily: "GYMER" }}>{t("customGear")}</h1>
+              <p style={{ marginBottom: "3rem" }}>{t("aboutUs")}</p>
             </div>
           )}
           <p
@@ -112,22 +114,13 @@ const AboutUs: React.FC = () => {
             }}
           >
             {isMobile ? (
-              `At PowFlick, we are passionate about designing and creating sportswear
-              that combines technology, style, and performance. Our mission is to
-              empower athletes and sports enthusiasts by offering the freedom to
-              express their identity through fully customized sportswear.`
+              t("introMobile")
             ) : (
               <>
-                At PowFlick, we are passionate about designing and creating
-                sportswear
-                <br />
-                that combines technology, style, and performance. Our mission is
-                to
-                <br />
-                empower athletes and sports enthusiasts by offering the freedom
-                to
-                <br />
-                express their identity through fully customized sportswear.
+                {t("introDesktopLine1")}<br />
+                {t("introDesktopLine2")}<br />
+                {t("introDesktopLine3")}<br />
+                {t("introDesktopLine4")}
               </>
             )}
           </p>
@@ -193,27 +186,19 @@ const AboutUs: React.FC = () => {
                 WebkitBoxOrient: "vertical",
               }}
             >
-              <h2 style={{ marginBottom: "3rem" }}>What Makes Us Unique</h2>
+              <h2 style={{ marginBottom: "3rem" }}>{t("whatMakesUsUnique")}</h2>
               <p>
-                <span style={{ color: "red" }}>Advanced fabric technology: </span>{" "}
-                We use specialized materials that maximize comfort, durability,
-                and performance, tailored to the demands of every sport.
+                <span style={{ color: "red" }}>{t("advancedFabricTitle")} </span>
+                {t("advancedFabricText")}
                 <br />
-                <span style={{ color: "red" }}>Total customization: </span>
-                Take full control of your design, from colors and patterns to
-                logos and specific styles.
+                <span style={{ color: "red" }}>{t("totalCustomizationTitle")} </span>
+                {t("totalCustomizationText")}
                 <br />
-                <span style={{ color: "red" }}>
-                  Innovation with Artificial Intelligence:{" "}
-                </span>
-                Our AI Customization tool simplifies and revolutionizes the design
-                process, allowing you to create unique garments in just minutes.
+                <span style={{ color: "red" }}>{t("aiInnovationTitle")} </span>
+                {t("aiInnovationText")}
                 <br />
-                <span style={{ color: "red" }}>
-                  Commitment to creative freedom:{" "}
-                </span>
-                We believe your clothing should reflect who you are, offering
-                endless possibilities to bring your ideas to life.
+                <span style={{ color: "red" }}>{t("creativeFreedomTitle")} </span>
+                {t("creativeFreedomText")}
               </p>
             </div>
 
@@ -313,12 +298,8 @@ const AboutUs: React.FC = () => {
               fontSize: isMobile ? "4.2vw" : "1.6vw",
             }}
           >
-            <h1 style={{ fontFamily: "GYMER" }}>OUR PROMISE</h1>
-            <p>
-              Every PowFlick garment is a testament to quality, innovation, and
-              attention to detail, designed to support you in every step of your
-              sports journey.{" "}
-            </p>
+            <h1 style={{ fontFamily: "GYMER" }}>{t("ourPromise")}</h1>
+            <p>{t("promiseText")}</p>
           </div>
         </Box>
       </LazyLoadSection>

@@ -6,7 +6,6 @@ import Head from "next/head";
 // Fuente global importada desde theme/fonts
 
 // IMPORT i18n SUPPORT FILE (client initializer)
-import "i18n/index";
 import React from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";

@@ -3,12 +3,705 @@
     "title": "Custom Sports Jerseys & Teamwear | Pow Flick",
     "description": "Buy custom sports jerseys and team apparel for soccer, basketball, baseball, and more. Design your own uniforms with Pow Flick — fast, premium & affordable.",
     "overlayAlt": "Decorative overlay",
-    "testTranslation": "This is a test translation"
+    "testTranslation": "This is a test translation",
+    "structuredDescription": "Buy custom sports jerseys for soccer, basketball, baseball, and more. High-quality teamwear with fast delivery and easy online customization.",
+    "bannerAlt": "Main banner",
+    "shopNow": "Shop Now",
+    "allSports": "All Sports",
+    "categories": "CATEGORIES",
+    "bestSellingProducts": "Best Selling Products",
+    "discountProducts": "Discount Products",
+    "saleProducts": "Sale Products",
+    "latestProducts": "Latest Products",
+    "bestWeekProducts": "Best of the Week",
+    "popularProducts": "Popular Products",
+    "designYourGameTitle": "Design Your Game.",
+    "designYourGameSubtitle": "Find your perfect match - modern icons, retro classics, and styles made for her.",
+    "topPicks": "Top Picks",
+    "gotDesignIdea": "GOT A DESIGN IDEA?",
+    "getItForFree": "GET IT FOR FREE!",
+    "seeUniformComeToLife": "See Your Uniform Come to Life!",
+    "claimYourFreeDesign": "Claim Your Free Design",
+    "prepare": "PREPARE",
+    "yourSeason": "YOUR SEASON",
+    "withTheBest": "WITH THE BEST",
+    "innovationAI": "Innovation with Artificial intelligence",
+    "powered": "POWERED",
+    "customization": "CUSTOMIZATION",
+    "customizeNow": "Customize Now",
+    "forMen": "For Men's",
+    "forWomen": "For Women's",
+    "startingAt": "Starting At $29",
+    "sale": "Sale",
+    "blackFriday": "Black Friday",
+    "upTo20Off": "Up to 20% Off",
+    "twentyFiveOff": "25% Off",
+    "carouselSlide1Title": "Discover the power of style!",
+    "carouselSlide1Description": "Look amazing with our black Nike sneakers. Don't miss them!",
+    "carouselSlide2Title": "Stay connected in style!",
+    "carouselSlide2Description": "The Apple Watch that combines technology and elegance. Get it now!",
+    "carouselSlide3Title": "Run with confidence!",
+    "carouselSlide3Description": "Red Nike shoes that take you further. Buy now!",
+    "buyNow": "Buy now",
+    "categorySoccer": "Soccer",
+    "categoryBasketball": "Basketball",
+    "categoryRunning": "Running",
+    "categoryGamer": "Gamer",
+    "categoryBaseball": "Baseball",
+    "categoryHockey": "Hockey",
+    "mobileImage1Alt": "Mobile brand promise image 1",
+    "mobileImage2Alt": "Mobile brand promise image 2",
+    "desktopImageAlt": "Desktop brand promises image",
+    "promoSportsBannerAlt": "Promo Sports Banner"
   },
+  "About": {
+    "unlockYourPotential": "Unlock Your Potential with",
+    "customGear": "CUSTOM GEAR",
+    "aboutUs": "About Us",
+    "introMobile": "At PowFlick, we are passionate about designing and creating sportswear that combines technology, style, and performance. Our mission is to empower athletes and sports enthusiasts by offering the freedom to express their identity through fully customized sportswear.",
+    "introDesktopLine1": "At PowFlick, we are passionate about designing and creating sportswear",
+    "introDesktopLine2": "that combines technology, style, and performance. Our mission is to",
+    "introDesktopLine3": "empower athletes and sports enthusiasts by offering the freedom to",
+    "introDesktopLine4": "express their identity through fully customized sportswear.",
+    "whatMakesUsUnique": "What Makes Us Unique",
+    "advancedFabricTitle": "Advanced fabric technology:",
+    "advancedFabricText": "We use specialized materials that maximize comfort, durability, and performance, tailored to the demands of every sport.",
+    "totalCustomizationTitle": "Total customization:",
+    "totalCustomizationText": "Take full control of your design, from colors and patterns to logos and specific styles.",
+    "aiInnovationTitle": "Innovation with Artificial Intelligence:",
+    "aiInnovationText": "Our AI Customization tool simplifies and revolutionizes the design process, allowing you to create unique garments in just minutes.",
+    "creativeFreedomTitle": "Commitment to creative freedom:",
+    "creativeFreedomText": "We believe your clothing should reflect who you are, offering endless possibilities to bring your ideas to life.",
+    "ourPromise": "OUR PROMISE",
+    "promiseText": "Every PowFlick garment is a testament to quality, innovation, and attention to detail, designed to support you in every step of your sports journey.",
+    "promiseAlt": "Promise",
+    "bannerAlt": "About us banner"
+  },
+  "YourDesign": {
+    "cta": "Start Your Design",
+    "heroAltDesktop": "Free design hero desktop",
+    "heroAltMobile": "Free design hero mobile",
+    "bannerAltDesktop": "Secondary free design banner desktop",
+    "bannerAltMobile": "Secondary free design banner mobile",
+    "stepsAltDesktop": "Design process desktop",
+    "stepsAltMobile": "Design process mobile"
+  },
+  "YourDesignForm": {
+    "title": "Fill out the request form",
+    "needBy": "When do you need these products by?",
+    "teamName": "Team Name",
+    "selectSport": "Select a sport",
+    "selectPlaceholder": "Please select",
+    "sports": {
+      "Soccer": "Soccer",
+      "Hockey": "Hockey",
+      "Baseball": "Baseball",
+      "Running": "Running",
+      "Basketball": "Basketball",
+      "Gaming": "Gaming"
+    },
+    "primaryColors": "Primary Colors",
+    "primaryColorsError": "Please select at least one primary color.",
+    "primaryColorsHelper": "(Select up to 3 primary colors. At least 1 is required.)",
+    "secondaryColors": "Secondary Colors",
+    "secondaryColorsHelper": "(Optional) Select up to 3 secondary colors",
+    "namesNumbersQuestion": "Would you like to add personalized names and numbers to your design?",
+    "optional": "(optional)",
+    "includeNames": "Include Names",
+    "includeNumbers": "Include Numbers",
+    "description": "Description",
+    "descriptionHelper": "Describe in more detail what you'd like in your design.",
+    "descriptionPlaceholder": "We’re going for a patriotic vibe with green and white accents. Keep it simple and subtle—nothing too bold. No past designs to follow, so feel free to start fresh.",
+    "contactInfo": "Contact Info",
+    "fullName": "Your Full Name",
+    "email": "Your Email",
+    "organization": "Organization Name",
+    "uploadLogosTitle": "Upload your logos",
+    "uploadLogosOptional": "(Optional)",
+    "uploadLogosHelper": "Supported file types: .pdf, .png, .ai, .eps, .otf, .jpeg",
+    "uploadLogosButton": "Upload Logos",
+    "otherImagesTitle": "Other Images",
+    "otherImagesHelper": "These could be past uniforms or elements you’d like included in your new design.",
+    "otherImagesButton": "Upload Images",
+    "submit": "GET YOUR FREE DESIGN",
+    "errorCreate": "Error creating design",
+    "errorCreateDetail": "Please try again later.",
+    "successMessage": "Your request was sent"
+  },
+  "Contact": {
+    "heading": "Drop Us A Line",
+    "subheading": "Use the form below to get in touch with the sales team",
+    "labels": {
+      "name": "Your Name *",
+      "email": "Your Email *",
+      "title": "Title *",
+      "message": "Your Message *",
+      "category": "Category"
+    },
+    "errors": {
+      "nameRequired": "Your Name is required",
+      "emailRequired": "Your Email is required",
+      "titleRequired": "Title is required",
+      "messageRequired": "Your Message is required"
+    },
+    "send": "Send message",
+    "brandName": "Brand Name:",
+    "physicalAddress": "Physical Address:",
+    "primaryEmail": "Primary Email:",
+    "contactPhone": "Contact Phone:",
+    "openHours": "Open Hours:",
+    "hoursValue": "Mon - Fri: 7:30am - 8:00pm PST Saturday: 8:00am - 6:00pm PST Sunday: 9:00am - 5:00pm PST"
+  },
+  "Shipping": {
+    "title": "Time And Shipping",
+    "bannerIntro": "At Pow Flick, we strive to deliver your customized uniforms as quickly and efficiently as possible.",
+    "bannerLead": "Here’s everything you need to know about our production and shipping timelines.",
+    "fastReliable": "Fast, Reliable Delivery for Your Custom Uniforms",
+    "fastReliableBody": "At Pow Flick, we know how important timely delivery is when it comes to your custom uniforms. That’s why we’ve streamlined our production and shipping processes to get your orders to you as quickly and efficiently as possible. Below, you’ll find everything you need to know about production times, shipping options, and how to track your order from start to finish.",
+    "productionTimeTitle": "Production Time",
+    "productionTimeBody": "All our products are made-to-order, ensuring top quality and personalization. The production process typically takes 30 days, depending on the complexity of your order and seasonal demand.",
+    "shippingTimesTitle": "Shipping Times",
+    "shippingTimesBody": "Once production is complete, your order will be shipped according to the following estimated delivery times:",
+    "shippingTimesList1": "USA, European Union, Mexico: 10–20 business days",
+    "shippingTimesList2": "Other destinations: Shipping times may vary depending on the country",
+    "steps": {
+      "designCreation": "Design Creation",
+      "designApproval": "Design Approval",
+      "fabricSample": "Fabric Sample Confirmation",
+      "productionQueue": "Production Queue",
+      "printing": "Printing",
+      "tailoring": "Tailoring",
+      "shippingTracking": "Shipping & Tracking"
+    },
+    "expressShippingTitle": "Express Shipping",
+    "expressShippingBody": "Need your order faster? We offer an Express Shipping option for an additional $20 USD, reducing delivery time to approximately 15 days. This service is available at checkout and uses trusted carriers like DHL and FedEx.",
+    "trackingTitle": "Tracking Your Order",
+    "trackingBody": "Once your order is shipped, you’ll receive a tracking number via email so you can monitor your delivery in real-time.",
+    "customsTitle": "Customs Duties and Taxes",
+    "customsBody": "For international shipments, customs duties and taxes may apply depending on your country’s regulations. These charges are the responsibility of the customer, and the relevant customs authorities will contact you if needed.",
+    "questionsTitle": "Questions?",
+    "questionsBody": "If you have any questions about your order or delivery times, feel free to reach out to us at support@powflick.com."
+  },
+  "ReturnRefund": {
+    "title": "Return & Refund Policy",
+    "intro1": "At Powflick, we understand how important it is for you and your team to have a uniform that truly represents you. That’s why every order is unique, and we treat it as such. We take quality very seriously, from material selection to the final print, including manual quality control, piece by piece. To ensure everything is perfect, we’ll keep you informed at every step, even sending you a sample of the printed fabric for you to confirm the colors and design before final production. All of this is backed by our 10+ years of experience.",
+    "intro2": "We know that sometimes, very rarely, things may not go as expected. Although we work with personalized products, if there is a genuine problem with your order, we are here to help! Please read our policy below so you know what to do.",
+    "cancellationsTitle": "1. Cancellations:",
+    "cancellationsIntro": "We understand that unforeseen circumstances may arise. Here’s our cancellation policy:",
+    "cancellationFree": "Free Cancellation: If you need to cancel your order shortly after placing it, you can do so free of charge within the first 2 hours.",
+    "cancellationFee": "Cancellation with Fee: If you request cancellation after the first 2 hours, but before your order enters the production phase, a 10% charge of the total order value will be applied to cover administrative costs.",
+    "cancellationNot": "Cancellation Not Possible: Once your order has entered the production phase, it can no longer be canceled due to its personalized nature.",
+    "cancellationHowTitle": "How to Request a Cancellation:",
+    "cancellationHowBody": "To request a cancellation, contact support@powflick.com including your order number and reason.",
+    "returnsTitle": "2. Returns (Customized Products):",
+    "returnsGeneralTitle": "2.1 General Policy:",
+    "returnsGeneralBody": "Because we make each product in a personalized way, following your specific designs and instructions, we do not accept returns of customized products, except in the cases detailed below.",
+    "returnsConditionsTitle": "Conditions for a Return:",
+    "returnsConditionsIntro": "Returns will only be considered in the following cases:",
+    "returnsCond1": "Serious Manufacturing Defect: If the product has a manufacturing defect that prevents its normal use.",
+    "returnsCond2": "Serious Error in Customization: If there is a substantial difference between the product received and the approved design/instructions.",
+    "exclusionsTitle": "2.2 Exclusions:",
+    "exclusionsIntro": "Returns will not be accepted for:",
+    "exclusion1": "Minor errors or variations that do not significantly affect appearance or functionality.",
+    "exclusion2": "Disagreement with the design if the sample was previously approved.",
+    "exclusion3": "Damage caused by misuse, improper care, or normal wear and tear.",
+    "exclusion4": "Change of mind.",
+    "claimPeriodTitle": "2.3 Claim Filing Period:",
+    "claimPeriodBody": "You have 7 business days from the date of receipt to file a claim.",
+    "claimHowTitle": "2.4 How to File a Claim:",
+    "claimHowBody": "Contact support@powflick.com, indicate your order number, detailed description, and attach clear photos showing the defect or error.",
+    "claimEvalTitle": "2.5 Claim Evaluation:",
+    "claimEvalBody": "Our team will review your claim and evidence. We may reject claims that lack evidence or don’t meet conditions.",
+    "claimResolutionTitle": "2.6 Resolution of Accepted Claims:",
+    "claimResolutionIntro": "If your claim is valid:",
+    "claimRes1": "We will provide instructions to proceed.",
+    "claimRes2": "Powflick covers shipping costs for the return.",
+    "claimRes3": "Modification or Reshipment: We may modify or send a new product quickly.",
+    "claimRes4": "Replacement: If modification isn’t possible, a replacement is sent at no cost.",
+    "claimRes5": "Refund: If none of the above is possible, a full or partial refund will be issued via the original payment method (processing time 5 business days after inspection; funds may appear within 7–15 days).",
+    "unavailableTitle": "3. Unavailable Products:",
+    "unavailableBody": "If a product you ordered is unavailable or can’t be customized, we will notify you and refund the amount paid.",
+    "pricingTitle": "4. Pricing Errors:",
+    "pricingBody": "If there is a price error, we’ll contact you to reconfirm or cancel. If unreachable, the order is canceled and fully refunded.",
+    "contactTitle": "5. Contact:",
+    "contactIntro": "For questions or assistance regarding this policy:",
+    "contactEmail": "Email: support@powflick.com",
+    "contactPhone": "Phone: +86 15920110846",
+    "contactResponse": "Response Time: We aim to reply within 24 hours (Mon–Fri).",
+    "changesTitle": "6. Changes to this Policy:",
+    "changesBody": "We may modify this Return & Refund Policy. Continued use of our services after updates implies acceptance.",
+    "lastUpdate": "Last Update",
+    "lastUpdateDate": "25/02/2025"
+  },
+  "Terms": {
+    "title": "Terms & Conditions",
+    "introShort": "Please read these Terms and Conditions because they govern your use of this website and the products/services provided by Powflick.",
+    "lastUpdate": "Last Update",
+    "lastUpdateDate": "25/02/2025",
+    "section1": {
+      "Terms": {
+        "title": "Terms & Conditions",
+        "introShort": "Read these Terms & Conditions as they govern your use of this website and Powflick products/services.",
+        "lastUpdate": "Last Update",
+        "lastUpdateDate": "25/02/2022",
+        "section1": {
+          "title": "1. GENERAL PROVISIONS",
+          "content": "<h5>1.1 Access and Acceptance</h5><p>Any user who accesses Powflick’s website (www.powflick.com) expressly agrees to these General Conditions and to the Data Protection Policy in force at the time of browsing and placing orders.</p><h5>1.2 Scope of Application</h5><p>These General Conditions govern the sale of goods and the provision of services carried out exclusively through Powflick’s website, in accordance with the applicable provisions on consumer protection and e-commerce.</p><h5>1.3 Legal Information of Powflick</h5><p><strong>Brand Name:</strong> Powflick <strong>Operated by:</strong> Squidgy Brand Management (Foshan) Co., Ltd. <strong>Physical Address:</strong> B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China <strong>Postal Code:</strong> 528000 <strong>Tax ID Number:</strong> 91440605MAE5F5JC1T <strong>Primary Email:</strong> powflick@gmail.com <strong>Contact Phone:</strong> +86 15920110846</p><h5>1.4 Mandatory Reading</h5><p>Users are required to carefully read these General Conditions before accessing the products and services offered on the website. By making any purchase, users are deemed to have accepted these General Conditions fully and without reservation.</p><h5>1.5 Modifications</h5><p>Powflick reserves the right to unilaterally modify these General Conditions without prior notice. Users are advised to download or print a copy of the purchase form and these General Conditions for their records.</p>"
+        },
+        "section2": {
+          "title": "2. ORDER PROCESS AND PRODUCT CUSTOMIZATION",
+          "content": "<h5>2.1 Product Selection</h5><p>The customer must choose the type of uniform they wish to customize.</p><h5>2.2 Design Customization</h5><p><strong>Size and Gender:</strong> The customer selects the sizes (e.g., XS to 3XL) and genders (men, women, children).</p><p><strong>Customizable Elements - Logos:</strong> The customer must upload their own logos in vector format (SVG, AI, EPS, PDF). If no vector file is available, the logo must be sent in the highest possible resolution (300 dpi). The customer is responsible for ensuring that images are of good quality, with a minimum size of 400×400 px and a minimum file size of 300 KB. Logos may also be sent by email to support@powflick.com. Powflick does not guarantee optimal print quality if low-resolution images are provided.</p><p><strong>Texts and Numbers:</strong> The customer may add names, slogans, or numbers to the front and back of the uniform.</p><p><strong>Materials:</strong> The customer will select from the predefined material mockups available for each type of sport. Powflick offers a default material at no additional cost, plus two other options at +$2.99 each.</p><p><strong>Additional Cost:</strong> Each customization variable (logos, text, numbers, material selection) has an associated additional cost: +$4.99 per logo +$3.99 per additional text or number +$2.99 if choosing a material different from the default.</p><h5>2.3 Preview</h5><p>The customer can access a design preview under the “list” option found beneath each customization, by clicking the “View” button. A PDF file will be generated, summarizing all customizations.</p><h5>2.4 Add to Cart</h5><p>Once satisfied with the design, the customer adds the uniform to their shopping cart.</p><h5>2.5 Summary and Confirmation</h5><p>The customer can view the costs of each customization throughout the process. Before confirming the order, the customer reviews the summary. After the purchase, they receive PDF files with details of the customization via email.</p><h5>2.6 Order Cancellation</h5><p>The customer has a 2-hour window after placing the order to cancel without any fees. If cancellation is requested after 2 hours, 10% of the total order value will be withheld for management costs. The customer must contact support@powflick.com to request cancellation.</p><h5>2.7 Product Availability</h5><p>If a product is no longer available or cannot be customized, Powflick will inform the customer and proceed with a refund of the amount paid.</p>"
+        },
+        "section3": {
+          "title": "3. PRICES, PAYMENTS, AND TRANSACTIONS",
+          "content": "<h5>3.1 Product and Service Prices</h5><p>The prices of products and services will be those indicated on the website, except in cases of obvious error. In the event of a pricing error, Powflick will notify the customer as soon as possible, allowing them to confirm the order at the correct price or cancel it. Powflick is not obliged to supply a product at a lower price if it was incorrectly listed. The listed prices do not include taxes corresponding to the customer’s country, which are calculated based on the shipping location (particularly in the United States).</p><h5>3.2 Payment Methods</h5><p>Powflick accepts credit card payments (Visa, Mastercard, Maestro, American Express) and through payment gateways such as Stripe.</p><h5>3.3 Discounts and Promotions</h5><p>Occasionally, Powflick may offer promotional discounts via codes that the customer can apply at checkout.</p><h5>3.4 Additional Costs</h5><p>Powflick does not apply additional handling or customization fees beyond those indicated by the customer when selecting each uniform variable.</p><h5>3.5 Transaction Security</h5><p>All transactions on Powflick’s website are encrypted to protect the customer’s sensitive data. Powflick works with recognized payment gateways to ensure the protection of financial information. Powflick does not store transaction information about its customers.</p>"
+        },
+        "section4": {
+          "title": "4. BRAND, IMAGE, AND PROMOTION RIGHTS",
+          "content": "<h5>4.1 Placement of Logos and Labels</h5><p>Powflick reserves the right to include its own logo on products, as shown in the sample designs. The customer agrees that Powflick’s logo is positioned so that it does not interfere with the customer’s logos and respects the overall aesthetic of the design.</p><h5>4.2 Use of Products and Information</h5><p>Powflick reserves the right to use any communication from the customer (including images and comments) for marketing and promotional purposes. This includes displaying products on the website, in catalogs, and on social media. By using these services, the customer agrees that Powflick may edit, copy, publish, distribute, and use shared content with no obligation of confidentiality, compensation, or response. Powflick is not responsible for any content uploaded or shared by the customer or third parties.</p><h5>4.3 Customers as References</h5><p>Powflick may use its customers as references, mentioning their names, logos, or images for advertising or promotional purposes. The customer may limit or prohibit the use of their information by notifying Powflick in writing.</p>"
+        },
+        "section5": {
+          "title": "5. ACCEPTABLE USE OF CONTENT AND INTELLECTUAL PROPERTY",
+          "content": "<h5>5.1 Customer Liability for Content</h5><p>The customer declares and guarantees that they are the legitimate owner or hold the necessary usage rights over any image, text, logo, brand, or other element they provide to Powflick for product customization. By uploading or submitting content, the customer confirms compliance with applicable intellectual property laws and commits to not infringe the rights of third parties.</p><h5>5.2 Prohibited Content and Review</h5><p>Powflick reserves the right to refuse, review, or remove any order containing content that, in its sole discretion, is considered a violation of intellectual property rights, fundamental rights, or any content that is offensive, illegal, etc.</p><h5>5.3 Use of Trademarks</h5><p>If the customer uses a trademark, they declare they have the express authorization of the rightful owner. The customer assumes full responsibility and expressly exonerates Powflick from any claim or dispute arising from the unauthorized use of said trademark.</p><h5>5.4 Disclaimer</h5><p>Powflick assumes no liability for legal, financial, or any other consequences resulting from unauthorized use or infringement of third-party rights by the customer. The customer agrees to indemnify and hold Powflick harmless from any claim, demand, loss, damage, expense, or cost arising from the improper use of the content provided. The customer will be solely responsible for any seizure or confiscation of products resulting from copyright infringement or any other applicable law.</p>"
+        },
+        "section6": {
+          "title": "6. EVENTS BEYOND OUR CONTROL",
+          "content": "<p>Powflick will not be liable for any breach or delay in fulfilling its contractual obligations caused by events outside its reasonable control (\"Events Beyond Our Control\"), such as natural disasters, wars, or any other similar cause. In the event of Events Beyond Our Control, Powflick will make all reasonable efforts to mitigate the effects and resume its obligations as soon as possible.</p>"
+        },
+        "section7": {
+          "title": "7. INTELLECTUAL PROPERTY OF POWFLICK’S WEBSITE AND CONTENT",
+          "content": "<p>All content included or made available through Powflick’s website (text, graphics, logos, images, videos, audio, software, source code, etc.) is the exclusive property of Powflick or its licensors, and is protected by applicable intellectual property laws. Any unauthorized use of the site’s content is strictly prohibited without prior written consent from Powflick.</p>"
+        },
+        "section8": {
+          "title": "8. SEVERABILITY",
+          "content": "<p>If any provision of these Terms and Conditions is declared invalid, illegal, or unenforceable by a competent authority, that provision will be deemed severable and will not affect the validity of the remaining provisions. The invalid provision will be replaced by one that complies with the law and closely reflects the original intention of the parties. <strong>GOVERNING LAW</strong> These Terms of Service and any separate agreements whereby we provide you Services shall be governed by and construed in accordance with the laws of HK.</p>"
+        },
+        "section9": {
+          "title": "9. ASSIGNMENT",
+          "content": "<p>Powflick may assign, transfer, or delegate any of its rights or obligations under these Terms and Conditions to a third party without requiring the customer’s prior consent. The customer may not assign, transfer, or delegate their rights or obligations without Powflick’s prior written consent.</p>"
+        },
+        "section10": {
+          "title": "10. PRODUCTION PROCESS",
+          "content": "<h5>10.1 Definition</h5><p>“Production” refers to the period from placing the order to the point at which products are handed over to the carrier for shipment. Shipping time is not included in this period.</p><h5>10.2 Start of the Process</h5><p>Production will not begin until all outstanding payments (if any) have been paid in full.</p><h5>10.3 Modifications</h5><p>Once an order enters the production phase, it cannot be modified.</p><h5>10.4 Design and Color Confirmation</h5><p>Approximately 8 days after placing the order, Powflick will send the customer a fabric sample of the logos, names, and numbers for one of the uniforms in the order, via email and WhatsApp. The customer will have 24 hours to respond and confirm or request changes. If no response is received, the sample is considered accepted.</p><h5>10.5 Delivery Times</h5><p>Powflick provides an approximate delivery date. The customer acknowledges that this is an estimation unless an EXPRESS service with a mandatory delivery timeframe is contracted.</p>"
+        },
+        "section11": {
+          "title": "11. DELIVERY TIMES",
+          "content": "<h5>11.1 Estimated Nature of Timeframes</h5><p>Delivery times provided by Powflick are estimates, not guarantees.</p><h5>11.2 Approximate Production Times</h5><p>The production time for a custom order is typically around 30 days. The customer can check the status of the order via the customer portal.</p><h5>11.3 Production Process (Summary)</h5><p>Processing: Checking the files. Production Queue: Waiting times vary. Printing: The design is printed and transferred onto fabric. Tailoring: Pieces are sewn. Review: Final inspection before shipping.</p><h5>11.4 Shipping (Transit) Times</h5><p>Once production is finished, shipping times vary by country (e.g., 10–20 business days for US/EU/MX).</p><h5>11.5 Express Shipping</h5><p>An Express Shipping option is available for an additional $20, reducing delivery times to ~15 days in most cases.</p><h5>11.6 Customs Duties</h5><p>For international shipments, customs duties and taxes may apply, which are the customer’s responsibility.</p>"
+        },
+        "section12": {
+          "title": "12. RETURNS AND CLAIMS",
+          "content": "<h5>12.1 Customized Products</h5><p>Powflick offers made-to-measure, customized products; no returns are allowed unless otherwise stated here.</p><h5>12.2 Claims for Defects or Obvious Errors</h5><p>Powflick will be liable for manufacturing defects that render the product unusable, or serious errors in customization.</p><h5>12.3 Claims Procedure</h5><p>The customer must contact Powflick within 7 business days of receiving the product, providing a description and photos.</p><h5>12.4 Conditions for Accepting Claims</h5><p>The customer must provide clear, detailed photographic evidence. Claims can be rejected if caused by misuse or if errors are minor.</p><h5>12.5 Return Shipping Costs</h5><p>If Powflick accepts a return due to a defect or obvious error, it will cover return shipping and replacement costs.</p>"
+        },
+        "section13": {
+          "title": "Last Update",
+          "content": "<p><strong>Last Update:</strong> 25/02/2022<br/><strong>Official Website:</strong> www.powflick.com</p>"
+        }
+      },
+      "title": "1. GENERAL PROVISIONS",
+      "content": "<h5>1.1 Access and Acceptance</h5><p>Any user who accesses Powflick’s website (www.powflick.com) expressly agrees to these General Conditions and to the Data Protection Policy in force at the time of browsing and placing orders.</p><h5>1.2 Scope of Application</h5><p>These General Conditions govern the sale of goods and the provision of services carried out exclusively through Powflick’s website, in accordance with the applicable provisions on consumer protection and e-commerce.</p><h5>1.3 Legal Information of Powflick</h5><p>Brand Name: Powflick Operated by: Squidgy Brand Management (Foshan) Co., Ltd. Physical Address: B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China Postal Code: 528000 Tax ID Number: 91440605MAE5F5JC1T Primary Email: powflick@gmail.com Contact Phone: +86 15920110846</p><h5>1.4 Mandatory Reading</h5><p>Users are required to carefully read these General Conditions before accessing the products and services offered on the website. By making any purchase, users are deemed to have accepted these General Conditions fully and without reservation.</p><h5>1.5 Modifications</h5><p>Powflick reserves the right to unilaterally modify these General Conditions without prior notice. Users are advised to download or print a copy of the purchase form and these General Conditions for their records.</p>"
+    },
+    "section2": {
+      "title": "2. ORDER PROCESS AND PRODUCT CUSTOMIZATION",
+      "content": "<h5>2.1 Product Selection</h5><p>The customer must choose the type of uniform they wish to customize.</p><h5>2.2 Design Customization</h5><p>Size and Gender The customer selects the sizes (e.g., XS to 3XL) and genders (men, women, children). Customizable Elements Logos The customer must upload their own logos in vector format (SVG, AI, EPS, PDF). If no vector file is available, the logo must be sent in the highest possible resolution (300 dpi). The customer is responsible for ensuring that images are of good quality, with a minimum size of 400×400 px and a minimum file size of 300 KB. Logos may also be sent by email to support@powflick.com. Powflick does not guarantee optimal print quality if low-resolution images are provided. Texts and Numbers The customer may add names, slogans, or numbers to the front and back of the uniform.</p><p>Materials The customer will select from the predefined material mockups available for each type of sport. Powflick offers a default material at no additional cost, plus two other options at +$2.99 each.</p><p>Additional Cost Each customization variable (logos, text, numbers, material selection) has an associated additional cost: +$4.99 per logo +$3.99 per additional text or number +$2.99 if choosing a material different from the default</p><h5>2.3 Preview</h5><p>The customer can access a design preview under the “list” option found beneath each customization, by clicking the “View” button. A PDF file will be generated, summarizing all customizations.</p><h5>2.4 Add to Cart</h5><p>Once satisfied with the design, the customer adds the uniform to their shopping cart.</p><h5>2.5 Summary and Confirmation</h5><p>The customer can view the costs of each customization throughout the process. Before confirming the order, the customer reviews the summary. After the purchase, they receive PDF files with details of the customization via email.</p><h5>2.6 Order Cancellation</h5><p>The customer has a 2-hour window after placing the order to cancel without any fees. If cancellation is requested after 2 hours, 10% of the total order value will be withheld for management costs. The customer must contact support@powflick.com to request cancellation.</p><h5>2.7 Product Availability</h5><p>If a product is no longer available or cannot be customized, Powflick will inform the customer and proceed with a refund of the amount paid.</p>"
+    },
+    "section3": {
+      "title": "3. PRICES, PAYMENTS, AND TRANSACTIONS",
+      "content": "<h5>3.1 Product and Service Prices</h5><p>The prices of products and services will be those indicated on the website, except in cases of obvious error. In the event of a pricing error, Powflick will notify the customer as soon as possible, allowing them to confirm the order at the correct price or cancel it. Powflick is not obliged to supply a product at a lower price if it was incorrectly listed. The listed prices do not include taxes corresponding to the customer’s country, which are calculated based on the shipping location (particularly in the United States).</p><h5>3.2 Payment Methods</h5><p>Powflick accepts credit card payments (Visa, Mastercard, Maestro, American Express) and through payment gateways such as Stripe.</p><h5>3.3 Discounts and Promotions</h5><p>Occasionally, Powflick may offer promotional discounts via codes that the customer can apply at checkout.</p><h5>3.4 Additional Costs</h5><p>Powflick does not apply additional handling or customization fees beyond those indicated by the customer when selecting each uniform variable.</p><h5>3.5 Transaction Security</h5><p>All transactions on Powflick’s website are encrypted to protect the customer’s sensitive data. Powflick works with recognized payment gateways to ensure the protection of financial information. Powflick does not store transaction information about its customers.</p>"
+    },
+    "section4": {
+      "title": "4. BRAND, IMAGE, AND PROMOTION RIGHTS",
+      "content": "<h5>4.1 Placement of Logos and Labels</h5><p>Powflick reserves the right to include its own logo on products, as shown in the sample designs. The customer agrees that Powflick’s logo is positioned so that it does not interfere with the customer’s logos and respects the overall aesthetic of the design.</p><h5>4.2 Use of Products and Information</h5><p>Powflick reserves the right to use any communication from the customer (including images and comments) for marketing and promotional purposes. This includes displaying products on the website, in catalogs, and on social media. By using these services, the customer agrees that Powflick may edit, copy, publish, distribute, and use shared content with no obligation of confidentiality, compensation, or response. Powflick is not responsible for any content uploaded or shared by the customer or third parties.</p><h5>4.3 Customers as References</h5><p>Powflick may use its customers as references, mentioning their names, logos, or images for advertising or promotional purposes. The customer may limit or prohibit the use of their information by notifying Powflick in writing.</p>"
+    },
+    "section5": {
+      "title": "5. ACCEPTABLE USE & INTELLECTUAL PROPERTY",
+      "content": "<h5>5.1 Customer Liability for Content</h5><p>The customer declares and guarantees that they are the legitimate owner or hold the necessary usage rights over any image, text, logo, brand, or other element they provide to Powflick for product customization. By uploading or submitting content, the customer confirms compliance with applicable intellectual property laws and commits to not infringe the rights of third parties.</p><h5>5.2 Prohibited Content and Review</h5><p>Powflick reserves the right to refuse, review, or remove any order containing content that, in its sole discretion, is considered a violation of intellectual property rights, fundamental rights, or any content that is offensive, illegal, etc.</p><h5>5.3 Use of Trademarks</h5><p>If the customer uses a trademark, they declare they have the express authorization of the rightful owner. The customer assumes full responsibility and expressly exonerates Powflick from any claim or dispute arising from the unauthorized use of said trademark.</p><h5>5.4 Disclaimer</h5><p>Powflick assumes no liability for legal, financial, or any other consequences resulting from unauthorized use or infringement of third-party rights by the customer. The customer agrees to indemnify and hold Powflick harmless from any claim, demand, loss, damage, expense, or cost arising from the improper use of the content provided. The customer will be solely responsible for any seizure or confiscation of products resulting from copyright infringement or any other applicable law.</p>"
+    },
+    "section6": {
+      "title": "6. EVENTS BEYOND OUR CONTROL",
+      "content": "<p>Powflick will not be liable for any breach or delay in fulfilling its contractual obligations caused by events outside its reasonable control (\"Events Beyond Our Control\"), such as natural disasters, wars, or any other similar cause. In the event of Events Beyond Our Control, Powflick will make all reasonable efforts to mitigate the effects and resume its obligations as soon as possible.</p>"
+    },
+    "section7": {
+      "title": "7. INTELLECTUAL PROPERTY OF THE WEBSITE",
+      "content": "<p>All content included or made available through Powflick’s website (text, graphics, logos, images, videos, audio, software, source code, etc.) is the exclusive property of Powflick or its licensors, and is protected by applicable intellectual property laws. Any unauthorized use of the site’s content is strictly prohibited without prior written consent from Powflick.</p>"
+    },
+    "section8": {
+      "title": "8. SEVERABILITY",
+      "content": "<p>If any provision of these Terms and Conditions is declared invalid, illegal, or unenforceable by a competent authority, that provision will be deemed severable and will not affect the validity of the remaining provisions. The invalid provision will be replaced by one that complies with the law and closely reflects the original intention of the parties.</p><p><strong>GOVERNING LAW</strong> These Terms of Service and any separate agreements whereby we provide you Services shall be governed by and construed in accordance with the laws of HK.</p>"
+    },
+    "section9": {
+      "title": "9. ASSIGNMENT",
+      "content": "<p>Powflick may assign, transfer, or delegate any of its rights or obligations under these Terms and Conditions to a third party without requiring the customer’s prior consent. The customer may not assign, transfer, or delegate their rights or obligations without Powflick’s prior written consent.</p>"
+    },
+    "section10": {
+      "title": "10. PRODUCTION PROCESS",
+      "content": "<h5>10.1 Definition</h5><p>“Production” refers to the period from placing the order to the point at which products are handed over to the carrier for shipment. Shipping time is not included in this period.</p><h5>10.2 Start of the Process</h5><p>Production will not begin until all outstanding payments (if any) have been paid in full.</p><h5>10.3 Modifications</h5><p>Once an order enters the production phase, it cannot be modified.</p><h5>10.4 Design and Color Confirmation</h5><p>Approximately 8 days after placing the order, Powflick will send the customer a fabric sample of the logos, names, and numbers for one of the uniforms in the order, via email and WhatsApp. The customer will have 24 hours to respond and confirm or request changes. If no response is received, the sample is considered accepted.</p><h5>10.5 Delivery Times</h5><p>Powflick provides an approximate delivery date. The customer acknowledges that this is an estimation unless an EXPRESS service with a mandatory delivery timeframe is contracted.</p>"
+    },
+    "section11": {
+      "title": "11. DELIVERY TIMES",
+      "content": "<h5>11.1 Estimated Nature of Timeframes</h5><p>Delivery times provided by Powflick are estimates, not guarantees.</p><h5>11.2 Approximate Production Times</h5><p>The production time for a custom order is typically around 30 days. The customer can check the status of the order via the customer portal.</p><h5>11.3 Production Process (Summary)</h5><p>Processing: Checking the files. Production Queue: Waiting times vary. Printing: The design is printed and transferred onto fabric. Tailoring: Pieces are sewn. Review: Final inspection before shipping.</p><h5>11.4 Shipping (Transit) Times</h5><p>Once production is finished, shipping times vary by country (e.g., 10–20 business days for US/EU/MX).</p><h5>11.5 Express Shipping</h5><p>An Express Shipping option is available for an additional $20, reducing delivery times to ~15 days in most cases.</p><h5>11.6 Customs Duties</h5><p>For international shipments, customs duties and taxes may apply, which are the customer’s responsibility.</p>"
+    },
+    "section12": {
+      "title": "12. RETURNS AND CLAIMS",
+      "content": "<h5>12.1 Customized Products</h5><p>Powflick offers made-to-measure, customized products; no returns are allowed unless otherwise stated here.</p><h5>12.2 Claims for Defects or Obvious Errors</h5><p>Powflick will be liable for manufacturing defects that render the product unusable, or serious errors in customization.</p><h5>12.3 Claims Procedure</h5><p>The customer must contact Powflick within 7 business days of receiving the product, providing a description and photos.</p><h5>12.4 Conditions for Accepting Claims</h5><p>The customer must provide clear, detailed photographic evidence. Claims can be rejected if caused by misuse or if errors are minor.</p><h5>12.5 Return Shipping Costs</h5><p>If Powflick accepts a return due to a defect or obvious error, it will cover return shipping and replacement costs.</p>"
+    },
+    "section13": {
+      "title": "Last Update",
+      "content": "<p><strong>Last Update Date:</strong> 25/02/2022<br/><strong>Official Website:</strong> www.powflick.com</p>"
+    }
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "introShort": "This privacy policy describes how we collect, use, and share personal information.",
+    "lastUpdate": "Last Update",
+    "lastUpdateDate": "25/02/2025",
+    "section1": {
+      "title": "What We Collect",
+      "items": {
+        "0": {
+          "subtitle": "Information You Give Us",
+          "text": "We may collect Personal Information you choose to provide to us..."
+        },
+        "1": {
+          "subtitle": "Information Automatically Collected",
+          "text": "We may use a third-party Service Provider (defined below)..."
+        },
+        "2": {
+          "subtitle": "Cookies",
+          "text": "We may log information using 'cookies.' Cookies are small data files..."
+        },
+        "3": {
+          "subtitle": "Web Beacons and Pixels",
+          "text": "We may log information using digital images called Web beacons..."
+        },
+        "4": {
+          "subtitle": "Tracking Options and California Do Not Track Disclosures",
+          "text": "You may adjust your browser or operating system settings..."
+        }
+      }
+    },
+    "section2": {
+      "title": "Use of Information",
+      "items": {
+        "0": {
+          "text": "We use the information that we have about you to provide, support..."
+        },
+        "1": {
+          "text": "We may use the Personal Information we collect from and about you to..."
+        },
+        "2": {
+          "text": "We may also use your information to contact you about our goods..."
+        }
+      }
+    },
+    "section3": {
+      "title": "Sharing of Personal Information",
+      "items": {
+        "0": {
+          "text": "We may disclose aggregated, anonymized, and/or non-identifying..."
+        },
+        "1": {
+          "text": "We will not disclose your Personal Information other than as..."
+        },
+        "2": {
+          "text": "We may share the Personal Information we collect from and about you..."
+        },
+        "3": {
+          "text": "We may sell or purchase assets during the normal course of our..."
+        }
+      }
+    },
+    "section4": {
+      "title": "Service Providers",
+      "items": {
+        "0": {
+          "text": "We may contract with third parties to perform functions related to..."
+        },
+        "1": {
+          "text": "However, certain third-party Service Providers, such as payment..."
+        },
+        "2": {
+          "text": "In particular, remember that certain providers may be located in..."
+        },
+        "3": {
+          "text": "As an example, if you are located in Canada and your transaction..."
+        },
+        "4": {
+          "text": "Once you leave Site or are redirected to a third-party website..."
+        }
+      }
+    },
+    "section5": {
+      "title": "Information Choices and Changes",
+      "items": {
+        "0": {
+          "text": "Our marketing emails tell you how to unsubscribe or 'opt-out.'..."
+        }
+      }
+    },
+    "section6": {
+      "title": "Links to Other Sites",
+      "items": {
+        "0": {
+          "text": "The Services may contain links to other third-party websites..."
+        }
+      }
+    },
+    "section7": {
+      "title": "Our Commitment Towards Children’s Privacy",
+      "items": {
+        "0": {
+          "text": "We do not direct the Services to, nor do we knowingly collect any..."
+        },
+        "1": {
+          "text": "Children under 13 are not eligible to use the Services. If we learn..."
+        }
+      }
+    },
+    "section8": {
+      "title": "Security of Your Personal Information",
+      "items": {
+        "0": {
+          "text": "We are committed to protecting the security of your Personal..."
+        }
+      }
+    },
+    "section9": {
+      "title": "Payment",
+      "items": {
+        "0": {
+          "text": "We use secure socket layer (SSL) technology to encrypt your..."
+        },
+        "1": {
+          "text": "When you make a payment, it is encrypted through the Payment Card..."
+        },
+        "2": {
+          "text": "All direct payment gateways adhere to the standards set by PCI-DSS..."
+        },
+        "3": {
+          "text": "PCI-DSS requirements help ensure the secure handling of credit card..."
+        }
+      }
+    },
+    "section10": {
+      "title": "Privacy Notice to EU Users",
+      "items": {
+        "0": {
+          "text": "If you are based within the European Union (EU), in certain..."
+        }
+      },
+      "list": {
+        "0": "Right to access: the right to request certain information...",
+        "1": "Right to rectification: the right to have your Personal...",
+        "2": "Right to erasure/“right to be forgotten”: where the processing...",
+        "3": "Right to restriction of use of your information: the right to stop...",
+        "4": "Right to data portability: the right to request that we return...",
+        "5": "Right to object: the right to object to our use of your Personal..."
+      }
+    },
+    "section11": {
+      "title": "Legal Basis for Processing",
+      "items": {
+        "0": {
+          "text": "The following legal bases apply to the ways in which we use and..."
+        }
+      },
+      "list": {
+        "0": "We process Personal Information on the basis of our performance...",
+        "1": "We also process the information provided by an individual in our..."
+      }
+    },
+    "section12": {
+      "title": "Retention",
+      "items": {
+        "0": {
+          "text": "We will retain the information you provide as long as you have..."
+        },
+        "1": {
+          "text": "Requests in relation to the above rights should be sent to..."
+        }
+      }
+    },
+    "section13": {
+      "title": "Contact Information",
+      "items": {
+        "0": {
+          "text": "We welcome your comments or questions about this Policy. You may..."
+        }
+      }
+    },
+    "section14": {
+      "title": "Changes to Privacy Policy",
+      "items": {
+        "0": {
+          "text": "We may modify this Policy from time to time. If we make any..."
+        }
+      }
+    }
+  },
+
   "Common": {
     "cta": {
       "contact": "Contact",
       "shop": "Shop now"
+    }
+  },
+  "Navigation": {
+    "store": "Store",
+    "getFreeDesign": "Get a Free Design",
+    "contact": "Contact",
+    "about": "About Us",
+    "faq": "FAQ",
+    "creatorKits": "Creator Kits",
+    "customizationGuide": "Customization Guide",
+    "categories": "Categories",
+    "collections": "Collections"
+  },
+  "Footer": {
+    "headings": {
+      "about": "About Us",
+      "pages": "Pages",
+      "categories": "Categories",
+      "contact": "Contact Us"
+    },
+    "links": {
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy Policy",
+      "shipping": "Time and Shipping",
+      "return": "Return & Refund",
+      "store": "Store",
+      "freeDesign": "Get a Free Design",
+      "contact": "Contact",
+      "about": "About Us",
+      "faq": "FAQ",
+      "creatorKits": "Creator Kits",
+      "customizationGuide": "Customization Guide",
+      "collections": "Collections",
+      "categories": "Categories"
+    },
+    "contact": {
+      "address1": "RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK",
+      "registeredOffice": "Registered Office (Legal Entity): CL 28 #113 57, Cali – Valle, Colombia NIT: 1231234",
+      "email": "Email: support@powflick.com",
+      "phone": "Phone: +86 13590635129"
+    },
+    "copyright": "Copyright © 2025 All rights reserved by Powflick."
+  },
+  "Auth": {
+    "login": {
+      "emailOrPhone": "Email or Phone Number",
+      "emailPlaceholder": "example@mail.com",
+      "password": "Password",
+      "submit": "Login",
+      "errors": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email",
+        "passwordRequired": "Password is required"
+      },
+      "success": "Session started successfully",
+      "error": "Error to init session"
+    },
+    "register": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "retypePassword": "Retype Password",
+      "placeholders": { "firstName": "Ralph", "lastName": "Bilkings" },
+      "agreementLong": "By signing up, you agree to",
+      "agreementShort": "Accept Our",
+      "terms": "Terms & Condition",
+      "createAccount": "Create Account",
+      "success": "User registered successfully!",
+      "errors": {
+        "firstName": "Name is required",
+        "lastName": "Last name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email",
+        "passwordRequired": "Password is required",
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Phone number is not valid",
+        "retypePasswordRequired": "Please re-type password",
+        "passwordsMustMatch": "Passwords must match",
+        "agreement": "You have to agree with our Terms and Conditions!"
+      }
+    },
+    "reset": {
+      "title": "Recover Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Submit",
+      "errors": {
+        "passwordRequired": "Password is required",
+        "confirmPasswordRequired": "Confirm password is required",
+        "passwordsDoNotMatch": "The passwords do not match",
+        "minMax": "Password must be between 8 and 20 characters long",
+        "uppercase": "Password must contain at least one uppercase letter",
+        "lowercase": "Password must contain at least one lowercase letter",
+        "number": "Password must contain at least one number",
+        "special": "Password must contain at least one special character (@$!%*?&)"
+      }
+    },
+    "bottom": {
+      "noAccount": "Don't have account?",
+      "register": "Register",
+      "forgot": "Forgot your password?",
+      "resetIt": "Reset It"
+    },
+    "greeting": {
+      "welcome": "Welcome",
+      "logoTitle": "Welcome To Pow Flick"
+    }
+  },
+  "Faq": {
+    "heroTitle": "We want your experience to be perfect!",
+    "heroSubtitle": "Here you'll find answers to the most common questions about orders, payments, and shipping. If anything’s unclear, just reach out — we’re here to help!",
+    "sections": {
+      "orders": {
+        "title": "Orders & Customization",
+        "q1Title": "How can I customize my uniform?",
+        "q1Content": "Select the type of uniform, choose sizes and genders, and add your logos, texts, or numbers. Upload logos in vector format (SVG, AI, EPS, PDF) or high resolution (minimum 300 dpi).",
+        "q2Title": "What file types can I upload for logos?",
+        "q2Content": "We recommend vector files (SVG, AI, EPS, PDF). If you don't have these formats, send the highest resolution image possible. We can’t guarantee optimal print quality if the file doesn’t meet our requirements.",
+        "q3Title": "Can I see a preview before confirming my order?",
+        "q3Content": "Yes, once you complete your customization, you can generate a PDF file with a preview of your design.",
+        "q4Title": "Can I modify or cancel my order after purchasing?",
+        "q4Content": "You have up to 2 hours after placing your order to cancel it free of charge. After that, if the order is already in production, no changes can be made, and a 10% fee will apply for cancellations."
+      },
+      "payments": {
+        "title": "Prices & Payments",
+        "q5Title": "What payment methods do you accept?",
+        "q5Content": "We accept credit cards (Visa, Mastercard, Maestro, American Express) and payments via Stripe.",
+        "q6Title": "Do prices include taxes?",
+        "q6Content": "No, taxes are calculated at checkout based on the shipping location.",
+        "q7Title": "Do you offer discounts or promotions?",
+        "q7Content": "Yes, we occasionally offer promotional codes and discounts. Stay tuned to our social media and newsletters!"
+      },
+      "shipping": {
+        "title": "Shipping & Delivery",
+        "q8Title": "How long will it take to receive my order?",
+        "q8Content": "Production takes about 30 days. Shipping times vary depending on the destination: USA, European Union, and Mexico: 10–20 business days. Other destinations: Shipping times may vary depending on the country.",
+        "q9Title": "Do you offer express shipping?",
+        "q9Content": "Yes, for an additional $20 USD, you can select express shipping at checkout. This service reduces delivery time to approximately 15 days.",
+        "q10Title": "Do I have to pay customs duties or taxes?",
+        "q10Content": "Yes, customs duties and taxes are the customer's responsibility and vary by country."
+      },
+      "returns": {
+        "title": "Returns & Claims",
+        "q11Title": "Can I return a customized product?",
+        "q11Content": "Since our products are made to order, we don’t accept returns unless there’s a manufacturing defect or an obvious error.",
+        "q12Title": "What should I do if I receive a defective or incorrect product?",
+        "q12Content": "Contact us within 7 business days of receiving your product by emailing support@powflick.com with a detailed description and photos of the issue.",
+        "q13Title": "Who covers the shipping costs for returns?",
+        "q13Content": "If we accept the return due to a defect or error, Pow Flick will cover the return shipping costs and the cost of shipping a replacement."
+      },
+      "contact": {
+        "contactQuestion1": "How can I get in touch with Pow Flick?",
+        "contactAnswer1": "You can email us at support@powflick.com or call us at +86 15920110846.",
+        "contactQuestion2": "Where are you located?",
+        "contactAnswer2": "Our headquarters are at B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China.",
+        "contactImageAlt": "Contact"
+      }
     }
   }
 }

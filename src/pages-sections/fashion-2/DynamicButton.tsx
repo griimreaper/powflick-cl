@@ -1,6 +1,8 @@
 import { Button } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 export default function DynamicButton({ href }: { href: string }) {
+    const t = useTranslations("Home");
     return (
         <Button
             color="primary"
@@ -16,7 +18,7 @@ export default function DynamicButton({ href }: { href: string }) {
                 fontStyle: "italic",
             }}
         >
-            Shop Now
+            {t("shopNow")}
         </Button>
     );
 }

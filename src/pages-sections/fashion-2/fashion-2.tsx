@@ -43,11 +43,6 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
         {/* <Section4 products={memoizedData?.collections?.mostSoldProducts || []} isMobile={isMobile} /> */}
         <DesignYourGameSection collections={memoizedData?.collections?.designYourGameSection || []} isMobile={isMobile} />
       </LazyLoadSection>
-      {/* prueba de traduccion */}
-      <div>
-        <p>  {t("testTranslation")}</p>
-
-      </div>
 
       {/* Banner */}
       <LazyLoadSection id="section7">

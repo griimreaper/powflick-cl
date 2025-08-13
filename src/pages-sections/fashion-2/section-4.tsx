@@ -7,7 +7,9 @@ import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 export default function Section4({ products, isMobile }: { products: DataStructure['landing']['collections']['mostSoldProducts'], isMobile: boolean }) {
+  const t = useTranslations("Home");
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
     { breakpoint: 768, settings: { slidesToShow: 3 } },
@@ -36,7 +38,7 @@ export default function Section4({ products, isMobile }: { products: DataStructu
             lineHeight: 1,
           }}
         >
-          Best Selling Products
+          {t("bestSellingProducts")}
         </Typography>
         <Link href={'/products?mostSold=true'}>
           <Paragraph
@@ -48,7 +50,7 @@ export default function Section4({ products, isMobile }: { products: DataStructu
               fontStyle: "italic",
             }}
           >
-            All Sports
+            {t("allSports")}
           </Paragraph>
         </Link>
       </Box>

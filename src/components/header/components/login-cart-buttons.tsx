@@ -1,6 +1,7 @@
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 // MUI ICON COMPONENT
@@ -36,6 +37,7 @@ export default function LoginCartButtons({
   const ICON_COLOR = { color: "#FEFCFC" };
 
   const { data: session } = useSession();
+  const t = useTranslations("Auth.greeting");
   const rol = session?.user?.email;
   const firstName = state.profile?.genericResponseUser?.firstName;
   const lastName = state.profile?.genericResponseUser?.lastName;
@@ -77,7 +79,7 @@ export default function LoginCartButtons({
               />
             )} */}
             <PersonOutline sx={ICON_COLOR} />
-            {state.profile?.genericResponseUser?.firstName && `Welcome ${firstName} ${lastName}`}
+            {state.profile?.genericResponseUser?.firstName && `${t("welcome")} ${firstName} ${lastName}`}
           </span>
         ) : (
           <PersonOutline sx={ICON_COLOR} />

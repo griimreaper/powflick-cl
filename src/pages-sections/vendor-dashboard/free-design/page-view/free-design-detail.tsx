@@ -12,7 +12,8 @@ import {
 import { FreeDesign } from "models/types";
 import { useDashboardStore } from "store/dashboard";
 import { useRouter } from "next/navigation";
-import { colors } from "app/(layout-1)/your-design/Form";
+// Import corregido: faltaba el segmento [locale] del árbol de rutas App Router
+import { colors } from "app/[locale]/(layout-1)/your-design/Form";
 import PageWrapper from "pages-sections/vendor-dashboard/page-wrapper";
 
 // ================================================================
@@ -43,7 +44,7 @@ export default function FreeDesignDetail({ id, freeDesign }: Props) {
     } = freeDesign;
 
     console.log(logos);
-    
+
     function RenderColor(color: string[]) {
         return (
             <Grid container spacing={2}>

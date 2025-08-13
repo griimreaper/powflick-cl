@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@mui/material/Button";
+import { useTranslations } from "next-intl";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useFormik } from "formik";
@@ -34,6 +35,7 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
   setIsRendering,
 }) => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
+  const t = useTranslations("Auth.register");
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("xs")
   );
@@ -58,22 +60,22 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
 
   // REGISTER FORM FIELD VALIDATION SCHEMA
   const validationSchema = yup.object().shape({
-    firstName: yup.string().required("Name is required"),
-    lastName: yup.string().required("Last name is required"),
-    email: yup.string().email("invalid email").required("Email is required"),
-    password: yup.string().required("Password is required"),
+    firstName: yup.string().required(t("errors.firstName")),
+    lastName: yup.string().required(t("errors.lastName")),
+    email: yup.string().email(t("errors.emailInvalid")).required(t("errors.emailRequired")),
+    password: yup.string().required(t("errors.passwordRequired")),
     phone: yup
       .string()
-      .matches(/^(\+\d{1,4}[- ]?)?(\d{1,4}[- ]?)?(\d{1,4}[- ]?)?\d{3,4}$/, "Phone number is not valid")
-      .required("Phone number is required"),
+      .matches(/^(\+\d{1,4}[- ]?)?(\d{1,4}[- ]?)?(\d{1,4}[- ]?)?\d{3,4}$/, t("errors.phoneInvalid"))
+      .required(t("errors.phoneRequired")),
     re_password: yup
       .string()
-      .oneOf([yup.ref("password")], "Passwords must match")
-      .required("Please re-type password"),
+      .oneOf([yup.ref("password")], t("errors.passwordsMustMatch"))
+      .required(t("errors.retypePasswordRequired")),
     agreement: yup
       .bool()
-      .oneOf([true], "You have to agree with our Terms and Conditions!")
-      .required("You have to agree with our Terms and Conditions!"),
+      .oneOf([true], t("errors.agreement"))
+      .required(t("errors.agreement")),
   });
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -83,7 +85,7 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
       onSubmit: async (values) => {
         const response = await registerUser({ ...values }, "none");
         if (response.statusCode === 201) {
-          showSuccessAlert("Success!", "User registered successfully!");
+          showSuccessAlert("Success!", t("success"));
           rendering && setIsRendering ? setIsRendering(false) : null
         } else {
           showErrorAlert("Error!", response.message as string);
@@ -107,12 +109,12 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
             fullWidth
             name="firstName"
             size="small"
-            label="First Name"
+            label={t("firstName")}
             variant="outlined"
             onBlur={handleBlur}
             value={values.firstName}
             onChange={handleChange}
-            placeholder="Ralph"
+            placeholder={t("placeholders.firstName")}
             error={!!touched.firstName && !!errors.firstName}
             helperText={(touched.firstName && errors.firstName) as string}
           />
@@ -122,12 +124,12 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
             fullWidth
             name="lastName"
             size="small"
-            label="Last Name"
+            label={t("lastName")}
             variant="outlined"
             onBlur={handleBlur}
             value={values.lastName}
             onChange={handleChange}
-            placeholder="Bilkings"
+            placeholder={t("placeholders.lastName")}
             error={!!touched.lastName && !!errors.lastName}
             helperText={(touched.lastName && errors.lastName) as string}
           />
@@ -142,7 +144,7 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
             onBlur={handleBlur}
             value={values.email}
             onChange={handleChange}
-            label="Email"
+            label={t("email")}
             placeholder="exmple@mail.com"
             error={!!touched.email && !!errors.email}
             helperText={(touched.email && errors.email) as string}
@@ -160,14 +162,14 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
                   color: "#2B3445",
                 }}
               >
-                Phone
+                {t("phone")}
               </label>
               <PhoneInput
                 inputProps={{
                   name: "phone",
                   onBlur: handleBlur,
                 }}
-                inputStyle={{ height: '45px'}}
+                inputStyle={{ height: '45px' }}
                 country={"us"}
                 specialLabel=""
                 value={values.phone}
@@ -188,7 +190,7 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
             fullWidth
             size="small"
             name="password"
-            label="Password"
+            label={t("password")}
             variant="outlined"
             autoComplete="on"
             placeholder="*********"
@@ -207,7 +209,7 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
             autoComplete="on"
             name="re_password"
             variant="outlined"
-            label="Retype Password"
+            label={t("retypePassword")}
             placeholder="*********"
             onBlur={handleBlur}
             onChange={handleChange}
@@ -245,12 +247,12 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
                   gap={1}
                 >
                   <Span display={{ sm: "inline-block", xs: "none" }}>
-                    By signing up, you agree to
+                    {t("agreementLong")}
                   </Span>
                   <Span display={{ sm: "none", xs: "inline-block" }}>
-                    Accept Our
+                    {t("agreementShort")}
                   </Span>
-                  <BoxLink title="Terms & Condition" href="/" />
+                  <BoxLink title={t("terms")} href="/terms-condition" />
                 </FlexBox>
               }
             />
@@ -269,7 +271,7 @@ const RegisterPageView: React.FC<RegisterPageViewProps> = ({
             variant="contained"
             size="large"
           >
-            Create Account
+            {t("createAccount")}
           </Button>
         </form>
       </Wrapper>

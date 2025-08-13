@@ -1,47 +1,11 @@
 "use client";
 
-import {
-  Typography,
-  Container,
-  Box,
-  Step,
-  StepLabel,
-  Stepper,
-  StepConnector,
-  Button, // Importar Button
-} from "@mui/material";
+import { Typography, Container, Box } from "@mui/material";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { getOrder } from "services/ThanksForBuying";
-
-const steps = [
-  {
-    label: "Design Creation",
-    img: "/shipping/icons/TIME_SHIPPING_ICONOS-12.png",
-  },
-  {
-    label: "Design Approval",
-    img: "/shipping/icons/TIME_SHIPPING_ICONOS-13.png",
-  },
-  {
-    label: "Fabric Sample Confirmation",
-    img: "/shipping/icons/TIME_SHIPPING_ICONOS-14.png",
-  },
-  {
-    label: "Production Queue",
-    img: "/shipping/icons/TIME_SHIPPING_ICONOS-15.png",
-  },
-  { label: "Printing", img: "/shipping/icons/TIME_SHIPPING_ICONOS-16.png" },
-  { label: "Tailoring", img: "/shipping/icons/TIME_SHIPPING_ICONOS-17.png" },
-  {
-    label: "Shipping & Tracking",
-    img: "/shipping/icons/TIME_SHIPPING_ICONOS-18.png",
-  },
-];
+import { useTranslations } from "next-intl";
 
 const Shipping = () => {
+  const t = useTranslations("Shipping");
   return (
     <Box sx={{ backgroundColor: "white" }}>
       {/* Banner */}
@@ -84,13 +48,11 @@ const Shipping = () => {
               fontFamily: "GYMER",
             }}
           >
-            Time And Shipping
+            {t("title")}
           </Typography>
           <Typography variant="body1" mt={1} sx={{ marginBottom: 3 }}>
-            At Pow Flick, we strive to deliver your customized uniforms as
-            quickly and efficiently as possible. <br />
-            Here’s everything you need to know about our production and shipping
-            timelines.
+            {t("bannerIntro")} <br />
+            {t("bannerLead")}
           </Typography>
           <Image
             src={"/shipping/TIME_SHIPPING_FORMAS-9.png"}
@@ -132,15 +94,10 @@ const Shipping = () => {
             textAlign="center"
             sx={{ fontStyle: "italic", color: "red" }}
           >
-            Fast, Reliable Delivery for Your Custom Uniforms
+            {t("fastReliable")}
           </Typography>
           <Typography textAlign="center" mt={2}>
-            At Pow Flick, we know how important timely delivery is when it comes
-            to your custom <br /> uniforms. That’s why we’ve streamlined our
-            production and shipping processes to get <br /> your orders to you
-            as quickly and efficiently as possible. Below, you’ll find
-            everything you <br /> need to know about production times, shipping
-            options, and how to track your order <br /> from start to finish.
+            {t("fastReliableBody")}
           </Typography>
         </Container>
         <Box
@@ -199,14 +156,10 @@ const Shipping = () => {
               textAlign="left"
               sx={{ fontStyle: "italic", color: "red" }}
             >
-              Prduction Time
+              {t("productionTimeTitle")}
             </Typography>
             <Typography textAlign="left" mt={2}>
-              Production Time All our products are made-to-order, ensuring top
-              quality and personalization. <br />
-              <br />
-              The production process typically takes 30 days, depending on the
-              complexity of your order and seasonal demand.
+              {t("productionTimeBody")}
             </Typography>
           </Box>
           <Box sx={{ width: { xs: "100%", md: "50%" } }}>
@@ -216,16 +169,12 @@ const Shipping = () => {
               textAlign="left"
               sx={{ fontStyle: "italic", color: "red" }}
             >
-              Shipping Times
+              {t("shippingTimesTitle")}
             </Typography>
             <Typography textAlign="left" mt={2}>
-              Once production is complete, your order will be shipped according
-              to the following estimated delivery times: <br /> <br />
-              <li>USA, European Union, Mexico: 10–20 business days</li>
-              <li>
-                Other destinations: Shipping times mayvary depending on the
-                country
-              </li>
+              {t("shippingTimesBody")} <br /> <br />
+              <li>{t("shippingTimesList1")}</li>
+              <li>{t("shippingTimesList2")}</li>
             </Typography>
           </Box>
         </Box>
@@ -272,13 +221,10 @@ const Shipping = () => {
             textAlign="left"
             sx={{ fontStyle: "italic", color: "red" }}
           >
-            Express Shipping
+            {t('expressShippingTitle')}
           </Typography>
           <Typography textAlign="left" mt={2}>
-            Need your order faster? We offer an Express Shipping option for an
-            additional $20 USD, reducing delivery time to approximately 15 days.
-            This service is available at checkout and uses trusted carriers like
-            DHL and FedEx.
+            {t('expressShippingBody')}
           </Typography>
         </Box>
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
@@ -288,11 +234,10 @@ const Shipping = () => {
             textAlign="left"
             sx={{ fontStyle: "italic", color: "red" }}
           >
-            Tracking Your Order
+            {t('trackingTitle')}
           </Typography>
           <Typography textAlign="left" mt={2}>
-            Once your order is shipped, you’ll receive a tracking number via
-            email so you can monitor your delivery in real-time.
+            {t('trackingBody')}
           </Typography>
         </Box>
         <Box sx={{ width: { xs: "100%", md: "50%" } }}>
@@ -302,13 +247,10 @@ const Shipping = () => {
             textAlign="left"
             sx={{ fontStyle: "italic", color: "red" }}
           >
-            Customs Duties and Taxes
+            {t('customsTitle')}
           </Typography>
           <Typography textAlign="left" mt={2}>
-            For international shipments, customs duties and taxes may apply
-            depending on your country’s regulations. These charges are the
-            responsibility of the customer, and the relevant customs authorities
-            will contact you if needed.
+            {t('customsBody')}
           </Typography>
         </Box>
 
@@ -367,11 +309,10 @@ const Shipping = () => {
               textAlign: { xs: "center", md: "left" },
             }}
           >
-            Questions?
+            {t('questionsTitle')}
           </Typography>
           <Typography variant="body1" mt={1} sx={{ marginBottom: 3 }}>
-            If you have any questions about your order or delivery times, feel
-            free to reach out to us at support@powflick.com.
+            {t('questionsBody')}
           </Typography>
         </Box>
       </Box>

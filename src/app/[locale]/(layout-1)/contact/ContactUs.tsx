@@ -19,8 +19,10 @@ import { ContactType } from "models/types";
 import { showSuccessAlert, showErrorAlert } from "utils/alerts";
 import { useDashboardStore } from "store/dashboard";
 import { Span } from "components/Typography";
+import { useTranslations } from "next-intl";
 
 const ContactUs = () => {
+  const t = useTranslations("Contact");
   const {
     register,
     handleSubmit,
@@ -47,12 +49,12 @@ const ContactUs = () => {
 
       const response = await sendMessage(data);
       if (response.status === 201) {
-        showSuccessAlert("Success!", "Message sent successfully");
+        showSuccessAlert("Success!", t("send"));
         if (profile.token) setMessages(data.messages);
       }
     } catch (error) {
       console.error("Error sending message:", error);
-      showErrorAlert("Error!", "Failed to send message");
+      showErrorAlert("Error!", t("errors.messageRequired"));
     } finally {
       reset();
     }
@@ -96,7 +98,7 @@ const ContactUs = () => {
               color="white"
               fontFamily={"GYMER"}
             >
-              Drop Us A Line
+              {t("heading")}
             </Title>
             <Typography
               variant="h6"
@@ -105,7 +107,7 @@ const ContactUs = () => {
               fontWeight={400}
               fontStyle={"italic"}
             >
-              Use the form below to get in touch with the sales team
+              {t("subheading")}
             </Typography>
             <Box component="form" mt={4} onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={2}>
@@ -113,8 +115,8 @@ const ContactUs = () => {
                   <TextField
                     fullWidth
                     variant="filled"
-                    label="Your Name *"
-                    {...register("name", { required: "Your Name is required" })}
+                    label={t("labels.name")}
+                    {...register("name", { required: t("errors.nameRequired") })}
                     error={!!errors.name}
                     helperText={errors.name?.message}
                     sx={{
@@ -140,10 +142,10 @@ const ContactUs = () => {
                   <TextField
                     fullWidth
                     variant="filled"
-                    label="Your Email *"
+                    label={t("labels.email")}
                     type="email"
                     {...register("email", {
-                      required: "Your Email is required",
+                      required: t("errors.emailRequired"),
                     })}
                     error={!!errors.email}
                     helperText={errors.email?.message}
@@ -170,10 +172,8 @@ const ContactUs = () => {
                   <TextField
                     fullWidth
                     variant="filled"
-                    label="Title *"
-                    {...register("title", {
-                      required: "Title is required",
-                    })}
+                    label={t("labels.title")}
+                    {...register("title", { required: t("errors.titleRequired") })}
                     error={!!errors.title}
                     helperText={errors.title?.message}
                     sx={{
@@ -201,10 +201,10 @@ const ContactUs = () => {
                     variant="filled"
                     multiline
                     aria-multiline
-                    label="Your Message *"
+                    label={t("labels.message")}
                     rows={4}
                     {...register("message", {
-                      required: "Your Message is required",
+                      required: t("errors.messageRequired"),
                     })}
                     error={!!errors.message}
                     helperText={errors.message?.message}
@@ -229,10 +229,10 @@ const ContactUs = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
-                    <InputLabel id="category-label">Category</InputLabel>
+                    <InputLabel id="category-label">{t("labels.category")}</InputLabel>
                     <Select
                       labelId="category-label"
-                      label="Category"
+                      label={t("labels.category")}
                       defaultValue={ContactType.GeneralHelp}
                       {...register("category")}
                       sx={{
@@ -264,16 +264,16 @@ const ContactUs = () => {
                 type="submit"
                 sx={{ mt: 4 }}
               >
-                Send message
+                {t("send")}
               </Button>
             </Box>
             <Box mb={4} mt={4}>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>Brand Name: </Span>
+                <Span fontWeight={600}>{t("brandName")} </Span>
                 BLUE STAR TRADING LIMITED
               </Typography>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>Physical Address: </Span>
+                <Span fontWeight={600}>{t("physicalAddress")} </Span>
                 RM C，6/F，WORLD TRUST TOWER 50 STANLEY STREET CENTRAL HK
               </Typography>
               {/* <Typography fontSize={15} fontWeight={200} color={"white"}>
@@ -285,19 +285,18 @@ const ContactUs = () => {
                 91440605MAE5F5JC1T
               </Typography> */}
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>Primary Email: </Span>
+                <Span fontWeight={600}>{t("primaryEmail")} </Span>
                 support@powflick.com
               </Typography>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>Contact Phone: </Span>
+                <Span fontWeight={600}>{t("contactPhone")} </Span>
                 +86 15920110846
               </Typography>
             </Box>
             <Box mb={4} width={"70%"}>
               <Typography fontSize={15} fontWeight={200} color={"white"}>
-                <Span fontWeight={600}>Open Hours: </Span>
-                Mon - Fri: 7:30am - 8:00pm PST Saturday: 8:00am - 6:00pm PST
-                Sunday: 9:00am - 5:00pm PST
+                <Span fontWeight={600}>{t("openHours")} </Span>
+                {t("hoursValue")}
               </Typography>
             </Box>
           </Grid>

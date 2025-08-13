@@ -6,7 +6,7 @@ import { cache } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getLanding } from "services/Landing";
 import { setStructuredData } from "./StructuredData";
-import ServerI18nProbe from "./ServerI18nProbe";
+
 
 export const revalidate = 3600;
 export const dynamic = 'force-dynamic'
@@ -133,12 +133,13 @@ export default async function FashionShopTwo({
     getLandingCached(),
   ]);
 
+  const t = await getTranslations("Home");
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Pow Flick",
     "url": "https://www.powflick.com/",
-    "description": "Buy custom sports jerseys for soccer, basketball, baseball, and more. High-quality teamwear with fast delivery and easy online customization.",
+    "description": t("structuredDescription"),
     "publisher": {
       "@type": "Organization",
       "name": "Pow Flick",
@@ -158,7 +159,7 @@ export default async function FashionShopTwo({
 
   return (
     <ShopLayout1 landing>
-      <ServerI18nProbe locale={params.locale} />
+
       <Fashion2 data={data} />
     </ShopLayout1>
   );
