@@ -110,6 +110,9 @@
       "trackingBody": "Una vez enviado tu pedido, recibirás número de rastreo y actualizaciones en tiempo real. ¿Necesitas soporte? Escribe a support@powflick.com."
     }
   },
+  "ProductRelated": {
+    "title": "Productos relacionados"
+  },
   "Pricing": {
     "title": "INFORMACIÓN DE PRECIOS:",
     "unitPrice": "Precio unitario por {quantity} uds:",
@@ -251,7 +254,7 @@
     "latestProducts": "Productos Nuevos",
     "bestWeekProducts": "Lo Mejor de la Semana",
     "popularProducts": "Productos Populares",
-    "designYourGameTitle": "Diseña Tu Juego.",
+    "designYourGameTitle": "Diseña Tu Juego",
     "designYourGameSubtitle": "Encuentra tu combinación perfecta: íconos modernos, clásicos retro y estilos hechos para ella.",
     "topPicks": "Top Picks",
     "gotDesignIdea": "¿TIENES UNA IDEA DE DISEÑO?",
@@ -289,6 +292,10 @@
     "mobileImage2Alt": "Imagen móvil promesa de marca 2",
     "desktopImageAlt": "Imagen promesas de marca escritorio",
     "promoSportsBannerAlt": "Banner promocional deportes"
+  },
+  "HomeReviews": {
+    "title": "LA GENTE NOS AMA",
+    "subtitle": "Reseñas de clientes"
   },
   "About": {
     "unlockYourPotential": "Desbloquea tu potencial con",

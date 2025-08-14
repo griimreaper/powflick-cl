@@ -205,6 +205,9 @@
       "trackingBody": "Once your order is shipped, you'll receive a tracking number and real-time updates. Need support? Contact support@powflick.com."
     }
   },
+  "ProductRelated": {
+    "title": "Related Products"
+  },
   "Pricing": {
     "title": "PRICING INFORMATION:",
     "unitPrice": "Unit price for {quantity} pcs:",
@@ -270,6 +273,10 @@
     "mobileImage2Alt": "Mobile brand promise image 2",
     "desktopImageAlt": "Desktop brand promises image",
     "promoSportsBannerAlt": "Promo Sports Banner"
+  },
+  "HomeReviews": {
+    "title": "PEOPLE LOVE US",
+    "subtitle": "Customer Reviews"
   },
   "About": {
     "unlockYourPotential": "Unlock Your Potential with",
