@@ -10,6 +10,7 @@ import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "@mui/material/Button";
+import { useTranslations } from "next-intl";
 // MUI ICON COMPONENTS
 import Apps from "@mui/icons-material/Apps";
 import ViewList from "@mui/icons-material/ViewList";
@@ -39,11 +40,11 @@ import { getProducts } from "services/Products";
 import { themeColors } from "theme/theme-colors";
 
 const SORT_OPTIONS = [
-  { label: "Relevance", value: "relevance" },
-  { label: "Date", value: "date" },
-  { label: "Price Low to High", value: "asc" },
-  { label: "Price High to Low", value: "desc" },
-];
+  { value: "relevance" },
+  { value: "date" },
+  { value: "asc" },
+  { value: "desc" },
+] as const;
 
 const initialFilters = {
   page: 1,
@@ -103,6 +104,7 @@ const useGlobalLoadingCursor = (isFetching: boolean) => {
 };
 
 export default function ProductSearchPageView() {
+  const t = useTranslations("ProductSearch");
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("relevance");
   const [filters, setFilters] = useState<ProductFilters>({ ...initialFilters });
@@ -150,8 +152,8 @@ export default function ProductSearchPageView() {
   }, [searchParams]);
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Products", href: "/products" },
+  { label: t("breadcrumbs.home"), href: "/" },
+  { label: t("breadcrumbs.products"), href: "/products" },
     ...(filters.category[0]
       ? [
         {
@@ -184,7 +186,7 @@ export default function ProductSearchPageView() {
         },
       ]
       : []),
-    ...(filters.search ? [{ label: `Search: ${filters.search}` }] : []),
+  ...(filters.search ? [{ label: t("breadcrumbs.search", { query: filters.search }) }] : []),
   ];
 
   const handleChangeFilters = (
@@ -240,18 +242,18 @@ export default function ProductSearchPageView() {
           <Box width={'100%'}>
             {filters.search && (
               <H5 lineHeight={1} mb={1} color={themeColors.text.secondary}>
-                Searching for “ {filters?.search} ”
+                {t("searchingFor", { query: filters?.search })}
               </H5>
             )}
             <Span style={{ color: themeColors.text.secondary }} whiteSpace={'nowrap'}>
-              {data?.count?.total} results found
+              {t("resultsFound", { count: data?.count?.total ?? 0 })}
             </Span>
           </Box>
 
           <FlexBox alignItems="center" gap={1} display={'flex'} flexDirection={'row'} flexWrap={{xs:'wrap', sm:'nowrap'}} justifyContent={{ xs: 'space-between', sm: 'flex-end' }} width={{xs: '100%', md:'40%'}}>
             <Box display={'flex'} width={'100%'} alignItems={'center'} justifyContent={'flex-start'} gap={1}>
 
-              <Paragraph whiteSpace="pre">Sort by:</Paragraph>
+              <Paragraph whiteSpace="pre">{t("sort.by")}</Paragraph>
 
               <TextField
                 select
@@ -259,7 +261,7 @@ export default function ProductSearchPageView() {
                 size="small"
                 value={sortBy}
                 variant="outlined"
-                placeholder="Sort by"
+                placeholder={t("sort.placeholder")}
                 color="primary"
                 onChange={(e) => handleChangeSortBy(e.target.value)}
                 sx={{ maxWidth: "180px", minWidth: '120px' }}
@@ -271,15 +273,13 @@ export default function ProductSearchPageView() {
                     color="primary"
                     style={{ color: "black" }}
                   >
-                    {item.label}
+                    {t(`sort.options.${item.value}`)}
                   </MenuItem>
                 ))}
               </TextField>
             </Box>
             <FlexBox alignItems="center" my="0.25rem" justifyContent={'flex-end'} width={'100%'}>
-              <Paragraph mr={1}>
-                View:
-              </Paragraph>
+              <Paragraph mr={1}>{t("view")}</Paragraph>
 
               <IconButton onClick={toggleView("grid")}>
                 <Apps

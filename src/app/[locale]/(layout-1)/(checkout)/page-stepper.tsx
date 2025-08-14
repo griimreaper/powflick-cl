@@ -8,15 +8,10 @@ import Container from "@mui/material/Container";
 import Stepper from "./stepper";
 import { Button } from "@mui/material";
 import Link from "next/link";
-
-const STEPPER_LIST = [
-  { title: "Cart", disabled: false },
-  { title: "Shipping", disabled: false },
-  { title: "Checkout", disabled: false },
-  // { title: "Review", disabled: true }
-];
+import { useTranslations } from "next-intl";
 
 export default function PageStepper({ children }: PropsWithChildren) {
+  const t = useTranslations("CheckoutSteps");
   const [selectedStep, setSelectedStep] = useState(0);
 
   const router = useRouter();
@@ -78,13 +73,17 @@ export default function PageStepper({ children }: PropsWithChildren) {
               mb: 2,
             }}
           >
-            Back to Cart
+            {t("backToCart")}
           </Button>
         </Box>
       )}
       <Box mb={3} display={{ sm: "block", xs: "none" }}>
         <Stepper
-          stepperList={STEPPER_LIST}
+          stepperList={[
+            { title: t("cart"), disabled: false },
+            { title: t("shipping"), disabled: false },
+            { title: t("checkout"), disabled: false },
+          ]}
           selectedStep={selectedStep}
           onChange={handleStepChange}
         />

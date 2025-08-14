@@ -1,4 +1,221 @@
 {
+  "Products": {
+    "meta": {
+      "title": "Product Search - Pow Flick",
+      "description": "Pow Flick is an online store specializing in high-quality sportswear. Find customizable t-shirts, sports uniforms, and accessories for soccer, basketball, baseball, hockey, running, and more. Designed for athletes and teams looking for performance and style."
+    },
+    "breadcrumbs": {
+      "soccer": "Custom Soccer Jerseys",
+      "basketball": "Custom Basketball Jerseys"
+    }
+  },
+  "Product": {
+    "meta": {
+      "title": "{name} - Pow Flick",
+      "defaultDescription": "High-quality custom sportswear and team jerseys by Pow Flick."
+    },
+    "Password": {
+      "title": "Product Locked",
+      "subtitle": "Please enter the password to view this product.",
+      "fields": {
+        "password": "Password"
+      },
+      "actions": {
+        "submit": "Submit"
+      },
+      "errors": {
+        "required": "Password is required"
+      }
+    }
+  },
+  "ProductIntro": {
+    "alerts": {
+      "errorTitle": "Error!",
+      "mustBeLogged": "You must be logged in.",
+  "successTitle": "Success!",
+  "addedToBag": "Product added to bag"
+    },
+    "noVideoSupport": "Your browser does not support the video tag.",
+    "categories": "Categories",
+    "collections": "Collections",
+    "tags": "Tags",
+    "rated": "Rated",
+    "stock": "Stock Available",
+    "actions": {
+      "customize": "Customize",
+      "addToCart": "Add to Cart"
+    },
+    "guide": {
+      "heading": "Not sure how to start?",
+      "text": "Check out our",
+      "link": "Customization Guide"
+    },
+    "variant": {
+      "top": "Top",
+      "uniform": "Uniform (Jersey + Shorts)"
+    },
+    "secureCheckout": "Guaranteed Safe & Secure Checkout"
+  },
+  "ProductCustomize": {
+    "sizeGuide": "Size Guide",
+    "setForAll": "Set for All",
+    "socksAvailable": "Socks available after {count} uniforms",
+    "sections": {
+      "size": "Size",
+      "materials": "Materials",
+      "neck": "Neck",
+      "shorts": "Shorts",
+      "pants": "Pants",
+      "socks": "Socks",
+      "technique": "Technique"
+    },
+    "genders": {
+      "men": "MEN",
+      "kids": "KIDS",
+      "women": "WOMEN"
+    },
+    "specialTech": {
+      "title": "Special Techniques require a minimum of 50 pieces per technique.",
+      "example": "Example: 25 with Embroidery on jersey + 25 with Embroidery on shorts = 50 pieces."
+    },
+    "techniqueNames": {
+      "defaultSublimated": "Default Sublimated",
+      "heatPress": "Heat Press Technique",
+      "stitchEmbroidery": "Stitch Embroidery",
+      "embroideryLogo": "Embroidery Logo"
+    },
+    "fabric": {
+      "common": {
+        "weight": "Weight",
+        "blend": "Blend",
+        "stretch": "Stretch",
+        "finish": "Finish"
+      },
+      "litePlay": {
+        "title": "LitePlay™ Fabric",
+        "subtitle": "Light-as-air comfort",
+        "dailyTitle": "Everyday performance",
+        "dailyBody": "Feather-light knit built for training and match day.",
+        "softTitle": "Soft interlock feel",
+        "softBody": "Smooth surface reduces chafe for all-day wear.",
+        "quickDryTitle": "Quick-dry finish",
+        "quickDryBody": "Wicks sweat fast to keep you cool and focused.",
+        "values": {
+          "weight": "150 g/m² (ultra-light)",
+          "blend": "100% performance polyester",
+          "stretch": "2-way responsive",
+          "finish": "Moisture-wick, soft interlock"
+        }
+      },
+      "aeroDry": {
+        "title": "AeroDry™ Fabric",
+        "subtitle": "Hexagon-vent mesh built for maximum cool",
+        "airflowTitle": "Hexa-Vent airflow",
+        "airflowBody": "Micro-hexagon openings increase ventilation up to 20% vs. standard mesh.",
+        "drycoreTitle": "DryCore wicking",
+        "drycoreBody": "Hydrophilic channels pull sweat off skin and spread it for rapid evaporation.",
+        "toughnessTitle": "Feather-lite toughness",
+        "toughnessBody": "Ultra-light 145 g/m² knit resists snags and abrasion.",
+        "values": {
+          "weight": "145 g/m² (ultra-light)",
+          "blend": "100% performance polyester",
+          "stretch": "2-way responsive",
+          "finish": "Moisture-wick, snag-resistant micro-vent"
+        }
+      },
+      "proMesh": {
+        "title": "ProMesh™ Fabric",
+        "subtitle": "Engineered for elite performance",
+        "knitTitle": "Engineered mesh knit",
+        "knitBody": "Precision-knit honeycomb cells lift heat away, boosting airflow.",
+        "flexTitle": "ProStretch 2-way flex",
+        "flexBody": "Athletic 2-way stretch moves with every sprint, tackle and slide.",
+        "durabilityTitle": "Game-ready durability",
+        "durabilityBody": "Anti-snag poly-filament yarns endure repeated washes and wear.",
+        "values": {
+          "weight": "150 g/m² (ultra-light)",
+          "blend": "100% performance polyester",
+          "stretch": "2-way responsive",
+          "finish": "Moisture-wick, soft interlock"
+        }
+      }
+    },
+    "contactUs": "Contact Us"
+  },
+  "ProductSearch": {
+    "breadcrumbs": {
+      "home": "Home",
+      "products": "Products",
+      "search": "Search: {query}"
+    },
+    "searchingFor": "Searching for \"{query}\"",
+    "resultsFound": "{count, number} results found",
+    "sort": {
+      "by": "Sort by:",
+      "placeholder": "Sort by",
+      "options": {
+        "relevance": "Relevance",
+        "date": "Date",
+        "asc": "Price Low to High",
+        "desc": "Price High to Low"
+      }
+    },
+    "view": "View:"
+  },
+  "ProductFilters": {
+    "activeFilters": "Active Filters",
+    "priceRange": "Price Range",
+    "priceMinPlaceholder": "0",
+    "priceMaxPlaceholder": "300",
+    "others": {
+      "discount": "On Sale",
+      "featured": "Featured"
+    },
+    "colors": "Colors",
+    "tags": "Tags",
+    "reset": "Reset Filters"
+  },
+  "ProductTabs": {
+    "tabs": {
+      "description": "Description",
+      "pricing": "Pricing Information",
+      "sizeTable": "Size Table",
+      "shippingWorldwide": "Worldwide Shipping",
+      "reviews": "Reviews"
+    },
+    "description": {
+      "intro1": "is a premium sportswear brand specializing in custom team uniforms for football, basketball, and more.",
+      "intro2": "We combine bold aesthetics, elite-level materials, and reliable production to help teams around the world stand out and perform at their best.",
+      "bullet1": { "title": "Advanced Performance Fabrics", "body": "Our kits are crafted with lightweight, breathable, and sweat-wicking fabrics engineered for speed, comfort, and durability – field-tested by semi-pro athletes." },
+      "bullet2": { "title": "Factory-Direct Supply", "body": "With direct control over our manufacturing in Asia, we offer fast turnaround times, consistent quality, and competitive pricing with no middlemen." },
+      "bullet3": { "title": "Full Custom Design Support", "body": "From layout sketches to mockups and revisions, our creative team works with clients to bring their team’s vision to life – no extra design fees, no limits on creativity. Whether you're a semi-pro club, a school team, or a growing brand, POW FLICK gives you the tools to compete with confidence." },
+      "techniques": { "heatPress": "Heat Press Technique", "stitchEmbroidery": "Stitch Embroidery" }
+    },
+    "size": { "englishTitle": "English Size Table", "spanishTitle": "Spanish Size Table" },
+    "shipping": {
+      "heading": "Worldwide Express Shipping. Reliable. On Time.",
+      "lead": "At <brand/>, we deliver custom sportswear worldwide. Whether you're ordering from the U.S., Latin America, Europe, or beyond — we've got you covered.",
+      "productionTitle": "Production & Processing Time",
+      "productionBody": "All custom uniforms are made-to-order. Our standard production timeline is 3–4 weeks, depending on the order size and complexity.",
+      "intlDeliveryTitle": "International Express Delivery",
+      "intlDeliveryBody": "We ship via trusted logistics partners (FedEx, DHL, etc.) ensuring safe and timely delivery.",
+      "estimatedTitle": "Estimated Shipping Time",
+      "estimated": { "naeu": "North America & Europe: 5–10 business days", "latam": "Latin America: 7–12 business days", "asia": "Asia & Oceania: 3–7 business days" },
+      "trackingTitle": "Tracking",
+      "trackingBody": "Once your order is shipped, you'll receive a tracking number and real-time updates. Need support? Contact support@powflick.com."
+    }
+  },
+  "Pricing": {
+    "title": "PRICING INFORMATION:",
+    "unitPrice": "Unit price for {quantity} pcs:",
+    "priceIncludes": "Price includes shipping, excludes customization",
+    "flexibleHeading": "Flexible Pricing. Team-Friendly Rates.",
+    "flexibleBody": "At POW FLICK, we offer competitive pricing for custom sports uniforms, designed to fit teams of all sizes and budgets.",
+    "transparentHeading": "Transparent Price Range",
+    "transparentBody": "Our prices vary based on product type, customization level, and quantity. We tailor offers to match your needs.",
+    "bulkHeading": "Bulk Order Discounts",
+    "bulkBody": "The more you order, the better the rate. Tiered pricing lowers per-unit costs for larger orders — ideal for clubs, schools, or resellers."
+  },
   "Home": {
     "title": "Custom Sports Jerseys & Teamwear | Pow Flick",
     "description": "Buy custom sports jerseys and team apparel for soccer, basketball, baseball, and more. Design your own uniforms with Pow Flick — fast, premium & affordable.",
@@ -545,6 +762,45 @@
       "shop": "Shop now"
     }
   },
+  "TopBar": {
+    "exclusiveDesign": "Get Your FREE Exclusive Design Today",
+    "freeShipping": "Free Worldwide Express Shipping!"
+  },
+  "MiniCart": {
+    "items": "{count, plural, one {# item} other {# items}}",
+    "checkoutNow": "Checkout Now ({total})",
+    "viewCart": "View Cart",
+    "empty": "Your shopping bag is empty. Start shopping"
+  },
+  "Cart": {
+    "meta": {
+      "title": "Cart - Pow Flick",
+      "description": "Review your selected products, apply a coupon, add notes, and proceed to secure checkout."
+    },
+    "subtotal": "Subtotal",
+    "customizations": "Customizations",
+    "coupon": "Coupon",
+    "couponWithDetails": "Coupon ({title} - {value})",
+    "total": "Total",
+    "additionalComments": "Additional Comments",
+    "optional": "Optional",
+    "couponCode": "Coupon Code",
+    "applyCoupon": "Apply Coupon",
+    "removeCoupon": "Remove Coupon",
+    "creditCard": "Credit Card",
+    "selectShippingAddress": "Select a shipping address",
+    "addProductsToCart": "Add products to cart",
+    "checkoutNow": "Checkout Now",
+    "mustBeLoggedIn": "You must be logged in",
+    "invalidCoupon": "Invalid or inactive coupon",
+    "couponNotFound": "Coupon not found or not available for your account"
+  },
+  "CheckoutSteps": {
+    "cart": "Cart",
+    "shipping": "Shipping",
+    "checkout": "Checkout",
+    "backToCart": "Back to Cart"
+  },
   "Navigation": {
     "store": "Store",
     "getFreeDesign": "Get a Free Design",
@@ -599,6 +855,12 @@
       },
       "success": "Session started successfully",
       "error": "Error to init session"
+    },
+    "social": {
+      "or": "or",
+      "iAccept": "I accept the",
+      "terms": "terms and conditions",
+      "continueWithGoogle": "Continue with Google"
     },
     "register": {
       "firstName": "First Name",
@@ -703,5 +965,36 @@
         "contactImageAlt": "Contact"
       }
     }
+  }
+  ,
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Stay in the loop with the latest about our products",
+    "searchPlaceholder": "Search…",
+    "searchAriaLabel": "search",
+    "allCategories": "All categories",
+    "company": "Company",
+    "product": "Product",
+    "design": "Design",
+    "engineering": "Engineering",
+    "rssAriaLabel": "RSS feed",
+    "latest": "Latest"
+  },
+  "Thanks": {
+    "backTo": "Back to",
+    "brand": "Pow Flick",
+    "thankYou": "Thank you!",
+    "onTheWay": "It's on the way!",
+    "orderSent": "Your order #{id} was sent to the factory for manufacturing and will be with you soon.",
+    "trackingNumber": "Tracking number",
+    "notAvailable": "Not available yet",
+    "yourOrder": "Your Order",
+    "quantity": "Quantity",
+    "price": "Price",
+    "shippingAddress": "Shipping Address",
+    "billingAddress": "Billing Address",
+    "summary": "Summary",
+    "coupon": "Coupon",
+    "total": "Total"
   }
 }

@@ -4,22 +4,23 @@ import Link from "next/link";
 import { Box, Typography, Slide } from "@mui/material";
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import { position } from "stylis";
-
-const messages = [
-    {
-        text: "Get Your FREE Exclusive Design Today",
-        icon: <DesignServicesIcon fontSize="small" sx={{ mr: 1 }} />,
-        href: "/your-design",
-    },
-    {
-        text: "Free Worldwide Express Shipping!",
-        icon: <LocalShippingIcon fontSize="small" sx={{ mr: 1 }} />,
-        // sin href = mensaje sin link
-    },
-];
+import { useTranslations } from "next-intl";
 
 export default function TopBarSlider() {
+    const t = useTranslations("TopBar");
+    // Mensajes dependientes del locale
+    const messages = [
+        {
+            text: t("exclusiveDesign"),
+            icon: <DesignServicesIcon fontSize="small" sx={{ mr: 1 }} />,
+            href: "/your-design",
+        },
+        {
+            text: t("freeShipping"),
+            icon: <LocalShippingIcon fontSize="small" sx={{ mr: 1 }} />,
+            // sin href = mensaje sin link
+        },
+    ];
     const [index, setIndex] = useState(0);
     const [show, setShow] = useState(true);
 
@@ -33,7 +34,7 @@ export default function TopBarSlider() {
         }, 10000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [messages.length]);
 
     const currentMessage = messages[index];
 

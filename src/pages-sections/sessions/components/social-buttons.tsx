@@ -12,6 +12,7 @@ import facebookLogo from "../../../../public/assets/images/icons/facebook-filled
 import { signIn } from 'next-auth/react';
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 // =======================================
 interface Props {
   handleGoogle?: () => void;
@@ -22,6 +23,7 @@ interface Props {
 
 export default function SocialButtons({ redirectUrl }: Props) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const t = useTranslations('Auth.social');
 
   return (
     <Fragment>
@@ -29,7 +31,7 @@ export default function SocialButtons({ redirectUrl }: Props) {
       <Box my={3}>
         <Divider>
           <Span lineHeight={1} px={1}>
-            or
+            {t('or')}
           </Span>
         </Divider>
       </Box>
@@ -45,7 +47,7 @@ export default function SocialButtons({ redirectUrl }: Props) {
         Continue with Facebook
       </Button> */}
 
-      {/* GOOGLE BUTTON */}
+  {/* GOOGLE BUTTON */}
       <FormControlLabel
         control={
           <Checkbox
@@ -56,7 +58,7 @@ export default function SocialButtons({ redirectUrl }: Props) {
         }
         label={
           <Typography variant="body2" sx={{ cursor: "default" }}>
-            I accept the{" "}
+    {t('iAccept')} {" "}
             <Link
               href="/terms-condition"
               style={{
@@ -64,7 +66,7 @@ export default function SocialButtons({ redirectUrl }: Props) {
                 fontWeight: "bold",
               }}
             >
-              terms and conditions
+      {t('terms')}
             </Link>
           </Typography>
         }
@@ -88,7 +90,7 @@ export default function SocialButtons({ redirectUrl }: Props) {
         onClick={() => signIn("google", { callbackUrl: redirectUrl || "/" })}
         disabled={!acceptedTerms} // 🔴 Bloquea el botón si no se aceptan los términos
       >
-        Continue with Google
+    {t('continueWithGoogle')}
       </Button>
     </Fragment>
   );

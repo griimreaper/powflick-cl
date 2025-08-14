@@ -1,18 +1,24 @@
 import ThanksForBuy from "components/ThanksForBuy/ThanksForBuy";
-import { Metadata } from "next";
-// PAGE VIEW COMPONENT
+import type { Metadata } from "next";
+import { locales } from "i18n/routing";
 
-export const metadata: Metadata = {
-  title: "Invoice - Pow Flick",
-  description:
-    "Pow Flick is an online store specializing in high-quality sportswear. Find customizable t-shirts, sports uniforms, and accessories for soccer, basketball, baseball, hockey, running, and more. Designed for athletes and teams looking for performance and style.",
-  authors: [{ name: "devcodelab" }],
-  keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
-  robots: {
-    index: false,
-    follow: false
-  }
-};
+type Props = { params: { locale: (typeof locales)[number]; id: string } };
+
+export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+  const title = `Invoice - Pow Flick`;
+  return {
+    title,
+    alternates: {
+      canonical: `https://www.powflick.com/${locale}/thanks-for-buying`,
+      languages: {
+        en: "https://www.powflick.com/en/thanks-for-buying",
+        es: "https://www.powflick.com/es/thanks-for-buying",
+        "x-default": "https://www.powflick.com/en/thanks-for-buying",
+      },
+    },
+    robots: { index: false, follow: false },
+  };
+}
 
 interface PageProps {
   params: {
@@ -21,6 +27,5 @@ interface PageProps {
 }
 
 export default async function ThanksForBuying({ params }: PageProps) {
-
-  return <ThanksForBuy id={params.id}></ThanksForBuy>
+  return <ThanksForBuy id={params.id} />
 }

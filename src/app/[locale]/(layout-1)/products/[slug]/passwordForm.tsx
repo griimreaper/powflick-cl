@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function ProductPasswordForm({ slug, productPassword }: Props) {
+    const t = useTranslations('Product.Password');
     const router = useRouter();
     const searchParams = useSearchParams() || new URLSearchParams();
     const queryPassword = searchParams.get('password');
@@ -33,7 +35,7 @@ export default function ProductPasswordForm({ slug, productPassword }: Props) {
         e.preventDefault();
 
         if (!password.trim()) {
-            setError('Password is required');
+            setError(t('errors.required'));
             return;
         }
 
@@ -43,17 +45,17 @@ export default function ProductPasswordForm({ slug, productPassword }: Props) {
     return (
         <FlexRowCenter height="100vh">
             <Card sx={{ p: 4, textAlign: 'center', width: 360 }}>
-                <H1 mb={2}>Product Locked</H1>
+                <H1 mb={2}>{t('title')}</H1>
 
                 <Typography variant="body2" mb={3}>
-                    Please enter the password to view this product.
+                    {t('subtitle')}
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
                     <TextField
                         fullWidth
                         type="password"
-                        label="Password"
+                        label={t('fields.password')}
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
@@ -70,7 +72,7 @@ export default function ProductPasswordForm({ slug, productPassword }: Props) {
                         fullWidth
                         sx={{ mt: 3 }}
                     >
-                        Submit
+                        {t('actions.submit')}
                     </Button>
                 </form>
             </Card>

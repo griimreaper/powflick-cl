@@ -1,12 +1,15 @@
 import { Metadata } from "next";
 import { CartPageView } from "pages-sections/cart/page-view";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Cart - Pow Flick",
-  description: "Pow Flick is an online store specializing in high-quality sportswear. Find customizable t-shirts, sports uniforms, and accessories for soccer, basketball, baseball, hockey, running, and more. Designed for athletes and teams looking for performance and style.",
-  authors: [{ name: "devcodelab" }],
-  keywords: ["e-commerce", "e-commerce template", "next.js", "react"],
-};
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: "Cart" });
+  return {
+    title: t("meta.title"),
+    description: t("meta.description"),
+    keywords: ["cart", "checkout", "sports uniforms"],
+  };
+}
 
 export default function Cart() {
   return <CartPageView />;

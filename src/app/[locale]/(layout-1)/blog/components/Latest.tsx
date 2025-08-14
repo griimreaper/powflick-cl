@@ -8,6 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
+import { useTranslations } from "next-intl";
 
 const articleInfo = [
   {
@@ -175,6 +176,7 @@ function Author({ authors }: { authors: { name: string; avatar: string }[] }) {
 }
 
 export default function Latest() {
+  const t = useTranslations("Blog");
   const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
     null
   );
@@ -189,9 +191,7 @@ export default function Latest() {
 
   return (
     <div>
-      <Typography variant="h2" gutterBottom>
-        Latest
-      </Typography>
+  <Typography variant="h2" gutterBottom>{t("latest")}</Typography>
       <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
         {articleInfo.map((article, index) => (
           <Grid key={index} xs={12} sm={6}>

@@ -1,11 +1,13 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 // PAGE VIEW COMPONENT
 import ProductSearchPageView from "pages-sections/product-details/page-view/product-search";
 import { setStructuredData } from "../../StructuredData";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: "Products" });
   return {
-    title: "Product Search - Pow Flick",
+    title: t("meta.title"),
     alternates: {
       // Canonical con prefijo de idioma para evitar duplicados
       canonical: `https://www.powflick.com/${params.locale}/products`,
@@ -15,8 +17,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         "x-default": "https://www.powflick.com/en/products",
       },
     },
-    description:
-      "Pow Flick is an online store specializing in high-quality sportswear. Find customizable t-shirts, sports uniforms, and accessories for soccer, basketball, baseball, hockey, running, and more. Designed for athletes and teams looking for performance and style.",
+    description: t("meta.description"),
     authors: [{ name: "devcodelab" }],
     keywords: [
       // Short-tail (genéricas)
@@ -75,6 +76,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 export const revalidate = 86400 * 7;
 
 export default async function ProductSearch({ params }: any) {
+  const t = await getTranslations({ locale: params?.locale ?? "en", namespace: "Products" });
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -82,7 +84,7 @@ export default async function ProductSearch({ params }: any) {
     "name": "Pow Flick",
     "url": "https://www.powflick.com/products",
     "logo": "https://www.powflick.com/logo.png", // Reemplaza con tu logo real si es diferente
-    "description": "Buy custom sports jerseys and teamwear for soccer, basketball, baseball, and more. Fast delivery, high-quality materials.",
+    "description": t("meta.description"),
     "image": "https://www.powflick.com/assets/images/landing/dashboard/DASHBOARD_BACKGROUND.png",
     "telephone": "+86 159 2011 0846", // Reemplaza por el tuyo real
     "email": "support@powflick.com", // Opcional si tenés contacto visible
@@ -112,13 +114,13 @@ export default async function ProductSearch({ params }: any) {
       {
         "@type": "ListItem",
         "position": 1,
-        "name": "Custom Soccer Jerseys",
+  "name": t("breadcrumbs.soccer"),
         "item": "https://www.powflick.com/products?category=Custom+Soccer+Jerseys"
       },
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Custom Basketball Jerseys",
+  "name": t("breadcrumbs.basketball"),
         "item": "https://www.powflick.com/products?category=Custom+Basketball+Jerseys"
       }
     ]

@@ -1,4 +1,240 @@
 {
+  "Products": {
+    "meta": {
+      "title": "Búsqueda de Productos - Pow Flick",
+      "description": "Pow Flick es una tienda online especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizadas, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñado para atletas y equipos que buscan rendimiento y estilo."
+    },
+    "breadcrumbs": {
+      "soccer": "Camisetas de fútbol personalizadas",
+      "basketball": "Camisetas de baloncesto personalizadas"
+    }
+  },
+  "Product": {
+    "meta": {
+      "title": "{name} - Pow Flick",
+      "defaultDescription": "Ropa deportiva personalizada y camisetas para equipos de alta calidad por Pow Flick."
+    },
+    "Password": {
+      "title": "Producto Bloqueado",
+      "subtitle": "Ingresa la contraseña para ver este producto.",
+      "fields": {
+        "password": "Contraseña"
+      },
+      "actions": {
+        "submit": "Enviar"
+      },
+      "errors": {
+        "required": "La contraseña es obligatoria"
+      }
+    }
+  },
+  "ProductSearch": {
+    "breadcrumbs": {
+      "home": "Inicio",
+      "products": "Productos",
+      "search": "Búsqueda: {query}"
+    },
+    "searchingFor": "Buscando \"{query}\"",
+    "resultsFound": "{count, number} resultados encontrados",
+    "sort": {
+      "by": "Ordenar por:",
+      "placeholder": "Ordenar por",
+      "options": {
+        "relevance": "Relevancia",
+        "date": "Fecha",
+        "asc": "Precio: menor a mayor",
+        "desc": "Precio: mayor a menor"
+      }
+    },
+    "view": "Vista:"
+  },
+  "ProductFilters": {
+    "activeFilters": "Filtros activos",
+    "priceRange": "Rango de precios",
+    "priceMinPlaceholder": "0",
+    "priceMaxPlaceholder": "300",
+    "others": {
+      "discount": "En oferta",
+      "featured": "Destacados"
+    },
+    "colors": "Colores",
+    "tags": "Tags",
+    "reset": "Restablecer filtros"
+  },
+  "ProductTabs": {
+    "tabs": {
+      "description": "Descripción",
+      "pricing": "Información de precios",
+      "sizeTable": "Tabla de tallas",
+      "shippingWorldwide": "Envío mundial",
+      "reviews": "Reseñas"
+    },
+    "description": {
+      "intro1": "es una marca premium de ropa deportiva especializada en uniformes personalizados para fútbol, baloncesto y más.",
+      "intro2": "Combinamos estética audaz, materiales de nivel élite y producción confiable para ayudar a equipos de todo el mundo a destacar y rendir al máximo.",
+      "bullet1": {
+        "title": "Tejidos de alto rendimiento",
+        "body": "Nuestras prendas están hechas con tejidos ligeros, transpirables y de secado rápido, diseñados para velocidad, comodidad y durabilidad – probados por atletas semiprofesionales."
+      },
+      "bullet2": {
+        "title": "Suministro directo de fábrica",
+        "body": "Con control directo sobre nuestra fabricación en Asia, ofrecemos tiempos de entrega rápidos, calidad constante y precios competitivos sin intermediarios."
+      },
+      "bullet3": {
+        "title": "Soporte de diseño totalmente personalizado",
+        "body": "Desde bocetos hasta mockups y revisiones, nuestro equipo creativo trabaja junto al cliente para dar vida a su visión — sin tarifas extra ni límites a la creatividad. Ya seas un club semiprofesional, un equipo escolar o una marca en crecimiento, POW FLICK te da las herramientas para competir con confianza."
+      },
+      "techniques": {
+        "heatPress": "Técnica de termotransferencia",
+        "stitchEmbroidery": "Bordado a puntada"
+      }
+    },
+    "size": {
+      "englishTitle": "Tabla de tallas (Inglés)",
+      "spanishTitle": "Tabla de tallas (Español)"
+    },
+    "shipping": {
+      "heading": "Envío exprés mundial. Confiable. A tiempo.",
+      "lead": "En <brand/>, enviamos ropa deportiva personalizada a todo el mundo. Pidas desde EE. UU., Latinoamérica, Europa o más allá — te cubrimos.",
+      "productionTitle": "Tiempo de producción y procesamiento",
+      "productionBody": "Todos los uniformes son bajo pedido. Nuestro tiempo estándar de producción es de 3–4 semanas, según cantidad y complejidad.",
+      "intlDeliveryTitle": "Entrega exprés internacional",
+      "intlDeliveryBody": "Enviamos con socios logísticos de confianza (FedEx, DHL, etc.), garantizando entregas seguras y puntuales.",
+      "estimatedTitle": "Tiempos estimados de envío",
+      "estimated": {
+        "naeu": "Norteamérica y Europa: 5–10 días hábiles",
+        "latam": "Latinoamérica: 7–12 días hábiles",
+        "asia": "Asia y Oceanía: 3–7 días hábiles"
+      },
+      "trackingTitle": "Rastreo",
+      "trackingBody": "Una vez enviado tu pedido, recibirás número de rastreo y actualizaciones en tiempo real. ¿Necesitas soporte? Escribe a support@powflick.com."
+    }
+  },
+  "Pricing": {
+    "title": "INFORMACIÓN DE PRECIOS:",
+    "unitPrice": "Precio unitario por {quantity} uds:",
+    "priceIncludes": "Precio incluye envío, no incluye personalización",
+    "flexibleHeading": "Precios flexibles. Tarifas para equipos.",
+    "flexibleBody": "En POW FLICK ofrecemos precios competitivos para uniformes personalizados, pensados para equipos de todos los tamaños y presupuestos.",
+    "transparentHeading": "Rango de precios transparente",
+    "transparentBody": "Nuestros precios varían según el tipo de producto, nivel de personalización y cantidad. Ajustamos la oferta a tus necesidades.",
+    "bulkHeading": "Descuentos por volumen",
+    "bulkBody": "Cuanto más pidas, mejor la tarifa. Ofrecemos precios escalonados para reducir el costo por unidad en pedidos grandes — ideal para clubes, escuelas o revendedores."
+  },
+  "ProductIntro": {
+    "alerts": {
+      "errorTitle": "¡Error!",
+      "mustBeLogged": "Debes iniciar sesión.",
+      "successTitle": "¡Éxito!",
+      "addedToBag": "Producto añadido al carrito"
+    },
+    "noVideoSupport": "Tu navegador no soporta la etiqueta de video.",
+    "categories": "Categorías",
+    "collections": "Colecciones",
+    "tags": "Tags",
+    "rated": "Valoración",
+    "stock": "Stock disponible",
+    "actions": {
+      "customize": "Personalizar",
+      "addToCart": "Añadir al carrito"
+    },
+    "guide": {
+      "heading": "¿No sabes por dónde empezar?",
+      "text": "Revisa nuestra",
+      "link": "Guía de personalización"
+    },
+    "variant": {
+      "top": "Top",
+      "uniform": "Uniforme (Camiseta + Pantalón)"
+    },
+    "secureCheckout": "Pago garantizado, seguro y protegido"
+  },
+  "ProductCustomize": {
+    "sizeGuide": "Guía de tallas",
+    "setForAll": "Aplicar a todos",
+    "socksAvailable": "Medias disponibles a partir de {count} uniformes",
+    "sections": {
+      "size": "Talla",
+      "materials": "Materiales",
+      "neck": "Cuello",
+      "shorts": "Shorts",
+      "pants": "Pantalón",
+      "socks": "Medias",
+      "technique": "Técnica"
+    },
+    "genders": {
+      "men": "HOMBRES",
+      "kids": "NIÑOS",
+      "women": "MUJERES"
+    },
+    "specialTech": {
+      "title": "Las Técnicas Especiales requieren un mínimo de 50 piezas por técnica.",
+      "example": "Ejemplo: 25 con bordado en la camiseta + 25 con bordado en el short = 50 piezas."
+    },
+    "techniqueNames": {
+      "defaultSublimated": "Sublimado por defecto",
+      "heatPress": "Técnica de termotransferencia",
+      "stitchEmbroidery": "Bordado a puntada",
+      "embroideryLogo": "Logo bordado"
+    },
+    "fabric": {
+      "common": {
+        "weight": "Peso",
+        "blend": "Composición",
+        "stretch": "Elasticidad",
+        "finish": "Acabado"
+      },
+      "litePlay": {
+        "title": "Tejido LitePlay™",
+        "subtitle": "Confort ultraligero",
+        "dailyTitle": "Rendimiento diario",
+        "dailyBody": "Tejido ligerísimo preparado para entrenos y día de partido.",
+        "softTitle": "Tacto suave interlock",
+        "softBody": "Superficie lisa que reduce roces para llevarlo todo el día.",
+        "quickDryTitle": "Secado rápido",
+        "quickDryBody": "Evacúa el sudor para mantenerte fresco y concentrado.",
+        "values": {
+          "weight": "150 g/m² (ultraligero)",
+          "blend": "100 % poliéster técnico",
+          "stretch": "Elasticidad bidireccional",
+          "finish": "Interlock suave con control de humedad"
+        }
+      },
+      "aeroDry": {
+        "title": "Tejido AeroDry™",
+        "subtitle": "Malla hexagonal para máxima frescura",
+        "airflowTitle": "Flujo de aire Hexa-Vent",
+        "airflowBody": "Sus micro-hexágonos elevan la ventilación hasta un 20 % frente a la malla clásica.",
+        "drycoreTitle": "Absorción DryCore",
+        "drycoreBody": "Canales hidrofílicos alejan el sudor y lo dispersan para una rápida evaporación.",
+        "toughnessTitle": "Ligereza resistente",
+        "toughnessBody": "Punto ultraligero de 145 g/m² que resiste enganches y rozaduras.",
+        "values": {
+          "weight": "145 g/m² (ultraligero)",
+          "blend": "100 % poliéster técnico",
+          "stretch": "Elasticidad bidireccional",
+          "finish": "Micro-ventilación resistente a enganches"
+        }
+      },
+      "proMesh": {
+        "title": "Tejido ProMesh™",
+        "subtitle": "Diseñado para alto rendimiento",
+        "knitTitle": "Malla de ingeniería",
+        "knitBody": "Celdas tipo panal aumentan la ventilación y elevan el calor del cuerpo.",
+        "flexTitle": "Elasticidad ProStretch 2-way",
+        "flexBody": "Se mueve contigo en cada sprint, entrada y barrida, sin restricciones.",
+        "durabilityTitle": "Durabilidad de competición",
+        "durabilityBody": "Filamentos anti-tirón que soportan el uso intenso y repetidos lavados.",
+        "values": {
+          "weight": "150 g/m² (ultraligero)",
+          "blend": "100 % poliéster técnico",
+          "stretch": "Elasticidad bidireccional",
+          "finish": "Interlock suave con control de humedad"
+        }
+      }
+    },
+    "contactUs": "Contáctanos"
+  },
   "Home": {
     "title": "Camisetas deportivas personalizadas | Pow Flick",
     "description": "Compra camisetas deportivas personalizadas y equipación para equipos de fútbol, baloncesto, béisbol y más. Diseña tus uniformes con Pow Flick — rápido, premium y asequible.",
@@ -19,7 +255,7 @@
     "designYourGameSubtitle": "Encuentra tu combinación perfecta: íconos modernos, clásicos retro y estilos hechos para ella.",
     "topPicks": "Top Picks",
     "gotDesignIdea": "¿TIENES UNA IDEA DE DISEÑO?",
-    "getItForFree": "¡OBTÉNLO GRATIS!",
+    "getItForFree": "OBTÉNLO GRATIS!",
     "seeUniformComeToLife": "¡Haz que Tu Uniforme Cobre Vida!",
     "claimYourFreeDesign": "Solicita Tu Diseño Gratis",
     "prepare": "PREPARA",
@@ -487,6 +723,46 @@
       "shop": "Comprar ahora"
     }
   },
+  "TopBar": {
+    "exclusiveDesign": "Obtén tu DISEÑO EXCLUSIVO GRATIS hoy",
+    "freeShipping": "¡Envío exprés mundial GRATIS!"
+  },
+  "MiniCart": {
+    "items": "{count, plural, one {# artículo} other {# artículos}}",
+    "checkoutNow": "Pagar ahora ({total})",
+    "viewCart": "Ver carrito",
+    "empty": "Tu carrito está vacío. Comienza a comprar"
+  },
+  "Cart": {
+    "meta": {
+      "title": "Carrito - Pow Flick",
+      "description": "Revisa tus productos, aplica un cupón, agrega notas y continúa a un pago seguro."
+    },
+    "subtotal": "Subtotal",
+    "customizations": "Personalizaciones",
+    "coupon": "Cupón",
+    "couponWithDetails": "Cupón ({title} - {value})",
+    "total": "Total",
+    "additionalComments": "Comentarios Adicionales",
+    "optional": "Opcional",
+    "couponCode": "Código de cupón",
+    "applyCoupon": "Aplicar cupón",
+    "removeCoupon": "Eliminar cupón",
+    "creditCard": "Tarjeta de Crédito",
+    "selectShippingAddress": "Selecciona una dirección de envío",
+    "addProductsToCart": "Agrega productos al carrito",
+    "checkoutNow": "Pagar ahora",
+    "mustBeLoggedIn": "Debes iniciar sesión",
+    "invalidCoupon": "Cupón inválido o inactivo",
+    "couponNotFound": "Cupón no encontrado o no disponible para tu cuenta"
+  },
+
+  "CheckoutSteps": {
+    "cart": "Carrito",
+    "shipping": "Envío",
+    "checkout": "Pago",
+    "backToCart": "Volver al carrito"
+  },
   "Navigation": {
     "store": "Tienda",
     "getFreeDesign": "Obtén un Diseño Gratis",
@@ -528,6 +804,36 @@
     },
     "copyright": "Copyright © 2025 Todos los derechos reservados por Powflick."
   },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Mantente al día con lo último sobre nuestros productos",
+    "searchPlaceholder": "Buscar…",
+    "searchAriaLabel": "buscar",
+    "allCategories": "Todas las categorías",
+    "company": "Compañía",
+    "product": "Producto",
+    "design": "Diseño",
+    "engineering": "Ingeniería",
+    "rssAriaLabel": "Fuente RSS",
+    "latest": "Lo más reciente"
+  },
+  "Thanks": {
+    "backTo": "Volver a",
+    "brand": "Pow Flick",
+    "thankYou": "¡Gracias!",
+    "onTheWay": "¡Va en camino!",
+    "orderSent": "Tu pedido #{id} fue enviado a fábrica para su fabricación y llegará pronto.",
+    "trackingNumber": "Número de rastreo",
+    "notAvailable": "Aún no disponible",
+    "yourOrder": "Tu pedido",
+    "quantity": "Cantidad",
+    "price": "Precio",
+    "shippingAddress": "Dirección de envío",
+    "billingAddress": "Dirección de facturación",
+    "summary": "Resumen",
+    "coupon": "Cupón",
+    "total": "Total"
+  },
   "Auth": {
     "login": {
       "emailOrPhone": "Correo o Teléfono",
@@ -541,6 +847,12 @@
       },
       "success": "Sesión iniciada correctamente",
       "error": "Error al iniciar sesión"
+    },
+    "social": {
+      "or": "o",
+      "iAccept": "Acepto los",
+      "terms": "términos y condiciones",
+      "continueWithGoogle": "Continuar con Google"
     },
     "register": {
       "firstName": "Nombre",

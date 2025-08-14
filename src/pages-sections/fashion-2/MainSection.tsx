@@ -63,7 +63,7 @@ export default function MainSection({ isMobile }: { isMobile: boolean }) {
           variant="contained"
           href="/products"
           sx={{
-            width: "clamp(140px, 17vw, 500px)",
+            width: "auto",
             borderRadius: 1,
             color: "white",
             whiteSpace: "nowrap",

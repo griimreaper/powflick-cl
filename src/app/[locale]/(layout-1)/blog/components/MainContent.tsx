@@ -16,6 +16,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
+import { useTranslations } from "next-intl";
 
 const cardData = [
   {
@@ -150,12 +151,13 @@ function Author({ authors }: { authors: { name: string; avatar: string }[] }) {
 }
 
 export function Search() {
+  const t = useTranslations("Blog");
   return (
     <FormControl sx={{ width: { xs: "100%", md: "25ch" } }} variant="outlined">
       <OutlinedInput
         size="small"
         id="search"
-        placeholder="Search…"
+        placeholder={t("searchPlaceholder")}
         sx={{ flexGrow: 1 }}
         startAdornment={
           <InputAdornment position="start" sx={{ color: "text.primary" }}>
@@ -163,7 +165,7 @@ export function Search() {
           </InputAdornment>
         }
         inputProps={{
-          "aria-label": "search",
+          "aria-label": t("searchAriaLabel"),
         }}
       />
     </FormControl>
@@ -171,6 +173,7 @@ export function Search() {
 }
 
 export default function MainContent() {
+  const t = useTranslations("Blog");
   const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
     null
   );
@@ -191,11 +194,9 @@ export default function MainContent() {
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <div>
         <Typography variant="h1" gutterBottom>
-          Blog
+          {t("title")}
         </Typography>
-        <Typography>
-          Stay in the loop with the latest about our products
-        </Typography>
+        <Typography>{t("subtitle")}</Typography>
       </div>
       <Box
         sx={{
@@ -230,11 +231,11 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Chip onClick={handleClick} size="medium" label="All categories" />
+          <Chip onClick={handleClick} size="medium" label={t("allCategories")} />
           <Chip
             onClick={handleClick}
             size="medium"
-            label="Company"
+            label={t("company")}
             sx={{
               backgroundColor: "transparent",
               border: "none",
@@ -243,7 +244,7 @@ export default function MainContent() {
           <Chip
             onClick={handleClick}
             size="medium"
-            label="Product"
+            label={t("product")}
             sx={{
               backgroundColor: "transparent",
               border: "none",
@@ -252,7 +253,7 @@ export default function MainContent() {
           <Chip
             onClick={handleClick}
             size="medium"
-            label="Design"
+            label={t("design")}
             sx={{
               backgroundColor: "transparent",
               border: "none",
@@ -261,7 +262,7 @@ export default function MainContent() {
           <Chip
             onClick={handleClick}
             size="medium"
-            label="Engineering"
+            label={t("engineering")}
             sx={{
               backgroundColor: "transparent",
               border: "none",
@@ -278,7 +279,7 @@ export default function MainContent() {
           }}
         >
           <Search />
-          <IconButton size="small" aria-label="RSS feed">
+          <IconButton size="small" aria-label={t("rssAriaLabel")}>
             <RssFeedRoundedIcon />
           </IconButton>
         </Box>

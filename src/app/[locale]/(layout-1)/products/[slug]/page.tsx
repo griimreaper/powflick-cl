@@ -9,6 +9,7 @@ import { cache } from "react";
 import ProductSeo from "./ProductSeo";
 import ProductPasswordForm from "./passwordForm";
 import { setStructuredData } from "@/app/[locale]/StructuredData";
+import { getTranslations } from "next-intl/server";
 
 export const revalidate = 360;
 export const dynamic = "force-dynamic"; // Permite cargar productos nuevos dinámicamente
@@ -49,6 +50,7 @@ export async function generateMetadata({
   params: { slug: string; locale: string };
 }): Promise<Metadata | undefined> {
   try {
+    const t = await getTranslations({ locale: params.locale, namespace: "Product" });
     const detail = await fetchProductDetails(params.slug);
     if (!detail || detail.product.status === "draft" || !detail.product.images) return;
 
@@ -58,7 +60,7 @@ export async function generateMetadata({
       "@context": "https://schema.org/",
       "@type": "Product",
       "name": product?.title,
-      "description": product?.short_description || "Default Description",
+  "description": product?.short_description || t("meta.defaultDescription"),
       "image": product?.images.map((img: string) => img), // Array de imágenes
       "brand": {
         "@type": "Brand",
@@ -169,7 +171,7 @@ export async function generateMetadata({
 
     return {
       metadataBase: new URL(process.env.NEXTAUTH_URL as string),
-      title: `${product.title} - Pow Flick`,
+  title: t("meta.title", { name: product.title }),
       authors: [{ name: "devcodelab" }],
       alternates: {
         canonical: `https://www.powflick.com/${params.locale || 'en'}/products/${params.slug}`,
@@ -179,14 +181,14 @@ export async function generateMetadata({
           "x-default": `https://www.powflick.com/en/products/${params.slug}`,
         },
       },
-      description: product.short_description || "Default Description",
+  description: product.short_description || t("meta.defaultDescription"),
       keywords: [
         ...baseKeywords,
         ...dinamycKeywords,
       ],
       openGraph: {
         title: product.title,
-        description: product.short_description || "Default Description",
+  description: product.short_description || t("meta.defaultDescription"),
         url: `https://www.powflick.com/${params.locale || 'en'}/products/${params.slug}`,
         images: [
           {
@@ -199,8 +201,8 @@ export async function generateMetadata({
       },
       twitter: {
         card: "summary",
-        title: product.title,
-        description: product.short_description,
+  title: product.title,
+  description: product.short_description || t("meta.defaultDescription"),
         images: product.URL,
       },
       robots: isPrivate
