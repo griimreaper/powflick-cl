@@ -7,31 +7,30 @@ const Carousel = dynamic(() => import("components/carousel").then(m => m.Carouse
 import CarouselCard1 from "components/carousel-cards/carousel-card-1";
 import { DataStructure } from "models/types";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 export default function Section1({ data }: { data: DataStructure["navbar"] }) {
+  const t = useTranslations("Home");
   const carouselData = [
     {
-      title: "¡Descubre el poder del estilo!",
+      title: t("carouselSlide1Title"),
       buttonLik: "/producto-1",
-      buttonText: "Comprar ahora",
-      description:
-        "Luce increíble con nuestras zapatillas Nike negras. ¡No te las pierdas!",
+      buttonText: t("buyNow"),
+      description: t("carouselSlide1Description"),
       imageUrl: "assets/images/banners/new/banner-web1.png",
     },
     {
-      title: "¡Mantente conectado con estilo!",
+      title: t("carouselSlide2Title"),
       buttonLik: "/producto-2",
-      buttonText: "Comprar ahora",
-      description:
-        "El Apple Watch que combina tecnología y elegancia. ¡Consíguelo ya!",
+      buttonText: t("buyNow"),
+      description: t("carouselSlide2Description"),
       imageUrl: "assets/images/banners/new/banner-web2.png",
     },
     {
-      title: "¡Corre con confianza!",
+      title: t("carouselSlide3Title"),
       buttonLik: "/producto-3",
-      buttonText: "Comprar ahora",
-      description:
-        "Las zapatillas Nike rojas que te llevarán más lejos. ¡Compra ahora!",
+      buttonText: t("buyNow"),
+      description: t("carouselSlide3Description"),
       imageUrl: "assets/images/banners/new/banner-web3.png",
     },
   ];

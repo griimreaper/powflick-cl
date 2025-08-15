@@ -1,0 +1,968 @@
+{
+  "Products": {
+    "meta": {
+      "title": "Búsqueda de Productos - Pow Flick",
+      "description": "Pow Flick es una tienda online especializada en ropa deportiva de alta calidad. Encuentra camisetas personalizadas, uniformes deportivos y accesorios para fútbol, baloncesto, béisbol, hockey, running y más. Diseñado para atletas y equipos que buscan rendimiento y estilo."
+    },
+    "breadcrumbs": {
+      "soccer": "Camisetas de fútbol personalizadas",
+      "basketball": "Camisetas de baloncesto personalizadas"
+    }
+  },
+  "Product": {
+    "meta": {
+      "title": "{name} - Pow Flick",
+      "defaultDescription": "Ropa deportiva personalizada y camisetas para equipos de alta calidad por Pow Flick."
+    },
+    "Password": {
+      "title": "Producto Bloqueado",
+      "subtitle": "Ingresa la contraseña para ver este producto.",
+      "fields": {
+        "password": "Contraseña"
+      },
+      "actions": {
+        "submit": "Enviar"
+      },
+      "errors": {
+        "required": "La contraseña es obligatoria"
+      }
+    }
+  },
+  "ProductSearch": {
+    "breadcrumbs": {
+      "home": "Inicio",
+      "products": "Productos",
+      "search": "Búsqueda: {query}"
+    },
+    "searchingFor": "Buscando \"{query}\"",
+    "resultsFound": "{count, number} resultados encontrados",
+    "sort": {
+      "by": "Ordenar por:",
+      "placeholder": "Ordenar por",
+      "options": {
+        "relevance": "Relevancia",
+        "date": "Fecha",
+        "asc": "Precio: menor a mayor",
+        "desc": "Precio: mayor a menor"
+      }
+    },
+    "view": "Vista:"
+  },
+  "ProductFilters": {
+    "activeFilters": "Filtros activos",
+    "priceRange": "Rango de precios",
+    "priceMinPlaceholder": "0",
+    "priceMaxPlaceholder": "300",
+    "others": {
+      "discount": "En oferta",
+      "featured": "Destacados"
+    },
+    "colors": "Colores",
+    "tags": "Tags",
+    "reset": "Restablecer filtros"
+  },
+  "ProductTabs": {
+    "tabs": {
+      "description": "Descripción",
+      "pricing": "Información de precios",
+      "sizeTable": "Tabla de tallas",
+      "shippingWorldwide": "Envío mundial",
+      "reviews": "Reseñas"
+    },
+    "description": {
+      "intro1": "es una marca premium de ropa deportiva especializada en uniformes personalizados para fútbol, baloncesto y más.",
+      "intro2": "Combinamos estética audaz, materiales de nivel élite y producción confiable para ayudar a equipos de todo el mundo a destacar y rendir al máximo.",
+      "bullet1": {
+        "title": "Tejidos de alto rendimiento",
+        "body": "Nuestras prendas están hechas con tejidos ligeros, transpirables y de secado rápido, diseñados para velocidad, comodidad y durabilidad – probados por atletas semiprofesionales."
+      },
+      "bullet2": {
+        "title": "Suministro directo de fábrica",
+        "body": "Con control directo sobre nuestra fabricación en Asia, ofrecemos tiempos de entrega rápidos, calidad constante y precios competitivos sin intermediarios."
+      },
+      "bullet3": {
+        "title": "Soporte de diseño totalmente personalizado",
+        "body": "Desde bocetos hasta mockups y revisiones, nuestro equipo creativo trabaja junto al cliente para dar vida a su visión — sin tarifas extra ni límites a la creatividad. Ya seas un club semiprofesional, un equipo escolar o una marca en crecimiento, POW FLICK te da las herramientas para competir con confianza."
+      },
+      "techniques": {
+        "heatPress": "Técnica de termotransferencia",
+        "stitchEmbroidery": "Bordado a puntada"
+      }
+    },
+    "size": {
+      "englishTitle": "Tabla de tallas (Inglés)",
+      "spanishTitle": "Tabla de tallas (Español)"
+    },
+    "shipping": {
+      "heading": "Envío exprés mundial. Confiable. A tiempo.",
+      "lead": "En <brand/>, enviamos ropa deportiva personalizada a todo el mundo. Pidas desde EE. UU., Latinoamérica, Europa o más allá — te cubrimos.",
+      "productionTitle": "Tiempo de producción y procesamiento",
+      "productionBody": "Todos los uniformes son bajo pedido. Nuestro tiempo estándar de producción es de 3–4 semanas, según cantidad y complejidad.",
+      "intlDeliveryTitle": "Entrega exprés internacional",
+      "intlDeliveryBody": "Enviamos con socios logísticos de confianza (FedEx, DHL, etc.), garantizando entregas seguras y puntuales.",
+      "estimatedTitle": "Tiempos estimados de envío",
+      "estimated": {
+        "naeu": "Norteamérica y Europa: 5–10 días hábiles",
+        "latam": "Latinoamérica: 7–12 días hábiles",
+        "asia": "Asia y Oceanía: 3–7 días hábiles"
+      },
+      "trackingTitle": "Rastreo",
+      "trackingBody": "Una vez enviado tu pedido, recibirás número de rastreo y actualizaciones en tiempo real. ¿Necesitas soporte? Escribe a support@powflick.com."
+    }
+  },
+  "ProductRelated": {
+    "title": "Productos relacionados"
+  },
+  "Pricing": {
+    "title": "INFORMACIÓN DE PRECIOS:",
+    "unitPrice": "Precio unitario por {quantity} uds:",
+    "priceIncludes": "Precio incluye envío, no incluye personalización",
+    "flexibleHeading": "Precios flexibles. Tarifas para equipos.",
+    "flexibleBody": "En POW FLICK ofrecemos precios competitivos para uniformes personalizados, pensados para equipos de todos los tamaños y presupuestos.",
+    "transparentHeading": "Rango de precios transparente",
+    "transparentBody": "Nuestros precios varían según el tipo de producto, nivel de personalización y cantidad. Ajustamos la oferta a tus necesidades.",
+    "bulkHeading": "Descuentos por volumen",
+    "bulkBody": "Cuanto más pidas, mejor la tarifa. Ofrecemos precios escalonados para reducir el costo por unidad en pedidos grandes — ideal para clubes, escuelas o revendedores."
+  },
+  "ProductIntro": {
+    "alerts": {
+      "errorTitle": "¡Error!",
+      "mustBeLogged": "Debes iniciar sesión.",
+      "successTitle": "¡Éxito!",
+      "addedToBag": "Producto añadido al carrito"
+    },
+    "noVideoSupport": "Tu navegador no soporta la etiqueta de video.",
+    "categories": "Categorías",
+    "collections": "Colecciones",
+    "tags": "Tags",
+    "rated": "Valoración",
+    "stock": "Stock disponible",
+    "actions": {
+      "customize": "Personalizar",
+      "addToCart": "Añadir al carrito"
+    },
+    "guide": {
+      "heading": "¿No sabes por dónde empezar?",
+      "text": "Revisa nuestra",
+      "link": "Guía de personalización"
+    },
+    "variant": {
+      "top": "Top",
+      "uniform": "Uniforme (Camiseta + Pantalón)"
+    },
+    "secureCheckout": "Pago garantizado, seguro y protegido"
+  },
+  "ProductCustomize": {
+    "sizeGuide": "Guía de tallas",
+    "setForAll": "Aplicar a todos",
+    "socksAvailable": "Medias disponibles a partir de {count} uniformes",
+    "sections": {
+      "size": "Talla",
+      "materials": "Materiales",
+      "neck": "Cuello",
+      "shorts": "Shorts",
+      "pants": "Pantalón",
+      "socks": "Medias",
+      "technique": "Técnica"
+    },
+    "genders": {
+      "men": "HOMBRES",
+      "kids": "NIÑOS",
+      "women": "MUJERES"
+    },
+    "specialTech": {
+      "title": "Las Técnicas Especiales requieren un mínimo de 50 piezas por técnica.",
+      "example": "Ejemplo: 25 con bordado en la camiseta + 25 con bordado en el short = 50 piezas."
+    },
+    "techniqueNames": {
+      "defaultSublimated": "Sublimado por defecto",
+      "heatPress": "Técnica de termotransferencia",
+      "stitchEmbroidery": "Bordado a puntada",
+      "embroideryLogo": "Logo bordado"
+    },
+    "fabric": {
+      "common": {
+        "weight": "Peso",
+        "blend": "Composición",
+        "stretch": "Elasticidad",
+        "finish": "Acabado"
+      },
+      "litePlay": {
+        "title": "Tejido LitePlay™",
+        "subtitle": "Confort ultraligero",
+        "dailyTitle": "Rendimiento diario",
+        "dailyBody": "Tejido ligerísimo preparado para entrenos y día de partido.",
+        "softTitle": "Tacto suave interlock",
+        "softBody": "Superficie lisa que reduce roces para llevarlo todo el día.",
+        "quickDryTitle": "Secado rápido",
+        "quickDryBody": "Evacúa el sudor para mantenerte fresco y concentrado.",
+        "values": {
+          "weight": "150 g/m² (ultraligero)",
+          "blend": "100 % poliéster técnico",
+          "stretch": "Elasticidad bidireccional",
+          "finish": "Interlock suave con control de humedad"
+        }
+      },
+      "aeroDry": {
+        "title": "Tejido AeroDry™",
+        "subtitle": "Malla hexagonal para máxima frescura",
+        "airflowTitle": "Flujo de aire Hexa-Vent",
+        "airflowBody": "Sus micro-hexágonos elevan la ventilación hasta un 20 % frente a la malla clásica.",
+        "drycoreTitle": "Absorción DryCore",
+        "drycoreBody": "Canales hidrofílicos alejan el sudor y lo dispersan para una rápida evaporación.",
+        "toughnessTitle": "Ligereza resistente",
+        "toughnessBody": "Punto ultraligero de 145 g/m² que resiste enganches y rozaduras.",
+        "values": {
+          "weight": "145 g/m² (ultraligero)",
+          "blend": "100 % poliéster técnico",
+          "stretch": "Elasticidad bidireccional",
+          "finish": "Micro-ventilación resistente a enganches"
+        }
+      },
+      "proMesh": {
+        "title": "Tejido ProMesh™",
+        "subtitle": "Diseñado para alto rendimiento",
+        "knitTitle": "Malla de ingeniería",
+        "knitBody": "Celdas tipo panal aumentan la ventilación y elevan el calor del cuerpo.",
+        "flexTitle": "Elasticidad ProStretch 2-way",
+        "flexBody": "Se mueve contigo en cada sprint, entrada y barrida, sin restricciones.",
+        "durabilityTitle": "Durabilidad de competición",
+        "durabilityBody": "Filamentos anti-tirón que soportan el uso intenso y repetidos lavados.",
+        "values": {
+          "weight": "150 g/m² (ultraligero)",
+          "blend": "100 % poliéster técnico",
+          "stretch": "Elasticidad bidireccional",
+          "finish": "Interlock suave con control de humedad"
+        }
+      }
+    },
+    "contactUs": "Contáctanos"
+  },
+  "Home": {
+    "title": "Camisetas deportivas personalizadas | Pow Flick",
+    "description": "Compra camisetas deportivas personalizadas y equipación para equipos de fútbol, baloncesto, béisbol y más. Diseña tus uniformes con Pow Flick — rápido, premium y asequible.",
+    "overlayAlt": "Elemento decorativo",
+    "testTranslation": "Esta es una traducción de prueba",
+    "structuredDescription": "Compra camisetas deportivas personalizadas para fútbol, baloncesto, béisbol y más. Equipación de alta calidad con entrega rápida y personalización online fácil.",
+    "bannerAlt": "Banner principal",
+    "shopNow": "Comprar ahora",
+    "allSports": "Todos los deportes",
+    "categories": "CATEGORÍAS",
+    "bestSellingProducts": "Productos Más Vendidos",
+    "discountProducts": "Productos con Descuento",
+    "saleProducts": "Productos en Oferta",
+    "latestProducts": "Productos Nuevos",
+    "bestWeekProducts": "Lo Mejor de la Semana",
+    "popularProducts": "Productos Populares",
+    "designYourGameTitle": "Diseña Tu Juego",
+    "designYourGameSubtitle": "Encuentra tu combinación perfecta: íconos modernos, clásicos retro y estilos hechos para ella.",
+    "topPicks": "Top Picks",
+    "gotDesignIdea": "¿TIENES UNA IDEA DE DISEÑO?",
+    "getItForFree": "OBTÉNLO GRATIS!",
+    "seeUniformComeToLife": "¡Haz que Tu Uniforme Cobre Vida!",
+    "claimYourFreeDesign": "Solicita Tu Diseño Gratis",
+    "prepare": "PREPARA",
+    "yourSeason": "TU TEMPORADA",
+    "withTheBest": "CON LO MEJOR",
+    "innovationAI": "Innovación con Inteligencia Artificial",
+    "powered": "IMPULSADO",
+    "customization": "PERSONALIZACIÓN",
+    "customizeNow": "Personaliza Ahora",
+    "forMen": "Para Hombres",
+    "forWomen": "Para Mujeres",
+    "startingAt": "Desde $29",
+    "sale": "Oferta",
+    "blackFriday": "Black Friday",
+    "upTo20Off": "Hasta 20% Off",
+    "twentyFiveOff": "25% Off",
+    "carouselSlide1Title": "¡Descubre el poder del estilo!",
+    "carouselSlide1Description": "Luce increíble con nuestras zapatillas Nike negras. ¡No te las pierdas!",
+    "carouselSlide2Title": "¡Mantente conectado con estilo!",
+    "carouselSlide2Description": "El Apple Watch que combina tecnología y elegancia. ¡Consíguelo ya!",
+    "carouselSlide3Title": "¡Corre con confianza!",
+    "carouselSlide3Description": "Las zapatillas Nike rojas que te llevarán más lejos. ¡Compra ahora!",
+    "buyNow": "Comprar ahora",
+    "categorySoccer": "Fútbol",
+    "categoryBasketball": "Baloncesto",
+    "categoryRunning": "Running",
+    "categoryGamer": "Gamer",
+    "categoryBaseball": "Béisbol",
+    "categoryHockey": "Hockey",
+    "mobileImage1Alt": "Imagen móvil promesa de marca 1",
+    "mobileImage2Alt": "Imagen móvil promesa de marca 2",
+    "desktopImageAlt": "Imagen promesas de marca escritorio",
+    "promoSportsBannerAlt": "Banner promocional deportes"
+  },
+  "HomeReviews": {
+    "title": "LA GENTE NOS AMA",
+    "subtitle": "Reseñas de clientes"
+  },
+  "About": {
+    "unlockYourPotential": "Desbloquea tu potencial con",
+    "customGear": "EQUIPO PERSONALIZADO",
+    "aboutUs": "Sobre Nosotros",
+    "introMobile": "En PowFlick nos apasiona diseñar y crear ropa deportiva que combine tecnología, estilo y rendimiento. Nuestra misión es empoderar a atletas y aficionados ofreciendo la libertad de expresar su identidad mediante prendas totalmente personalizadas.",
+    "introDesktopLine1": "En PowFlick nos apasiona diseñar y crear ropa deportiva",
+    "introDesktopLine2": "que combine tecnología, estilo y rendimiento. Nuestra misión es",
+    "introDesktopLine3": "empoderar a atletas y aficionados ofreciendo la libertad de",
+    "introDesktopLine4": "expresar su identidad mediante prendas totalmente personalizadas.",
+    "whatMakesUsUnique": "Qué Nos Hace Únicos",
+    "advancedFabricTitle": "Tecnología textil avanzada:",
+    "advancedFabricText": "Usamos materiales especializados que maximizan comodidad, durabilidad y rendimiento, adaptados a las exigencias de cada deporte.",
+    "totalCustomizationTitle": "Personalización total:",
+    "totalCustomizationText": "Toma el control completo de tu diseño: colores, patrones, logos y estilos específicos.",
+    "aiInnovationTitle": "Innovación con Inteligencia Artificial:",
+    "aiInnovationText": "Nuestra herramienta de personalización con IA simplifica y revoluciona el proceso, permitiéndote crear prendas únicas en minutos.",
+    "creativeFreedomTitle": "Compromiso con la libertad creativa:",
+    "creativeFreedomText": "Creemos que tu ropa debe reflejar quién eres, ofreciendo posibilidades infinitas para dar vida a tus ideas.",
+    "ourPromise": "NUESTRA PROMESA",
+    "promiseText": "Cada prenda PowFlick es un testimonio de calidad, innovación y detalle, diseñada para acompañarte en cada paso de tu camino deportivo.",
+    "promiseAlt": "Promesa",
+    "bannerAlt": "Banner sobre nosotros"
+  },
+  "YourDesign": {
+    "cta": "Comienza Tu Diseño",
+    "heroAltDesktop": "Diseño gratis hero escritorio",
+    "heroAltMobile": "Diseño gratis hero móvil",
+    "bannerAltDesktop": "Banner secundario diseño gratis escritorio",
+    "bannerAltMobile": "Banner secundario diseño gratis móvil",
+    "stepsAltDesktop": "Proceso de diseño escritorio",
+    "stepsAltMobile": "Proceso de diseño móvil"
+  },
+  "YourDesignForm": {
+    "title": "Completa el formulario de solicitud",
+    "needBy": "¿Para cuándo necesitas estos productos?",
+    "teamName": "Nombre del equipo",
+    "selectSport": "Selecciona un deporte",
+    "selectPlaceholder": "Por favor selecciona",
+    "sports": {
+      "Soccer": "Fútbol",
+      "Hockey": "Hockey",
+      "Baseball": "Béisbol",
+      "Running": "Running",
+      "Basketball": "Baloncesto",
+      "Gaming": "Gaming"
+    },
+    "primaryColors": "Colores primarios",
+    "primaryColorsError": "Por favor selecciona al menos un color primario.",
+    "primaryColorsHelper": "(Selecciona hasta 3 colores primarios. Al menos 1 es obligatorio.)",
+    "secondaryColors": "Colores secundarios",
+    "secondaryColorsHelper": "(Opcional) Selecciona hasta 3 colores secundarios",
+    "namesNumbersQuestion": "¿Te gustaría añadir nombres y números personalizados a tu diseño?",
+    "optional": "(opcional)",
+    "includeNames": "Incluir nombres",
+    "includeNumbers": "Incluir números",
+    "description": "Descripción",
+    "descriptionHelper": "Describe con más detalle lo que te gustaría en tu diseño.",
+    "descriptionPlaceholder": "Buscamos un estilo patriótico con acentos verdes y blancos. Que sea simple y sutil—nada muy llamativo. No hay diseños previos, así que siéntete libre de comenzar desde cero.",
+    "contactInfo": "Información de contacto",
+    "fullName": "Tu nombre completo",
+    "email": "Tu correo electrónico",
+    "organization": "Nombre de la organización",
+    "uploadLogosTitle": "Sube tus logos",
+    "uploadLogosOptional": "(Opcional)",
+    "uploadLogosHelper": "Tipos de archivo soportados: .pdf, .png, .ai, .eps, .otf, .jpeg",
+    "uploadLogosButton": "Subir logos",
+    "otherImagesTitle": "Otras imágenes",
+    "otherImagesHelper": "Pueden ser uniformes anteriores o elementos que quieras incluir en tu nuevo diseño.",
+    "otherImagesButton": "Subir imágenes",
+    "submit": "OBTÉN TU DISEÑO GRATIS",
+    "errorCreate": "Error al crear el diseño",
+    "errorCreateDetail": "Por favor inténtalo más tarde.",
+    "successMessage": "Tu solicitud fue enviada"
+  },
+  "Contact": {
+    "heading": "Escríbenos",
+    "subheading": "Usa el formulario para contactar al equipo de ventas",
+    "labels": {
+      "name": "Tu Nombre *",
+      "email": "Tu Correo *",
+      "title": "Título *",
+      "message": "Tu Mensaje *",
+      "category": "Categoría"
+    },
+    "errors": {
+      "nameRequired": "El nombre es obligatorio",
+      "emailRequired": "El correo es obligatorio",
+      "titleRequired": "El título es obligatorio",
+      "messageRequired": "El mensaje es obligatorio"
+    },
+    "send": "Enviar mensaje",
+    "brandName": "Nombre de la Marca:",
+    "physicalAddress": "Dirección Física:",
+    "primaryEmail": "Correo Principal:",
+    "contactPhone": "Teléfono de Contacto:",
+    "openHours": "Horario:",
+    "hoursValue": "Lun - Vie: 7:30am - 8:00pm PST Sábado: 8:00am - 6:00pm PST Domingo: 9:00am - 5:00pm PST"
+  },
+  "Shipping": {
+    "title": "Tiempo y Envío",
+    "bannerIntro": "En Pow Flick, nos esforzamos por entregar tus uniformes personalizados de manera rápida y eficiente.",
+    "bannerLead": "Aquí encontrarás todo lo que necesitas saber sobre nuestros tiempos de producción y envío.",
+    "fastReliable": "Entrega Rápida y Confiable para Tus Uniformes Personalizados",
+    "fastReliableBody": "En Pow Flick sabemos lo importante que es recibir tus uniformes personalizados a tiempo. Por eso hemos optimizado nuestros procesos de producción y logística para que tus pedidos lleguen lo antes posible. A continuación encontrarás toda la información sobre tiempos de producción, opciones de envío y cómo rastrear tu pedido de principio a fin.",
+    "productionTimeTitle": "Tiempo de Producción",
+    "productionTimeBody": "Todos nuestros productos se fabrican bajo pedido, garantizando máxima calidad y personalización. El proceso de producción normalmente toma 30 días, dependiendo de la complejidad de tu pedido y la demanda estacional.",
+    "shippingTimesTitle": "Tiempos de Envío",
+    "shippingTimesBody": "Una vez finalizada la producción, tu pedido será enviado según los siguientes tiempos estimados de entrega:",
+    "shippingTimesList1": "EE. UU., Unión Europea, México: 10–20 días hábiles",
+    "shippingTimesList2": "Otros destinos: Los tiempos pueden variar según el país",
+    "steps": {
+      "designCreation": "Creación del Diseño",
+      "designApproval": "Aprobación del Diseño",
+      "fabricSample": "Confirmación de Muestra de Tela",
+      "productionQueue": "Cola de Producción",
+      "printing": "Impresión",
+      "tailoring": "Confección",
+      "shippingTracking": "Envío y Rastreo"
+    },
+    "expressShippingTitle": "Envío Exprés",
+    "expressShippingBody": "¿Necesitas tu pedido más rápido? Ofrecemos una opción de Envío Exprés por un costo adicional de $20 USD, reduciendo el tiempo de entrega a aproximadamente 15 días. Este servicio está disponible en el checkout y utiliza transportistas de confianza como DHL y FedEx.",
+    "trackingTitle": "Rastreo de tu Pedido",
+    "trackingBody": "Una vez que tu pedido sea enviado, recibirás un número de rastreo por correo electrónico para que puedas monitorear la entrega en tiempo real.",
+    "customsTitle": "Derechos e Impuestos Aduaneros",
+    "customsBody": "En envíos internacionales, pueden aplicarse derechos e impuestos aduaneros según las regulaciones de tu país. Estos cargos son responsabilidad del cliente y las autoridades aduaneras te contactarán si es necesario.",
+    "questionsTitle": "¿Preguntas?",
+    "questionsBody": "Si tienes alguna pregunta sobre tu pedido o los tiempos de entrega, no dudes en escribirnos a support@powflick.com."
+  },
+  "ReturnRefund": {
+    "title": "Política de Devoluciones y Reembolsos",
+    "intro1": "En Powflick entendemos lo importante que es para ti y tu equipo contar con un uniforme que realmente los represente. Cada pedido es único y así lo tratamos. Nos tomamos muy en serio la calidad, desde la selección de materiales hasta la impresión final, incluyendo un control de calidad manual pieza por pieza. Para asegurar que todo sea perfecto, te mantenemos informado en cada etapa y te enviamos una muestra impresa de la tela para que confirmes colores y diseño antes de la producción final. Todo esto respaldado por más de 10 años de experiencia.",
+    "intro2": "Sabemos que en ocasiones, aunque muy raramente, algo puede no salir como se esperaba. Aunque trabajamos con productos personalizados, si existe un problema genuino con tu pedido, estamos aquí para ayudarte. Lee nuestra política a continuación para saber cómo proceder.",
+    "cancellationsTitle": "1. Cancelaciones:",
+    "cancellationsIntro": "Entendemos que pueden surgir imprevistos. Esta es nuestra política de cancelación:",
+    "cancellationFree": "Cancelación Gratis: Puedes cancelar tu pedido sin costo dentro de las primeras 2 horas.",
+    "cancellationFee": "Cancelación con Cargo: Si solicitas la cancelación después de las 2 primeras horas pero antes de entrar en producción, se aplica un 10% del valor total por costos administrativos.",
+    "cancellationNot": "No Cancelable: Una vez que el pedido entra en producción ya no es posible cancelarlo debido a su naturaleza personalizada.",
+    "cancellationHowTitle": "Cómo Solicitar la Cancelación:",
+    "cancellationHowBody": "Escribe a support@powflick.com indicando número de pedido y motivo.",
+    "returnsTitle": "2. Devoluciones (Productos Personalizados):",
+    "returnsGeneralTitle": "2.1 Política General:",
+    "returnsGeneralBody": "Al fabricar cada producto de forma personalizada siguiendo tus diseños e instrucciones, no aceptamos devoluciones salvo en los casos detallados.",
+    "returnsConditionsTitle": "Condiciones para una Devolución:",
+    "returnsConditionsIntro": "Sólo se considerarán devoluciones en los siguientes casos:",
+    "returnsCond1": "Defecto Grave de Fabricación: Si impide el uso normal del producto.",
+    "returnsCond2": "Error Grave en la Personalización: Si existe una diferencia sustancial respecto al diseño/instrucciones aprobados.",
+    "exclusionsTitle": "2.2 Exclusiones:",
+    "exclusionsIntro": "No se aceptarán devoluciones por:",
+    "exclusion1": "Errores o variaciones menores que no afecten significativamente apariencia o funcionalidad.",
+    "exclusion2": "Disconformidad con el diseño si la muestra fue aprobada.",
+    "exclusion3": "Daños por mal uso, cuidado inadecuado o desgaste normal.",
+    "exclusion4": "Cambio de opinión.",
+    "claimPeriodTitle": "2.3 Plazo para Reclamar:",
+    "claimPeriodBody": "Dispones de 7 días hábiles desde la recepción para presentar un reclamo.",
+    "claimHowTitle": "2.4 Cómo Presentar un Reclamo:",
+    "claimHowBody": "Contacta a support@powflick.com indicando número de pedido, descripción y fotos claras del defecto o error.",
+    "claimEvalTitle": "2.5 Evaluación del Reclamo:",
+    "claimEvalBody": "Nuestro equipo revisará tu reclamo y evidencia. Podemos rechazarlo si falta evidencia o no cumple condiciones.",
+    "claimResolutionTitle": "2.6 Resolución de Reclamos Aceptados:",
+    "claimResolutionIntro": "Si el reclamo es válido:",
+    "claimRes1": "Te daremos instrucciones para proceder.",
+    "claimRes2": "Powflick cubre los gastos de envío de la devolución.",
+    "claimRes3": "Modificación o Reenvío: Podemos modificar o reenviar el producto rápidamente.",
+    "claimRes4": "Reposición: Si no es posible modificar, se envía un reemplazo sin costo.",
+    "claimRes5": "Reembolso: Si nada de lo anterior es posible, se hará un reembolso total o parcial por el método original (procesa en 5 días hábiles tras la inspección; puede reflejarse en 7–15 días).",
+    "unavailableTitle": "3. Productos No Disponibles:",
+    "unavailableBody": "Si un producto no está disponible o no puede personalizarse, lo notificaremos y reembolsaremos el importe.",
+    "pricingTitle": "4. Errores de Precio:",
+    "pricingBody": "Si existe un error de precio, te contactaremos para reconfirmar o cancelar. Si no te localizamos, se cancela y reembolsa.",
+    "contactTitle": "5. Contacto:",
+    "contactIntro": "Para dudas o asistencia sobre esta política:",
+    "contactEmail": "Correo: support@powflick.com",
+    "contactPhone": "Teléfono: +86 15920110846",
+    "contactResponse": "Tiempo de Respuesta: Respondemos dentro de 24h (Lun–Vie).",
+    "changesTitle": "6. Cambios en esta Política:",
+    "changesBody": "Podemos modificar esta Política de Devoluciones y Reembolsos. El uso continuado implica aceptación.",
+    "lastUpdate": "Última Actualización",
+    "lastUpdateDate": "25/02/2025"
+  },
+  "Terms": {
+    "title": "Términos y Condiciones",
+    "introShort": "Lee estos Términos y Condiciones; regulan el uso de este sitio y los productos/servicios de Powflick.",
+    "lastUpdate": "Última Actualización",
+    "lastUpdateDate": "25/02/2022",
+    "section1": {
+      "title": "1. DISPOSICIONES GENERALES",
+      "content": "<h5>1.1 Acceso y Aceptación</h5><p>Todo usuario que acceda al sitio web de Powflick (www.powflick.com) acepta expresamente estas Condiciones Generales y la Política de Protección de Datos vigente al momento de la navegación y realización de pedidos.</p><h5>1.2 Ámbito de Aplicación</h5><p>Estas Condiciones Generales regulan la venta de bienes y la prestación de servicios llevadas a cabo exclusivamente a través del sitio web de Powflick, de conformidad con las disposiciones aplicables sobre protección del consumidor y comercio electrónico.</p><h5>1.3 Información Legal de Powflick</h5><p><strong>Nombre de la Marca:</strong> Powflick <strong>Operado por:</strong> Squidgy Brand Management (Foshan) Co., Ltd. <strong>Dirección Física:</strong> B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China <strong>Código Postal:</strong> 528000 <strong>Número de Identificación Fiscal:</strong> 91440605MAE5F5JC1T <strong>Email Principal:</strong> powflick@gmail.com <strong>Teléfono de Contacto:</strong> +86 15920110846</p><h5>1.4 Lectura Obligatoria</h5><p>Los usuarios están obligados a leer atentamente estas Condiciones Generales antes de acceder a los productos y servicios ofrecidos en el sitio web. Al realizar cualquier compra se considerará que el usuario ha aceptado estas Condiciones Generales de forma plena y sin reserva alguna.</p><h5>1.5 Modificaciones</h5><p>Powflick se reserva el derecho de modificar unilateralmente estas Condiciones Generales sin previo aviso. Se aconseja a los usuarios descargar o imprimir una copia del formulario de compra y de estas Condiciones Generales para su archivo.</p>"
+    },
+    "section2": {
+      "title": "2. PROCESO DE PEDIDO Y PERSONALIZACIÓN DEL PRODUCTO",
+      "content": "<h5>2.1 Selección del Producto</h5><p>El cliente debe elegir el tipo de uniforme que desea personalizar.</p><h5>2.2 Personalización del Diseño</h5><p><strong>Tallas y Género:</strong> El cliente selecciona las tallas (p. ej., XS a 3XL) y géneros (hombre, mujer, niños).</p><p><strong>Elementos Personalizables - Logos:</strong> El cliente debe subir sus propios logos en formato vectorial (SVG, AI, EPS, PDF). Si no se dispone de un archivo vectorial, el logo debe enviarse en la mayor resolución posible (300 dpi). El cliente es responsable de asegurar que las imágenes sean de buena calidad, con un tamaño mínimo de 400×400 px y un peso mínimo de archivo de 300 KB. Los logos también pueden enviarse por correo electrónico a support@powflick.com. Powflick no garantiza una calidad de impresión óptima si se proporcionan imágenes de baja resolución.</p><p><strong>Textos y Números:</strong> El cliente puede añadir nombres, lemas o números en la parte frontal y posterior del uniforme.</p><p><strong>Materiales:</strong> El cliente seleccionará entre los mockups de materiales predefinidos disponibles para cada tipo de deporte. Powflick ofrece un material predeterminado sin coste adicional, más otras dos opciones a +$2.99 cada una.</p><p><strong>Costo Adicional:</strong> Cada variable de personalización (logos, texto, números, selección de material) tiene un coste adicional asociado: +$4.99 por logo +$3.99 por texto o número adicional +$2.99 si se elige un material diferente al predeterminado.</p><h5>2.3 Vista Previa</h5><p>El cliente puede acceder a una vista previa del diseño bajo la opción “list” que se encuentra debajo de cada personalización, haciendo clic en el botón “View”. Se generará un archivo PDF que resume todas las personalizaciones.</p><h5>2.4 Añadir al Carrito</h5><p>Una vez satisfecho con el diseño, el cliente añade el uniforme a su carrito de compra.</p><h5>2.5 Resumen y Confirmación</h5><p>El cliente puede ver los costes de cada personalización a lo largo del proceso. Antes de confirmar el pedido, el cliente revisa el resumen. Tras la compra, recibe archivos PDF con los detalles de la personalización vía email.</p><h5>2.6 Cancelación del Pedido</h5><p>El cliente dispone de una ventana de 2 horas tras realizar el pedido para cancelarlo sin ningún cargo. Si la cancelación se solicita después de 2 horas, se retendrá el 10% del valor total del pedido por costes de gestión. El cliente debe contactar a support@powflick.com para solicitar la cancelación.</p><h5>2.7 Disponibilidad del Producto</h5><p>Si un producto deja de estar disponible o no puede personalizarse, Powflick informará al cliente y procederá al reembolso del importe pagado.</p>"
+    },
+    "section3": {
+      "title": "3. PRECIOS, PAGOS Y TRANSACCIONES",
+      "content": "<h5>3.1 Precios de Productos y Servicios</h5><p>Los precios de los productos y servicios serán los indicados en el sitio web, salvo en casos de error evidente. En caso de error en el precio, Powflick notificará al cliente lo antes posible, permitiéndole confirmar el pedido al precio correcto o cancelarlo. Powflick no está obligada a suministrar un producto a un precio inferior si fue listado incorrectamente. Los precios mostrados no incluyen los impuestos correspondientes al país del cliente, los cuales se calculan en función del lugar de envío (particularmente en los Estados Unidos).</p><h5>3.2 Métodos de Pago</h5><p>Powflick acepta pagos con tarjeta de crédito (Visa, Mastercard, Maestro, American Express) y a través de pasarelas de pago como Stripe.</p><h5>3.3 Descuentos y Promociones</h5><p>Ocasionalmente, Powflick puede ofrecer descuentos promocionales mediante códigos que el cliente puede aplicar en el proceso de pago.</p><h5>3.4 Costos Adicionales</h5><p>Powflick no aplica cargos adicionales de tramitación o personalización más allá de los indicados por el cliente al seleccionar cada variable del uniforme.</p><h5>3.5 Seguridad de las Transacciones</h5><p>Todas las transacciones en el sitio web de Powflick están cifradas para proteger los datos sensibles del cliente. Powflick trabaja con pasarelas de pago reconocidas para garantizar la protección de la información financiera. Powflick no almacena información de transacciones de sus clientes.</p>"
+    },
+    "section4": {
+      "title": "4. DERECHOS DE MARCA, IMAGEN Y PROMOCIÓN",
+      "content": "<h5>4.1 Colocación de Logos y Etiquetas</h5><p>Powflick se reserva el derecho de incluir su propio logo en los productos, tal como se muestra en los diseños de muestra. El cliente acepta que el logo de Powflick se posicione de forma que no interfiera con los logos del cliente y respete la estética general del diseño.</p><h5>4.2 Uso de Productos e Información</h5><p>Powflick se reserva el derecho de usar cualquier comunicación del cliente (incluyendo imágenes y comentarios) con fines de marketing y promoción. Esto incluye mostrar productos en el sitio web, en catálogos y en redes sociales. Al usar estos servicios, el cliente acepta que Powflick pueda editar, copiar, publicar, distribuir y usar el contenido compartido sin obligación de confidencialidad, compensación o respuesta. Powflick no es responsable de ningún contenido subido o compartido por el cliente o por terceros.</p><h5>4.3 Clientes como Referencias</h5><p>Powflick puede usar a sus clientes como referencias, mencionando sus nombres, logos o imágenes con fines publicitarios o promocionales. El cliente puede limitar o prohibir el uso de su información notificándolo por escrito a Powflick.</p>"
+    },
+    "section5": {
+      "title": "5. USO ACEPTABLE DEL CONTENIDO Y PROPIEDAD INTELECTUAL",
+      "content": "<h5>5.1 Responsabilidad del Cliente sobre el Contenido</h5><p>El cliente declara y garantiza que es el legítimo propietario o que posee los derechos de uso necesarios sobre cualquier imagen, texto, logo, marca u otro elemento que proporcione a Powflick para la personalización de productos. Al subir o enviar contenido, el cliente confirma el cumplimiento de las leyes aplicables de propiedad intelectual y se compromete a no infringir los derechos de terceros.</p><h5>5.2 Contenido Prohibido y Revisión</h5><p>Powflick se reserva el derecho de rechazar, revisar o eliminar cualquier pedido que contenga contenido que, a su exclusivo criterio, se considere una violación de derechos de propiedad intelectual, derechos fundamentales o cualquier contenido ofensivo, ilegal, etc.</p><h5>5.3 Uso de Marcas</h5><p>Si el cliente utiliza una marca registrada, declara que cuenta con la autorización expresa del legítimo titular. El cliente asume plena responsabilidad y exonera expresamente a Powflick de cualquier reclamación o disputa derivada del uso no autorizado de dicha marca.</p><h5>5.4 Exención de Responsabilidad</h5><p>Powflick no asume responsabilidad por consecuencias legales, económicas o de cualquier otra índole derivadas del uso no autorizado o la infracción de derechos de terceros por parte del cliente. El cliente acepta indemnizar y mantener indemne a Powflick frente a cualquier reclamación, demanda, pérdida, daño, gasto o coste derivado del uso indebido del contenido proporcionado. El cliente será el único responsable de cualquier incautación o confiscación de productos resultante de infracción de derechos de autor o de cualquier otra ley aplicable.</p>"
+    },
+    "section6": {
+      "title": "6. EVENTOS FUERA DE NUESTRO CONTROL",
+      "content": "<p>Powflick no será responsable de ningún incumplimiento o retraso en el cumplimiento de sus obligaciones contractuales causado por eventos fuera de su control razonable (\"Eventos Fuera de Nuestro Control\"), tales como desastres naturales, guerras o cualquier otra causa similar. En caso de Eventos Fuera de Nuestro Control, Powflick realizará todos los esfuerzos razonables para mitigar los efectos y reanudar sus obligaciones lo antes posible.</p>"
+    },
+    "section7": {
+      "title": "7. PROPIEDAD INTELECTUAL DEL SITIO WEB Y CONTENIDO DE POWFLICK",
+      "content": "<p>Todo el contenido incluido o puesto a disposición a través del sitio web de Powflick (texto, gráficos, logos, imágenes, videos, audio, software, código fuente, etc.) es propiedad exclusiva de Powflick o de sus licenciantes y está protegido por las leyes aplicables de propiedad intelectual. Cualquier uso no autorizado del contenido del sitio está estrictamente prohibido sin el consentimiento previo y por escrito de Powflick.</p>"
+    },
+    "section8": {
+      "title": "8. DIVISIBILIDAD",
+      "content": "<p>Si alguna disposición de estos Términos y Condiciones es declarada inválida, ilegal o inaplicable por una autoridad competente, dicha disposición se considerará separable y no afectará la validez de las disposiciones restantes. La disposición inválida será reemplazada por otra que cumpla la ley y refleje lo más fielmente posible la intención original de las partes. <strong>LEY APLICABLE</strong> Estos Términos de Servicio y cualquier acuerdo separado mediante el cual proporcionemos Servicios se regirán e interpretarán de conformidad con las leyes de HK.</p>"
+    },
+    "section9": {
+      "title": "9. CESIÓN",
+      "content": "<p>Powflick podrá ceder, transferir o delegar cualquiera de sus derechos u obligaciones en virtud de estos Términos y Condiciones a un tercero sin requerir el consentimiento previo del cliente. El cliente no podrá ceder, transferir o delegar sus derechos u obligaciones sin el consentimiento previo y por escrito de Powflick.</p>"
+    },
+    "section10": {
+      "title": "10. PROCESO DE PRODUCCIÓN",
+      "content": "<h5>10.1 Definición</h5><p>“Producción” se refiere al período desde la realización del pedido hasta el momento en que los productos se entregan al transportista para su envío. El tiempo de envío no está incluido en este período.</p><h5>10.2 Inicio del Proceso</h5><p>La producción no comenzará hasta que todos los pagos pendientes (si los hubiera) hayan sido abonados en su totalidad.</p><h5>10.3 Modificaciones</h5><p>Una vez que un pedido entra en la fase de producción, no puede modificarse.</p><h5>10.4 Confirmación de Diseño y Color</h5><p>Unos 8 días después de realizar el pedido, Powflick enviará al cliente una muestra de tela de los logos, nombres y números de uno de los uniformes del pedido, por correo electrónico y WhatsApp. El cliente dispondrá de 24 horas para responder y confirmar o solicitar cambios. Si no se recibe respuesta, se considerará aceptada la muestra.</p><h5>10.5 Plazos de Entrega</h5><p>Powflick proporciona una fecha de entrega aproximada. El cliente reconoce que se trata de una estimación salvo que se contrate un servicio EXPRESS con un plazo de entrega obligatorio.</p>"
+    },
+    "section11": {
+      "title": "11. TIEMPOS DE ENTREGA",
+      "content": "<h5>11.1 Naturaleza Estimada de los Plazos</h5><p>Los tiempos de entrega proporcionados por Powflick son estimaciones, no garantías.</p><h5>11.2 Tiempos Aproximados de Producción</h5><p>El tiempo de producción de un pedido personalizado es normalmente de alrededor de 30 días. El cliente puede comprobar el estado del pedido a través del portal del cliente.</p><h5>11.3 Proceso de Producción (Resumen)</h5><p>Procesamiento: Comprobación de los archivos. Cola de Producción: Los tiempos de espera varían. Impresión: El diseño se imprime y transfiere a la tela. Confección: Las piezas se cosen. Revisión: Inspección final antes del envío.</p><h5>11.4 Tiempos de Envío (Tránsito)</h5><p>Una vez finalizada la producción, los tiempos de envío varían según el país (p. ej., 10–20 días hábiles para EE. UU./UE/MX).</p><h5>11.5 Envío Exprés</h5><p>Hay una opción de Envío Exprés disponible por un coste adicional de $20, reduciendo los tiempos de entrega a ~15 días en la mayoría de los casos.</p><h5>11.6 Derechos de Aduana</h5><p>En los envíos internacionales, pueden aplicarse aranceles e impuestos, que son responsabilidad del cliente.</p>"
+    },
+    "section12": {
+      "title": "12. DEVOLUCIONES Y RECLAMACIONES",
+      "content": "<h5>12.1 Productos Personalizados</h5><p>Powflick ofrece productos personalizados hechos a medida; no se permiten devoluciones salvo lo indicado aquí.</p><h5>12.2 Reclamaciones por Defectos o Errores Evidentes</h5><p>Powflick será responsable de defectos de fabricación que hagan el producto inutilizable o errores graves en la personalización.</p><h5>12.3 Procedimiento de Reclamaciones</h5><p>El cliente debe contactar a Powflick dentro de los 7 días hábiles posteriores a la recepción del producto, proporcionando descripción y fotos.</p><h5>12.4 Condiciones para Aceptar Reclamaciones</h5><p>El cliente debe aportar evidencia fotográfica clara y detallada. Las reclamaciones pueden rechazarse si son causadas por mal uso o si los errores son menores.</p><h5>12.5 Costes de Envío de Devolución</h5><p>Si Powflick acepta una devolución por defecto o error evidente, cubrirá los costes de envío de devolución y reemplazo.</p>"
+    },
+    "section13": {
+      "title": "Última Actualización",
+      "content": "<p><strong>Última Actualización:</strong> 25/02/2022<br/><strong>Sitio Web Oficial:</strong> www.powflick.com</p>"
+    }
+  },
+  "Privacy": {
+    "title": "Política de Privacidad",
+    "introShort": "Esta política de privacidad describe cómo recopilamos, usamos y compartimos información personal.",
+    "lastUpdate": "Última Actualización",
+    "lastUpdateDate": "25/02/2025",
+    "section1": {
+      "title": "Qué Recopilamos",
+      "items": {
+        "0": {
+          "subtitle": "Información que Nos Proporcionas",
+          "text": "Podemos recopilar Información Personal que eliges proporcionarnos..."
+        },
+        "1": {
+          "subtitle": "Información Recopilada Automáticamente",
+          "text": "Podemos usar un Proveedor de Servicios externo (definido abajo)..."
+        },
+        "2": {
+          "subtitle": "Cookies",
+          "text": "Podemos registrar información usando 'cookies'. Las cookies son archivos..."
+        },
+        "3": {
+          "subtitle": "Balizas Web y Píxeles",
+          "text": "Podemos registrar información usando imágenes digitales llamadas balizas..."
+        },
+        "4": {
+          "subtitle": "Opciones de Rastreo y Señales Do Not Track de California",
+          "text": "Puedes ajustar la configuración de tu navegador o sistema operativo..."
+        }
+      }
+    },
+    "section2": {
+      "title": "Uso de la Información",
+      "items": {
+        "0": {
+          "text": "Usamos la información que tenemos sobre ti para proporcionar, soportar..."
+        },
+        "1": {
+          "text": "Podemos usar la Información Personal que recopilamos de y sobre ti para..."
+        },
+        "2": {
+          "text": "También podemos usar tu información para contactarte acerca de nuestros bienes..."
+        }
+      }
+    },
+    "section3": {
+      "title": "Compartición de Información Personal",
+      "items": {
+        "0": {
+          "text": "Podemos divulgar información agregada, anonimizada y/o no identificativa..."
+        },
+        "1": {
+          "text": "No divulgaremos tu Información Personal salvo según lo descrito..."
+        },
+        "2": {
+          "text": "Podemos compartir la Información Personal que recopilamos de y sobre ti..."
+        },
+        "3": {
+          "text": "Podemos vender o comprar activos durante el curso normal de nuestro..."
+        }
+      }
+    },
+    "section4": {
+      "title": "Proveedores de Servicios",
+      "items": {
+        "0": {
+          "text": "Podemos contratar con terceros para realizar funciones relacionadas..."
+        },
+        "1": {
+          "text": "Sin embargo, ciertos Proveedores de Servicios terceros, como los de pago..."
+        },
+        "2": {
+          "text": "En particular, recuerda que ciertos proveedores pueden estar ubicados en..."
+        },
+        "3": {
+          "text": "Como ejemplo, si estás en Canadá y tu transacción es procesada..."
+        },
+        "4": {
+          "text": "Una vez que abandonas el Sitio o eres redirigido a un sitio de un tercero..."
+        }
+      }
+    },
+    "section5": {
+      "title": "Opciones y Cambios de Información",
+      "items": {
+        "0": {
+          "text": "Nuestros correos de marketing indican cómo darte de baja u optar por no recibir..."
+        }
+      }
+    },
+    "section6": {
+      "title": "Enlaces a Otros Sitios",
+      "items": {
+        "0": {
+          "text": "Los Servicios pueden contener enlaces a otros sitios web de terceros..."
+        }
+      }
+    },
+    "section7": {
+      "title": "Compromiso con la Privacidad de los Niños",
+      "items": {
+        "0": {
+          "text": "No dirigimos los Servicios ni recopilamos conscientemente información..."
+        },
+        "1": {
+          "text": "Los menores de 13 años no son elegibles para usar los Servicios. Si nos enteramos..."
+        }
+      }
+    },
+    "section8": {
+      "title": "Seguridad de tu Información Personal",
+      "items": {
+        "0": {
+          "text": "Nos comprometemos a proteger la seguridad de tu Información Personal..."
+        }
+      }
+    },
+    "section9": {
+      "title": "Pago",
+      "items": {
+        "0": {
+          "text": "Usamos tecnología SSL (secure socket layer) para cifrar tu..."
+        },
+        "1": {
+          "text": "Cuando realizas un pago, se cifra a través de la Industria de Tarjetas..."
+        },
+        "2": {
+          "text": "Todos los gateways de pago directos cumplen los estándares establecidos por PCI-DSS..."
+        },
+        "3": {
+          "text": "Los requisitos PCI-DSS ayudan a garantizar el manejo seguro de tarjetas..."
+        }
+      }
+    },
+    "section10": {
+      "title": "Aviso de Privacidad para Usuarios de la UE",
+      "items": {
+        "0": {
+          "text": "Si te encuentras dentro de la Unión Europea (UE), en ciertos..."
+        }
+      },
+      "list": {
+        "0": "Derecho de acceso: derecho a solicitar cierta información...",
+        "1": "Derecho de rectificación: derecho a que tu Información Personal...",
+        "2": "Derecho de supresión/‘derecho al olvido’: cuando el procesamiento...",
+        "3": "Derecho a la restricción del uso de tu información: derecho a detener...",
+        "4": "Derecho a la portabilidad de datos: derecho a solicitar que devolvamos...",
+        "5": "Derecho de oposición: derecho a oponerte a nuestro uso de tu Información..."
+      }
+    },
+    "section11": {
+      "title": "Base Legal para el Procesamiento",
+      "items": {
+        "0": {
+          "text": "Las siguientes bases legales aplican a las formas en que usamos y..."
+        }
+      },
+      "list": {
+        "0": "Procesamos Información Personal sobre la base de la ejecución...",
+        "1": "También procesamos la información proporcionada por un individuo en nuestro..."
+      }
+    },
+    "section12": {
+      "title": "Retención",
+      "items": {
+        "0": {
+          "text": "Retendremos la información que proporciones mientras tengas..."
+        },
+        "1": {
+          "text": "Las solicitudes relacionadas con los derechos anteriores deben enviarse..."
+        }
+      }
+    },
+    "section13": {
+      "title": "Información de Contacto",
+      "items": {
+        "0": {
+          "text": "Agradecemos tus comentarios o preguntas sobre esta Política. Puedes..."
+        }
+      }
+    },
+    "section14": {
+      "title": "Cambios a la Política de Privacidad",
+      "items": {
+        "0": {
+          "text": "Podemos modificar esta Política periódicamente. Si hacemos algún..."
+        }
+      }
+    }
+  },
+
+  "Common": {
+    "cta": {
+      "contact": "Contacto",
+      "shop": "Comprar ahora"
+    }
+  },
+  "TopBar": {
+    "exclusiveDesign": "Obtén tu DISEÑO EXCLUSIVO GRATIS hoy",
+    "freeShipping": "¡Envío exprés mundial GRATIS!"
+  },
+  "MiniCart": {
+    "items": "{count, plural, one {# artículo} other {# artículos}}",
+    "checkoutNow": "Pagar ahora ({total})",
+    "viewCart": "Ver carrito",
+    "empty": "Tu carrito está vacío. Comienza a comprar"
+  },
+  "Cart": {
+    "meta": {
+      "title": "Carrito - Pow Flick",
+      "description": "Revisa tus productos, aplica un cupón, agrega notas y continúa a un pago seguro."
+    },
+    "subtotal": "Subtotal",
+    "customizations": "Personalizaciones",
+    "coupon": "Cupón",
+    "couponWithDetails": "Cupón ({title} - {value})",
+    "total": "Total",
+    "additionalComments": "Comentarios Adicionales",
+    "optional": "Opcional",
+    "couponCode": "Código de cupón",
+    "applyCoupon": "Aplicar cupón",
+    "removeCoupon": "Eliminar cupón",
+    "creditCard": "Tarjeta de Crédito",
+    "selectShippingAddress": "Selecciona una dirección de envío",
+    "addProductsToCart": "Agrega productos al carrito",
+    "checkoutNow": "Pagar ahora",
+    "mustBeLoggedIn": "Debes iniciar sesión",
+    "invalidCoupon": "Cupón inválido o inactivo",
+    "couponNotFound": "Cupón no encontrado o no disponible para tu cuenta"
+  },
+
+  "CheckoutSteps": {
+    "cart": "Carrito",
+    "shipping": "Envío",
+    "checkout": "Pago",
+    "backToCart": "Volver al carrito"
+  },
+  "Navigation": {
+    "store": "Tienda",
+    "getFreeDesign": "Obtén un Diseño Gratis",
+    "contact": "Contacto",
+    "about": "Sobre Nosotros",
+    "faq": "FAQ",
+    "creatorKits": "Kits de Creadores",
+    "customizationGuide": "Guía de Personalización",
+    "categories": "Categorías",
+    "collections": "Colecciones"
+  },
+  "Footer": {
+    "headings": {
+      "about": "Sobre Nosotros",
+      "pages": "Páginas",
+      "categories": "Categorías",
+      "contact": "Contáctanos"
+    },
+    "links": {
+      "terms": "Términos y Condiciones",
+      "privacy": "Política de Privacidad",
+      "shipping": "Tiempo y Envío",
+      "return": "Devoluciones y Reembolsos",
+      "store": "Tienda",
+      "freeDesign": "Obtén un Diseño Gratis",
+      "contact": "Contacto",
+      "about": "Sobre Nosotros",
+      "faq": "FAQ",
+      "creatorKits": "Kits de Creadores",
+      "customizationGuide": "Guía de Personalización",
+      "collections": "Colecciones",
+      "categories": "Categorías"
+    },
+    "contact": {
+      "address1": "RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK",
+      "registeredOffice": "Oficina Registrada (Entidad Legal): CL 28 #113 57, Cali – Valle, Colombia NIT: 1231234",
+      "email": "Email: support@powflick.com",
+      "phone": "Teléfono: +86 13590635129"
+    },
+    "copyright": "Copyright © 2025 Todos los derechos reservados por Powflick."
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Mantente al día con lo último sobre nuestros productos",
+    "searchPlaceholder": "Buscar…",
+    "searchAriaLabel": "buscar",
+    "allCategories": "Todas las categorías",
+    "company": "Compañía",
+    "product": "Producto",
+    "design": "Diseño",
+    "engineering": "Ingeniería",
+    "rssAriaLabel": "Fuente RSS",
+    "latest": "Lo más reciente"
+  },
+  "Thanks": {
+    "backTo": "Volver a",
+    "brand": "Pow Flick",
+    "thankYou": "¡Gracias!",
+    "onTheWay": "¡Va en camino!",
+    "orderSent": "Tu pedido #{id} fue enviado a fábrica para su fabricación y llegará pronto.",
+    "trackingNumber": "Número de rastreo",
+    "notAvailable": "Aún no disponible",
+    "yourOrder": "Tu pedido",
+    "quantity": "Cantidad",
+    "price": "Precio",
+    "shippingAddress": "Dirección de envío",
+    "billingAddress": "Dirección de facturación",
+    "summary": "Resumen",
+    "coupon": "Cupón",
+    "total": "Total"
+  },
+  "Auth": {
+    "login": {
+      "emailOrPhone": "Correo o Teléfono",
+      "emailPlaceholder": "ejemplo@correo.com",
+      "password": "Contraseña",
+      "submit": "Ingresar",
+      "errors": {
+        "emailRequired": "El correo es obligatorio",
+        "emailInvalid": "Correo inválido",
+        "passwordRequired": "La contraseña es obligatoria"
+      },
+      "success": "Sesión iniciada correctamente",
+      "error": "Error al iniciar sesión"
+    },
+    "social": {
+      "or": "o",
+      "iAccept": "Acepto los",
+      "terms": "términos y condiciones",
+      "continueWithGoogle": "Continuar con Google"
+    },
+    "register": {
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "password": "Contraseña",
+      "retypePassword": "Repite la Contraseña",
+      "placeholders": { "firstName": "Ralph", "lastName": "Bilkings" },
+      "agreementLong": "Al registrarte, aceptas",
+      "agreementShort": "Acepta nuestros",
+      "terms": "Términos y Condiciones",
+      "createAccount": "Crear Cuenta",
+      "success": "¡Usuario registrado con éxito!",
+      "errors": {
+        "firstName": "El nombre es obligatorio",
+        "lastName": "El apellido es obligatorio",
+        "emailRequired": "El correo es obligatorio",
+        "emailInvalid": "Correo inválido",
+        "passwordRequired": "La contraseña es obligatoria",
+        "phoneRequired": "El teléfono es obligatorio",
+        "phoneInvalid": "Teléfono inválido",
+        "retypePasswordRequired": "Repite la contraseña",
+        "passwordsMustMatch": "Las contraseñas deben coincidir",
+        "agreement": "¡Debes aceptar nuestros Términos y Condiciones!"
+      }
+    },
+    "reset": {
+      "title": "Recuperar Contraseña",
+      "newPassword": "Nueva Contraseña",
+      "confirmPassword": "Confirmar Contraseña",
+      "submit": "Enviar",
+      "errors": {
+        "passwordRequired": "La contraseña es obligatoria",
+        "confirmPasswordRequired": "Confirmar contraseña es obligatorio",
+        "passwordsDoNotMatch": "Las contraseñas no coinciden",
+        "minMax": "La contraseña debe tener entre 8 y 20 caracteres",
+        "uppercase": "Debe contener al menos una mayúscula",
+        "lowercase": "Debe contener al menos una minúscula",
+        "number": "Debe contener al menos un número",
+        "special": "Debe contener al menos un carácter especial (@$!%*?&)"
+      }
+    },
+    "bottom": {
+      "noAccount": "¿No tienes cuenta?",
+      "register": "Regístrate",
+      "forgot": "¿Olvidaste tu contraseña?",
+      "resetIt": "Recupérala"
+    },
+    "greeting": {
+      "welcome": "Bienvenido",
+      "logoTitle": "Bienvenido a Pow Flick"
+    }
+  },
+  "Faq": {
+    "heroTitle": "¡Queremos que tu experiencia sea perfecta!",
+    "heroSubtitle": "Aquí encontrarás respuestas a las preguntas más comunes sobre pedidos, pagos y envíos. Si algo no queda claro, contáctanos — ¡estamos aquí para ayudarte!",
+    "sections": {
+      "orders": {
+        "title": "Pedidos y Personalización",
+        "q1Title": "¿Cómo puedo personalizar mi uniforme?",
+        "q1Content": "Selecciona el tipo de uniforme, elige tallas y géneros, y añade tus logos, textos o números. Sube logos en formato vectorial (SVG, AI, EPS, PDF) o en alta resolución (mínimo 300 dpi).",
+        "q2Title": "¿Qué tipos de archivo puedo subir para los logos?",
+        "q2Content": "Recomendamos archivos vectoriales (SVG, AI, EPS, PDF). Si no tienes estos formatos, envía la imagen con la mayor resolución posible. No podemos garantizar una calidad óptima de impresión si el archivo no cumple los requisitos.",
+        "q3Title": "¿Puedo ver una vista previa antes de confirmar mi pedido?",
+        "q3Content": "Sí, una vez completes tu personalización puedes generar un archivo PDF con la vista previa de tu diseño.",
+        "q4Title": "¿Puedo modificar o cancelar mi pedido después de la compra?",
+        "q4Content": "Tienes hasta 2 horas después de realizar el pedido para cancelarlo sin cargo. Después, si ya está en producción, no se podrán hacer cambios y se aplicará un 10% por cancelación."
+      },
+      "payments": {
+        "title": "Precios y Pagos",
+        "q5Title": "¿Qué métodos de pago aceptan?",
+        "q5Content": "Aceptamos tarjetas de crédito (Visa, Mastercard, Maestro, American Express) y pagos vía Stripe.",
+        "q6Title": "¿Los precios incluyen impuestos?",
+        "q6Content": "No, los impuestos se calculan en el checkout según la ubicación de envío.",
+        "q7Title": "¿Ofrecen descuentos o promociones?",
+        "q7Content": "Sí, ocasionalmente ofrecemos códigos promocionales y descuentos. ¡Sigue nuestras redes y newsletters!"
+      },
+      "shipping": {
+        "title": "Envío y Entrega",
+        "q8Title": "¿Cuánto tardaré en recibir mi pedido?",
+        "q8Content": "La producción toma alrededor de 30 días. Los tiempos de envío varían según el destino: EE. UU., Unión Europea y México: 10–20 días hábiles. Otros destinos: Puede variar según el país.",
+        "q9Title": "¿Ofrecen envío exprés?",
+        "q9Content": "Sí, por $20 USD adicionales puedes seleccionar envío exprés en el checkout. Reduce el tiempo de entrega a aproximadamente 15 días.",
+        "q10Title": "¿Debo pagar aranceles o impuestos aduaneros?",
+        "q10Content": "Sí, los derechos e impuestos aduaneros son responsabilidad del cliente y varían según el país."
+      },
+      "returns": {
+        "title": "Devoluciones y Reclamos",
+        "q11Title": "¿Puedo devolver un producto personalizado?",
+        "q11Content": "Como nuestros productos se fabrican bajo pedido, no aceptamos devoluciones salvo defecto de fabricación o error evidente.",
+        "q12Title": "¿Qué hago si recibo un producto defectuoso o incorrecto?",
+        "q12Content": "Contáctanos dentro de los 7 días hábiles posteriores a la recepción escribiendo a support@powflick.com con descripción y fotos del problema.",
+        "q13Title": "¿Quién cubre los gastos de envío en una devolución?",
+        "q13Content": "Si aceptamos la devolución por defecto o error, Pow Flick cubre los gastos de envío de devolución y del reemplazo."
+      },
+      "contact": {
+        "contactQuestion1": "¿Cómo puedo contactar a Pow Flick?",
+        "contactAnswer1": "Puedes escribirnos a support@powflick.com o llamarnos al +86 15920110846.",
+        "contactQuestion2": "¿Dónde están ubicados?",
+        "contactAnswer2": "Nuestra sede está en B15-280, Xia Nan Yi Heng Base Section, Guicheng Subdistrict, Nanhai District, Foshan City, Guangdong Province, China.",
+        "contactImageAlt": "Contacto"
+      }
+    }
+  }
+}

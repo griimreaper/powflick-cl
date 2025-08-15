@@ -1,7 +1,9 @@
 import { Box, Container } from "@mui/material";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export default function Section2({ className, isMobile, detail = false }: { className: string, isMobile: boolean, detail?: boolean }) {
+  const t = useTranslations("Home");
   return (
     <Container
       className={className}
@@ -17,7 +19,7 @@ export default function Section2({ className, isMobile, detail = false }: { clas
           <Image
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-36.png"
-            alt="Mobile Image 1"
+            alt={t("mobileImage1Alt")}
             layout="responsive" // Para mantener la proporción
             width={500} // Ajuste adecuado
             height={300} // Ajuste adecuado
@@ -33,7 +35,7 @@ export default function Section2({ className, isMobile, detail = false }: { clas
           <Image
             draggable={false}
             src="/assets/images/landing/mobile/POWFLICK-_PROMESA-37.png"
-            alt="Mobile Image 2"
+            alt={t("mobileImage2Alt")}
             layout="responsive" // Para mantener la proporción
             width={500} // Ajuste adecuado
             height={300} // Ajuste adecuado
@@ -52,7 +54,7 @@ export default function Section2({ className, isMobile, detail = false }: { clas
         <Image
           draggable={false}
           src="/assets/images/landing/POWFLICK_PROMESAS-DE-MARCA.png"
-          alt="Desktop Image"
+          alt={t("desktopImageAlt")}
           quality={80}
           priority
           layout="responsive"

@@ -4,11 +4,13 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
+import { useTranslations } from "next-intl";
 import { RootStyle } from "./section-7";
 import Image from "next/image";
 // LOCAL CUSTOM COMPONENT
 
 export default function Section8({ isMobile }: { isMobile: boolean }) {
+  const t = useTranslations("Home");
   // Determina la imagen según el tamaño de la pantalla
   const backgroundImage = !isMobile ? `/assets/images/landing/POWFLICK_BANNER-INFERIOR.png` : `/assets/images/landing/mobile/HOME_BANNER-SEASON.png`;
 
@@ -17,7 +19,7 @@ export default function Section8({ isMobile }: { isMobile: boolean }) {
       {/* Imagen de fondo */}
       <Image
         src={backgroundImage}
-        alt="Promo Sports Banner"
+        alt={t("promoSportsBannerAlt")}
         layout="responsive" // Se adapta al tamaño original manteniendo la relación de aspecto
         width={1920} // Ajusta según el tamaño real de tu imagen
         height={1080} // Ajusta según el tamaño real de tu imagen
@@ -50,14 +52,14 @@ export default function Section8({ isMobile }: { isMobile: boolean }) {
       >
 
         <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1}>
-          PREPARE
+          {t("prepare")}
         </H1>
         <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1} >
-          YOUR SEASON
+          {t("yourSeason")}
         </H1>
 
         <H3 fontSize={"clamp(8px, 2.2vw, 30px)"} fontWeight={100} lineHeight={1} mb={isMobile ? 2 : 4} fontFamily={"sans-serif"} fontStyle="oblique">
-          WITH THE BEST
+          {t("withTheBest")}
         </H3>
 
         <Button variant="contained" size="large" color="primary" href="/products"
@@ -69,7 +71,7 @@ export default function Section8({ isMobile }: { isMobile: boolean }) {
             fontSize: "clamp(12px, 2vw, 120px)",
             fontStyle: "italic",
           }}>
-          Shop Now
+          {t("shopNow")}
         </Button>
       </Box>
     </RootStyle>

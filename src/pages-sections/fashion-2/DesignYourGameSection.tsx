@@ -6,6 +6,7 @@ import { useState, useMemo } from "react";
 import { Carousel } from "components/carousel";
 import ProductCard8 from "components/product-cards/product-card-8";
 import { DataStructure } from "models/types";
+import { useTranslations } from "next-intl";
 
 export default function DesignYourGameSection({
     collections,
@@ -14,18 +15,19 @@ export default function DesignYourGameSection({
     collections: DataStructure["landing"]["collections"]["designYourGameSection"];
     isMobile: boolean;
 }) {
-    const [selectedType, setSelectedType] = useState("Top Picks");
+    const t = useTranslations("Home");
+    const [selectedType, setSelectedType] = useState(t("topPicks"));
 
     // Extraer tipos únicos (puede cambiar según la propiedad real)
     const types = collections?.collections;
 
     const filteredProducts = useMemo(() => {
-        if (selectedType === "Top Picks") return collections?.allProducts?.filter((p) => p.featured === true);
+        if (selectedType === t("topPicks")) return collections?.allProducts?.filter((p) => p.featured === true);
 
         return collections.allProducts.filter((p) =>
             p.collections?.some((col) => col.title === selectedType)
         );
-    }, [selectedType, collections]);
+    }, [selectedType, collections, t]);
 
     const responsive = [
         { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 4 } },
@@ -74,10 +76,10 @@ export default function DesignYourGameSection({
                                 fontFamily: "GYMER",
                                 lineHeight: 1,
                                 textTransform: "uppercase",
-                                WebkitTextStroke: {xs: "1px #CA0b0b", md: "2px #CA0b0b" },
+                                WebkitTextStroke: { xs: "1px #CA0b0b", md: "2px #CA0b0b" },
                             }}
                         >
-                            Design Your Game.
+                            {t("designYourGameTitle")}
                         </Typography>
 
                         {/* Capa principal blanca */}
@@ -93,7 +95,7 @@ export default function DesignYourGameSection({
                                 textTransform: "uppercase",
                             }}
                         >
-                            Design Your Game.
+                            {t("designYourGameTitle")}
                         </Typography>
                     </Box>
                     <Typography
@@ -104,7 +106,7 @@ export default function DesignYourGameSection({
                         fontSize={{ xs: '4vw', sm: '3vw', md: '2vw', lg: '1.2vw' }}
                         fontWeight={500}
                     >
-                        Find your perfect match - modern icons, retro classics, and styles made for her.
+                        {t("designYourGameSubtitle")}
                     </Typography>
                     <Box sx={{
                         display: 'flex',
@@ -115,7 +117,7 @@ export default function DesignYourGameSection({
                         overflowX: 'scroll',
                         '&::-webkit-scrollbar': { height: '2px' }, // para Chrome
                     }}>
-                        {types?.map((type) => (
+                        {[t("topPicks"), ...(types || [])].map((type) => (
                             <Typography
                                 key={type}
                                 onClick={() => setSelectedType(type)}

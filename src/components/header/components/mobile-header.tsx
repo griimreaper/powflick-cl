@@ -21,6 +21,7 @@ import { DataStructure } from "models/types";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import MobileMenu from "components/navbar/mobile-menu/mobile-menu";
+import LanguageSwitcher from "./language-switcher";
 
 const DialogDrawer = dynamic(() => import("./dialog-drawer"));
 
@@ -50,7 +51,7 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
         </Box>
 
         {/* MIDDLE CONTENT - LOGO */}
-        <Link href="/">
+        <Link href={`/${(typeof window === 'undefined' ? 'en' : (location.pathname.match(/^\/(en|es)/)?.[1] || 'en'))}`}>
           <Image
             draggable={false}
             height={44}
@@ -65,11 +66,12 @@ export default function MobileHeader({ data }: { data: DataStructure['navbar'] }
 
         {/* RIGHT CONTENT - LOGIN, CART, SEARCH BUTTON */}
         <FlexBox justifyContent="end" flex={1}>
+          <LanguageSwitcher variant="icon" />
           <IconButton onClick={toggleSearchBar}>
             <Icon.Search sx={ICON_STYLE} />
           </IconButton>
 
-          <IconButton onClick={() => { session ? router.push(rol === 'admin' ? '/admin/dashboard' :'/dashboard/profile') : toggleDialog() }}>
+          <IconButton onClick={() => { session ? router.push(rol === 'admin' ? '/admin/dashboard' : '/dashboard/profile') : toggleDialog() }}>
             <Icon.User sx={ICON_STYLE} />
           </IconButton>
 

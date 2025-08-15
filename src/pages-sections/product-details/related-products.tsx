@@ -8,15 +8,17 @@ import ProductCard1 from "components/product-cards/product-card-1";
 // CUSTOM DATA MODEL
 import Product from "models/Product.model";
 import { ProductDB } from "models/types";
+import { useTranslations } from "next-intl";
 
 // ==============================================================
 type Props = { products: ProductDB[] };
 // ==============================================================
 
 export default function RelatedProducts({ products }: Props) {
+  const t = useTranslations("ProductRelated");
   return (
     <Box mb={7.5}>
-      <H3 mb={3}>Related Products</H3>
+      <H3 mb={3}>{t("title")}</H3>
 
       <Grid container spacing={3}>
         {products.map((item, ind) => (

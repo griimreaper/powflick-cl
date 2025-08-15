@@ -1,3 +1,5 @@
+const withNextIntl = require("next-intl/plugin")("./src/i18n/request.ts");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: { theme: "DEFAULT", currency: "USD" },
@@ -6,16 +8,28 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: "https", hostname: "ui-lib.com" },
-      { protocol: "https", hostname: "5ogdqbzzrogmotoh.public.blob.vercel-storage.com" },
+      {
+        protocol: "https",
+        hostname: "5ogdqbzzrogmotoh.public.blob.vercel-storage.com",
+      },
       { protocol: "https", hostname: "ideasjersey.com" },
       { protocol: "https", hostname: "help.pitpay.com" },
       { protocol: "https", hostname: "emmanuela.insyst.info" },
-      { protocol: "https", hostname: "sbvajd9r07chtxp5.public.blob.vercel-storage.com" },
-      { protocol: "https", hostname: "a4dogv6ty8aeyf4s.public.blob.vercel-storage.com" },
+      {
+        protocol: "https",
+        hostname: "sbvajd9r07chtxp5.public.blob.vercel-storage.com",
+      },
+      {
+        protocol: "https",
+        hostname: "a4dogv6ty8aeyf4s.public.blob.vercel-storage.com",
+      },
       { protocol: "https", hostname: "www.powflick.com" },
-      { protocol: "https", hostname: "a4dogv6ty8aeyf4s.public.blob.vercel-storage.com" },
+      {
+        protocol: "https",
+        hostname: "a4dogv6ty8aeyf4s.public.blob.vercel-storage.com",
+      },
     ],
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

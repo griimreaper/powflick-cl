@@ -1,0 +1,10 @@
+node_modules
+.next
+.next-static
+coverage
+public
+**/*.config.js
+**/*.config.cjs
+**/*.config.mjs
+scripts/**
+api/**

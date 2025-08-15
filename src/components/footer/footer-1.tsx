@@ -18,9 +18,11 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { useMediaQuery } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
   const isMobile = useMediaQuery("(max-width:768px)");
+  const t = useTranslations("Footer");
   return (
     <>
 
@@ -110,90 +112,87 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
                 >
                   FOR TEAM BEHIND THE DREAM
                 </Box> */}
-              </Grid>
-              {/* ABOUT US LINKS */}
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={3}
-                lg={2}
-                display="flex"
-                flexDirection="column"
-                alignItems={{ xs: "center", lg: "flex-start" }}
-                justifyContent="center"
-              >
-                <AboutLinks />
-              </Grid>
-              {/* CUSTOMER CARE LINKS */}
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={3}
-                lg={2}
-                display="flex"
-                flexDirection="column"
-                alignItems={{ xs: "center", lg: "flex-start" }}
-                justifyContent="center"
-              >
-                <CustomerCareLinks />
-              </Grid>
-              {/* Categories LINKS */}
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={3}
-                lg={2}
-                display="flex"
-                flexDirection="column"
-                alignItems={{ xs: "center", lg: "flex-start" }}
-                justifyContent="center"
-              >
-                <CategoriesLinks list={data?.categories} />
-              </Grid>
-              {/* CONTACT & SOCIAL LINKS */}
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={3}
-                lg={2}
-                display="flex"
-                flexDirection="column"
-                alignItems={{ xs: "center", lg: "flex-start" }}
-                justifyContent="center"
-                sx={{
-                  gap: "0.6rem 0rem",
-                }}
-              >
-                {/* CONTACT INFORMATION */}
-                <Heading style={{ color: "#CA0B0B", marginBottom: "24px" }}>Contact Us</Heading>
+                </Grid>
+                {/* ABOUT US LINKS */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  lg={2}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems={{ xs: "center", lg: "flex-start" }}
+                  justifyContent="center"
+                >
+                  <AboutLinks />
+                </Grid>
+                {/* CUSTOMER CARE LINKS */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  lg={2}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems={{ xs: "center", lg: "flex-start" }}
+                  justifyContent="center"
+                >
+                  <CustomerCareLinks />
+                </Grid>
+                {/* Categories LINKS */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  lg={2}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems={{ xs: "center", lg: "flex-start" }}
+                  justifyContent="center"
+                >
+                  <CategoriesLinks list={data?.categories} />
+                </Grid>
+                {/* CONTACT & SOCIAL LINKS */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  lg={2}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems={{ xs: "center", lg: "flex-start" }}
+                  justifyContent="center"
+                  sx={{
+                    gap: "0.6rem 0rem",
+                  }}
+                >
+                  {/* CONTACT INFORMATION */}
+                  <Heading style={{ color: "#CA0B0B", marginBottom: "24px" }}>{t("headings.contact")}</Heading>
 
-                <Paragraph color="grey.500">
-                  <LocationOnIcon
-                    sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }}
-                  />
-                  RM C, 6/F, WORLD TRUST TOWER, 50 STANLEY STREET, CENTRAL HK
-                </Paragraph>
-
-                <Paragraph color="grey.500">
-                  Registered Office (Legal Entity):
-                  CL 28 #113 57, Cali – Valle, Colombia
-                  NIT: 1231234
-
+                  <Paragraph color="grey.500">
+                    <LocationOnIcon
+                      sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }}
+                    />
+                    {t("contact.address1")}
                   </Paragraph>
 
-                <Paragraph color="grey.500">
-                  <EmailIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
-                  Email: support@powflick.com
-                </Paragraph>
+                  <Paragraph color="grey.500">
+                    {t("contact.registeredOffice")}
+                  </Paragraph>
 
-                <Paragraph mb={2} color="grey.500">
-                  <PhoneIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
-                  Phone: +86 13590635129
-                </Paragraph>
+                  <Paragraph color="grey.500">
+                    <EmailIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
+                    {t("contact.email")}
+                  </Paragraph>
+
+                  <Paragraph mb={2} color="grey.500">
+                    <PhoneIcon sx={{ fontSize: 18, verticalAlign: "middle", mr: 1 }} />
+                    {t("contact.phone")}
+                  </Paragraph>
 
 
                 </Grid>
@@ -234,7 +233,7 @@ export default function Footer1({ data }: { data: DataStructure["navbar"] }) {
                     color="white"
                     sx={{ fontSize: { lg: "1.1rem" }, fontStyle: "italic" }}
                   >
-                    Copyright © 2025 All rights reserved by Powflick.
+                    {t("copyright")}
                   </Paragraph>
                 </Box>
                 <SocialLinks />

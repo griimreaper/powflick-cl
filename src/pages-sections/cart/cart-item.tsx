@@ -6,7 +6,6 @@ import Add from "@mui/icons-material/Add";
 import Close from "@mui/icons-material/Close";
 import Remove from "@mui/icons-material/Remove";
 // GLOBAL CUSTOM COMPONENTS
-import Image from "components/SportZoneImage";
 import { Span } from "components/Typography";
 import { FlexBox } from "components/flex-box";
 // GLOBAL CUSTOM HOOK
@@ -21,6 +20,7 @@ import { useEffect, useRef, useState } from "react";
 import { CustomizationModal } from "./CustomizationModal";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
+import Image from "next/image";
 
 // =========================================================
 type Props = {
@@ -81,7 +81,6 @@ export default function CartItem({ item }: Props) {
         alt={item.product.title as string}
         width={140}
         height={140}
-        display="block"
         src={item.product.images[0] || "/assets/images/products/iphone-xi.png"}
       />
 

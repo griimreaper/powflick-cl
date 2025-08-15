@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnchorHTMLAttributes, CSSProperties } from "react";
+import { useLocale } from "next-intl";
+import { AnchorHTMLAttributes, CSSProperties, useMemo } from "react";
 import styled from "@mui/material/styles/styled";
 import clsx from "clsx";
 
@@ -32,16 +33,32 @@ export default function NavLink({
   ...props
 }: NavLinkProps) {
   const pathname = usePathname() || "";
+  const locale = (useLocale?.() as string) || "en";
+
+  // Ensure internal links keep the current locale prefix
+  const localizedHref = useMemo(() => {
+    // External or hash links untouched
+    if (/^https?:\/\//.test(href) || href.startsWith("#")) return href;
+    const path = href.startsWith("/") ? href : `/${href}`;
+    const alreadyLocalized = /^\/(en|es)(\/|$)/.test(path);
+    return alreadyLocalized ? path : `/${locale}${path}`;
+  }, [href, locale]);
 
   // CHECK CURRENT ROUTE
   const checkRouteMatch = () => {
-    if (href === "/") return pathname === href;
-    return pathname.includes(href);
+    // Compare without locale prefix
+    const current = pathname.replace(/^\/(en|es)(?=\/|$)/, "");
+    const target = (href.startsWith("/") ? href : `/${href}`).replace(
+      /^\/(en|es)(?=\/|$)/,
+      ""
+    );
+    if (target === "/") return current === target;
+    return current.includes(target);
   };
 
   return (
     <StyledLink
-      href={href}
+      href={localizedHref}
       style={style}
       className={clsx(className)}
       active={checkRouteMatch() ? 1 : 0}

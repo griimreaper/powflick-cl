@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H3 } from "components/Typography";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 // LOCAL CUSTOM COMPONENT
 
@@ -23,6 +24,7 @@ export const RootStyle = styled("div")({
 });
 
 export default function Section7({ isMobile }: { isMobile: boolean }) {
+  const t = useTranslations("Home");
   // Determina la imagen según el tamaño de la pantalla
   const backgroundImage = !isMobile
     ? `/assets/images/landing/POWFLICK-19.png`
@@ -45,7 +47,7 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
       {/* Imagen de fondo */}
       <Image
         src={backgroundImage}
-        alt="Promo Sports Banner"
+        alt={t("promoSportsBannerAlt")}
         layout="responsive"
         width={1920} // Ajusta según el tamaño real de tu imagen
         height={1080} // Ajusta según el tamaño real de tu imagen
@@ -87,14 +89,14 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
           fontStyle="oblique"
 
         >
-          GOT A DESIGN IDEA?
+          {t("gotDesignIdea")}
         </H3>
 
         <H1 fontSize="clamp(10px, 6vw, 120px)" lineHeight={1} mb={1} sx={{ color: "primary.main", fontFamily: "GYMER", }}>
-          GET IT FOR FREE!
+          {t("getItForFree")}
         </H1>
         <H1 fontSize={"clamp(8px, 2.2vw, 30px)"} lineHeight={1} mb={{ xs: 1, md: 5 }} sx={{ fontFamily: "sans-serif", fontStyle: "oblique", fontWeight: 100, }}>
-          See Your Uniform Come to Life!
+          {t("seeUniformComeToLife")}
         </H1>
 
         <Button
@@ -113,7 +115,7 @@ export default function Section7({ isMobile }: { isMobile: boolean }) {
             "&:hover": { background: "#E3364E" },
           }}
         >
-          Claim Your Free Design
+          {t("claimYourFreeDesign")}
         </Button>
       </Box>
     </Box>

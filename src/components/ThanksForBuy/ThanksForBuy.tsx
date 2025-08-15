@@ -23,8 +23,10 @@ import { getProfile } from "services/DashboardUser";
 import { useSession } from "next-auth/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { generatePurchaseEmail } from "services/Order";
+import { useTranslations } from "next-intl";
 
 export default function ThanksForBuy({ id }: { id: string }) {
+  const t = useTranslations("Thanks");
   const [order, setOrder] = useState<any>({});
   const state = useDashboardStore();
   const { clearCart } = useShoppingCartStore();
@@ -58,7 +60,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
       };
       sendEmail();
     }
-  }, [token]);
+  }, [id, token]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -154,7 +156,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
     };
     fetchData();
     clearCart();
-  }, [token]);
+  }, [clearCart, id, token]);
 
   console.log("order", order);
 
@@ -177,35 +179,28 @@ export default function ThanksForBuy({ id }: { id: string }) {
           startIcon={<ChevronLeft />}
           sx={{ mb: 4 }}
         >
-          Back to{" "}
+          {t("backTo")}
           <Typography color="primary" sx={{ ml: 1 }}>
-            Pow Flick
+            {t("brand")}
           </Typography>
         </Button>
 
-        <Typography variant="h6" color="primary">
-          Thank you!
-        </Typography>
+        <Typography variant="h6" color="primary">{t("thankYou")}</Typography>
         <Typography variant="h3" fontWeight="bold" gutterBottom>
-          {"It's on the way!"}
+          {t("onTheWay")}
         </Typography>
-        <Typography gutterBottom>
-          Your order #{order?.id} was sent to the factory for manufacturing and
-          will be with you soon.
-        </Typography>
+        <Typography gutterBottom>{t("orderSent", { id: order?.id })}</Typography>
 
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-          Tracking number
+          {t("trackingNumber")}
         </Typography>
         <Typography color="" gutterBottom>
-          {order?.tracking_number || "Not available yet"}
+          {order?.tracking_number || t("notAvailable")}
         </Typography>
 
         <Divider sx={{ my: 4 }} />
 
-        <Typography variant="h5" gutterBottom>
-          Your Order
-        </Typography>
+  <Typography variant="h5" gutterBottom>{t("yourOrder")}</Typography>
 
         {order?.products?.map((product: any) => (
           <Card
@@ -225,10 +220,10 @@ export default function ThanksForBuy({ id }: { id: string }) {
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Typography variant="body2" fontWeight="bold">
-                  Quantity: {product.OrderProduct.amount}
+                  {t("quantity")}: {product.OrderProduct.amount}
                 </Typography>
                 <Typography variant="body2" fontWeight="bold">
-                  Price: ${product.OrderProduct.price}
+                  {t("price")}: ${product.OrderProduct.price}
                 </Typography>
               </Box>
             </CardContent>
@@ -237,11 +232,11 @@ export default function ThanksForBuy({ id }: { id: string }) {
 
         <Divider sx={{ my: 4 }} />
 
-        <Grid container spacing={4}>
+  <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Typography variant="subtitle1" fontWeight="bold">
-                Shipping Address
+    {t("shippingAddress")}
               </Typography>
               <Typography variant="body2">
                 {order?.direction?.address}
@@ -257,7 +252,7 @@ export default function ThanksForBuy({ id }: { id: string }) {
           <Grid item xs={12} sm={6}>
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Typography variant="subtitle1" fontWeight="bold">
-                Billing Address
+                {t("billingAddress")}
               </Typography>
               <Typography variant="body2">
                 {order?.direction?.address}
@@ -311,17 +306,15 @@ export default function ThanksForBuy({ id }: { id: string }) {
 
         <Divider sx={{ my: 4 }} />
 
-        <Typography variant="h5" gutterBottom>
-          Summary
-        </Typography>
+        <Typography variant="h5" gutterBottom>{t("summary")}</Typography>
         {/* Solo mostrar el cupón si existe */}
         {order?.coupon && (
           <Typography variant="body2">
-            Coupon: {order.coupon.title + " - " + (order.coupon.type === "amount" ? "$" + order.coupon.discount : order.coupon.discount + "%")}
+            {t("coupon")}: {order.coupon.title + " - " + (order.coupon.type === "amount" ? "$" + order.coupon.discount : order.coupon.discount + "%")}
           </Typography>
         )}
         <Typography variant="body2" fontWeight="bold">
-          Total: ${order?.total}
+          {t("total")}: ${order?.total}
         </Typography>
       </Box>
 
