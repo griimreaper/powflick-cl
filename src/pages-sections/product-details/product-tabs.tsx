@@ -8,10 +8,14 @@ import styled from "@mui/material/styles/styled";
 import { useTranslations } from "next-intl";
 // LOCAL CUSTOM COMPONENTS
 import { Review } from "models/types";
-import { Grid, Typography } from "@mui/material";
-import Image from "next/image";
-import PricingSection from "./pricing-section";
+import PricingSectionTab from "./PricingTab";
 import DetailReviewList from "./DetailsReviewList";
+import SizeTableTab from "./SizeTableTab";
+import WorldWideTab from "./WorldWideTab";
+import DescriptionTab from "./DescriptionTab";
+import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from "@mui/material";
+import { ExpandMoreOutlined } from "@mui/icons-material";
+import Image from "next/image";
 
 // STYLED COMPONENT
 const StyledTabs = styled(Tabs)(({ theme }) => ({
@@ -31,8 +35,50 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
+  const contentList = [
+    {
+      label: "Description",
+      content: <DescriptionTab />,
+      hidden: false
+    },
+    {
+      label: "Pricing Information",
+      content: <PricingSectionTab price={0} />,
+      hidden: hasInfluencer
+    },
+    {
+      label: "Size Table",
+      content: <SizeTableTab />,
+      hidden: false
+    },
+    {
+      label: "Worldwide Shipping",
+      content: <WorldWideTab />,
+      hidden: false
+    },
+    {
+      label: "Reviews",
+      content: <DetailReviewList reviews={reviews} />,
+      hidden: false
+    }
+  ];
+
+  const visibleTabs = contentList.filter(tab => !tab.hidden);
+
   return (
     <>
+      <Box my={6} sx={{ display: { sm: 'none', xs: 'block' } }} >
+        {visibleTabs.map(({ label, content }, index) => (
+          <div key={index}>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreOutlined />}>
+                <Typography fontWeight={600}>{label}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>{content}</AccordionDetails>
+            </Accordion>
+          </div>
+        ))}
+      </Box>
       <StyledTabs
         textColor="primary"
         value={selectedOption}
@@ -40,11 +86,11 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
         onChange={handleOptionClick}
         variant='scrollable'
       >
-  <Tab className="inner-tab" label={t('tabs.description')} />
-  {hasInfluencer ? <></> : <Tab className="inner-tab" label={t('tabs.pricing')} />}
-  <Tab className="inner-tab" label={t('tabs.sizeTable')} />
-  <Tab className="inner-tab" label={t('tabs.shippingWorldwide')} />
-  <Tab className="inner-tab" label={t('tabs.reviews')} />
+        <Tab className="inner-tab" label={t('tabs.description')} />
+        {hasInfluencer ? <></> : <Tab className="inner-tab" label={t('tabs.pricing')} />}
+        <Tab className="inner-tab" label={t('tabs.sizeTable')} />
+        <Tab className="inner-tab" label={t('tabs.shippingWorldwide')} />
+        <Tab className="inner-tab" label={t('tabs.reviews')} />
       </StyledTabs>
 
       <Box mb={6}>
@@ -182,7 +228,7 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
         }
         {selectedOption === 1 &&
           <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
-            <PricingSection price={productPrice} />
+            <PricingSectionTab price={productPrice} />
           </Box>
         }
         {

@@ -2,7 +2,7 @@ import { Box, Grid, Typography, Paper, Button, Divider, TextField } from '@mui/m
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-const PricingSection = ({ price }: { price: number }) => {
+const PricingSectionTab = ({ price }: { price: number }) => {
     const t = useTranslations('Pricing');
     const tiers = ['10-20', '21-50', '51-100', '101-250', '250+'];
 
@@ -261,51 +261,53 @@ const PricingSection = ({ price }: { price: number }) => {
     };
 
     return (
-        <Box>
-            <Typography
-                variant="h5"
-                color="primary.main"
-                fontWeight="700"
-                textAlign="center"
-            >
-                {t('title')}
-            </Typography>
+        <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
+            <Box>
+                <Typography
+                    variant="h5"
+                    color="primary.main"
+                    fontWeight="700"
+                    textAlign="center"
+                >
+                    {t('title')}
+                </Typography>
 
-            <Grid container spacing={4} mt={{ xs: 2, md: 4 }}>
-                {/* Texto izquierdo */}
-                <Grid item xs={12} md={5} display={'flex'} flexDirection="column" justifyContent="center" gap={2} textAlign={{ xs: 'center', md: 'left' }}>
-                    <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        {t('flexibleHeading')}
-                    </Typography>
-                    <Typography paragraph fontSize={'14px'}>
-                        {t('flexibleBody')}
-                    </Typography>
+                <Grid container spacing={4} mt={{ xs: 2, md: 4 }}>
+                    {/* Texto izquierdo */}
+                    <Grid item xs={12} md={5} display={'flex'} flexDirection="column" justifyContent="center" gap={2} textAlign={{ xs: 'center', md: 'left' }}>
+                        <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
+                            {t('flexibleHeading')}
+                        </Typography>
+                        <Typography paragraph fontSize={'14px'}>
+                            {t('flexibleBody')}
+                        </Typography>
 
-                    <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        {t('transparentHeading')}
-                    </Typography>
-                    <Typography paragraph fontSize={'14px'}>
-                        {t('transparentBody')}
-                    </Typography>
+                        <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
+                            {t('transparentHeading')}
+                        </Typography>
+                        <Typography paragraph fontSize={'14px'}>
+                            {t('transparentBody')}
+                        </Typography>
 
-                    <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        {t('bulkHeading')}
-                    </Typography>
-                    <Typography paragraph fontSize={'14px'}>
-                        {t('bulkBody')}
-                    </Typography>
+                        <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
+                            {t('bulkHeading')}
+                        </Typography>
+                        <Typography paragraph fontSize={'14px'}>
+                            {t('bulkBody')}
+                        </Typography>
+                    </Grid>
+
+                    {/* Tarjetas de precios */}
+                    <Grid item xs={12} md={7}>
+                        <Box mb={3}>
+                            <PricingCard title="TOP:" prices={pricesTop} />
+                        </Box>
+                        <PricingCard title="UNIFORM (JERSEY + SHORTS):" prices={pricesUniform} />
+                    </Grid>
                 </Grid>
-
-                {/* Tarjetas de precios */}
-                <Grid item xs={12} md={7}>
-                    <Box mb={3}>
-                        <PricingCard title="TOP:" prices={pricesTop} />
-                    </Box>
-                    <PricingCard title="UNIFORM (JERSEY + SHORTS):" prices={pricesUniform} />
-                </Grid>
-            </Grid>
-        </Box>
+            </Box>
+        </Box >
     );
 };
 
-export default PricingSection;
+export default PricingSectionTab;

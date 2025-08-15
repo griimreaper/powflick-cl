@@ -68,6 +68,14 @@ export type CustomizationsStoreType = {
     fontColor?: string,
     isTopSelected?: boolean
   ) => void;
+        updateCustomizationField: (
+        productId: string,
+        customizationId: string,
+        side: 'frontSide' | 'backSide',
+        type: 'texts' | 'numbers',
+        index: number,
+        value: string | undefined
+      ) => void;
 };
 
 export type ProductToBagType = {

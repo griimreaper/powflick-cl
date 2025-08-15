@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { calculateCustomizationPrice } from "utils/tools";
 import { deleteImage } from "services/imageStorage";
 import { PersistStorage, StorageValue, persist } from 'zustand/middleware';
-import { Customization } from "models/types";
+import { Customization, Number, Text } from "models/types";
 import { CustomizationsStoreType } from "./interfaces/interface";
 import { initialCustomization } from "./customizationStore";
 
@@ -321,13 +321,14 @@ export const useCustomizationsStore = create(
               const textX = estimateCenterX(nameText.length, textSize);
 
               customization.size = size;
-              customization.shorts = isTopSelected ? 'No Shorts (-$13.99)' : 'Default (+$0.00)';
+              customization.shorts = isTopSelected ? 'No Shorts (-$10.00)' : 'Default (+$0.00)';
 
               customization.backSide.numbers = item.number
                 ? [{
                   number: numberText,
                   font,
                   numberPosition: { x: numberX, y: 120 },
+                  numberDragOffset: { x: 0, y: 0 },
                   numberSize,
                   numberColor: fontColor,
                   rotate: 0,
@@ -339,6 +340,7 @@ export const useCustomizationsStore = create(
                   text: nameText,
                   font,
                   textPosition: { x: textX, y: 50 },
+                  textDragOffset: { x: 0, y: 0 },
                   textSize,
                   textColor: fontColor,
                   rotate: 0,
@@ -383,6 +385,117 @@ export const useCustomizationsStore = create(
 
         updateTotal(set);
       },
+      updateCustomizationField: (
+        productId: string,
+        customizationId: string,
+        side: 'frontSide' | 'backSide',
+        type: 'texts' | 'numbers',
+        index: number,
+        value: string | undefined
+      ) => {
+        set((state) => {
+          const updatedList = state.list.map((prod) => {
+            if (prod.productId !== productId) return prod;
+
+            const updatedCustomizations = prod.customizations.map((custom) => {
+              if (custom.id !== customizationId) return custom;
+
+              const sideData = { ...custom[side] };
+
+              let elements = type === "texts"
+                ? [...(sideData.texts as Text[])]
+                : [...(sideData.numbers as Number[])];
+
+              const base: any = elements[0];
+              if (!base) return custom;
+
+              const offsetX = 10; // px de desplazamiento horizontal
+              const offsetY = 10; // px de desplazamiento vertical
+
+              if (value === undefined) {
+                if (index === 0) {
+                  // Limpiar el valor pero mantener posición
+                  if (type === "texts") {
+                    elements[0] = { ...base, text: "", textPosition: base.textPosition };
+                  } else {
+                    elements[0] = { ...base, number: "", numberPosition: base.numberPosition };
+                  }
+                } else if (index < elements.length) {
+                  elements.splice(index, 1);
+                }
+              } else {
+                // Rellenar huecos si faltan y setear posiciones
+                for (let i = 0; i < index; i++) {
+                  if (!elements[i]) {
+                    if (type === "texts") {
+                      elements[i] = {
+                        ...base,
+                        text: "",
+                        textPosition: {
+                          x: Math.round(base.textPosition.x + offsetX * i),
+                          y: Math.round(base.textPosition.y + offsetY * i),
+                        }
+                      };
+                    } else {
+                      elements[i] = {
+                        ...base,
+                        number: "",
+                        numberPosition: {
+                          x: Math.round(base.numberPosition.x + offsetX * i),
+                          y: Math.round(base.numberPosition.y + offsetY * i),
+                        }
+                      };
+                    }
+                  }
+                }
+                // Insertar o actualizar en index con posición desplazada
+                if (type === "texts") {
+                  elements[index] = {
+                    ...base,
+                    text: value,
+                    textPosition: {
+                      x: Math.round(base.textPosition.x + offsetX * index),
+                      y: Math.round(base.textPosition.y + offsetY * index),
+                    }
+                  };
+                } else {
+                  elements[index] = {
+                    ...base,
+                    number: value,
+                    numberPosition: {
+                      x: Math.round(base.numberPosition.x + offsetX * index),
+                      y: Math.round(base.numberPosition.y + offsetY * index),
+                    }
+                  };
+                }
+              }
+
+              if (type === "texts") {
+                sideData.texts = elements as Text[];
+              } else {
+                sideData.numbers = elements as Number[];
+              }
+
+              return {
+                ...custom,
+                [side]: sideData,
+              };
+            });
+
+            return {
+              ...prod,
+              customizations: updatedCustomizations,
+            };
+          });
+
+          return {
+            list: updatedList,
+          };
+        });
+
+        updateTotal(set);
+      },
+
 
       clearCustomization: () => {
         set({ list: [] });

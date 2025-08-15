@@ -1,6 +1,4 @@
 "use client";
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -12,8 +10,6 @@ import Button from "@mui/material/Button";
 // MUI ICON COMPONENTS
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
-// GLOBAL CUSTOM HOOK
-import useCart from "hooks/useCart";
 // GLOBAL CUSTOM COMPONENTS
 import { H1, H2, H6 } from "components/Typography";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
@@ -40,8 +36,6 @@ import { Divider, TextField, Typography } from "@mui/material";
 import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
-import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -52,7 +46,6 @@ type SelectVariants = {
 };
 
 export default function ProductIntro({ product }: Props) {
-  const t = useTranslations('ProductIntro');
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const {
     id,
@@ -100,9 +93,6 @@ export default function ProductIntro({ product }: Props) {
   const [selected, setSelected] = useState<"top" | "uniform">(isTopSelected || 'top');
   const isSelected = (value: "top" | "uniform") => selected === value;
 
-  const searchParams = useSearchParams();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const newValue = selected === 'top'
       ? 'No Shorts (-$10.00)'
@@ -118,7 +108,6 @@ export default function ProductIntro({ product }: Props) {
     updateCustomizationAttribute('shorts', newValue);
   }, [selected, counter]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
       "customizations-store"
@@ -137,7 +126,6 @@ export default function ProductIntro({ product }: Props) {
     }
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (customization.id !== "none") {
       if (customization.shorts === 'No Shorts (-$10.00)') {
@@ -149,7 +137,6 @@ export default function ProductIntro({ product }: Props) {
     }
   }, [customization]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const customizations: Customization[] | null =
       list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
@@ -160,7 +147,6 @@ export default function ProductIntro({ product }: Props) {
     }
   }, [id]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
       "customizations-store"
@@ -190,7 +176,6 @@ export default function ProductIntro({ product }: Props) {
     }
   }, [font, fontColor]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     return () => {
       setShowCustomization(false);
@@ -210,7 +195,7 @@ export default function ProductIntro({ product }: Props) {
 
   const handleAddToFav = async () => {
     if (!token || token === undefined) {
-      showErrorAlert(t('alerts.errorTitle'), t('alerts.mustBeLogged'));
+      showErrorAlert("Error!", "Must be loged.");
     } else {
       setIsFav(!isFav);
       const fetchfavProduct = await favProduct(token, String(id), false);
@@ -219,16 +204,16 @@ export default function ProductIntro({ product }: Props) {
         fetchfavProduct.error &&
         fetchfavProduct.message !== "The list of product favs"
       ) {
-        showErrorAlert(t('alerts.errorTitle'), fetchfavProduct.message);
+        showErrorAlert("Error!", fetchfavProduct.message);
       } else {
-        showSuccessAlert(t('alerts.successTitle'), fetchfavProduct.message);
+        showSuccessAlert("Success!", fetchfavProduct.message);
       }
     }
   };
 
   const handleCustomizationClick = (
     index: number,
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>
   ) => {
     setSelectedCustomization(index);
     setShowCustomization(!showCustomization); // Al hacer clic en "Custom", mostrar la personalización
@@ -283,7 +268,7 @@ export default function ProductIntro({ product }: Props) {
         amount,
         top
       );
-    showSuccessAlert(t('alerts.successTitle'), t('alerts.addedToBag'));
+    showSuccessAlert("Success!", "Product added to bag");
     return {
       productToBag,
       customizations,
@@ -292,8 +277,6 @@ export default function ProductIntro({ product }: Props) {
       amount,
     };
   };
-
-  console.log(product);
 
   return (
     <Box width="100%">
@@ -310,7 +293,14 @@ export default function ProductIntro({ product }: Props) {
         >
           {showCustomization ? (
             <Box>
-              <Customizations {...customizationProps} />
+              <Customizations
+                {...customizationProps}
+                increment={increment}
+                decrement={decrement}
+                handleCustomizationClick={(event: React.MouseEvent<HTMLElement>) =>
+                  handleCustomizationClick(selectedCustomization || 0, event)
+                }
+              />
               {/* Agrega aquí los elementos de personalización */}
             </Box>
           ) : (
@@ -329,7 +319,7 @@ export default function ProductIntro({ product }: Props) {
                     controls
                   >
                     <source src={selectedVideo} type="video/mp4" />
-                    {t('noVideoSupport')}
+                    Your browser does not support the video tag.
                   </video>
                 ) : (
                   <Image
@@ -337,6 +327,7 @@ export default function ProductIntro({ product }: Props) {
                     width={500}
                     height={500}
                     loading="eager"
+                    onTouchStart={(event) => handleCustomizationClick(selectedCustomization || 0, event)}
                     src={product.product.images.filter(i => !i.includes('customization'))[selectedImage] || ""}
                   />
                 )}
@@ -391,7 +382,7 @@ export default function ProductIntro({ product }: Props) {
                       src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
                       type="video/mp4"
                     />
-                    {t('noVideoSupport')}
+                    Your browser does not support the video tag.
                   </video>
                 </FlexRowCenter>
               </FlexBox>
@@ -399,150 +390,154 @@ export default function ProductIntro({ product }: Props) {
           )}
         </Grid>
 
+
         {/* PRODUCT INFO AREA */}
         <Grid item md={6} xs={12} alignItems="center">
           {/* PRODUCT NAME */}
           <H1 mb={1}>{title}</H1>
 
-          {/* PRODUCT BRAND */}
-          {product.product.categories?.length > 0 && (
-            <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
-              <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                {t('categories')}:
-              </Typography>
+          <>
+            {/* PRODUCT BRAND */}
+            {product.product.categories?.length > 0 && (
+              <FlexBox alignItems="center" flexWrap="wrap" mb={1} display={{ xs: 'none', md: 'flex' }}>
+                <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                  Categories:
+                </Typography>
 
-              {product.product.categories.map((cat: any, index: number) => (
-                <Box key={cat} display="inline-flex" alignItems="center">
-                  <Link href={`/products?category=${encodeURIComponent(cat)}`}>
-                    {product.product.categories.length === 1 ? (
-                      <H6>{cat}.</H6>
-                    ) : index === 0 && product.product.categories.length > 1 ? (
-                      <H6>{cat},</H6>
-                    ) :
-                      index === product.product.categories.length - 1 ? (
-                        <H6 ml={0.5}>{cat}.</H6>
+                {product.product.categories.map((cat: any, index: number) => (
+                  <Box key={cat} display="inline-flex" alignItems="center">
+                    <Link href={`/products?category=${encodeURIComponent(cat)}`}>
+                      {product.product.categories.length === 1 ? (
+                        <H6>{cat}.</H6>
+                      ) : index === 0 && product.product.categories.length > 1 ? (
+                        <H6>{cat},</H6>
+                      ) :
+                        index === product.product.categories.length - 1 ? (
+                          <H6 ml={0.5}>{cat}.</H6>
+                        ) : (
+                          <H6 ml={0.5}>{cat},</H6>
+                        )}
+                    </Link>
+                  </Box>
+                ))}
+              </FlexBox>
+            )}
+
+            {product.product.collections?.length > 0 && (
+              <FlexBox alignItems="center" flexWrap="wrap" mb={1} display={{ xs: 'none', md: 'flex' }}>
+                <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
+                  Collections:
+                </Typography>
+
+                {product.product.collections.map((col: any, index: number) => (
+                  <Box key={col} display="inline-flex" alignItems="center">
+                    <Link href={`/products?collection=${encodeURIComponent(col)}`}>
+                      {product.product.collections.length === 1 ? (
+                        <H6>{col}.</H6>
+                      ) : index === 0 && product.product.collections.length > 1 ? (
+                        <H6>{col},</H6>
+                      ) : index === product.product.collections.length - 1 ? (
+                        <H6 ml={0.5}>{col}.</H6>
                       ) : (
-                        <H6 ml={0.5}>{cat},</H6>
+                        <H6 ml={0.5}>{col},</H6>
                       )}
+                    </Link>
+                  </Box>
+                ))}
+              </FlexBox>
+            )}
+
+            {product.product.tags?.length > 0 && (
+              <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"} display={{ xs: 'none', md: 'flex' }}>
+                <div>Tags: </div>
+                {product.product.tags.map((t: any) => (
+                  <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
+                    <H6 bgcolor={"#f0f0f0"} sx={{
+                      transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
+                      '&:hover': {
+                        bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
+                      },
+                    }} borderRadius={20} paddingX={1.5}>
+                      {'#' + t}
+                    </H6>
                   </Link>
-                </Box>
-              ))}
+                ))}
+              </FlexBox>
+            )}
+
+            {/* PRODUCT RATING */}
+            <FlexBox alignItems="center" gap={1} mb={2} display={{ xs: 'none', md: 'flex' }}>
+              <Box lineHeight="1">Rated:</Box>
+              <Rating color="warn" value={4} readOnly />
+              <H6 lineHeight="1">(50)</H6>
             </FlexBox>
-          )}
-
-          {product.product.collections?.length > 0 && (
-            <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
-              <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                {t('collections')}:
-              </Typography>
-
-              {product.product.collections.map((col: any, index: number) => (
-                <Box key={col} display="inline-flex" alignItems="center">
-                  <Link href={`/products?collection=${encodeURIComponent(col)}`}>
-                    {product.product.collections.length === 1 ? (
-                      <H6>{col}.</H6>
-                    ) : index === 0 && product.product.collections.length > 1 ? (
-                      <H6>{col},</H6>
-                    ) : index === product.product.collections.length - 1 ? (
-                      <H6 ml={0.5}>{col}.</H6>
-                    ) : (
-                      <H6 ml={0.5}>{col},</H6>
-                    )}
-                  </Link>
-                </Box>
-              ))}
-            </FlexBox>
-          )}
-
-          {product.product.tags?.length > 0 && (
-            <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
-              <div>{t('tags')}: </div>
-              {product.product.tags.map((t: any) => (
-                <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
-                  <H6 bgcolor={"#f0f0f0"} sx={{
-                    transition: 'background-color 0.3s ease',  // Animación para el cambio de color de fondo
-                    '&:hover': {
-                      bgcolor: '#e0e0e0',  // Cambia el color de fondo al hacer hover
-                    },
-                  }} borderRadius={20} paddingX={1.5}>
-                    {'#' + t}
-                  </H6>
-                </Link>
-              ))}
-            </FlexBox>
-          )}
-
-          {/* PRODUCT RATING */}
-          <FlexBox alignItems="center" gap={1} mb={2}>
-            <Box lineHeight="1">{t('rated')}:</Box>
-            <Rating color="warn" value={4} readOnly />
-            <H6 lineHeight="1">(50)</H6>
-          </FlexBox>
+          </>
 
           {/* PRICE & STOCK */}
-          <Box pt={1} mb={3}>
+          <Box pt={1} display={"flex"} flexDirection={{ xs: 'row', md: 'column' }} gap={{ xs: 2, md: 4 }} justifyContent={{ xs: 'left' }} alignItems={{ xs: 'center', md: 'start' }}>
             <H2 color="primary.main" mb={0.5} lineHeight="1">
               {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -10.00 : 0), counter, selected === 'top'))}
             </H2>
-            <Box color="inherit">{t('stock')}</Box>
+
+            {/* button increment, decrement */}
+            <FlexBox alignItems="center" mb={{ md: 4.5, xs: 0 }}>
+              <Button
+                size="small"
+                sx={{ p: 1 }}
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  decrement();
+                }}
+              >
+                <Remove fontSize="small" />
+              </Button>
+
+              <TextField
+                value={counter}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+
+                  if (newValue === "") {
+                    // Si el campo está vacío, no hacer nada
+                    handleInputChange(0); // Deja el estado vacío
+                  } else {
+                    const parsedValue = parseInt(newValue, 10);
+
+                    if (
+                      !isNaN(parsedValue) &&
+                      parsedValue >= 1 &&
+                      parsedValue <= 999
+                    ) {
+                      handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
+                      setCounter(parsedValue); // Actualiza el estado con el nuevo valor
+                    }
+                  }
+                }}
+                inputProps={{
+                  min: 1, // Evita valores negativos si es necesario
+                  style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
+                }}
+                sx={{ mx: 2.5 }}
+              />
+
+              <Button
+                size="small"
+                sx={{ p: 1 }}
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  increment();
+                }}
+              >
+                <Add fontSize="small" />
+              </Button>
+            </FlexBox>
           </Box>
 
           {/* BUTTONS */}
-          <Box sx={{ display: "flex", gap: 3 }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}>
             <Box sx={{ display: "column", gap: 3 }}>
-              <FlexBox alignItems="center" mb={4.5}>
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    decrement();
-                  }}
-                >
-                  <Remove fontSize="small" />
-                </Button>
-
-                <TextField
-                  value={counter}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-
-                    if (newValue === "") {
-                      // Si el campo está vacío, no hacer nada
-                      handleInputChange(0); // Deja el estado vacío
-                    } else {
-                      const parsedValue = parseInt(newValue, 10);
-
-                      if (
-                        !isNaN(parsedValue) &&
-                        parsedValue >= 1 &&
-                        parsedValue <= 999
-                      ) {
-                        handleInputChange(parsedValue); // Llama a la función para manejar las customizaciones
-                        setCounter(parsedValue); // Actualiza el estado con el nuevo valor
-                      }
-                    }
-                  }}
-                  inputProps={{
-                    min: 1, // Evita valores negativos si es necesario
-                    style: { textAlign: "center", width: "50px" }, // Centra el texto y ajusta el tamaño
-                  }}
-                  sx={{ mx: 2.5 }}
-                />
-
-                <Button
-                  size="small"
-                  sx={{ p: 1 }}
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => {
-                    increment();
-                  }}
-                >
-                  <Add fontSize="small" />
-                </Button>
-              </FlexBox>
 
               {/* ADD TO CART, HEART, AND CUSTOMIZE BUTTONS */}
               <FlexBox alignItems="center" gap={2} flexWrap="wrap" width="100%">
@@ -558,7 +553,7 @@ export default function ProductIntro({ product }: Props) {
                     flex: 1,
                   }}
                 >
-                  {t('actions.customize')}
+                  Customize
                 </Button>
               </FlexBox>
             </Box>
@@ -567,13 +562,13 @@ export default function ProductIntro({ product }: Props) {
           <Box display={"flex"} width={'100%'} my={2}>
             <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
               <strong>
-                {t('guide.heading')}
+                Not sure how to start?
               </strong>
-              {" "}{t('guide.text')}{" "}
+              {" "}Check out our{" "}
               <a href="https://powflick.com/customization-guide"
                 rel="noopener noreferrer"
                 style={{ color: 'blue', textDecoration: 'underline' }}>
-                {t('guide.link')}
+                Customization Guide
               </a>
             </Typography>
           </Box>
@@ -599,7 +594,7 @@ export default function ProductIntro({ product }: Props) {
                   }
                 }}
               >
-                {t('variant.top')}
+                Top
               </Button>
               <Button
                 onClick={() => setSelected("uniform")}
@@ -617,7 +612,7 @@ export default function ProductIntro({ product }: Props) {
                   }
                 }}
               >
-                {t('variant.uniform')}
+                Uniform (Jersey + Shorts)
               </Button>
             </FlexBox>
           )
@@ -635,7 +630,7 @@ export default function ProductIntro({ product }: Props) {
           />
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
-            <Box width={'100%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
+            <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
               <Button
                 id="addToBag-button-event-click"
                 color="primary"
@@ -647,7 +642,6 @@ export default function ProductIntro({ product }: Props) {
                   my: 2,
                   whiteSpace: "nowrap",
                   flex: 1, // Permite que los botones se distribuyan equitativamente
-                  maxWidth: "300px" // Limita el ancho máximo del botón
                 }}
                 onClick={() => {
                   const result = handleAddToBagClick();
@@ -698,7 +692,7 @@ export default function ProductIntro({ product }: Props) {
                   });
                 }}
               >
-                {t('actions.addToCart')}
+                Add to Cart
               </Button>
 
               <Button
@@ -722,46 +716,40 @@ export default function ProductIntro({ product }: Props) {
           <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={1} mt={2} border={1} borderColor={'grey.200'} p={1}>
             <Typography variant="subtitle2" fontSize={{ xs: '4vw', md: '1.5vw' }} fontWeight={700} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Lock />
-              {t('secureCheckout')}
+              Guaranteed Safe & Secure Checkout
             </Typography>
 
             <Box display="flex" flexWrap={'wrap'} mt={1} width={'100%'} justifyContent={'center'} alignItems={'center'}>
               <Box width={{ xs: '18vw', md: '6vw' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/paypal-1.png" alt="Pago 1" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: 'auto', md: 'auto' }} >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/visa.png" alt="Pago 2" style={{ width: 'auto', height: 'auto' }} />
               </Box>
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/MasterCard.png" alt="Pago 2" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: 'auto', md: 'auto' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/jcb.png" alt="Pago 3" style={{ width: 'auto', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/3dsecure.png" alt="Pago 3" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/wise.png" alt="Pago 4" style={{ width: '100%', height: 'auto' }} />
               </Box>
             </Box>

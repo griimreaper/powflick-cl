@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useCustomizationsStore } from "store/customizationsStore";
+import { useCustomizationStore } from "store/customizationStore";
 
 export const useCounter = (productId: string, initialValue = 1) => {
   const [counter, setCounter] = useState(initialValue);
-  const { addCustomizations, trimCustomizations } = useCustomizationsStore();
+  const { list, addCustomizations, trimCustomizations } = useCustomizationsStore();
+  const { customization, setCustomization } = useCustomizationStore();
 
   const handleInputChange = (newValue: number) => {
     if (newValue === 0) {
@@ -35,10 +37,23 @@ export const useCounter = (productId: string, initialValue = 1) => {
   };
 
   const decrement = () => {
-    if (counter > 1) { // Solo decrementa si el contador es mayor a 1
+    if (counter > 1) {
       const newCounter = counter - 1;
-      setCounter(newCounter); // Actualiza el contador
-      trimCustomizations(productId, newCounter); // Elimina customización al decrementar
+      setCounter(newCounter);
+      trimCustomizations(productId, newCounter);
+
+      // Buscar el objeto del producto en la lista
+      const productData = list.find(item => item.productId === productId);
+      const productCustomizations = productData?.customizations || [];
+
+      // Verificar si la customización actual está en la lista
+      const exists = productCustomizations.includes(customization);
+
+      // Si no está, asignar la primera customización disponible
+      if (!exists && productCustomizations.length > 0) {
+        setCustomization(productCustomizations[0]);
+      }
+
     }
   };
 

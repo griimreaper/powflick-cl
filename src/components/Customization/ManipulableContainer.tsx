@@ -100,6 +100,9 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     return () => observer.disconnect(); // Limpiar observer al desmontar
   }, []);
 
+  useEffect(() => {
+    isSelectedRef.current = selection.index === index && selection.type === each.type;
+  }, [selection, index, each.type]);
 
   // Manejar clics fuera del componente
   useEffect(() => {
@@ -157,8 +160,6 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
     console.log('Pinch event:', { newRotate, newSize });
   };
 
-
-
   return (
     <Box
       ref={containerRef}
@@ -182,7 +183,7 @@ const ManipulableContainer: React.FC<ManipulableContainerProps> = ({
         }}
       />
 
-      {isSelectedRef.current && (
+      {isSelectedRef.current && (each?.text || each.logoUrl) && (
         <>
           <Moveable
             flushSync={flushSync}

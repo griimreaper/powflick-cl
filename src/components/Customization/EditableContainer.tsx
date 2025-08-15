@@ -4,7 +4,7 @@ import { useCustomizationsStore } from 'store/customizationsStore';
 import { deleteImage, setImageBlob } from 'services/imageStorage';
 import CustomTooltip from 'components/Tooltip/tooltip';
 import InputTeam from './inputTeam';
-import { ChevronRightOutlined, ErrorOutline } from '@mui/icons-material';
+import { Add, ChevronRightOutlined, ErrorOutline } from '@mui/icons-material';
 import { SwatchesPicker } from "react-color";
 import { Box, Button, FormControl, IconButton, Input, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip, Typography } from '@mui/material';
 
@@ -118,6 +118,9 @@ function EditableContainer({
             input?.removeEventListener('touchstart', preventFocus);
         };
     }, [selection]);
+
+    console.log(selection);
+
 
     const removeLogo = async (index: number) => {
         if (logos[index].logoUrl !== "") {
@@ -306,24 +309,30 @@ function EditableContainer({
                                         sx={{
                                             height: 32,
                                             width: 32,
-                                            backgroundColor: selection.index === index ? "primary.main" : "grey.200",
+                                            backgroundColor: selection.index === index ? "black" : "white",
                                             borderRadius: 1,
                                             p: 0.5,
                                             cursor: "pointer",
-                                            "&:hover": {
-                                                backgroundColor: "primary.main",
-                                            },
+                                            border: '1px solid black',
+
                                         }}
                                         onClick={() => setSelection({ type: "Logo", index })}
                                     />
                                 )
                         )}
                         <Button
-                            variant="contained"
-                            sx={{ p: 1, backgroundColor: "grey.200", "&:hover": { backgroundColor: "primary.main", color: "white" } }}
+                            size="small"
+                            sx={{ p: 1 }}
+                            color="primary"
+                            variant="outlined"
+                            style={{
+                                width: "32px",
+                                height: "32px",
+                                alignSelf: "center",
+                            }}
                             onClick={() => addNewElement("Logo")}
                         >
-                            +
+                            <Add fontSize="small" />
                         </Button>
                     </Box>
                     {/* Logo */}
@@ -456,29 +465,49 @@ function EditableContainer({
                                     onClick={() => setSelection({ type: "Text", index })}
                                     onChange={(e) => handleTextChange(e, selection.index)}
                                     inputProps={{
-                                        style: { textAlign: "center" },
+                                        style: {
+                                            textAlign: "center",
+                                            color: selection.index === index ? "white" : "black",
+                                        },
                                     }}
                                     sx={{
                                         overflow: "visible",
                                         width: `${(each.text ?? "").length + 4}ch`,
                                         "&.Mui-focused": {
-                                            backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
+                                            border: '1px solid black',
+                                            color: 'white',
                                         },
-                                        backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
+                                        backgroundColor: selection.index === index ? "black" : "white",
                                         cursor: selection.index === index ? "default" : "pointer",
-                                        "&:hover": { backgroundColor: "primary.400" },
+                                        "&:hover": {
+                                            backgroundColor: "gray.200"
+                                        },
                                         touchAction: "none",
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: 'black',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: 'black',
+                                            },
+                                        },
                                     }}
                                 />
                             )
                         ))}
                         <Button
-                            variant="contained"
-                            color="primary"
                             size="small"
+                            sx={{ p: 1 }}
+                            color="primary"
+                            variant="outlined"
+                            style={{
+                                width: "32px",
+                                height: "32px",
+                                alignSelf: "center",
+                            }}
                             onClick={() => addNewElement("Text")}
                         >
-                            +
+                            <Add fontSize="small" />
                         </Button>
                     </Box>
                     <Box
@@ -490,7 +519,7 @@ function EditableContainer({
                         sx={{ display: showInputsEdit === "Text" ? "none" : "flex" }}
                     >
                         <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                            <Box display="flex" alignItems="center" gap={2}>
+                            {/* <Box display="flex" alignItems="center" gap={2}>
                                 {Number(
                                     list.find(({ productId }) => productId === id)?.customizations?.length
                                 ) > 1 && (
@@ -520,7 +549,7 @@ function EditableContainer({
                                             <ChevronRightOutlined sx={{ width: 16, height: 16 }} />
                                         </Box>
                                     )}
-                            </Box>
+                            </Box> */}
                             <FormControl fullWidth>
                                 <InputLabel id="font-select-label">Font</InputLabel>
                                 <Select
@@ -571,14 +600,14 @@ function EditableContainer({
                                 </Tooltip>
                             </Button>
                         </Box>
-                        <InputTeam
+                        {/* <InputTeam
                             sideName={sideName}
                             selection={selection}
                             name={"Text"}
                             id={id}
                             showInput={showInputsEdit === "Text"}
                             setShowInput={setShowInputsEdit}
-                        />
+                        /> */}
                     </Box>
                 </Box>
             )}
@@ -602,35 +631,53 @@ function EditableContainer({
                                     key={index + "numbers" + sideName}
                                     value={each.number}
                                     color='primary'
-                                    onChange={(e) => handleNumberChange(e, selection.index)}
                                     onClick={() => setSelection({ type: "Number", index })}
+                                    onChange={(e) => handleNumberChange(e, selection.index)}
                                     inputProps={{
                                         style: {
                                             textAlign: "center",
                                             width: `${(each.number ?? "").length + 1}ch`,
+                                            color: selection.index === index ? "white" : "black",
                                         },
                                     }}
                                     size="small"
                                     sx={{
                                         "&.Mui-focused": {
-                                            backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
+                                            border: '1px solid black',
+                                            color: 'white',
                                         },
-                                        backgroundColor: selection.index === index ? "primary.main" : "#f5f5f5",
                                         cursor: selection.index === index ? "default" : "pointer",
-                                        "&:hover": { backgroundColor: "primary.400" },
+                                        backgroundColor: selection.index === index ? "black" : "white",
+                                        "&:hover": {
+                                            backgroundColor: "gray.200"
+                                        },
                                         touchAction: "none",
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: 'black',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: 'black',
+                                            },
+                                        },
                                     }}
 
                                 />
                             )
                         ))}
                         <Button
-                            onClick={() => addNewElement("Number")}
-                            variant="contained"
-                            color='primary'
                             size="small"
+                            sx={{ p: 1 }}
+                            color="primary"
+                            variant="outlined"
+                            style={{
+                                width: "32px",
+                                height: "32px",
+                                alignSelf: "center",
+                            }}
+                            onClick={() => addNewElement("Number")}
                         >
-                            +
+                            <Add fontSize="small" />
                         </Button>
                     </Box>
 
@@ -643,7 +690,7 @@ function EditableContainer({
                         sx={{ display: showInputsEdit === "Number" ? "none" : "flex" }}
                     >
                         <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                            <Box display="flex" alignItems="center" gap={2}>
+                            {/* <Box display="flex" alignItems="center" gap={2}>
                                 {Number(
                                     list.find(({ productId }) => productId === id)?.customizations.length
                                 ) > 1 && (
@@ -673,7 +720,7 @@ function EditableContainer({
                                             <ChevronRightOutlined sx={{ width: 16, height: 16 }} />
                                         </Box>
                                     )}
-                            </Box>
+                            </Box> */}
 
                             <FormControl fullWidth>
                                 <InputLabel id="font-select-label">Font</InputLabel>
@@ -728,18 +775,18 @@ function EditableContainer({
                             </Button>
                         </Box>
 
-                        <InputTeam
+                        {/* <InputTeam
                             sideName={sideName}
                             selection={selection}
                             name={"Number"}
                             id={id}
                             showInput={showInputsEdit === "Number"}
                             setShowInput={setShowInputsEdit}
-                        />
+                        /> */}
                     </Box>
                 </Box>
             )}
-            <Box sx={{ width: "100%" }}>
+            {/* <Box sx={{ width: "100%" }}>
                 {showInputsEdit === "Text" ? (
                     <InputTeam
                         sideName={sideName}
@@ -759,7 +806,7 @@ function EditableContainer({
                         setShowInput={setShowInputsEdit}
                     />
                 ) : null}
-            </Box>
+            </Box> */}
         </Box>
     )
 }
