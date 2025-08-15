@@ -16,6 +16,7 @@ import Image from "next/image";
 import DialogDrawer from "./components/dialog-drawer";
 import LoginCartButtons from "./components/login-cart-buttons";
 import MobileHeader from "./components/mobile-header";
+import LanguageSwitcher from "./components/language-switcher";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ResetPasswordForm } from "pages-sections/sessions/page-view/ResetPassword";
 import LoadingPageComponent from "components/Loaders/LoaderPageComponent";
@@ -49,14 +50,17 @@ export default function Header({
   const [openReset, setIsOpenReset] = useState(false);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
-  const searchParams = useSearchParams() || new URLSearchParams();
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
 
   useEffect(() => {
     // Verifica si estamos en el cliente
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setIsClient(true);
-      setToken(searchParams.get('token'));
+      // Lee el token desde la URL
+      const t = searchParams?.get("token");
+      setToken(t ?? null);
     }
   }, [searchParams]);
 
@@ -70,31 +74,30 @@ export default function Header({
       const { isValid } = await validateToken(String(token));
       if (isValid) {
         // Save the token in sessionStorage
-        sessionStorage.setItem('resetPasswordToken', String(token));
+        sessionStorage.setItem("resetPasswordToken", String(token));
         // Remove the token from the URL without reloading the page
-        const urlWithoutToken = window.location.href.split('?')[0];
+        const urlWithoutToken = window.location.href.split("?")[0];
         window.history.replaceState({}, document.title, urlWithoutToken);
         toggleDialog();
-        setIsOpenReset(true)
+        setIsOpenReset(true);
         setLoading(false);
       } else {
-        showErrorAlert("Error!", 'Change password time expired');
+        showErrorAlert("Error!", "Change password time expired");
         setLoading(false);
       }
     };
 
     asyncFetch();
-  }, [isClient, token, router]);
+  }, [isClient, token, router, toggleDialog]);
 
   const theme = useTheme();
   const downMd = useMediaQuery(theme.breakpoints.down(1150));
-  const { dialogOpen, sidenavOpen, toggleDialog, toggleSidenav } = useHeader();
 
   const CONTENT_FOR_LARGE_DEVICE = (
     <Fragment>
       {/* LEFT CONTENT - LOGO AND CATEGORY */}
       <FlexBox minWidth={100} alignItems="center" paddingTop={2}>
-        <Link href="/">
+        <Link href={`/${(typeof window === 'undefined' ? 'en' : (location.pathname.match(/^\/(en|es)/)?.[1] || 'en'))}`}>
           <Image
             draggable={false}
             width={50}
@@ -119,6 +122,9 @@ export default function Header({
         toggleSidenav={toggleSidenav}
         session={!!session}
       />
+
+      {/* LANGUAGE SWITCHER */}
+      {/* <LanguageSwitcher /> */}
 
       {/* LOGIN FORM DIALOG AND CART SIDE BAR  */}
       <DialogDrawer

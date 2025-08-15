@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { beginCheckout } from "../../../../fpixel";
+import { useTranslations } from "next-intl";
 
 // ==============================================================
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 // ==============================================================
 
 export default function BottomActions({ total, handleNavigate }: Props) {
+  const t = useTranslations("MiniCart");
   const { cart, setCoupon, coupon } = useShoppingCartStore();
 
   console.log(coupon);
@@ -103,7 +105,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
           addDatalayer();
         }}
       >
-        Checkout Now ({total.toFixed(2)})
+        {t("checkoutNow", { total: total.toFixed(2) })}
       </Button>
 
       <Button
@@ -117,7 +119,7 @@ export default function BottomActions({ total, handleNavigate }: Props) {
           addDatalayer();
         }}
       >
-        View Cart
+        {t("viewCart")}
       </Button>
     </Box>
   );

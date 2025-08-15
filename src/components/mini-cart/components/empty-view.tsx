@@ -3,8 +3,10 @@ import Image from "next/image";
 import { FlexBox } from "components/flex-box";
 import { Paragraph } from "components/Typography";
 import { ShoppingBag } from "@mui/icons-material";
+import { useTranslations } from "next-intl";
 
 export default function EmptyCartView() {
+  const t = useTranslations("MiniCart");
   return (
     <FlexBox
       alignItems="center"
@@ -14,7 +16,7 @@ export default function EmptyCartView() {
       <ShoppingBag fontSize="large"/>
 
       <Paragraph fontSize={15} mt={2} color="grey.600" textAlign="center" maxWidth={200}>
-        Your shopping bag is empty. Start shopping
+        {t("empty")}
       </Paragraph>
     </FlexBox>
   );

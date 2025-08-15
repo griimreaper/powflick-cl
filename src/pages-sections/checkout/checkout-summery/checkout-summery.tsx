@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -26,6 +25,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { useTranslations } from "next-intl";
 
 const gatewayOptions = [
   // {
@@ -46,6 +46,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
   const [error, setError] = useState("");
   const [selectedGateway, setSelectedGateway] = useState(gatewayOptions[0].value);
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("Cart");
 
   const subtotal = data.cart.reduce((acc: any, item: any) => acc + item.totalProduct, 0);
   const totalCustomizations = data.cart.reduce((acc: any, item: any) => acc + item.totalCustomization, 0);
@@ -69,17 +70,17 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
     try {
       if (!token) {
         toggleDialog();
-        showErrorAlert("You must be logged", "");
+        showErrorAlert(t("mustBeLoggedIn"), "");
         return;
       }
       const couponData = await getCouponByCode(couponCode, token);
       if (!couponData || !couponData.active) {
-        setError("Invalid or inactive coupon");
+        setError(t("invalidCoupon"));
         return;
       }
       setCoupon(couponData);
     } catch (error) {
-      setError(`Coupon not found or not available for your account`);
+      setError(t("couponNotFound"));
       console.log("Error fetching coupon:", error);
 
     }
@@ -95,22 +96,25 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
 
   return (
     <Card sx={{ padding: 3, boxShadow: '0 8px 32px 0 rgba(60,72,88,0.25)' }}>
-      <ListItem mb={1} title="Subtotal" value={subtotal} />
-      <ListItem mb={1} title="Customizations" value={totalCustomizations} />
+      <ListItem mb={1} title={t("subtotal")} value={subtotal} />
+      <ListItem mb={1} title={t("customizations")} value={totalCustomizations} />
       <ListItem
         mb={1}
         title={
           coupon && coupon.title
-            ? `Coupon (${coupon.title} - ${coupon.type === "amount"
-              ? `$${coupon.discount}`
-              : `${coupon.discount}%`
-            })`
-            : "Coupon"
+            ? t("couponWithDetails", {
+                title: coupon.title,
+                value:
+                  coupon.type === "amount"
+                    ? currency(coupon.discount)
+                    : `${coupon.discount}%`,
+              })
+            : t("coupon")
         }
         value={discountValue}
       />
       <FlexBetween mb={2}>
-        <Span color="grey.600">Total:</Span>
+        <Span color="grey.600">{t("total")}:</Span>
         <Span fontSize={18} fontWeight={600} lineHeight="1">
           {currency(totalWithDiscount)}
         </Span>
@@ -118,9 +122,9 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
       <Divider sx={{ my: 2 }} />
 
       <FlexBox alignItems="center" columnGap={1} mb={2}>
-        <Span fontWeight="600">Additional Comments</Span>
+        <Span fontWeight="600">{t("additionalComments")}</Span>
         <Span p="6px 10px" fontSize={12} lineHeight="1" borderRadius="3px" color="primary.main" bgcolor="primary.light">
-          Optional
+          {t("optional")}
         </Span>
       </FlexBox>
       <TextField variant="outlined" rows={6} fullWidth multiline value={note} onChange={(e) => setNote(e.target.value)} />
@@ -130,9 +134,9 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
       <TextField
         fullWidth
         size="small"
-        label="Coupon Code"
+        label={t("couponCode")}
         variant="outlined"
-        placeholder="Coupon Code"
+        placeholder={t("couponCode")}
         value={couponCode}
         onChange={(e) => setCouponCode(e.target.value)}
         error={!!error}
@@ -149,7 +153,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
           onClick={handleApplyCoupon}
           disabled={!!coupon}
         >
-          Apply Coupon
+          {t("applyCoupon")}
         </Button>
         <Divider sx={{ my: 4 }} />
         {/* Métodos de pago como radio group */}
@@ -212,7 +216,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
                       minHeight: 40,
                     }}
                   >
-                    Credit Card
+                    {t("creditCard")}
                     <span style={{ display: "flex", alignItems: "center", marginLeft: 8, gap: 4 }}>
                       <Image src="/assets/images/payment-methods/visa.png" alt="Visa" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
                       <Image src="/assets/images/payment-methods/master-card.png" alt="MasterCard" width={28} height={18} style={{ background: "#fff", borderRadius: 2 }} />
@@ -229,9 +233,9 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
         </RadioGroup>
         <Tooltip title={
           !selectedDirection
-            ? "Select a shipping address"
+            ? t("selectShippingAddress")
             : cart.length === 0
-              ? "Add products to cart"
+              ? t("addProductsToCart")
               : ""
         } arrow>
           <span style={{ display: 'block' }}>
@@ -354,7 +358,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
               {loading ? (
                 <Image src="/assets/images/Double Ring-1s-200px.png" alt="Loader GIF" width={20} height={20} />
               ) : (
-                'Checkout Now'
+        t("checkoutNow")
               )}
             </Button>
           </span>
@@ -368,7 +372,7 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
           sx={{ mb: 3 }}
           onClick={handleRemoveCoupon}
         >
-          Remove Coupon
+      {t("removeCoupon")}
         </Button>
       )}
       <Divider sx={{ mb: 2 }} />

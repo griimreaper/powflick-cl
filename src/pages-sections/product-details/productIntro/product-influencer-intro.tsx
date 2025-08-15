@@ -33,12 +33,14 @@ import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount } from "utils/tools";
 import AditionalDetailsinfluencer from "./AditionalDetailsInfluencer";
+import { useTranslations } from "next-intl";
 
 // ================================================================
 type Props = { product: detailProps };
 // ================================================================
 
 export default function ProductInfluencerIntro({ product }: Props) {
+  const t = useTranslations('ProductIntro');
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const {
     id,
@@ -573,7 +575,7 @@ export default function ProductInfluencerIntro({ product }: Props) {
           <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={1} mt={2} border={1} borderColor={'grey.200'} p={1}>
             <Typography variant="subtitle2" fontSize={{ xs: '4vw', md: '1.5vw' }} fontWeight={700} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Lock />
-              Guaranteed Safe & Secure Checkout
+              {t('secureCheckout')}
             </Typography>
 
             <Box display="flex" flexWrap={'wrap'} mt={1} width={'100%'} justifyContent={'center'} alignItems={'center'}>

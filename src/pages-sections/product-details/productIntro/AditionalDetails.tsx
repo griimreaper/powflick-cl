@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { FC, useEffect, useState } from "react";
 import {
   Accordion,
@@ -22,6 +23,7 @@ import { killParenthesisIn } from "utils/tools";
 import { useCustomizationsStore } from "store/customizationsStore";
 import { Paragraph } from "components/Typography";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface detailProps {
   Neck: { name: string; image: string }[] | null;
@@ -61,6 +63,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
   id,
   selected = "uniform", // <-- Valor por defecto
 }) => {
+  const t = useTranslations('ProductCustomize');
   const customization = useCustomizationStore(state => state.customization);
   const { setFieldForAllCustomizations } = useCustomizationsStore();
   const isLocked = counter < 20;
@@ -126,7 +129,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                       setShowSizeGuide(!showSizeGuide);
                     }}
                   >
-                    Size Guide
+                    {t('sizeGuide')}
                   </Typography>
                   {showSizeGuide && (
                     <Dialog open={showSizeGuide} onClose={() => setShowSizeGuide(false)} maxWidth="md">
@@ -215,7 +218,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                     color: "#000",
                     border: "1px solid #000",
                     height: "clamp(32px, 20px, 50px)", // Mantiene una altura adaptable
-                    width: "clamp(30px, 30vw, 80px)", // Mantiene un ancho consistente en distintas pantallas
+                    width: "auto", // Mantiene un ancho consistente en distintas pantallas
                     flexShrink: 0, // Evita que el botón se reduzca si el texto a la izquierda crece
                     mx: 1,
                     whiteSpace: "nowrap",
@@ -237,7 +240,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                     );
                   }}
                 >
-                  Set for all
+                  {t('setForAll')}
                 </Button>
               )}
             </Box>
@@ -261,10 +264,10 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
       {type === 'technique' && (
         <Box display={'flex'} gap={1} flexDirection={'column'}>
           <Typography fontWeight={'bold'} color={'primary.main'}>
-            Special Techniques require a minimum of 50 pieces per technique.
+            {t('specialTech.title')}
           </Typography>
           <Typography fontSize={'12px'}>
-            Example: 25 with Embroidery on jersey + 25 with Embroidery on shorts = 50 pieces.
+            {t('specialTech.example')}
           </Typography>
         </Box>
       )}
@@ -379,7 +382,15 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                 {
                   <>
                     <Typography fontWeight={'600'} align="center" whiteSpace={'nowrap'}>
-                      {type === "socks" ? killParenthesisIn(item.name) : item.name}
+                      {type === "socks" ? killParenthesisIn(item.name) : (type === 'technique' ? (function (name) {
+                        switch (name) {
+                          case 'Default Sublimated': return t('techniqueNames.defaultSublimated');
+                          case 'Heat Press Technique': return t('techniqueNames.heatPress');
+                          case 'Stitch Embroidery': return t('techniqueNames.stitchEmbroidery');
+                          case 'Embroidery Logo': return t('techniqueNames.embroideryLogo');
+                          default: return name;
+                        }
+                      })(item.name) : item.name)}
                     </Typography>
                     {item.description &&
                       <Typography fontSize={'11px'} align="center"  >
@@ -395,7 +406,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
                           style={{ textDecoration: "none" }}
                         >
                           <Typography fontSize={'11px'} color={'blue'} align="center">
-                            Contact Us
+                            {t('contactUs')}
                           </Typography>
                         </a>
                       </Link>
@@ -422,6 +433,164 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
 
   const isProMesh = (name: string) =>
     ["ProMesh", "ProMesh™", "ProMesh™ Fabric"].some(n => name?.toLowerCase().includes(n.toLowerCase()));
+
+  const renderFabricSection = (name?: string) => {
+    if (!name) return null;
+    const lower = name.toLowerCase();
+    const isLP = ["liteplay", "liteplay™", "liteplay™ fabric"].some(n => lower.includes(n));
+    const isAD = ["aerodry", "aerodry™", "aerodry™ fabric"].some(n => lower.includes(n));
+    const isPM = ["promesh", "promesh™", "promesh™ fabric"].some(n => lower.includes(n));
+
+    const headers = {
+      weight: t('fabric.common.weight'),
+      blend: t('fabric.common.blend'),
+      stretch: t('fabric.common.stretch'),
+      finish: t('fabric.common.finish'),
+    };
+
+    if (isLP) {
+      return (
+        <Box width="100%">
+          <Typography variant="h4" fontWeight="bold" mb={2} sx={{ lineHeight: 1.1 }}>
+            {t('fabric.litePlay.title')}
+          </Typography>
+          <Typography fontStyle="italic" mb={3} sx={{ fontSize: 17 }}>
+            {t('fabric.litePlay.subtitle')}
+          </Typography>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.litePlay.dailyTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.litePlay.dailyBody')}</Typography>
+          </Box>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.litePlay.softTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.litePlay.softBody')}</Typography>
+          </Box>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.litePlay.quickDryTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.litePlay.quickDryBody')}</Typography>
+          </Box>
+          <Box mt={2} mb={2}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+              <tbody>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.weight}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.litePlay.values.weight')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.blend}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.litePlay.values.blend')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.stretch}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.litePlay.values.stretch')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.finish}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.litePlay.values.finish')}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Box>
+        </Box>
+      );
+    }
+
+    if (isAD) {
+      return (
+        <Box width="100%">
+          <Typography variant="h4" fontWeight="bold" mb={2} sx={{ lineHeight: 1.1 }}>
+            {t('fabric.aeroDry.title')}
+          </Typography>
+          <Typography fontStyle="italic" mb={3} sx={{ fontSize: 17 }}>
+            {t('fabric.aeroDry.subtitle')}
+          </Typography>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.aeroDry.airflowTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.aeroDry.airflowBody')}</Typography>
+          </Box>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.aeroDry.drycoreTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.aeroDry.drycoreBody')}</Typography>
+          </Box>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.aeroDry.toughnessTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.aeroDry.toughnessBody')}</Typography>
+          </Box>
+          <Box mt={2} mb={2}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+              <tbody>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.weight}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.aeroDry.values.weight')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.blend}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.aeroDry.values.blend')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.stretch}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.aeroDry.values.stretch')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.finish}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.aeroDry.values.finish')}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Box>
+        </Box>
+      );
+    }
+
+    if (isPM) {
+      return (
+        <Box width="100%">
+          <Typography variant="h4" fontWeight="bold" mb={2} sx={{ lineHeight: 1.1 }}>
+            {t('fabric.proMesh.title')}
+          </Typography>
+          <Typography fontStyle="italic" mb={3} sx={{ fontSize: 17 }}>
+            {t('fabric.proMesh.subtitle')}
+          </Typography>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.proMesh.knitTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.proMesh.knitBody')}</Typography>
+          </Box>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.proMesh.flexTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.proMesh.flexBody')}</Typography>
+          </Box>
+          <Box mb={2}>
+            <Typography fontWeight="bold" sx={{ fontSize: 15 }}>{t('fabric.proMesh.durabilityTitle')}</Typography>
+            <Typography variant="body2" sx={{ fontSize: 14 }}>{t('fabric.proMesh.durabilityBody')}</Typography>
+          </Box>
+          <Box mt={2} mb={2}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+              <tbody>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.weight}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.proMesh.values.weight')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.blend}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.proMesh.values.blend')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.stretch}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.proMesh.values.stretch')}</td>
+                </tr>
+                <tr>
+                  <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>{headers.finish}</td>
+                  <td style={{ padding: 8, border: "1px solid #ddd" }}>{t('fabric.proMesh.values.finish')}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Box>
+        </Box>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div style={{ marginTop: "2rem" }}>
@@ -490,174 +659,8 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
               bgcolor: "#fff"
             }}
           >
-            {selectedItem && isLitePlay(selectedItem.name) ? (
-              <Box width="100%">
-                <Typography variant="h4" fontWeight="bold" mb={2} sx={{ lineHeight: 1.1 }}>
-                  LitePlay™ Fabric
-                </Typography>
-                <Typography fontStyle="italic" mb={3} sx={{ fontSize: 17 }}>
-                  Light-as-air comfort · Confort ultraligero
-                </Typography>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>Everyday Performance · Rendimiento Diario</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>EN. Feather-light knit built for training and match day.</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>ES. Tejido ultraligero pensado para entrenos y día de partido.</Typography>
-                </Box>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>Soft Interlock Feel · Tacto Suave Interlock</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>EN. Smooth surface reduces chafe for all-day wear.</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>ES. Superficie lisa que evita roces durante todo el día.</Typography>
-                </Box>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>Quick-Dry Finish · Secado Rápido</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>EN. Wicks sweat fast to keep you cool and focused.</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>ES. Absorbe y evacua el sudor para mantenerte fresco y concentrado.</Typography>
-                </Box>
-                <Box mt={2} mb={2}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
-                    <tbody>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Weight / Peso</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>150 g/m² (ultra-light)</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Blend / Composición</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>100 % performance polyester</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Stretch / Elasticidad</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>2-way responsive</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Finish / Acabado</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>Moisture-wick, soft interlock</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </Box>
-              </Box>
-            ) : selectedItem && isAeroDry(selectedItem.name) ? (
-              <Box width="100%">
-                <Typography variant="h4" fontWeight="bold" mb={2} sx={{ lineHeight: 1.1 }}>
-                  AeroDry™ Fabric
-                </Typography>
-                <Typography fontStyle="italic" mb={3} sx={{ fontSize: 17 }}>
-                  Hexagon-vent mesh built for maximum cool · Malla hexagonal que mantiene la frescura total
-                </Typography>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>Hexa-Vent Airflow · Flujo de Aire Hexa-Vent</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>EN.</b> Micro-hexagon openings increase ventilation <b>up to 20 %</b> versus standard mesh, letting heat escape fast during sprints and summer fixtures.
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>ES.</b> Sus micro-hexágonos elevan la ventilación <b>hasta un 20 %</b> frente a la malla clásica, liberando el calor en carreras y partidos veraniegos.
-                  </Typography>
-                </Box>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>DryCore Wicking · Absorción DryCore</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>EN.</b> Hydrophilic channels pull sweat off the skin and spread it across the surface for rapid evaporation—stay dry even above 90 °F.
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>ES.</b> Canales hidrofílicos alejan el sudor de la piel y lo dispersan para evaporarlo rápido; mantente seco incluso por encima de 32 °C.
-                  </Typography>
-                </Box>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>Feather-Lite Toughness · Ligeza Resistente</Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>EN.</b> Ultra-light 145 g/m² knit resists snags and abrasion, enduring <b>50+ washes</b> without losing stretch or color.
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>ES.</b> Punto ultraligero de 145 g/m² que soporta enganches y rozaduras, aguantando <b>50+ lavadas</b> sin perder elasticidad ni color.
-                  </Typography>
-                </Box>
-                <Box mt={2} mb={2}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
-                    <tbody>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Weight / Peso</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>145 g/m² (ultra-light)</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Blend / Composición</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>100 % performance polyester</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Stretch / Elasticidad</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>2-way responsive</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Finish / Acabado</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>Moisture-wick, snag-resistant micro-vent</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </Box>
-              </Box>
-            ) : selectedItem && isProMesh(selectedItem.name) ? (
-              <Box width="100%">
-                <Typography variant="h4" fontWeight="bold" mb={2} sx={{ lineHeight: 1.1 }}>
-                  ProMesh™ Fabric
-                </Typography>
-                <Typography fontStyle="italic" mb={3} sx={{ fontSize: 17 }}>
-                  Engineered for elite performance · Diseñado para el alto rendimiento
-                </Typography>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>
-                    Engineered Mesh Knit · Tejido de Malla Avanzada
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>EN.</b> Precision-knit honeycomb cells lift heat away from the body, boosting airflow by up to 25 % compared with standard jerseys.
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>ES.</b> Celdas tipo panel elevan el calor y aumentan la ventilación hasta un 25 % frente a los tejidos convencionales.
-                  </Typography>
-                </Box>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>
-                    ProStretch 2- Way Flex · Elasticidad Bidireccional ProStretch
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>EN.</b> Athletic 2-way stretch moves with every sprint, tackle and slide—zero restriction, zero bagging.
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>ES.</b> Su elasticidad bidireccional acompaña cada sprint, entrada o barrida sin limitarte ni deformarse.
-                  </Typography>
-                </Box>
-                <Box mb={2}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 15 }}>
-                    Game-Ready Durability · Resistencia de Competición
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>EN.</b> Anti-snag poly-filament yarns endure 50+ washes and season-long wear with no pilling or color fade.
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontSize: 14 }}>
-                    <b>ES.</b> Los filamentos anti-tirón superan 50 lavadas y toda una temporada sin bolitas ni pérdida de color.
-                  </Typography>
-                </Box>
-                <Box mt={2} mb={2}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
-                    <tbody>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Weight / Peso</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>150 g/m² (ultra-light)</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Blend / Composición</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>100 % performance polyester</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Stretch / Elasticidad</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>2-way responsive</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: "bold", padding: 8, border: "1px solid #ddd", background: "#fafafa" }}>Finish / Acabado</td>
-                        <td style={{ padding: 8, border: "1px solid #ddd" }}>Moisture-wick, soft interlock</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </Box>
-              </Box>
+            {selectedItem && (isLitePlay(selectedItem.name) || isAeroDry(selectedItem.name) || isProMesh(selectedItem.name)) ? (
+              <Box width="100%">{renderFabricSection(selectedItem.name)}</Box>
             ) : selectedItem?.description ? (
               <Box dangerouslySetInnerHTML={{ __html: selectedItem.description }} />
             ) : null}
@@ -668,19 +671,19 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         <Paragraph
           sx={{ color: "primary.main", fontWeight: 600, my: 1, ml: 2 }}
         >
-          Socks available after 20 uniforms
+          {t('socksAvailable', { count: 20 })}
         </Paragraph>
       ) : (
         <></>
       )}
       {detail.Size &&
         renderSection(
-          `Size ${customization.size}`,
+          `${t('sections.size')} ${customization.size}`,
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {["-MEN", "-KIDS", "-WOMEN"].map((gender) => (
               <div key={gender} style={{ width: "100%" }}>
                 <Typography variant="subtitle2">
-                  {gender.split("-").pop()}
+                  {(function (g) { const k = g.split('-').pop() || ''; const key = k.toLowerCase(); return t(`genders.${key}` as any); })(gender)}
                 </Typography>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                   {detail.Size.filter((s: string) => s.includes(gender)).map(
@@ -724,7 +727,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         )}
       {detail.Materials &&
         renderSection(
-          `Materials ${customization.materials}`,
+          `${t('sections.materials')} ${customization.materials}`,
           renderItems(detail.Materials, "materials", true),
           "materials",
           undefined,
@@ -732,7 +735,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         )}
       {detail.Neck &&
         renderSection(
-          `Neck ${customization.neck}`,
+          `${t('sections.neck')} ${customization.neck}`,
           renderItems(detail.Neck, "neck"),
           "neck",
           undefined,
@@ -741,7 +744,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
       {/* Renderiza Shorts solo si selected es 'uniform' */}
       {detail.Shorts && selected === "uniform" &&
         renderSection(
-          `Shorts ${customization.shorts}`,
+          `${t('sections.shorts')} ${customization.shorts}`,
           renderItems(detail.Shorts, "shorts", false, 75, true),
           "shorts",
           undefined,
@@ -749,7 +752,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         )}
       {detail.Pants &&
         renderSection(
-          `Pants ${customization.pants}`,
+          `${t('sections.pants')} ${customization.pants}`,
           renderItems(detail.Pants, "pants", false, 75, true),
           "pants",
           undefined,
@@ -757,7 +760,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         )}
       {detail.Socks &&
         renderSection(
-          `Socks ${customization.socks}`,
+          `${t('sections.socks')} ${customization.socks}`,
           renderItems(detail.Socks, "socks", false, 75, true),
           "socks",
           undefined,
@@ -765,7 +768,7 @@ const AditionalDetails: FC<AditionalDetailsProps> = ({
         )}
       {detail.Technique &&
         renderSection(
-          `Technique ${customization.technique}`,
+          `${t('sections.technique')} ${customization.technique}`,
           renderItems(detail.Technique, "technique"),
           "technique",
           undefined,

@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import styled from "@mui/material/styles/styled";
+import { useTranslations } from "next-intl";
 // LOCAL CUSTOM COMPONENTS
 import { Review } from "models/types";
 import { Grid, Typography } from "@mui/material";
@@ -26,6 +27,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 }));
 
 export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { productPrice: number, reviews: Review[], hasInfluencer?: boolean }) {
+  const t = useTranslations('ProductTabs');
   const [selectedOption, setSelectedOption] = useState(0);
   const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
@@ -38,11 +40,11 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
         onChange={handleOptionClick}
         variant='scrollable'
       >
-        <Tab className="inner-tab" label="Description" />
-        {hasInfluencer ? <></> : <Tab className="inner-tab" label="Pricing Information" />}
-        <Tab className="inner-tab" label={`Size Table`} />
-        <Tab className="inner-tab" label={`Worldwide Shipping`} />
-        <Tab className="inner-tab" label={`Reviews`} />
+  <Tab className="inner-tab" label={t('tabs.description')} />
+  {hasInfluencer ? <></> : <Tab className="inner-tab" label={t('tabs.pricing')} />}
+  <Tab className="inner-tab" label={t('tabs.sizeTable')} />
+  <Tab className="inner-tab" label={t('tabs.shippingWorldwide')} />
+  <Tab className="inner-tab" label={t('tabs.reviews')} />
       </StyledTabs>
 
       <Box mb={6}>
@@ -51,20 +53,20 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
             <Box width={{ xs: '100%', md: '50%' }} p={2} display={'flex'} flexDirection={'column'} alignItems={'start'} justifyContent={'space-around'} gap={2}>
 
               <Typography variant="body1" paragraph fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
-                <Typography component="span" fontWeight="bold" color="primary.main" fontSize={{ xs: '14px', md: '14px' }}>POW FLICK</Typography> is a premium sportswear brand specializing in custom team uniforms for football, basketball, and more.
+                <Typography component="span" fontWeight="bold" color="primary.main" fontSize={{ xs: '14px', md: '14px' }}>POW FLICK</Typography> {t('description.intro1')}
               </Typography>
 
               <Typography variant="body1" paragraph fontWeight={500} fontSize={{ xs: '14px', md: '14px' }} >
-                We combine bold aesthetics, elite-level materials, and reliable production to help teams around the world stand out and perform at their best.
+                {t('description.intro2')}
               </Typography>
 
               <Box sx={{ mb: 1 }}>
                 <Typography variant="body1" fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
                   -
                   <Typography component="span" fontWeight="bold" color="primary.main" fontSize={{ xs: '14px', md: '14px' }}>
-                    {" "}Advanced Performance Fabrics
+                    {" "}{t('description.bullet1.title')}
                   </Typography>
-                  {" "}Our kits are crafted with lightweight, breathable, and sweat-wicking fabrics engineered for speed, comfort, and durability – field-tested by semi-pro athletes.
+                  {" "}{t('description.bullet1.body')}
                 </Typography>
               </Box>
 
@@ -72,9 +74,9 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
                 <Typography variant="body1" fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
                   -
                   <Typography component="span" fontWeight="bold" color="primary.main" fontSize={{ xs: '14px', md: '14px' }}>
-                    {" "}Factory-Direct Supply
+                    {" "}{t('description.bullet2.title')}
                   </Typography>
-                  {" "}Chain With direct control over our manufacturing in Asia, we offer fast turnaround times, consistent quality, and competitive pricing with no middlemen.
+                  {" "}{t('description.bullet2.body')}
                 </Typography>
               </Box>
 
@@ -82,9 +84,9 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
                 <Typography variant="body1" fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
                   -
                   <Typography component="span" fontWeight="bold" color="primary.main" fontSize={{ xs: '14px', md: '14px' }}>
-                    {" "}Full Custom Design Support
+                    {" "}{t('description.bullet3.title')}
                   </Typography>
-                  {" From layout sketches to mockups and revisions, our creative team works side-by-side with clients to bring their team’s vision to life – no extra design fees, no limits on creativity. Whether you're a semi-pro club, a school team, or a growing brand, POW FLICK gives you the tools to compete with confidence and look the part."}
+                  {t('description.bullet3.body')}
                 </Typography>
               </Box>
             </Box>
@@ -102,7 +104,7 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
                 </Box>
                 <Box width={{ xs: '100%', md: '50%' }} display={'flex'} flexDirection={{ xs: 'row', md: 'column' }} justifyContent={'space-between'} alignItems={'center'} gap={2} p={2} whiteSpace={'nowrap'} >
                   <Box width={{ xs: '45%', md: '60%' }} display={'flex'} flexDirection={'column'} gap={2} justifyContent={'center'} alignItems={'center'}>
-                    <Typography fontWeight={'600'} fontSize={{ xs: '4vw', md: '1.5vw' }}>Heat Press Technique</Typography>
+                    <Typography fontWeight={'600'} fontSize={{ xs: '4vw', md: '1.5vw' }}>{t('description.techniques.heatPress')}</Typography>
                     <Image
                       src="/assets/images/detail/description-image-element-1.png"
                       alt="description-image"
@@ -113,7 +115,7 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
                     </Image>
                   </Box>
                   <Box width={{ xs: '45%', md: '60%' }} display={'flex'} flexDirection={'column'} gap={2} justifyContent={'center'} alignItems={'center'}>
-                    <Typography fontWeight={'600'} fontSize={{ xs: '4vw', md: '1.5vw' }}>Stitch Embroidery</Typography>
+                    <Typography fontWeight={'600'} fontSize={{ xs: '4vw', md: '1.5vw' }}>{t('description.techniques.stitchEmbroidery')}</Typography>
                     <Image
                       src="/assets/images/detail/description-image-element-2.png"
                       alt="description-image"
@@ -131,7 +133,7 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
         {selectedOption === 2 &&
           <Box display='flex' flexDirection={{ xs: 'column' }} px={{ xs: 1, md: 4 }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'} gap={2}>
             <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '4vw', md: '30px' }}>
-              English Size Table
+              {t('size.englishTitle')}
             </Typography>
             <Box display={'flex'} width={'60%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
               <Box width={{ xs: '80%', md: '30%' }}>
@@ -154,7 +156,7 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
               </Box>
             </Box>
             <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '4vw', md: '30px' }}>
-              Spanish Size Table
+              {t('size.spanishTitle')}
             </Typography>
             <Box display={'flex'} width={'60%'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'center'} gap={2}>
               <Box width={{ xs: '100%', md: '30%' }}>
@@ -190,35 +192,33 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
             <Grid item xs={12} md={6} textAlign={{ xs: 'center', md: 'left' }} display={'flex'} flexDirection={'column'} gap={2} >
               <Box display={'flex'} flexDirection={'column'} textAlign={{ xs: 'center', md: 'left' }} justifyContent={'center'} height={'100%'} gap={{ xs: 5, md: 2 }}>
                 <Typography variant="h6" color="primary.main" fontWeight={800} mb={2} fontSize={{ xs: '14px', md: '14px' }}>
-                  Worldwide Express Shipping. Reliable. On Time.
+                  {t('shipping.heading')}
                 </Typography>
                 <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
-                  At <strong style={{ color: '#CA0B0B' }}>POW FLICK</strong>{", we deliver custom sportswear to teams across the globe. Whether you're ordering from the U.S., Latin America, Europe, or beyond — we've got you covered."}
+                  {t.rich('shipping.lead', { brand: () => <strong style={{ color: '#CA0B0B' }}>POW FLICK</strong> })}
                 </Typography>
 
                 <Box display={'flex'} flexDirection={'column'} gap={2}>
-                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- Production & Processing Time</Typography>
-                  <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>All custom uniforms are made-to-order. Our standard production timeline is
-                    3-4 weeks, depending on the order size and complexity.</Typography>
+                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- {t('shipping.productionTitle')}</Typography>
+                  <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>{t('shipping.productionBody')}</Typography>
                 </Box>
 
                 <Box display={'flex'} flexDirection={'column'} gap={2}>
-                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- International Express Delivery</Typography>
-                  <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>We ship worldwide via trusted logistics partners (FedEx, DHL, etc.), ensuring
-                    safe and timely delivery.</Typography>
+                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- {t('shipping.intlDeliveryTitle')}</Typography>
+                  <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>{t('shipping.intlDeliveryBody')}</Typography>
                 </Box>
 
                 <Box display={'flex'} flexDirection={'column'} gap={2}>
-                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- Estimated Shipping Time</Typography>
+                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- {t('shipping.estimatedTitle')}</Typography>
                   <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
-                    North America & Europe: 5–10 business days
+                    {t('shipping.estimated.naeu')}
                   </Typography>
 
                   <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
-                    Latin America: 7–12 business days
+                    {t('shipping.estimated.latam')}
                   </Typography>
                   <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
-                    Asia & Oceania: 3–7 business days
+                    {t('shipping.estimated.asia')}
                   </Typography>
                 </Box>
               </Box>
@@ -228,9 +228,9 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
             <Grid item xs={12} md={6} textAlign={{ xs: 'center', md: 'left' }} display={'flex'}>
               <Box display={'flex'} flexDirection={'column'} alignItems={'center'} height={'100%'} gap={{ xs: '50px', md: '106px' }}>
                 <Box display={'flex'} flexDirection={'column'} gap={2}>
-                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- Tracking</Typography>
+                  <Typography variant="subtitle1" color="primary.main" fontWeight={800} fontSize={{ xs: '14px', md: '14px' }}>- {t('shipping.trackingTitle')}</Typography>
                   <Typography fontWeight={500} fontSize={{ xs: '14px', md: '14px' }}>
-                    {"Once your order is shipped, you'll receive a tracking number and real-time updates directly to your inbox.Need support with delivery or logistics? Contact us at support@powflick.com — our team is here to assist."}
+                    {t('shipping.trackingBody')}
                   </Typography>
                 </Box>
                 <Box width={'100%'} maxWidth={{ xs: '100%', md: '300px' }} height={'auto'} display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} alignItems={'center'} gap={6} px={{ xs: 0, sm: 6 }}>

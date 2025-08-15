@@ -5,6 +5,7 @@ import { DataStructure } from "models/types";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
+import { useTranslations } from "next-intl";
 import MainSection from "./MainSection";
 import { LazyLoadSection } from "./LazyLoadSection";
 import * as fbq from '../../../fpixel';
@@ -22,6 +23,7 @@ const Section8 = dynamic(() => import("./section-8"));
 const Box = dynamic(() => import("@mui/material/Box"));
 
 const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
+  const t = useTranslations("Home");
   const memoizedData = useMemo(() => data?.landing || {}, [data]);
   const isMobile = useMediaQuery("(max-width:768px)", { noSsr: true });
 
@@ -62,7 +64,7 @@ const FashionTwoPageView = ({ data }: { data: DataStructure }) => {
         <Box style={{ position: "relative" }}>
           <Image
             src="/assets/images/landing/POWFLICK_ELEMENTO-2.png"
-            alt="Overlay"
+            alt={t("overlayAlt")}
             width={250}
             height={200}
             priority

@@ -1,4 +1,4 @@
-import { openSans } from "app/layout";
+import { openSans } from "theme/fonts";
 
 export const fontSize = 14;
 
