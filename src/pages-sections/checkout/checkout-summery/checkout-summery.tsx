@@ -79,6 +79,8 @@ export default function CheckoutSummary({ data, toggleDialog, selectedDirection 
         return;
       }
       setCoupon(couponData);
+
+
     } catch (error) {
       setError(t("couponNotFound"));
       console.log("Error fetching coupon:", error);

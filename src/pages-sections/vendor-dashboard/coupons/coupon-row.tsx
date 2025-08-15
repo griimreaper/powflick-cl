@@ -4,17 +4,26 @@ import { showSuccessAlert, showErrorAlert } from "utils/alerts";
 import { useDashboardStore } from "store/dashboard";
 import { deleteCoupon } from "services/dashboardAdmin/coupons";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { Chip } from "@mui/material";
 
 // ========================================================================
 type Props = { coupon: any; setActualize: Function };
 // ========================================================================
 
 export default function CouponRow({ coupon, setActualize, onClick }: any) {
-    const { id, title, content, discountDisplay } = coupon || {};
+    const { id, title, content, discountDisplay, expiresAt } = coupon || {};
     const { profile } = useDashboardStore();
 
     const router = useRouter();
     const handleNavigate = () => router.push(`/admin/coupons/${id}`);
+
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
+
+    const isExpired = expiresAt ? dayjs.utc().isAfter(dayjs.utc(expiresAt)) : false;
 
     const handleDelete = async (id: string) => {
         try {
@@ -27,16 +36,54 @@ export default function CouponRow({ coupon, setActualize, onClick }: any) {
     };
 
     return (
-        <StyledTableRow tabIndex={-1} role="checkbox" onClick={onClick} style={{ cursor: "pointer" }}>
+        <StyledTableRow tabIndex={-1} role="checkbox" onClick={handleNavigate} sx={{
+            cursor: 'pointer',
+            '&:hover': {
+                backgroundColor: 'rgba(202, 11, 11, 0.1)',
+            },
+        }}>
             <StyledTableCell align="left">{title}</StyledTableCell>
             <StyledTableCell align="left">{content}</StyledTableCell>
             <StyledTableCell align="center">{discountDisplay}</StyledTableCell>
+            <StyledTableCell align="left">
+                {expiresAt ? (() => {
+                    const zone = coupon.timezone || 'UTC';
+                    const localTime = dayjs.utc(expiresAt).tz(zone).format('DD/MM/YYYY HH:mm');
+                    const cityName = zone.split('/').pop()?.replace(/_/g, ' ') || zone;
+                    return `${cityName} - ${localTime}`;
+                })() : 'Sin fecha'}
+            </StyledTableCell>
+            <StyledTableCell align="left">
+                {expiresAt
+                    ? new Intl.DateTimeFormat('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false, // ← formato 24hs
+                    }).format(new Date(expiresAt))
+                    : 'Sin fecha'}
+            </StyledTableCell>
             <StyledTableCell align="center">
-                <StyledIconButton onClick={handleNavigate}>
+                <Chip
+                    label={isExpired ? 'Expired' : 'Active'}
+                    color={!isExpired ? 'success' : 'error'}
+                    variant="outlined"
+                >
+                </Chip>
+            </StyledTableCell>
+
+            <StyledTableCell align="center">
+                <StyledIconButton onClick={(e) => {
+                    e.stopPropagation(); // para que no se dispare también el onClick del row
+                    router.push(`/admin/coupons/${id}?edit=true`);
+                }}
+                >
                     <Edit />
                 </StyledIconButton>
                 <StyledIconButton>
-                    <Delete onClick={() => handleDelete(id)} />
+                    <Delete onClick={(e) => { e.stopPropagation(); handleDelete(id) }} />
                 </StyledIconButton>
             </StyledTableCell>
         </StyledTableRow>
