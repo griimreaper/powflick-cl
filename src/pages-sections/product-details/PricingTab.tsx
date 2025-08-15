@@ -2,7 +2,7 @@ import { Box, Grid, Typography, Paper, Button, Divider, TextField } from '@mui/m
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-const PricingSection = ({ price }: { price: number }) => {
+const PricingSectionTab = ({ price }: { price: number }) => {
     const t = useTranslations('Pricing');
     const tiers = ['10-20', '21-50', '51-100', '101-250', '250+'];
 

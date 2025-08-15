@@ -13,8 +13,9 @@ import DetailReviewList from "./DetailsReviewList";
 import SizeTableTab from "./SizeTableTab";
 import WorldWideTab from "./WorldWideTab";
 import DescriptionTab from "./DescriptionTab";
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from "@mui/material";
 import { ExpandMoreOutlined } from "@mui/icons-material";
+import Image from "next/image";
 
 // STYLED COMPONENT
 const StyledTabs = styled(Tabs)(({ theme }) => ({
@@ -29,9 +30,10 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   }
 }));
 
-export default function ProductTabs({ reviews, hasInfluencer }: { reviews: Review[], hasInfluencer?: boolean }) {
+export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { productPrice: number, reviews: Review[], hasInfluencer?: boolean }) {
   const t = useTranslations('ProductTabs');
   const [selectedOption, setSelectedOption] = useState(0);
+  const handleOptionClick = (_: any, value: number) => setSelectedOption(value);
 
   const contentList = [
     {
@@ -41,7 +43,7 @@ export default function ProductTabs({ reviews, hasInfluencer }: { reviews: Revie
     },
     {
       label: "Pricing Information",
-      content: <PricingSectionTab />,
+      content: <PricingSectionTab price={0} />,
       hidden: hasInfluencer
     },
     {
@@ -226,7 +228,7 @@ export default function ProductTabs({ reviews, hasInfluencer }: { reviews: Revie
         }
         {selectedOption === 1 &&
           <Box display={'flex'} flexDirection={{ xs: 'column' }} justifyContent={'center'} width={'100%'} height={'100%'} alignItems={'center'}>
-            <PricingSection price={productPrice} />
+            <PricingSectionTab price={productPrice} />
           </Box>
         }
         {
