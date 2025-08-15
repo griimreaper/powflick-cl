@@ -43,7 +43,7 @@ export default function ProductTabs({ productPrice, reviews, hasInfluencer }: { 
     },
     {
       label: "Pricing Information",
-      content: <PricingSectionTab price={0} />,
+      content: <PricingSectionTab price={productPrice} />,
       hidden: hasInfluencer
     },
     {
