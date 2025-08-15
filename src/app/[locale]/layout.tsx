@@ -16,6 +16,7 @@ import GoogleTagManager from "./GoogleTagManager";
 import IntercomChat from "./IntercomChat";
 import { getStructuredData } from "./StructuredData";
 import MicrosoftClarity from "./MicrosoftClarity";
+import ThirdPartyErrorGuard from "./ThirdPartyErrorGuard";
 
 
 export default async function RootLayout({
@@ -75,6 +76,7 @@ export default async function RootLayout({
         <React.StrictMode>
           <NextIntlClientProvider locale={params.locale} messages={messages}>
             <GlobalProvider>
+              <ThirdPartyErrorGuard />
               <IntercomChat />
               <FloatingWhatsApp />
               {children}

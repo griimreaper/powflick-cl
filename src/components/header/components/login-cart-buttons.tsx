@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import { useShoppingCartStore } from "store/shoppingCart";
 import { SearchInputWithCategory } from "components/search-box";
 import { useDashboardStore } from "store/dashboard";
+import LanguageSwitcher from "./language-switcher";
 
 // ==============================================================
 interface Props {
@@ -124,8 +125,10 @@ export default function LoginCartButtons({
           }}
         >
           <SearchInputWithCategory onClose={toggleSearchBar} />
+
         </Box>
       </Modal>
+      <LanguageSwitcher />
     </div>
   );
 }
