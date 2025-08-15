@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import {
   Box,
@@ -13,6 +14,7 @@ import { styled } from "@mui/system";
 import { Paragraph } from "components/Typography";
 import Image from "next/image";
 import { Carousel } from "components/carousel";
+import { useTranslations } from "next-intl";
 import { Review } from "models/types";
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -115,6 +117,7 @@ interface ReviewsProps {
 }
 
 export const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
+  const t = useTranslations("HomeReviews");
   const responsive = [
     { breakpoint: 1024, settings: { slidesToShow: 4 } },
     { breakpoint: 768, settings: { slidesToShow: 3 } },
@@ -164,7 +167,7 @@ export const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
               lineHeight: 1,
             }}
           >
-            PEOPLE LOVE US
+            {t("title")}
           </Typography>
           <Paragraph
             color={isMobile ? 'white' : 'primary.main'}
@@ -175,7 +178,7 @@ export const Reviews: React.FC<ReviewsProps> = ({ review, isMobile }) => {
               fontStyle: "italic",
             }}
           >
-            Customer Reviews
+            {t("subtitle")}
           </Paragraph>
         </Box>
         {isMobile ? (

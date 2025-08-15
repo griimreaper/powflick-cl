@@ -1,7 +1,9 @@
 import { Box, Grid, Typography, Paper, Button, Divider, TextField } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 const PricingSection = ({ price }: { price: number }) => {
+    const t = useTranslations('Pricing');
     const tiers = ['10-20', '21-50', '51-100', '101-250', '250+'];
 
     type Tier =
@@ -246,10 +248,10 @@ const PricingSection = ({ price }: { price: number }) => {
                     <Box display="flex" width={{ xs: '100%', md: '35%' }} justifyContent="space-between" alignItems="start">
                         <Box textAlign={{ xs: 'center', md: 'left' }} width={'100%'}>
                             <Typography variant="body2" fontWeight={'bold'} fontSize={'14px'}>
-                                Unit price for {quantity} pcs: <strong>${prices[selectedTier].toFixed(2)}</strong>
+                                {t('unitPrice', { quantity })} <strong>${prices[selectedTier].toFixed(2)}</strong>
                             </Typography>
                             <Typography color="textSecondary" fontSize={'10px'}>
-                                Price includes shipping, excludes customization
+                                {t('priceIncludes')}
                             </Typography>
                         </Box>
                     </Box>
@@ -266,35 +268,31 @@ const PricingSection = ({ price }: { price: number }) => {
                 fontWeight="700"
                 textAlign="center"
             >
-                PRICING INFORMATION:
+                {t('title')}
             </Typography>
 
             <Grid container spacing={4} mt={{ xs: 2, md: 4 }}>
                 {/* Texto izquierdo */}
                 <Grid item xs={12} md={5} display={'flex'} flexDirection="column" justifyContent="center" gap={2} textAlign={{ xs: 'center', md: 'left' }}>
                     <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        Flexible Pricing. Team-Friendly Rates.
+                        {t('flexibleHeading')}
                     </Typography>
                     <Typography paragraph fontSize={'14px'}>
-                        At POW FLICK, we offer competitive pricing for custom sports uniforms, designed to fit
-                        teams of all sizes and budgets.
+                        {t('flexibleBody')}
                     </Typography>
 
                     <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        Transparent Price Range
+                        {t('transparentHeading')}
                     </Typography>
                     <Typography paragraph fontSize={'14px'}>
-                        Our prices vary based on the product type, customization level, and quantity ordered.
-                        Whether you’re ordering for a small team or an entire club, we’ll tailor the offer to
-                        match your needs.
+                        {t('transparentBody')}
                     </Typography>
 
                     <Typography color="primary.main" fontWeight="700" fontSize={'14px'}>
-                        Bulk Order Discounts
+                        {t('bulkHeading')}
                     </Typography>
                     <Typography paragraph fontSize={'14px'}>
-                        The more you order, the better the rate. We offer tiered pricing, so teams placing
-                        larger orders enjoy lower per-unit costs — ideal for clubs, schools, or resellers.
+                        {t('bulkBody')}
                     </Typography>
                 </Grid>
 

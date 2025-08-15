@@ -27,12 +27,13 @@ import { ProductDB } from "models/types";
 import { themeColors } from "theme/theme-colors";
 import { useRouter, useSearchParams } from "next/navigation";
 import { COLOR_HEX_MAP } from "./types-colors";
+import { useTranslations } from "next-intl";
 
 const OTHERS = [
-  { label: "On Sale", value: "discount" },
-  // { label: "In Stock", value: "stock" },
-  { label: "Featured", value: "featured" },
-];
+  { value: "discount" },
+  // { value: "stock" },
+  { value: "featured" },
+] as const;
 
 interface Props {
   filters: ProductFilters;
@@ -61,6 +62,7 @@ export default function ProductFilterCard({
   colors,
   tags,
 }: Props) {
+  const t = useTranslations("ProductFilters");
   const [collapsed, setCollapsed] = useState<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -145,7 +147,7 @@ export default function ProductFilterCard({
   return (
     <div>
       {/* ACTIVE FILTERS */}
-      <H6 mb={1.25} color={themeColors.text.primary}>Active Filters</H6>
+  <H6 mb={1.25} color={themeColors.text.primary}>{t("activeFilters")}</H6>
       {topCategories?.map((item) => (
         <Fragment key={item.title}>
           <AccordionHeader
@@ -182,7 +184,7 @@ export default function ProductFilterCard({
       <Box component={Divider} my={3} />
 
       {/* PRICE VARIANT FILTER */}
-      <H6 mb={2} color={themeColors.text.primary}>Price Range</H6>
+      <H6 mb={2} color={themeColors.text.primary}>{t("priceRange")}</H6>
       <Slider
         min={0}
         max={300}
@@ -198,7 +200,7 @@ export default function ProductFilterCard({
           fullWidth
           size="small"
           type="number"
-          placeholder="0"
+          placeholder={t("priceMinPlaceholder")}
           color="primary"
           value={filters.price?.[0] || 0}
           onChange={(e) =>
@@ -212,7 +214,7 @@ export default function ProductFilterCard({
           fullWidth
           size="small"
           type="number"
-          placeholder="250"
+          placeholder={t("priceMaxPlaceholder")}
           color="primary"
           value={filters.price?.[1] || 0}
           onChange={(e) =>
@@ -240,10 +242,16 @@ export default function ProductFilterCard({
 
       {/* SALES OPTIONS */}
       <FormGroup>
-        {OTHERS.map(({ label, value }) => (
+        {OTHERS.map(({ value }) => (
           <CheckboxLabel
             key={value}
-            label={label}
+            label={
+              value === "discount"
+                ? t("others.discount")
+                : value === "featured"
+                ? t("others.featured")
+                : value
+            }
             checked={filters[value as keyof ProductFilters] || false} // Verifica si está activo
             onChange={(e) => handleChangeSales(value, e.target.checked)}
           />
@@ -268,7 +276,7 @@ export default function ProductFilterCard({
       <Box component={Divider} my={3} />
 
       {/* COLORS VARIANT FILTER */}
-      <H6 mb={2} color={themeColors.text.primary}>Colors</H6>
+  <H6 mb={2} color={themeColors.text.primary}>{t("colors")}</H6>
       <FlexBox mb={2} flexWrap="wrap" gap={1.5}>
         {validColors.map((item: string) => (
           <Box
@@ -289,7 +297,7 @@ export default function ProductFilterCard({
           />
         ))}
       </FlexBox>
-      <H6 mb={2} color={themeColors.text.primary}>Tags</H6>
+  <H6 mb={2} color={themeColors.text.primary}>{t("tags")}</H6>
       <FlexBox mb={2} flexWrap="wrap" gap={1.5}>
         {tags?.map((item: string) => (
           <Box
@@ -309,7 +317,7 @@ export default function ProductFilterCard({
       <Box component={Divider} my={3} />
       <Box component={Divider} my={3} />
       <Button variant="outlined" onClick={handleResetFilters}>
-        Reset Filters
+        {t("reset")}
       </Button>
     </div>
   );

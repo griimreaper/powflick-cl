@@ -1,4 +1,6 @@
 "use client";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -39,6 +41,7 @@ import { useCounter } from "hooks/useCounter";
 import { addToCart } from "../../../../fpixel";
 import { getTotalWithDiscount, getUnitPriceWithDiscount } from "utils/tools";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 // ================================================================
 type Props = { product: detailProps };
@@ -49,6 +52,7 @@ type SelectVariants = {
 };
 
 export default function ProductIntro({ product }: Props) {
+  const t = useTranslations('ProductIntro');
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const {
     id,
@@ -98,6 +102,7 @@ export default function ProductIntro({ product }: Props) {
 
   const searchParams = useSearchParams();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const newValue = selected === 'top'
       ? 'No Shorts (-$10.00)'
@@ -113,6 +118,7 @@ export default function ProductIntro({ product }: Props) {
     updateCustomizationAttribute('shorts', newValue);
   }, [selected, counter]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
       "customizations-store"
@@ -131,6 +137,7 @@ export default function ProductIntro({ product }: Props) {
     }
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (customization.id !== "none") {
       if (customization.shorts === 'No Shorts (-$10.00)') {
@@ -142,6 +149,7 @@ export default function ProductIntro({ product }: Props) {
     }
   }, [customization]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const customizations: Customization[] | null =
       list[list.findIndex((i) => i.productId === id)]?.customizations ?? null;
@@ -152,6 +160,7 @@ export default function ProductIntro({ product }: Props) {
     }
   }, [id]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const findAmountBySessionStorage: string | null = sessionStorage.getItem(
       "customizations-store"
@@ -181,6 +190,7 @@ export default function ProductIntro({ product }: Props) {
     }
   }, [font, fontColor]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     return () => {
       setShowCustomization(false);
@@ -200,7 +210,7 @@ export default function ProductIntro({ product }: Props) {
 
   const handleAddToFav = async () => {
     if (!token || token === undefined) {
-      showErrorAlert("Error!", "Must be loged.");
+      showErrorAlert(t('alerts.errorTitle'), t('alerts.mustBeLogged'));
     } else {
       setIsFav(!isFav);
       const fetchfavProduct = await favProduct(token, String(id), false);
@@ -209,9 +219,9 @@ export default function ProductIntro({ product }: Props) {
         fetchfavProduct.error &&
         fetchfavProduct.message !== "The list of product favs"
       ) {
-        showErrorAlert("Error!", fetchfavProduct.message);
+        showErrorAlert(t('alerts.errorTitle'), fetchfavProduct.message);
       } else {
-        showSuccessAlert("Success!", fetchfavProduct.message);
+        showSuccessAlert(t('alerts.successTitle'), fetchfavProduct.message);
       }
     }
   };
@@ -273,7 +283,7 @@ export default function ProductIntro({ product }: Props) {
         amount,
         top
       );
-    showSuccessAlert("Success!", "Product added to bag");
+    showSuccessAlert(t('alerts.successTitle'), t('alerts.addedToBag'));
     return {
       productToBag,
       customizations,
@@ -319,7 +329,7 @@ export default function ProductIntro({ product }: Props) {
                     controls
                   >
                     <source src={selectedVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
+                    {t('noVideoSupport')}
                   </video>
                 ) : (
                   <Image
@@ -381,7 +391,7 @@ export default function ProductIntro({ product }: Props) {
                       src="https://sbvajd9r07chtxp5.public.blob.vercel-storage.com/video-Detail/20250303-105015-1dPq64oJspwVHro40Vm8Th0hMtcByU.mp4"
                       type="video/mp4"
                     />
-                    Your browser does not support the video tag.
+                    {t('noVideoSupport')}
                   </video>
                 </FlexRowCenter>
               </FlexBox>
@@ -398,7 +408,7 @@ export default function ProductIntro({ product }: Props) {
           {product.product.categories?.length > 0 && (
             <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
               <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                Categories:
+                {t('categories')}:
               </Typography>
 
               {product.product.categories.map((cat: any, index: number) => (
@@ -423,7 +433,7 @@ export default function ProductIntro({ product }: Props) {
           {product.product.collections?.length > 0 && (
             <FlexBox alignItems="center" flexWrap="wrap" mb={1}>
               <Typography sx={{ marginRight: '0.5rem', display: 'inline-flex', alignItems: 'center' }}>
-                Collections:
+                {t('collections')}:
               </Typography>
 
               {product.product.collections.map((col: any, index: number) => (
@@ -446,7 +456,7 @@ export default function ProductIntro({ product }: Props) {
 
           {product.product.tags?.length > 0 && (
             <FlexBox alignItems="center" mb={1} gap={1} flexWrap={"wrap"}>
-              <div>Tags: </div>
+              <div>{t('tags')}: </div>
               {product.product.tags.map((t: any) => (
                 <Link key={t} href={`/products?tag=${encodeURIComponent(t)}`}>
                   <H6 bgcolor={"#f0f0f0"} sx={{
@@ -464,7 +474,7 @@ export default function ProductIntro({ product }: Props) {
 
           {/* PRODUCT RATING */}
           <FlexBox alignItems="center" gap={1} mb={2}>
-            <Box lineHeight="1">Rated:</Box>
+            <Box lineHeight="1">{t('rated')}:</Box>
             <Rating color="warn" value={4} readOnly />
             <H6 lineHeight="1">(50)</H6>
           </FlexBox>
@@ -474,7 +484,7 @@ export default function ProductIntro({ product }: Props) {
             <H2 color="primary.main" mb={0.5} lineHeight="1">
               {currency(getUnitPriceWithDiscount(price + (selected === 'top' ? -10.00 : 0), counter, selected === 'top'))}
             </H2>
-            <Box color="inherit">Stock Available</Box>
+            <Box color="inherit">{t('stock')}</Box>
           </Box>
 
           {/* BUTTONS */}
@@ -548,7 +558,7 @@ export default function ProductIntro({ product }: Props) {
                     flex: 1,
                   }}
                 >
-                  Customize
+                  {t('actions.customize')}
                 </Button>
               </FlexBox>
             </Box>
@@ -557,13 +567,13 @@ export default function ProductIntro({ product }: Props) {
           <Box display={"flex"} width={'100%'} my={2}>
             <Typography variant="body1" width={'100%'} flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 1 }} textAlign={'start'}>
               <strong>
-                Not sure how to start?
+                {t('guide.heading')}
               </strong>
-              {" "}Check out our{" "}
+              {" "}{t('guide.text')}{" "}
               <a href="https://powflick.com/customization-guide"
                 rel="noopener noreferrer"
                 style={{ color: 'blue', textDecoration: 'underline' }}>
-                Customization Guide
+                {t('guide.link')}
               </a>
             </Typography>
           </Box>
@@ -589,7 +599,7 @@ export default function ProductIntro({ product }: Props) {
                   }
                 }}
               >
-                Top
+                {t('variant.top')}
               </Button>
               <Button
                 onClick={() => setSelected("uniform")}
@@ -607,7 +617,7 @@ export default function ProductIntro({ product }: Props) {
                   }
                 }}
               >
-                Uniform (Jersey + Shorts)
+                {t('variant.uniform')}
               </Button>
             </FlexBox>
           )
@@ -625,7 +635,7 @@ export default function ProductIntro({ product }: Props) {
           />
 
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="flex-start" width={'100%'} my={2}>
-            <Box width={'70%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
+            <Box width={'100%'} gap={2} display="flex" alignItems="center" flexDirection={'row'} justifyContent="space-between">
               <Button
                 id="addToBag-button-event-click"
                 color="primary"
@@ -637,6 +647,7 @@ export default function ProductIntro({ product }: Props) {
                   my: 2,
                   whiteSpace: "nowrap",
                   flex: 1, // Permite que los botones se distribuyan equitativamente
+                  maxWidth: "300px" // Limita el ancho máximo del botón
                 }}
                 onClick={() => {
                   const result = handleAddToBagClick();
@@ -687,7 +698,7 @@ export default function ProductIntro({ product }: Props) {
                   });
                 }}
               >
-                Add to Cart
+                {t('actions.addToCart')}
               </Button>
 
               <Button
@@ -711,40 +722,46 @@ export default function ProductIntro({ product }: Props) {
           <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={1} mt={2} border={1} borderColor={'grey.200'} p={1}>
             <Typography variant="subtitle2" fontSize={{ xs: '4vw', md: '1.5vw' }} fontWeight={700} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Lock />
-              Guaranteed Safe & Secure Checkout
+              {t('secureCheckout')}
             </Typography>
 
             <Box display="flex" flexWrap={'wrap'} mt={1} width={'100%'} justifyContent={'center'} alignItems={'center'}>
               <Box width={{ xs: '18vw', md: '6vw' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/paypal-1.png" alt="Pago 1" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: 'auto', md: 'auto' }} >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/visa.png" alt="Pago 2" style={{ width: 'auto', height: 'auto' }} />
               </Box>
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/MasterCard.png" alt="Pago 2" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: 'auto', md: 'auto' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/jcb.png" alt="Pago 3" style={{ width: 'auto', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/3dsecure.png" alt="Pago 3" style={{ width: '100%', height: 'auto' }} />
               </Box>
 
               <Divider orientation="vertical" flexItem sx={{ mx: 1, borderColor: 'black', height: '25px', my: 'auto' }} />
 
               <Box width={{ xs: '18vw', md: '6vw' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/assets/images/payment-methods/wise.png" alt="Pago 4" style={{ width: '100%', height: 'auto' }} />
               </Box>
             </Box>

@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { useTranslations } from "next-intl";
 import BoxLink from "./box-link";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
 import useFlag from "hooks/useFlag";
@@ -6,6 +7,7 @@ import { RegisterPageView } from "../page-view";
 import ResetPassword from "../page-view/reset-password";
 
 export default function LoginBottom() {
+  const t = useTranslations("Auth.bottom");
   const [isRenderingRegister, setIsRenderingRegister] = useFlag(false);
   const [isRenderingResetPassword, setIsRenderingResetPassword] = useFlag(false);
 
@@ -21,9 +23,9 @@ export default function LoginBottom() {
     <Fragment>
       {/* DON'T HAVE ACCOUNT AREA */}
       <FlexRowCenter gap={1} my={3}>
-        Don&apos;t have account?
+        {t("noAccount")}
         <BoxLink
-          title="Register"
+          title={t("register")}
           onClick={() => {
             setIsRenderingRegister(true);
           }}
@@ -44,10 +46,10 @@ export default function LoginBottom() {
         justifyContent="center"
         bgcolor="grey.200"
       >
-        Forgot your password?
-        <BoxLink title="Reset It" onClick={() => {
+        {t("forgot")}
+        <BoxLink title={t("resetIt")} onClick={() => {
           setIsRenderingResetPassword(true);
-        }}/>
+        }} />
       </FlexBox>
 
       {isRenderingResetPassword && (

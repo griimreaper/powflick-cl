@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { TextField, Button, Box, CircularProgress, useMediaQuery, Theme, Dialog } from "@mui/material";
 import { resetPassword } from "services/Login";
+import { useTranslations } from "next-intl";
 import { showErrorAlert, showSuccessAlert } from "utils/alerts";
 import useLoading from "hooks/useLoading";
 import { H3 } from "components/Typography";
@@ -14,6 +15,7 @@ interface ResetPasswordPageViewProps {
 }
 
 export const ResetPasswordForm: React.FC<ResetPasswordPageViewProps> = ({ rendering, setIsRendering }) => {
+  const t = useTranslations("Auth.reset");
   const [loading, startLoading, stopLoading] = useLoading();
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("xs")
@@ -30,19 +32,19 @@ export const ResetPasswordForm: React.FC<ResetPasswordPageViewProps> = ({ render
 
   const validatePassword = (value: string) => {
     if (value.length < 8 || value.length > 20) {
-      return "Password must be between 8 and 20 characters long";
+      return t("errors.minMax");
     }
     if (!/[A-Z]/.test(value)) {
-      return "Password must contain at least one uppercase letter";
+      return t("errors.uppercase");
     }
     if (!/[a-z]/.test(value)) {
-      return "Password must contain at least one lowercase letter";
+      return t("errors.lowercase");
     }
     if (!/\d/.test(value)) {
-      return "Password must contain at least one number";
+      return t("errors.number");
     }
     if (!/[@$!%._.,;:+#|*?&]/.test(value)) {
-      return "Password must contain at least one special character (@$!%*?&)";
+      return t("errors.special");
     }
     return true;
   };
@@ -82,19 +84,19 @@ export const ResetPasswordForm: React.FC<ResetPasswordPageViewProps> = ({ render
       <Wrapper>
         <Fragment>
           <H3 mb={3} textAlign={"center"}>
-            Recover Password
+            {t("title")}
           </H3>
           <Box component="form" onSubmit={onSubmit} display="flex" flexDirection="column" gap={2}>
             <Box display="flex" flexDirection="column" gap={-4} minWidth={300} maxWidth={300}>
               <TextField
                 fullWidth
-                label="New Password"
+                label={t("newPassword")}
                 type="password"
                 autoComplete="new-password"
                 margin="normal"
                 error={!!errors.password}
                 helperText={errors.password?.message?.toString()}
-                {...register("password", { required: "Password is required", validate: validatePassword })}
+                {...register("password", { required: t("errors.passwordRequired"), validate: validatePassword })}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     '& fieldset': {
@@ -114,15 +116,15 @@ export const ResetPasswordForm: React.FC<ResetPasswordPageViewProps> = ({ render
               />
               <TextField
                 fullWidth
-                label="Confirm Password"
+                label={t("confirmPassword")}
                 type="password"
                 autoComplete="new-password"
                 margin="normal"
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message?.toString()}
                 {...register("confirmPassword", {
-                  required: "Confirm password is required",
-                  validate: (value) => value === password || "The passwords do not match",
+                  required: t("errors.confirmPasswordRequired"),
+                  validate: (value) => value === password || t("errors.passwordsDoNotMatch"),
                 })}
                 sx={{
                   '& .MuiOutlinedInput-root': {
@@ -149,7 +151,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordPageViewProps> = ({ render
               color="primary"
               disabled={!isValid || loading}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : "Submit"}
+              {loading ? <CircularProgress size={24} color="inherit" /> : t("submit")}
             </Button>
           </Box>
         </Fragment>

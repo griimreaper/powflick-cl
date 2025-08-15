@@ -1,12 +1,2 @@
-"use client";
-
-import i18next from "i18next";
-import { initReactI18next } from "react-i18next";
-import { resources } from "./resource";
-
-i18next.use(initReactI18next).init({
-  resources,
-  lng: "en",
-  fallbackLng: "en",
-  interpolation: { escapeValue: false },
-});
+// Deprecated legacy i18next initializer intentionally left empty.
+// Use next-intl (request.ts + routing.ts) instead.

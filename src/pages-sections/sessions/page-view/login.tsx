@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@mui/material/Button";
+import { useTranslations } from "next-intl";
 import { useFormik } from "formik";
 import * as yup from "yup";
 // LOCAL CUSTOM COMPONENTS
@@ -21,14 +22,18 @@ interface Props {
 
 const LoginPageView = ({ closeDialog, redirectUrl }: Props) => {
   const { visiblePassword, togglePasswordVisible } = usePasswordVisible();
+  const t = useTranslations("Auth.login");
 
   // LOGIN FORM FIELDS INITIAL VALUES
   const initialValues = { email: "", password: "" };
 
   // LOGIN FORM FIELD VALIDATION SCHEMA
   const validationSchema = yup.object().shape({
-    password: yup.string().required("Password is required"),
-    email: yup.string().email("invalid email").required("Email is required"),
+    password: yup.string().required(t("errors.passwordRequired")),
+    email: yup
+      .string()
+      .email(t("errors.emailInvalid"))
+      .required(t("errors.emailRequired")),
   });
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -40,22 +45,22 @@ const LoginPageView = ({ closeDialog, redirectUrl }: Props) => {
       },
     });
 
-    const onSubmit = async (values: any) => {
-      const response = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-      });
-      if (response?.error) {
-        showErrorAlert("Error!", `Error to init session ${response?.error}`);
-      } else {
-        showSuccessAlert("Success!", "Session started successfully");
+  const onSubmit = async (values: any) => {
+    const response = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+    if (response?.error) {
+      showErrorAlert("Error!", `${t("error")} ${response?.error}`);
+    } else {
+      showSuccessAlert("Success!", t("success"));
 
-        setTimeout(() => {
-          window.location.href = redirectUrl || "/";
-        }, 1000);
-      }
+      setTimeout(() => {
+        window.location.href = redirectUrl || "/";
+      }, 1000);
     }
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -69,8 +74,8 @@ const LoginPageView = ({ closeDialog, redirectUrl }: Props) => {
         onBlur={handleBlur}
         value={values.email}
         onChange={handleChange}
-        label="Email or Phone Number"
-        placeholder="exmple@mail.com"
+        label={t("emailOrPhone")}
+        placeholder={t("emailPlaceholder")}
         helperText={touched.email && errors.email}
         error={Boolean(touched.email && errors.email)}
       />
@@ -80,7 +85,7 @@ const LoginPageView = ({ closeDialog, redirectUrl }: Props) => {
         fullWidth
         size="small"
         name="password"
-        label="Password"
+        label={t("password")}
         autoComplete="on"
         variant="outlined"
         onBlur={handleBlur}
@@ -108,7 +113,7 @@ const LoginPageView = ({ closeDialog, redirectUrl }: Props) => {
         size="large"
         onClick={() => onSubmit(values)}
       >
-        Login
+        {t("submit")}
       </Button>
     </form>
   );

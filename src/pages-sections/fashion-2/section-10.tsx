@@ -1,3 +1,4 @@
+"use client";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 // LOCAL CUSTOM COMPONENT
@@ -9,6 +10,7 @@ import Link from "next/link";
 import LazyImage from "components/LazyImage";
 import { NavLink } from "components/nav-link";
 import { H3, Paragraph } from "components/Typography";
+import { useTranslations } from "next-intl";
 // CUSTOM UTILS LIBRARY FUNCTIONS
 import { currency } from "lib";
 // STYLED COMPONENT
@@ -69,26 +71,27 @@ function ListBlock({ title, products }: Props) {
   );
 }
 
-export default async function Section10({ products }: { products: DataStructure['landing']['collections']}) {
-  const {saleProducts, latestProducts, popularProducts, bestWeekProducts} = products;
+export default function Section10({ products }: { products: DataStructure['landing']['collections'] }) {
+  const { saleProducts, latestProducts, popularProducts, bestWeekProducts } = products;
+  const t = useTranslations("Home");
 
   return (
     <Container className="pt-5 pb-5">
       <Grid container spacing={3}>
         <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <ListBlock title="Sale Products" products={saleProducts} />
+          <ListBlock title={t("saleProducts")} products={saleProducts} />
         </Grid>
 
         <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <ListBlock title="Latest Products" products={latestProducts} />
+          <ListBlock title={t("latestProducts")} products={latestProducts} />
         </Grid>
 
         <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <ListBlock title="Best of the Week" products={bestWeekProducts} />
+          <ListBlock title={t("bestWeekProducts")} products={bestWeekProducts} />
         </Grid>
 
         <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <ListBlock title="Popular Products" products={popularProducts} />
+          <ListBlock title={t("popularProducts")} products={popularProducts} />
         </Grid>
       </Grid>
     </Container>

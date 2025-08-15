@@ -1,3 +1,4 @@
+"use client";
 // GLOBAL CUSTOM COMPONENTS
 import { FlexBox } from "components/flex-box";
 // LOCAL CUSTOM COMPONENTS - Dynamic import
@@ -5,6 +6,7 @@ import { NavList } from "../types";
 import { DataStructure } from "models/types";
 import CategoryBasedMenu from "../category-based-menu";
 import { StyledNavLink } from "../styles";
+import { useTranslations } from "next-intl";
 
 
 export default function NavigationList({
@@ -12,6 +14,7 @@ export default function NavigationList({
 }: {
   data: DataStructure["navbar"];
 }) {
+  const t = useTranslations("Navigation");
   const renderNestedNav = (list: any[] = [], isRoot = false) => {
     return list.map((nav: NavList) => {
       if (isRoot) {
@@ -32,7 +35,7 @@ export default function NavigationList({
   const fullScreenMenu = {
     megaMenu: false,
     megaMenuWithSub: true,
-    title: "Store",
+    title: t("store"),
     child: "categories" in data ? data.categories : [],
   };
 
@@ -40,11 +43,11 @@ export default function NavigationList({
     <FlexBox gap={4} height={'100%'} alignItems="center" >
       {fullScreenMenu && renderNestedNav([fullScreenMenu], true)}
       {/* <StyledNavLink href="/blog">Blog</StyledNavLink> */}
-      <StyledNavLink href="/your-design">Get a Free Design</StyledNavLink>
-      <StyledNavLink href="/contact">Contact</StyledNavLink>
-      <StyledNavLink href="/about-us">About Us</StyledNavLink>
-      <StyledNavLink href="/help">FAQ</StyledNavLink>
-      <StyledNavLink href="/influencers">Creator Kits</StyledNavLink>
+      <StyledNavLink href="/your-design">{t("getFreeDesign")}</StyledNavLink>
+      <StyledNavLink href="/contact">{t("contact")}</StyledNavLink>
+      <StyledNavLink href="/about-us">{t("about")}</StyledNavLink>
+      <StyledNavLink href="/help">{t("faq")}</StyledNavLink>
+      <StyledNavLink href="/influencers">{t("creatorKits")}</StyledNavLink>
     </FlexBox>
   );
 }
