@@ -117,7 +117,7 @@ export default function DesignYourGameSection({
                         overflowX: 'scroll',
                         '&::-webkit-scrollbar': { height: '2px' }, // para Chrome
                     }}>
-                        {[t("topPicks"), ...(types || [])].map((type) => (
+                        {[ ...(types || [])].map((type) => (
                             <Typography
                                 key={type}
                                 onClick={() => setSelectedType(type)}
